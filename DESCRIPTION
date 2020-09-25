@@ -1,0 +1,27 @@
+Package: EDGEtransport
+Title: Prepare EDGE Transport Data for the REMIND model
+Version: 0.1.0
+Authors@R: c(
+    person("Alois", "Dirnaichner", email = "dirnaichner@pik-potsdam.de", role = c("aut", "cre")),
+    person("Marianna", "Rottoli", email = "rottoli@pik-potsdam.de", role = "aut"))
+Description: Collect data from different sources, construct the GCAM-like logit tree and generate ES trajectories for REMIND. Uses REMIND fuel prices.
+Depends:
+    R (>= 3.1),
+    data.table (>= 1.11.0),
+    edgeTrpLib
+Imports:
+    rootSolve,
+    rmndt,
+    readxl,
+    magclass,
+    mrremind,
+    madrat
+Suggests:
+    knitr,
+    markdown
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
+Date: 2020-09-22

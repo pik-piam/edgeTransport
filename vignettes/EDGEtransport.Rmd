@@ -1,0 +1,72 @@
+---
+title: "Data preparation with EDGEtransport"
+author: "Marianna Rottoli"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data preparation with EDGEtransport}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Description
+
+The input data preparation routine of EDGE-Transport produces transport detailed data compatible with the structure of REMIND. The code is provided as R package, while the input data is available upon request. The input data is necessary to run the package. The input data generation routine uses the functions provided in the [edgeTrpLib](https://github.com/pik-piam/edgeTrpLib) package.
+
+## Usage
+
+The package can be installed from github...
+
+Data can be generated as follows:
+
+`
+generateEDGEdata(input_folder, output_folder, mappings_folder, REMIND_gdx, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
+`
+
+Where:
+
+`input_folder` character string containing the path to the input data folder
+
+`output_folder` character string containing the path where output data are saved
+
+`mappings_folder` character string containing the path to regional and sectoral mappings
+
+`REMIND_gdx` character string containing the path a previous gdx output from REMIND
+
+`EDGE_scenario` character string containing the selected transport scenario. Options are: `ConvCase`, `ElecEra`, `HydrHype`, `ConvCaseWise`, `ElecEraWise`, `HydrHypeWise`
+
+`REMIND_scenario` character string containing the selected SSP scenario. Options are: `SSP1`, `SSP2`, `SSP3`, `SSP4`, `SSP5`. By default, `SSP2` is selected
+
+`saveRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved. By default, the parameter is set to `FALSE`.
+
+In order to produce a complete new input data set for REMIND, the function needs to run with all options of `EDGE_scenario`. Afterwards, the results have to be collected to produce [mrremind](https://github.com/pik-piam/mrremind)-compatible input data as follows:
+
+`
+collectScens(output_folder)
+`
+
+where `output_folder` is the folder where the mrremind-compatible input data is saved.
+
+## Data generation structure
+
+The package contains three levels of data wrangling.
+
+* Level 0: this level performs the raw data loading and processing. The scripts in this level load the input data, such as: detailed historical demand, technology performances-load factor, intensity, value of time, inconvenience costs for 4wheelers.
+* Level 1: in this level the inconvenience costs and preference factors are calibrated on the historical transport demand. The calibrated preferences are then projected in time for technologies-vehicles-modes based on assumptions of the evolution of the transport system.
+* Level 2: the future composition of the transport system is defined via a logit function. The total demand for transport is calculated via regressions. Data is then saved in the form of .csv files.
+
+## Scenarios description
+
+The data preparation routine allows to provide combinations of transport scenarios and macro-economic scenarios. The transport scenarios are characterized by a set of assumptions about technological development, evolution of preferences for technologies and transport modes, lifestyle changes, introduction of policy packages. The assumptions are reported in a set of switches reported in the mapping file `EDGEtransport/data-raw/EDGEscenario_description.csv`. An extensive description of the scenarios is provided here [CIT]. The scenario options are the following:
+
+`ConvCase` stands for *Conventional Case*, represents a conventional case, internal combustion engines, no incentives to BEVs and FCEVs
+
+`ElecEra` stands for *Electric Era* incentives to BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
+
+`HydrHype`stands for *Hydrogen Hype* incentives to FCEVs, slow development of BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
+
+The same scenarios can be run with the suffix `Wise` to introduce lifestyle changes on top of the assumptions of the corresponding baselines. Lifestyle changes concern: a more moderate growth of demand, an increased preference for public transport and non-motorized modes.
+
+The macro-economic scenarios are based on the Shared Socio-Economic Pathways [see @riahi_shared_2017]. The entries that vary across scenarios are GDP and population projections. There are no assumptions specific to transport structure across the various SSPs.
+
+## References
