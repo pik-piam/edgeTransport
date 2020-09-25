@@ -3,7 +3,6 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files
-#' @param REMIND_gdx GAMS binary to obtain price trajectories
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param saveRDS optional saving of intermediate RDS files
@@ -18,7 +17,7 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, REMIND_gdx,
+generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
                              saveRDS=FALSE){
 
@@ -203,10 +202,9 @@ generateEDGEdata <- function(input_folder, output_folder, REMIND_gdx,
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
-
   print("-- Merge non-fuel prices with REMIND fuel prices")
   REMIND_prices <- merge_prices(
-    gdx = REMIND_gdx,
+    gdx = file.path(input_folder, "REMIND/fulldata.gdx"),
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = intensity_gcam,
