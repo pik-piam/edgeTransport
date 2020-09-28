@@ -20,7 +20,7 @@ The package can be installed from github...
 Data can be generated as follows:
 
 `
-generateEDGEdata(input_folder, output_folder, mappings_folder, REMIND_gdx, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
+generateEDGEdata(input_folder, output_folder, mappings_folder, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
 `
 
 Where:
@@ -30,8 +30,6 @@ Where:
 `output_folder` character string containing the path where output data are saved
 
 `mappings_folder` character string containing the path to regional and sectoral mappings
-
-`REMIND_gdx` character string containing the path a previous gdx output from REMIND
 
 `EDGE_scenario` character string containing the selected transport scenario. Options are: `ConvCase`, `ElecEra`, `HydrHype`, `ConvCaseWise`, `ElecEraWise`, `HydrHypeWise`
 

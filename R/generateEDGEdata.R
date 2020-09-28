@@ -3,7 +3,6 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files
-#' @param REMIND_gdx GAMS binary to obtain price trajectories
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param saveRDS optional saving of intermediate RDS files
@@ -18,7 +17,7 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, REMIND_gdx,
+generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
                              saveRDS=FALSE){
 
@@ -52,11 +51,11 @@ generateEDGEdata <- function(input_folder, output_folder, REMIND_gdx,
              seq(2070, 2110, by = 10),
              2130, 2150)
   ## load mappings
-  REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmappingH12.csv", package = "EDGEtransport"))[, .(iso = CountryCode,region = RegionCode)]
-  EDGEscenarios = fread(system.file("extdata", "EDGEscenario_description.csv", package = "EDGEtransport"))
-  GCAM2ISO_MAPPING = fread(system.file("extdata", "iso_GCAM.csv", package = "EDGEtransport"))
-  EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "EDGEtransport"))
-  EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "EDGEtransport"))
+  REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmappingH12.csv", package = "edgeTransport"))[, .(iso = CountryCode,region = RegionCode)]
+  EDGEscenarios = fread(system.file("extdata", "EDGEscenario_description.csv", package = "edgeTransport"))
+  GCAM2ISO_MAPPING = fread(system.file("extdata", "iso_GCAM.csv", package = "edgeTransport"))
+  EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
+  EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "edgeTransport"))
   
   ## load specific transport switches
   EDGEscenarios <- EDGEscenarios[scenario_name == EDGE_scenario]
@@ -203,10 +202,9 @@ generateEDGEdata <- function(input_folder, output_folder, REMIND_gdx,
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
-
   print("-- Merge non-fuel prices with REMIND fuel prices")
   REMIND_prices <- merge_prices(
-    gdx = REMIND_gdx,
+    gdx = file.path(input_folder, "REMIND/fulldata.gdx"),
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = intensity_gcam,
