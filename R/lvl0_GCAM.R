@@ -420,48 +420,6 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   # costs for LDV in USA and EU:
   # https://www.quora.com/Why-are-cars-considerably-cheaper-in-the-US-than-in-Europe-for-the-same-level-of-functionality
 
-  ## costs for electric buses, electric trucks, electric aviation, electric shipping
-  ## include Electric buses, electric trucks, electric domestic shipping and electric aviation
-  newtech = NULL
-
-  for (i in unique(NEcost$non_energy_cost$region)) {
-    electric = NEcost$non_energy_cost[(subsector_L3 %in% c("trn_freight_road")|
-                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "non_fuel_price") := list("Electric", 0)]
-    hydrogen = NEcost$non_energy_cost[(subsector_L3 %in% c("trn_freight_road")|
-                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "non_fuel_price") := list("FCEV", 0)]
-    liquids = NEcost$non_energy_cost[(subsector_L3 %in% c("trn_freight_road")|
-                                        subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i]
-    newtech = rbind(newtech, electric, liquids, hydrogen)
-  }
-
-  ## documentation for this section is in the paper Rottoli et al 2020
-  ## cost of electric truck is 60% more than a as conventional truck today
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year <= 2020, non_fuel_price := ifelse(technology == "Electric", 1.6*non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-  ## costs of electric truck breaks even in 2030
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year >= 2030, non_fuel_price := ifelse(technology == "Electric", non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-
-  ## cost of a FCEV truck is 80% more than a as conventional truck today
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year <= 2020, non_fuel_price := ifelse(technology == "FCEV", 1.8*non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-  ## costs of FCEV truck breaks is 10% more than a conventional truck in 2030
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year == 2030, non_fuel_price := ifelse(technology == "FCEV", 1.1*non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-  ## break even for FCEV truck is assumed to occur in 2035
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year >= 2035, non_fuel_price := ifelse(technology == "FCEV", non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-
-  ## for electric and FCEV trucks, in between 2020 and 2030 the cost follows a linear trend
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1" & year <= 2030 & year >= 2020 & technology %in% c("Electric", "FCEV"),
-          non_fuel_price := (non_fuel_price[year == 2020] - non_fuel_price[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + non_fuel_price[year == 2030],
-          by = c("region", "technology", "vehicle_type")]
-
-  ## cost of electric buses is 40% more of a conventional bus today
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus") & year <= 2020, non_fuel_price := ifelse(technology %in% c("Electric", "FCEV"), 1.4*non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-  ## electric and FCEV buses breaks-even with conventional buses in 2030
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus") & year >= 2030, non_fuel_price := ifelse(technology %in% c("Electric", "FCEV"), non_fuel_price[technology=="Liquids"], non_fuel_price), by = c("region", "year", "vehicle_type")]
-  ## for electric and FCEV buses, in between 2020 and 2030 the cost follows a linear trend
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus") & year <= 2030 & year >= 2020 & technology %in% c("Electric", "FCEV"),
-          non_fuel_price := (non_fuel_price[year == 2020]-non_fuel_price[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + non_fuel_price[year == 2030], by = c("region", "technology", "vehicle_type")]
-
-  NEcost$non_energy_cost = rbind(NEcost$non_energy_cost, newtech[technology!="Liquids"])
-
   ## Create values for plug-in hybrids costs: add plug-in hybrids to all countries, using the same ratio as Hybrid Liquids for each country (ref: EU-15)
 
   ## costs

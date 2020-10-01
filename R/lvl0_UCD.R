@@ -298,6 +298,46 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
                       by = c("UCD_region", "size.class", "UCD_technology", "type")]
     }
 
+
+    ## add FCEVs and Electric trucks
+    ## include Electric buses, electric trucks, h2 buses, h2 trucks
+    ## documentation for this section is in the paper Rottoli et al 2020
+    newtech = NULL
+    trucks = unique(non_energy_cost[grepl("Truck", mode) & !grepl("Light", mode), mode])
+    buses = unique(non_energy_cost[grepl("Bus", mode), mode])
+    truck_buses = c(trucks, buses)
+    electric = non_energy_cost[mode %in% truck_buses & UCD_technology == "Liquids"][, c("UCD_technology", "CAPEX_and_non_fuel_OPEX") := list("Electric", 0)]
+    hydrogen = non_energy_cost[mode %in% truck_buses & UCD_technology == "Liquids"][, c("UCD_technology", "CAPEX_and_non_fuel_OPEX") := list("FCEV", 0)]
+    liquids = non_energy_cost[mode %in% truck_buses & UCD_technology == "Liquids"]
+    newtech = rbind(newtech, electric, liquids, hydrogen)
+    ## documentation for this section is in the paper Rottoli et al 2020
+    ## cost of electric truck is 60% more than a as conventional truck today
+    newtech[mode %in% trucks & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "Electric", 1.6*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## costs of electric truck breaks even in 2030
+    newtech[mode %in% trucks & year >= 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "Electric", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+
+    ## cost of a FCEV truck is 80% more than a as conventional truck today
+    newtech[mode %in% trucks & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", 1.8*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## costs of FCEV truck breaks is 10% more than a conventional truck in 2030
+    newtech[mode %in% trucks & year == 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", 1.1*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## break even for FCEV truck is assumed to occur in 2035
+    newtech[mode %in% trucks & year >= 2035, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+
+    ## for electric and FCEV trucks, in between 2020 and 2030 the cost follows a linear trend
+    newtech[mode %in% trucks & year <= 2030 & year >= 2020 & UCD_technology %in% c("Electric", "FCEV"),
+            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020] - CAPEX_and_non_fuel_OPEX[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + CAPEX_and_non_fuel_OPEX[year == 2030],
+            by = c("UCD_region", "UCD_technology", "mode")]
+
+    ## cost of electric buses is 40% more of a conventional bus today
+    newtech[mode %in% buses & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology %in% c("Electric", "FCEV"), 1.4*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## electric and FCEV buses breaks-even with conventional buses in 2030
+    newtech[mode %in% buses & year >= 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology %in% c("Electric", "FCEV"), CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## for electric and FCEV buses, in between 2020 and 2030 the cost follows a linear trend
+    newtech[mode %in% buses & year <= 2030 & year >= 2020 & UCD_technology %in% c("Electric", "FCEV"),
+            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020]-CAPEX_and_non_fuel_OPEX[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + CAPEX_and_non_fuel_OPEX[year == 2030], by = c("UCD_region", "UCD_technology", "mode")]
+
+    non_energy_cost = rbind(non_energy_cost, newtech[UCD_technology!="Liquids"])
+
     ## calculate total fuel price
     non_energy_cost[,non_fuel_cost:=non_fuel_OPEX+
                       Operating_subsidy+
@@ -348,17 +388,18 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 
 
     setnames(non_energy_cost,old=c("mode","UCD_technology"),new=c("univocal_name","technology"))
-
-    ## add logit_category for Hybrid Electric
+    ## add logit_category for Hybrid Electric, Electric and FCEVs trucks and buses
     logit_category = rbind(logit_category, logit_category[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
-
+    logit_category = rbind(logit_category, logit_category[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "Electric"])
+    logit_category = rbind(logit_category, logit_category[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "FCEV"])
 
     non_energy_cost=merge(non_energy_cost, logit_category, all=FALSE, by = c("univocal_name","technology"))
     non_energy_cost[, c("univocal_name") := NULL]
 
     ## add load_factor for Hybrid Electric
     load_factor = rbind(load_factor, load_factor[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
-
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "Electric"])
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "FCEV"])
 
     non_energy_cost=merge(non_energy_cost,load_factor,all = FALSE, by=c("technology","region","year","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector") )
 
@@ -370,6 +411,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     tmp3=copy(non_energy_cost[region=="EU-15" & vehicle_type=="Mini Car",])[,region:="European Free Trade Association"]
 
     non_energy_cost=rbindlist(list(tmp1,tmp2,tmp3,non_energy_cost))
+
 
     ## create 2 separate dts, one with the total non fuel price the other with all it's components (for reporting purposes)
 
