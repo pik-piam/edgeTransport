@@ -72,13 +72,15 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
                        extrapolate = TRUE)
 
 
-  ## correct price elasticity for IND, otherwise the demand is wrongly low
+  ## correct price elasticity for IND, otherwise the demand is misleadingly low
   ## https://ideas.repec.org/p/ekd/006356/7355.html
   price_el[, eps := ifelse(var == "price_elasticity_pass_sm" & iso == "IND", -0.35, eps)]
 
   ## correct elasticity for SSA, otherwise the demand does not grow enough as compared to other regions
   price_el[, eps := ifelse(var == "income_elasticity_pass_sm" & iso %in% c("AGO", "BDI", "BEN", "BFA", "BWA", "CAF", "CIV", "CMR", "COD", "COG", "COM", "CPV", "DJI", "ERI", "ETH", "GAB", "GHA", "GIN", "GMB", "GNB", "GNQ", "KEN", "LBR", "LSO", "MDG", "MLI", "MOZ", "MRT", "MUS", "MWI", "MYT", "NAM", "NER", "NGA", "REU", "RWA", "SEN", "SHN", "SLE", "SOM", "SSD", "STP", "SWZ", "SYC", "TCD", "TGO", "TZA", "UGA", "ZAF", "ZMB", "ZWE"), eps*1.1, eps)]
 
+  ## CHN demand grows too quickly in the first time step: smoothen down the elasticity increase
+  price_el[iso == "CHN" & var == "price_elasticity_pass_sm" & year == 2015, eps := 0.8*eps]
 
   price_el = dcast(price_el[,c("iso","year","var","eps", "GDP_cap")], iso + year + GDP_cap ~var, value.var = "eps")
 
