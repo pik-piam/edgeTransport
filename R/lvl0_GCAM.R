@@ -327,14 +327,14 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   GCAM_output$tech_output = GCAM_output$tech_output[!(region == "China" & subsector_L3 == "trn_pass_road"),]
   GCAM_output$tech_output = rbind(tmp, GCAM_output$tech_output)
   ## include Electric buses, electric trucks, h2 buses, h2 trucks
-  newtech = NULL
-  for (i in unique(GCAM_output$tech_output$region)) {
-    electric = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
-                                                     subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "tech_output") := list("Electric", 0)]
-    hydrogen = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
-                                                     subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "tech_output") := list("FCEV", 0)]
-    newtech = rbind(newtech, electric, hydrogen)
-  }
+  electric = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
+                                                     subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "tech_output") := list("Electric", 0)]
+  FCEV = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
+                                                     subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "tech_output") := list("FCEV", 0)]
+
+  hydrogen = GCAM_output$tech_output[subsector_L3 %in% c("Domestic Aviation") & technology == "Liquids"][, c("technology", "tech_output") := list("Hydrogen", 0)]
+
+  newtech = rbind(electric, FCEV, hydrogen)
 
   GCAM_output$tech_output = rbind(GCAM_output$tech_output, newtech)
 
@@ -451,25 +451,29 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   NEcost$non_energy_cost_split = rbind(NEcost$non_energy_cost_split, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
 
-
   ## === Correct & Integrate energy intensity == ##
-  ## intensity for electric buses, electric trucks, electric aviation, electric shipping
-  newtech = NULL
+  ## intensity for electric buses/trucks, FCEV buses/trucks, hydrogen aviation
 
-  for (i in unique(GCAM_output$conv_pkm_mj$region)) {
-    electric = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
-                                           subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Electric", 0, "elect_td_trn")]
-    hydrogen = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
-                                           subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("FCEV", 0, "H2 enduse")]
-    liquids = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
-                                          subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids" & region == i]
-    newtech = rbind(newtech,electric, liquids, hydrogen)
-  }
+  electric = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
+                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Electric", 0, "elect_td_trn")]
+  FCEV = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
+                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("FCEV", 0, "H2 enduse")]
+  hydrogen = GCAM_output$conv_pkm_mj[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Hydrogen", 0, "H2 enduse")]
+  liquids = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road", "Domestic Aviation")|
+                                        subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"]
+  newtech = rbind(electric, liquids, FCEV, hydrogen)
 
   newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1", conv_pkm_MJ := ifelse(technology == "Electric", 0.3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
   newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus"), conv_pkm_MJ := ifelse(technology == "Electric", 0.3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1", conv_pkm_MJ := ifelse(technology == "FCEV", 3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus"), conv_pkm_MJ := ifelse(technology == "FCEV", 3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
+  ## energy intensity of hydrogen trucks: around 80% of diesel trucks
+  ## https://www.hydrogen.energy.gov/pdfs/19006_hydrogen_class8_long_haul_truck_targets.pdf
+  ## https://www.osti.gov/servlets/purl/1455116
+  ## https://www.fch.europa.eu/sites/default/files/171121_FCH2JU_Application-Package_WG1_Heavy%20duty%20trucks%20%28ID%202910560%29%20%28ID%202911646%29.pdf
+  newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1", conv_pkm_MJ := ifelse(technology == "FCEV", 0.8*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
+  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus"), conv_pkm_MJ := ifelse(technology == "FCEV", 0.8*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
+
+  ## according to "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
+  newtech[subsector_L3 %in% c("Domestic Aviation"), conv_pkm_MJ := ifelse(technology == "Hydrogen", 0.5*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
 
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"])
 
@@ -502,6 +506,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## === Substitute lambda === ##
   ## logit exponent is based on Givord et al (see paper)
   logitexp$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
+
 
   return(list(GCAM_output = GCAM_output,
               NEcost = NEcost,
