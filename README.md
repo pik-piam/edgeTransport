@@ -1,6 +1,6 @@
 # Prepare EDGE Transport Data for the REMIND model
 
-R package **edgeTransport**, version **0.1.2**
+R package **edgeTransport**, version **0.1.3**
 
   
 
@@ -46,11 +46,9 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M
-(2020). _edgeTransport:
-Prepare EDGE Transport Data
-for the REMIND model_. R
-package version 0.1.2.
+Dirnaichner A, Rottoli M (2020). _edgeTransport:
+Prepare EDGE Transport Data for the REMIND model_.
+R package version 0.1.3.
 
 A BibTeX entry for LaTeX users is
 
@@ -59,7 +57,7 @@ A BibTeX entry for LaTeX users is
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Alois Dirnaichner and Marianna Rottoli},
   year = {2020},
-  note = {R package version 0.1.2},
+  note = {R package version 0.1.3},
 }
 ```
 
