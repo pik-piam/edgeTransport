@@ -13,14 +13,23 @@ collectScens <- function(output_folder){
   for (filetype in filetypes) {
     files <- lapply(directories, list.files, filetype, full.names = TRUE)
     patterns=gsub(paste0(".*level_2/(.+)",filetype,".*"), "\\1", unlist(files))
-    
+
     for (pattern in patterns) {
       out=NULL
       for (i in seq(1:length(files))) {
         dat = fread(files[[i]][grepl(pattern,files[[i]])])
         out = rbind (out, dat)
       }
-      fwrite(out,file =paste0(output_folder, "/mrremindData/", pattern, filetype), row.names=FALSE, quote= FALSE)
+
+      outpath <- function(fname){
+        path <- file.path(output_folder, "mrremindData")
+        if(!dir.exists(path)){
+          dir.create(path, recursive = T)
+        }
+        return(file.path(path, fname))
+      }
+
+      fwrite(out, file = outpath(paste0(pattern, filetype)), row.names=FALSE, quote= FALSE)
     }
   }
 

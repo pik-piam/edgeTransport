@@ -285,16 +285,18 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND2ISO_
 
   ## convergence year for FCEV Buses and Trucks is more optimistic in the HydrHype case
   if (techswitch == "FCEV") {
-    convsymmFCEV = 2065
+    convsymmFCEV = 2025
+    convsymmHydrogenAir = 2100
   } else {
     convsymmFCEV = 2075
+    convsymmHydrogenAir = 2150
   }
 
   ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
   if (techswitch == "BEV") {
-    convsymmBEV = 2055
+    convsymmBEV = 2025
     } else {
-    convsymmBEV = 2065
+    convsymmBEV = 2075
   }
 
   ## small trucks
@@ -318,10 +320,39 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND2ISO_
                     value := apply_logistic_trends(value[year == 2020], year, ysymm = (convsymmBEV + 10), speed = 0.1),
                     by=c("iso","vehicle_type","technology")]
 
+  ## hydrogen airplanes develop following an S-shaped curve
+  ## in optimistic scenarios, the percentage of hydrogen-fuelled aviation can be around 40% https://www.fch.europa.eu/sites/default/files/FCH%20Docs/20200507_Hydrogen%20Powered%20Aviation%20report_FINAL%20web%20%28ID%208706035%29.pdf
+  SWS$FV_final_pref[technology == "Hydrogen" & year >= 2020 & subsector_L3 == "Domestic Aviation",
+                    value := apply_logistic_trends(value[year == 2020], year, ysymm = convsymmHydrogenAir, speed = 0.1),
+                    by=c("iso","vehicle_type","technology")]
+
+
+if (techswitch %in% c("BEV", "FCEV")) {
+  if (techswitch == "FCEV") {
+    ## BEV are constrained, for long distance application
+    SWS$FV_final_pref[technology == "Electric" & year >= 2020 & (vehicle_type %in% c("Bus_tmp_vehicletype", "Light Bus", "Heavy Bus")|
+                                                                   (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
+                      value := apply_logistic_trends(value[year == 2020], year, ysymm = 2150, speed = 0.1),
+                      by=c("iso","vehicle_type","technology")]
+  }
+
+  ## dislike for NG fuelled trucks and buses
+  SWS$FV_final_pref[technology %in% c("NG") & year >= 2020 & (vehicle_type %in% c("Bus_tmp_vehicletype", "Light Bus", "Heavy Bus")|
+                                                                           subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
+                    value := ifelse(year <= 2100, value[year==2020] + (0.01*value[year==2020]-value[year==2020]) * (year-2020)/(2100-2020), 0.1*value[year==2020]),
+                    by=c("iso", "vehicle_type", "technology")]
+  ## normalize again
+  SWS$FV_final_pref[year >= 2020 & (vehicle_type %in% c("Bus_tmp_vehicletype", "Light Bus", "Heavy Bus")|
+                                                                 subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
+                    value := value/max(value),
+                    by=c("iso", "vehicle_type", "year")]
+}
+
   ## electric trains develop linearly to 2100
   SWS$FV_final_pref[technology == "Electric" & year >= 2020 & subsector_L3 %in% c("Passenger Rail", "HSR", "Freight Rail"),
                     value := value[year==2020] + (1-value[year==2020]) * (year-2020)/(2100-2020),
                     by=c("iso","vehicle_type","technology")]
+
 
   ## nat. gas increase linearly for Buses and Trucks (very slowly, 1 is reached in 2400)
   SWS$FV_final_pref[technology %in% "NG" & year >= 2020 & logit_type == "sw",
