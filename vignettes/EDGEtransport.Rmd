@@ -15,21 +15,19 @@ The input data preparation routine of EDGE-Transport produces transport detailed
 
 ## Usage
 
-The package can be installed from github...
+The package can be installed from PIK-PIAM following the indications reported [here](https://github.com/pik-piam/edgeTransport).
 
 Data can be generated as follows:
 
 `
-generateEDGEdata(input_folder, output_folder, mappings_folder, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
+generateEDGEdata(input_folder, output_folder, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
 `
 
 Where:
 
 `input_folder` character string containing the path to the input data folder
 
-`output_folder` character string containing the path where output data are saved
-
-`mappings_folder` character string containing the path to regional and sectoral mappings
+`output_folder` character string containing the path where output is saved
 
 `EDGE_scenario` character string containing the selected transport scenario. Options are: `ConvCase`, `ElecEra`, `HydrHype`, `ConvCaseWise`, `ElecEraWise`, `HydrHypeWise`
 
@@ -49,19 +47,19 @@ where `output_folder` is the folder where the mrremind-compatible input data is 
 
 The package contains three levels of data wrangling.
 
-* Level 0: this level performs the raw data loading and processing. The scripts in this level load the input data, such as: detailed historical demand, technology performances-load factor, intensity, value of time, inconvenience costs for 4wheelers.
+* Level 0: this level performs the raw data loading and processing. The scripts in this level load input data such as: detailed historical demand, technology performances-load factor, intensity, value of time, capital and operating costs.
 * Level 1: in this level the inconvenience costs and preference factors are calibrated on the historical transport demand. The calibrated preferences are then projected in time for technologies-vehicles-modes based on assumptions of the evolution of the transport system.
-* Level 2: the future composition of the transport system is defined via a logit function. The total demand for transport is calculated via regressions. Data is then saved in the form of .csv files.
+* Level 2: the future composition of the transport system is defined via a Weibull-based function. The total demand for transport is calculated via regressions. Data is then saved in the form of .csv files.
 
 ## Scenarios description
 
 The data preparation routine allows to provide combinations of transport scenarios and macro-economic scenarios. The transport scenarios are characterized by a set of assumptions about technological development, evolution of preferences for technologies and transport modes, lifestyle changes, introduction of policy packages. The assumptions are reported in a set of switches reported in the mapping file `EDGEtransport/data-raw/EDGEscenario_description.csv`. An extensive description of the scenarios is provided here [CIT]. The scenario options are the following:
 
-`ConvCase` stands for *Conventional Case*, represents a conventional case, internal combustion engines, no incentives to BEVs and FCEVs
+`ConvCase` stands for *Conventional Case*, represents a conventional case, internal combustion engines, no incentives to alternative vehicles.
 
-`ElecEra` stands for *Electric Era* incentives to BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
+`ElecEra` stands for *Electric Era* incentives to battery electric vehicles
 
-`HydrHype`stands for *Hydrogen Hype* incentives to FCEVs, slow development of BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
+`HydrHype`stands for *Hydrogen Hype* incentives to fuel cell electric vehicles, slow development of battery electric vehicles
 
 The same scenarios can be run with the suffix `Wise` to introduce lifestyle changes on top of the assumptions of the corresponding baselines. Lifestyle changes concern: a more moderate growth of demand, an increased preference for public transport and non-motorized modes.
 

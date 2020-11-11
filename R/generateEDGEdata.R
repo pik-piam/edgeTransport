@@ -91,13 +91,19 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LVL 0 scripts
   #################################################
   print("-- Start of level 0 scripts")
-  
+
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
-  ## demand in million pkm and tmk, EI in MJ/km
+  ## Final values:
+  ## demand for energy services (tech_output): million pkm and tmk
+  ## energy intensity (conv_pkm_MJ): MJ/km
+  ## load factor (load_factor): passenger per vehicles (passenger demand), ton per vehicles (freight demand)
+  ## speed (speed): km/h
   print("-- load GCAM raw data")
   GCAM_data <- lvl0_GCAMraw(input_folder)
 
-  ##function that loads PSI energy intensity for Europe and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
+  ## function that loads PSI energy intensity for Europe and merges them with GCAM intensities.
+  ## Final units:
+  ## energy intensity (conv_pkm_MJ): MJ/km
   print("-- merge PSI energy intensity data")
   intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(GCAM_data, input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
   GCAM_data$conv_pkm_mj = intensity_PSI_GCAM_data
@@ -105,15 +111,20 @@ generateEDGEdata <- function(input_folder, output_folder,
   if(saveRDS)
     saveRDS(intensity_PSI_GCAM_data, file = level0path("intensity_PSI_GCAM.RDS"))
 
-  ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [1990$/pkm]
+  ## function that calculates VOT for each level and logit exponents for each level.
+  ## Final units:
+  ## Value Of Time (VOT_output): [1990$/km], either pkm (passenger) or tkm (freight)
   print("-- load value-of-time and logit exponents")
   VOT_lambdas=lvl0_VOTandExponents(GCAM_data, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
 
-  ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
+  ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU.
+  ## Final units:
+  ## non fuel price (non_energy_cost and non_energy_cost_split): in 1990USD/pkm (1990USD/tkm),
+  ## annual mileage (annual_mileage): in vkt/veh/yr (vehicle km traveled per year),
+  ## depreciation rate (fcr_veh): [-]
   print("-- load UCD database")
   UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, rebates_febates = rebates_febates, techswitch = techswitch)
-
 
 
   ## function that applies corrections to GCAM outdated data. No conversion of units happening.
@@ -148,13 +159,19 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## includes demand from the TRACCS-country level data if needed (has to happen on ISO level)
   if (merge_traccs == TRUE) {
-    ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
+    ## function that loads the TRACCS data for Europe.
+    ## Final units:
+    ## demand (all elements in TRACCS_data): millionkm (tkm and pkm)
     print("-- load EU TRACCS data")
     TRACCS_data <- lvl0_loadTRACCS(input_folder)
     if(saveRDS)
       saveRDS(TRACCS_data, file = level0path("load_TRACCS_data.RDS"))
 
-    ## function that makes the TRACCS database compatible with the GCAM framework. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
+    ## function that makes the TRACCS database compatible with the GCAM framework.
+    ## Final units:
+    ## demand for energy services (tech_output): million pkm and tmk
+    ## energy intensity (conv_pkm_MJ): MJ/km
+    ## load factor (load_factor): passenger per vehicles (passenger demand), ton per vehicles (freight demand)
     print("-- prepare the EU TRACCS database")
     TRACCS_EI_dem_LF <- lvl0_prepareTRACCS(TRACCS_data = TRACCS_data,
                                            GCAM_data = GCAM_data,
@@ -164,12 +181,14 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     print("-- merge the EU TRACCS database (energy intensity, load factors and energy services)")
     iso_data$iso_GCAMdata_results$tech_output <- lvl0_mergeTRACCS(
-      TRACCS_data = TRACCS_EI_dem_LF,  ## EI in MJ/km, LF in p/v, demand in million pkm or million tkm
+      TRACCS_data = TRACCS_EI_dem_LF,
       output = iso_data$iso_GCAMdata_results$tech_output)
   }
 
   if (inconvenience) {
     ## function that calculates the inconvenience cost starting point between 1990 and 2020
+    ## Final units:
+    ## inconvenience costs (incocost): passenger 1990USD/pkm, freight 1990USD/tkm
     incocost <- lvl0_incocost(annual_mileage = iso_data$iso_UCD_results$annual_mileage_iso,
                               load_factor = iso_data$iso_UCD_results$load_iso,
                               fcr_veh = UCD_output$fcr_veh)
@@ -196,13 +215,18 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LVL 1 scripts
   #################################################
   print("-- Start of level 1 scripts")
-  
+
   print("-- Harmonizing energy intensities to match IEA final energy balances")
+  ## function that harmonizes the data to the IEA balances to avoid mismatches in the historical time steps
+  ## Final units:
+  ## energy intensity (intensity_gcam): MJ/km
   intensity_gcam <- lvl1_IEAharmonization(tech_data = iso_data$iso_GCAMdata_results)
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
+  ## Final units:
+  ## prices (REMIND_prices): in 1990USD/pkt (1990USD/tkm)
   REMIND_prices <- merge_prices(
     gdx = file.path(input_folder, "REMIND/fulldata.gdx"),
     REMINDmapping = REMIND2ISO_MAPPING,
