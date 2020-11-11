@@ -202,7 +202,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 }
 
   calc_non_energy_price=function(UCD_transportation_database, GCAM2ISO_MAPPING){
-    loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- NULL
+    loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- subsector_L3 <- NULL
     #=== Calculations ====
     UCD_cost <- UCD_transportation_database[unit %in% c("2005$/veh/yr", "2005$/veh", "2005$/vkt"),]
 
