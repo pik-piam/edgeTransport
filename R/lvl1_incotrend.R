@@ -103,7 +103,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND2ISO_
     dt = merge(dt, REMIND2ISO_MAPPING, by = c("iso"))
     dt = merge(dt, clusters, by = c("region"))
     ## define rich regions
-    richcountries = unique(unique(dt[year == 2010 & GDP_cap > 25000 & region %in% unique(clusters$region_leader), iso]))
+    richcountries = unique(unique(dt[year == 2020 & GDP_cap > 25000 & region %in% unique(clusters$region_leader), iso]))
     ## calculate average sw (averaged on GDP) across rich countries and find total GDP and population
     richave = dt[iso %in% richcountries & sw > 0,]
     richave = richave[, .(sw = sum(sw*weight)/sum(weight)), by = c(all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))], "year", "region_leader")]
@@ -139,8 +139,8 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND2ISO_
     ## merge with non fuel price of corresponding values
     tmp2 = merge(tmp5, tmp3, by = c("time", "region_leader", all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))]))
 
-    ## find year closest to 2010 for each ISO, this is the year at which is going to converge
-    tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("iso")]
+    ## find year closest to 2020 for each ISO, this is the year at which is going to converge
+    tmp2[, yearconv := time[which.min(abs(time - 2020))], by = c("iso")]
 
     ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
     tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("iso", "time", "region_leader")]
@@ -153,9 +153,12 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND2ISO_
 
     ## value of yearconv represents the convergence value
     tmp2[, sw_conv := sw_new[time==yearconv], by = c("iso", "region_leader",all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
+    ## convergence is linear until the value corresponding to 2020 is reached
+    tmp2[year <= year_at_yearconv & year >= 2010 & year_at_yearconv > 2010, sw := sw[year == 2010]*(year[time == yearconv]-year)/(year[time == yearconv]-2010) +
+           sw_conv*(year-2010)/(year[time == yearconv]-2010),
+         by =c(all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))], "iso", "region_leader")]
 
-    ## convergence is linear until the value corresponding to 2010 is reached
-    tmp2[year <= year_at_yearconv & year >= 2010 & year_at_yearconv != year, sw := sw[year == 2010]*(year[time == yearconv]-year)/(year[time == yearconv]-2010) + sw_conv*(year-2010)/(year[time == yearconv]-2010), by =c(all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))], "iso", "region_leader")]
+
     ## select only useful columns
     tmp2 = tmp2[,c("iso", "year", "sw", all_subsectors[seq(match(groupval, all_subsectors) - 1,length(all_subsectors), 1)]), with = F]
 
@@ -361,12 +364,26 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
   ## mode types
   ## Public transport evolves in time: trn_pass_road_bus trend is converging towards Bus trend for those countries that have both options
-  SWS$S2S3_final_pref[subsector_L2 %in% c("Bus","trn_pass_road_bus") & year >= 2020,
-                      sw := ifelse(year <= 2030, sw[year==2020] + (sw[year==2100 & subsector_L2 == "Bus"]-sw[year==2020]) * (year-2020) / (2030-2020), sw[year==2100 & subsector_L2 == "Bus"]),
+  SWS$S2S3_final_pref[,
+                      sw := ifelse(year >= 2040 & subsector_L2 %in% c("trn_pass_road_bus", "Bus"),
+                                   sw[subsector_L2 == "Bus"],
+                                   sw),
+                      by=c("iso", "year")]
+
+  SWS$S2S3_final_pref[subsector_L2 %in% c("trn_pass_road_bus") & year >= 2020 & year <= 2040,
+                      sw := sw[year==2020] + (sw[year==2040]-sw[year==2020]) * (year-2020) / (2040-2020),
                       by=c("iso")]
-  SWS$S2S3_final_pref[subsector_L2 %in% c("Bus","trn_pass_road_bus") & year >= 2030,
-                      sw := ifelse(subsector_L2 %in% c("trn_pass_road_bus") & year >= 2030, sw[subsector_L2 == "Bus"], sw),
+
+  ## aviation is constrained
+  SWS$S3S_final_pref[subsector_L3 == "trn_pass_road" & year >= 2020  & year <= 2100 & iso %in% c("USA", "CAN", "AUS"),
+                      sw := sw[year==2020] + (2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020),
                       by=c("iso")]
+
+  ## three wheelers and 2wheelers in CHN are constrained
+  SWS$S1S2_final_pref[subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_2W") & year >= 2010 & iso == "CHN",
+                     sw := sw[year==2010],
+                     by=c("iso")]
+
 
   if (smartlifestyle) {
     GDP_POP = getRMNDGDPcap(scenario = REMIND_scenario)
