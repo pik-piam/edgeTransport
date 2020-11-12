@@ -382,7 +382,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
   ## three wheelers and 2wheelers in CHN are constrained
   SWS$S1S2_final_pref[subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_2W") & year >= 2010 & iso == "CHN",
                      sw := sw[year==2010],
-                     by=c("iso")]
+                     by=c("iso", "subsector_L1")]
 
 
   if (smartlifestyle) {
