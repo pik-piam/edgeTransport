@@ -9,14 +9,14 @@
 
 
 lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario){
-    `.` <- demand <- iso <- all_in <- all_GDPscen <- value <- NULL
+    `.` <- demand <- region <- all_in <- all_GDPscen <- value <- NULL
     gdp_ssp_scenario <- paste0("gdp_", REMIND_scenario)
     regrdemand=merge(regrdemand, unique(EDGE2teESmap[,c("EDGE_top","all_in")]),
                      by.x="sector",by.y="EDGE_top",all.x=TRUE)
-    regrdemand=regrdemand[,.(value=demand,iso,year,all_in)]
+    regrdemand=regrdemand[,.(value=demand,region,year,all_in)]
     regrdemand = approx_dt(regrdemand, REMINDtall,
                            xcol = "year", ycol = "value",
-                           idxcols = c("iso", "all_in"),
+                           idxcols = c("region", "all_in"),
                            extrapolate=T)
     ## add SSP dimension
     regrdemand[,all_GDPscen:=gdp_ssp_scenario]
@@ -24,7 +24,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
     regrdemand[,value:=value   ## in [millionpkm]
                *1e-6]          ## in [trillionpkm]
     ## set columns order
-    setcolorder(regrdemand, c("year", "iso", "all_GDPscen","all_in", "value"))
+    setcolorder(regrdemand, c("year", "region", "all_GDPscen","all_in", "value"))
     return(regrdemand)
 }
 
@@ -238,10 +238,10 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
   pref_datatmp = pref_data["FV_final_pref"] ## this is not to be modified
   pref_data = pref_data[c("VS1_final_pref", "S1S2_final_pref", "S2S3_final_pref", "S3S_final_pref")]
   ## melt and rearrange all other levels
-  pref_data <- mapply(melt, pref_data, id.vars = list(c("year", "iso", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "iso", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "iso", "sector", "subsector_L3", "subsector_L2", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "iso", "sector", "subsector_L3", "GDP_scenario", "EDGE_scenario")
+  pref_data <- mapply(melt, pref_data, id.vars = list(c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "GDP_scenario", "EDGE_scenario"),
+                                                      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "GDP_scenario", "EDGE_scenario"),
+                                                      c("year", "region", "sector", "subsector_L3", "subsector_L2", "GDP_scenario", "EDGE_scenario"),
+                                                      c("year", "region", "sector", "subsector_L3", "GDP_scenario", "EDGE_scenario")
                                                       ))
   ## rename column in all datatables
   pref_data = lapply(pref_data, setnames, old = "variable", new = "logit_type")
@@ -260,7 +260,7 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
   int_dat[, MJ_km := NULL]
 
   ## remove redundant columns from load factor
-  loadFactor = unique(loadFactor[year >= 1990, c("iso", "year", "loadFactor", "vehicle_type")])
+  loadFactor = unique(loadFactor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
   ## add scenario column to load factor
   loadFactor <- addScenarioCols(loadFactor, 0)
 

@@ -381,14 +381,13 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     non_energy_cost[,mode:=ifelse(mode=="Air Domestic","Domestic Aviation",mode)]
     non_energy_cost[,mode:=ifelse(mode=="Ship International","International Ship",mode)]
     non_energy_cost[,mode:=ifelse(mode=="Ship Domestic","Domestic Ship",mode)]
-
+# browser()
     ## downscale to ISO level
     non_energy_cost=disaggregate_dt(non_energy_cost, UCD2iso, fewcol = "UCD_region",
                                     datacols = c("mode","UCD_technology","price_component", "type"))
 
     ## upscale to regions
-    gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), usecache = T)
-
+    gdp <- getRMNDGDPISO(paste0("gdp_", REMIND_scenario), usecache = F)
     non_energy_cost=aggregate_dt(non_energy_cost, GCAM2ISO_MAPPING,
                                  datacols = c("mode", "UCD_technology", "price_component", "type"),
                                  weights = gdp)

@@ -472,19 +472,12 @@ lvl0_prepareTRACCS <- function(TRACCS_data,
 #'
 #' @param TRACCS_data TRACCS based data
 #' @param output iso level data
+#' @param REMIND2ISO_MAPPING 
 
-lvl0_mergeTRACCS <- function(TRACCS_data, output){
+lvl0_mergeTRACCS <- function(TRACCS_data, output, REMIND2ISO_MAPPING){
   iso <- subsector_L3 <- subsector_L2 <- technology <- NULL
   ## load TRACCS-friendly data
   output_EU <- TRACCS_data$dem_TRACCS
-  #load_iso <- TRACCS_data$LF_TRACCS ## LF that comes from the file is already for all regions and on iso level
-
-  ## dups <- duplicated(load_iso, by=c("iso", "technology", "vehicle_type","year"))
-  ## if(any(dups)){
-  ##   warning("Duplicated techs found in supplied LF.")
-  ##   print(load_iso[dups])
-  ##   output <- unique(load_iso, by=c("iso", "technology", "vehicle_type"))
-  ## }
 
   output=output[!(iso %in% unique(output_EU$iso) & subsector_L3 %in% c("trn_pass_road","trn_freight_road")),] #remove all the entries that has to come from TRACCS: road passenger and freight
 
@@ -511,7 +504,9 @@ lvl0_mergeTRACCS <- function(TRACCS_data, output){
     print(output[dups])
     output <- unique(output, by=c("iso", "technology", "vehicle_type"))
   }
-
+  output = aggregate_dt(output,  REMIND2ISO_MAPPING,
+                        valuecol="tech_output",
+                        datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"))
   return(output)
 
 }

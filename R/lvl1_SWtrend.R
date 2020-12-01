@@ -9,40 +9,44 @@
 
 
 lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
-  iso <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- iso3c <- region <- NULL
+  region <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- region3c <- region <- NULL
   ## WDI area country is part of internal package data
   ## only one year is used, as area is approximately constant in time
+  # browser()
   WDI_file <- function(fname){
     file.path(input_folder, WDI_dir, fname)
   }
   WDI_area_country = readRDS(WDI_file("WDI_area_country.RDS"))
   
-  area_country=WDI_area_country[year==2010,.(iso=as.character(iso3c),value=as.numeric(AG.SRF.TOTL.K2),year)]
+  area_country = WDI_area_country[year==2010,.(iso=as.character(iso3c),value=as.numeric(AG.SRF.TOTL.K2),year)]
+  ## calculate area of REMIND regions
   ## filter out only the countries that are in REMIND
   area_country=area_country[iso %in% REMIND2ISO_MAPPING$iso,]
-  ## attribute a datacol to the dt
-  area_country[,var:="area"]
+  area_country[, year :=NULL]
   ## aggregate
-  area_country=aggregate_dt(data=area_country,
-                            mapping=REMIND2ISO_MAPPING,
-                            datacols = "var")
+  area = aggregate_dt(area_country,
+                      mapping=REMIND2ISO_MAPPING,
+                      valuecol = "value",
+                      yearcol = NULL,
+                      datacols=NULL)
+
+  ## attribute a datacol to the dt
+  area[,var:="area"]
+
   
-  area_country[,year:=NULL]
+
   
   ## load and aggregate population
-  POP_country=calcOutput("Population",aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  POP <- magpie2dt(POP_country, regioncol = "iso",
+  POP_country=calcOutput("Population",aggregate = T)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
+  POP <- magpie2dt(POP_country, regioncol = "region",
                    yearcol = "year", datacols = "POP")
-  POP=POP[,.(iso,year,POP,
+  POP=POP[,.(region,year,POP,
              POP_val=value              ## in million
              *1e6)]                     ## in units
   
-  POP=aggregate_dt(POP,REMIND2ISO_MAPPING,
-                   datacols = c("POP"),
-                   valuecol = "POP_val")
   
   ## calculate density
-  density=merge(area_country,POP,all=FALSE,by=c("region"))
+  density=merge(POP, area,  by =c("region"))
   density[,density:=POP_val      ## in units
           /value]                ## in units per square km
   

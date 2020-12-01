@@ -60,10 +60,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## load specific transport switches
   EDGEscenarios <- EDGEscenarios[scenario_name == EDGE_scenario]
 
-  merge_traccs <- EDGEscenarios[options == "merge_traccs", switch]
-  print(paste0("You selected the option to include bottom-up data from the TRACCS database to :", merge_traccs))
-  inconvenience <- EDGEscenarios[options == "inconvenience", switch]
-  print(paste0("You selected the option to express preferences for 4Wheelers in terms of inconvenience costs to:", inconvenience))
   selfmarket_taxes <- EDGEscenarios[options == "selfmarket_taxes", switch]
   print(paste0("You selected self-sustaining market, option Taxes to: ", selfmarket_taxes))
   enhancedtech <- EDGEscenarios[options== "enhancedtech", switch]
@@ -135,7 +131,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   }
 
 
-  ## produce ISO versions of all files. No conversion of units happening.
+  ## produce regionalized versions, and ISO version of the tech_output. No conversion of units happening.
   print("-- generate ISO level data")
   iso_data <- lvl0_toISO(
     input_data = GCAM_data,
@@ -143,11 +139,10 @@ generateEDGEdata <- function(input_folder, output_folder,
     price_nonmot = VOT_lambdas$price_nonmot,
     UCD_data = UCD_output,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
+    REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
 
-  ## includes demand from the TRACCS-country level data if needed (has to happen on ISO level)
-  if (merge_traccs == TRUE) {
     ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
     print("-- load EU TRACCS data")
     TRACCS_data <- lvl0_loadTRACCS(input_folder)
@@ -163,17 +158,15 @@ generateEDGEdata <- function(input_folder, output_folder,
                                            GCAM2ISO_MAPPING = GCAM2ISO_MAPPING)
 
     print("-- merge the EU TRACCS database (energy intensity, load factors and energy services)")
-    iso_data$iso_GCAMdata_results$tech_output <- lvl0_mergeTRACCS(
-      TRACCS_data = TRACCS_EI_dem_LF,  ## EI in MJ/km, LF in p/v, demand in million pkm or million tkm
-      output = iso_data$iso_GCAMdata_results$tech_output)
-  }
+    iso_data$tech_output <- lvl0_mergeTRACCS(
+      TRACCS_data = TRACCS_EI_dem_LF$dem_TRACCS,  ## demand in million pkm or million tkm
+      output = iso_data$TO_iso,
+      REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
-  if (inconvenience) {
-    ## function that calculates the inconvenience cost starting point between 1990 and 2020
-    incocost <- lvl0_incocost(annual_mileage = iso_data$iso_UCD_results$annual_mileage_iso,
-                              load_factor = iso_data$iso_UCD_results$load_iso,
-                              fcr_veh = UCD_output$fcr_veh)
-  }
+  ## function that calculates the inconvenience cost starting point between 1990 and 2020
+  incocost <- lvl0_incocost(annual_mileage = iso_data$UCD_results$annual_mileage,
+                            load_factor = iso_data$UCD_results$load_factor,
+                            fcr_veh = UCD_output$fcr_veh)
 
 
   if(saveRDS){
@@ -191,14 +184,13 @@ generateEDGEdata <- function(input_folder, output_folder,
             file = level0path("GCAM_data_iso.RDS"))
   }
 
-
   #################################################
   ## LVL 1 scripts
   #################################################
   print("-- Start of level 1 scripts")
   
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  intensity_gcam <- lvl1_IEAharmonization(tech_data = iso_data$iso_GCAMdata_results)
+  intensity_gcam <- lvl1_IEAharmonization(tech_data = iso_data)
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
@@ -208,30 +200,24 @@ generateEDGEdata <- function(input_folder, output_folder,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = intensity_gcam,
-    nonfuel_costs = iso_data$iso_UCD_results$nec_iso[type == "normal"][, type := NULL],
+    nonfuel_costs = iso_data$UCD_results$nec_cost[type == "normal"][, type := NULL],
     module = "edge_esm")
 
+  ## hotfix: fill in advanced electric trains
+  REMIND_prices[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("technology", "vehicle_type", "year")]
+  REMIND_prices[, tot_price := non_fuel_price+fuel_price_pkm]
+  ##################### fin qua
   if(saveRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
 
   print("-- EDGE calibration")
-  ## two options of calibration: one is on partially on inconvenience costs and partially on preferences, the other is exclusively on preferences
-  if (inconvenience) {
-    calibration_output <- lvl1_calibrateEDGEinconv(
-      prices = REMIND_prices,
-      GCAM_data = iso_data$iso_GCAMdata_results,
-      logit_exp_data = VOT_lambdas$logit_output,
-      vot_data = iso_data$iso_VOT_results,
-      price_nonmot = iso_data$iso_pricenonmot_results)
-  } else {
-    calibration_output <- lvl1_calibrateEDGE(
-      prices = REMIND_prices,
-      GCAM_data = iso_data$iso_GCAMdata_results,
-      logit_exp_data = VOT_lambdas$logit_output,
-      vot_data = iso_data$iso_VOT_results,
-      price_nonmot = iso_data$iso_pricenonmot_results)
-  }
+  calibration_output <- lvl1_calibrateEDGEinconv(
+    prices = REMIND_prices,
+    tech_output = iso_data$tech_output,
+    logit_exp_data = VOT_lambdas$logit_output,
+    vot_data = iso_data$vot,
+    price_nonmot = iso_data$price_nonmot)
 
   if(saveRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
@@ -250,34 +236,22 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(density, file = level1path("density.RDS"))
   }
 
-  ## two options of projected preferences: one is on partially on inconvenience costs and partially on preferences, the other is exclusively on preferences
-  if (inconvenience) {
-    print("-- generating trends for inconvenience costs")
-    prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
-                            clusters = clusters,
-                            incocost = incocost,
-                            calibdem = iso_data$iso_GCAMdata_results[["tech_output"]],
-                            years = years,
-                            REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
-                            REMIND_scenario = REMIND_scenario,
-                            EDGE_scenario = EDGE_scenario,
-                            smartlifestyle = smartlifestyle,
-                            techswitch = techswitch)
+  print("-- generating trends for inconvenience costs")
+  prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
+                          clusters = clusters,
+                          incocost = incocost,
+                          calibdem = iso_data$tech_output,
+                          years = years,
+                          REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
+                          REMIND_scenario = REMIND_scenario,
+                          EDGE_scenario = EDGE_scenario,
+                          smartlifestyle = smartlifestyle,
+                          techswitch = techswitch)
     
-    if(saveRDS)
-      saveRDS(prefs, file = level1path("prefs.RDS"))
+  if(saveRDS)
+    saveRDS(prefs, file = level1path("prefs.RDS"))
 
-  } else {
-    print("-- generating trends for share weights")
-    SW <- lvl1_SWtrend(calibration_output,
-                       clusters,
-                       years,
-                       REMIND_scenario = REMIND_scenario,
-                       EDGE_scenario = EDGE_scenario)
 
-    if(saveRDS)
-      saveRDS(SW, file = level1path("SW.RDS"))
-  }
 
   #################################################
   ## LVL 2 scripts
@@ -286,32 +260,21 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LOGIT calculation
   print("-- LOGIT calculation")
   ## two options of logit calculation: one is on partially on inconvenience costs and partially on preferences, the other is exclusively on preferences
-  if (inconvenience) {
-    ## filter out prices and intensities that are related to not used vehicles-technologies in a certain region
-    REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all.y = TRUE)
-    intensity_gcam = merge(intensity_gcam, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all.y = TRUE)
-    logit_data <- calculate_logit_inconv_endog(
-      prices = REMIND_prices,
-      vot_data = iso_data$iso_VOT_results,
-      pref_data = prefs,
-      logit_params = VOT_lambdas$logit_output,
-      intensity_data = intensity_gcam,
-      price_nonmot = iso_data$iso_pricenonmot_results,
-      techswitch = techswitch)
+  ## filter out prices and intensities that are related to not used vehicles-technologies in a certain region
+  REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+  intensity_gcam = merge(intensity_gcam, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+  logit_data <- calculate_logit_inconv_endog(
+    prices = REMIND_prices,
+    vot_data = iso_data$vot,
+    pref_data = prefs,
+    logit_params = VOT_lambdas$logit_output,
+    intensity_data = intensity_gcam,
+    price_nonmot = iso_data$price_nonmot,
+    techswitch = techswitch)
 
-    if(saveRDS){
-      saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
-      saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
-    }
-
-  } else{
-    logit_data <- calculate_logit(
-      REMIND_prices,
-      vot_data = iso_data$iso_VOT_results,
-      sw_data = SW,
-      logit_params = VOT_lambdas$logit_output,
-      intensity_data = intensity_gcam,
-      price_nonmot = iso_data$iso_pricenonmot_results)
+  if(saveRDS){
+    saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
+    saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
   }
 
   if(saveRDS)
@@ -323,7 +286,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## regression demand calculation
   print("-- performing demand regression")
-  dem_regr = lvl2_demandReg(tech_output = iso_data$iso_GCAMdata_results[["tech_output"]], 
+  dem_regr = lvl2_demandReg(tech_output = iso_data$tech_output, 
                           price_baseline = prices$S3S, 
                           REMIND_scenario = REMIND_scenario, 
                           smartlifestyle = smartlifestyle)
@@ -397,51 +360,30 @@ generateEDGEdata <- function(input_folder, output_folder,
                                          FEdem = shares_intensity_demand$demandF_plot_EJ)
 
   print("-- generating CSV files to be transferred to mmremind")
-  if (inconvenience) {
-    ## only the combinations (iso, vehicle) present in the mix have to be included in costs
-    NEC_data = merge(iso_data$iso_UCD_results$nec_iso,
-                     unique(calibration_output$list_SW$VS1_final_SW[,c("iso", "vehicle_type")]),
-                     by =c("iso", "vehicle_type"))
-    capcost4W = merge(iso_data$iso_UCD_results$capcost4W,
-                      unique(calibration_output$list_SW$VS1_final_SW[,c("iso", "vehicle_type")]),
-                      by =c("iso", "vehicle_type"))
-    lvl2_createCSV_inconv(
-      logit_params = VOT_lambdas$logit_output,
-      pref_data = logit_data$pref_data,
-      vot_data = iso_data$iso_VOT_results,
-      int_dat = intensity_gcam,
-      NEC_data = NEC_data,
-      capcost4W = capcost4W,
-      demByTech = finalInputs$demByTech,
-      intensity = finalInputs$intensity,
-      capCost = finalInputs$capCost,
-      demand_traj = demand_traj,
-      price_nonmot = iso_data$iso_pricenonmot_results,
-      complexValues = complexValues,
-      loadFactor = iso_data$iso_UCD_results$load_iso,
-      REMIND_scenario = REMIND_scenario,
-      EDGE_scenario = EDGE_scenario,
-      level2path = level2path)
-
-  } else {
-
-    lvl2_createCSV(
-      logit_params = VOT_lambdas$logit_output,
-      sw_data = SW,
-      vot_data = iso_data$iso_VOT_results,
-      int_dat = intensity_gcam,
-      NEC_data = iso_data$iso_UCD_results$nec_iso,
-      demByTech = finalInputs$demByTech,
-      intensity = finalInputs$intensity,
-      capCost = finalInputs$capCost,
-      demand_traj = demand_traj,
-      price_nonmot = iso_data$iso_pricenonmot_results,
-      complexValues = complexValues,
-      REMIND_scenario = REMIND_scenario,
-      EDGE_scenario = EDGE_scenario,
-      level2path = level2path)
-  }
-
-
+  ## only the combinations (region, vehicle) present in the mix have to be included in costs
+  NEC_data = merge(iso_data$UCD_results$nec_cost,
+                   unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
+                   by =c("region", "vehicle_type"))
+  capcost4W = merge(iso_data$UCD_results$capcost4W,
+                    unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
+                    by =c("region", "vehicle_type"))
+  
+  lvl2_createCSV_inconv(
+    logit_params = VOT_lambdas$logit_output,
+    pref_data = logit_data$pref_data,
+    vot_data = iso_data$vot,
+    int_dat = intensity_gcam,
+    NEC_data = NEC_data,
+    capcost4W = capcost4W,
+    demByTech = finalInputs$demByTech,
+    intensity = finalInputs$intensity,
+    capCost = finalInputs$capCost,
+    demand_traj = demand_traj,
+    price_nonmot = iso_data$price_nonmot,
+    complexValues = complexValues,
+    loadFactor = iso_data$UCD_results$load_factor,
+    REMIND_scenario = REMIND_scenario,
+    EDGE_scenario = EDGE_scenario,
+    level2path = level2path)
 
 }
