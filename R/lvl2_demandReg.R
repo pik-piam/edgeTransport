@@ -15,10 +15,8 @@
 
 lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartlifestyle){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- index_price <- tot_price <- trn_freight <- price_elasticity_freight_sm <- trn_shipping_intl <- price_elasticity_freight_lo <- trn_pass <- price_elasticity_pass_sm <- trn_aviation_intl <- `.` <- index_price_f_sm <- index_price_f_lo <- index_GDP_f_sm <- index_GDPcap_p_lo <- index_GDP_f_lo <- index_price_p_sm <- index_GDPcap_p_sm <- index_POP <- index_price_p_lo <- D_star_f_sm <- D_star_p_sm <- D_star_p_lo <- D_star_f_lo <- D_star_f_sm <- value <- variable <- NULL
-# browser()
   ## conversion rate 2005->1990 USD
   CONV_2005USD_1990USD = 0.67
-
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
   GDP_POP = getRMNDGDPcap(scenario = REMIND_scenario)
   setnames(GDP_POP, old = "weight", new = "GDP_val")
@@ -34,34 +32,47 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
                                             "price_elasticity_freight_lo"))
   ## define max and min values of the elasticities
   ## pass sm
-  tmp[, rich := ifelse(var == "income_elasticity_pass_sm", 0.2, NA)]
-  tmp[, rich := ifelse(var == "price_elasticity_pass_sm", -0.01, rich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_pass_sm", 0.25, NA)]
+  tmp[, vrich := ifelse(var == "price_elasticity_pass_sm", -0.65, vrich)]
+  tmp[, rich := ifelse(var == "income_elasticity_pass_sm", 0.5, NA)]
+  tmp[, rich := ifelse(var == "price_elasticity_pass_sm", -1.25, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_pass_sm", 0.8, NA)]
+  tmp[, vpoor := ifelse(var == "price_elasticity_pass_sm", -1, vpoor)]
   tmp[, norm := ifelse(var == "income_elasticity_pass_sm", 1, NA)]
-  tmp[, norm := ifelse(var == "price_elasticity_pass_sm", -1.25, norm)]
+  tmp[, norm := ifelse(var == "price_elasticity_pass_sm", -0.625, norm)]
   ## pass lo
-  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 0.05, rich)]
-  tmp[, rich := ifelse(var == "price_elasticity_pass_lo", -0.05, rich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_pass_lo", 0.25, vrich)]
+  tmp[, vrich := ifelse(var == "price_elasticity_pass_lo", -0.25, vrich)]
+  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 0.5, rich)]
+  tmp[, rich := ifelse(var == "price_elasticity_pass_lo", -0.5, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_pass_lo", 0.7, vpoor)]
+  tmp[, vpoor := ifelse(var == "price_elasticity_pass_lo", -0.7, vpoor)]
   tmp[, norm := ifelse(var == "income_elasticity_pass_lo", 1, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_pass_lo", -1, norm)]
   ## freight sm
-  tmp[, rich := ifelse(var == "income_elasticity_freight_sm", 0.4, rich)]
-  tmp[, rich := ifelse(var == "price_elasticity_freight_sm", -0.3, rich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_freight_sm", 0.1875, vrich)]
+  tmp[, vrich := ifelse(var == "price_elasticity_freight_sm", -0.1875, vrich)]
+  tmp[, rich := ifelse(var == "income_elasticity_freight_sm", 0.375, rich)]
+  tmp[, rich := ifelse(var == "price_elasticity_freight_sm", -0.325, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_freight_sm", 0.6, vpoor)]
+  tmp[, vpoor := ifelse(var == "price_elasticity_freight_sm", -0.4, vpoor)]
   tmp[, norm := ifelse(var == "income_elasticity_freight_sm", 0.75, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_freight_sm", -0.65, norm)]
   ## freight lo
+  tmp[, vrich := ifelse(var == "income_elasticity_freight_lo", 0.1, vrich)]
+  tmp[, vrich := ifelse(var == "price_elasticity_freight_lo", -0.1625, vrich)]
   tmp[, rich := ifelse(var == "income_elasticity_freight_lo", 0.2, rich)]
-  tmp[, rich := ifelse(var == "price_elasticity_freight_lo", -0.3, rich)]
+  tmp[, rich := ifelse(var == "price_elasticity_freight_lo", -0.325, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_freight_lo", 0.3, vpoor)]
+  tmp[, vpoor := ifelse(var == "price_elasticity_freight_lo", -0.5, vpoor)]
   tmp[, norm := ifelse(var == "income_elasticity_freight_lo", 0.4, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_freight_lo", -0.65, norm)]
 
-  if (smartlifestyle) {
-    tmp[grep("income", var), rich := 0.2*rich]
-  }
-# browser()
-
   price_el = merge(price_el, tmp, by = "region", allow.cartesian = TRUE)
-  price_el[, eps := ifelse(GDP_cap >= floor(GDP_cap[region=="JPN" & year == 2020]), rich, NA)]
-  price_el[, eps := ifelse(GDP_cap < floor(GDP_cap[region=="JPN" & year == 2020]), norm, eps)]
+  price_el[, eps := ifelse(GDP_cap < 15000, vpoor, NA)]
+  price_el[, eps := ifelse(GDP_cap >= 25000, rich, eps)]
+  price_el[, eps := ifelse(GDP_cap > 25000 & GDP_cap < 30000, vrich, eps)]
+  price_el[, eps := ifelse(GDP_cap < 25000 & GDP_cap >= 15000, norm, eps)]
 
   ## interpolate of gdpcap values
   price_el = approx_dt(dt = price_el,
@@ -71,14 +82,23 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
                        idxcols="var",
                        extrapolate = TRUE)
 
+  price_el[region =="REF" & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
+  price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
+  price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
+  price_el[region %in% c("SSA", "CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.3]
+  price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
 
-  ## correct price elasticity for IND, otherwise the demand is misleadingly low
-  ## https://ideas.repec.org/p/ekd/006356/7355.html
-  price_el[, eps := ifelse(var == "price_elasticity_pass_sm" & region == "IND", -0.35, eps)]
+  if (smartlifestyle) {
+    price_el[region =="REF" & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
+    price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
+    price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.4]
+    price_el[region %in% c("CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.2]
+    price_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
+    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
 
-  ## CHN demand grows too quickly in the first time step: smoothen down the elasticity increase
-  price_el[region == "CHA" & var == "price_elasticity_pass_sm" & year == 2015, eps := 0.8*eps]
+  }
 
+  price_el[var %in% c("price_elasticity_freight_lo", "price_elasticity_freight_sm", "price_elasticity_pass_lo", "price_elasticity_pass_sm"), eps := 0]
   price_el = dcast(price_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
 
   #calculate growth rates

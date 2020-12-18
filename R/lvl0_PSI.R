@@ -111,10 +111,23 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   psi_intensity[,sector_fuel:=ifelse(EDGE_category=="NG","delivered gas",sector_fuel)]
   psi_intensity[,sector_fuel:=ifelse(EDGE_category=="Hybrid Electric","Liquids-Electricity",sector_fuel)]
   psi_intensity[,sector_fuel:=ifelse(is.na(sector_fuel),"refined liquids enduse",sector_fuel)]
-
   ## average on the EDGE category
-  psi_intensity=psi_intensity[,.(value=mean(value)),by=c("EDGE_category","region","vehicle_type","year","sector_fuel")]
-
+  psi_intensity = psi_intensity[, .(value=mean(value)), by = c("EDGE_category","region","vehicle_type","year","sector_fuel")]
+  psi_intensity_liq = psi_intensity[EDGE_category == "Liquids"]
+  psi_intensity_liq[year > 2010, value := ifelse(year < 2020, value, NA)]
+  psi_intensity_liq[, value := ifelse(year == 2020, 0.9*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2030, 0.8*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2040, 0.7*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2050, 0.6*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2100, 0.6*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  ## approximate the trend of energy intensity to fill in the missing time steps
+  psi_intensity_liq = approx_dt(psi_intensity_liq, unique(psi_intensity_liq$year),
+                 xcol = "year", ycol = c("value"),
+                 idxcols = c("region", "EDGE_category", "vehicle_type"),
+                 extrapolate=T)
+  
+  psi_intensity = rbind(psi_intensity[EDGE_category != "Liquids"], psi_intensity_liq)
+  
   ## add logit_category for Hybrid Electric
   logit_category = rbind(logit_category, logit_category[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
 

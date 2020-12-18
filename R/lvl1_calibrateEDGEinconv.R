@@ -46,7 +46,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
   sw_calc=function(df_sw,grouping_value,exp_prices){
     logit.exponent <- fac <- share <- tot_price <- tech_output <- sw <- NULL
-    
     for (exp_price in exp_prices) {                                         ## loops through all the initial points suggested
       
       if(is.null(df_sw$sw)){df_sw[,sw:=NaN]}                                ## if this is the first iteration, an empty column is needed
@@ -79,7 +78,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
     return(df_sw)
 
   }
-# browser()
+
   ## historical values of the demand, fuel level
   calibr_demand=tech_output
   logit_exponent_FV=logit_exp_data[["logit_exponent_FV"]]
@@ -92,7 +91,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   value_time_VS1=vot_data[["value_time_VS1"]]
   value_time_S1S2=vot_data[["value_time_S1S2"]]
   value_time_S2S3=vot_data[["value_time_S2S3"]]
-
   base_SW=calibr_demand[tech_output>0,]
   base_SW=base_SW[,share:=tech_output/sum(tech_output),by=c("region","year","vehicle_type")]
   base_SW=merge(base_SW,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsector_L1", "vehicle_type", "subsector_L2", "subsector_L3"))
@@ -113,13 +111,12 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
     price_FV <- unique(price_FV, by=c("region", "technology", "vehicle_type","year"))
   }
 
-
   FV_SW=merge(price_FV,base_SW,all=FALSE,by=c("region","year","technology","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector"))
   FV_SW=FV_SW[!is.na(tech_output),] ## minor adjusments, TODO check if needed/why needed!
   ## needs rando lambdas for the sectors that are not explicitly calculated
   FV_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6), grouping_value="vehicle_type")
+  FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicle_type")
 
 
   ## hotfix for Central Asia, Motorcycle (50-250cc), LA-BEV-> also in GCAM!

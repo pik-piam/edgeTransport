@@ -10,9 +10,9 @@
 
 lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
   region <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- region3c <- region <- NULL
+  iso3c <- sector_fuel <- iso <- NULL
   ## WDI area country is part of internal package data
   ## only one year is used, as area is approximately constant in time
-  # browser()
   WDI_file <- function(fname){
     file.path(input_folder, WDI_dir, fname)
   }
@@ -61,11 +61,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   density=merge(density,clusters)
   
   ## find leading region through max GDP capita in 2015 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), usecache = T)
-  gdp=aggregate_dt(gdp,
-                   REMIND2ISO_MAPPING,
-                   datacols = "variable",
-                   valuecol = "weight")
+  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), isolev = FALSE, isocol = "region", usecache = T)
   gdp=merge(gdp,POP,by=c("region","year"))
   gdp[,gdpcap:=weight/POP_val]
   
@@ -97,7 +93,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
 lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
   region<- cluster <- sw_cluster <- sw <- technology <- subsector_L1 <- subsector_L2 <- iso <- subsector_L3 <- NULL
   ## load gdp as weight
-  gdp <- getRMNDGDP(scenario = REMIND_scenario, usecache = T)
+  gdp <- getRMNDGDP(scenario = REMIND_scenario, isolev = FALSE, isocol = "region", usecache = T)
   
   ## function to converge to average "leader region" level
   aveval=function(dt,path2clusters){
@@ -198,7 +194,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
                       by=c("iso","vehicle_type","technology")]
       SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 == "trn_pass_road_LDV_4W", sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2045, speed = 0.2),
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1", "trn_pass_road_bus_tmp_subsector_L1"), sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2055, speed = 0.2),
+      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"), sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2055, speed = 0.2),
                       by=c("iso","vehicle_type","technology")]
       ## electric trains develop increasing linearly to 2100
       SWS$FV_final_SW[technology == "Electric" & year >= 2020,
@@ -241,7 +237,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
       SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 == "trn_pass_road_LDV_4W",
                       sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2050, speed = 0.1),
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1", "trn_pass_road_bus_tmp_subsector_L1"),
+      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"),
                       sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2060, speed = 0.1),
                       by=c("iso","vehicle_type","technology")]
       SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2020,

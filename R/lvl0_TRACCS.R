@@ -472,7 +472,7 @@ lvl0_prepareTRACCS <- function(TRACCS_data,
 #'
 #' @param TRACCS_data TRACCS based data
 #' @param output iso level data
-#' @param REMIND2ISO_MAPPING 
+#' @param REMIND2ISO_MAPPING REMIND2iso mapping
 
 lvl0_mergeTRACCS <- function(TRACCS_data, output, REMIND2ISO_MAPPING){
   iso <- subsector_L3 <- subsector_L2 <- technology <- NULL

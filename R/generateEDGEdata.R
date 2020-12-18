@@ -22,7 +22,7 @@ generateEDGEdata <- function(input_folder, output_folder,
                              saveRDS=FALSE){
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
-  
+  non_fuel_price <- tot_price <- fuel_price_pkm <- NULL
   setConfig(forcecache = TRUE)
 
   levelNpath <- function(fname, N){
@@ -56,7 +56,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM2ISO_MAPPING = fread(system.file("extdata", "iso_GCAM.csv", package = "edgeTransport"))
   EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
   EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "edgeTransport"))
-  
+
   ## load specific transport switches
   EDGEscenarios <- EDGEscenarios[scenario_name == EDGE_scenario]
 
@@ -87,7 +87,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LVL 0 scripts
   #################################################
   print("-- Start of level 0 scripts")
-  
+
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
@@ -188,7 +188,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LVL 1 scripts
   #################################################
   print("-- Start of level 1 scripts")
-  
+
   print("-- Harmonizing energy intensities to match IEA final energy balances")
   intensity_gcam <- lvl1_IEAharmonization(tech_data = iso_data)
   if(saveRDS)
@@ -203,10 +203,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     nonfuel_costs = iso_data$UCD_results$nec_cost[type == "normal"][, type := NULL],
     module = "edge_esm")
 
-  ## hotfix: fill in advanced electric trains
   REMIND_prices[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("technology", "vehicle_type", "year")]
   REMIND_prices[, tot_price := non_fuel_price+fuel_price_pkm]
-  ##################### fin qua
   if(saveRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
@@ -230,7 +228,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   density=clusters_overview[[1]]
   clusters=clusters_overview[[2]]
-  
+
   if(saveRDS){
     saveRDS(clusters, file = level1path("clusters.RDS"))
     saveRDS(density, file = level1path("density.RDS"))
@@ -242,12 +240,11 @@ generateEDGEdata <- function(input_folder, output_folder,
                           incocost = incocost,
                           calibdem = iso_data$tech_output,
                           years = years,
-                          REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
                           REMIND_scenario = REMIND_scenario,
                           EDGE_scenario = EDGE_scenario,
                           smartlifestyle = smartlifestyle,
                           techswitch = techswitch)
-    
+
   if(saveRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
 
@@ -286,16 +283,16 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## regression demand calculation
   print("-- performing demand regression")
-  dem_regr = lvl2_demandReg(tech_output = iso_data$tech_output, 
-                          price_baseline = prices$S3S, 
-                          REMIND_scenario = REMIND_scenario, 
+  dem_regr = lvl2_demandReg(tech_output = iso_data$tech_output,
+                          price_baseline = prices$S3S,
+                          REMIND_scenario = REMIND_scenario,
                           smartlifestyle = smartlifestyle)
 
   if(saveRDS)
     saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
 
-
   ## calculate vintages (new shares, prices, intensity)
+  prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
   vintages = calcVint(shares = shares,
                       totdem_regr = dem_regr,
                       prices = prices,
@@ -310,7 +307,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
  if(saveRDS)
     saveRDS(vintages, file = level2path("vintages.RDS"))
-  
+
   print("-- aggregating shares, intensity and demand along REMIND tech dimensions")
   shares_intensity_demand <- shares_intensity_and_demand(
     logit_shares=shares,
@@ -318,7 +315,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     EDGE2CESmap=EDGE2CESmap,
     REMINDyears=years,
     demand_input = dem_regr)
-  
+
   demByTech <- shares_intensity_demand[["demand"]] ##in [-]
   intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
 
@@ -337,6 +334,25 @@ generateEDGEdata <- function(input_folder, output_folder,
                   seq(1990, 2060, by = 5),
                   seq(2070, 2110, by = 10),
                   2130, 2150)
+
+  if (saveRDS) {
+    # find the files that you want
+    # list.of.files <- list.files(current.folder, "SDM.tif$")
+    # copy the files to the new folder
+    # file.copy("ins", level2path("report.Rmd"))
+    saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
+    saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
+    saveRDS(shares, file = level2path("shares.RDS"))
+    saveRDS(logit_data$mj_km_data, file = level2path("mj_km_data.RDS"))
+    saveRDS(shares_intensity_demand$demandF_plot_EJ,
+            file=level2path("demandF_plot_EJ.RDS"))
+    saveRDS(shares_intensity_demand$demandF_plot_pkm,
+            level2path("demandF_plot_pkm.RDS"))
+    saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
+    saveRDS(iso_data$UCD_results$load_factor, file = level2path("loadFactor.RDS"))
+
+  }
+
 
   ## prepare the entries to be saved in the gdx files: intensity, shares, non_fuel_price. Final entries: intensity in [trillionkm/Twa], capcost in [trillion2005USD/trillionpkm], shares in [-]
   print("-- final preparation of input files")
@@ -367,7 +383,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   capcost4W = merge(iso_data$UCD_results$capcost4W,
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
-  
+
+
   lvl2_createCSV_inconv(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,

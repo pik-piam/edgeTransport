@@ -9,7 +9,7 @@
 
 lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- NULL
-    conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- NULL
+  conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- vehicle_type <- NULL
   GCAM_folder = file.path(input_folder, GCAM_dir)
 
   ## names of some regions show underscores that have to be substituted with blank spaces
@@ -74,6 +74,8 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
+  ## remove double category of buses and remove three wheelers
+  vehicle_intensity = vehicle_intensity[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
   #load factor
   load_factor = read.csv(file.path(GCAM_folder, "L254.StubTranTechLoadFactor.csv"), skip=4, header = T,stringsAsFactors = FALSE)
   load_factor = rename_region(load_factor)
@@ -88,13 +90,13 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
+  ## remove double category of buses and remove three wheelers
+  load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
 
   #calculate MJ/km conversion factor
   conv_pkm_mj = merge(vehicle_intensity,load_factor, all = TRUE)
   conv_pkm_mj = conv_pkm_mj[,conv_pkm_MJ := MJvkm/loadFactor]
   conv_pkm_mj[, c("MJvkm", "loadFactor") := NULL]
-
-
   ## load and change the tech_output file so that it reflects the logit tree
   tech_output = fread(file.path(GCAM_folder, "tech_output.csv"), skip = 1, sep=";", header = T)
   tech_output = melt(tech_output, measure.vars=6:26, value.name="tech_output", variable.name = "year")
@@ -104,6 +106,14 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
 
   tech_output = remove.coal(tech_output)
   tech_output = add.ElTrains(tech_output)
+
+  ## merge 2wheelers and 3 wheelers and different categories of buses; remove NG motorbikes and merge BEV and LA-BEV
+  tech_output[subsector %in% c("Heavy Bus", "Light Bus"), c("subsector","sector") := list("Bus","trn_pass_road")]
+  tech_output[subsector %in% c("Three-Wheeler", "Scooter"), c("subsector", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W")]
+  tech_output[subsector == "3W Rural", subsector := "Truck (0-3.5t)"]
+  tech_output[technology == "LA-BEV", technology := "BEV"]
+  tech_output = tech_output[!(technology == "NG" & sector == "trn_pass_road_LDV_2W")]
+  tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector","technology","year")]
 
   setnames(tech_output, old="sector", new="supplysector")
 
@@ -205,6 +215,92 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   vott_all = GCAM_data[["vott_all"]]
   speed = GCAM_data[["speed"]]
 
+  ## speed converges
+  gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), isolev = TRUE, isocol = "iso", usecache = F)
+  pop = calcOutput("Population", aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
+  pop <- magpie2dt(pop, regioncol = "iso",
+                   yearcol = "year", datacols = "POP")
+  gdp <- aggregate_dt(gdp, GCAM2ISO_MAPPING,
+                      valuecol="weight",
+                      datacols=c("variable"))
+
+  pop <- aggregate_dt(pop, GCAM2ISO_MAPPING,
+                      valuecol="value",
+                      datacols=c("POP"))
+
+  GDP_POP = merge(gdp, pop, by = c("region", "year"))
+  GDP_POP[,GDP_cap := weight/value]
+
+  tmp = merge(speed, GDP_POP, by = c("region", "year"))
+  ## define rich regions
+  richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
+  ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
+  richave = tmp[region %in% richregions & speed > 0,]
+  richave = richave[, .(speed = sum(speed*weight)/sum(weight)), by = c("tranSubsector", "supplysector", "year")]
+  GDP_POP = GDP_POP[region %in% richregions,]
+  GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(value)), by = c("year")]
+  richave = merge(richave, GDP_POP, by = "year")
+  ## average gdp per capita of the rich countries
+  richave[, GDP_cap := GDP/POP_val]
+  ## missing trucks categories are attributed an average cost for rich countries
+  richave = rbind(richave, richave[tranSubsector == "Truck (0-3.5t)"][,tranSubsector := "Truck (0-6t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (0-1t)"][,tranSubsector := "Truck (0-2t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (1-6t)"][,tranSubsector := "Truck (2-5t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (4.5-12t)"][,tranSubsector := "Truck (5-9t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (4.5-15t)"][,tranSubsector := "Truck (6-14t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (6-15t)"][,tranSubsector := "Truck (9-16t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck (>15t)"][,tranSubsector := "Truck (>14t)"])
+  richave = rbind(richave, richave[tranSubsector == "Truck"][,tranSubsector := "Truck (>16t)"])
+
+  ## dt on which the GDPcap is checked
+  tmp1 = tmp[!region %in% richregions, c("region", "year",
+                                         "GDP_cap", "supplysector", "tranSubsector",
+                                         "speed")]
+  ## dt contaning the gdp towards which to converge
+  tmp2 = richave[, c("year", "GDP_cap")]
+  ## dt containing the non fuel price for rich countries
+  tmp3 = richave[, c("year", "supplysector", "tranSubsector")]
+  ## names has to be different across dts for roll join
+  setnames(tmp2, old = c("year"), new = c("time"))
+  setnames(tmp3, old = c("year"), new = c("time"))
+
+  setkey(tmp1,GDP_cap)
+  setkey(tmp2,GDP_cap)
+  ## find the time step at which the GDPcap matches the GDPcap of the rich countries
+  tmp2 <- tmp2[tmp1, roll = "nearest", on = .(GDP_cap)]
+
+  ## merge with non fuel price of corresponding values
+  tmp2 = merge(tmp2, tmp3, by = c("time", "supplysector", "tranSubsector"))
+
+  ## find year closest to 2010 for each region, this is the year at which is going to converge
+  tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("region")]
+
+  ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
+  tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
+  tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
+  ## if year of convergence is 2010, 2015 is selected
+  tmp2[yearconv == 2010, yearconv := 2020]
+  tmp2[yearconv == 2015, yearconv := 2020]
+  ## year at which the convergence happens
+  tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","supplysector", "tranSubsector")]
+
+  ## value of the non-fuel price after the convergence
+  tmp3 = richave[, c("year", "speed", "supplysector", "tranSubsector")]
+  setnames(tmp3, old = c("speed"), new = c("speed_trend"))
+  tmp2 = merge(tmp2,tmp3,by=c("year", "supplysector", "tranSubsector"))
+
+  ## after the year of convergence, the values are the "average" developed countries values
+  tmp2[year >= year_at_yearconv & year > 2010, speed := speed_trend, by = c("region","supplysector", "tranSubsector")]
+
+  ## value of yearconv represents the convergence value
+  tmp2[, speed_conv := speed_trend[time==yearconv], by = c("region","supplysector", "tranSubsector")]
+  ## convergence is linear until the value corresponding to 2010 is reached
+  tmp2[year <= year_at_yearconv & year >= 2010, speed := speed[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(speed_conv-speed[year == 2010]), by =c("supplysector", "tranSubsector", "region")]
+  ## select only useful columns
+  tmp2 = tmp2[,.(region, year, speed, supplysector, tranSubsector)]
+  ## rich countries need to be reintegrated
+  speed = rbind(tmp2, speed[region %in% richregions])
+
   ## load logit categories table
   logit_category = GCAM_data[["logit_category"]]
   ## calculate VOT
@@ -241,11 +337,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   value_of_time_LDV = value_of_time[supplysector %in% c("trn_pass_road_LDV_2W", "trn_pass_road_LDV_4W"),
                                     .(vehicle_type = tranSubsector, subsector_L1 = supplysector, region, year, time_price)]
 
-  value_of_time_buses_lower = value_of_time[supplysector == "trn_pass_road_bus_tmp_subsector_L1",
-                                            .(vehicle_type = tranSubsector, subsector_L1 = supplysector, region, year, time_price)]
-
-  value_time_FV = merge(value_of_time_LDV,value_of_time_buses_lower,all=TRUE)
-  value_time_FV = value_time_FV[!is.na(time_price),]
+  value_time_FV = value_of_time_LDV[!is.na(time_price),]
 
   ## VS1
 
@@ -253,8 +345,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
 
   ## S1S2
 
-  value_time_S1S2 = value_of_time[tranSubsector %in% c("Three-Wheeler"),
-                                  .(subsector_L2 = supplysector, subsector_L1 = tranSubsector, region, year, time_price)]
+  value_time_S1S2 = data.table(subsector_L2 = character(), subsector_L1 = character(), region = character(), year = numeric(), time_price = numeric())
 
   ## S2S3
 

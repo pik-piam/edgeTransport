@@ -203,6 +203,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 
   calc_non_energy_price=function(UCD_transportation_database, GCAM2ISO_MAPPING){
     loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- NULL
+    subsector_L3 <- NULL
     #=== Calculations ====
     UCD_cost <- UCD_transportation_database[unit %in% c("2005$/veh/yr", "2005$/veh", "2005$/vkt"),]
 
@@ -381,13 +382,12 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     non_energy_cost[,mode:=ifelse(mode=="Air Domestic","Domestic Aviation",mode)]
     non_energy_cost[,mode:=ifelse(mode=="Ship International","International Ship",mode)]
     non_energy_cost[,mode:=ifelse(mode=="Ship Domestic","Domestic Ship",mode)]
-# browser()
     ## downscale to ISO level
     non_energy_cost=disaggregate_dt(non_energy_cost, UCD2iso, fewcol = "UCD_region",
                                     datacols = c("mode","UCD_technology","price_component", "type"))
 
     ## upscale to regions
-    gdp <- getRMNDGDPISO(paste0("gdp_", REMIND_scenario), usecache = F)
+    gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), isolev = TRUE, isocol = "iso", usecache = F)
     non_energy_cost=aggregate_dt(non_energy_cost, GCAM2ISO_MAPPING,
                                  datacols = c("mode", "UCD_technology", "price_component", "type"),
                                  weights = gdp)
