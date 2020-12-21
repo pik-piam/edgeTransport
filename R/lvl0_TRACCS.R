@@ -54,9 +54,6 @@ lvl0_loadTRACCS <- function(input_folder, TRACCS_dir = "TRACCS"){
                                        }))
 
     roadp_eu = roadp_eu[, country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
-    roadp_eu = rbind(roadp_eu, roadp_eu[technology == "Liquids"][,c("technology","km_million") := list("Hybrid Liquids", 0)])
-
-
                                         #road freight: load demand
     roadf_eu <- do.call("rbind",lapply(list_countries$countries,
                                        function(x) {
@@ -137,11 +134,11 @@ lvl0_loadTRACCS <- function(input_folder, TRACCS_dir = "TRACCS"){
     energy_intensity_EU=energy_intensity_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
     #include the sector fuel
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Electric","BEV","Electric","LA-BEV","Tech-Adv-Electric"),"elect_td_trn",NA)]
-    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Liquid","Hybrid Liquids","Liquids","Tech-Adv-Liquid"),"refined liquids enduse",sector_fuel)]
+    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Liquid","Liquids","Tech-Adv-Liquid"),"refined liquids enduse",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("NG"),"delivered gas",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Coal"),"delivered coal",sector_fuel)]
-                                        #==== Load Rail data ====
-                                        #rail passenger: load demand
+    #==== Load Rail data ====
+    #rail passenger: load demand
     railp_eu=suppressMessages(data.table(read_excel(
       path=file.path(
         TRACCS_folder,
@@ -439,9 +436,9 @@ lvl0_prepareTRACCS <- function(TRACCS_data,
   dem_TRACCS1990[, year := 1990]
   dem_TRACCS = rbind(dem_TRACCS,dem_TRACCS1990)
 
-  dem_TRACCSBEV = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("BEV", 0)]
-  dem_TRACCSFCEV = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("FCEV", 0)]
-  dem_TRACCSPIH = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("Hybrid Electric", 0)]
+  dem_TRACCSBEV = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("BEV", 0)]
+  dem_TRACCSFCEV = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("FCEV", 0)]
+  dem_TRACCSPIH = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("Hybrid Electric", 0)]
 
   dem_TRACCSNG = dem_TRACCS[technology=="Liquids" & subsector_L1 == "trn_freight_road_tmp_subsector_L1",][, c("technology", "tech_output") := list("NG", 0)]
 

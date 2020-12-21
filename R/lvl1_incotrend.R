@@ -417,10 +417,9 @@ if (techswitch %in% c("BEV", "FCEV")) {
   }
   ## CHA has very low prices for 2W. this leads to crazy behaviours, hence their preferenc efactor is set to contant
   SWS$S1S2_final_pref[region %in% c("CHA") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2010, sw := sw[year == 2010], by = c("region")]
-  ## aviation grows too much in USA, CAZ, EUR, CHA, NEU
-
-  # # SWS$S3S_final_pref[region %in% c("CHA") & subsector_L3 == "Domestic Aviation"  & year >=2020,
-  #                    sw := sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
+  ## preference for buses extremely high in OAS and IND
+  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2020,
+                     sw := ifelse(year <= 2050, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2050-2020), 0.01*sw[year==2020]), by = c("region","subsector_L2")]
 
   ## linear convergence is fixed if goes beyond 0 or above 1
   SWS$FV_final_pref[value > 1 & logit_type == "sw", value := 1]

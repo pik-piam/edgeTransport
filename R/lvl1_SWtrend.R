@@ -208,12 +208,6 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
       SWS$FV_final_SW[technology == "Liquids" & year >= 2060,
                       sw := 0.1,
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2020,
-                      sw := sw[year==2020] + (0.5-sw[year==2020]) * (year-2020)/(2050-2020),
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2050,
-                      sw := 0.5,
-                      by=c("iso","vehicle_type","technology")]
     
       
       ## Preference for road public transport is doubled in the whole world (not for China, which already has high preference)
@@ -240,12 +234,6 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
       SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"),
                       sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2060, speed = 0.1),
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2020,
-                      sw := sw[year==2020] + (0.7-sw[year==2020]) * (year-2020)/(2050-2020),
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2050,
-                      sw := 0.7,
-                      by=c("iso","vehicle_type","technology")]
       
       ## electric trains develop increasing linearly to 2100
       SWS$FV_final_SW[technology == "Electric" & year >= 2020,
@@ -261,7 +249,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     }
     
 
-    ## nat. gas and hybrid liquids increase linearly to 2100
+    ## nat. gas increase linearly to 2100
     SWS$FV_final_SW[technology == "NG" & year >= 2020,
           sw := sw[year==2020] + (1-sw[year==2020]) * (year-2020) / (2200-2020),
           by=c("iso","vehicle_type","technology")]

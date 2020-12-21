@@ -145,7 +145,6 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     psi_costs[, EDGE_category:=ifelse(technology=="ICEV-g","NG",NA)]
     psi_costs[, EDGE_category:=ifelse(technology %in% c("ICEV-p","ICEV-d"),"Liquids",EDGE_category)]
     psi_costs[, EDGE_category:=ifelse(grepl("PHEV",technology),"Hybrid Electric",EDGE_category)]
-    psi_costs[, EDGE_category:=ifelse(grepl("HEV-p",technology),"Hybrid Liquids",EDGE_category)]
     psi_costs[,EDGE_category:=ifelse(is.na(EDGE_category),technology,EDGE_category)]
 
     ## average on the EDGE category
@@ -174,7 +173,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
                   variable=="Capital costs (purchase)" &
                   size.class %in% unique(psi_costs$size.class),]
 
-    tmp = rbind(tmp, tmp[UCD_technology == "Hybrid Liquids"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
+    tmp = rbind(tmp, tmp[UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
 
     ## delete column with data that is going to come from PSI
     tmp[,c("value"):=NULL]
@@ -187,8 +186,8 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     ## delete mini cars as they are added otherwise later (FIXME)
     tmp=tmp[size.class!="Mini Car",]
 
-    ## attribute the other costs components from Hybrid Liquids to Hybrid Electic for EU
-    costs_UCD = rbind(costs_UCD, costs_UCD[UCD_region %in% c("Western Europe", "Eastern Europe") & UCD_technology == "Hybrid Liquids"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
+    ## attribute the other costs components from BEVs to Hybrid Electic for EU
+    costs_UCD = rbind(costs_UCD, costs_UCD[UCD_region %in% c("Western Europe", "Eastern Europe") & UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
 
     ## merge back with the original database
     costs_UCD=merge(costs_UCD[!(UCD_region %in% c("Western Europe", "Eastern Europe") & ## EU regions trends come from PSI
@@ -404,7 +403,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 
     setnames(non_energy_cost,old=c("mode","UCD_technology"),new=c("univocal_name","technology"))
     ## add logit_category for Hybrid Electric, Electric and FCEVs trucks and buses, hydrogen airplanes
-    logit_category = rbind(logit_category, logit_category[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
+    logit_category = rbind(logit_category, logit_category[technology == "BEV"][, technology := "Hybrid Electric"])
     logit_category = rbind(logit_category, logit_category[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "Electric"])
     logit_category = rbind(logit_category, logit_category[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "FCEV"])
     logit_category = rbind(logit_category, logit_category[technology == "Liquids" & subsector_L3 == "Domestic Aviation"][, technology := "Hydrogen"])
@@ -413,7 +412,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     non_energy_cost[, c("univocal_name") := NULL]
 
     ## add load_factor for Hybrid Electric, trucks and buses FCEV and electric, domestic aviation hydrogen
-    load_factor = rbind(load_factor, load_factor[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
+    load_factor = rbind(load_factor, load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
     load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "Electric"])
     load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "FCEV"])
     load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% "Domestic Aviation_tmp_vehicletype"][, technology := "Hydrogen"])
@@ -478,7 +477,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 
     annual_mileage[, c("UCD_technology", "variable", "UCD_sector"):=NULL] ##delete the column that stands for "all" technology
     annual_mileage[, ID := "id"]
-    techs = data.table(technology = c("BEV", "Liquids", "Hybrid Liquids", "NG", "FCEV", "Hybrid Electric"))[, ID := "id"]
+    techs = data.table(technology = c("BEV", "Liquids", "NG", "FCEV", "Hybrid Electric"))[, ID := "id"]
     annual_mileage = merge(annual_mileage, techs, by = "ID", allow.cartesian = TRUE)
     annual_mileage[, ID := NULL]
     annual_mileage=merge(annual_mileage,logit_category,all=FALSE,by=c("vehicle_type","technology"))[,-"univocal_name"]

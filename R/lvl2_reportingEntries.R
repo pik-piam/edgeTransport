@@ -44,7 +44,7 @@ lvl2_reportingEntries = function(ESdem, FEdem){
 
 
   ## shares of fepet->LDVs, with respect to total liquid-fuelled transport (share_LDV_totliq) and total road transport (share_LDV_totroad)
-  shLDV = FEdem[technology %in% c("Liquids", "Hybrid Liquids")]
+  shLDV = FEdem[technology %in% c("Liquids")]
   shLDV = shLDV[,.(demand_EJ = sum(demand_EJ)), by = c("sector","subsector_L3", "subsector_L2" , "region", "year")]
   shLDV[, share_LDV_totliq := demand_EJ[subsector_L2 == "trn_pass_road_LDV"]/sum(demand_EJ), by = c("region", "year")]
   shLDV = shLDV[subsector_L3 %in% c("trn_pass_road", "trn_freight_road"),]

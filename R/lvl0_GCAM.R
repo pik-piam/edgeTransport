@@ -112,6 +112,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   tech_output[subsector %in% c("Three-Wheeler", "Scooter"), c("subsector", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W")]
   tech_output[subsector == "3W Rural", subsector := "Truck (0-3.5t)"]
   tech_output[technology == "LA-BEV", technology := "BEV"]
+  tech_output[technology == "Hybrid Liquids", technology := "Liquids"]
   tech_output = tech_output[!(technology == "NG" & sector == "trn_pass_road_LDV_2W")]
   tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector","technology","year")]
 
@@ -430,7 +431,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   GCAM_output$tech_output = rbind(GCAM_output$tech_output, newtech)
 
   ## add 0 plug-in hybrids for years 1990-2010
-  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[technology == "Hybrid Liquids"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
+  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[technology == "BEV"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
 
 
   ## IND buses costs http://www.asrtu.org/wp-content/uploads/2018/09/LBNL-Electric-Buses-in-India_BusWorld-v6.pdf
@@ -463,15 +464,13 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   BEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(1.53, 0.60, 0.56, 0.56), technology = rep("BEV", 4))
   FCEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(2.10, 0.91, 0.56, 0.54), technology = rep("FCEV", 4))
   PHEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(0.80, 0.59, 0.54, 0.54), technology = rep("Hybrid Electric", 4))
-  ## values for Hybrid Liquids, Liquids and NG are estimated
+  ## values for Liquids and NG are estimated
   ## liquids are ~ 40% of a BEV car today, see https://www.sciencedirect.com/science/article/abs/pii/S0306261916307206?via%3Dihub
-  ## hybrid liquids are 0.7 always
   ## NG are 0.7 always
   ICEs = data.table(year = c(2010, 2030, 2050, 2100), cost = rep(0.6, 4), technology = rep("Liquids", 4))
   NGVs = data.table(year = c(2010, 2030, 2050, 2100), cost = rep(0.7, 4), technology = rep("NG", 4))
-  HLVs = data.table(year = c(2010, 2030, 2050, 2100), cost = rep(0.7, 4), technology = rep("Hybrid Liquids", 4))
 
-  costs_zhang = rbind(BEVs, FCEVs, PHEVs, ICEs, NGVs, HLVs)
+  costs_zhang = rbind(BEVs, FCEVs, PHEVs, ICEs, NGVs)
   ## assume linear decrease in non-fuel price between the temporal time steps
   costs_zhang = approx_dt(costs_zhang, unique(NEcost$non_energy_cost$year),
                          xcol = "year",
@@ -511,10 +510,10 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   # costs for LDV in USA and EU:
   # https://www.quora.com/Why-are-cars-considerably-cheaper-in-the-US-than-in-Europe-for-the-same-level-of-functionality
 
-  ## Create values for plug-in hybrids costs: add plug-in hybrids to all countries, using the same ratio as Hybrid Liquids for each country (ref: EU-15)
+  ## Create values for plug-in hybrids costs: add plug-in hybrids to all countries, using the same ratio as Liquids for each country (ref: EU-15)
 
   ## costs
-  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Hybrid Liquids"),]
+  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids"),]
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by = c("year","technology", "vehicle_type", "type")]
   inspect_ratios_costs = inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year", "type")] ## if vehicle type is not originally in EU-15
 
@@ -529,7 +528,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
 
   ## costs split
-  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("Hybrid Liquids") & region != "EU-12", ] ## EU-12 is already present, so we exclude it
+  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & region != "EU-12", ] ## EU-12 is already present, so we exclude it
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by=c("year","technology", "vehicle_type", "price_component")]
   inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 
@@ -569,7 +568,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"])
 
   ## add plug-in hybrids to all countries, using the same ratio as Hybrid Liquids for each country (ref: EU-15)
-  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Liquids"), ]
+  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV"), ]
   inspect_ratios_eff[, ratio := conv_pkm_MJ/conv_pkm_MJ[region == "EU-15"], by = c("year", "technology", "vehicle_type")]
   inspect_ratios_eff = inspect_ratios_eff[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 

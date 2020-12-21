@@ -103,7 +103,6 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   setnames(psi_intensity,old="variable",new="year")
   psi_intensity[,EDGE_category:=ifelse(technology=="ICEV-g","NG",NA)]
   psi_intensity[,EDGE_category:=ifelse(technology %in% c("ICEV-p","ICEV-d"),"Liquids",EDGE_category)]
-  psi_intensity[,EDGE_category:=ifelse(technology == "HEV-p","Hybrid Liquids",EDGE_category)]
   psi_intensity[,EDGE_category:=ifelse(grepl("PHEV",technology),"Hybrid Electric",EDGE_category)]
   psi_intensity[,EDGE_category:=ifelse(is.na(EDGE_category),technology,EDGE_category)]
   psi_intensity[,sector_fuel:=ifelse(EDGE_category=="BEV","elect_td_trn",NA)]
@@ -125,11 +124,10 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
                  xcol = "year", ycol = c("value"),
                  idxcols = c("region", "EDGE_category", "vehicle_type"),
                  extrapolate=T)
-  
   psi_intensity = rbind(psi_intensity[EDGE_category != "Liquids"], psi_intensity_liq)
-  
+  psi_intensity = psi_intensity[EDGE_category != "Hybrid Liquids"]
   ## add logit_category for Hybrid Electric
-  logit_category = rbind(logit_category, logit_category[technology == "Hybrid Liquids"][, technology := "Hybrid Electric"])
+  logit_category = rbind(logit_category, logit_category[technology == "BEV"][, technology := "Hybrid Electric"])
 
   ##merge with logit_category
   psi_intensity=merge(logit_category,psi_intensity,by.x=c("technology","vehicle_type"),by.y=c("EDGE_category","vehicle_type"))[,-"univocal_name"]
