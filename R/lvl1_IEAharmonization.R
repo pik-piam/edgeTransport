@@ -46,7 +46,7 @@ lvl1_IEAharmonization <- function(tech_data){
     setkey(tech_output, "technology")
 
     ## apply the IEA-friendly categories to tech_output
-    elts <- c("Electric", "Adv-Electric", "BEV", "LA-BEV")
+    elts <- c("Electric", "BEV")
     tech_output[technology %in% elts, te := "tdelt"]
     gats <- "NG"
     tech_output[technology %in% gats, te := "tdgat"]

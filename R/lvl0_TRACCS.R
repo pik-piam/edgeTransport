@@ -133,8 +133,8 @@ lvl0_loadTRACCS <- function(input_folder, TRACCS_dir = "TRACCS"){
     setnames(energy_intensity_EU,old="EDGE_vehicle_type",new="vehicle_type")
     energy_intensity_EU=energy_intensity_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
     #include the sector fuel
-    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Electric","BEV","Electric","LA-BEV","Tech-Adv-Electric"),"elect_td_trn",NA)]
-    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Liquid","Liquids","Tech-Adv-Liquid"),"refined liquids enduse",sector_fuel)]
+    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("BEV","Electric"),"elect_td_trn",NA)]
+    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Liquids"),"refined liquids enduse",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("NG"),"delivered gas",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Coal"),"delivered coal",sector_fuel)]
     #==== Load Rail data ====
