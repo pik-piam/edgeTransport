@@ -437,7 +437,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   GCAM_output$tech_output = rbind(GCAM_output$tech_output, newtech)
 
   ## add 0 plug-in hybrids for years 1990-2010
-  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[technology == "BEV"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
+  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[technology == "BEV" & subsector_L1=="trn_pass_road_LDV_4W"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
 
 
   ## IND buses costs http://www.asrtu.org/wp-content/uploads/2018/09/LBNL-Electric-Buses-in-India_BusWorld-v6.pdf
@@ -529,6 +529,10 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   missingtrucksCHA = NEcost$non_energy_cost[subsector_L3 %in% c("trn_freight_road") &
                                               vehicle_type %in% c("Truck (0-2t)") & region =="China"][, c("vehicle_type") := list("Truck (0-3.5t)")]
+
+  missingtrucksOAS = NEcost$non_energy_cost[subsector_L3 %in% c("trn_freight_road") &
+                                               vehicle_type %in% c("Truck (3.5-16t)") & region %in%c("Central Asia")][, c("vehicle_type") := list("Truck")]
+
 
   NEcost$non_energy_cost = rbind(NEcost$non_energy_cost, missingtrucksCHA, missingtrucksOAS, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
 
