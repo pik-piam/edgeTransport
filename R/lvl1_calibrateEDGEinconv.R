@@ -35,11 +35,10 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
     tmp[, share_check := sw*tot_price^logit.exponent/sum(sw*tot_price^logit.exponent),
         by=c("region", "year",grouping_value)]
 
-    tmp[,
-        share_diff:=(share_check-share)^2]
-    return(max(tmp$share_diff))
+    tmp[,share_diff:=(share_check-share)^2]
+    tmp = tmp[share_diff>1e-3]
+    return(tmp[share_diff == max(share_diff)][,c("region","year","share_check","share")])
   }
-
   ## for loop that tries multiple initial points for the SW calibration.
   ## The function stops when all the SW have been successfully calculated
   ## Returns the dt with the calculated SW, already normalized
@@ -47,7 +46,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   sw_calc=function(df_sw,grouping_value,exp_prices){
     logit.exponent <- fac <- share <- tot_price <- tech_output <- sw <- NULL
     for (exp_price in exp_prices) {                                         ## loops through all the initial points suggested
-      
       if(is.null(df_sw$sw)){df_sw[,sw:=NaN]}                                ## if this is the first iteration, an empty column is needed
       
       for (lamb in unique(df_sw$logit.exponent)) {                          ## treats all the lambdas separately
@@ -55,9 +53,9 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
               fac:=share/max(share)*(tot_price/max(tot_price))^exp_price,   ## provides a starting point
               by=c("region", "year",grouping_value)]
         
-        suppressWarnings(df_sw[logit.exponent==lamb  & is.nan(sw),
+        df_sw[logit.exponent==lamb  & is.nan(sw),
                                sw:= root_func(tot_price, share, lamb,fac),                   ## apply the root function
-                               by=c("region", "year",grouping_value)])
+                               by=c("region", "year",grouping_value)]
       }
 
       df_sw[,
@@ -73,7 +71,8 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
     if(any(is.na(df_sw$sw))){
       print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
-    } else (print(paste0("Max difference in shares for ",grouping_value,": ", check_shares(df_sw,grouping_value))))## check maximum difference in expected shares
+    } else {print(paste0("Max difference in shares for ",grouping_value,": "))
+            print(check_shares(df_sw,grouping_value))}## check maximum difference in expected shares
 
     return(df_sw)
 
@@ -118,16 +117,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
   FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicle_type")
 
-
-  ## hotfix for Central Asia, Motorcycle (50-250cc), LA-BEV-> also in GCAM!
-  #these are all the countries that are in Central Asia
-  # FV_SW[region %in% c("ARM","AZE","GEO","KAZ","KGZ","MNG","TJK","TKM","UZB") & vehicle_type=="Motorcycle (50-250cc)" & technology=="LA-BEV",
-  #       sw:=0]
-  # 
-  # FV_SW[region %in% c("ARM","AZE","GEO","KAZ","KGZ","MNG","TJK","TKM","UZB") & vehicle_type=="Motorcycle (50-250cc)" & technology=="Liquids",
-  #       sw:=1]
-
-
   ## reshape, save and store the sw at this level
   FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,logit.exponent)]
 
@@ -146,7 +135,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   ## calculate shares at this level
   VS1_SW[,share:=tech_output/sum(tech_output),by=c("region","year","subsector_L1")]
   ## optimize
-  VS1_SW=sw_calc(df_sw = VS1_SW, exp_prices = c(1,2,6,5,3,7),grouping_value = "subsector_L1")
+  VS1_SW=sw_calc(df_sw = VS1_SW, exp_prices = c(7,1,2,6,5,3),grouping_value = "subsector_L1")
 
   ## reshape, save and store the sw at this level
   VS1_final_SW=VS1_SW[,.(region,year,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,tot_price,logit.exponent)]
@@ -165,7 +154,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   ## needs rando lambdas for the sectors that are not explicitly calculated
   S1S2_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  S1S2_sw=sw_calc(S1S2_sw,exp_prices = c(3,1,4),grouping_value = "subsector_L2")
+  S1S2_sw=sw_calc(S1S2_sw,exp_prices = c(0.5,1,2,3,1,4),grouping_value = "subsector_L2")
 
   ## reshape, save and store the sw at this level
   S1S2_final_SW=S1S2_sw[,.(region,year,subsector_L1,subsector_L2,subsector_L3,sector,sw,tot_price,logit.exponent)]
@@ -183,7 +172,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   ## needs rando lambdas for the sectors that are not explicitly calculated
   S2S3_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  S2S3_sw=sw_calc(df_sw = S2S3_sw, exp_prices = c(4,2,1), grouping_value = "subsector_L3")
+  S2S3_sw=sw_calc(df_sw = S2S3_sw, exp_prices = c(2,3,4,2,1), grouping_value = "subsector_L3")
 
   ## reshape, save and store the sw at this level
   S2S3_final_SW=S2S3_sw[,.(region,year,subsector_L2,subsector_L3,sector,sw, tot_price, logit.exponent)]
@@ -197,7 +186,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   S3S_sw=merge(S2S3_sw,logit_exponent_S3S,all.x=TRUE)
   S3S_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector")]
 
-  S3S_sw=sw_calc(df_sw = S3S_sw, exp_prices = c(2,5,3,1,4), grouping_value = "sector")
+  S3S_sw=sw_calc(df_sw = S3S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
 
   ## reshape, save and store the sw at this level
   S3S_final_SW=S3S_sw[,.(region,year,subsector_L3,sector,sw,tot_price,logit.exponent)]
