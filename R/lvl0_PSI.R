@@ -57,7 +57,6 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   ## give alternative pathways depending on the scenario
   if (enhancedtech & techswitch == "FCEV") {
     psi_intensity[technology %in% c("BEV", "HEV-p", "PHEV"), y2040 := (y2015 + y2040)/2, by = "technology"] ## value in 2040 is halfway the loaded value in 2040 and 2015
-    psi_intensity[technology %in% c("FCEV"), y2040 := y2040*0.7, by = "technology"] ## value in 2040 for FCEV is very optimistic
   }
 
   psi_intensity[,y2100:=0.1*(y2040-y2015)/(2040-2015)*(2100-2040)+y2040] ## set a value for 2100 that is not present in PSI database. It's set to 1/10 of the decrease between 2015 and 2040 (quite conservative)
