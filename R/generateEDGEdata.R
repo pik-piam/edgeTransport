@@ -336,10 +336,6 @@ generateEDGEdata <- function(input_folder, output_folder,
                   2130, 2150)
 
   if (saveRDS) {
-    # find the files that you want
-    # list.of.files <- list.files(current.folder, "SDM.tif$")
-    # copy the files to the new folder
-    # file.copy("ins", level2path("report.Rmd"))
     saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
     saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
@@ -350,7 +346,10 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(iso_data$UCD_results$load_factor, file = level2path("loadFactor.RDS"))
-
+    md_template = "report.Rmd"
+    ## ship and run the file in the output folder
+    ## system.file("Rmd", md_template, package = "edgeTransport")
+    rmarkdown::render(level2path(md_template), output_format="pdf_document")
   }
 
 
@@ -395,7 +394,6 @@ generateEDGEdata <- function(input_folder, output_folder,
     demByTech = finalInputs$demByTech,
     intensity = finalInputs$intensity,
     capCost = finalInputs$capCost,
-    demand_traj = demand_traj,
     price_nonmot = iso_data$price_nonmot,
     complexValues = complexValues,
     loadFactor = iso_data$UCD_results$load_factor,
