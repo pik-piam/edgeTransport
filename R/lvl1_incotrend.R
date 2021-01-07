@@ -274,7 +274,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
   SWS <- lapply(SWS, extr_const)
   ## domestic aviation grows way to much, reduce it
   SWS$S3S_final_SW[region %in% c("USA") & subsector_L3 == "Domestic Aviation"  & year >=2015,
-                     sw := 0.3*sw[year==2020], by = c("region","subsector_L3")]
+                     sw := 0.2*sw[year==2020], by = c("region","subsector_L3")]
   SWS$S3S_final_SW[region %in% c("EUR") & subsector_L3 == "Domestic Aviation"  & year >=2015,
                    sw := 0.5*sw[year==2020], by = c("region","subsector_L3")]
   ## apply function that finds the average value in 2100 for levels S1S2, S2S3, S3S
@@ -417,9 +417,17 @@ if (techswitch %in% c("BEV", "FCEV")) {
   }
   ## CHA has very low prices for 2W. this leads to crazy behaviours, hence their preferenc efactor is set to contant
   SWS$S1S2_final_pref[region %in% c("CHA") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2010, sw := sw[year == 2010], by = c("region")]
+
   ## preference for buses extremely high in OAS and IND
-  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2020,
-                     sw := ifelse(year <= 2050, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2050-2020), 0.01*sw[year==2020]), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
+                     sw := ifelse(year <= 2030, sw[year==2020] + (0.5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2030 & year <= 2050,
+                      sw := ifelse(year <= 2050, sw[year==2030] + (0.3*sw[year==2030]-sw[year==2030]) * (year-2030) / (2050-2030), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2050 & year <= 2100,
+                      sw := ifelse(year <= 2100, sw[year==2050] + (0.2*sw[year==2050]-sw[year==2050]) * (year-2050) / (2100-2050), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2100,
+                      sw := sw[year==2100], by = c("region","subsector_L2")]
+
 
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("IND", "MEA", "CHA") & year >= 2010,
                      sw := sw[year == 2010],
@@ -433,10 +441,15 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S3S_final_pref[subsector_L3 == "Walk" & region %in% "REF" & year >= 2010,
                      sw := ifelse(year==2010, sw, 3*sw[year==2010]),
                      by=c("region")]
-  
-  SWS$S3S_final_pref[subsector_L3 %in% c("Freight Rail", "Domestic Shipping") & region %in% "IND" & year >= 2045,
+
+  SWS$S3S_final_pref[subsector_L3 %in% c("Freight Rail") & region %in% "IND" & year >= 2045,
                      sw := sw[year == 2080],
                      by=c("region", "subsector_L3")]
+
+  SWS$S3S_final_pref[subsector_L3 %in% c("Domestic Ship") & region %in% "IND" & year >= 2010,
+                     sw := ifelse(year == 2010, sw, 0.1*sw[year == 2010]),
+                     by=c("region", "subsector_L3")]
+
   ## linear convergence is fixed if goes beyond 0 or above 1
   SWS$FV_final_pref[value > 1 & logit_type == "sw", value := 1]
   SWS$S2S3_final_pref[, sw := ifelse(year >2100 & sw<0, sw[year == 2100], sw), by = c("region", "subsector_L2")]
