@@ -159,13 +159,14 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
     ## year at which the convergence happens
     tmp2[, year_at_yearconv := year[time == yearconv], by = c("region", "region_leader", all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
     ## TODO: this one still does not work but would be better to have a more generic one!
-    tmp2[is.na(year_at_yearconv), year_at_yearconv := year[time == (yearconv-5)], by = c("region", "region_leader", all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
+    tmp2[is.na(year_at_yearconv), year_at_yearconv := year[time == (yearconv+5)], by = c("region", "region_leader", all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
 
     ## values of GDPcap equal to GDPcap_rich have the same values as non_fuel_prices of rich countries
     tmp2[year >= year_at_yearconv & year > 2010, sw := sw_new, by = c("region", "region_leader", all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
 
     ## value of yearconv represents the convergence value
     tmp2[, sw_conv := sw_new[time==yearconv], by = c("region", "region_leader",all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
+    tmp2[is.na(sw_conv), sw_conv := sw_new[time==yearconv+5], by = c("region", "region_leader",all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))])]
 
     ## convergence is linear until the value corresponding to 2010 is reached
     tmp2[year <= year_at_yearconv & year >= 2010, sw := sw[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(sw_conv-sw[year == 2010]), by =c(all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))], "region")]

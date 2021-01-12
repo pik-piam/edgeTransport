@@ -94,7 +94,8 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     tmp2[yearconv == 2010, yearconv := 2020]
     tmp2[yearconv == 2015, yearconv := 2020]
     ## year at which the convergence happens
-    tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","technology", "vehicle_type")]
+    tmp2[, year_at_yearconv := year[time == yearconv], by = c("region", "technology", "vehicle_type")]
+    tmp2[is.na(year_at_yearconv), year_at_yearconv := year[time == yearconv + 5], by = c("region", "technology", "vehicle_type")]
 
     ## value of the non-fuel price after the convergence
     tmp3 = richave[, c("year", "conv_pkm_MJ", "technology", "vehicle_type")]
@@ -106,6 +107,8 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
 
     ## value of yearconv represents the convergence value
     tmp2[, conv_pkm_MJ_conv := conv_pkm_MJ_trend[time==yearconv], by = c("region","technology", "vehicle_type")]
+    tmp2[is.na(conv_pkm_MJ_conv), conv_pkm_MJ_conv := conv_pkm_MJ_trend[time==yearconv+5], by = c("region","technology", "vehicle_type")]
+
     ## convergence is linear until the value corresponding to 2010 is reached
     tmp2[year <= year_at_yearconv & year >= 2010, conv_pkm_MJ := conv_pkm_MJ[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(conv_pkm_MJ_conv-conv_pkm_MJ[year == 2010]), by =c("technology", "vehicle_type", "region")]
     ## select only useful columns
