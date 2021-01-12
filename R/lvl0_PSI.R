@@ -48,12 +48,12 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   psi_intensity=dcast(psi_intensity, technology + vehicle_type ~ year, value.var = "intensity_MJ_km")
   setnames(psi_intensity,old=c("2015","2040"),new=c("y2015","y2040"))
   psi_intensity = psi_intensity[!(technology %in% c("PHEV-c", "PHEV-e")),] ## PSI reports separately the electric and ICE running modes of a plug-in hybrid
-  
+
   ## in the conservative scenario, conservative assumptions about costs of alternative technologies
   if (!(enhancedtech)) {
     psi_intensity[technology %in% c("BEV", "FCEV", "HEV-p", "PHEV"), y2040 := y2040 + 0.5*(y2015-y2040), by = "technology"]
   }
-  
+
   ## give alternative pathways depending on the scenario
   if (enhancedtech & techswitch == "FCEV") {
     psi_intensity[technology %in% c("BEV", "HEV-p", "PHEV"), y2040 := (y2015 + y2040)/2, by = "technology"] ## value in 2040 is halfway the loaded value in 2040 and 2015
@@ -79,26 +79,11 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
     psi_intensity[,paste0("y",t):=y2100]
   }
 
-
   psi_intensity = melt(psi_intensity, id.vars = c("technology", "vehicle_type"),
                        measure.vars = paste0("y",tsteps))
 
   psi_intensity[,variable:=as.numeric(gsub("y","",variable))]
 
-  psi_intensity[,region:="EU-15"]
-  tmp=copy(psi_intensity)
-  tmp[,region:="EU-12"]
-  psi_intensity=rbind(psi_intensity,tmp)
-
-  tmp=copy(psi_intensity)
-  tmp[,region:="European Free Trade Association"]
-  psi_intensity=rbind(psi_intensity,tmp)
-
-  tmp=copy(psi_intensity)
-  tmp[,region:="Europe Non EU"]
-  psi_intensity=rbind(psi_intensity,tmp)
-
-  ##TODOplugin: differentiate for EU the plug in h from mild h
   setnames(psi_intensity,old="variable",new="year")
   psi_intensity[,EDGE_category:=ifelse(technology=="ICEV-g","NG",NA)]
   psi_intensity[,EDGE_category:=ifelse(technology %in% c("ICEV-p","ICEV-d"),"Liquids",EDGE_category)]
@@ -110,32 +95,42 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   psi_intensity[,sector_fuel:=ifelse(EDGE_category=="Hybrid Electric","Liquids-Electricity",sector_fuel)]
   psi_intensity[,sector_fuel:=ifelse(is.na(sector_fuel),"refined liquids enduse",sector_fuel)]
   ## average on the EDGE category
-  psi_intensity = psi_intensity[, .(value=mean(value)), by = c("EDGE_category","region","vehicle_type","year","sector_fuel")]
+  psi_intensity = psi_intensity[, .(value=mean(value)), by = c("EDGE_category","vehicle_type","year","sector_fuel")]
   psi_intensity_liq = psi_intensity[EDGE_category == "Liquids"]
   psi_intensity_liq[year > 2010, value := ifelse(year < 2020, value, NA)]
-  psi_intensity_liq[, value := ifelse(year == 2020, 0.9*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
-  psi_intensity_liq[, value := ifelse(year == 2030, 0.8*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
-  psi_intensity_liq[, value := ifelse(year == 2040, 0.7*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
-  psi_intensity_liq[, value := ifelse(year == 2050, 0.6*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
-  psi_intensity_liq[, value := ifelse(year == 2100, 0.6*value[year == 2010], value), by = c("region", "vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2020, 0.9*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2030, 0.8*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2040, 0.7*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2050, 0.6*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
+  psi_intensity_liq[, value := ifelse(year == 2100, 0.6*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
   ## approximate the trend of energy intensity to fill in the missing time steps
   psi_intensity_liq = approx_dt(psi_intensity_liq, unique(psi_intensity_liq$year),
                  xcol = "year", ycol = c("value"),
-                 idxcols = c("region", "EDGE_category", "vehicle_type"),
+                 idxcols = c("EDGE_category", "vehicle_type"),
                  extrapolate=T)
   psi_intensity = rbind(psi_intensity[EDGE_category != "Liquids"], psi_intensity_liq)
-  psi_intensity = psi_intensity[EDGE_category != "Hybrid Liquids"]
   ## add logit_category for Hybrid Electric
   logit_category = rbind(logit_category, logit_category[technology == "BEV"][, technology := "Hybrid Electric"])
 
   ##merge with logit_category
   psi_intensity=merge(logit_category,psi_intensity,by.x=c("technology","vehicle_type"),by.y=c("EDGE_category","vehicle_type"))[,-"univocal_name"]
   setnames(psi_intensity,old="value",new="conv_pkm_MJ")
-  ##merge with GCAM intensities and substitute EU
-  conv_pkm_mj=merge(conv_pkm_mj[!(region %in% c("EU-15","EU-12","European Free Trade Association","Europe Non EU") & ## EU regions trends come from PSI
-                                      subsector_L1=="trn_pass_road_LDV_4W")], ## for LDV4 only
-                     psi_intensity,
-  by=intersect(names(psi_intensity),names(conv_pkm_mj)),all=TRUE)
+  ## add missing 4Ws
+  psi_intensity = rbind(psi_intensity,
+                        psi_intensity[vehicle_type == "Large Car and SUV"][, vehicle_type := "Large Car"],
+                        psi_intensity[vehicle_type == "Large Car and SUV"][, vehicle_type := "Light Truck and SUV"])
+  psi_intensity = merge(psi_intensity, unique(conv_pkm_mj[, c("region", "year")]), by = "year", allow.cartesian = TRUE)
+  psi_intensity = merge(psi_intensity, unique(conv_pkm_mj[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all = FALSE)
+  psi_intensity = rbind(psi_intensity[region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")],
+                        psi_intensity[!region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
+
+  ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
+  conv_pkm_mj_rest = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W" &
+                                     technology %in% c("BEV", "FCEV", "Hybrid Electric")) & !region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")]
+  conv_pkm_mj_EU = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W") &
+                                 region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") ]
+
+  conv_pkm_mj=rbind(conv_pkm_mj_rest, conv_pkm_mj_EU, psi_intensity)
 
   return(conv_pkm_mj)
 }
