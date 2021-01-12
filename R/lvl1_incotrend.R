@@ -17,7 +17,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
   subsector_L1 <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
   gdp <- getRMNDGDP(scenario = REMIND_scenario, isolev = FALSE, isocol = "region", usecache = T)
-  gdpcap <- getRMNDGDPcap(scenario = REMIND_scenario, usecache = T)
+  gdpcap <- getRMNDGDPcap(scenario = REMIND_scenario, usecache = T, isocol = "region", isolev = F)
   ## function to converge to average generic rich region (useful for vehicle types and subsector_L1)
   aveval=function(dtin,              ## dt of which I recalculate the SW
                   gdpcap            ## per capita gdp
@@ -378,7 +378,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
 
   if (smartlifestyle) {
-    GDP_POP = getRMNDGDPcap(scenario = REMIND_scenario)
+    GDP_POP = getRMNDGDPcap(scenario = REMIND_scenario, usecache = T, isocol = "region", isolev = F)
     ## roughly distinguish countries by GDPcap
     richregions = unique(unique(GDP_POP[year == 2010 & GDP_cap > 25000, region]))
 
