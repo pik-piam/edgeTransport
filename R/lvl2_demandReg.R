@@ -25,7 +25,7 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
   ## conversion rate 2005->1990 USD
   CONV_2005USD_1990USD = 0.67
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
-  GDP_POP = getRMNDGDPcap(scenario = paste0("gdp_", REMIND_scenario), usecache = T, isocol = "region", isolev = F)
+  GDP_POP = getRMNDGDPcap(scenario = paste0("gdp_", REMIND_scenario), usecache = T, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
   setnames(GDP_POP, old = "weight", new = "GDP_val")
   ## create ct with the various elasticities
   price_el = GDP_POP[,-"variable"]

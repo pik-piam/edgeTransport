@@ -20,7 +20,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     ## GCAM data
     tech_output <- input_data[["tech_output"]]
     intensity <- input_data[["conv_pkm_mj"]]
-    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), isolev = TRUE, isocol = "iso", usecache = T)
+    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
     ## tech output is extensive: use GDP weight
     TO_iso <- disaggregate_dt(tech_output, GCAM2ISO_MAPPING,
                               valuecol="tech_output",
@@ -41,7 +41,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     ## convergence of intensity according to GDPcap
     ## working principle: intensity follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", isolev = F)
+    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
     tmp = merge(int, GDP_POP, by = c("region", "year"))
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))

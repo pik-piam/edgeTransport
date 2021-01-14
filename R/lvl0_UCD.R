@@ -386,7 +386,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
                                     datacols = c("mode","UCD_technology","price_component", "type"))
 
     ## upscale to regions
-    gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), isolev = TRUE, isocol = "iso", usecache = T)
+    gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
     non_energy_cost=aggregate_dt(non_energy_cost, GCAM2ISO_MAPPING,
                                  datacols = c("mode", "UCD_technology", "price_component", "type"),
                                  weights = gdp)

@@ -223,7 +223,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   speed = GCAM_data[["speed"]]
 
   ## speed converges
-  gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), isolev = TRUE, isocol = "iso", usecache = T)
+  gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
   pop = calcOutput("Population", aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
   pop <- magpie2dt(pop, regioncol = "iso",
                    yearcol = "year", datacols = "POP")
