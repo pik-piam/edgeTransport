@@ -30,8 +30,7 @@ lvl1_IEAharmonization <- function(tech_data){
     ## load pkm and intensity from GCAM database conversion rate MJ->EJ
     CONV_MJ_EJ <- 1e-12
     CONV_millionkm_km <- 1e6
-
-    vehicle_intensity <- tech_data[["int"]]
+    vehicle_intensity <- copy(tech_data[["int"]])
     vehicle_intensity[, EJ_Mpkm := conv_pkm_MJ * CONV_millionkm_km * CONV_MJ_EJ][,conv_pkm_MJ:=NULL]
 
     ## output is given in million pkm

@@ -14,6 +14,7 @@
 #' @import edgeTrpLib
 #' @importFrom madrat setConfig
 #' @importFrom magclass getSets
+#' @importFrom rmarkdown render
 #' @export
 
 
@@ -93,7 +94,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- load GCAM raw data")
   GCAM_data <- lvl0_GCAMraw(input_folder)
 
-  ##function that loads PSI energy intensity for Europe and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
+  ##function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
   print("-- merge PSI energy intensity data")
   intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(GCAM_data, input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
   GCAM_data$conv_pkm_mj = intensity_PSI_GCAM_data
@@ -112,7 +113,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
 
-  ## function that applies corrections to GCAM outdated data. No conversion of units happening.
+  ## function that integrates GCAM data. No conversion of units happening.
   print("-- correct tech output")
   correctedOutput <- lvl0_correctTechOutput(GCAM_data,
                                             UCD_output$non_energy_cost,
@@ -348,8 +349,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(iso_data$UCD_results$load_factor, file = level2path("loadFactor.RDS"))
     md_template = "report.Rmd"
     ## ship and run the file in the output folder
-    ## system.file("Rmd", md_template, package = "edgeTransport")
-    rmarkdown::render(level2path(md_template), output_format="pdf_document")
+    system.file("Rmd", md_template, package = "edgeTransport")
+    render(level2path(md_template), output_format="pdf_document")
   }
 
 
