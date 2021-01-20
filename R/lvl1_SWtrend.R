@@ -9,7 +9,8 @@
 
 
 lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
-  iso <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- iso3c <- region <- NULL
+  region <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- region3c <- region <- NULL
+  iso3c <- sector_fuel <- iso <- NULL
   ## WDI area country is part of internal package data
   ## only one year is used, as area is approximately constant in time
   WDI_file <- function(fname){
@@ -17,32 +18,35 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   }
   WDI_area_country = readRDS(WDI_file("WDI_area_country.RDS"))
   
-  area_country=WDI_area_country[year==2010,.(iso=as.character(iso3c),value=as.numeric(AG.SRF.TOTL.K2),year)]
+  area_country = WDI_area_country[year==2010,.(iso=as.character(iso3c),value=as.numeric(AG.SRF.TOTL.K2),year)]
+  ## calculate area of REMIND regions
   ## filter out only the countries that are in REMIND
   area_country=area_country[iso %in% REMIND2ISO_MAPPING$iso,]
-  ## attribute a datacol to the dt
-  area_country[,var:="area"]
+  area_country[, year :=NULL]
   ## aggregate
-  area_country=aggregate_dt(data=area_country,
-                            mapping=REMIND2ISO_MAPPING,
-                            datacols = "var")
+  area = aggregate_dt(area_country,
+                      mapping=REMIND2ISO_MAPPING,
+                      valuecol = "value",
+                      yearcol = NULL,
+                      datacols=NULL)
+
+  ## attribute a datacol to the dt
+  area[,var:="area"]
+
   
-  area_country[,year:=NULL]
+
   
   ## load and aggregate population
-  POP_country=calcOutput("Population",aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  POP <- magpie2dt(POP_country, regioncol = "iso",
+  POP_country=calcOutput("Population",aggregate = T)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
+  POP <- magpie2dt(POP_country, regioncol = "region",
                    yearcol = "year", datacols = "POP")
-  POP=POP[,.(iso,year,POP,
+  POP=POP[,.(region,year,POP,
              POP_val=value              ## in million
              *1e6)]                     ## in units
   
-  POP=aggregate_dt(POP,REMIND2ISO_MAPPING,
-                   datacols = c("POP"),
-                   valuecol = "POP_val")
   
   ## calculate density
-  density=merge(area_country,POP,all=FALSE,by=c("region"))
+  density=merge(POP, area,  by =c("region"))
   density[,density:=POP_val      ## in units
           /value]                ## in units per square km
   
@@ -57,11 +61,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   density=merge(density,clusters)
   
   ## find leading region through max GDP capita in 2015 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), usecache = T)
-  gdp=aggregate_dt(gdp,
-                   REMIND2ISO_MAPPING,
-                   datacols = "variable",
-                   valuecol = "weight")
+  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
   gdp=merge(gdp,POP,by=c("region","year"))
   gdp[,gdpcap:=weight/POP_val]
   
@@ -93,7 +93,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
 lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
   region<- cluster <- sw_cluster <- sw <- technology <- subsector_L1 <- subsector_L2 <- iso <- subsector_L3 <- NULL
   ## load gdp as weight
-  gdp <- getRMNDGDP(scenario = REMIND_scenario, usecache = T)
+  gdp <- getRMNDGDP(scenario = REMIND_scenario, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
   
   ## function to converge to average "leader region" level
   aveval=function(dt,path2clusters){
@@ -194,7 +194,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
                       by=c("iso","vehicle_type","technology")]
       SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 == "trn_pass_road_LDV_4W", sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2045, speed = 0.2),
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1", "trn_pass_road_bus_tmp_subsector_L1"), sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2055, speed = 0.2),
+      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"), sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2055, speed = 0.2),
                       by=c("iso","vehicle_type","technology")]
       ## electric trains develop increasing linearly to 2100
       SWS$FV_final_SW[technology == "Electric" & year >= 2020,
@@ -207,12 +207,6 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
                       by=c("iso","vehicle_type","technology")]
       SWS$FV_final_SW[technology == "Liquids" & year >= 2060,
                       sw := 0.1,
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2020,
-                      sw := sw[year==2020] + (0.5-sw[year==2020]) * (year-2020)/(2050-2020),
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2050,
-                      sw := 0.5,
                       by=c("iso","vehicle_type","technology")]
     
       
@@ -237,14 +231,8 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
       SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 == "trn_pass_road_LDV_4W",
                       sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2050, speed = 0.1),
                       by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1", "trn_pass_road_bus_tmp_subsector_L1"),
+      SWS$FV_final_SW[technology == "FCEV" & year >= 2020 & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"),
                       sw := apply_logistic_trends(sw[year == 2020], year, ysymm = 2060, speed = 0.1),
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2020,
-                      sw := sw[year==2020] + (0.7-sw[year==2020]) * (year-2020)/(2050-2020),
-                      by=c("iso","vehicle_type","technology")]
-      SWS$FV_final_SW[technology == "Hybrid Liquids" & year >= 2050,
-                      sw := 0.7,
                       by=c("iso","vehicle_type","technology")]
       
       ## electric trains develop increasing linearly to 2100
@@ -261,7 +249,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     }
     
 
-    ## nat. gas and hybrid liquids increase linearly to 2100
+    ## nat. gas increase linearly to 2100
     SWS$FV_final_SW[technology == "NG" & year >= 2020,
           sw := sw[year==2020] + (1-sw[year==2020]) * (year-2020) / (2200-2020),
           by=c("iso","vehicle_type","technology")]

@@ -21,8 +21,8 @@ lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh){
   prisk = prisk*fcr_veh ## disc$/veh
   prefElRech = prefElRech*fcr_veh ## disc$/veh
 
-  pinco = merge(annual_mileage, load_factor, by = c("iso", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type"))[year <= 2020]
-  pinco = pinco[subsector_L1 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV", "Hybrid Electric","Hybrid Liquids", "NG")]
+  pinco = merge(annual_mileage, load_factor, by = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type"))[year <= 2020]
+  pinco = pinco[subsector_L1 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV", "Hybrid Electric","NG")]
   ## infrastructure lack contains range anxiety and refueling availability, and is 0 in the case of Hybrids
   pinco[, prange := ifelse(technology == "BEV", prangeBEV, 0)]
   pinco[, pref := ifelse(technology == "FCEV", prefuelFCEV, 0)]
@@ -33,14 +33,13 @@ lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh){
   ## risk premium is the same for all technologies
   pinco[, prisk := prisk]
 
-  pinco[year >= 2010 & technology == "BEV", pmod_av := (pmod_av[year==2010]-10000*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "Hybrid Electric", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "NG", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "FCEV", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "Hybrid Liquids", pmod_av := (pmod_av[year==2010]-29150*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "BEV", prange := (prange[year==2010]-65000*fcr_veh)/(2010-2020)*(year-2010)+prange[year==2010], by = c("iso", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "BEV", pmod_av := (pmod_av[year==2010]-10000*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "Hybrid Electric", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "NG", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "FCEV", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "BEV", prange := (prange[year==2010]-65000*fcr_veh)/(2010-2020)*(year-2010)+prange[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
 
-  pinco = melt(pinco, id.vars = c("iso", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "annual_mileage", "loadFactor", "mode"))
+  pinco = melt(pinco, id.vars = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "annual_mileage", "loadFactor", "mode"))
   setnames(pinco, old = "variable", new = "logit_type")
   pinco[, value:= value/(annual_mileage*loadFactor)]
   pinco[, c("annual_mileage", "loadFactor", "mode"):= NULL]

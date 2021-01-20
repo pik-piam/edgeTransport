@@ -5,7 +5,7 @@
 
 
 lvl2_reportingEntries = function(ESdem, FEdem){
-  category <- share_LDV_totroad <- iso <- subsector_L3 <- subsector_L2 <- subsector_L1 <- share_LDV_totliq <- technology <- demand_EJ <- totdem <- demand_F <- entry <- `.` <- NULL
+  category <- share_LDV_totroad <- region <- subsector_L3 <- subsector_L2 <- subsector_L1 <- share_LDV_totliq <- technology <- demand_EJ <- totdem <- demand_F <- entry <- `.` <- NULL
   aggrCategory = function(dt){
     node <- category <- technology <- sector <- subsector_L1 <- subsector_L2 <- subsector_L3 <- fuel <- NULL
     ## Split results according to nodes (LDV, HDV, El. Trains)
@@ -35,23 +35,23 @@ lvl2_reportingEntries = function(ESdem, FEdem){
 
   dem$ESdem[, entry := "ES"]
   dem$ESdem[, unit := ifelse(category  == "Pass", "billion pkm", "billion tkm")]
-  dem$ESdem=dem$ESdem[,.(totdem = sum(totdem)), by = c("iso", "year", "node", "category", "fuel", "entry", "unit")]
+  dem$ESdem=dem$ESdem[,.(totdem = sum(totdem)), by = c("region", "year", "node", "category", "fuel", "entry", "unit")]
 
   ## FE demand mif entries
   dem$FEdem[,entry := "FE"]
   dem$FEdem[, unit := "EJ"]
-  dem$FEdem=dem$FEdem[,.(totdem = sum(demand_EJ)), by = c("iso", "year", "node", "category", "fuel", "entry", "unit")]
+  dem$FEdem=dem$FEdem[,.(totdem = sum(demand_EJ)), by = c("region", "year", "node", "category", "fuel", "entry", "unit")]
 
 
   ## shares of fepet->LDVs, with respect to total liquid-fuelled transport (share_LDV_totliq) and total road transport (share_LDV_totroad)
-  shLDV = FEdem[technology %in% c("Liquids", "Hybrid Liquids")]
-  shLDV = shLDV[,.(demand_EJ = sum(demand_EJ)), by = c("sector","subsector_L3", "subsector_L2" , "iso", "year")]
-  shLDV[, share_LDV_totliq := demand_EJ[subsector_L2 == "trn_pass_road_LDV"]/sum(demand_EJ), by = c("iso", "year")]
+  shLDV = FEdem[technology %in% c("Liquids")]
+  shLDV = shLDV[,.(demand_EJ = sum(demand_EJ)), by = c("sector","subsector_L3", "subsector_L2" , "region", "year")]
+  shLDV[, share_LDV_totliq := demand_EJ[subsector_L2 == "trn_pass_road_LDV"]/sum(demand_EJ), by = c("region", "year")]
   shLDV = shLDV[subsector_L3 %in% c("trn_pass_road", "trn_freight_road"),]
-  shLDV[, share_LDV_totroad := demand_EJ[subsector_L2 == "trn_pass_road_LDV"]/sum(demand_EJ), by = c("iso", "year")]
-  shLDV = shLDV[,share_LDV_totliq := ifelse(is.na(share_LDV_totliq), share_LDV_totliq[year == 2090], share_LDV_totliq), by =c("iso","subsector_L2")]
-  shLDV = shLDV[,share_LDV_totroad := ifelse(is.na(share_LDV_totroad), share_LDV_totroad[year == 2090], share_LDV_totroad), by =c("iso","subsector_L2")]
-  shLDV = shLDV[subsector_L2 == "trn_pass_road_LDV", .(iso, year, share_LDV_totliq, share_LDV_totroad)]
+  shLDV[, share_LDV_totroad := demand_EJ[subsector_L2 == "trn_pass_road_LDV"]/sum(demand_EJ), by = c("region", "year")]
+  shLDV = shLDV[,share_LDV_totliq := ifelse(is.na(share_LDV_totliq), share_LDV_totliq[year == 2090], share_LDV_totliq), by =c("region","subsector_L2")]
+  shLDV = shLDV[,share_LDV_totroad := ifelse(is.na(share_LDV_totroad), share_LDV_totroad[year == 2090], share_LDV_totroad), by =c("region","subsector_L2")]
+  shLDV = shLDV[subsector_L2 == "trn_pass_road_LDV", .(region, year, share_LDV_totliq, share_LDV_totroad)]
 
   out = list(dem = dem, shLDV = shLDV)
 

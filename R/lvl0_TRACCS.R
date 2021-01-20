@@ -54,9 +54,6 @@ lvl0_loadTRACCS <- function(input_folder, TRACCS_dir = "TRACCS"){
                                        }))
 
     roadp_eu = roadp_eu[, country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
-    roadp_eu = rbind(roadp_eu, roadp_eu[technology == "Liquids"][,c("technology","km_million") := list("Hybrid Liquids", 0)])
-
-
                                         #road freight: load demand
     roadf_eu <- do.call("rbind",lapply(list_countries$countries,
                                        function(x) {
@@ -136,12 +133,12 @@ lvl0_loadTRACCS <- function(input_folder, TRACCS_dir = "TRACCS"){
     setnames(energy_intensity_EU,old="EDGE_vehicle_type",new="vehicle_type")
     energy_intensity_EU=energy_intensity_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
     #include the sector fuel
-    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Electric","BEV","Electric","LA-BEV","Tech-Adv-Electric"),"elect_td_trn",NA)]
-    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Adv-Liquid","Hybrid Liquids","Liquids","Tech-Adv-Liquid"),"refined liquids enduse",sector_fuel)]
+    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("BEV","Electric"),"elect_td_trn",NA)]
+    energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Liquids"),"refined liquids enduse",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("NG"),"delivered gas",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Coal"),"delivered coal",sector_fuel)]
-                                        #==== Load Rail data ====
-                                        #rail passenger: load demand
+    #==== Load Rail data ====
+    #rail passenger: load demand
     railp_eu=suppressMessages(data.table(read_excel(
       path=file.path(
         TRACCS_folder,
@@ -439,9 +436,9 @@ lvl0_prepareTRACCS <- function(TRACCS_data,
   dem_TRACCS1990[, year := 1990]
   dem_TRACCS = rbind(dem_TRACCS,dem_TRACCS1990)
 
-  dem_TRACCSBEV = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("BEV", 0)]
-  dem_TRACCSFCEV = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("FCEV", 0)]
-  dem_TRACCSPIH = dem_TRACCS[technology=="Hybrid Liquids",][, c("technology","tech_output") := list("Hybrid Electric", 0)]
+  dem_TRACCSBEV = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("BEV", 0)]
+  dem_TRACCSFCEV = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("FCEV", 0)]
+  dem_TRACCSPIH = dem_TRACCS[technology=="Liquids",][, c("technology","tech_output") := list("Hybrid Electric", 0)]
 
   dem_TRACCSNG = dem_TRACCS[technology=="Liquids" & subsector_L1 == "trn_freight_road_tmp_subsector_L1",][, c("technology", "tech_output") := list("NG", 0)]
 
@@ -472,19 +469,12 @@ lvl0_prepareTRACCS <- function(TRACCS_data,
 #'
 #' @param TRACCS_data TRACCS based data
 #' @param output iso level data
+#' @param REMIND2ISO_MAPPING REMIND2iso mapping
 
-lvl0_mergeTRACCS <- function(TRACCS_data, output){
+lvl0_mergeTRACCS <- function(TRACCS_data, output, REMIND2ISO_MAPPING){
   iso <- subsector_L3 <- subsector_L2 <- technology <- NULL
   ## load TRACCS-friendly data
   output_EU <- TRACCS_data$dem_TRACCS
-  #load_iso <- TRACCS_data$LF_TRACCS ## LF that comes from the file is already for all regions and on iso level
-
-  ## dups <- duplicated(load_iso, by=c("iso", "technology", "vehicle_type","year"))
-  ## if(any(dups)){
-  ##   warning("Duplicated techs found in supplied LF.")
-  ##   print(load_iso[dups])
-  ##   output <- unique(load_iso, by=c("iso", "technology", "vehicle_type"))
-  ## }
 
   output=output[!(iso %in% unique(output_EU$iso) & subsector_L3 %in% c("trn_pass_road","trn_freight_road")),] #remove all the entries that has to come from TRACCS: road passenger and freight
 
@@ -511,7 +501,9 @@ lvl0_mergeTRACCS <- function(TRACCS_data, output){
     print(output[dups])
     output <- unique(output, by=c("iso", "technology", "vehicle_type"))
   }
-
+  output = aggregate_dt(output,  REMIND2ISO_MAPPING,
+                        valuecol="tech_output",
+                        datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"))
   return(output)
 
 }
