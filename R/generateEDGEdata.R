@@ -132,7 +132,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   }
 
 
-  ## produce regionalized versions, and ISO version of the tech_output. No conversion of units happening.
+  ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level in TRACCS. No conversion of units happening.
   print("-- generate ISO level data")
   iso_data <- lvl0_toISO(
     input_data = GCAM_data,
@@ -144,25 +144,23 @@ generateEDGEdata <- function(input_folder, output_folder,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
 
-    ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
-    print("-- load EU TRACCS data")
-    TRACCS_data <- lvl0_loadTRACCS(input_folder)
-    if(saveRDS)
-      saveRDS(TRACCS_data, file = level0path("load_TRACCS_data.RDS"))
+  ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
+  print("-- load EU TRACCS data")
+  TRACCS_data <- lvl0_loadTRACCS(input_folder, GCAM_data = GCAM_data)
+  if(saveRDS)
+     saveRDS(TRACCS_data, file = level0path("load_TRACCS_data.RDS"))
 
-    ## function that makes the TRACCS database compatible with the GCAM framework. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
-    print("-- prepare the EU TRACCS database")
-    TRACCS_EI_dem_LF <- lvl0_prepareTRACCS(TRACCS_data = TRACCS_data,
-                                           GCAM_data = GCAM_data,
-                                           intensity = intensity_PSI_GCAM_data,
-                                           input_folder = input_folder,
-                                           GCAM2ISO_MAPPING = GCAM2ISO_MAPPING)
-
-    print("-- merge the EU TRACCS database (energy intensity, load factors and energy services)")
-    iso_data$tech_output <- lvl0_mergeTRACCS(
-      TRACCS_data = TRACCS_EI_dem_LF$dem_TRACCS,  ## demand in million pkm or million tkm
-      output = iso_data$TO_iso,
-      REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+  ## function that merges TRACCS database with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
+  print("-- prepare the EU TRACCS database")
+  alldata <- lvl0_prepareTRACCS(TRACCS_data = TRACCS_data,
+                                       iso_data = iso_data,
+                                       intensity = intensity_PSI_GCAM_data,
+                                       input_folder = input_folder,
+                                       GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
+                                       REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+  ## attribute new values to original dataframes
+  iso_data$UCD_results$load_factor = alldata$LF
+  iso_data$tech_output = alldata$demkm
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
   incocost <- lvl0_incocost(annual_mileage = iso_data$UCD_results$annual_mileage,

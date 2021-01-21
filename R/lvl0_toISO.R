@@ -260,10 +260,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
 
     load_factor <- UCD_data$non_energy_cost[["load_factor"]]
     load_factor <- disaggregate_dt(load_factor, GCAM2ISO_MAPPING)
-    load_factor <-  aggregate_dt(load_factor, REMIND2ISO_MAPPING,
-                                 valuecol="loadFactor",
-                                 datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "year"),
-                                 weights=gdp)
+
 
     capcost4W <- nec_cost_split[subsector_L1 == "trn_pass_road_LDV_4W" & price_component == "Capital_costs_purchase"][, c("sector", "subsector_L3", "subsector_L2", "subsector_L1") := NULL]
 
