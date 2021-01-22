@@ -146,25 +146,30 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
   print("-- load EU TRACCS data")
-  TRACCS_data <- lvl0_loadTRACCS(input_folder, GCAM_data = GCAM_data)
+  EU_data <- lvl0_loadEU(input_folder)
   if(saveRDS)
-     saveRDS(TRACCS_data, file = level0path("load_TRACCS_data.RDS"))
+     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
 
-  ## function that merges TRACCS database with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
-  print("-- prepare the EU TRACCS database")
-  alldata <- lvl0_prepareTRACCS(TRACCS_data = TRACCS_data,
+  ## function that merges TRACCS, Eurostat databases with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
+  print("-- prepare the EU related databases")
+  alldata <- lvl0_prepareEU(EU_data = EU_data,
                                        iso_data = iso_data,
                                        intensity = intensity_PSI_GCAM_data,
                                        input_folder = input_folder,
                                        GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                                        REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
-  ## attribute new values to original dataframes
-  iso_data$UCD_results$load_factor = alldata$LF
-  iso_data$tech_output = alldata$demkm
+
+  target_LF = if(smartlifestyle) 1.8 else 1.7
+  target_year = if(smartlifestyle) 2060 else 2080
+
+  alldata$LF[
+    subsector_L1 == "trn_pass_road_LDV_4W" &
+      year >= 2020 & year <= target_year,
+    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
   incocost <- lvl0_incocost(annual_mileage = iso_data$UCD_results$annual_mileage,
-                            load_factor = iso_data$UCD_results$load_factor,
+                            load_factor = alldata$LF,
                             fcr_veh = UCD_output$fcr_veh)
 
 
@@ -187,9 +192,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LVL 1 scripts
   #################################################
   print("-- Start of level 1 scripts")
-
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  intensity_gcam <- lvl1_IEAharmonization(tech_data = iso_data)
+  intensity_gcam <- lvl1_IEAharmonization(int = iso_data$int, demKm = alldata$demkm)
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
@@ -211,7 +215,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(
     prices = REMIND_prices,
-    tech_output = iso_data$tech_output,
+    tech_output = alldata$demkm,
     logit_exp_data = VOT_lambdas$logit_output,
     vot_data = iso_data$vot,
     price_nonmot = iso_data$price_nonmot)
@@ -237,7 +241,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
                           clusters = clusters,
                           incocost = incocost,
-                          calibdem = iso_data$tech_output,
+                          calibdem = alldata$demkm,
                           years = years,
                           REMIND_scenario = REMIND_scenario,
                           EDGE_scenario = EDGE_scenario,
@@ -282,7 +286,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## regression demand calculation
   print("-- performing demand regression")
-  dem_regr = lvl2_demandReg(tech_output = iso_data$tech_output,
+  dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
                           price_baseline = prices$S3S,
                           REMIND_scenario = REMIND_scenario,
                           smartlifestyle = smartlifestyle)
@@ -344,7 +348,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
-    saveRDS(iso_data$UCD_results$load_factor, file = level2path("loadFactor.RDS"))
+    saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
     md_template = "report.Rmd"
     ## ship and run the file in the output folder
     system.file("Rmd", md_template, package = "edgeTransport")
@@ -395,7 +399,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     capCost = finalInputs$capCost,
     price_nonmot = iso_data$price_nonmot,
     complexValues = complexValues,
-    loadFactor = iso_data$UCD_results$load_factor,
+    loadFactor = alldata$LF,
     REMIND_scenario = REMIND_scenario,
     EDGE_scenario = EDGE_scenario,
     level2path = level2path)

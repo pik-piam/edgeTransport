@@ -5,12 +5,13 @@
 #' Therefore we have to change energy intensities for historical timesteps and smoothly
 #' change them to the GCAM/PSI values.
 #'
-#' @param tech_data region level demand and intensity
+#' @param int intensity
+#' @param demKm demand in million km
 #'
 #' @importFrom rmndt magpie2dt
 
 
-lvl1_IEAharmonization <- function(tech_data){
+lvl1_IEAharmonization <- function(int, demKm){
     te <- isbunk <- flow <- value <- `.` <- region <- EJ_Mpkm <- conv_pkm_MJ <- subsector_L3 <- technology <- EJ_Mpkm.mean <- vehicle_type <- sector <- EJ_Mpkm_ave_adjusted <- Mpkm_tot <- factor_intensity <- EJ_Mpkm_ave <- EJ_Mpkm_adjusted <- lambda <- EJ_Mpkm_final <- EJ_tot_adjusted <- NULL 
     IEA <- calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
     IEA <- IEA[, 2005, c("fedie", "fepet", "fegat", "feelt"), pmatch = TRUE]
@@ -30,11 +31,11 @@ lvl1_IEAharmonization <- function(tech_data){
     ## load pkm and intensity from GCAM database conversion rate MJ->EJ
     CONV_MJ_EJ <- 1e-12
     CONV_millionkm_km <- 1e6
-    vehicle_intensity <- copy(tech_data[["int"]])
+    vehicle_intensity <- copy(int)
     vehicle_intensity[, EJ_Mpkm := conv_pkm_MJ * CONV_millionkm_km * CONV_MJ_EJ][,conv_pkm_MJ:=NULL]
 
     ## output is given in million pkm
-    tech_output <- tech_data[["tech_output"]]
+    tech_output <- copy(demKm)
     tech_output <- merge(tech_output, vehicle_intensity, all.x = TRUE,
                          by = intersect(colnames(tech_output), colnames(vehicle_intensity)))
     tech_output <- tech_output[!subsector_L3 %in% c("Cycle", "Walk"), ]  #no non-motorized
