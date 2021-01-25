@@ -14,7 +14,7 @@
 
 
 lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
-    countries <- technologies <- `.` <- region <- EDGE_vehicle_type <- MJ <- mtoe <- km_million <- country_name <- technology <- tkm_million <- MJ_km <- load_factor <- million_tkm <- Liquids <- Electric <- pkm_million <- ktkm <- pkm <- name <- code_airplane_characteristics <- sector_fuel <- vehicle_type <- NULL
+    countries <- tech_output <- technologies <- `.` <- region <- EDGE_vehicle_type <- MJ <- mtoe <- km_million <- country_name <- technology <- tkm_million <- MJ_km <- load_factor <- million_tkm <- Liquids <- Electric <- pkm_million <- ktkm <- pkm <- name <- code_airplane_characteristics <- sector_fuel <- vehicle_type <- NULL
     EU_folder <- file.path(input_folder, EU_dir)
 
     ## load mappings
@@ -312,6 +312,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 #' Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
 #'
 #' @param EU_data TRACCS based data
+#' @param iso_data iso level data
 #' @param intensity energy intensity of technologies
 #' @param input_folder folder hosting raw data
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
@@ -327,7 +328,7 @@ lvl0_prepareEU <- function(EU_data,
                                GCAM2ISO_MAPPING,
                                REMIND2ISO_MAPPING){
 
-  subsector_L3 <- region <- technology <- subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
+  subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
   dem_OTHER = copy(iso_data$TO_iso)
 
   ## use intensity and LF from GCAM to convert into tkm/pkm for bunkers

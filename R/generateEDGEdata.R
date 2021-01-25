@@ -23,9 +23,8 @@ generateEDGEdata <- function(input_folder, output_folder,
                              saveRDS=FALSE){
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
-  non_fuel_price <- tot_price <- fuel_price_pkm <- NULL
+  non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
   setConfig(forcecache = TRUE)
-
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
