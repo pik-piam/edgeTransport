@@ -320,7 +320,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
   smtruck = c("Truck (1-6t)", "Truck (0-6t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (2-5t)", "Truck (0-3.5t)", "Truck (0-1t)", "Truck (0-2.7t)")
 
   SWS$FV_final_pref[technology == "FCEV" & year >= 2020 & vehicle_type %in% smtruck,
-                    value := apply_logistic_trends(value[year == 2020], year, ysymm = convsymmFCEV, speed = 0.1),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmFCEV, speed = 0.1),
                     by=c("region","vehicle_type","technology")]
 
   SWS$FV_final_pref[technology == "FCEV" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|

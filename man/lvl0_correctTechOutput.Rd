@@ -4,8 +4,15 @@
 \alias{lvl0_correctTechOutput}
 \title{Fix issues with the GCAM data}
 \usage{
-lvl0_correctTechOutput(tech_output)
+lvl0_correctTechOutput(GCAM_output, NEcost, logitexp)
+}
+\arguments{
+\item{GCAM_output}{output from GCAM raw data wrangling}
+
+\item{NEcost}{non energy costs}
+
+\item{logitexp}{logit exponents}
 }
 \description{
-Applies corrections to GCAM outdated/horrible data. No conversion of units happening.
+Applies corrections to GCAM outdated data. No conversion of units happening.
 }

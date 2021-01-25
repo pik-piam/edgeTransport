@@ -4,9 +4,28 @@
 \alias{lvl1_SWclustering}
 \title{Create regional clusters to bin different share weight trends.}
 \usage{
-lvl1_SWclustering(scenario)
+lvl1_SWclustering(
+  input_folder,
+  REMIND_scenario,
+  REMIND2ISO_MAPPING,
+  WDI_dir = "WDI"
+)
+}
+\arguments{
+\item{input_folder}{folder hosting raw data}
+
+\item{REMIND_scenario}{SSP scenario}
+
+\item{REMIND2ISO_MAPPING}{REMIND2iso mapping}
+
+\item{WDI_dir}{directory with WDI data}
+}
+\value{
+clusters grouping regions for preference factors trends
 }
 \description{
-Uses internal package data from WDI:
-WDI_area_country=data.table(WDI::WDI(indicator = "AG.SRF.TOTL.K2",extra=TRUE))
+Create regional clusters to bin different share weight trends.
+}
+\author{
+Marianna Rottoli
 }

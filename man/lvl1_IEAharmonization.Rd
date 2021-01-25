@@ -4,10 +4,12 @@
 \alias{lvl1_IEAharmonization}
 \title{Harmonize the energy intensities to match the IEA energy balances.}
 \usage{
-lvl1_IEAharmonization(GCAMmapping, tech_data)
+lvl1_IEAharmonization(int, demKm)
 }
 \arguments{
-\item{tech_data}{}
+\item{int}{intensity}
+
+\item{demKm}{demand in million km}
 }
 \description{
 We provide energy service trajectories. IEA energy balances have to be met and are *not*

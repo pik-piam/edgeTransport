@@ -4,11 +4,45 @@
 \alias{lvl0_loadUCD}
 \title{Load the UCD transportation database}
 \usage{
-lvl0_loadUCD(GCAM_data, EDGE_scenario, REMIND_scenario, input_folder,
-  years, UCD_dir = "UCD")
+lvl0_loadUCD(
+  GCAM_data,
+  EDGE_scenario,
+  REMIND_scenario,
+  GCAM2ISO_MAPPING,
+  input_folder,
+  years,
+  UCD_dir = "UCD",
+  enhancedtech,
+  selfmarket_taxes,
+  rebates_febates,
+  techswitch
+)
 }
 \arguments{
-\item{UCD_dir}{}
+\item{GCAM_data}{GCAM based data}
+
+\item{EDGE_scenario}{EDGE transport scenario specifier}
+
+\item{REMIND_scenario}{SSP scenario}
+
+\item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
+
+\item{input_folder}{folder hosting raw data}
+
+\item{years}{time steps}
+
+\item{UCD_dir}{directory with UCD data}
+
+\item{enhancedtech}{switch activating optimistic development of alternative technologies}
+
+\item{selfmarket_taxes}{switch activating decrease in registration taxes}
+
+\item{rebates_febates}{activating rebates-feebates}
+
+\item{techswitch}{technology at the center of the policy packages}
+}
+\value{
+non fuel price and annual mileage of vehicles
 }
 \description{
 Loads and prepares the non_fuel prices.
@@ -17,4 +51,7 @@ Final values:
   non fuel price in 1990$/pkt (1990USD/tkm),
   annual mileage in vkt/veh/yr (vehicle km traveled per year),
   non_fuel_split in 1990$/pkt (1990USD/tkm)
+}
+\author{
+Marianna Rottoli
 }
