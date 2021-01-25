@@ -7,7 +7,13 @@
 lvl2_REMINDdemand(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario)
 }
 \arguments{
-\item{REMIND_scenario}{}
+\item{regrdemand}{demand regression}
+
+\item{EDGE2teESmap}{mapping between EDGE-T and REMIND technologies}
+
+\item{REMINDtall}{extended REMIND time steps}
+
+\item{REMIND_scenario}{SSP scenario}
 }
 \description{
 Provide demand trajectories for REMIND

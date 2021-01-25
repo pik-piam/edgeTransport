@@ -4,9 +4,40 @@
 \alias{lvl0_toISO}
 \title{Produce ISO versions of all files.}
 \usage{
-lvl0_toISO(GCAM_data, VOT_data, UCD_data, EDGE_scenario,
-  REMIND_scenario = "SSP2")
+lvl0_toISO(
+  input_data,
+  VOT_data,
+  price_nonmot,
+  UCD_data,
+  GCAM2ISO_MAPPING,
+  REMIND2ISO_MAPPING,
+  EDGE_scenario,
+  REMIND_scenario = "SSP2"
+)
+}
+\arguments{
+\item{input_data}{demand and energy intensity input data}
+
+\item{VOT_data}{value of time data}
+
+\item{price_nonmot}{price non motorized transport}
+
+\item{UCD_data}{UCD data}
+
+\item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
+
+\item{REMIND2ISO_MAPPING}{regional mapping}
+
+\item{EDGE_scenario}{EDGE transport scenario specifier}
+
+\item{REMIND_scenario}{SSP scenario}
+}
+\value{
+ISO level data for all entries
 }
 \description{
 No conversion of units happening.
+}
+\author{
+Marianna Rottoli
 }

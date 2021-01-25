@@ -4,16 +4,29 @@
 \alias{lvl0_VOTandExponents}
 \title{Load value-of-time and exponents}
 \usage{
-lvl0_VOTandExponents(GCAM_data, REMIND_scenario, input_folder,
-  logitexp_dir = "GCAM_logit_exponents")
+lvl0_VOTandExponents(
+  GCAM_data,
+  REMIND_scenario,
+  input_folder,
+  GCAM2ISO_MAPPING,
+  logitexp_dir = "GCAM_logit_exponents"
+)
 }
 \arguments{
-\item{logitexp_dir}{}
+\item{GCAM_data}{GCAM based data}
+
+\item{REMIND_scenario}{SSP scenario}
+
+\item{input_folder}{folder hosting raw data}
+
+\item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
+
+\item{logitexp_dir}{directory with logit exponents for GCAM}
 }
 \description{
 load logit exponents for each level: they are based on GCAM assumptions.
 They are on csv files that already follow the EDGE structure, created by hand.
 }
 \details{
-VOT values in [1990$/pkm]
+VOT values in (1990$/pkm)
 }

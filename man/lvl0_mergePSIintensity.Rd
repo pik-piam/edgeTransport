@@ -4,10 +4,24 @@
 \alias{lvl0_mergePSIintensity}
 \title{Merge PSI Energy Intensity for EU with GCAM Data}
 \usage{
-lvl0_mergePSIintensity(GCAM_data, input_folder, PSI_dir = "PSI")
+lvl0_mergePSIintensity(
+  GCAM_data,
+  input_folder,
+  PSI_dir = "PSI",
+  enhancedtech,
+  techswitch
+)
 }
 \arguments{
-\item{PSI_dir}{}
+\item{GCAM_data}{GCAM based data}
+
+\item{input_folder}{folder hosting raw data}
+
+\item{PSI_dir}{directory with PSI data}
+
+\item{enhancedtech}{switch activating optimistic development of alternative technologies}
+
+\item{techswitch}{technology at the center of the policy packages}
 }
 \description{
 Final values: MJ/km (pkm and tkm)

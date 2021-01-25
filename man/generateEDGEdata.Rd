@@ -2,25 +2,33 @@
 % Please edit documentation in R/generateEDGEdata.R
 \name{generateEDGEdata}
 \alias{generateEDGEdata}
-\title{Generate EDGE Input Data for the REMIND model.}
+\title{Generate EDGE-Transport Input Data for the REMIND model.}
 \usage{
-generateEDGEdata(input_folder, output_folder, mappings_folder, REMIND_gdx,
-  EDGE_scenario = "conservative", REMIND_scenario = "SSP2",
-  saveRDS = FALSE)
+generateEDGEdata(
+  input_folder,
+  output_folder,
+  EDGE_scenario,
+  REMIND_scenario = "SSP2",
+  saveRDS = FALSE
+)
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}
 
 \item{output_folder}{folder hosting REMIND input files}
 
-\item{mappings_folder}{contains mappings of techs and regions}
-
-\item{REMIND_gdx}{GAMS binary to obtain price trajectories}
-
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 
-\item{REMIND_scenario}{SSP/SDP scenario}
+\item{REMIND_scenario}{SSP scenario}
+
+\item{saveRDS}{optional saving of intermediate RDS files}
+}
+\value{
+generated EDGE-transport input data
 }
 \description{
 Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
+}
+\author{
+Alois Dirnaichner, Marianna Rottoli
 }

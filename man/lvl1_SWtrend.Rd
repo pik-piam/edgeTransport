@@ -4,13 +4,36 @@
 \alias{lvl1_SWtrend}
 \title{Calculate a trend for the share weights based on the EDGE scenario and the regional clusters.}
 \usage{
-lvl1_SWtrend(calibration_output, clusters, years, REMIND_scenario,
-  EDGE_scenario)
+lvl1_SWtrend(
+  calibration_output,
+  clusters,
+  years,
+  REMIND2ISO_MAPPING,
+  REMIND_scenario,
+  EDGE_scenario
+)
 }
 \arguments{
-\item{EDGE_scenario}{in order to avoid inconsistencies, only the combinations present in dt_tmp are to be taken from dt, which instead is based on a cartesian product.
-If the sum of all years present in the group is 2100, i.e. 2100 is the only year present, the column has to be deleted}
+\item{calibration_output}{historically calibrated preference factors}
+
+\item{clusters}{clusters of regions based on geographical structure}
+
+\item{years}{time steps}
+
+\item{REMIND2ISO_MAPPING}{REMIND2iso mapping}
+
+\item{REMIND_scenario}{SSP scenario}
+
+\item{EDGE_scenario}{EDGE transport scenario specifier}
+}
+\value{
+projected trend for preference factors
 }
 \description{
 Calculate a trend for the share weights based on the EDGE scenario and the regional clusters.
+}
+\author{
+Marianna Rottoli, Alois Dirnaichner
+in order to avoid inconsistencies, only the combinations present in dt_tmp are to be taken from dt, which instead is based on a cartesian product.
+If the sum of all years present in the group is 2100, i.e. 2100 is the only year present, the column has to be deleted
 }

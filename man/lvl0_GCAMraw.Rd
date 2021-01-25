@@ -6,6 +6,14 @@
 \usage{
 lvl0_GCAMraw(input_folder, GCAM_dir = "GCAM")
 }
+\arguments{
+\item{input_folder}{folder hosting raw data}
+
+\item{GCAM_dir}{subdirectory within the data input with GCAM data}
+}
+\value{
+transport entries (demand, energy intensity, load factor, value of time, structure of the logit, vehicle speed)
+}
 \description{
-Demand in million pkm and tmk (CHECK!), EI in MJ/km
+Demand in million pkm and tmk, EI in MJ/km
 }
