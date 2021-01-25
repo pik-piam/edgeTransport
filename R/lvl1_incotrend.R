@@ -302,7 +302,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
 
   ## convergence year for FCEV Buses and Trucks is more optimistic in the HydrHype case
   if (techswitch == "FCEV") {
-    convsymmFCEV = 2025
+    convsymmFCEV = 2035
     convsymmHydrogenAir = 2100
   } else {
     convsymmFCEV = 2075
@@ -311,15 +311,15 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
 
   ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
   if (techswitch == "BEV") {
-    convsymmBEV = 2025
+    convsymmBEV = 2035
     } else {
     convsymmBEV = 2075
   }
 
   ## small trucks
-  smtruck = c("Truck (1-6t)", "Truck (0-6t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (2-5t)", "Truck (0-3.5t)", "Truck (0-1t)", "Truck (0-2.7t)")
+  smtruck = c("Truck (1-6t)", "Truck (0-6t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (2-5t)", "Truck (0-3.5t)", "Truck (0-1t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)")
 
-  SWS$FV_final_pref[technology == "FCEV" & year >= 2020 & vehicle_type %in% smtruck,
+  SWS$FV_final_pref[technology == "FCEV" & year >= 2025 & vehicle_type %in% smtruck,
                     value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmFCEV, speed = 0.1),
                     by=c("region","vehicle_type","technology")]
 

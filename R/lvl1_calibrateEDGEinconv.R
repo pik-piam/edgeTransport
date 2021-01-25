@@ -154,7 +154,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   ## needs rando lambdas for the sectors that are not explicitly calculated
   S1S2_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  S1S2_sw=sw_calc(S1S2_sw,exp_prices = c(0.5,1,2,3,1,4),grouping_value = "subsector_L2")
+  S1S2_sw=sw_calc(S1S2_sw,exp_prices = c(1,0.5,2,3,1,4),grouping_value = "subsector_L2")
 
   ## reshape, save and store the sw at this level
   S1S2_final_SW=S1S2_sw[,.(region,year,subsector_L1,subsector_L2,subsector_L3,sector,sw,tot_price,logit.exponent)]

@@ -218,6 +218,8 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   logit_exponent_S1S2 = fread(exp_folder("S1S2_logitexponent.csv"))
   logit_exponent_S2S3 = fread(exp_folder("S2S3_logitexponent.csv"))
   logit_exponent_S3S = fread(exp_folder("S3S_logitexponent.csv"))
+  ## make freight less price sensitive
+  logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
   ## load VOT factors and speed
   vott_all = GCAM_data[["vott_all"]]
   speed = GCAM_data[["speed"]]
@@ -291,7 +293,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   ## year at which the convergence happens
   tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","supplysector", "tranSubsector")]
 
-  ## value of the non-fuel price after the convergence
+  ## value of speed after the convergence
   tmp3 = richave[, c("year", "speed", "supplysector", "tranSubsector")]
   setnames(tmp3, old = c("speed"), new = c("speed_trend"))
   tmp2 = merge(tmp2,tmp3,by=c("year", "supplysector", "tranSubsector"))
