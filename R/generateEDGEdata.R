@@ -348,10 +348,11 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
-    md_template = "report.Rmd"
+    md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
-    system.file("Rmd", md_template, package = "edgeTransport")
-    render(level2path(md_template), output_format="pdf_document")
+    file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
+              md_template, overwrite = T)
+    render(md_template, output_format="pdf_document")
   }
 
 
