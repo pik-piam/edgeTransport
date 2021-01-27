@@ -26,13 +26,15 @@
 
 
 lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, rebates_febates, techswitch){
-  subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_total_non_fuel <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
+  subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
   #==== Load data ====
   #readUCD
   #load database UCD transportation
   UCD2iso=fread(file.path(input_folder, UCD_dir, "mapping_UCDdb_ISO.csv"))
   logit_category=GCAM_data[["logit_category"]]
   UCD_transportation_database = fread(file.path(input_folder, UCD_dir, "UCD_transportation_database.csv"), stringsAsFactors=F, header = TRUE)
+  ## simplify costs removing non used data
+  UCD_transportation_database = UCD_transportation_database[!size.class %in% c("Three-Wheeler", "Heavy Bus", "Light Bus")]
   setnames(UCD_transportation_database, old = c("2005", "2020", "2035", "2050", "2065", "2080", "2095"), new = c("X2005", "X2020", "X2035", "X2050", "X2065", "X2080", "X2095"))
   ## read load factor from the previous step, FIXME improper nmes again, not clear who should contain
   load_factor=GCAM_data[["load_factor"]]
@@ -140,12 +142,11 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     tmp=copy(psi_costs)
     tmp[,region:="Eastern Europe"]
     psi_costs=rbind(psi_costs,tmp)
-
     setnames(psi_costs,old="variable",new="year")
     psi_costs[, EDGE_category:=ifelse(technology=="ICEV-g","NG",NA)]
     psi_costs[, EDGE_category:=ifelse(technology %in% c("ICEV-p","ICEV-d"),"Liquids",EDGE_category)]
     psi_costs[, EDGE_category:=ifelse(grepl("PHEV",technology),"Hybrid Electric",EDGE_category)]
-    psi_costs[,EDGE_category:=ifelse(is.na(EDGE_category),technology,EDGE_category)]
+    psi_costs[, EDGE_category:=ifelse(is.na(EDGE_category),technology,EDGE_category)]
 
     ## average on the EDGE category
     psi_costs=psi_costs[,.(value=mean(value)),by=c("EDGE_category","region","vehicle_type","year")]
@@ -187,7 +188,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     tmp=tmp[size.class!="Mini Car",]
 
     ## attribute the other costs components from BEVs to Hybrid Electic for EU
-    costs_UCD = rbind(costs_UCD, costs_UCD[UCD_region %in% c("Western Europe", "Eastern Europe") & UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
+    costs_UCD = rbind(costs_UCD, costs_UCD[mode %in% "LDV_4W" & UCD_region %in% c("Western Europe", "Eastern Europe") & UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
 
     ## merge back with the original database
     costs_UCD=merge(costs_UCD[!(UCD_region %in% c("Western Europe", "Eastern Europe") & ## EU regions trends come from PSI
@@ -254,8 +255,6 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
 
     non_energy_cost[, UCD_region := gsub("_"," ", UCD_region)]
 
-    #fix threewheelers for China, their UCD_fuel is called "NG" instead of Natural Gas
-    non_energy_cost[UCD_region=="China" & size.class=="Three-Wheeler" & UCD_technology=="NG", UCD_fuel :="Natural Gas"]
     non_energy_cost = non_energy_cost[, .(year, UCD_region, UCD_sector, mode, UCD_technology, variable, value, size.class)]
     non_energy_cost = non_energy_cost[year %in% years,]
     ## attribute categories coherent with the rest of the model
@@ -357,7 +356,6 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     ## calculate total fuel price
     non_energy_cost[,non_fuel_cost:=non_fuel_OPEX+
                       Operating_subsidy+
-                      Operating_costs_total_non_fuel+
                       Operating_costs_tolls+
                       Operating_costs_registration_and_insurance+
                       Operating_costs_maintenance+
@@ -371,7 +369,7 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
     non_energy_cost[, type := "normal"]
     ## convert back to long format with the newly calculated total non fuel price
     non_energy_cost=melt(non_energy_cost,id.vars = c("year","UCD_region","UCD_sector", "mode","UCD_technology","size.class", "type"),
-                         measure.vars=c("non_fuel_OPEX","Operating_subsidy", "Operating_costs_total_non_fuel","Operating_costs_tolls", "Operating_costs_registration_and_insurance","Operating_costs_maintenance","Capital_costs_total","Capital_costs_purchase","Capital_costs_other","Capital_costs_infrastructure","CAPEX_and_non_fuel_OPEX","CAPEX","non_fuel_cost"),
+                         measure.vars=c("non_fuel_OPEX","Operating_subsidy", "Operating_costs_tolls", "Operating_costs_registration_and_insurance","Operating_costs_maintenance","Capital_costs_total","Capital_costs_purchase","Capital_costs_other","Capital_costs_infrastructure","CAPEX_and_non_fuel_OPEX","CAPEX","non_fuel_cost"),
                          variable.name="price_component",
                          value.name="value")
 
