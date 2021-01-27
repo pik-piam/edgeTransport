@@ -1,0 +1,4 @@
+^edgetRansport\.Rproj$
+^.*\.zenodo.json$
+^\.buildlibrary$
+^GDP*\.RDS$
