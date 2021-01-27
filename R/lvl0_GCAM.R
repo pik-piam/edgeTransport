@@ -218,8 +218,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   logit_exponent_S1S2 = fread(exp_folder("S1S2_logitexponent.csv"))
   logit_exponent_S2S3 = fread(exp_folder("S2S3_logitexponent.csv"))
   logit_exponent_S3S = fread(exp_folder("S3S_logitexponent.csv"))
-  ## make freight less price sensitive
-  logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
+
   ## load VOT factors and speed
   vott_all = GCAM_data[["vott_all"]]
   speed = GCAM_data[["speed"]]
@@ -556,7 +555,8 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## === Substitute lambda === ##
   ## logit exponent is based on Givord et al (see paper)
   logitexp$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
-
+  ## make freight less price sensitive
+  logitexp$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
 
   return(list(GCAM_output = GCAM_output,
               NEcost = NEcost,
