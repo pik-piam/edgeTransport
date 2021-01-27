@@ -218,6 +218,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   logit_exponent_S1S2 = fread(exp_folder("S1S2_logitexponent.csv"))
   logit_exponent_S2S3 = fread(exp_folder("S2S3_logitexponent.csv"))
   logit_exponent_S3S = fread(exp_folder("S3S_logitexponent.csv"))
+
   ## load VOT factors and speed
   vott_all = GCAM_data[["vott_all"]]
   speed = GCAM_data[["speed"]]
@@ -291,7 +292,7 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   ## year at which the convergence happens
   tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","supplysector", "tranSubsector")]
 
-  ## value of the non-fuel price after the convergence
+  ## value of speed after the convergence
   tmp3 = richave[, c("year", "speed", "supplysector", "tranSubsector")]
   setnames(tmp3, old = c("speed"), new = c("speed_trend"))
   tmp2 = merge(tmp2,tmp3,by=c("year", "supplysector", "tranSubsector"))
@@ -452,68 +453,6 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   ## china has 20% EBuses https://www.bloomberg.com/news/articles/2019-05-15/in-shift-to-electric-bus-it-s-china-ahead-of-u-s-421-000-to-300
 
-  ## === Correct & Integrate costs === ##
-  ## costs of non fuel price LDV have to be scaled as well
-  ## costs in 2010
-  ## 1.12 [2017USD/pkm] = 0.59 [1990USD/pkm] BEV car
-  ## 0.78 [2017USD/pkm] = 0.42 [1990USD/pkm] HV and ICE car
-  ## 2.04 [2017USD/pkm] = 1.08 [1990USD/pkm] FCEV car
-  ## costs in 2030
-  ## 0.58 [2017USD/pkm] = 0.31 [1990USD/pkm] BEV car
-  ## 0.58 [2017USD/pkm] = 0.31 [1990USD/pkm] HV and ICE car
-  ## 0.89 [2017USD/pkm] = 0.47 [1990USD/pkm] FCEV car
-  ## costs in 2050
-  ## 0.52 [2017USD/pkm] = 0.28 [1990USD/pkm] BEV car
-  ## 0.54 [2017USD/pkm] = 0.29 [1990USD/pkm] HV and ICE car
-  ## 0.54 [2017USD/pkm] = 0.29 [1990USD/pkm] FCEV car
-  ## value in 2100 is assumed equal to 2050
-  BEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(1.53, 0.60, 0.56, 0.56), technology = rep("BEV", 4))
-  FCEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(2.10, 0.91, 0.56, 0.54), technology = rep("FCEV", 4))
-  PHEVs = data.table(year = c(2010, 2030, 2050, 2100), cost = c(0.80, 0.59, 0.54, 0.54), technology = rep("Hybrid Electric", 4))
-  ## values for Liquids and NG are estimated
-  ## liquids are ~ 40% of a BEV car today, see https://www.sciencedirect.com/science/article/abs/pii/S0306261916307206?via%3Dihub
-  ## NG are 0.7 always
-  ICEs = data.table(year = c(2010, 2030, 2050, 2100), cost = rep(0.6, 4), technology = rep("Liquids", 4))
-  NGVs = data.table(year = c(2010, 2030, 2050, 2100), cost = rep(0.7, 4), technology = rep("NG", 4))
-
-  costs_zhang = rbind(BEVs, FCEVs, PHEVs, ICEs, NGVs)
-  ## assume linear decrease in non-fuel price between the temporal time steps
-  costs_zhang = approx_dt(costs_zhang, unique(NEcost$non_energy_cost$year),
-                         xcol = "year",
-                         ycol = "cost",
-                         idxcols = c("technology"),
-                         extrapolate = TRUE)
-
-
-  ## find the ratio in prices between a compact car and any other LDV (e.g. ICE: CompactCar/MidsizeCar)
-  inspect_ratios = NEcost$non_energy_cost[region %in% c("China") & subsector_L1 %in% c("trn_pass_road_LDV_4W") & type =="normal", ]
-  inspect_ratios[, ratio := non_fuel_price/ non_fuel_price[vehicle_type == "Compact Car" & year == 2015], by = c("technology")]
-
-
-  ## use Zhang for a Midsize Car, and scale up/down for any other category
-  for (tech in unique(costs_zhang[,technology])) {
-    inspect_ratios[technology == tech, non_fuel_price := ratio*costs_zhang[technology == tech, cost]]
-  }
-
-  inspect_ratios[, ratio:= NULL]
-  ## include missing prices categories
-
-  NEcost$non_energy_cost = rbind(NEcost$non_energy_cost[!(region == "China" & subsector_L1 == "trn_pass_road_LDV_4W")], inspect_ratios)
-
-  setnames(inspect_ratios, old = "non_fuel_price", new = "tot_nonfuelprice")
-  ## scale up of the same values the costs split out TODO
-  costsSplit = NEcost$non_energy_cost_split[region =="China" & subsector_L2 == "trn_pass_road_LDV"]
-  costsSplit = merge(costsSplit, inspect_ratios, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "type"))
-  costsSplit[, non_fuel_price := non_fuel_price*tot_nonfuelprice/sum(non_fuel_price), by=c("year","vehicle_type","technology", "type")]
-  costsSplit[, tot_nonfuelprice := NULL]
-  NEcost$non_energy_cost_split = rbind(NEcost$non_energy_cost_split[!(region == "China" & subsector_L1 == "trn_pass_road_LDV_4W")],
-                                       costsSplit)
-
-  # costs for LDV in USA and EU:
-  # https://www.quora.com/Why-are-cars-considerably-cheaper-in-the-US-than-in-Europe-for-the-same-level-of-functionality
-
-  ## Create values for plug-in hybrids costs: add plug-in hybrids to all countries, using the same ratio as Liquids for each country (ref: EU-15)
-
   ## costs
   inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids"),]
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by = c("year","technology", "vehicle_type", "type")]
@@ -616,7 +555,8 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## === Substitute lambda === ##
   ## logit exponent is based on Givord et al (see paper)
   logitexp$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
-
+  ## make freight less price sensitive
+  logitexp$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
 
   return(list(GCAM_output = GCAM_output,
               NEcost = NEcost,

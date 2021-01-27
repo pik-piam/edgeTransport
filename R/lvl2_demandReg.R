@@ -47,14 +47,14 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
   tmp[, vpoor := ifelse(var == "price_elasticity_pass_sm", -1, vpoor)]
   tmp[, norm := ifelse(var == "income_elasticity_pass_sm", 1, NA)]
   tmp[, norm := ifelse(var == "price_elasticity_pass_sm", -0.625, norm)]
-  ## pass lo
-  tmp[, vrich := ifelse(var == "income_elasticity_pass_lo", 0.25, vrich)]
+  ## pass lo (see The income elasticity of air travel a meta analysis, Gallet et al 2014)
+  tmp[, vrich := ifelse(var == "income_elasticity_pass_lo", 1.5, vrich)]
   tmp[, vrich := ifelse(var == "price_elasticity_pass_lo", -0.25, vrich)]
-  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 0.5, rich)]
+  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 1.5, rich)]
   tmp[, rich := ifelse(var == "price_elasticity_pass_lo", -0.5, rich)]
-  tmp[, vpoor := ifelse(var == "income_elasticity_pass_lo", 0.7, vpoor)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_pass_lo", 1.5, vpoor)]
   tmp[, vpoor := ifelse(var == "price_elasticity_pass_lo", -0.7, vpoor)]
-  tmp[, norm := ifelse(var == "income_elasticity_pass_lo", 1, norm)]
+  tmp[, norm := ifelse(var == "income_elasticity_pass_lo", 1.5, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_pass_lo", -1, norm)]
   ## freight sm
   tmp[, vrich := ifelse(var == "income_elasticity_freight_sm", 0.1875, vrich)]
