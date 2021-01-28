@@ -22,11 +22,6 @@ require(gridExtra)
 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-setConfig(cachefolder = "~/../Desktop/rd3mod_inputdata/cache/default_a/")
-setConfig(sourcefolder = "~/SVN_repository/r3d_mod_input_data/sources/")
-setConfig(forcecache=T)
-setConfig(outputfolder = "~/SVN_repository/r3d_mod_input_data/output/")
-setConfig(mappingfolder = "~/SVN_repository/r3d_mod_input_data/mappings/")
 setConfig(forcecache = TRUE)
 
 cols <- c("NG" = "#d11141",
