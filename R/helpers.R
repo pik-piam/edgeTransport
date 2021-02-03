@@ -4,6 +4,7 @@
 #' @return saves csv files with all EDGE-transport scenarios collected
 #' @author Marianna Rottoli
 #' @import data.table
+#' @export
 
 
 collectScens <- function(output_folder){
