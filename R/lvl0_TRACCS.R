@@ -328,7 +328,9 @@ lvl0_prepareEU <- function(EU_data,
                                GCAM2ISO_MAPPING,
                                REMIND2ISO_MAPPING){
 
-  subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
+  subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- dem <- NULL
+  subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- NULL
+  i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
   dem_OTHER = copy(iso_data$TO_iso)
 
   ## use intensity and LF from GCAM to convert into tkm/pkm for bunkers
@@ -366,6 +368,9 @@ lvl0_prepareEU <- function(EU_data,
     dem_OTHER <- unique(dem_OTHER, by=c("iso", "technology", "vehicle_type", "year"))
   }
 
+  ## keep ISO level demand for 2010, to be used as weights in mrremind run
+  demISO = dem_OTHER[year == 2010][,.(dem = sum(tech_output)), by = c("iso", "sector")]
+  demISO[, dem := round(dem)]
   dem_OTHER = aggregate_dt(dem_OTHER,  REMIND2ISO_MAPPING,
                         valuecol="tech_output",
                         datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"))
@@ -392,7 +397,8 @@ lvl0_prepareEU <- function(EU_data,
 
   ## save demand, load factor
   output=list(LF=LF_OTHER,
-              demkm = dem_OTHER)
+              demkm = dem_OTHER,
+              demISO = demISO)
 
   return(output)
 }

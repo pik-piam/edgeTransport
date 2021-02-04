@@ -1,7 +1,7 @@
 #' Provide demand trajectories for REMIND
 #'
 #' @param regrdemand demand regression
-#' @param EDGE2teESmap mapping between EDGE-T and REMIND technologies 
+#' @param EDGE2teESmap mapping between EDGE-T and REMIND technologies
 #' @param REMINDtall extended REMIND time steps
 #' @param REMIND_scenario SSP scenario
 #'
@@ -42,13 +42,14 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 #' @param capCost capital costs
 #' @param price_nonmot non motorized modes price
 #' @param loadFactor load factors
+#' @param demISO ISO level demand in 2010 to be used as a weight in mrremind
 #' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param level2path directory where data will be saved
-#' @param complexValues values for complex module in REMIND 
+#' @param complexValues values for complex module in REMIND
 
 
-lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, REMIND_scenario, EDGE_scenario, level2path){
+lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, demISO, REMIND_scenario, EDGE_scenario, level2path){
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", REMIND_scenario)
 
@@ -98,6 +99,7 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
   price_nonmot <- addScenarioCols(price_nonmot, 0)
   capcost4W <- addScenarioCols(capcost4W, 0)
   complexValues$shLDV <- addScenarioCols(complexValues$shLDV, 0)
+  demISO <- addScenarioCols(demISO, 0)
 
   ## for the data used in REMIND directly, we put the scens after time and region
   demByTech <- addScenarioCols(demByTech, 2)
@@ -175,6 +177,8 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
 
   fwrite(complexValues$shLDV, file = level2path("shares_LDV_transport.cs4r"))
 
+  print("Creating csv files for energy demand weights...")
+  fwrite(demISO, file = level2path("demISO.csv"))
   print("Creating csv files for non-motorized costs...")
   fwrite(price_nonmot, file = level2path("price_nonmot.csv"))
   print("Creating csv files for energy intensity...")

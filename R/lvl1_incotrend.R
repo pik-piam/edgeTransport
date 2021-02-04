@@ -59,7 +59,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
     tmp2 = richave[, c("year", "GDP_cap")]
     tmp2 = unique(tmp2[, c("year", "GDP_cap")])
     ## dt containing the sw for rich countries
-    tmp3 = richave[, c("GDP", "GDP_cap", "POP_val") := NULL]
+    tmp3 = richave[, c("GDP_cap", "POP_val") := NULL]
     ## names has to be different across dts for roll join
     setnames(tmp2, old = c("year"), new = c("time"))
     setnames(tmp3, old = c("year", "sw"), new = c("time", "sw_new"))
@@ -130,7 +130,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
     ## dt contaning the gdp towards which to converge
     tmp2 = unique(richave[, c("year", "GDP_cap", "region_leader")])
     ## dt containing the sw for rich countries
-    tmp3 = richave[, c("GDP", "GDP_cap", "POP_val") := NULL]
+    tmp3 = richave[, c("GDP_cap", "POP_val") := NULL]
     ## names has to be different across dts for roll join
     setnames(tmp2, old = c("year"), new = c("time"))
     setnames(tmp3, old = c("year", "sw"), new = c("time", "sw_new"))

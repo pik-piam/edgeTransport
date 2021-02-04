@@ -152,11 +152,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## function that merges TRACCS, Eurostat databases with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
   print("-- prepare the EU related databases")
   alldata <- lvl0_prepareEU(EU_data = EU_data,
-                                       iso_data = iso_data,
-                                       intensity = intensity_PSI_GCAM_data,
-                                       input_folder = input_folder,
-                                       GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
-                                       REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+                            iso_data = iso_data,
+                            intensity = intensity_PSI_GCAM_data,
+                            input_folder = input_folder,
+                            GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
+                            REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   target_LF = if(smartlifestyle) 1.8 else 1.7
   target_year = if(smartlifestyle) 2060 else 2080
@@ -400,6 +400,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     price_nonmot = iso_data$price_nonmot,
     complexValues = complexValues,
     loadFactor = alldata$LF,
+    demISO = alldata$demISO,
     REMIND_scenario = REMIND_scenario,
     EDGE_scenario = EDGE_scenario,
     level2path = level2path)
