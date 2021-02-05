@@ -132,7 +132,7 @@ demandEJplotf = function(demandEJ, POP){
   demandEJ[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "Bus"), "Pass non LDV", aggr_mode)]
   demandEJ[, aggr_mode := ifelse(is.na(aggr_mode), "Freight", aggr_mode)]
   demandEJ[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|3W Rural", vehicle_type), "Large Cars", NA)]
-  demandEJ[, veh := ifelse(grepl("Subcompact|Compact|Mini|Three-Wheeler", vehicle_type), "Small Cars", veh)]
+  demandEJ[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
   demandEJ[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
   demandEJ[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
   demandEJ[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV", "Truck", veh)]
@@ -268,6 +268,48 @@ demandEJLDVplotf <- function(demandEJ){
 demandEJLDVplotf(demand_ej)
 ```
 
+# share of alternative techs in ES demand (global values)
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+shareAltTechplotf = function(demandkm){
+  ## REMIND-EDGE results
+  demandkm<- demandkm[,c("subsector_L1","technology", "year","demand_F")]
+  demandkm = demandkm[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1") & year >= 2010]
+  demandkm[, aggr_mode := "LDV"]
+  demandkm[subsector_L1 == "trn_freight_road_tmp_subsector_L1", aggr_mode := "Truck"]
+  demandkm[, technology := ifelse(technology %in% c("BEV", "Electric", "FCEV", "Hybrid Electric"), "Alternative", "Conventional")]
+  demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("year", "aggr_mode", "technology")]
+
+  demandkm= demandkm[, share := demand_F/sum(demand_F), by = c("year", "aggr_mode")]
+
+  demandkm[, aggr_mode := factor(aggr_mode, levels = c("LDV","Truck"))]
+
+  p = ggplot()+
+    geom_line(data = demandkm[technology == "Alternative"], aes(x=year, y=share, color = aggr_mode))+
+    labs(x = "", y = "Share [%] on km traveled")+
+    facet_wrap(~aggr_mode)+
+    theme_minimal()+
+    scale_fill_manual(values = cols)+
+    # scale_fill_manual("Vehicle Type",values = cols, breaks=legend_ord)+
+    theme(axis.text.x = element_text(size = 7),
+          axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+
+
+
+  plots = list(p=p)
+  return(plots)
+
+}
+
+## share of alternative veh on energy services demand
+shareAltTechplotf(demand_km)
+```
+
 # Energy services demand
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -286,7 +328,7 @@ demandkmplotf = function(demandkm, POP){
 
   demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
   demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicle_type), "Large Cars", veh)]
-  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini|Three-Wheeler_tmp_vehicletype", vehicle_type), "Small Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
   demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
   demandkm[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
   demandkm[, veh := ifelse(subsector_L3 == "Domestic Aviation", "Domestic Aviation", veh)]
@@ -421,6 +463,7 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor){
   newcomp = newcomp[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
 
   allfleet = merge(newcomp, vintcomp, all =TRUE, by = c("region", "sector", "subsector_L1", "vehicle_type", "technology",  "year"))
+  allfleet = allfleet[sector=="trn_pass"]
   allfleet = merge(allfleet, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
   allfleet[,vintdem:=totdem*sharetech_vint*shareVS1]
   allfleet[,newdem:=totdem*sharetech_new*shareVS1]
@@ -428,9 +471,8 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor){
                                       "year"), measure.vars = c("vintdem", "newdem"))
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
 
-  # allfleet = merge(allfleet[region=="EUR"], loadFactor, all.x = TRUE, by = c("region", "vehicle_type", "year"))
   annual_mileage = 13000
-  loadFactor = 1.5
+  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
   allfleet = allfleet[,.(value = sum(value/loadFactor/annual_mileage)), by = c("region", "technology", "variable", "year")]
   allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year")]
   allfleet[,alphaval := ifelse(variable =="vintdem", 1,0)]
