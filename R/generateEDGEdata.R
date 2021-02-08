@@ -143,7 +143,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
 
-  ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
+  ## function that loads the TRACCS and Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   print("-- load EU TRACCS data")
   EU_data <- lvl0_loadEU(input_folder)
   if(saveRDS)
@@ -257,70 +257,91 @@ generateEDGEdata <- function(input_folder, output_folder,
   #################################################
   print("-- Start of level 2 scripts")
   ## LOGIT calculation
-  print("-- LOGIT calculation")
+  print("-- LOGIT calculation: three iterations to provide endogenous update of inconvenience costs")
   ## two options of logit calculation: one is on partially on inconvenience costs and partially on preferences, the other is exclusively on preferences
   ## filter out prices and intensities that are related to not used vehicles-technologies in a certain region
   REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
   intensity_gcam = merge(intensity_gcam, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
-  logit_data <- calculate_logit_inconv_endog(
-    prices = REMIND_prices,
-    vot_data = iso_data$vot,
-    pref_data = prefs,
-    logit_params = VOT_lambdas$logit_output,
-    intensity_data = intensity_gcam,
-    price_nonmot = iso_data$price_nonmot,
-    techswitch = techswitch)
+  stations=NULL
+  totveh=NULL
+
+  for (i in seq(1,3,1)) {
+    logit_data <- calculate_logit_inconv_endog(
+      prices = REMIND_prices,
+      vot_data = iso_data$vot,
+      pref_data = prefs,
+      logit_params = VOT_lambdas$logit_output,
+      intensity_data = intensity_gcam,
+      price_nonmot = iso_data$price_nonmot,
+      stations = if (!is.null(stations)) stations,
+      totveh = if (!is.null(totveh)) totveh,
+      techswitch = techswitch)
+
+    shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
+    mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
+    prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
+
+    ## regression demand calculation
+    print(paste0("-- performing demand regression for iter ", i))
+    dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
+                              price_baseline = prices$S3S,
+                              REMIND_scenario = REMIND_scenario,
+                              smartlifestyle = smartlifestyle)
+
+    ## calculate vintages (new shares, prices, intensity)
+    print(paste0("-- calculate vintages structure for iter ", i))
+    prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
+    vintages = calcVint(shares = shares,
+                        totdem_regr = dem_regr,
+                        prices = prices,
+                        mj_km_data = mj_km_data,
+                        years = years)
+
+
+
+    shares$FV_shares = vintages[["shares"]]$FV_shares
+    prices = vintages[["prices"]]
+    mj_km_data = vintages[["mj_km_data"]]
+
+    print(paste0("-- aggregating shares, intensity and demand along REMIND tech dimensions for iter ", i))
+
+    ## calculate demand and intensity. Output: demandF_plot_pkm and demand in million km; demand_I in million pkm/EJ; demandF_plot_EJ in EJ
+    shares_intensity_demand <- shares_intensity_and_demand(
+      logit_shares=shares,
+      MJ_km_base=mj_km_data,
+      EDGE2CESmap=EDGE2CESmap,
+      REMINDyears=years,
+      demand_input = dem_regr)
+
+    demByTech <- shares_intensity_demand[["demand"]] ##in [-]
+    intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
+
+    print(paste0("-- calculate share of available stations for each fuel, for iter ", i))
+    ## calculate the absolute number of vehicles and the share of stations providing each fuel. Output: learntechdem in million veh; stations in %; alltechdem in million veh.
+    num_veh_stations = calc_num_vehicles_stations(
+      norm_dem = shares_intensity_demand[["demandF_plot_pkm"]][
+        subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
+        c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
+      ES_demand_all = dem_regr,
+      techswitch = techswitch,
+      loadFactor = unique(alldata$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
+      rep = TRUE)
+
+    stations = num_veh_stations$stations
+    totveh = num_veh_stations$alltechdem
+
+    i = i+1
+  }
+
+
 
   if(saveRDS){
     saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
     saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
-  }
-
-  if(saveRDS)
     saveRDS(logit_data, file = level2path("logit_data.RDS"))
-
-  shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
-  mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
-  prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
-
-  ## regression demand calculation
-  print("-- performing demand regression")
-  dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
-                          price_baseline = prices$S3S,
-                          REMIND_scenario = REMIND_scenario,
-                          smartlifestyle = smartlifestyle)
-
-  if(saveRDS)
     saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
-
-  ## calculate vintages (new shares, prices, intensity)
-  prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
-  vintages = calcVint(shares = shares,
-                      totdem_regr = dem_regr,
-                      prices = prices,
-                      mj_km_data = mj_km_data,
-                      years = years)
-
-
-  shares$FV_shares = vintages[["shares"]]$FV_shares
-  prices = vintages[["prices"]]
-  mj_km_data = vintages[["mj_km_data"]]
-
-
- if(saveRDS)
     saveRDS(vintages, file = level2path("vintages.RDS"))
-
-  print("-- aggregating shares, intensity and demand along REMIND tech dimensions")
-  shares_intensity_demand <- shares_intensity_and_demand(
-    logit_shares=shares,
-    MJ_km_base=mj_km_data,
-    EDGE2CESmap=EDGE2CESmap,
-    REMINDyears=years,
-    demand_input = dem_regr)
-
-  demByTech <- shares_intensity_demand[["demand"]] ##in [-]
-  intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
-
+  }
 
   print("-- Calculating budget coefficients")
   budget <- calculate_capCosts(
@@ -348,6 +369,7 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
+    saveRDS(stations, file = level2path("stations.RDS"))
     md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
     file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
