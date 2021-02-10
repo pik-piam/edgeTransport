@@ -143,7 +143,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
 
-  ## function that loads the TRACCS and Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
+  ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
   print("-- load EU TRACCS data")
   EU_data <- lvl0_loadEU(input_folder)
   if(saveRDS)
@@ -322,25 +322,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
 
 
-  print("-- calculate costs of available stations for each fuel")
-  ## calculate the stations cost providing each fuel. Output: stations costs in $/km.
-  num_veh_stations = calc_num_vehicles_stations(
-    norm_dem = shares_intensity_demand[["demandF_plot_pkm"]][
-      subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
-      c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
-    intensity = shares_intensity_demand$demandI,
-    ES_demand_all = dem_regr,
-    techswitch = techswitch,
-    loadFactor = unique(alldata$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
-    EDGE2teESmap = EDGE2teESmap,
-    rep = TRUE)
-
   print("-- Calculating budget coefficients")
-  ## calculates the capital cost per km of each CES-technology combination. Units: $/km
   budget <- calculate_capCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
-    stations = num_veh_stations$stations,
     EDGE2CESmap = EDGE2CESmap,
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = years,
