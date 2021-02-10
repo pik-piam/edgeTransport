@@ -304,37 +304,40 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scen
   if (techswitch == "FCEV") {
     convsymmFCEV = 2035
     convsymmHydrogenAir = 2100
+    speedFCEV = 0.5
   } else {
     convsymmFCEV = 2075
     convsymmHydrogenAir = 2150
+    speedFCEV = 0.1
   }
 
   ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
   if (techswitch == "BEV") {
     convsymmBEV = 2035
+    speedBEV = 0.5
     } else {
     convsymmBEV = 2075
+    speedBEV = 0.1
   }
 
   ## small trucks
   smtruck = c("Truck (1-6t)", "Truck (0-6t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (2-5t)", "Truck (0-3.5t)", "Truck (0-1t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)")
 
   SWS$FV_final_pref[technology == "FCEV" & year >= 2025 & vehicle_type %in% smtruck,
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmFCEV, speed = 0.1),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmFCEV, speed = speedFCEV),
                     by=c("region","vehicle_type","technology")]
 
   SWS$FV_final_pref[technology == "FCEV" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
                                                              (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = (convsymmFCEV + 10), speed = 0.1),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = (convsymmFCEV + 10), speed = speedFCEV),
                     by=c("region","vehicle_type","technology")]
-
   SWS$FV_final_pref[technology == "Electric" & year >= 2025 & vehicle_type %in% smtruck,
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmBEV, speed = 0.1),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmBEV, speed = speedBEV),
                     by=c("region","vehicle_type","technology")]
 
   SWS$FV_final_pref[technology == "Electric" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
-                                                                 (! vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = (convsymmBEV + 10), speed = 0.1),
+                                                             (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = (convsymmBEV + 10), speed = speedBEV),
                     by=c("region","vehicle_type","technology")]
 
   ## hydrogen airplanes develop following an S-shaped curve
@@ -349,7 +352,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
     ## BEV are constrained, for long distance application
     SWS$FV_final_pref[technology == "Electric" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
                                                                    (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
-                      value := apply_logistic_trends(value[year == 2025], year, ysymm = 2150, speed = 0.1),
+                      value := apply_logistic_trends(value[year == 2025], year, ysymm = (convsymmBEV + 20), speed = speedBEV),
                       by=c("region","vehicle_type","technology")]
   }
 
