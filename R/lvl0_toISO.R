@@ -164,7 +164,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
                                 datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"),
                                 weights=gdp)
     ## UCD data
-    nec_cost <- UCD_data$non_energy_cost$non_energy_cost ## non energy cost aggregated
+    nec_cost <- UCD_data$non_energy_cost ## non energy cost aggregated
     nec_cost <-disaggregate_dt(nec_cost,GCAM2ISO_MAPPING)
     nec_cost = aggregate_dt(nec_cost, REMIND2ISO_MAPPING,
                             valuecol="non_fuel_price",
@@ -244,7 +244,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     nec_cost = rbind(tmp2, nec_cost[region %in% richregions])
 
 
-    nec_cost_split <- UCD_data$non_energy_cost$non_energy_cost_split ## non energy cost disaggregated
+    nec_cost_split <- UCD_data$non_energy_cost_split ## non energy cost disaggregated
     nec_cost_split <-disaggregate_dt(nec_cost_split,GCAM2ISO_MAPPING,
                                   datacols = c("mode","UCD_technology","price_component", "type"))
     nec_cost_split <-aggregate_dt(nec_cost_split, REMIND2ISO_MAPPING,
@@ -252,13 +252,13 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
                                   datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "type", "year", "price_component"),
                                   weights=gdp)
 
-    annual_mileage <- UCD_data[["annual_mileage"]] #already on ISO level
+    annual_mileage <- UCD_data$annual_mileage #already on ISO level
     annual_mileage <- aggregate_dt(annual_mileage, REMIND2ISO_MAPPING,
                                   valuecol="annual_mileage",
                                   datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"),
                                   weights=gdp)
 
-    load_factor <- UCD_data$non_energy_cost[["load_factor"]]
+    load_factor <- UCD_data$load_factor
     load_factor <- disaggregate_dt(load_factor, GCAM2ISO_MAPPING)
 
 

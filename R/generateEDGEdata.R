@@ -110,23 +110,24 @@ generateEDGEdata <- function(input_folder, output_folder,
   UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, rebates_febates = rebates_febates, techswitch = techswitch)
 
-
-
   ## function that integrates GCAM data. No conversion of units happening.
   print("-- correct tech output")
   correctedOutput <- lvl0_correctTechOutput(GCAM_data,
                                             UCD_output$non_energy_cost,
                                             VOT_lambdas$logit_output)
-
-  GCAM_data[["tech_output"]] = correctedOutput$GCAM_output$tech_output
-  GCAM_data[["conv_pkm_mj"]] = correctedOutput$GCAM_output$conv_pkm_mj
-  UCD_output$non_energy_cost$non_energy_cost = correctedOutput$NEcost$non_energy_cost
-  UCD_output$non_energy_cost$non_energy_cost_split = correctedOutput$NEcost$non_energy_cost_split
+  dem_int= list()
+  costs_lf_mile = list()
+  dem_int$tech_output = correctedOutput$GCAM_output$tech_output
+  dem_int$conv_pkm_mj = correctedOutput$GCAM_output$conv_pkm_mj
+  costs_lf_mile$non_energy_cost = correctedOutput$NEcost$non_energy_cost
+  costs_lf_mile$non_energy_cost_split = correctedOutput$NEcost$non_energy_cost_split
+  costs_lf_mile$load_factor = UCD_output$non_energy_cost$load_factor
+  costs_lf_mile$annual_mileage = UCD_output$annual_mileage
   VOT_lambdas$logit_output = correctedOutput$logitexp
 
   if(saveRDS){
-    saveRDS(GCAM_data, file = level0path("GCAM_data.RDS"))
-    saveRDS(UCD_output, file = level0path("UCD_output.RDS"))
+    saveRDS(dem_int, file = level0path("correctedGCAM_data.RDS"))
+    saveRDS(costs_lf_mile, file = level0path("correctedUCD_output.RDS"))
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
 
@@ -134,10 +135,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level in TRACCS. No conversion of units happening.
   print("-- generate ISO level data")
   iso_data <- lvl0_toISO(
-    input_data = GCAM_data,
+    input_data = dem_int,
     VOT_data = VOT_lambdas$VOT_output,
     price_nonmot = VOT_lambdas$price_nonmot,
-    UCD_data = UCD_output,
+    UCD_data = costs_lf_mile,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
     EDGE_scenario = EDGE_scenario,
