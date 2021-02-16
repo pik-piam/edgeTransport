@@ -454,7 +454,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## china has 20% EBuses https://www.bloomberg.com/news/articles/2019-05-15/in-shift-to-electric-bus-it-s-china-ahead-of-u-s-421-000-to-300
 
   ## costs
-  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids"),]
+  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids") & subsector_L1 == "trn_pass_road_LDV_4W",]
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by = c("year","technology", "vehicle_type", "type")]
   inspect_ratios_costs = inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year", "type")] ## if vehicle type is not originally in EU-15
 
@@ -477,13 +477,13 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
 
   ## costs split
-  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & region != "EU-12", ] ## EU-12 is already present, so we exclude it
+  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W" & region != "EU-12", ] ## EU-12 is already present, so we exclude it
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by=c("year","technology", "vehicle_type", "price_component")]
   inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 
   inspect_ratios_costs[, c("technology", "non_fuel_price") := NULL]
 
-  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost_split[technology %in% c("Hybrid Electric") & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
+  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost_split[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
   inspect_ratios_costs = inspect_ratios_costs[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("region", "year", "price_component")] ## if vehicle type is not originally in EU-15
   inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
   inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
@@ -526,14 +526,14 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"], missingtrucksCHA, missingtrucksOAS)
 
-  ## add plug-in hybrids to all countries, using the same ratio as Hybrid Liquids for each country (ref: EU-15)
-  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV"), ]
+  ## add plug-in hybrids to all countries, using the same ratio as BEVs for each country (ref: EU-15)
+  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W", ]
   inspect_ratios_eff[, ratio := conv_pkm_MJ/conv_pkm_MJ[region == "EU-15"], by = c("year", "technology", "vehicle_type")]
   inspect_ratios_eff = inspect_ratios_eff[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 
   inspect_ratios_eff[, c("sector_fuel", "technology", "conv_pkm_MJ") := NULL]
 
-  inspect_ratios_eff = merge(inspect_ratios_eff, GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Electric") & region == "EU-15", ][, c("region", "technology", "sector_fuel") := NULL], all = TRUE)
+  inspect_ratios_eff = merge(inspect_ratios_eff, GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology", "sector_fuel") := NULL], all = TRUE)
   inspect_ratios_eff = inspect_ratios_eff[, conv_pkm_MJ := ifelse(is.na(conv_pkm_MJ), mean(conv_pkm_MJ, na.rm = TRUE), conv_pkm_MJ), by = c("region", "year")] ## if vehicle type is not originally in EU-15
   inspect_ratios_eff[, conv_pkm_MJ := ratio*conv_pkm_MJ]
   inspect_ratios_eff[, c("technology", "sector_fuel", "ratio") := list("Hybrid Electric", "Liquids-Electricity", NULL)]
