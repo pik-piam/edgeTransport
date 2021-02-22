@@ -94,8 +94,11 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
-  ## remove double category of buses and remove three wheelers
+  ## remove double category of buses and remove three wheelers; substitute
   load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
+  ## add load factor for China and Central Asia of missing vehicle types
+  load_factor = rbind(load_factor,load_factor[region == "China" & vehicle_type == "Truck (0-2t)"][, vehicle_type := "Truck (0-3.5t)"])
+  load_factor = rbind(load_factor,load_factor[region == "Central Asia" & vehicle_type == "Truck (3.5-16t)"][, vehicle_type := "Truck"])
 
   #calculate MJ/km conversion factor
   conv_pkm_mj = merge(vehicle_intensity,load_factor, all = TRUE)
