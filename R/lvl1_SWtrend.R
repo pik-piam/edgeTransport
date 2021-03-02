@@ -1,6 +1,7 @@
 #' Create regional clusters to bin different share weight trends.
 #' 
 #' @param input_folder folder hosting raw data
+#' @param POP population (regional aggregation)
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param WDI_dir directory with WDI data
@@ -8,7 +9,7 @@
 #' @author Marianna Rottoli
 
 
-lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
+lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
   region <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- region3c <- region <- NULL
   iso3c <- sector_fuel <- iso <- NULL
   ## WDI area country is part of internal package data
@@ -34,12 +35,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   area[,var:="area"]
 
   
-
-  
-  ## load and aggregate population
-  POP_country=calcOutput("Population",aggregate = T)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  POP <- magpie2dt(POP_country, regioncol = "region",
-                   yearcol = "year", datacols = "POP")
+  ## load and scale population
   POP=POP[,.(region,year,POP,
              POP_val=value              ## in million
              *1e6)]                     ## in units
@@ -59,9 +55,8 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   clusters=density[!is.na(cluster),c("cluster","region")]
   density[,cluster:=NULL]
   density=merge(density,clusters)
-  
   ## find leading region through max GDP capita in 2015 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
+  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), gdp = GDP, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
   gdp=merge(gdp,POP,by=c("region","year"))
   gdp[,gdpcap:=weight/POP_val]
   

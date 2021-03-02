@@ -85,9 +85,8 @@ pref <- readRDS(datapath(fname = "pref_output.RDS"))
 mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 ## Load population to calculate per capita values
-POP_country=calcOutput("Population", aggregate = T)[,, "pop_SSP2"]
-POP <- magpie2dt(POP_country, regioncol = "region",
-                 yearcol = "year", datacols = "POP")
+POP_country <- readRDS(datapath(fname = "POP_country.RDS"))
+POP = readRDS(datapath(fname = "POP.RDS"))
 ```
 
 
@@ -161,7 +160,7 @@ demandEJplotf = function(demandEJ, POP){
   demandEJ = rbind(demandEJglob,demandEJ)
   ## calculate per capita demand
   demandEJcap = merge(demandEJ , POP, all.x = TRUE, by =c("year", "region"))
-  demandEJcapglob = demandEJcap[,.(demand_EJ = sum(demand_EJ), value = sum(value)), by = .(year, vehicle_type_plot, aggr_mode, POP)][, region:= "World"]
+  demandEJcapglob = demandEJcap[,.(demand_EJ = sum(demand_EJ), value = sum(value)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "World"]
 
   demandEJcap = rbind(demandEJcap, demandEJcapglob)
 

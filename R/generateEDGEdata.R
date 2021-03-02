@@ -5,6 +5,9 @@
 #' @param output_folder folder hosting REMIND input files
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
+#' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population
+#' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP
+#' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances
 #' @param saveRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
@@ -20,6 +23,7 @@
 
 generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
+                             IEAbal=NULL, GDP_country=NULL, POP_country=NULL,
                              saveRDS=FALSE){
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
@@ -82,12 +86,29 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   print(paste0("You selected the ", EDGE_scenario, " transport scenario."))
   print(paste0("You selected the ", REMIND_scenario, " socio-economic scenario."))
-
   #################################################
   ## LVL 0 scripts
   #################################################
   print("-- Start of level 0 scripts")
 
+  ## load the GDP, POP, IEA from default input data if not provided
+  mrremind_folder = file.path(input_folder, "mrremind")
+  if (is.null(IEAbal)) IEAbal = readRDS(file.path(mrremind_folder, "IEAbal.RDS"))
+  if (is.null(GDP_country)) GDP_country = readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
+  if (is.null(POP_country)) POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
+
+  ## rearrange the columns and create regional values
+  GDP_country = GDP_country[,, REMIND_scenario, pmatch=TRUE]
+  GDP_country <- as.data.table(GDP_country)
+  GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
+  GDP = merge(GDP_country, REMIND2ISO_MAPPING, by.x = "ISO3", by.y = "iso")
+  GDP = GDP[,.(value = sum(value)), by = c("region", "year")]
+  POP_country = POP_country[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
+  POP_country <- as.data.table(POP_country)
+  POP_country[, year := as.numeric(gsub("y", "", year))]
+  POP = merge(POP_country, REMIND2ISO_MAPPING, by.x = "iso2c", by.y = "iso")
+  POP = POP[,.(value = sum(value)), by = c("region", "year")]
+  setnames(POP_country, old = c("iso2c", "variable"), new = c("iso", "POP"),skip_absent=TRUE)
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
@@ -103,11 +124,11 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [1990$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(GCAM_data, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
+  VOT_lambdas=lvl0_VOTandExponents(GCAM_data, GDP_country, POP_country = POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
 
   ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
   print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
+  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, rebates_febates = rebates_febates, techswitch = techswitch)
 
 
@@ -138,6 +159,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     VOT_data = VOT_lambdas$VOT_output,
     price_nonmot = VOT_lambdas$price_nonmot,
     UCD_data = UCD_output,
+    GDP = GDP,
+    POP = POP,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
     EDGE_scenario = EDGE_scenario,
@@ -154,6 +177,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   alldata <- lvl0_prepareEU(EU_data = EU_data,
                             iso_data = iso_data,
                             intensity = intensity_PSI_GCAM_data,
+                            GDP_country = GDP_country,
                             input_folder = input_folder,
                             GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
@@ -192,7 +216,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   #################################################
   print("-- Start of level 1 scripts")
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  intensity_gcam <- lvl1_IEAharmonization(int = iso_data$int, demKm = alldata$demkm)
+  intensity_gcam <- lvl1_IEAharmonization(int = iso_data$int, demKm = alldata$demkm, IEA = IEAbal)
   if(saveRDS)
     saveRDS(intensity_gcam, file = level1path("harmonized_intensities.RDS"))
 
@@ -225,6 +249,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- cluster regions for share weight trends")
   clusters_overview <- lvl1_SWclustering(
     input_folder = input_folder,
+    POP = POP,
+    GDP = GDP,
     REMIND_scenario = REMIND_scenario,
     REMIND2ISO_MAPPING)
 
@@ -348,6 +374,7 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
+    saveRDS(POP, file = level2path("POP.RDS"))
     md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
     file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),

@@ -14,13 +14,13 @@
 #' @author Marianna Rottoli
 
 
-lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
+lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
     scenario <- subsector_L1 <- price_component <- GDP_cap <- region <- conv_pkm_MJ <- `.` <- weight <- POP_val <- vehicle_type <- year_at_yearconv <- conv_pkm_MJ_trend <- conv_pkm_MJ_conv <- technology <- NULL
-    subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- GDP <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- NULL
+    subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- NULL
     ## GCAM data
     tech_output <- input_data[["tech_output"]]
     intensity <- input_data[["conv_pkm_mj"]]
-    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
+    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), gdp = GDP_country, to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
     ## tech output is extensive: use GDP weight
     TO_iso <- disaggregate_dt(tech_output, GCAM2ISO_MAPPING,
                               valuecol="tech_output",
@@ -41,7 +41,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     ## convergence of intensity according to GDPcap
     ## working principle: intensity follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
+    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", gdp = GDP, POP = POP, to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
     tmp = merge(int, GDP_POP, by = c("region", "year"))
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
@@ -174,7 +174,8 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GCAM2ISO_MA
     ## convergence of non_fuel_price according to GDPcap
     ## working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.RDS")
+    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", gdp = GDP, POP = POP, to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
+
     tmp = merge(nec_cost, GDP_POP, by = c("region", "year"))
 
     ## define rich regions

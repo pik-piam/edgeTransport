@@ -322,12 +322,12 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 
 
 lvl0_prepareEU <- function(EU_data,
-                               iso_data,
-                               intensity,
-                               input_folder,
-                               GCAM2ISO_MAPPING,
-                               REMIND2ISO_MAPPING){
-
+                           iso_data,
+                           intensity,
+                           GDP_country,
+                           input_folder,
+                           GCAM2ISO_MAPPING,
+                           REMIND2ISO_MAPPING){
   subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- dem <- NULL
   subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- NULL
   i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
@@ -388,7 +388,7 @@ lvl0_prepareEU <- function(EU_data,
     LF_OTHER <- unique(LF_OTHER, by=c("iso", "technology", "vehicle_type", "year"))
   }
 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
+    gdp = getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), usecache = TRUE, isocol = "region", gdp = GDP_country, to_aggregate = T, gdpfile = "GDPcache_iso.RDS")
 
   LF_OTHER <-  aggregate_dt(LF_OTHER, REMIND2ISO_MAPPING,
                                valuecol="loadFactor",
