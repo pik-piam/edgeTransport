@@ -5,9 +5,9 @@
 #' @param output_folder folder hosting REMIND input files
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
-#' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population
-#' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP
-#' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances
+#' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: mrremind::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
+#' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: mrremind::calcOutput("GDPppp", aggregate =F)
+#' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: mrremind::calcOutput("Population", aggregate =F)
 #' @param saveRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
