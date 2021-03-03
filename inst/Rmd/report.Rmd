@@ -14,14 +14,11 @@ require(gdxdt)
 require(gdx)
 require(rmndt)
 require(quitte)
-require(ggpubr)
 require(gridExtra)
 ```
 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-setConfig(forcecache = TRUE)
-
 cols <- c("NG" = "#d11141",
           "Liquids" = "#8c8c8c",
           "Hybrid Liquids" = "#ffc425",
@@ -83,7 +80,6 @@ pref <- readRDS(datapath(fname = "pref_output.RDS"))
 mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 ## Load population to calculate per capita values
-POP_country <- readRDS(datapath(fname = "POP_country.RDS"))
 POP = readRDS(datapath(fname = "POP.RDS"))
 ```
 
