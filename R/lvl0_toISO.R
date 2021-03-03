@@ -6,17 +6,23 @@
 #' @param VOT_data value of time data
 #' @param price_nonmot price non motorized transport
 #' @param UCD_data UCD data
+#' @param GDP_country GDP ISO level
+#' @param GDP regional level
+#' @param POP population regional level
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING regional mapping
+#'
+#' @importFrom edgeTrpLib getRMNDGDP getRMNDGDPcap
+#' @importFrom rmndt aggregate_dt disaggregate_dt
 #' @return ISO level data for all entries
 #' @author Marianna Rottoli
 
 
-lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
+lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_country, POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
     scenario <- subsector_L1 <- price_component <- GDP_cap <- region <- conv_pkm_MJ <- `.` <- weight <- POP_val <- vehicle_type <- year_at_yearconv <- conv_pkm_MJ_trend <- conv_pkm_MJ_conv <- technology <- NULL
-    subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- NULL
+    subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- GDP <- NULL
     ## GCAM data
     tech_output <- input_data[["tech_output"]]
     intensity <- input_data[["conv_pkm_mj"]]
@@ -132,7 +138,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, POP, G
     vots <- names(VOT_data)
 
     vot <- lapply(VOT_data[vots], function(item){
-        disaggregate_dt(item, GCAM2ISO_MAPPING)
+      disaggregate_dt(item, GCAM2ISO_MAPPING)
     })
 
     ## aggregation is on gdp
@@ -165,7 +171,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, POP, G
                                 weights=gdp)
     ## UCD data
     nec_cost <- UCD_data$non_energy_cost$non_energy_cost ## non energy cost aggregated
-    nec_cost <-disaggregate_dt(nec_cost,GCAM2ISO_MAPPING)
+    nec_cost <- disaggregate_dt(nec_cost,GCAM2ISO_MAPPING)
     nec_cost = aggregate_dt(nec_cost, REMIND2ISO_MAPPING,
                             valuecol="non_fuel_price",
                             datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "type", "year"),

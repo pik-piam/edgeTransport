@@ -8,8 +8,8 @@
 #' @param int intensity
 #' @param demKm demand in million km
 #' @param IEA IEA balances
-#'
 #' @importFrom rmndt magpie2dt
+#'
 
 
 lvl1_IEAharmonization <- function(int, demKm, IEA){

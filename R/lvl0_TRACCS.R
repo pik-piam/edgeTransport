@@ -313,12 +313,14 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 #'
 #' @param EU_data TRACCS based data
 #' @param iso_data iso level data
+#' @param GDP_country GDP ISO level
 #' @param intensity energy intensity of technologies
 #' @param input_folder folder hosting raw data
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #'
-#' @importFrom rmndt disaggregate_dt
+#' @importFrom edgeTrpLib getRMNDGDP
+#' @importFrom rmndt approx_dt aggregate_dt
 
 
 lvl0_prepareEU <- function(EU_data,

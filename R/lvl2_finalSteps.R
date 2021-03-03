@@ -4,8 +4,8 @@
 #' @param EDGE2teESmap mapping between EDGE-T and REMIND technologies
 #' @param REMINDtall extended REMIND time steps
 #' @param REMIND_scenario SSP scenario
-#'
 #' @importFrom rmndt approx_dt
+#'
 
 
 lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario){

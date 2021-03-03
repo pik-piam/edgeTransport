@@ -8,6 +8,7 @@
 #'   non_fuel_split in 1990$/pkt (1990USD/tkm)
 #'
 #' @param GCAM_data GCAM based data
+#' @param GDP_country GDP ISO level
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
@@ -23,6 +24,8 @@
 #'
 #' @importFrom stats approx
 #' @importFrom utils read.csv
+#' @importFrom edgeTrpLib getRMNDGDP
+#' @importFrom rmndt approx_dt disaggregate_dt aggregate_dt
 
 
 lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, rebates_febates, techswitch){

@@ -196,14 +196,15 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
 #'
 #' VOT values in (1990$/pkm)
 #' @param GCAM_data GCAM based data
+#' @param GDP_country GDP ISO level
 #' @param POP_country population (ISO level)
 #' @param REMIND_scenario SSP scenario
 #' @param input_folder folder hosting raw data
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
-#' @param POP population
 #' @param logitexp_dir directory with logit exponents for GCAM
-#'
 #' @importFrom rmndt aggregate_dt
+#'
+#' @importFrom edgeTrpLib getRMNDGDP
 
 
 lvl0_VOTandExponents <- function(GCAM_data, GDP_country, POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING, logitexp_dir="GCAM_logit_exponents"){

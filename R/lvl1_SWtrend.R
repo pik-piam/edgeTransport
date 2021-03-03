@@ -1,10 +1,12 @@
 #' Create regional clusters to bin different share weight trends.
 #' 
 #' @param input_folder folder hosting raw data
+#' @param GDP GDP regional level
 #' @param POP population (regional aggregation)
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param WDI_dir directory with WDI data
+#' @importFrom edgeTrpLib getRMNDGDP
 #' @return clusters grouping regions for preference factors trends
 #' @author Marianna Rottoli
 
@@ -80,7 +82,8 @@ lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2IS
 #' @param years time steps
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param REMIND_scenario SSP scenario
-#' @param EDGE_scenario EDGE transport scenario specifier
+#' @param EDGE_scenario EDGE transport scenario specifie
+#' @importFrom rmndt aggregate_dt disaggregate_dt
 #' @return projected trend for preference factors
 #' @author Marianna Rottoli, Alois Dirnaichner
 
@@ -95,7 +98,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     sw <- delete <- NULL
     dt_tmp=copy(dt)
     ## load region clusters
-    dt=aggregate_dt(data=dt,
+    dt= aggregate_dt(data=dt,
                     mapping=REMIND2ISO_MAPPING,
                     weights = gdp,
                     datacols = names(dt)[!c(names(dt))%in% c("year","iso","sw")],
@@ -110,7 +113,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     dt=merge(dt,unique(clusters[,c("region","cluster")]),all=TRUE,by="cluster",allow.cartesian = TRUE)
     dt[,cluster:=NULL]
     ## attribute to countries again
-    dt=disaggregate_dt(data=dt,
+    dt= disaggregate_dt(data=dt,
                        mapping = REMIND2ISO_MAPPING,
                        datacols = names(dt)[!c(names(dt))%in% c("year","region","sw")],
                        valuecol = "sw")

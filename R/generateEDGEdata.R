@@ -13,10 +13,7 @@
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @import mrremind
-#' @import edgeTrpLib
-#' @importFrom madrat setConfig
-#' @importFrom magclass getSets
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND
 #' @importFrom rmarkdown render
 #' @export
 
@@ -28,7 +25,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
-  setConfig(forcecache = TRUE)
+  Year <- value <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -159,8 +156,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     VOT_data = VOT_lambdas$VOT_output,
     price_nonmot = VOT_lambdas$price_nonmot,
     UCD_data = UCD_output,
-    GDP = GDP,
-    POP = POP,
+    GDP_country = GDP_country,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
     EDGE_scenario = EDGE_scenario,

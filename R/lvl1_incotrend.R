@@ -11,6 +11,7 @@
 #' @param techswitch technology at the center of the policy packages
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
+#' @importFrom edgeTrpLib getRMNDGDP
 
 
 lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){

@@ -5,11 +5,11 @@
 #' @param price_baseline baseline prices
 #' @param REMIND_scenario SSP scenario
 #' @param smartlifestyle switch activating sustainable lifestyles
-#'
+#' @importFrom edgeTrpLib getRMNDGDPcap
+#' @importFrom rmndt approx_dt
 #' @return transport demand projections
 #' @author Marianna Rottoli
 #'
-#' @importFrom rmndt magpie2dt
 #' @importFrom data.table shift frank
 
 
