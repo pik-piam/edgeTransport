@@ -313,21 +313,22 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 #'
 #' @param EU_data TRACCS based data
 #' @param iso_data iso level data
+#' @param GDP_country GDP ISO level
 #' @param intensity energy intensity of technologies
 #' @param input_folder folder hosting raw data
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #'
-#' @importFrom rmndt disaggregate_dt
+#' @importFrom rmndt approx_dt aggregate_dt
 
 
 lvl0_prepareEU <- function(EU_data,
-                               iso_data,
-                               intensity,
-                               input_folder,
-                               GCAM2ISO_MAPPING,
-                               REMIND2ISO_MAPPING){
-
+                           iso_data,
+                           intensity,
+                           GDP_country,
+                           input_folder,
+                           GCAM2ISO_MAPPING,
+                           REMIND2ISO_MAPPING){
   subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- dem <- NULL
   subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- NULL
   i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
@@ -387,9 +388,7 @@ lvl0_prepareEU <- function(EU_data,
     print(LF_OTHERr[dups])
     LF_OTHER <- unique(LF_OTHER, by=c("iso", "technology", "vehicle_type", "year"))
   }
-
-  gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
-
+  gdp =copy(GDP_country)
   LF_OTHER <-  aggregate_dt(LF_OTHER, REMIND2ISO_MAPPING,
                                valuecol="loadFactor",
                                datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "year"),

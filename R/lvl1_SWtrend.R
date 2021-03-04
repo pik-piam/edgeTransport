@@ -1,6 +1,8 @@
 #' Create regional clusters to bin different share weight trends.
 #' 
 #' @param input_folder folder hosting raw data
+#' @param GDP GDP regional level
+#' @param POP population (regional aggregation)
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param WDI_dir directory with WDI data
@@ -8,7 +10,7 @@
 #' @author Marianna Rottoli
 
 
-lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
+lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2ISO_MAPPING, WDI_dir="WDI"){
   region <- `.` <- var <- value <- POP_val <- cluster <- AG.SRF.TOTL.K2 <- gdpcap <- weight <- region3c <- region <- NULL
   iso3c <- sector_fuel <- iso <- NULL
   ## WDI area country is part of internal package data
@@ -34,12 +36,7 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   area[,var:="area"]
 
   
-
-  
-  ## load and aggregate population
-  POP_country=calcOutput("Population",aggregate = T)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  POP <- magpie2dt(POP_country, regioncol = "region",
-                   yearcol = "year", datacols = "POP")
+  ## load and scale population
   POP=POP[,.(region,year,POP,
              POP_val=value              ## in million
              *1e6)]                     ## in units
@@ -59,10 +56,8 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
   clusters=density[!is.na(cluster),c("cluster","region")]
   density[,cluster:=NULL]
   density=merge(density,clusters)
-  
   ## find leading region through max GDP capita in 2015 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
-  gdp=merge(gdp,POP,by=c("region","year"))
+  gdp=merge(GDP,POP,by=c("region","year"))
   gdp[,gdpcap:=weight/POP_val]
   
   
@@ -81,28 +76,27 @@ lvl1_SWclustering <- function(input_folder, REMIND_scenario, REMIND2ISO_MAPPING,
 #' Calculate a trend for the share weights based on the EDGE scenario and the regional clusters.
 #'
 #' @param calibration_output historically calibrated preference factors
+#' @param GDP regional level 
 #' @param clusters clusters of regions based on geographical structure
 #' @param years time steps
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param REMIND_scenario SSP scenario
-#' @param EDGE_scenario EDGE transport scenario specifier
+#' @param EDGE_scenario EDGE transport scenario specifie
+#' @importFrom rmndt aggregate_dt disaggregate_dt
 #' @return projected trend for preference factors
 #' @author Marianna Rottoli, Alois Dirnaichner
 
 
-lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
+lvl1_SWtrend <- function(calibration_output, GDP, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
   region<- cluster <- sw_cluster <- sw <- technology <- subsector_L1 <- subsector_L2 <- iso <- subsector_L3 <- NULL
-  ## load gdp as weight
-  gdp <- getRMNDGDP(scenario = REMIND_scenario, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
-  
   ## function to converge to average "leader region" level
   aveval=function(dt,path2clusters){
     sw <- delete <- NULL
     dt_tmp=copy(dt)
     ## load region clusters
-    dt=aggregate_dt(data=dt,
+    dt= aggregate_dt(data=dt,
                     mapping=REMIND2ISO_MAPPING,
-                    weights = gdp,
+                    weights = GDP,
                     datacols = names(dt)[!c(names(dt))%in% c("year","iso","sw")],
                     valuecol = "sw")
     
@@ -115,7 +109,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     dt=merge(dt,unique(clusters[,c("region","cluster")]),all=TRUE,by="cluster",allow.cartesian = TRUE)
     dt[,cluster:=NULL]
     ## attribute to countries again
-    dt=disaggregate_dt(data=dt,
+    dt= disaggregate_dt(data=dt,
                        mapping = REMIND2ISO_MAPPING,
                        datacols = names(dt)[!c(names(dt))%in% c("year","region","sw")],
                        valuecol = "sw")

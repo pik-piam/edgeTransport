@@ -8,6 +8,7 @@
 #'   non_fuel_split in 1990$/pkt (1990USD/tkm)
 #'
 #' @param GCAM_data GCAM based data
+#' @param GDP_country GDP ISO level
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
@@ -23,9 +24,10 @@
 #'
 #' @importFrom stats approx
 #' @importFrom utils read.csv
+#' @importFrom rmndt approx_dt disaggregate_dt aggregate_dt
 
 
-lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, rebates_febates, techswitch){
+lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, rebates_febates, techswitch){
   subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
   #==== Load data ====
   #readUCD
@@ -384,10 +386,10 @@ lvl0_loadUCD <- function(GCAM_data, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAP
                                     datacols = c("mode","UCD_technology","price_component", "type"))
 
     ## upscale to regions
-    gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
+    gdp_country=copy(GDP_country)
     non_energy_cost=aggregate_dt(non_energy_cost, GCAM2ISO_MAPPING,
                                  datacols = c("mode", "UCD_technology", "price_component", "type"),
-                                 weights = gdp)
+                                 weights = gdp_country)
     ## only EU-15 and EU-12 should have Hybrid Electric
     non_energy_cost = non_energy_cost[(UCD_technology == "Hybrid Electric" & region %in% c("EU-12", "EU-15"))|(UCD_technology != "Hybrid Electric"),]
     dups <- duplicated(non_energy_cost, by=c("region", "UCD_technology", "mode","year","price_component", "type"))
