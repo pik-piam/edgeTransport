@@ -13,9 +13,6 @@ Imports:
     rootSolve,
     rmndt,
     readxl,
-    magclass,
-    mrremind,
-    madrat,
     rmarkdown
 Suggests:
     knitr,
