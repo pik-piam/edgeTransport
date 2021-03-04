@@ -199,19 +199,19 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
 #'
 #' VOT values in (1990$/pkm)
 #' @param GCAM_data GCAM based data
+#' @param GDP_country GDP ISO level
+#' @param POP_country population (ISO level)
 #' @param REMIND_scenario SSP scenario
 #' @param input_folder folder hosting raw data
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param logitexp_dir directory with logit exponents for GCAM
-#'
-#' @importFrom madrat calcOutput
 #' @importFrom rmndt aggregate_dt
+#'
 
 
-lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2ISO_MAPPING, logitexp_dir="GCAM_logit_exponents"){
+lvl0_VOTandExponents <- function(GCAM_data, GDP_country, POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING, logitexp_dir="GCAM_logit_exponents"){
   sector <- logit.exponent <- value <-  region <- ISO3 <- `.` <- time <- Year <- Value <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <- univocal_name <- speed_conv <- year_at_yearconv <- yearconv <-weight <- GDP <- speed_trend <- POP_val <- NULL
   CONV_2005USD_1990USD = 0.67
-
   exp_folder = function(fname){
     file.path(input_folder, logitexp_dir, fname)
   }
@@ -227,28 +227,26 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   speed = GCAM_data[["speed"]]
 
   ## speed converges
-  gdp <- getRMNDGDP(paste0("gdp_", REMIND_scenario), to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
-  pop = calcOutput("Population", aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  pop <- magpie2dt(pop, regioncol = "iso",
-                   yearcol = "year", datacols = "POP")
-  gdp <- aggregate_dt(gdp, GCAM2ISO_MAPPING,
+  gdp_country = copy(GDP_country)
+  gdp <- aggregate_dt(gdp_country, GCAM2ISO_MAPPING,
                       valuecol="weight",
                       datacols=c("variable"))
 
-  pop <- aggregate_dt(pop, GCAM2ISO_MAPPING,
+  pop <- aggregate_dt(POP_country, GCAM2ISO_MAPPING,
                       valuecol="value",
                       datacols=c("POP"))
 
   GDP_POP = merge(gdp, pop, by = c("region", "year"))
-  GDP_POP[,GDP_cap := weight/value]
 
-  tmp = merge(speed, GDP_POP, by = c("region", "year"))
+  GDP_POP_cap = GDP_POP[,GDP_cap := weight/value]
+
+  tmp = merge(speed, GDP_POP_cap, by = c("region", "year"))
   ## define rich regions
   richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
   ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
   richave = tmp[region %in% richregions & speed > 0,]
   richave = richave[, .(speed = sum(speed*weight)/sum(weight)), by = c("tranSubsector", "supplysector", "year")]
-  GDP_POP = GDP_POP[region %in% richregions,]
+  GDP_POP = GDP_POP_cap[region %in% richregions,]
   GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(value)), by = c("year")]
   richave = merge(richave, GDP_POP, by = "year")
   ## average gdp per capita of the rich countries
@@ -311,25 +309,10 @@ lvl0_VOTandExponents <- function(GCAM_data, REMIND_scenario, input_folder, GCAM2
   tmp2 = tmp2[,.(region, year, speed, supplysector, tranSubsector)]
   ## rich countries need to be reintegrated
   speed = rbind(tmp2, speed[region %in% richregions])
-
   ## load logit categories table
   logit_category = GCAM_data[["logit_category"]]
   ## calculate VOT
-  GDPppp_country = calcOutput("GDPppp", aggregate = F)[,, REMIND_scenario, pmatch=TRUE]
-  POP_country = calcOutput("Population", aggregate = F)[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
-  GDPcap = as.data.table(GDPppp_country*CONV_2005USD_1990USD/POP_country) ## GDP_cap in [1990$/person/year]
-  GDPcap = GDPcap[,.(entry_name="GDP_cap", iso = ISO3, year = as.numeric(as.character(gsub("y", "", Year))), GDP_cap = value)]
-
-  gdpdt = as.data.table(GDPppp_country[,,REMIND_scenario, pmatch=TRUE])[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
-  setnames(gdpdt, c("ISO3", "value"), c("iso", "weight"))
-
-  GDPcap=aggregate_dt(GDPcap,
-                      mapping = GCAM2ISO_MAPPING,
-                      valuecol = "GDP_cap",
-                      datacols = "entry_name",
-                      weights = gdpdt)
-
-  vott_all = merge(vott_all, GDPcap, all = TRUE, by = "region", allow.cartesian = TRUE) #for each time step and each region
+  vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "region", allow.cartesian = TRUE) #for each time step and each region
   vott_all = merge (vott_all, speed, all = FALSE, by = c("region", "year", "tranSubsector", "supplysector"))
   WEEKS_PER_YEAR = 50
   HOURS_PER_WEEK = 40

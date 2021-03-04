@@ -3,17 +3,17 @@
 #'
 #' @param tech_output historically calibrated demand
 #' @param price_baseline baseline prices
+#' @param GDP_POP GDP per capita
 #' @param REMIND_scenario SSP scenario
 #' @param smartlifestyle switch activating sustainable lifestyles
-#'
+#' @importFrom rmndt approx_dt
 #' @return transport demand projections
 #' @author Marianna Rottoli
 #'
-#' @importFrom rmndt magpie2dt
 #' @importFrom data.table shift frank
 
 
-lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartlifestyle){
+lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, REMIND_scenario, smartlifestyle){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
@@ -25,10 +25,10 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
   ## conversion rate 2005->1990 USD
   CONV_2005USD_1990USD = 0.67
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
-  GDP_POP = getRMNDGDPcap(scenario = paste0("gdp_", REMIND_scenario), usecache = T, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
-  setnames(GDP_POP, old = "weight", new = "GDP_val")
+  gdp_pop = copy(GDP_POP)
+  setnames(gdp_pop, old = "weight", new = "GDP_val")
   ## create ct with the various elasticities
-  price_el = GDP_POP[,-"variable"]
+  price_el = gdp_pop[,-"variable"]
   tmp = CJ(region=unique(price_el$region), var =c("income_elasticity_pass_sm",
                                             "price_elasticity_pass_sm",
                                             "income_elasticity_pass_lo",
@@ -109,16 +109,16 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
   price_el = dcast(price_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
 
   #calculate growth rates
-  GDP_POP[,`:=`(index_GDP=GDP_val/shift(GDP_val), index_GDPcap=GDP_cap/shift(GDP_cap), index_POP=POP_val/shift(POP_val)), by=c("region")]
+  gdp_pop[,`:=`(index_GDP=GDP_val/shift(GDP_val), index_GDPcap=GDP_cap/shift(GDP_cap), index_POP=POP_val/shift(POP_val)), by=c("region")]
   ## merge GDP_POP and price elasticity
-  GDP_POP = merge(GDP_POP, price_el[,c("region", "year", "income_elasticity_pass_lo", "income_elasticity_pass_sm", "income_elasticity_freight_sm", "income_elasticity_freight_lo")], by = c("region", "year"))
+  gdp_pop = merge(gdp_pop, price_el[,c("region", "year", "income_elasticity_pass_lo", "income_elasticity_pass_sm", "income_elasticity_freight_sm", "income_elasticity_freight_lo")], by = c("region", "year"))
 
   #calculate the indexes raised to the corresponding elasticities
-  GDP_POP[,`:=`(index_GDP_f_sm=index_GDP^income_elasticity_freight_sm,
+  gdp_pop[,`:=`(index_GDP_f_sm=index_GDP^income_elasticity_freight_sm,
                 index_GDP_f_lo=index_GDP^income_elasticity_freight_lo,
                 index_GDPcap_p_sm=index_GDPcap^income_elasticity_pass_sm,
                 index_GDPcap_p_lo=index_GDPcap^income_elasticity_pass_lo)]
-  GDP_POP[,c("income_elasticity_freight_sm", "income_elasticity_freight_lo", "income_elasticity_pass_sm", "income_elasticity_pass_lo") := NULL]
+  gdp_pop[,c("income_elasticity_freight_sm", "income_elasticity_freight_lo", "income_elasticity_pass_sm", "income_elasticity_pass_lo") := NULL]
 
   #order the prices according to the year, within the sector
   price_baseline=price_baseline[order(-frank(sector), year)]
@@ -139,7 +139,7 @@ lvl2_demandReg <- function(tech_output, price_baseline, REMIND_scenario, smartli
   price_baseline[,c("price_elasticity_freight_sm", "price_elasticity_freight_lo", "price_elasticity_pass_sm", "price_elasticity_pass_lo") := NULL]
 
   #create the D* df
-  D_star=merge(price_baseline,GDP_POP,by = c("region","year"))
+  D_star=merge(price_baseline,gdp_pop,by = c("region","year"))
 
   #calculate D* for each mode separately, and select only the useful cols
   D_star=D_star[,.(D_star_f_sm=index_price_f_sm*index_GDP_f_sm,

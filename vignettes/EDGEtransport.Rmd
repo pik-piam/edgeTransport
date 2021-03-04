@@ -35,15 +35,15 @@ Where:
 
 `REMIND_scenario` character string containing the selected SSP scenario. Options are: `SSP1`, `SSP2`, `SSP3`, `SSP4`, `SSP5`. By default, `SSP2` is selected
 
-`saveRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved. By default, the parameter is set to `FALSE`.
+`saveRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved, and a reporting PDF to validate the data is produced in level_2. By default, the parameter is set to `FALSE`.
 
 In order to produce a complete new input data set for REMIND, the function needs to run with all options of `EDGE_scenario`. Afterwards, the results have to be collected to produce [mrremind](https://github.com/pik-piam/mrremind)-compatible input data as follows:
 
 `
-collectScens(output_folder)
+collectScens(scen_folder, output_folder)
 `
-
-where `output_folder` is the folder where the mrremind-compatible input data is saved.
+Where `scen_folder` is the folder where scenarios results were previously stored.
+where `output_folder` is the folder where the mrremind-compatible input data is to be saved. If set to NULL, a sub-folder called `mrremindData` is created in `scen_folder`.
 
 ## Data generation structure
 

@@ -7,7 +7,7 @@
 #' @param PSI_dir  directory with PSI data
 #' @param enhancedtech switch activating optimistic development of alternative technologies
 #' @param techswitch technology at the center of the policy packages
-#'
+#' @importFrom rmndt approx_dt
 #' @importFrom readxl read_excel
 
 
