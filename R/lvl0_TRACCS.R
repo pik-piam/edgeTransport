@@ -319,7 +319,6 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #'
-#' @importFrom edgeTrpLib getRMNDGDP
 #' @importFrom rmndt approx_dt aggregate_dt
 
 
@@ -389,9 +388,7 @@ lvl0_prepareEU <- function(EU_data,
     print(LF_OTHERr[dups])
     LF_OTHER <- unique(LF_OTHER, by=c("iso", "technology", "vehicle_type", "year"))
   }
-
-    gdp = getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), usecache = TRUE, isocol = "region", gdp = GDP_country, to_aggregate = T, gdpfile = "GDPcache_iso.RDS")
-
+  gdp =copy(GDP_country)
   LF_OTHER <-  aggregate_dt(LF_OTHER, REMIND2ISO_MAPPING,
                                valuecol="loadFactor",
                                datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "year"),

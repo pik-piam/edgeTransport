@@ -204,7 +204,6 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
 #' @param logitexp_dir directory with logit exponents for GCAM
 #' @importFrom rmndt aggregate_dt
 #'
-#' @importFrom edgeTrpLib getRMNDGDP
 
 
 lvl0_VOTandExponents <- function(GCAM_data, GDP_country, POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING, logitexp_dir="GCAM_logit_exponents"){
@@ -225,9 +224,8 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, POP_country, REMIND_sce
   speed = GCAM_data[["speed"]]
 
   ## speed converges
-  gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), gdp = GDP_country, to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
-
-  gdp <- aggregate_dt(gdp, GCAM2ISO_MAPPING,
+  gdp_country = copy(GDP_country)
+  gdp <- aggregate_dt(gdp_country, GCAM2ISO_MAPPING,
                       valuecol="weight",
                       datacols=c("variable"))
 

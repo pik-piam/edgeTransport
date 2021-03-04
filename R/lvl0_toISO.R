@@ -9,36 +9,37 @@
 #' @param GDP_country GDP ISO level
 #' @param GDP regional level
 #' @param POP population regional level
+#' @param GDP_POP per capita GDP
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING regional mapping
 #'
-#' @importFrom edgeTrpLib getRMNDGDP getRMNDGDPcap
 #' @importFrom rmndt aggregate_dt disaggregate_dt
 #' @return ISO level data for all entries
 #' @author Marianna Rottoli
 
 
-lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_country, POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
+lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_country, POP, GDP_POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
     scenario <- subsector_L1 <- price_component <- GDP_cap <- region <- conv_pkm_MJ <- `.` <- weight <- POP_val <- vehicle_type <- year_at_yearconv <- conv_pkm_MJ_trend <- conv_pkm_MJ_conv <- technology <- NULL
     subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- NULL
     ## GCAM data
     tech_output <- input_data[["tech_output"]]
     intensity <- input_data[["conv_pkm_mj"]]
-    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), gdp = GDP_country, to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
     ## tech output is extensive: use GDP weight
+    gdp_country = copy(GDP_country)
     TO_iso <- disaggregate_dt(tech_output, GCAM2ISO_MAPPING,
                               valuecol="tech_output",
                               datacols=c("sector", "subsector_L1", "subsector_L2",
                                          "subsector_L3", "vehicle_type", "technology"),
-                              weights=gdp)
+                              weights=gdp_country)
     ## check if there are NAs
     stopifnot(!any(is.na(TO_iso$tech_output)))
 
     ## intensity and load factor are intensive
     int <- disaggregate_dt(intensity, GCAM2ISO_MAPPING)
     ## re-aggregate to REMIND regions
+    gdp =copy(GDP_country)
     int <- aggregate_dt(int, REMIND2ISO_MAPPING,
                            valuecol="conv_pkm_MJ",
                            datacols=c("sector", "subsector_L1", "subsector_L2",
@@ -47,16 +48,16 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     ## convergence of intensity according to GDPcap
     ## working principle: intensity follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", gdp = GDP, POP = POP, to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
-    tmp = merge(int, GDP_POP, by = c("region", "year"))
+    gdp_pop=copy(GDP_POP)
+    tmp = merge(int, gdp_pop, by = c("region", "year"))
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[region %in% richregions & conv_pkm_MJ > 0,]
     richave = richave[, .(conv_pkm_MJ = sum(conv_pkm_MJ*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
-    GDP_POP = GDP_POP[region %in% richregions,]
-    GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
-    richave = merge(richave, GDP_POP, by = "year")
+    gdp_pop = gdp_pop[region %in% richregions,]
+    gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
+    richave = merge(richave, gdp_pop, by = "year")
     ## average gdp per capita of the rich countries
     richave[, GDP_cap := GDP/POP_val]
     ## missing trucks categories are attributed an average cost for rich countries
@@ -180,18 +181,17 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     ## convergence of non_fuel_price according to GDPcap
     ## working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    GDP_POP = getRMNDGDPcap(usecache = TRUE, isocol = "region", gdp = GDP, POP = POP, to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
-
-    tmp = merge(nec_cost, GDP_POP, by = c("region", "year"))
+    gdp_pop=copy(GDP_POP)
+    tmp = merge(nec_cost, gdp_pop, by = c("region", "year"))
 
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[region %in% richregions & non_fuel_price > 0,]
     richave = richave[, .(non_fuel_price = sum(non_fuel_price*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
-    GDP_POP = GDP_POP[region %in% richregions,]
-    GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
-    richave = merge(richave, GDP_POP, by = "year")
+    gdp_pop = gdp_pop[region %in% richregions,]
+    gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
+    richave = merge(richave, gdp_pop, by = "year")
     ## average gdp per capita of the rich countries
     richave[, GDP_cap := GDP/POP_val]
     ## missing trucks categories are attributed an average cost for rich countries

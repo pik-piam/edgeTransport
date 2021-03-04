@@ -5,20 +5,21 @@
 #' @param incocost inconvenience costs for 4wheelers
 #' @param clusters clusters of regions based on geographical structure
 #' @param years time steps
+#' @param GDP GDP regional level
+#' @param GDP_POP GDP per capita
 #' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param techswitch technology at the center of the policy packages
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
-#' @importFrom edgeTrpLib getRMNDGDP
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
-  subsector_L1 <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
+lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_POP, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
+  subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
-  gdp <- getRMNDGDP(scenario = REMIND_scenario, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache_iso.RDS")
-  gdpcap <- getRMNDGDPcap(scenario = REMIND_scenario, usecache = T, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
+  gdp <- copy(GDP)
+  gdpcap <- copy(GDP_POP)
   ## function to converge to average generic rich region (useful for vehicle types and subsector_L1)
   aveval=function(dtin,              ## dt of which I recalculate the SW
                   gdpcap            ## per capita gdp
@@ -382,9 +383,8 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
 
   if (smartlifestyle) {
-    GDP_POP = getRMNDGDPcap(scenario = REMIND_scenario, usecache = T, isocol = "region", to_aggregate = T, gdpCapfile = "GDPcapCache.rds")
     ## roughly distinguish countries by GDPcap
-    richregions = unique(unique(GDP_POP[year == 2010 & GDP_cap > 25000, region]))
+    richregions = unique(unique(gdp_pop[year == 2010 & GDP_cap > 25000, region]))
 
     ## Preference for Walking increases assuming that the infrastructure and the services are smarter closer etc.
     SWS$S3S_final_pref[subsector_L3 %in% c("Walk") & year >= 2020 & region %in% richregions,

@@ -6,7 +6,6 @@
 #' @param REMIND_scenario SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
 #' @param WDI_dir directory with WDI data
-#' @importFrom edgeTrpLib getRMNDGDP
 #' @return clusters grouping regions for preference factors trends
 #' @author Marianna Rottoli
 
@@ -58,8 +57,7 @@ lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2IS
   density[,cluster:=NULL]
   density=merge(density,clusters)
   ## find leading region through max GDP capita in 2015 
-  gdp <- getRMNDGDP(scenario = paste0("gdp_",REMIND_scenario), gdp = GDP, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
-  gdp=merge(gdp,POP,by=c("region","year"))
+  gdp=merge(GDP,POP,by=c("region","year"))
   gdp[,gdpcap:=weight/POP_val]
   
   
@@ -78,6 +76,7 @@ lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2IS
 #' Calculate a trend for the share weights based on the EDGE scenario and the regional clusters.
 #'
 #' @param calibration_output historically calibrated preference factors
+#' @param GDP regional level 
 #' @param clusters clusters of regions based on geographical structure
 #' @param years time steps
 #' @param REMIND2ISO_MAPPING REMIND2iso mapping
@@ -88,11 +87,8 @@ lvl1_SWclustering <- function(input_folder, POP, GDP, REMIND_scenario, REMIND2IS
 #' @author Marianna Rottoli, Alois Dirnaichner
 
 
-lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
+lvl1_SWtrend <- function(calibration_output, GDP, clusters, years, REMIND2ISO_MAPPING, REMIND_scenario, EDGE_scenario){
   region<- cluster <- sw_cluster <- sw <- technology <- subsector_L1 <- subsector_L2 <- iso <- subsector_L3 <- NULL
-  ## load gdp as weight
-  gdp <- getRMNDGDP(scenario = REMIND_scenario, to_aggregate = T, isocol = "region", usecache = T, gdpfile = "GDPcache.RDS")
-  
   ## function to converge to average "leader region" level
   aveval=function(dt,path2clusters){
     sw <- delete <- NULL
@@ -100,7 +96,7 @@ lvl1_SWtrend <- function(calibration_output, clusters, years, REMIND2ISO_MAPPING
     ## load region clusters
     dt= aggregate_dt(data=dt,
                     mapping=REMIND2ISO_MAPPING,
-                    weights = gdp,
+                    weights = GDP,
                     datacols = names(dt)[!c(names(dt))%in% c("year","iso","sw")],
                     valuecol = "sw")
     

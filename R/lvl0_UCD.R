@@ -24,7 +24,6 @@
 #'
 #' @importFrom stats approx
 #' @importFrom utils read.csv
-#' @importFrom edgeTrpLib getRMNDGDP
 #' @importFrom rmndt approx_dt disaggregate_dt aggregate_dt
 
 
@@ -387,10 +386,10 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
                                     datacols = c("mode","UCD_technology","price_component", "type"))
 
     ## upscale to regions
-    gdp <- getRMNDGDP(scenario = paste0("gdp_", REMIND_scenario), gdp = GDP_country, to_aggregate = FALSE, isocol = "iso", usecache = T, gdpfile = "GDPcache_iso.RDS")
+    gdp_country=copy(GDP_country)
     non_energy_cost=aggregate_dt(non_energy_cost, GCAM2ISO_MAPPING,
                                  datacols = c("mode", "UCD_technology", "price_component", "type"),
-                                 weights = gdp)
+                                 weights = gdp_country)
     ## only EU-15 and EU-12 should have Hybrid Electric
     non_energy_cost = non_energy_cost[(UCD_technology == "Hybrid Electric" & region %in% c("EU-12", "EU-15"))|(UCD_technology != "Hybrid Electric"),]
     dups <- duplicated(non_energy_cost, by=c("region", "UCD_technology", "mode","year","price_component", "type"))

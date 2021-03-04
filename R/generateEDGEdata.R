@@ -25,7 +25,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
-  Year <- value <- NULL
+  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -98,14 +98,25 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP_country = GDP_country[,, REMIND_scenario, pmatch=TRUE]
   GDP_country <- as.data.table(GDP_country)
   GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
+  setnames(GDP_country, old = "value", new = "weight")
   GDP = merge(GDP_country, REMIND2ISO_MAPPING, by.x = "ISO3", by.y = "iso")
-  GDP = GDP[,.(value = sum(value)), by = c("region", "year")]
+  GDP = GDP[,.(weight = sum(weight)), by = c("region", "year")]
+  setnames(GDP_country, c("ISO3"), c("iso"))
+
+
   POP_country = POP_country[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
   POP_country <- as.data.table(POP_country)
   POP_country[, year := as.numeric(gsub("y", "", year))]
   POP = merge(POP_country, REMIND2ISO_MAPPING, by.x = "iso2c", by.y = "iso")
   POP = POP[,.(value = sum(value)), by = c("region", "year")]
   setnames(POP_country, old = c("iso2c", "variable"), new = c("iso", "POP"),skip_absent=TRUE)
+
+  GDP_POP=merge(GDP,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
+  GDP_POP[,GDP_cap:=weight/POP_val]
+
+
+  GDP_POP_cap=merge(GDP,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
+  GDP_POP_cap[,GDP_cap:=weight/POP_val]
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
@@ -157,6 +168,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     price_nonmot = VOT_lambdas$price_nonmot,
     UCD_data = UCD_output,
     GDP = GDP,
+    GDP_POP = GDP_POP,
     GDP_country = GDP_country,
     POP = POP,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
@@ -265,6 +277,8 @@ generateEDGEdata <- function(input_folder, output_folder,
                           clusters = clusters,
                           incocost = incocost,
                           calibdem = alldata$demkm,
+                          GDP = GDP,
+                          GDP_POP = GDP_POP,
                           years = years,
                           REMIND_scenario = REMIND_scenario,
                           EDGE_scenario = EDGE_scenario,
@@ -311,6 +325,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- performing demand regression")
   dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
                           price_baseline = prices$S3S,
+                          GDP_POP = GDP_POP,
                           REMIND_scenario = REMIND_scenario,
                           smartlifestyle = smartlifestyle)
 
