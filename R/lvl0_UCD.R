@@ -410,6 +410,12 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
     non_energy_cost=merge(non_energy_cost, logit_category, all=FALSE, by = c("univocal_name","technology"))
     non_energy_cost[, c("univocal_name") := NULL]
+    non_energy_cost[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
+    non_energy_cost[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
+    non_energy_cost[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+    non_energy_cost[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
+    non_energy_cost[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
+    non_energy_cost=non_energy_cost[,.(value = mean(value)), by = c("year","region","sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "type", "price_component")]
 
     ## add load_factor for Hybrid Electric, trucks and buses FCEV and electric, domestic aviation hydrogen
     load_factor = rbind(load_factor, load_factor[technology == "BEV"][, technology := "Hybrid Electric"])

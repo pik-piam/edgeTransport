@@ -60,15 +60,6 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     richave = merge(richave, gdp_pop, by = "year")
     ## average gdp per capita of the rich countries
     richave[, GDP_cap := GDP/POP_val]
-    ## missing trucks categories are attributed an average cost for rich countries
-    richave = rbind(richave, richave[vehicle_type == "Truck (0-3.5t)"][,vehicle_type := "Truck (0-6t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (0-1t)"][,vehicle_type := "Truck (0-2t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (1-6t)"][,vehicle_type := "Truck (2-5t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (4.5-12t)"][,vehicle_type := "Truck (5-9t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (4.5-15t)"][,vehicle_type := "Truck (6-14t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (6-15t)"][,vehicle_type := "Truck (9-16t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (>15t)"][,vehicle_type := "Truck (>14t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck"][,vehicle_type := "Truck (>16t)"])
 
     ## dt on which the GDPcap is checked
     tmp1 = tmp[!region %in% richregions, c("region", "year",
@@ -194,15 +185,6 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     richave = merge(richave, gdp_pop, by = "year")
     ## average gdp per capita of the rich countries
     richave[, GDP_cap := GDP/POP_val]
-    ## missing trucks categories are attributed an average cost for rich countries
-    richave = rbind(richave, richave[vehicle_type == "Truck (0-3.5t)"][,vehicle_type := "Truck (0-6t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (0-1t)"][,vehicle_type := "Truck (0-2t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (1-6t)"][,vehicle_type := "Truck (2-5t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (4.5-12t)"][,vehicle_type := "Truck (5-9t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (4.5-15t)"][,vehicle_type := "Truck (6-14t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (6-15t)"][,vehicle_type := "Truck (9-16t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck (>15t)"][,vehicle_type := "Truck (>14t)"])
-    richave = rbind(richave, richave[vehicle_type == "Truck"][,vehicle_type := "Truck (>16t)"])
 
     ## dt on which the GDPcap is checked
     tmp1 = tmp[!region %in% richregions, c("region", "year", "non_fuel_price", "GDP_cap", "technology", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "type")]

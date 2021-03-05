@@ -43,17 +43,6 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
     richave = merge(richave, gdpcap, by = c("year"))
     ## average gdp per capita of the cluster regions
     richave[, GDP_cap := GDP/POP_val]
-    if (!is.null(richave$vehicle_type)) {
-      ## missing trucks categories are attributed an average cost for rich countries
-      richave = rbind(richave, richave[vehicle_type == "Truck (0-3.5t)"][,vehicle_type := "Truck (0-6t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (0-1t)"][,vehicle_type := "Truck (0-2t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (1-6t)"][,vehicle_type := "Truck (2-5t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (4.5-12t)"][,vehicle_type := "Truck (5-9t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (4.5-15t)"][,vehicle_type := "Truck (6-14t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (6-15t)"][,vehicle_type := "Truck (9-16t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (>15t)"][,vehicle_type := "Truck (>14t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck"][,vehicle_type := "Truck (>16t)"])
-    }
 
     ## dt on which the GDPcap is checked
     tmp1 = dt[!region %in% richregions, c("region", "year", "sw", "GDP_cap", all_subsectors[seq(match(groupval, all_subsectors) - 1,length(all_subsectors), 1)]), with = FALSE]
