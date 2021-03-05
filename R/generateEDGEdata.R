@@ -360,12 +360,24 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   demByTech <- shares_intensity_demand[["demand"]] ##in [-]
   intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
+  norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## total demand normalized to 1; if opt$reporting, in million km
 
+  num_veh_stations = calc_num_vehicles_stations(
+    norm_dem = norm_demand[
+      subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
+      c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
+    ES_demand_all = dem_regr,
+    intensity = intensity_remind,
+    techswitch = techswitch,
+    loadFactor = unique(alldata$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
+    EDGE2teESmap = EDGE2teESmap,
+    rep = TRUE)
 
   print("-- Calculating budget coefficients")
   budget <- calculate_capCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
+    stations = num_veh_stations$stations,
     EDGE2CESmap = EDGE2CESmap,
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = years,
