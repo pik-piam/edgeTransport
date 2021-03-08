@@ -13,7 +13,7 @@
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations
 #' @importFrom rmarkdown render
 #' @export
 
@@ -139,23 +139,24 @@ generateEDGEdata <- function(input_folder, output_folder,
   UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, rebates_febates = rebates_febates, techswitch = techswitch)
 
-
-
   ## function that integrates GCAM data. No conversion of units happening.
   print("-- correct tech output")
   correctedOutput <- lvl0_correctTechOutput(GCAM_data,
                                             UCD_output$non_energy_cost,
                                             VOT_lambdas$logit_output)
-
-  GCAM_data[["tech_output"]] = correctedOutput$GCAM_output$tech_output
-  GCAM_data[["conv_pkm_mj"]] = correctedOutput$GCAM_output$conv_pkm_mj
-  UCD_output$non_energy_cost$non_energy_cost = correctedOutput$NEcost$non_energy_cost
-  UCD_output$non_energy_cost$non_energy_cost_split = correctedOutput$NEcost$non_energy_cost_split
+  dem_int= list()
+  costs_lf_mile = list()
+  dem_int$tech_output = correctedOutput$GCAM_output$tech_output
+  dem_int$conv_pkm_mj = correctedOutput$GCAM_output$conv_pkm_mj
+  costs_lf_mile$non_energy_cost = correctedOutput$NEcost$non_energy_cost
+  costs_lf_mile$non_energy_cost_split = correctedOutput$NEcost$non_energy_cost_split
+  costs_lf_mile$load_factor = UCD_output$non_energy_cost$load_factor
+  costs_lf_mile$annual_mileage = UCD_output$annual_mileage
   VOT_lambdas$logit_output = correctedOutput$logitexp
 
   if(saveRDS){
-    saveRDS(GCAM_data, file = level0path("GCAM_data.RDS"))
-    saveRDS(UCD_output, file = level0path("UCD_output.RDS"))
+    saveRDS(dem_int, file = level0path("correctedGCAM_data.RDS"))
+    saveRDS(costs_lf_mile, file = level0path("correctedUCD_output.RDS"))
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
 
@@ -163,10 +164,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level in TRACCS. No conversion of units happening.
   print("-- generate ISO level data")
   iso_data <- lvl0_toISO(
-    input_data = GCAM_data,
+    input_data = dem_int,
     VOT_data = VOT_lambdas$VOT_output,
     price_nonmot = VOT_lambdas$price_nonmot,
-    UCD_data = UCD_output,
+    UCD_data = costs_lf_mile,
     GDP = GDP,
     GDP_POP = GDP_POP,
     GDP_country = GDP_country,
@@ -359,12 +360,24 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   demByTech <- shares_intensity_demand[["demand"]] ##in [-]
   intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
+  norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## total demand normalized to 1; if opt$reporting, in million km
 
+  num_veh_stations = calc_num_vehicles_stations(
+    norm_dem = norm_demand[
+      subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
+      c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
+    ES_demand_all = dem_regr,
+    intensity = intensity_remind,
+    techswitch = techswitch,
+    loadFactor = unique(alldata$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
+    EDGE2teESmap = EDGE2teESmap,
+    rep = TRUE)
 
   print("-- Calculating budget coefficients")
   budget <- calculate_capCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
+    stations = num_veh_stations$stations,
     EDGE2CESmap = EDGE2CESmap,
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = years,

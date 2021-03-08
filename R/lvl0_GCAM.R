@@ -77,6 +77,13 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   vehicle_intensity = vehicle_intensity[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
   ## remove the Adv categories, Hybrid Liquids and LA_BEV
   vehicle_intensity = vehicle_intensity[!technology %in% c("Tech-Adv-Electric", "Adv-Electric", "Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid")]
+  vehicle_intensity[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
+  vehicle_intensity[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
+  vehicle_intensity[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+  vehicle_intensity[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
+  vehicle_intensity[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
+  vehicle_intensity=vehicle_intensity[,.(MJvkm = mean(MJvkm)), by = c("sector_fuel","region", "year", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2","subsector_L1")]
+
   #load factor
   load_factor = read.csv(file.path(GCAM_folder, "L254.StubTranTechLoadFactor.csv"), skip=4, header = T,stringsAsFactors = FALSE)
   load_factor = rename_region(load_factor)
@@ -94,8 +101,16 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
-  ## remove double category of buses and remove three wheelers
+  ## remove double category of buses and remove three wheelers; substitute
   load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
+  ## add load factor for trucks
+  load_factor[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
+  load_factor[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
+  load_factor[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+  load_factor[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
+  load_factor[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
+
+  load_factor=load_factor[,.(loadFactor = mean(loadFactor)), by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2","subsector_L1")]
 
   #calculate MJ/km conversion factor
   conv_pkm_mj = merge(vehicle_intensity,load_factor, all = TRUE)
@@ -111,20 +126,26 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   tech_output = remove.coal(tech_output)
   tech_output = add.ElTrains(tech_output)
 
+  setnames(tech_output, old="sector", new="supplysector")
+
+  tech_output = distribute_logit(tech_output,colname = "subsector",extracol = "supplysector")
   ## merge 2wheelers and 3 wheelers and different categories of buses; remove NG motorbikes and merge BEV and LA-BEV
-  tech_output[subsector %in% c("Heavy Bus", "Light Bus"), c("subsector","sector") := list("Bus","trn_pass_road")]
-  tech_output[subsector %in% c("Three-Wheeler", "Scooter"), c("subsector", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W")]
-  tech_output[subsector == "3W Rural", subsector := "Truck (0-3.5t)"]
-  tech_output[subsector == "Multipurpose Vehicle", subsector := "Subcompact Car"]
+  tech_output[vehicle_type %in% c("Heavy Bus", "Light Bus"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Bus_tmp_vehicletype", "Bus_tmp_subsector_L1", "Bus", "trn_pass_road", "trn_pass")]
+  tech_output[vehicle_type %in% c("Three-Wheeler", "Scooter"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W", "trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
+  tech_output[vehicle_type == "Multipurpose Vehicle", vehicle_type := "Subcompact Car"]
   tech_output[technology == "LA-BEV", technology := "BEV"]
   tech_output[technology %in% c("Tech-Adv-Electric", "Adv-Electric"), technology := "Electric"]
   tech_output[technology %in% c("Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid"), technology := "Liquids"]
   tech_output = tech_output[!(technology == "NG" & sector == "trn_pass_road_LDV_2W")]
-  tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector","technology","year")]
 
-  setnames(tech_output, old="sector", new="supplysector")
+  ## merge the truck categories
+  tech_output[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
+  tech_output[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
+  tech_output[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+  tech_output[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
+  tech_output[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
+  tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type","technology","year")]
 
-  tech_output = distribute_logit(tech_output,colname = "subsector",extracol = "supplysector")
   tech_output = rename_region(tech_output)
 
   ## speed motorized modes
@@ -248,15 +269,6 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, POP_country, REMIND_sce
   richave = merge(richave, GDP_POP, by = "year")
   ## average gdp per capita of the rich countries
   richave[, GDP_cap := GDP/POP_val]
-  ## missing trucks categories are attributed an average cost for rich countries
-  richave = rbind(richave, richave[tranSubsector == "Truck (0-3.5t)"][,tranSubsector := "Truck (0-6t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (0-1t)"][,tranSubsector := "Truck (0-2t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (1-6t)"][,tranSubsector := "Truck (2-5t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (4.5-12t)"][,tranSubsector := "Truck (5-9t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (4.5-15t)"][,tranSubsector := "Truck (6-14t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (6-15t)"][,tranSubsector := "Truck (9-16t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck (>15t)"][,tranSubsector := "Truck (>14t)"])
-  richave = rbind(richave, richave[tranSubsector == "Truck"][,tranSubsector := "Truck (>16t)"])
 
   ## dt on which the GDPcap is checked
   tmp1 = tmp[!region %in% richregions, c("region", "year",
@@ -437,7 +449,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## china has 20% EBuses https://www.bloomberg.com/news/articles/2019-05-15/in-shift-to-electric-bus-it-s-china-ahead-of-u-s-421-000-to-300
 
   ## costs
-  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids"),]
+  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids") & subsector_L1 == "trn_pass_road_LDV_4W",]
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by = c("year","technology", "vehicle_type", "type")]
   inspect_ratios_costs = inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year", "type")] ## if vehicle type is not originally in EU-15
 
@@ -460,13 +472,13 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
 
   ## costs split
-  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & region != "EU-12", ] ## EU-12 is already present, so we exclude it
+  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W" & region != "EU-12", ] ## EU-12 is already present, so we exclude it
   inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by=c("year","technology", "vehicle_type", "price_component")]
   inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 
   inspect_ratios_costs[, c("technology", "non_fuel_price") := NULL]
 
-  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost_split[technology %in% c("Hybrid Electric") & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
+  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost_split[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
   inspect_ratios_costs = inspect_ratios_costs[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("region", "year", "price_component")] ## if vehicle type is not originally in EU-15
   inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
   inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
@@ -509,14 +521,14 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"], missingtrucksCHA, missingtrucksOAS)
 
-  ## add plug-in hybrids to all countries, using the same ratio as Hybrid Liquids for each country (ref: EU-15)
-  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV"), ]
+  ## add plug-in hybrids to all countries, using the same ratio as BEVs for each country (ref: EU-15)
+  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W", ]
   inspect_ratios_eff[, ratio := conv_pkm_MJ/conv_pkm_MJ[region == "EU-15"], by = c("year", "technology", "vehicle_type")]
   inspect_ratios_eff = inspect_ratios_eff[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
 
   inspect_ratios_eff[, c("sector_fuel", "technology", "conv_pkm_MJ") := NULL]
 
-  inspect_ratios_eff = merge(inspect_ratios_eff, GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Electric") & region == "EU-15", ][, c("region", "technology", "sector_fuel") := NULL], all = TRUE)
+  inspect_ratios_eff = merge(inspect_ratios_eff, GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology", "sector_fuel") := NULL], all = TRUE)
   inspect_ratios_eff = inspect_ratios_eff[, conv_pkm_MJ := ifelse(is.na(conv_pkm_MJ), mean(conv_pkm_MJ, na.rm = TRUE), conv_pkm_MJ), by = c("region", "year")] ## if vehicle type is not originally in EU-15
   inspect_ratios_eff[, conv_pkm_MJ := ratio*conv_pkm_MJ]
   inspect_ratios_eff[, c("technology", "sector_fuel", "ratio") := list("Hybrid Electric", "Liquids-Electricity", NULL)]

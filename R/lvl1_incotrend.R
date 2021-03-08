@@ -43,17 +43,6 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
     richave = merge(richave, gdpcap, by = c("year"))
     ## average gdp per capita of the cluster regions
     richave[, GDP_cap := GDP/POP_val]
-    if (!is.null(richave$vehicle_type)) {
-      ## missing trucks categories are attributed an average cost for rich countries
-      richave = rbind(richave, richave[vehicle_type == "Truck (0-3.5t)"][,vehicle_type := "Truck (0-6t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (0-1t)"][,vehicle_type := "Truck (0-2t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (1-6t)"][,vehicle_type := "Truck (2-5t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (4.5-12t)"][,vehicle_type := "Truck (5-9t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (4.5-15t)"][,vehicle_type := "Truck (6-14t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (6-15t)"][,vehicle_type := "Truck (9-16t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck (>15t)"][,vehicle_type := "Truck (>14t)"])
-      richave = rbind(richave, richave[vehicle_type == "Truck"][,vehicle_type := "Truck (>16t)"])
-    }
 
     ## dt on which the GDPcap is checked
     tmp1 = dt[!region %in% richregions, c("region", "year", "sw", "GDP_cap", all_subsectors[seq(match(groupval, all_subsectors) - 1,length(all_subsectors), 1)]), with = FALSE]
@@ -277,10 +266,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   SWS <- lapply(SWS, extr_const)
   ## domestic aviation grows way to much, reduce it
   SWS$S3S_final_SW[region %in% c("USA") & subsector_L3 == "Domestic Aviation"  & year >=2015,
-                     sw := 0.2*sw[year==2020], by = c("region","subsector_L3")]
-  SWS$S3S_final_SW[region %in% c("EUR") & subsector_L3 == "Domestic Aviation"  & year >=2015,
-                   sw := 0.5*sw[year==2020], by = c("region","subsector_L3")]
-  ## apply function that finds the average value in 2100 for levels S1S2, S2S3, S3S
+                     sw := 0.1*sw[year==2020], by = c("region","subsector_L3")]
   ups1 = list(VS1_final_SW = SWS$VS1_final_SW, S1S2_final_SW = SWS$S1S2_final_SW)
   ups2 = list(S2S3_final_SW = SWS$S2S3_final_SW, S3S_final_SW = SWS$S3S_final_SW)
   ups1 <- lapply(X=ups1, FUN=aveval, gdpcap = gdpcap)
@@ -433,6 +419,14 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
+  ## public transport preference in European countries increases (Buses)
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region == "EUR" & year >= 2020,
+                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
+                      by=c("region", "subsector_L3")]
+  ## public transport preference in European countries increases (Buses)
+  SWS$S2S3_final_pref[subsector_L2 == "Bus" & region == "EUR" & year >= 2010,
+                     sw := ifelse(year <= 2020, sw[year==2010] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), 0.2*sw[year==2010]),
+                     by=c("region", "subsector_L2")]
 
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("IND", "MEA", "CHA") & year >= 2010,
                      sw := sw[year == 2010],
