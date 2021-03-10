@@ -460,16 +460,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
   inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
 
-
-  missingtrucksCHA = NEcost$non_energy_cost[subsector_L3 %in% c("trn_freight_road") &
-                                              vehicle_type %in% c("Truck (0-2t)") & region =="China"][, c("vehicle_type") := list("Truck (0-3.5t)")]
-
-  missingtrucksOAS = NEcost$non_energy_cost[subsector_L3 %in% c("trn_freight_road") &
-                                               vehicle_type %in% c("Truck (3.5-16t)") & region %in%c("Central Asia")][, c("vehicle_type") := list("Truck")]
-
-
-  NEcost$non_energy_cost = rbind(NEcost$non_energy_cost, missingtrucksCHA, missingtrucksOAS, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
-
+  NEcost$non_energy_cost = rbind(NEcost$non_energy_cost, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
 
   ## costs split
   inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W" & region != "EU-12", ] ## EU-12 is already present, so we exclude it
@@ -483,44 +474,31 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
   inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
 
-  missingtrucksCHA = NEcost$non_energy_cost_split[subsector_L3 %in% c("trn_freight_road") &
-                                              vehicle_type %in% c("Truck (0-2t)") & region =="China"][, c("vehicle_type") := list("Truck (0-3.5t)")]
-  missingtrucksOAS = NEcost$non_energy_cost_split[subsector_L3 %in% c("trn_freight_road") &
-                                              vehicle_type %in% c("Truck (3.5-16t)") & region %in%c("Central Asia")][, c("vehicle_type") := list("Truck")]
-
-  NEcost$non_energy_cost_split = rbind(NEcost$non_energy_cost_split, missingtrucksCHA, missingtrucksOAS, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
-
+  NEcost$non_energy_cost_split = rbind(NEcost$non_energy_cost_split, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
   ## === Correct & Integrate energy intensity == ##
   ## intensity for electric buses/trucks, FCEV buses/trucks, hydrogen aviation
 
   electric = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
-                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Electric", 0, "elect_td_trn")]
+                                         subsector_L2 %in% c("Bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Electric", 0, "elect_td_trn")]
   FCEV = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road")|
-                                         subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("FCEV", 0, "H2 enduse")]
+                                         subsector_L2 %in% c("Bus")) & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("FCEV", 0, "H2 enduse")]
   hydrogen = GCAM_output$conv_pkm_mj[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Hydrogen", 0, "H2 enduse")]
   liquids = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("trn_freight_road", "Domestic Aviation")|
-                                        subsector_L2 %in% c("Bus", "trn_pass_road_bus")) & technology == "Liquids"]
+                                        subsector_L2 %in% c("Bus")) & technology == "Liquids"]
   newtech = rbind(electric, liquids, FCEV, hydrogen)
-
+  # browser()
   newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1", conv_pkm_MJ := ifelse(technology == "Electric", 0.3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus"), conv_pkm_MJ := ifelse(technology == "Electric", 0.3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
+  newtech[subsector_L2 %in% c("Bus"), conv_pkm_MJ := ifelse(technology == "Electric", 0.3*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
   ## energy intensity of hydrogen trucks: around 80% of diesel trucks
   ## https://www.hydrogen.energy.gov/pdfs/19006_hydrogen_class8_long_haul_truck_targets.pdf
   ## https://www.osti.gov/servlets/purl/1455116
   ## https://www.fch.europa.eu/sites/default/files/171121_FCH2JU_Application-Package_WG1_Heavy%20duty%20trucks%20%28ID%202910560%29%20%28ID%202911646%29.pdf
   newtech[subsector_L1 =="trn_freight_road_tmp_subsector_L1", conv_pkm_MJ := ifelse(technology == "FCEV", 0.8*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  newtech[subsector_L2 %in% c("Bus", "trn_pass_road_bus"), conv_pkm_MJ := ifelse(technology == "FCEV", 0.8*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
+  newtech[subsector_L2 %in% c("Bus"), conv_pkm_MJ := ifelse(technology == "FCEV", 0.8*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
 
   ## according to "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
   newtech[subsector_L3 %in% c("Domestic Aviation"), conv_pkm_MJ := ifelse(technology == "Hydrogen", 0.5*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  ## integrate the missing Truck types for OAS and CHA
-  missingtrucksCHA = GCAM_output$conv_pkm_mj[subsector_L3 %in% c("trn_freight_road") &
-                                               vehicle_type %in% c("Truck (0-2t)") & region =="China"][, c("vehicle_type") := list("Truck (0-3.5t)")]
-  missingtrucksOAS = GCAM_output$conv_pkm_mj[subsector_L3 %in% c("trn_freight_road") &
-                                               vehicle_type %in% c("Truck (3.5-16t)") & region %in%c("Central Asia")][, c("vehicle_type") := list("Truck")]
-
-  GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"], missingtrucksCHA, missingtrucksOAS)
-
+  GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"])
   ## add plug-in hybrids to all countries, using the same ratio as BEVs for each country (ref: EU-15)
   inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W", ]
   inspect_ratios_eff[, ratio := conv_pkm_MJ/conv_pkm_MJ[region == "EU-15"], by = c("year", "technology", "vehicle_type")]
