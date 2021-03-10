@@ -292,7 +292,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   if (techswitch == "FCEV") {
     convsymmFCEV = 2035
     convsymmHydrogenAir = 2100
-    speedFCEV = 0.5
+    speedFCEV = 0.1
   } else {
     convsymmFCEV = 2075
     convsymmHydrogenAir = 2150
