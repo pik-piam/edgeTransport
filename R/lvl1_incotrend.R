@@ -448,6 +448,13 @@ if (techswitch %in% c("BEV", "FCEV")) {
     SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% richregions & year >= 2020,
                        sw := ifelse(year <= 2100, sw[year==2020] + (1.5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 2*sw[year==2020]),
                        by=c("region")]
+
+    ## Small-large cars preference increase 5-fold
+    SWS$VS1_final_pref[vehicle_type %in% c("Compact Car", "Mini Car", "Subcompact Car") & year >= 2020,
+                       sw := ifelse(year <= 2100, sw[year==2020] + (5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 2*sw[year==2020]),
+                       by=c("region", "vehicle_type")]
+
+
   }
 
 

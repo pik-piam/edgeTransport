@@ -419,10 +419,11 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
     ## add load_factor for Hybrid Electric, trucks and buses FCEV and electric, domestic aviation hydrogen
     load_factor = rbind(load_factor, load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
-    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "Electric"])
-    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c(truck_buses, "Bus_tmp_vehicletype")][, technology := "FCEV"])
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c("Bus_tmp_vehicletype")][, technology := "Electric"])
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c("Bus_tmp_vehicletype")][, technology := "FCEV"])
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c("Truck (0-3.5t)","Truck (7.5t)","Truck (1-6t)","Truck (18t)", "Truck (26t)", "Truck (40t)")][, technology := "Electric"])
+    load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% c("Truck (0-3.5t)","Truck (7.5t)","Truck (1-6t)","Truck (18t)", "Truck (26t)", "Truck (40t)")][, technology := "FCEV"])
     load_factor = rbind(load_factor, load_factor[technology == "Liquids" & vehicle_type %in% "Domestic Aviation_tmp_vehicletype"][, technology := "Hydrogen"])
-
     non_energy_cost=merge(non_energy_cost,load_factor,all = FALSE, by=c("technology","region","year","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector") )
 
     non_energy_cost=non_energy_cost[,non_fuel_price:=value/loadFactor][,-"loadFactor"]
