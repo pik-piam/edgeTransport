@@ -265,7 +265,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   ## constant trends for all techs
   SWS <- lapply(SWS, extr_const)
   ## domestic aviation grows way to much, reduce it
-  SWS$S3S_final_SW[region %in% c("USA") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+  SWS$S3S_final_SW[region %in% c("USA", "EUR") & subsector_L3 == "Domestic Aviation"  & year >=2015,
                      sw := 0.1*sw[year==2020], by = c("region","subsector_L3")]
   ups1 = list(VS1_final_SW = SWS$VS1_final_SW, S1S2_final_SW = SWS$S1S2_final_SW)
   ups2 = list(S2S3_final_SW = SWS$S2S3_final_SW, S3S_final_SW = SWS$S3S_final_SW)
