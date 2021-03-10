@@ -25,6 +25,7 @@ cols <- c("NG" = "#d11141",
           "Hybrid Electric" = "#f37735",
           "BEV" = "#00b159",
           "Electricity" = "#00b159",
+          "Electric" = "#00b159",
           "FCEV" = "#00aedb",
           "pchar" = "#00aedb",
           "pinco_tot" = "#00b159",
@@ -261,6 +262,43 @@ demandEJLDVplotf <- function(demandEJ){
 demandEJLDVplotf(demand_ej)
 ```
 
+# Trucks final energy demand
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## demand EJ for trucks, divided by fuel type
+
+demandEJTruckplotf <- function(demandEJ){
+  demandEJ = demandEJ[subsector_L3 == "trn_freight_road",]
+  demandEJ <- demandEJ[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+
+  demandEJ[technology == "Hybrid Liquids", technology := "Liquids"]
+  demandEJ[technology == "FCEV", technology := "Hydrogen"]
+  demandEJ[technology == "BEV", technology := "Electricity"]
+  demandEJ = demandEJ[, .(demand_EJ = sum(demand_EJ)), by = c("region", "year", "technology")]
+
+  demandEJglob = demandEJ[, .(demand_EJ = sum(demand_EJ)), by = c("year", "technology")][, region := "World"]
+
+  p = ggplot()+
+    geom_area(data = demandEJ[year > 2010], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    labs(x = "", y = "Final energy demand for trucks [EJ]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(size = 7),
+          axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+
+  return(p)
+
+}
+
+
+demandEJTruckplotf(demand_ej)
+```
 # share of alternative techs in ES demand (global values)
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
