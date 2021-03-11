@@ -380,6 +380,15 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S2S3_final_pref[region %in% c("OAS", "IND") & subsector_L2 == "Bus"  & year >=2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >=2010 & year <= 2030,
+                      sw := ifelse(year <= 2030, sw[year==2010] + (0.1*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >=2030 & year <= 2050,
+                      sw := ifelse(year <= 2050, sw[year==2030] + (0.1*sw[year==2030]-sw[year==2030]) * (year-2030) / (2050-2030), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >=2050 & year <= 2100,
+                      sw := ifelse(year <= 2100, sw[year==2050] + (0.1*sw[year==2050]-sw[year==2050]) * (year-2050) / (2100-2050), sw), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >=2100,
+                      sw := sw[year==2100], by = c("region","subsector_L2")]
+
   ## public transport preference in European countries increases (Buses)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region == "EUR" & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
@@ -403,13 +412,15 @@ if (techswitch %in% c("BEV", "FCEV")) {
                      sw := ifelse(year==2010, sw, 3*sw[year==2010]),
                      by=c("region")]
 
-  SWS$S3S_final_pref[subsector_L3 %in% c("Freight Rail") & region %in% "IND" & year >= 2045,
-                     sw := sw[year == 2080],
-                     by=c("region", "subsector_L3")]
 
   SWS$S3S_final_pref[subsector_L3 %in% c("Domestic Ship") & region %in% "IND" & year >= 2010,
                      sw := ifelse(year == 2010, sw, 0.1*sw[year == 2010]),
                      by=c("region", "subsector_L3")]
+
+  SWS$S3S_final_pref[subsector_L3 %in% c("Domestic Aviation") & region %in% c("IND", "CHA") & year >= 2010,
+                     sw := 0.01*sw[year==2010],
+                     by=c("region", "subsector_L3")]
+
 
   if (smartlifestyle) {
     ## roughly distinguish countries by GDPcap
