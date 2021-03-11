@@ -246,6 +246,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
              measure.vars = as.character(2005:2010))
     setnames(airp_EU,old=c("value","variable"),new=c("pkm","year"))
     airp_EU[, year := as.character(year)]
+    airp_EU[, pkm := gsub(x = pkm, pattern = ",", replacement = ".")]
     airp_EU=airp_EU[,.(tech_output=CONV_unit_million*as.numeric(pkm),country_name=name,year=as.numeric(year),code_airplane_characteristics)]
     airp_EU = approx_dt(airp_EU,
                         xdata = seq(1990,2010),
@@ -256,10 +257,9 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
     airp_EU = airp_EU[,.(tech_output =sum(tech_output)), by = c("year", "country_name")]
     airp_EU[, vehicle_type := "Domestic Aviation_tmp_vehicletype"]
     airp_EU[, technology := "Liquids"]
-
-    ## move it to prepare TRACCS
+    ## there is an issue of order of magnitudes in aviation... remove for now
     ## merge all data
-    dem_EU = rbind(airp_EU, shipping_EU, rail_EU, road_EU)
+    dem_EU = rbind(shipping_EU, rail_EU, road_EU)
     ## merge with structure
     mapping_TRACCS_iso= fread(file.path(EU_folder, "mapping_countries_EU.csv"), skip=0)
 
