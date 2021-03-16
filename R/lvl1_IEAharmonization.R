@@ -13,11 +13,16 @@
 
 
 lvl1_IEAharmonization <- function(int, demKm, IEA){
-    te <- isbunk <- flow <- value <- `.` <- region <- EJ_Mpkm <- conv_pkm_MJ <- subsector_L3 <- technology <- EJ_Mpkm.mean <- vehicle_type <- sector <- EJ_Mpkm_ave_adjusted <- Mpkm_tot <- factor_intensity <- EJ_Mpkm_ave <- EJ_Mpkm_adjusted <- lambda <- EJ_Mpkm_final <- EJ_tot_adjusted <- NULL 
-    IEA <- IEA[, 2005, c("fedie", "fepet", "fegat", "feelt"), pmatch = TRUE]
+    te <- isbunk <- flow <- value <- `.` <- region <- EJ_Mpkm <- conv_pkm_MJ <- subsector_L3 <- technology <- EJ_Mpkm.mean <- vehicle_type <- sector <- EJ_Mpkm_ave_adjusted <- Mpkm_tot <- factor_intensity <- EJ_Mpkm_ave <- EJ_Mpkm_adjusted <- lambda <- EJ_Mpkm_final <- EJ_tot_adjusted <- NULL
+    IEA <- IEA[, , c("fedie", "fepet", "fegat", "feelt"), pmatch = TRUE]
 
     IEA_dt <- magpie2dt(IEA, datacols=c("se", "fe", "te", "mod", "flow"), regioncol="region", yearcol="year")
     IEA_dt <- IEA_dt[te != "dot"]  #delete fedie.dot
+    IEA_dt2plot = copy(IEA_dt)
+    IEA_dt2plot = IEA_dt2plot[, .(value = sum(value)), by=.(region, year, flow)]
+    IEA_dt2plot = IEA_dt2plot[!flow %in% c("PIPELINE", "TRNONSPE", "NETRANS")]
+
+    IEA_dt = IEA_dt[year==2005]
     IEA_dt[, isbunk := ifelse(grepl("BUNK", flow), flow, "short-medium")]
 
     IEA_dt[, c("se", "fe", "mod", "flow") := NULL]
@@ -122,10 +127,11 @@ lvl1_IEAharmonization <- function(int, demKm, IEA){
                      (2005 + delta - year)/delta, 0)]
 
     merged_intensity[, EJ_Mpkm_final := EJ_Mpkm * (1-lambda) + EJ_Mpkm_adjusted * lambda]
-    
+
     ## delete columns not useful anymore
     merged_intensity[,c("EJ_Mpkm", "lambda", "EJ_Mpkm_adjusted")]=NULL
-    
-    return(merged_intensity)
+
+    return(list(merged_intensity = merged_intensity,
+           IEA_dt2plot = IEA_dt2plot))
 
 }

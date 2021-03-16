@@ -42,13 +42,19 @@ cols <- c("NG" = "#d11141",
           "Operating costs maintenance" = "#00798c",
           "Capital cost" = "#d1495b",
           "International Aviation" = "#9acd32",
+          "AVBUNK" = "#9acd32",
           "Domestic Aviation" = "#7cfc00",
+          "DOMESAIR" = "#7cfc00",
           "Bus" = "#32cd32",
           "Passenger Rail" = "#2e8b57",
+          "RAIL" = "#2e8b57",
           "Freight Rail" = "#ee4000",
           "Trucks" = "#ff6a6a",
+          "ROAD" = "#ff6a6a",
           "International Shipping" = "#cd2626",
+          "MARBUNK" = "#cd2626",
           "Domestic Shipping" = "#ff4040",
+          "DOMESNAV" = "#ff4040",
           "Shipping" = "#ff4040",
           "Truck" = "#ff7f50",
           "Trucks (<3.5t)" = "#ff7f50",
@@ -57,7 +63,7 @@ cols <- c("NG" = "#d11141",
           "Motorbikes" = "#1874cd", #"dodgerblue3",
           "Small Cars" = "#87cefa",
           "Large Cars" = "#6495ed",
-          "Van" = "     #40e0d0",
+          "Van" = "#40e0d0",
           "LDV" = "#00bfff",
           "Non motorized" = "#da70d6",
           "Freight"="#ff0000",
@@ -82,6 +88,8 @@ mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 ## Load population to calculate per capita values
 POP = readRDS(datapath(fname = "POP.RDS"))
+## load IEA data as a comparison
+IEA = readRDS(datapath(fname = "IEAcomp.RDS"))
 ```
 
 
@@ -299,6 +307,92 @@ demandEJTruckplotf <- function(demandEJ){
 
 demandEJTruckplotf(demand_ej)
 ```
+
+# FE comparison IEA historical data vs EDGE-T projections
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## demand EJ for trucks, divided by fuel type
+
+demandEJ_IEAcomp <- function(demandEJ, IEA){
+
+  demandEJ[, flow := ifelse(sector == "trn_aviation_intl", "AVBUNK", NA)]
+  demandEJ[, flow := ifelse(sector == "trn_shipping_intl", "MARBUNK", flow)]
+  demandEJ[, flow := ifelse(grepl("road", subsector_L3), "ROAD", flow)]
+  demandEJ[, flow := ifelse(grepl("Rail|HSR", subsector_L3), "RAIL", flow)]
+  demandEJ[, flow := ifelse(grepl("Domestic Aviation", subsector_L3), "DOMESAIR", flow)]
+  demandEJ[, flow := ifelse(grepl("Domestic Ship", subsector_L3), "DOMESNAV", flow)]
+  demandEJ = demandEJ[,.(value = sum(demand_EJ)), by = c("region", "year", "flow")]
+  demandEJ[, model := "EDGE-T"]
+  IEA[, model := "IEAbal"]
+  totdem=rbind(demandEJ[year>=2015], IEA[year<2015])
+
+  p1 = ggplot()+
+    geom_area(data = totdem[flow=="ROAD"], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    labs(x = "", y = "Final energy demand road [EJ]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(size = 7),
+          axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+
+    p2 = ggplot()+
+    geom_area(data = totdem[flow!="ROAD"], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    labs(x = "", y = "Final energy demand no road [EJ]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(size = 7),
+          axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+    totdem1=rbind(demandEJ, IEA)
+    p3 = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & flow =="ROAD"], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand road [EJ]")+
+    facet_grid(year~region, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8),
+          axis.text.x = element_text(angle = 90, hjust = 1))
+
+        p4 = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & flow !="ROAD"], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand no road [EJ]")+
+    facet_grid(year~region, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.y = element_text(size=7),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8),
+          axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+
+  return(list(p1,p2,p3,p4))
+
+}
+
+
+demandEJ_IEAcomp(demand_ej, IEA)
+```
+
 # share of alternative techs in ES demand (global values)
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
