@@ -13,41 +13,14 @@ array = array.interp(
     kwargs={'fill_value': 'extrapolate'})
 
 
-rg2ctr = {
-    'OAS': 'TH',
-    'ENC': 'DK',
-    'NES': 'TR',
-    'MEA': 'EG',
-    'SSA': 'KE',
-    'LAM': 'BR',
-    'REF': 'RU',
-    'CAZ': 'CA',
-    'EWN': 'NL',
-    'ECS': 'HR',
-    'CHA': 'CH',
-    'ESC': 'IT',
-    'ECE': 'PL',
-    'FRA': 'FR',
-    'DEU': 'DE',
-    'UKI': 'UK',
-    'NEN': 'NO',
-    'IND': 'IN',
-    'JPN': 'JP',
-    'ESW': 'ES',
-    'USA': 'US'
-}
-
-tab = []
-for rec, ccode in rg2ctr.items():
-    mc = "Regional delivery"
-    cm = ct.TruckModel(array, cycle=mc, country="TH")
+mc = "Regional delivery"
+# all countries have the same ttw values, using DE
+cm = ct.TruckModel(array, cycle=mc, country="DE")
     
-    cm.set_all()
+cm.set_all()
 
-    df = cm.array.sel(parameter="TtW efficiency").to_dataframe(name="efficiency").reset_index().drop(columns=["parameter", "value"])
+df = cm.array.sel(parameter="TtW energy").to_dataframe(name="ttw_energy").reset_index().drop(columns=["parameter", "value"])
 
-    df["region"] = rec
-    tab.append(df)
+df["unit"] = "kJ/km"
 
-full = pd.concat(tab)
-full.to_csv("{}_truck_efficiencies.csv".format(mc))
+df.to_csv("{}_truck_efficiencies.csv".format(mc))
