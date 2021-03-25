@@ -5,9 +5,9 @@
 #' @param output_folder folder hosting REMIND input files
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
-#' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: mrremind::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
-#' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: mrremind::calcOutput("GDPppp", aggregate =F)
-#' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: mrremind::calcOutput("Population", aggregate =F)
+#' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
+#' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)
+#' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)
 #' @param saveRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
@@ -52,7 +52,7 @@ generateEDGEdata <- function(input_folder, output_folder,
              seq(2070, 2110, by = 10),
              2130, 2150)
   ## load mappings
-  REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmappingH12.csv", package = "edgeTransport"))[, .(iso = CountryCode,region = RegionCode)]
+  REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(iso = CountryCode,region = RegionCode)]
   EDGEscenarios = fread(system.file("extdata", "EDGEscenario_description.csv", package = "edgeTransport"))
   GCAM2ISO_MAPPING = fread(system.file("extdata", "iso_GCAM.csv", package = "edgeTransport"))
   EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
@@ -233,7 +233,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
   REMIND_prices <- merge_prices(
-    gdx = file.path(input_folder, "REMIND/fulldata.gdx"),
+    gdx = file.path(input_folder, "REMIND/fulldata_EU.gdx"),
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
@@ -328,6 +328,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     ## regression demand calculation
     print("-- performing demand regression")
+    ## demand in million km
     dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
                               price_baseline = prices$S3S,
                               GDP_POP = GDP_POP,
@@ -364,7 +365,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     demByTech <- shares_intensity_demand[["demand"]] ##in [-]
     intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
-    norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## total demand normalized to 1; if opt$reporting, in million km
+    norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## in million km
 
     num_veh_stations = calc_num_vehicles_stations(
       norm_dem = norm_demand[

@@ -266,7 +266,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   SWS <- lapply(SWS, extr_const)
 
 
-  SWS$S3S_final_SW[region %in% c("EUR") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+  SWS$S3S_final_SW[region %in% c("EUR", "DEU", "ESC", "EWN", "FRA", "UKI") & subsector_L3 == "Domestic Aviation"  & year >=2015,
                    sw := 0.1*sw[year==2015], by = c("region","subsector_L3")]
 
 
@@ -370,6 +370,17 @@ if (techswitch %in% c("BEV", "FCEV")) {
                     value := value[year==2020] + (1-value[year==2020]) * (year-2020) / (2400-2020),
                     by=c("region","vehicle_type","technology", "logit_type")]
 
+  SWS$FV_final_pref[region%in% c("ECE", "ECS") &technology %in% c("NG") & year >= 2010 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
+                                                                                            subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
+                    value := 0,
+                    by=c("region", "vehicle_type", "technology")]
+
+
+  SWS$FV_final_pref[region%in% c("ECE", "ECS") &technology %in% c("Liquids") & year >= 2020 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
+                                                                                            subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
+                    value := ifelse(year <= 2030, value[year==2020] + (1-value[year==2020]) * (year-2020)/(2030-2020), 1),
+                    by=c("region", "vehicle_type", "technology")]
+
   ## CHA has very low prices for 2W. this leads to crazy behaviours, hence their preferenc efactor is set to contant
   SWS$S1S2_final_pref[region %in% c("CHA") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2010, sw := sw[year == 2010], by = c("region")]
 
@@ -398,18 +409,23 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "trn_pass_road_LDV"  & year >= 2015 & year <= 2025,
                       sw := 1, by = c("region","subsector_L2")]
 
-  ## public transport preference in European countries increases (Buses)
-  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region == "EUR" & year >= 2020,
+  ## public transport preference in European countries increases (Rail)
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("EUR", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
                      by=c("region", "subsector_L3")]
   ## public transport preference in European countries increases (Buses)
-  SWS$S2S3_final_pref[subsector_L2 == "Bus" & region == "EUR" & year >= 2010,
+  SWS$S2S3_final_pref[subsector_L2 == "Bus" & region %in% c("EUR", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2010,
                       sw := ifelse(year <= 2020, sw[year==2010] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), 0.2*sw[year==2010]),
                       by=c("region", "subsector_L2")]
 
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("IND", "MEA", "CHA") & year >= 2010,
                      sw := sw[year == 2010],
                      by=c("region")]
+
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("JPN") & year >= 2010,
+                     sw :=  ifelse(year <= 2100, sw[year==2010] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2100-2010), 0.2*sw[year==2010]),
+                     by=c("region", "subsector_L3")]
+
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% "REF" & year >= 2010,
                      sw := ifelse(year==2010, sw, 20*sw[year==2010]),
                      by=c("region")]
@@ -453,6 +469,17 @@ if (techswitch %in% c("BEV", "FCEV")) {
                      sw := 0.0001, by = c("region","subsector_L3")]
   SWS$S3S_final_pref[region %in% c("CAZ", "NEU", "MEA", "IND") & subsector_L3 == "trn_pass_road"  & year >=2015,
                      sw := 1, by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("ECE", "ECS", "ENC", "ESW", "NEN", "NES") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+                   sw := 0.05*sw[year==2015], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "trn_pass_road"  & year >=2015,
+                     sw := 1, by = c("region","subsector_L3")]
+  SWS$S2S3_final_pref[region %in% c("NEN") & subsector_L3 == "trn_pass_road_LDV"  & year >=2015,
+                     sw := 1, by = c("region","subsector_L2")]
+
+  SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "Passenger Rail"  & year >=2010,
+                     sw := sw[year==2010], by = c("region","subsector_L3")]
 
   if (smartlifestyle) {
     ## roughly distinguish countries by GDPcap
@@ -518,6 +545,9 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
   SWS$VS1_final_pref[, sw := sw/max(sw),
                      by = c("region", "year", "subsector_L1")]
+
+  SWS$FV_final_pref[logit_type =="sw", value := value/max(value),
+                     by = c("region", "year", "vehicle_type")]
 
   return(SWS)
 }
