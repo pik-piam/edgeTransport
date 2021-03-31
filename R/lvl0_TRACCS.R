@@ -287,7 +287,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
                                         output = melt(output, id.vars = c("name"),
                                                       measure.vars = c("1990","2005","2010"))
                                         setnames(output,old=c("value"),new=c("mtoe"))
-                                        output[,MJ := mtoe*41868]
+                                        output[, MJ := mtoe*41868000000]
                                         output$country_name <- x
                                         return(output)
                                         }))
@@ -336,7 +336,9 @@ lvl0_prepareEU <- function(EU_data,
 
   ## use intensity and LF from GCAM to convert into tkm/pkm for bunkers
   bunk = merge(EU_data$dem_bunk, intensity[region =="EU-15" & vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")][,c("year","conv_pkm_MJ","vehicle_type")])
-  bunk[, tech_output := MJ/conv_pkm_MJ][, c("MJ", "conv_pkm_MJ") := NULL]
+  bunk[, tech_output := MJ/  ## in MJ
+                        conv_pkm_MJ*    ## in km
+                        1e-6][, c("MJ", "conv_pkm_MJ") := NULL] ## in million km
   bunk[, technology := "Liquids"]
 
   ## missing time steps extrapolated: TRACCS features yearly values between 2005 and 2010, but 1990 is absent. Remove the extra time steps as well

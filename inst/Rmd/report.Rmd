@@ -88,6 +88,7 @@ shares <- readRDS(datapath(fname = "shares.RDS"))
 pref <- readRDS(datapath(fname = "pref_output.RDS"))
 mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
+bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 ## Load population to calculate per capita values
 POP = readRDS(datapath(fname = "POP.RDS"))
 ## load IEA data as a comparison
@@ -223,7 +224,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
   pfreight=ggplot()+
-    geom_area(data = demandEJ[year > 2010 & year <= maxyear  & aggr_mode %in% c("Freight")&region%in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight")&region%in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Freight final Energy demand [EJ]")+
     theme_minimal()+
@@ -238,7 +239,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
     pfreight1=ggplot()+
-    geom_area(data = demandEJ[year > 2010 & year <= maxyear  & aggr_mode %in% c("Freight") & !region%in%EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight") & !region%in%EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Freight final Energy demand [EJ]")+
     theme_minimal()+
@@ -255,7 +256,7 @@ demandEJplotf = function(demandEJ, POP){
 
 
   pcap1=ggplot()+
-    geom_area(data = demandEJcap[year > 2020 & year <= maxyear  & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Final Energy demand [GJ/cap]")+
     theme_minimal()+
@@ -270,7 +271,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
     pcap2=ggplot()+
-    geom_area(data = demandEJcap[year > 2020 & year <= maxyear  & region %in% non_EU_regions], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% non_EU_regions], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Final Energy demand [GJ/cap]")+
     theme_minimal()+
@@ -317,7 +318,7 @@ demandEJLDVplotf <- function(demandEJ){
   demandEJ = rbind(demandEJ, demandEJEUR, demandEJnonEUR, demandEJglob)
 
   p1 = ggplot()+
-    geom_area(data = demandEJ[year > 2010 & year <= maxyear  & region %in% c(EU_regions, NEU_regions) & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & region %in% c(EU_regions, NEU_regions) & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand for LDVs, non-EU [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -332,7 +333,7 @@ demandEJLDVplotf <- function(demandEJ){
           strip.text = element_text(size=8))
 
   p2 = ggplot()+
-    geom_area(data = demandEJ[year > 2010 & year <= maxyear  & region %in% c(non_EU_regions, "World", "EUR", "NEU") & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "World", "EUR", "NEU") & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand for LDVs [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -381,7 +382,7 @@ demandEJTruckplotf <- function(demandEJ){
   demandEJ = rbind(demandEJ, demandEJEUR, demandEJnonEUR, demandEJglob)
 
   p1 = ggplot()+
-    geom_area(data = demandEJ[year > 2010  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandEJ[year > 2005  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand for trucks [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -395,7 +396,7 @@ demandEJTruckplotf <- function(demandEJ){
           strip.text = element_text(size=8))
 
     p2 = ggplot()+
-    geom_area(data = demandEJ[year > 2010 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand for trucks [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -442,7 +443,7 @@ demandkmTruckplotf <- function(demandkm){
   demandkm = rbind(demandkm, demandkmEUR, demandkmnonEUR, demandkmglob)
 
   p1 = ggplot()+
-    geom_area(data = demandkm[year > 2010  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandkm[year > 2005  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = "Energy services demand for trucks [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -456,7 +457,7 @@ demandkmTruckplotf <- function(demandkm){
           strip.text = element_text(size=8))
 
     p2 = ggplot()+
-    geom_area(data = demandkm[year > 2010 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
+    geom_area(data = demandkm[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
     labs(x = "", y = " Energy services demand for trucks [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
@@ -571,6 +572,19 @@ demandEJ_IEAcomp <- function(demandEJ, IEA){
           legend.text = element_text(size = 8),
           legend.title = element_text(size = 8),
           strip.text = element_text(size=8))
+    
+        p5b = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand road [EJ]")+
+    facet_grid(region~year, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
 
         p6 = ggplot()+
     geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
@@ -585,10 +599,38 @@ demandEJ_IEAcomp <- function(demandEJ, IEA){
           legend.title = element_text(size = 8),
           strip.text = element_text(size=8))
 
+                p6b = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand road [EJ]")+
+    facet_grid(region~year, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+                
+                
         p7 = ggplot()+
     geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & !flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
     labs(x = "", y = "Final energy demand no road [EJ]")+
     facet_grid(year~region, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+        
+        
+                p7b = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & !flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand no road [EJ]")+
+    facet_grid(region~year, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_minimal()+
     theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
@@ -610,13 +652,58 @@ demandEJ_IEAcomp <- function(demandEJ, IEA){
           legend.text = element_text(size = 8),
           legend.title = element_text(size = 8),
           strip.text = element_text(size=8))
+        
+                p8b = ggplot()+
+    geom_bar(data = totdem1[year %in% c(2005, 2010, 2015) & !flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions], aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand no road [EJ]")+
+    facet_grid(region~year, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
 
-  return(list(p1,p2,p3,p4,p5,p6,p7,p8))
+  return(list(p1,p2,p3,p4,p5,p5b,p6,p6b,p7,p7b,p8,p8b))
 
 }
 
 
 demandEJ_IEAcomp(demand_ej, IEA)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+bunk_EUplotf = function(bunk_EU, IEA){
+  bunk_EU[, flow := ifelse(vehicle_type == "International Aviation_tmp_vehicletype", "AVBUNK", NA)]
+  bunk_EU[, flow := ifelse(vehicle_type == "International Ship_tmp_vehicletype", "MARBUNK", flow)]
+  bunk_EU[, model := "EDGE-T"]
+  bunk_EU[, value := MJ *    ## in MJ
+                     1e-12]   ## in EJ
+  IEA = IEA[flow %in% c("AVBUNK", "MARBUNK") & region %in% EU_regions & year %in% c(1990, 2005, 2010),]
+  IEA[, model := "IEAbal"]
+  
+  totbunk=rbind(bunk_EU[,c("region", "year", "flow", "model", "value")], IEA)
+  
+  p = ggplot()+
+    geom_bar(data = totbunk, aes(x=model, y=value, group = interaction(model, flow), fill = flow), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand only bunkers [EJ]")+
+    facet_grid(year~region, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.title = element_text(size = 8),
+          title = element_text(size = 8),
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 8),
+          strip.text = element_text(size=8))
+  return(p)
+  
+}
+
+bunk_EUplotf(bunk_EU, IEA)
+
 ```
 
 # share of alternative techs in ES demand (global values)
@@ -625,7 +712,7 @@ demandEJ_IEAcomp(demand_ej, IEA)
 shareAltTechplotf = function(demandkm){
   ## REMIND-EDGE results
   demandkm<- demandkm[,c("subsector_L1","technology", "year","demand_F")]
-  demandkm = demandkm[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1") & year >= 2010]
+  demandkm = demandkm[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1") & year >= 2005]
   demandkm[, aggr_mode := "LDV"]
   demandkm[subsector_L1 == "trn_freight_road_tmp_subsector_L1", aggr_mode := "Truck"]
   demandkm[, technology := ifelse(technology %in% c("BEV", "Electric", "FCEV", "Hybrid Electric"), "Alternative", "Conventional")]
@@ -762,7 +849,7 @@ demandkmplotf = function(demandkm, POP){
           strip.text = element_text(size=8))
 
   ptot_freight = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2010 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -777,7 +864,7 @@ demandkmplotf = function(demandkm, POP){
           strip.text = element_text(size=8))
 
     ptot_freight1 = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2010 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -792,7 +879,7 @@ demandkmplotf = function(demandkm, POP){
           strip.text = element_text(size=8))
 
   pcap_freight1 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2020  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     theme_minimal()+
     facet_wrap(~region, nrow = 4, scales = "free")+
@@ -810,7 +897,7 @@ demandkmplotf = function(demandkm, POP){
           axis.line = element_line(size = 0.5, colour = "grey"))
 
     pcap_freight2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2020  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     theme_minimal()+
     facet_wrap(~region, nrow = 4, scales = "free")+
@@ -828,7 +915,7 @@ demandkmplotf = function(demandkm, POP){
           axis.line = element_line(size = 0.5, colour = "grey"))
 
   pcap_pass = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2020 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     theme_minimal()+
     facet_wrap(~region, nrow = 4, scales = "free")+
@@ -846,7 +933,7 @@ demandkmplotf = function(demandkm, POP){
           axis.line = element_line(size = 0.5, colour = "grey"))
 
   pcap_pass2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2020 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     theme_minimal()+
     facet_wrap(~region, nrow = 4, scales = "free")+

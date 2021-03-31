@@ -25,7 +25,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
-  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- NULL
+  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -412,6 +412,9 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
+    EU_data$dem_bunkers = merge(EU_data$dem_bunkers, REMIND2ISO_MAPPING, by = "iso")
+    EU_data$dem_bunkers = EU_data$dem_bunkers[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
+    saveRDS(EU_data$dem_bunkers, file = level2path("EurostatBunkers.RDS"))
     saveRDS(POP, file = level2path("POP.RDS"))
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
