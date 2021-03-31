@@ -13,7 +13,11 @@
 
 
 lvl1_IEAharmonization <- function(int, demKm, IEA){
-    te <- isbunk <- flow <- value <- `.` <- region <- EJ_Mpkm <- conv_pkm_MJ <- subsector_L3 <- technology <- EJ_Mpkm.mean <- vehicle_type <- sector <- EJ_Mpkm_ave_adjusted <- Mpkm_tot <- factor_intensity <- EJ_Mpkm_ave <- EJ_Mpkm_adjusted <- lambda <- EJ_Mpkm_final <- EJ_tot_adjusted <- NULL
+    te <- isbunk <- flow <- value <- `.` <- region <- EJ_Mpkm <- conv_pkm_MJ <- subsector_L1 <- NULL
+    subsector_L3 <- technology <- EJ_Mpkm.mean <- vehicle_type <- sector <- EJ_Mpkm_ave_adjusted <- NULL
+    Mpkm_tot <- factor_intensity <- EJ_Mpkm_ave <- EJ_Mpkm_adjusted <- lambda <- EJ_Mpkm_final <- NULL
+    EJ_tot_adjusted <- NULL
+
     IEA <- IEA[, , c("fedie", "fepet", "fegat", "feelt"), pmatch = TRUE]
 
     IEA_dt <- magpie2dt(IEA, datacols=c("se", "fe", "te", "mod", "flow"), regioncol="region", yearcol="year")
@@ -73,7 +77,7 @@ lvl1_IEAharmonization <- function(int, demKm, IEA){
     tech_output[, EJ_Mpkm.mean := mean(EJ_Mpkm, na.rm = T), by=.(year, technology, vehicle_type)
                 ][is.na(EJ_Mpkm), EJ_Mpkm := EJ_Mpkm.mean
                   ][,EJ_Mpkm.mean := NULL]
-    
+
     tech_output[, isbunk := ifelse(sector == "trn_aviation_intl", "AVBUNK", NA)]
     tech_output[, isbunk := ifelse(sector == "trn_shipping_intl", "MARBUNK", isbunk)]
     tech_output[, isbunk := ifelse(is.na(isbunk), "short-medium", isbunk)]
@@ -130,6 +134,8 @@ lvl1_IEAharmonization <- function(int, demKm, IEA){
 
     ## delete columns not useful anymore
     merged_intensity[,c("EJ_Mpkm", "lambda", "EJ_Mpkm_adjusted")]=NULL
+    ## cut energy intensity to 3 for NG LDVs
+    merged_intensity[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "NG", EJ_Mpkm_final := min(EJ_Mpkm_final, 3.2e-06), by = c("region", "year", "vehicle_type")]
 
     return(list(merged_intensity = merged_intensity,
            IEA_dt2plot = IEA_dt2plot))
