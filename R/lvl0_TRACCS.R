@@ -22,63 +22,47 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
 
     ## conversion unit->million
     CONV_unit_million <- 1e-06
+    ## load mapping with country codes
+    mapping_TRACCS_iso= fread(file.path(EU_folder, "mapping_countries_EU.csv"), skip=0)
     ## load Road data
     list_countries = data.table(countries=list.files(path = file.path(EU_folder, "TRACCS_ROAD_Final_EXCEL_2013-12-20"),
                                                    all.files=FALSE))
     list_countries[, countries := gsub("Road Data |_Output.xlsx", "", countries)] #
     list_countries = list_countries[!grepl("\\$",countries),] #deletes open files, which have a $ in the name
 
-    ##road passenger: load demand (million pkm-tkm)
-    roadp_eu = do.call("rbind",lapply(list_countries$countries,
-                                       function(x) {
-                                         output = suppressMessages(data.table(read_excel(
-                                           path = file.path(
-                                             EU_folder,
-                                             paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ", x, "_Output.xlsx")),
-                                           sheet="Pass-Km","A2:I51")))
+    ##road FE: load demand (million EJ)
+    roadFE_eu = do.call("rbind",lapply(list_countries$countries,
+                                      function(x) {
+                                        output = suppressMessages(data.table(read_excel(
+                                          path = file.path(
+                                            EU_folder,
+                                            paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ", x, "_Output.xlsx")),
+                                          sheet="FCcalc","A2:I75")))
 
-                                         colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
-                                           output[,technology := ifelse(technology %in% c("Gasoline","Diesel","Flexi-fuel","LPG","B30"),"Liquids",technology)]
-                                           output[,technology := ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
-                                           output[,technology := ifelse(technology %in% c("Other"),"Liquids",technology)]
-                                           output=output[!technology %in% c("All"),]
-                                           output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                                                         measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                           setnames(output,old=c("value","variable"), new = c("km_million","year"))
-                                           output = merge(mapping_TRACCS_roadf_categories,output)
-                                           output$country_name <- x
-                                           output = output[, .(vehicle_type=EDGE_vehicle_type,technology,year,km_million,country_name)]
-                                           output = output[, .(km_million=sum(km_million)),by=c("year","country_name","technology","vehicle_type")]
-                                           return(output)
-                                       }))
+                                        colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
+                                        output[,technology := ifelse(technology %in% c("Gasoline","Diesel","Flexi-fuel","LPG","B30"),"Liquids",technology)]
+                                        output[,technology := ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
+                                        output[,technology := ifelse(technology %in% c("Other"),"Liquids",technology)]
+                                        output=output[!technology %in% c("All", "Total"),]
+                                        output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                                                      measure.vars = c("2005","2006","2007","2008","2009","2010"))
+                                        setnames(output,old=c("value","variable"), new = c("t","year"))
+                                        output = merge(mapping_TRACCS_roadf_categories,output)
+                                        output$country_name <- x
+                                        output = output[, .(vehicle_type=EDGE_vehicle_type,technology,year,t,country_name)]
+                                        output = output[, .(t=sum(t)),by=c("year","country_name","technology","vehicle_type")]
+                                        output[, convert := ifelse(technology == "Liquids", 0.043, 0.048)]
+                                        output[, MJ := t*     ## in t
+                                                       convert*  ## in TJ
+                                                       1000000   ## in MJ
+                                               ]
+                                        return(output)
+                                      }))
+    roadFE_eu=roadFE_eu[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
+    roadFE_eu=merge(roadFE_eu,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
+    roadFE_eu[, year := as.numeric(as.character(year))]
+    roadFE_eu[, c("t", "convert"):=NULL]
 
-    roadp_eu = roadp_eu[, country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
-    ## road freight: load demand
-    roadf_eu <- do.call("rbind",lapply(list_countries$countries,
-                                       function(x) {
-                                         output = suppressMessages(data.table(
-                                           read_excel(path=file.path(
-                                                        EU_folder,
-                                                        paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
-                                                      sheet="Tonne-Km","A2:I20")))
-                                           colnames(output)=c("category_TRACCS", "vehicle_type", "technology", as.character(seq(2005,2010,1)))
-                                           output[,technology:=ifelse(technology %in% c("Gasoline","Diesel","LPG","Other", "Flexi-fuel","B30"),"Liquids",technology)]
-                                           output[,technology:=ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
-                                           # output[,technology:=ifelse(technology %in% c("Other"),"BEV",technology)]
-                                           output=output[!technology %in% c("All"),]
-                                           output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                                                         measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                           setnames(output,old=c("value","variable"),new=c("km_million","year"))
-                                           output=merge(mapping_TRACCS_roadf_categories,output)
-                                           output$country_name <- x
-                                           output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,km_million,country_name)]
-                                           return(output)
-                                       }))
-
-    roadf_eu=roadf_eu[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
-
-    road_EU=merge(roadf_eu,roadp_eu,all=TRUE)
-    road_EU=road_EU[,.(tech_output=sum(km_million)),by=c("year","country_name","vehicle_type","technology")]
     ## road passenger: load load factors
     LF_countries_EU<- do.call("rbind",lapply(list_countries$countries,
                                              function(x) {
@@ -136,136 +120,35 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("NG"),"delivered gas",sector_fuel)]
     energy_intensity_EU[,sector_fuel:=ifelse(technology %in% c("Coal"),"delivered coal",sector_fuel)]
 
-    ## rail passenger: load demand
-    railp_eu=suppressMessages(data.table(read_excel(
+    energy_intensity_EU=merge(energy_intensity_EU,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
+    energy_intensity_EU[, year := as.numeric(as.character(year))]
+
+    ## rail pass and freight: load demand
+    rail_eu=suppressMessages(data.table(read_excel(
       path=file.path(
         EU_folder,
-        paste0("TRACCS_RAIL_Final_EXCEL_2013-12-20/TRACCS_Rail_Final_Eval.xlsx")), sheet="eval_rail_pkm","A6:K61")))
-    railp_eu = melt(railp_eu, id.vars = c("CountryID","Country","Countrytype_short","RailTrafficType","Unit_short"),
+        paste0("TRACCS_RAIL_Final_EXCEL_2013-12-20/TRACCS_Rail_Final_Eval.xlsx")), sheet="eval_rail_energy","A6:L124")))
+    rail_eu = melt(rail_eu, id.vars = c("RailTraction","Unit_short","CountryID","Country","Countrytype_short","RailTrafficType"),
                     measure.vars = c("2005","2006","2007","2008","2009","2010"))
+    rail_eu[, technology := ifelse(RailTraction == "Diesel", "Liquids", "Electric")]
+    rail_eu[, MJ := numeric()]
+    rail_eu[Unit_short == "t", MJ := value*  ## in t
+                                     0.043774*  ## in TJ
+                                     1000000  ## in MJ
+            ]
 
-    setnames(railp_eu,old=c("value","variable"),new=c("pkm_million","year"))
-    railp_eu=railp_eu[,.(km_million=sum(pkm_million)),by=c("year","Country")]
-    railp_eu[,vehicle_type:="Passenger Rail_tmp_vehicletype"]
+    rail_eu[Unit_short == "Mio kWh", MJ := value*  ## in Mio kWh
+                                           1e6*  ## in kwh
+                                           3.6  ## in MJ
+    ]
 
-    ## rail freight: load demand
-    railf_eu=suppressMessages(data.table(read_excel(
-      path=file.path(
-        EU_folder,
-        paste0("TRACCS_RAIL_Final_EXCEL_2013-12-20/TRACCS_Rail_Final_Eval.xlsx")),
-      sheet="eval_rail_tkm","A6:K122")))
-    railf_eu = melt(railf_eu, id.vars = c("CountryID","Country","Countrytype_short","RailTrafficType","Cargoclass_long"),
-                    measure.vars = c("2005","2006","2007","2008","2009","2010"))
-
-    setnames(railf_eu,old=c("value","variable"),new=c("tkm_million","year"))
-    railf_eu=railf_eu[,.(km_million=sum(tkm_million)),by=c("year","Country")]
-    railf_eu[,vehicle_type:="Freight Rail_tmp_vehicletype"]
-
-    rail_EU=merge(railf_eu,railp_eu,all=TRUE)
-    rail_EU[,Electric:=0.75*km_million]
-    rail_EU[,Liquids:=0.25*km_million]
-    rail_EU[,km_million:=NULL]
-    rail_EU = melt(rail_EU, id.vars = c("year", "Country", "vehicle_type"),
-                 measure.vars = c("Liquids", "Electric"))
-    setnames(rail_EU, old= c("Country", "value","variable"), new=c("country_name","tech_output","technology"))
-    rail_EU=rail_EU[!country_name %in% c("Liechtenstein"),] #delete Liechtenstein as we don't have it in any other database
-
-    #attribute 75% of demand to Electric trains and 25% to Liquid trains (on average for Europe https://www.iea.org/futureofrail/)
-
-    ## shipping: load demand for each type of shipping
-    list_countries=data.table(
-      countries=list.files(
-        path = file.path(EU_folder, "TRACCS_WATERBORNE_Final_EXCEL_2013-12-20"), all.files=FALSE))
-    list_countries[,countries:=gsub("_shipping.xlsx","",countries)]
-    list_countries=list_countries[!countries%in% c("Turkey","Iceland"),]#don't load the countries that have missing data
-    list_countries=list_countries[!grepl("\\$",countries),]
-
-    ## SSS: short sea shipping
-    shippingSSS_eu <- do.call("rbind",lapply(list_countries$countries,
-                                             function(x) {
-                                               output = suppressMessages(data.table(
-                                                 read_excel(
-                                                   path=file.path(
-                                                     EU_folder,
-                                                     paste0("TRACCS_WATERBORNE_Final_EXCEL_2013-12-20/",x,"_shipping.xlsx")),
-                                                   sheet="SSS_FREIGHT","A2:J86")))
-                                                 colnames(output)=c("vessel","size","cargo_class","distance",as.character(seq(2005,2010,1)))
-                                                 output = melt(output, id.vars = c("vessel","size","cargo_class","distance"),
-                                                               measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                                 setnames(output,old=c("value","variable"),new=c("ktkm","year"))
-                                                 output[,million_tkm:=ktkm/1000]
-                                                 output$country_name <- x
-                                                 output=output[,.(million_tkm=sum(million_tkm)),by=c("year","country_name")] #summarise to have total demand
-                                                 return(output)
-                                             }))
-    ## IWW: inland waterways navigation
-    shippingIWW_eu <- do.call("rbind",lapply(list_countries$countries,
-                                             function(x) {
-                                               output = suppressMessages(data.table(
-                                                 read_excel(
-                                                   path=file.path(
-                                                     EU_folder,
-                                                     paste0("TRACCS_WATERBORNE_Final_EXCEL_2013-12-20/",x,"_shipping.xlsx")),
-                                                   sheet="IWW FREIGHT","A2:J114")))
-                                                 colnames(output)=c("vessel","size","cargo_class","distance",as.character(seq(2005,2010,1)))
-                                                 output = melt(output, id.vars = c("vessel","size","cargo_class","distance"),
-                                                               measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                                 setnames(output,old=c("value","variable"),new=c("ktkm","year"))
-                                                 output[,million_tkm:=ktkm/1000]
-                                                 output$country_name <- x
-                                                 output=output[,.(million_tkm=sum(million_tkm)),by=c("year","country_name")] #summarise to have total demand
-                                                 return(output)
-                                             }))
-    ## DSS: deep sea shipping
-    shippingDSS_eu <- do.call("rbind",lapply(list_countries$countries,
-                                             function(x) {
-                                                 output = suppressMessages(data.table(read_excel(path=file.path(EU_folder, paste0("TRACCS_WATERBORNE_Final_EXCEL_2013-12-20/",x,"_shipping.xlsx")),
-                                                                                sheet="DSS FREIGHT","A2:H6")))
-                                                 colnames(output)=c("cargo_class","distance",as.character(seq(2005,2010,1)))
-                                                 output = melt(output, id.vars = c("cargo_class","distance"),
-                                                               measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                                 setnames(output,old=c("value","variable"),new=c("ktkm","year"))
-                                                 output[,million_tkm:=ktkm/1000]
-                                                 output$country_name <- x
-                                                 output=output[,.(million_tkm=sum(million_tkm)),by=c("year","country_name")] #summarise to have total demand
-                                                 return(output)
-                                             }))
-
-    ## merge them together
-    shipping_EU=Reduce(function(...) merge(..., all=TRUE), list(shippingSSS_eu,shippingIWW_eu,shippingDSS_eu))
-    ## summarize values per year
-    shipping_EU=shipping_EU[,.(tech_output=sum(million_tkm)),by=c("year","country_name")]
-    shipping_EU[,technology:="Liquids"]
-    shipping_EU[,vehicle_type:="Domestic Ship_tmp_vehicletype"] #I attribute all of the shipping data to domestic shipping
-    shipping_EU[, vehicle_type := "Domestic Ship_tmp_vehicletype"]
-    shipping_EU[, technology := "Liquids"]
-    ## Domestic Aviation
-    #load demand
-    airp_EU=fread(file.path(EU_folder, "TRACCS_AVI_Final_EXCEL_2013-12-20/aviation.csv"), sep=";", na.strings = "")#the CSV file is based on the excel sheet Avi_Pkm_Final_Eval.xlsx, sheet "fromDB_pkm_final"
-    airp_EU = melt(airp_EU, id.vars = c("name","code_airplane_characteristics"),
-             measure.vars = as.character(2005:2010))
-    setnames(airp_EU,old=c("value","variable"),new=c("pkm","year"))
-    airp_EU[, year := as.character(year)]
-    airp_EU[, pkm := gsub(x = pkm, pattern = ",", replacement = ".")]
-    airp_EU=airp_EU[,.(tech_output=CONV_unit_million*as.numeric(pkm),country_name=name,year=as.numeric(year),code_airplane_characteristics)]
-    airp_EU = approx_dt(airp_EU,
-                        xdata = seq(1990,2010),
-                        ycol = "tech_output",
-                        xcol = "year",
-                        idxcols=c("country_name","code_airplane_characteristics"),
-                        extrapolate = T)
-    airp_EU = airp_EU[,.(tech_output =sum(tech_output)), by = c("year", "country_name")]
-    airp_EU[, vehicle_type := "Domestic Aviation_tmp_vehicletype"]
-    airp_EU[, technology := "Liquids"]
-    ## there is an issue of order of magnitudes in aviation... remove for now
-    ## merge all data
-    dem_EU = rbind(shipping_EU, rail_EU, road_EU)
-    ## merge with structure
-    mapping_TRACCS_iso= fread(file.path(EU_folder, "mapping_countries_EU.csv"), skip=0)
-
-    ## the TRACCS database has to be with iso names
-    dem_EU=merge(dem_EU,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
-    dem_EU[, year := as.numeric(as.character(year))]
+    setnames(rail_eu,old=c("variable", "Country"),new=c("year", "country_name"))
+    rail_eu[, vehicle_type := character()]
+    rail_eu[RailTrafficType == "Goods", vehicle_type := "Freight Rail_tmp_vehicletype"]
+    rail_eu[RailTrafficType == "Passenger", vehicle_type := "Passenger Rail_tmp_vehicletype"]
+    rail_eu=rail_eu[,.(MJ=sum(MJ)),by=c("year","country_name", "technology", "vehicle_type")]
+    rail_eu=merge(rail_eu,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
+    rail_eu[, year := as.numeric(as.character(year))]
 
     LF_countries_EU = merge(LF_countries_EU,mapping_TRACCS_iso, by = "country_name")[, -c("country_name")]
     ## use only one tech
@@ -275,9 +158,9 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
     setnames(LF_countries_EU, old = "load_factor", new="loadFactor")
 
     ## load eurostata for bunkers
-    map_bunkers = data.table(country_name = c("BE","BG","CZ","DK","DE","EE","IE","EL","ES","FR","HR","IT","CY","LV","LT","LU","HU","MT","NL","AT","PL","PT","RO","SI","SK","FI","SE","UK"),
+    map_eurostat = data.table(country_name = c("BE","BG","CZ","DK","DE","EE","IE","EL","ES","FR","HR","IT","CY","LV","LT","LU","HU","MT","NL","AT","PL","PT","RO","SI","SK","FI","SE","UK"),
     iso = c("BEL","BGR","CZE","DNK","DEU","EST","IRL","GRC","ESP","FRA","HRV","ITA","CYP","LVA","LTU","LUX","HUN","MLT","NLD","AUT","POL","PRT","ROU","SVN","SVK","FIN","SWE","GBR"))
-    dem_bunkers <- do.call("rbind",lapply(map_bunkers$country_name,
+    dem_bunkers <- do.call("rbind",lapply(map_eurostat$country_name,
                                       function(x) {
                                         output = suppressMessages(data.table(read_excel(path=file.path(EU_folder, "Eurostat/energy_statistical_countrydatasheets.xlsx"),
                                                                                                sheet=x,"C8:X95")))
@@ -293,14 +176,40 @@ lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
                                         }))
 
     ## merge with regional mapping for EUROSTAT
-    dem_bunkers = merge(dem_bunkers, map_bunkers)[, c("country_name","mtoe") := NULL]
+    dem_bunkers = merge(dem_bunkers, map_eurostat)[, c("country_name","mtoe") := NULL]
     dem_bunkers[, vehicle_type := ifelse(name == "International maritime bunkers", "International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")][, name := NULL]
     setnames(dem_bunkers, old ="variable", new = "year")
     dem_bunkers[, year := as.numeric(as.character(year))]
+    dem_bunkers[, technology := "Liquids"]
+    # browser()
+    ## load domestic aviation from Eurostat
+    dem_dom <- do.call("rbind",lapply(map_eurostat$country_name,
+                                          function(x) {
+                                            output = suppressMessages(data.table(read_excel(path=file.path(EU_folder, "Eurostat/energy_statistical_countrydatasheets.xlsx"),
+                                                                                            sheet=x,"C8:X249")))
+                                            colnames(output)=c("name", as.character(seq(1990,2010,1)))
+                                            output = output[name %in% c("Domestic aviation", "Domestic navigation")]
+                                            output = output[, c("name", "1990", "2005", "2010")]
+                                            output = melt(output, id.vars = c("name"),
+                                                          measure.vars = c("1990","2005","2010"))
+                                            setnames(output,old=c("value"),new=c("mtoe"))
+                                            output[, MJ := mtoe*41868000000]
+                                            output$country_name <- x
+                                            return(output)
+                                          }))
 
-    load_EU_data=list(dem_EU=dem_EU,
-                          dem_bunkers = dem_bunkers,
+    ## merge with regional mapping for EUROSTAT
+    dem_dom = merge(dem_dom, map_eurostat)[, c("country_name","mtoe") := NULL]
+    dem_dom[, vehicle_type := ifelse(name == "Domestic aviation", "Domestic Aviation_tmp_vehicletype", "Domestic Ship_tmp_vehicletype")][, name := NULL]
+    setnames(dem_dom, old ="variable", new = "year")
+    dem_dom[, year := as.numeric(as.character(year))]
+    dem_dom[, technology := "Liquids"]
+
+    dem_eurostat = rbind(dem_bunkers, dem_dom, rail_eu, roadFE_eu)
+    load_EU_data=list(
+                      dem_eurostat = dem_eurostat,
                           energy_intensity_EU=energy_intensity_EU,
+                          roadFE_eu = roadFE_eu,
                           LF_countries_EU=LF_countries_EU)
     return(load_EU_data)
 
@@ -333,24 +242,12 @@ lvl0_prepareEU <- function(EU_data,
   subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- NULL
   i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
   dem_OTHER = copy(iso_data$TO_iso)
-
   ## use intensity and LF from GCAM to convert into tkm/pkm for bunkers
-  bunk = merge(EU_data$dem_bunk, intensity[region =="EU-15" & vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")][,c("year","conv_pkm_MJ","vehicle_type")])
-  bunk[, tech_output := MJ/  ## in MJ
+  dem_EU = merge(EU_data$dem_eurostat, intensity[region =="EU-15" & vehicle_type %in% unique(EU_data$dem_eurostat$vehicle_type)][,c("year","conv_pkm_MJ","vehicle_type", "technology")])
+  dem_EU[, tech_output := MJ/  ## in MJ
                         conv_pkm_MJ*    ## in km
                         1e-6][, c("MJ", "conv_pkm_MJ") := NULL] ## in million km
-  bunk[, technology := "Liquids"]
 
-  ## missing time steps extrapolated: TRACCS features yearly values between 2005 and 2010, but 1990 is absent. Remove the extra time steps as well
-  dem_TRACCS = approx_dt(dt = EU_data$dem_EU,
-                         xdata = c(1990, 2005, 2010),
-                         xcol = "year",
-                         ycol = "tech_output",
-                         idxcols = c("iso", "vehicle_type","technology"),
-                         extrapolate = TRUE)
-
-  ## merge TRACCS and Eurostat data
-  dem_EU = rbind(bunk, dem_TRACCS)
 
   dups <- duplicated(dem_EU, by=c("iso", "technology", "vehicle_type","year"))
 
