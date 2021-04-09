@@ -448,7 +448,9 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- preparing complex module-friendly output files")
   ## final value: in billionspkm or billions tkm and EJ; shares are in [-]
   complexValues <- lvl2_reportingEntries(ESdem = shares_intensity_demand$demandF_plot_pkm,
-                                         FEdem = shares_intensity_demand$demandF_plot_EJ)
+                                         FEdem = shares_intensity_demand$demandF_plot_EJ,
+                                         gdp_country = GDP_country,
+                                         REMIND2ISO_MAPPING)
 
   print("-- generating CSV files to be transferred to mmremind")
   ## only the combinations (region, vehicle) present in the mix have to be included in costs
