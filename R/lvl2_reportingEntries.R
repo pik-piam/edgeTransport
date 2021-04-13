@@ -2,6 +2,8 @@
 #'
 #' @param ESdem energy services demand
 #' @param FEdem final energy demand
+#' @param gdp_country GDP on ISO level
+#' @param REMIND2ISO_MAPPING REMIND2ISO_MAPPING mapping
 
 
 lvl2_reportingEntries = function(ESdem, FEdem, gdp_country, REMIND2ISO_MAPPING){
