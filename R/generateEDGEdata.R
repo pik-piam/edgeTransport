@@ -208,7 +208,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   }
 
 
-  ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level in TRACCS. No conversion of units happening.
+  ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level for EU. No conversion of units happening.
   print("-- generate ISO level data")
   iso_data <- lvl0_toISO(
     input_data = dem_int,
@@ -224,8 +224,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
 
-  ## function that loads the TRACCS data for Europe. Final units for demand: millionkm (tkm and pkm)
-  print("-- load EU TRACCS data")
+  ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
+  print("-- load EU data")
   EU_data <- lvl0_loadEU(input_folder)
   if(saveRDS)
      saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
