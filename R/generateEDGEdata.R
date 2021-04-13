@@ -123,6 +123,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM_data <- lvl0_GCAMraw(input_folder)
 
   ##function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
+  ## for alternative trucks: all regions (from PSI)
   print("-- merge PSI energy intensity data")
   intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(GCAM_data, input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
   GCAM_data$conv_pkm_mj = intensity_PSI_GCAM_data
