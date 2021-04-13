@@ -266,7 +266,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   SWS <- lapply(SWS, extr_const)
 
 
-  SWS$S3S_final_SW[region %in% c("EUR", "DEU", "ESC", "EWN", "FRA", "UKI") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+  SWS$S3S_final_SW[region %in% c("EUR", "ESC", "EWN", "FRA") & subsector_L3 == "Domestic Aviation"  & year >=2015,
                    sw := 0.1*sw[year==2015], by = c("region","subsector_L3")]
 
 
@@ -470,8 +470,28 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S3S_final_pref[region %in% c("CAZ", "NEU", "MEA", "IND") & subsector_L3 == "trn_pass_road"  & year >=2015,
                      sw := 1, by = c("region","subsector_L3")]
 
-  SWS$S3S_final_pref[region %in% c("ECE", "ECS", "ENC", "ESW", "NEN", "NES") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+  SWS$S3S_final_pref[region %in% c("ECE", "ECS", "NEN", "NES") & subsector_L3 == "Domestic Aviation"  & year >=2015,
                    sw := 0.05*sw[year==2015], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("DEU") & subsector_L3 == "Domestic Aviation"  & year >=2020,
+                     sw := 1.1*sw[year==2020], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("ESC") & subsector_L3 == "Domestic Aviation"  & year >=2030,
+                     sw := 1.1*sw[year==2030], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("FRA") & subsector_L3 == "Domestic Aviation"  & year ==2010,
+                     sw := 1.5*sw[year==2010], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("FRA") & subsector_L3 == "Domestic Aviation"  & year ==2015,
+                     sw := 5*sw[year==2015], by = c("region","subsector_L3")]
+
+  SWS$S3S_final_pref[region %in% c("UKI") & subsector_L3 == "Domestic Aviation"  & year >=2015,
+                     sw := 1.1*sw[year==2015], by = c("region","subsector_L3")]
+  SWS$S3S_final_pref[region %in% c("ESW") & subsector_L3 == "Domestic Aviation"  & year >=2010,
+                     sw := 0.4*sw[year==2010], by = c("region","subsector_L3")]
+  SWS$S3S_final_pref[region %in% c("ENC") & subsector_L3 == "Domestic Aviation"  & year >=2010,
+                     sw := 0.9*sw[year==2010], by = c("region","subsector_L3")]
+
 
   SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "trn_pass_road"  & year >=2015,
                      sw := 1, by = c("region","subsector_L3")]
