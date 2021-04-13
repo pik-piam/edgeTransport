@@ -8,6 +8,8 @@
 #' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
 #' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)
 #' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)
+#' @param JRC_IDEES_Trsp use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")
+#' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
 #' @param saveRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
@@ -20,12 +22,12 @@
 
 generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
-                             IEAbal=NULL, GDP_country=NULL, POP_country=NULL,
+                             IEAbal=NULL, GDP_country=NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL,
                              saveRDS=FALSE){
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
-  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- NULL
+  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -93,6 +95,9 @@ generateEDGEdata <- function(input_folder, output_folder,
   if (is.null(IEAbal)) IEAbal = readRDS(file.path(mrremind_folder, "IEAbal.RDS"))
   if (is.null(GDP_country)) GDP_country = readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
   if (is.null(POP_country)) POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
+  if (is.null(JRC_IDEES_Trsp)) JRC_IDEES_Trsp = readRDS(file.path(mrremind_folder, "JRC_IDEES_Trsp.RDS"))
+  if (is.null(JRC_IDEES_MarBunk)) JRC_IDEES_MarBunk = readRDS(file.path(mrremind_folder, "JRC_IDEES_MarBunk.RDS"))
+
 
   ## rearrange the columns and create regional values
   GDP_country = GDP_country[,, REMIND_scenario, pmatch=TRUE]
@@ -117,6 +122,47 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   GDP_POP_cap=merge(GDP,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
   GDP_POP_cap[,GDP_cap:=weight/POP_val]
+
+  ## filter only non-NA countries from IDEES and transform in data table
+  JRC_IDEES_Trsp=as.data.table(JRC_IDEES_Trsp)
+  JRC_IDEES_MarBunk=as.data.table(JRC_IDEES_MarBunk)
+  JRC_IDEES=rbind(JRC_IDEES_MarBunk, JRC_IDEES_Trsp)
+  JRC_IDEES=JRC_IDEES[grep("nergy consumption",variable.unit)]
+  JRC_IDEES=JRC_IDEES[!grep("Shares",variable.unit)]
+  JRC_IDEES=merge(JRC_IDEES,REMIND2ISO_MAPPING,by.x="iso3c",by.y="iso")
+  JRC_IDEES=JRC_IDEES[,.(value=sum(value)),by = c("variable.unit","region","year")]
+  JRC_IDEES[,year :=as.numeric(gsub("y","",year))]
+  JRC_IDEES=JRC_IDEES[year %in%c(1990,2000,2005,2010,2015)]
+  JRC_IDEES[, EJ:= value*  ##in ktoe
+                   1e3*    ## in toe
+                   4.1868E-8]  ## in EJ
+  useful_var = c(
+    ## international shipping
+    "Maritime Bunkers|Energy Consumption|Total energy consumption.ktoe",
+    ## international aviation
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Extra-EU.ktoe",
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Intra-EU.ktoe",
+    ## domestic shipping
+    "Transport|Navigation|Energy Consumption|Total energy consumption.ktoe",
+    ## domestic aviation
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|Domestic.ktoe",
+    ## road freight
+    "Transport|Energy consumption|Freight transport|Road transport|Heavy duty vehicles.ktoe",
+    ## road passenger LDVs
+    "Transport|Energy consumption|Passenger transport|Road transport|Passenger cars.ktoe",
+    ## road passenger HDVs
+    "Transport|Road|Energy Consumption|Total energy consumption|Passenger transport|Motor coaches, buses and trolley buses.ktoe",
+    ## rail passenger
+    "Transport|Rail|Energy Consumption|Total energy consumption|Passenger transport|Conventional passenger trains.ktoe",
+    ## rail freight
+    "Transport|Rail|Energy Consumption|Total energy consumption|Freight transport.ktoe"
+  )
+
+  JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
+
+
+
+
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
@@ -419,6 +465,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     EU_data$roadFE_eu=EU=merge(EU_data$roadFE_eu[year %in% c(1990, 2005, 2010)], REMIND2ISO_MAPPING,by="iso")
     EU_data$roadFE_eu=EU_data$roadFE_eu[,.(EJ=sum(MJ)*1e-12), by = c("year","region","vehicle_type")]
     saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS"))
+
+    saveRDS(JRC_IDEES, file = level2path("JRC_IDEES.RDS"))
 
     saveRDS(POP, file = level2path("POP.RDS"))
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))

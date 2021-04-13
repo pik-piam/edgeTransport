@@ -90,6 +90,7 @@ mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
+JRC_IDEES <- readRDS(datapath(fname = "JRC_IDEES.RDS"))
 ## Load population to calculate per capita values
 POP = readRDS(datapath(fname = "POP.RDS"))
 ## load IEA data as a comparison
@@ -111,6 +112,56 @@ theme_plot = theme_minimal()+
           strip.text = element_text(size = 8),
           strip.background = element_rect(color = "grey"),
           axis.line = element_line(size = 0.5, colour = "grey"))
+
+
+
+mapping_JRC_IDEE = data.table(variable.unit = c(
+    ## international shipping
+    "Maritime Bunkers|Energy Consumption|Total energy consumption.ktoe",
+    ## international aviation
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Extra-EU.ktoe",
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Intra-EU.ktoe",
+    ## domestic shipping
+    "Transport|Navigation|Energy Consumption|Total energy consumption.ktoe",
+    ## domestic aviation
+    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|Domestic.ktoe",
+    ## road freight
+    "Transport|Energy consumption|Freight transport|Road transport|Heavy duty vehicles.ktoe",
+    ## road passenger LDVs
+    "Transport|Energy consumption|Passenger transport|Road transport|Passenger cars.ktoe",
+    ## road passenger HDVs
+    "Transport|Road|Energy Consumption|Total energy consumption|Passenger transport|Motor coaches, buses and trolley buses.ktoe",
+    ## rail passenger
+    "Transport|Rail|Energy Consumption|Total energy consumption|Passenger transport|Conventional passenger trains.ktoe",
+    ## rail freight
+    "Transport|Rail|Energy Consumption|Total energy consumption|Freight transport.ktoe"
+  ),
+  flow = c(
+    ## international shipping
+    "MARBUNK",
+    ## international aviation
+    "AVBUNK",
+    "AVBUNK",
+    ## domestic shipping
+    "DOMESNAV",
+    ## domestic aviation
+    "DOMESAIR",
+    ## road freight
+    "ROAD HDV",
+    ## road passenger LDVs
+    "ROAD LDV",
+    ## road passenger HDVs
+    "ROAD HDV",
+    ## rail passenger
+    "RAIL",
+    ## rail freight
+    "RAIL"
+  )
+  )
+
+JRC_IDEES= merge(JRC_IDEES, mapping_JRC_IDEE, by ="variable.unit")
+
+JRC_IDEES=JRC_IDEES[,.(value = sum(EJ)), by = .(region, year, flow)]
 ```
 
 
@@ -450,7 +501,7 @@ demandkmTruckplotf(demand_km)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE,fig.width = 10, fig.height = 5}
 ## demand EJ for trucks, divided by fuel type
 
-demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS){
+demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS, JRC_IDEES){
   demandEJ[, flow := ifelse(sector == "trn_aviation_intl", "AVBUNK", NA)]
   demandEJ[, flow := ifelse(sector == "trn_shipping_intl", "MARBUNK", flow)]
   demandEJ[, flow := ifelse(grepl("LDV", subsector_L2), "ROAD LDV", flow)]
@@ -465,47 +516,43 @@ demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS){
   demEJ_TRACCS = demEJ_TRACCS[,.(value = sum(EJ)), by = c("region", "year", "flow")]
 
   demEJ_TRACCS[, model := "TRACCS"]
-
-
   demandEJ[, model := "EDGE-T"]
   IEA[, model := "IEAbal"]
-  totdem=rbind(demandEJ[year>=2015], IEA[year<2015])
-  totdem_road=rbind(demandEJ[year %in% c(2005, 2010, 2015)], IEA[year %in% c(2005, 2010, 2015)], demEJ_TRACCS)
+  JRC_IDEES[, model := "JRC_IDEE"]
+  totdem=rbind(demandEJ[year>=2015], IEA[year<2015],JRC_IDEES)
+  totdem_road=rbind(demandEJ[year %in% c(2005, 2010, 2015)], IEA[year %in% c(2005, 2010, 2015)], demEJ_TRACCS, JRC_IDEES)
 
   p1 = ggplot()+
-    geom_area(data = totdem[flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions & year <= maxyear ], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    geom_area(data = totdem[flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions & year <= maxyear & model %in% c("IEAbal", "EDGE-T")], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand road [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
 
     p2 = ggplot()+
-    geom_area(data = totdem[flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions & year <= maxyear ], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    geom_area(data = totdem[flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions & year <= maxyear & model %in% c("IEAbal", "EDGE-T")], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand road [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
 
     p3 = ggplot()+
-    geom_area(data = totdem[!flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions & year <= maxyear ], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    geom_area(data = totdem[!flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & region %in% EU_regions & year <= maxyear & model %in% c("IEAbal", "EDGE-T") ], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand no road [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
 
 
-    totdem1=rbind(demandEJ, IEA)
+    totdem1=rbind(demandEJ, IEA, JRC_IDEES)
 
 
     p4 = ggplot()+
-    geom_area(data = totdem[!flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions & year <= maxyear ], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
+    geom_area(data = totdem[!flow%in%c("ROAD", "ROAD LDV", "ROAD HDV") & !region %in% EU_regions & year <= maxyear & model %in% c("IEAbal", "EDGE-T")], aes(x=year, y=value, group = interaction(model, flow), fill = flow), color="black",position= position_stack())+
     labs(x = "", y = "Final energy demand no road [EJ]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
-
-    totdem1=rbind(demandEJ, IEA)
-
 
 
     p5b1 = ggplot()+
@@ -624,7 +671,7 @@ demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS){
 }
 
 
-plots = demandEJ_IEAcomp(demand_ej, IEA, demEJ_TRACCS)
+plots = demandEJ_IEAcomp(demand_ej, IEA, demEJ_TRACCS, JRC_IDEES)
 
 
 
