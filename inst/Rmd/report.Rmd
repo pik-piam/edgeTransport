@@ -473,14 +473,14 @@ demandkmTruckplotf <- function(demandkm){
 
   p1 = ggplot()+
     geom_area(data = demandkm[year > 2005  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
-    labs(x = "", y = "Energy services demand for trucks [EJ]")+
+    labs(x = "", y = "Energy services demand for trucks [million tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
 
     p2 = ggplot()+
     geom_area(data = demandkm[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
-    labs(x = "", y = " Energy services demand for trucks [EJ]")+
+    labs(x = "", y = " Energy services demand for trucks [million tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols)+
     theme_plot
