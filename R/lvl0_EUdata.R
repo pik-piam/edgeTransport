@@ -13,7 +13,7 @@
 #' @importFrom readxl read_excel
 
 
-lvl0_loadEU <- function(input_folder, EU_dir = "TRACCS"){
+lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     countries <- tech_output <- technologies <- `.` <- region <- EDGE_vehicle_type <- MJ <- mtoe <- km_million <- country_name <- technology <- tkm_million <- MJ_km <- load_factor <- million_tkm <- Liquids <- Electric <- pkm_million <- ktkm <- pkm <- name <- code_airplane_characteristics <- sector_fuel <- vehicle_type <- NULL
     EJ <- RailTraction <- RailTrafficType <- Unit_short <- convert <- value <- NULL
     EU_folder <- file.path(input_folder, EU_dir)
