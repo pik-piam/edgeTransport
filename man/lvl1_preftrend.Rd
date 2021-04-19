@@ -10,6 +10,8 @@ lvl1_preftrend(
   incocost,
   clusters,
   years,
+  GDP,
+  GDP_POP,
   REMIND_scenario,
   EDGE_scenario,
   smartlifestyle,
@@ -26,6 +28,10 @@ lvl1_preftrend(
 \item{clusters}{clusters of regions based on geographical structure}
 
 \item{years}{time steps}
+
+\item{GDP}{GDP regional level}
+
+\item{GDP_POP}{GDP per capita}
 
 \item{REMIND_scenario}{SSP scenario}
 

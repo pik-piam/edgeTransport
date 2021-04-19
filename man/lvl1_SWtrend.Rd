@@ -6,6 +6,7 @@
 \usage{
 lvl1_SWtrend(
   calibration_output,
+  GDP,
   clusters,
   years,
   REMIND2ISO_MAPPING,
@@ -16,6 +17,8 @@ lvl1_SWtrend(
 \arguments{
 \item{calibration_output}{historically calibrated preference factors}
 
+\item{GDP}{regional level}
+
 \item{clusters}{clusters of regions based on geographical structure}
 
 \item{years}{time steps}
@@ -24,7 +27,7 @@ lvl1_SWtrend(
 
 \item{REMIND_scenario}{SSP scenario}
 
-\item{EDGE_scenario}{EDGE transport scenario specifier}
+\item{EDGE_scenario}{EDGE transport scenario specifie}
 }
 \value{
 projected trend for preference factors

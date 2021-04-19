@@ -17,6 +17,7 @@ lvl2_createCSV_inconv(
   price_nonmot,
   complexValues,
   loadFactor,
+  demISO,
   REMIND_scenario,
   EDGE_scenario,
   level2path
@@ -46,6 +47,8 @@ lvl2_createCSV_inconv(
 \item{complexValues}{values for complex module in REMIND}
 
 \item{loadFactor}{load factors}
+
+\item{demISO}{ISO level demand in 2010 to be used as a weight in mrremind}
 
 \item{REMIND_scenario}{SSP scenario}
 

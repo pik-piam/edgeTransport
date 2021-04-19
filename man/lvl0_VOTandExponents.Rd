@@ -6,6 +6,8 @@
 \usage{
 lvl0_VOTandExponents(
   GCAM_data,
+  GDP_country,
+  POP_country,
   REMIND_scenario,
   input_folder,
   GCAM2ISO_MAPPING,
@@ -14,6 +16,10 @@ lvl0_VOTandExponents(
 }
 \arguments{
 \item{GCAM_data}{GCAM based data}
+
+\item{GDP_country}{GDP ISO level}
+
+\item{POP_country}{population (ISO level)}
 
 \item{REMIND_scenario}{SSP scenario}
 

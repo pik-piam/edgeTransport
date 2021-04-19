@@ -9,6 +9,11 @@ generateEDGEdata(
   output_folder,
   EDGE_scenario,
   REMIND_scenario = "SSP2",
+  IEAbal = NULL,
+  GDP_country = NULL,
+  POP_country = NULL,
+  JRC_IDEES_Trsp = NULL,
+  JRC_IDEES_MarBunk = NULL,
   saveRDS = FALSE
 )
 }
@@ -20,6 +25,16 @@ generateEDGEdata(
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 
 \item{REMIND_scenario}{SSP scenario}
+
+\item{IEAbal}{use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
+
+\item{GDP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)}
+
+\item{POP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)}
+
+\item{JRC_IDEES_Trsp}{use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")}
+
+\item{JRC_IDEES_MarBunk}{use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")}
 
 \item{saveRDS}{optional saving of intermediate RDS files}
 }
