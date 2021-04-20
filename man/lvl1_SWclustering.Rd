@@ -6,6 +6,8 @@
 \usage{
 lvl1_SWclustering(
   input_folder,
+  POP,
+  GDP,
   REMIND_scenario,
   REMIND2ISO_MAPPING,
   WDI_dir = "WDI"
@@ -13,6 +15,10 @@ lvl1_SWclustering(
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}
+
+\item{POP}{population (regional aggregation)}
+
+\item{GDP}{GDP regional level}
 
 \item{REMIND_scenario}{SSP scenario}
 

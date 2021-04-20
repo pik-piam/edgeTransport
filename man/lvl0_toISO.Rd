@@ -9,6 +9,10 @@ lvl0_toISO(
   VOT_data,
   price_nonmot,
   UCD_data,
+  GDP,
+  GDP_country,
+  POP,
+  GDP_POP,
   GCAM2ISO_MAPPING,
   REMIND2ISO_MAPPING,
   EDGE_scenario,
@@ -23,6 +27,14 @@ lvl0_toISO(
 \item{price_nonmot}{price non motorized transport}
 
 \item{UCD_data}{UCD data}
+
+\item{GDP}{regional level}
+
+\item{GDP_country}{GDP ISO level}
+
+\item{POP}{population regional level}
+
+\item{GDP_POP}{per capita GDP}
 
 \item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
 

@@ -2,9 +2,11 @@
 #'
 #' @param ESdem energy services demand
 #' @param FEdem final energy demand
+#' @param gdp_country GDP on ISO level
+#' @param REMIND2ISO_MAPPING REMIND2ISO_MAPPING mapping
 
 
-lvl2_reportingEntries = function(ESdem, FEdem){
+lvl2_reportingEntries = function(ESdem, FEdem, gdp_country, REMIND2ISO_MAPPING){
   category <- share_LDV_totroad <- region <- subsector_L3 <- subsector_L2 <- subsector_L1 <- share_LDV_totliq <- technology <- demand_EJ <- totdem <- demand_F <- entry <- `.` <- NULL
   aggrCategory = function(dt){
     node <- category <- technology <- sector <- subsector_L1 <- subsector_L2 <- subsector_L3 <- fuel <- NULL
@@ -42,6 +44,11 @@ lvl2_reportingEntries = function(ESdem, FEdem){
   dem$FEdem[, unit := "EJ"]
   dem$FEdem=dem$FEdem[,.(totdem = sum(demand_EJ)), by = c("region", "year", "node", "category", "fuel", "entry", "unit")]
 
+  dem$iso_FEdem = disaggregate_dt(dem$FEdem, REMIND2ISO_MAPPING,
+                                  valuecol="totdem",
+                                  datacols=c("year", "node", "category",
+                                             "fuel", "entry", "unit"),
+                                  weights=gdp_country)
 
   ## shares of fepet->LDVs, with respect to total liquid-fuelled transport (share_LDV_totliq) and total road transport (share_LDV_totroad)
   shLDV = FEdem[technology %in% c("Liquids")]

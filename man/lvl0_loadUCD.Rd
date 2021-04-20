@@ -6,6 +6,7 @@
 \usage{
 lvl0_loadUCD(
   GCAM_data,
+  GDP_country,
   EDGE_scenario,
   REMIND_scenario,
   GCAM2ISO_MAPPING,
@@ -20,6 +21,8 @@ lvl0_loadUCD(
 }
 \arguments{
 \item{GCAM_data}{GCAM based data}
+
+\item{GDP_country}{GDP ISO level}
 
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 

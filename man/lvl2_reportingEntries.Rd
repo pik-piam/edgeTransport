@@ -4,12 +4,16 @@
 \alias{lvl2_reportingEntries}
 \title{Provides entries that are useful for reporting and complex realization}
 \usage{
-lvl2_reportingEntries(ESdem, FEdem)
+lvl2_reportingEntries(ESdem, FEdem, gdp_country, REMIND2ISO_MAPPING)
 }
 \arguments{
 \item{ESdem}{energy services demand}
 
 \item{FEdem}{final energy demand}
+
+\item{gdp_country}{GDP on ISO level}
+
+\item{REMIND2ISO_MAPPING}{REMIND2ISO_MAPPING mapping}
 }
 \description{
 Provides entries that are useful for reporting and complex realization
