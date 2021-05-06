@@ -168,18 +168,20 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
                             valuecol="non_fuel_price",
                             datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "type", "year"),
                             weights=gdp)
-
     ## convergence of non_fuel_price according to GDPcap
     ## working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
     gdp_pop=copy(GDP_POP)
     tmp = merge(nec_cost, gdp_pop, by = c("region", "year"))
-
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[region %in% richregions & non_fuel_price > 0,]
+    ## for passenger rail, include only EUR, JPN in the average
+    richave_rail = richave[vehicle_type == "Passenger Rail_tmp_vehicletype" & region %in% c("JPN", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")]
+    richave_rail = richave_rail[, .(non_fuel_price = sum(non_fuel_price*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
     richave = richave[, .(non_fuel_price = sum(non_fuel_price*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
+    richave = rbind(richave[vehicle_type != "Passenger Rail_tmp_vehicletype"], richave_rail)
     gdp_pop = gdp_pop[region %in% richregions,]
     gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
     richave = merge(richave, gdp_pop, by = "year")
