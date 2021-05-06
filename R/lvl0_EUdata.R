@@ -258,8 +258,14 @@ lvl0_prepareEU <- function(EU_data,
     dem_EU <- unique(dem_EU, by=c("iso", "technology", "vehicle_type", "year"))
   }
 
+  ## exclude LDVs from EU countries in OTHER
+  dem_OTHER = dem_OTHER[!(iso %in% unique(dem_EU$iso) & subsector_L1 == "trn_pass_road_LDV_4W")]
   ## select based on the combination of variables available in TRACCS
   dem_OTHER[dem_EU, on=.(iso, vehicle_type, technology, year), tech_output := i.tech_output]
+  ## merge dem_EU with full mapping
+  dem_EU = merge(dem_EU, unique(dem_OTHER[, c("vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector")]), by = "vehicle_type")
+  ## re-introduce LDVs in OTHER
+  dem_OTHER = rbind(dem_OTHER, dem_EU[subsector_L1 == "trn_pass_road_LDV_4W"])
 
   dups <- duplicated(dem_OTHER, by=c("iso", "technology", "vehicle_type","year"))
 
