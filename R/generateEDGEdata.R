@@ -7,6 +7,7 @@
 #' @param REMIND_scenario SSP scenario
 #' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
 #' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)
+#' @param RatioPPP2MER_country use mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: calcOutput("RatioPPP2MER", aggregate =F)
 #' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)
 #' @param JRC_IDEES_Trsp use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
@@ -22,11 +23,11 @@
 
 generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
-                             IEAbal=NULL, GDP_country=NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL,
+                             IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL,
                              saveRDS=FALSE){
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
-  non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- NULL
+  non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
@@ -94,6 +95,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   mrremind_folder = file.path(input_folder, "mrremind")
   if (is.null(IEAbal)) IEAbal = readRDS(file.path(mrremind_folder, "IEAbal.RDS"))
   if (is.null(GDP_country)) GDP_country = readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
+  if (is.null(RatioPPP2MER_country)) RatioPPP2MER_country = readRDS(file.path(mrremind_folder, "RatioPPP2MER_country.RDS"))
   if (is.null(POP_country)) POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
   if (is.null(JRC_IDEES_Trsp)) JRC_IDEES_Trsp = readRDS(file.path(mrremind_folder, "JRC_IDEES_Trsp.RDS"))
   if (is.null(JRC_IDEES_MarBunk)) JRC_IDEES_MarBunk = readRDS(file.path(mrremind_folder, "JRC_IDEES_MarBunk.RDS"))
@@ -108,6 +110,15 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP = GDP[,.(weight = sum(weight)), by = c("region", "year")]
   setnames(GDP_country, c("ISO3"), c("iso"))
 
+  RatioPPP2MER_country = as.data.table(RatioPPP2MER_country)
+  RatioPPP2MER_country = RatioPPP2MER_country[, c("year", "data") := NULL]
+  setnames(RatioPPP2MER_country, old = "value", new = "ratio")
+
+  GDP_MER_country = merge(GDP_country, RatioPPP2MER_country, by.x = "iso", by.y = "Region")
+  GDP_MER_country[, weight := weight*ratio]
+  GDP_MER_country[, ratio := NULL]
+  GDP_MER = merge(GDP_MER_country, REMIND2ISO_MAPPING, by = "iso")
+  GDP_MER = GDP_MER[,.(weight = sum(weight)), by = c("region", "year")]
 
   POP_country = POP_country[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
   POP_country <- as.data.table(POP_country)
@@ -120,8 +131,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP_POP[,GDP_cap:=weight/POP_val]
 
 
-  GDP_POP_cap=merge(GDP,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
-  GDP_POP_cap[,GDP_cap:=weight/POP_val]
+  GDP_POP_MER=merge(GDP_MER,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
+  GDP_POP_MER[,GDP_cap:=weight/POP_val]
 
   ## filter only non-NA countries from IDEES and transform in data table
   JRC_IDEES_Trsp=as.data.table(JRC_IDEES_Trsp)
@@ -179,7 +190,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [1990$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(GCAM_data, GDP_country, POP_country = POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
+  VOT_lambdas=lvl0_VOTandExponents(GCAM_data = GCAM_data, GDP_country = GDP_country, GDP_POP = GDP_POP, GDP_MER_country = GDP_MER_country, POP_country = POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
 
   ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
   print("-- load UCD database")
@@ -201,6 +212,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   costs_lf_mile$annual_mileage = UCD_output$annual_mileage
   VOT_lambdas$logit_output = correctedOutput$logitexp
 
+
   if(saveRDS){
     saveRDS(dem_int, file = level0path("correctedGCAM_data.RDS"))
     saveRDS(costs_lf_mile, file = level0path("correctedUCD_output.RDS"))
@@ -217,6 +229,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     UCD_data = costs_lf_mile,
     GDP = GDP,
     GDP_POP = GDP_POP,
+    GDP_POP_MER = GDP_POP_MER,
     GDP_country = GDP_country,
     POP = POP,
     GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
@@ -326,7 +339,7 @@ generateEDGEdata <- function(input_folder, output_folder,
                           incocost = incocost,
                           calibdem = alldata$demkm,
                           GDP = GDP,
-                          GDP_POP = GDP_POP,
+                          GDP_POP_MER = GDP_POP_MER,
                           years = years,
                           REMIND_scenario = REMIND_scenario,
                           EDGE_scenario = EDGE_scenario,

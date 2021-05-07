@@ -6,7 +6,7 @@
 #' @param clusters clusters of regions based on geographical structure
 #' @param years time steps
 #' @param GDP GDP regional level
-#' @param GDP_POP GDP per capita
+#' @param GDP_POP_MER GDP per capita MER
 #' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param smartlifestyle switch activating sustainable lifestyles
@@ -15,11 +15,11 @@
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_POP, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
+lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_POP_MER, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
   gdp <- copy(GDP)
-  gdpcap <- copy(GDP_POP)
+  gdpcap <- copy(GDP_POP_MER)
   ## function to converge to average generic rich region (useful for vehicle types and subsector_L1)
   aveval=function(dtin,              ## dt of which I recalculate the SW
                   gdpcap            ## per capita gdp
@@ -83,7 +83,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
 
     ## convergence is linear until the value corresponding to 2010 is reached
     tmp2[year <= year_at_yearconv & year >= 2010, sw := sw[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(sw_conv-sw[year == 2010]), by =c(all_subsectors[seq(match(groupval, all_subsectors) - 1, match(groupval, all_subsectors))], "region")]
-
+    tmp2[is.na(sw), sw := sw_new]
     ## select only useful columns
     tmp2 = tmp2[,c("region", "year", "sw", all_subsectors[seq(match(groupval, all_subsectors) - 1,length(all_subsectors), 1)]), with = F]
 
@@ -410,8 +410,11 @@ if (techswitch %in% c("BEV", "FCEV")) {
                       sw := 1, by = c("region","subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
-  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("EUR", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2020,
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("EUR", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
+                     by=c("region", "subsector_L3")]
+  SWS$S3S_final_pref[subsector_L3 %in% c("Passenger Rail", "HSR") & region %in% c("ECE", "ECS") & year >= 2020,
+                     sw := ifelse(year <= 2100, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.01*sw[year==2020]),
                      by=c("region", "subsector_L3")]
   ## public transport preference in European countries increases (Buses)
   SWS$S2S3_final_pref[subsector_L2 == "Bus" & region %in% c("EUR", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2010,
