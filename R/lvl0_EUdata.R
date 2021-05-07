@@ -206,6 +206,13 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     dem_dom[, year := as.numeric(as.character(year))]
     dem_dom[, technology := "Liquids"]
 
+    ## extend road to 1990
+    roadFE_eu = approx_dt(roadFE_eu, c(1990,unique(roadFE_eu$year)),
+                          xcol = "year", ycol = "MJ",
+                          idxcols = c("iso", "vehicle_type", "technology"),
+                          extrapolate=T)
+
+
     dem_eurostat = rbind(dem_bunkers, dem_dom, rail_eu, roadFE_eu)
     load_EU_data=list(
                       dem_eurostat = dem_eurostat,

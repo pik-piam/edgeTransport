@@ -9,7 +9,8 @@
 #' @param GDP_country GDP ISO level
 #' @param GDP regional level
 #' @param POP population regional level
-#' @param GDP_POP per capita GDP
+#' @param GDP_POP per capita GDPppp
+#' @param GDP_POP_MER per capita GDPmer
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
@@ -20,7 +21,7 @@
 #' @author Marianna Rottoli
 
 
-lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_country, POP, GDP_POP, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
+lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_country, POP, GDP_POP, GDP_POP_MER, GCAM2ISO_MAPPING, REMIND2ISO_MAPPING, EDGE_scenario, REMIND_scenario="SSP2"){
     scenario <- subsector_L1 <- price_component <- GDP_cap <- region <- conv_pkm_MJ <- `.` <- weight <- POP_val <- vehicle_type <- year_at_yearconv <- conv_pkm_MJ_trend <- conv_pkm_MJ_conv <- technology <- NULL
     subsector_L2 <- subsector_L3 <- sector <- sector_fuel <- yearconv <- time <- non_fuel_price <-non_fuel_price_trend <- non_fuel_price_conv <- type <- NULL
     ## GCAM data
@@ -45,10 +46,11 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
                            datacols=c("sector", "subsector_L1", "subsector_L2",
                                       "subsector_L3", "vehicle_type", "technology"),
                            weights=gdp)
+
     ## convergence of intensity according to GDPcap
     ## working principle: intensity follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    gdp_pop=copy(GDP_POP)
+    gdp_pop=copy(GDP_POP_MER)
     tmp = merge(int, gdp_pop, by = c("region", "year"))
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
@@ -94,11 +96,11 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     ## year at which the convergence happens
     tmp2[, year_at_yearconv := year[time == yearconv], by = c("region", "technology", "vehicle_type")]
     tmp2[is.na(year_at_yearconv), year_at_yearconv := year[time == yearconv + 5], by = c("region", "technology", "vehicle_type")]
-
-    ## value of the non-fuel price after the convergence
+    tmp2[conv_pkm_MJ_conv, conv_pkm_MJ_conv := conv_pkm_MJ]
+    ## value of the intensity after the convergence
     tmp3 = richave[, c("year", "conv_pkm_MJ", "technology", "vehicle_type")]
-    setnames(tmp3, old = c("conv_pkm_MJ"), new = c("conv_pkm_MJ_trend"))
-    tmp2 = merge(tmp2,tmp3,by=c("year", "technology", "vehicle_type"))
+    setnames(tmp3, old = c("conv_pkm_MJ", "year"), new = c("conv_pkm_MJ_trend", "yearconv"))
+    tmp2 = merge(tmp2,tmp3,by=c("yearconv", "technology", "vehicle_type"))
 
     ## after the year of convergence, the values are the "average" developed countries values
     tmp2[year >= year_at_yearconv & year > 2010, conv_pkm_MJ := conv_pkm_MJ_trend, by = c("region","technology", "vehicle_type")]
@@ -109,6 +111,7 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
 
     ## convergence is linear until the value corresponding to 2010 is reached
     tmp2[year <= year_at_yearconv & year >= 2010, conv_pkm_MJ := conv_pkm_MJ[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(conv_pkm_MJ_conv-conv_pkm_MJ[year == 2010]), by =c("technology", "vehicle_type", "region")]
+    tmp2[is.nan(conv_pkm_MJ), conv_pkm_MJ := conv_pkm_MJ_trend]
     ## select only useful columns
     tmp2 = tmp2[,.(region, year, conv_pkm_MJ, technology, vehicle_type, subsector_L1, subsector_L2, subsector_L3, sector, sector_fuel)]
     ## rich countries need to be reintegrated
@@ -168,18 +171,20 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
                             valuecol="non_fuel_price",
                             datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "type", "year"),
                             weights=gdp)
-
     ## convergence of non_fuel_price according to GDPcap
     ## working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     ## load gdp per capita
-    gdp_pop=copy(GDP_POP)
+    gdp_pop=copy(GDP_POP_MER)
     tmp = merge(nec_cost, gdp_pop, by = c("region", "year"))
-
     ## define rich regions
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[region %in% richregions & non_fuel_price > 0,]
+    ## for passenger rail, include only EUR, JPN in the average
+    richave_rail = richave[vehicle_type == "Passenger Rail_tmp_vehicletype" & region %in% c("JPN", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")]
+    richave_rail = richave_rail[, .(non_fuel_price = sum(non_fuel_price*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
     richave = richave[, .(non_fuel_price = sum(non_fuel_price*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
+    richave = rbind(richave[vehicle_type != "Passenger Rail_tmp_vehicletype"], richave_rail)
     gdp_pop = gdp_pop[region %in% richregions,]
     gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
     richave = merge(richave, gdp_pop, by = "year")
@@ -216,8 +221,8 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
 
     ## value of the non-fuel price after the convergence
     tmp3 = richave[, c("year", "non_fuel_price", "technology", "vehicle_type")]
-    setnames(tmp3, old = c("non_fuel_price"), new = c("non_fuel_price_trend"))
-    tmp2 = merge(tmp2,tmp3,by=c("year", "technology", "vehicle_type"))
+    setnames(tmp3, old = c("non_fuel_price", "year"), new = c("non_fuel_price_trend", "yearconv"))
+    tmp2 = merge(tmp2,tmp3,by=c("yearconv", "technology", "vehicle_type"))
 
     ## after the year of convergence, the values are the "average" developed countries values
     tmp2[year >= year_at_yearconv & year > 2010, non_fuel_price := non_fuel_price_trend, by = c("region","technology", "vehicle_type")]
