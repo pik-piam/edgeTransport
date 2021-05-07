@@ -74,7 +74,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
   ## remove double category of buses and remove three wheelers
-  vehicle_intensity = vehicle_intensity[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
+  vehicle_intensity = vehicle_intensity[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
   ## remove the Adv categories, Hybrid Liquids and LA_BEV
   vehicle_intensity = vehicle_intensity[!technology %in% c("Tech-Adv-Electric", "Adv-Electric", "Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid")]
   vehicle_intensity[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
@@ -102,11 +102,11 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
                                       col2use = "vehicle_type")
   ## remove double category of buses and remove three wheelers; substitute
-  load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype")]
+  load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
   ## add load factor for trucks
   load_factor[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
   load_factor[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  load_factor[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+  load_factor[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicle_type := "Truck (18t)"]
   load_factor[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
   load_factor[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
 
@@ -131,7 +131,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   tech_output = distribute_logit(tech_output,colname = "subsector",extracol = "supplysector")
   ## merge 2wheelers and 3 wheelers and different categories of buses; remove NG motorbikes and merge BEV and LA-BEV
   tech_output[vehicle_type %in% c("Heavy Bus", "Light Bus"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Bus_tmp_vehicletype", "Bus_tmp_subsector_L1", "Bus", "trn_pass_road", "trn_pass")]
-  tech_output[vehicle_type %in% c("Three-Wheeler", "Scooter"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W", "trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
+  tech_output[vehicle_type %in% c("Three-Wheeler_tmp_vehicletype", "Scooter"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W", "trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
   tech_output[vehicle_type == "Multipurpose Vehicle", vehicle_type := "Subcompact Car"]
   tech_output[technology == "LA-BEV", technology := "BEV"]
   tech_output[technology %in% c("Tech-Adv-Electric", "Adv-Electric"), technology := "Electric"]
@@ -141,7 +141,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   ## merge the truck categories
   tech_output[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
   tech_output[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  tech_output[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
+  tech_output[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicle_type := "Truck (18t)"]
   tech_output[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
   tech_output[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
   tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type","technology","year")]
