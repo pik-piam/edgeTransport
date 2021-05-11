@@ -2,7 +2,7 @@
 #'
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param input_folder folder hosting raw data
-#' @param output_folder folder hosting REMIND input files
+#' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param REMIND_scenario SSP scenario
 #' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
@@ -523,8 +523,8 @@ generateEDGEdata <- function(input_folder, output_folder,
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
-
-  lvl2_createCSV_inconv(
+  ## save the output csv files or create a list of objects
+  EDGETrData = lvl2_createoutput(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,
     vot_data = iso_data$vot,
@@ -540,6 +540,11 @@ generateEDGEdata <- function(input_folder, output_folder,
     demISO = alldata$demISO,
     REMIND_scenario = REMIND_scenario,
     EDGE_scenario = EDGE_scenario,
-    level2path = level2path)
+    level2path = level2path,
+    output_folder = output_folder)
+
+  if (!is.null(EDGETrData)) {
+    return(EDGETrData)
+  }
 
 }
