@@ -28,7 +28,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
-  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- NULL
+  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -313,6 +313,11 @@ generateEDGEdata <- function(input_folder, output_folder,
     logit_exp_data = VOT_lambdas$logit_output,
     vot_data = iso_data$vot,
     price_nonmot = iso_data$price_nonmot)
+
+  if(any(is.na(calibration_output$list_SW$FV_final_SW))){
+    print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
+  stop()
+  }
 
   if(saveRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
