@@ -44,6 +44,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   ## Returns the dt with the calculated SW, already normalized
 
   sw_calc=function(df_sw,grouping_value,exp_prices){
+    # browser()
     logit.exponent <- fac <- share <- tot_price <- tech_output <- sw <- NULL
     for (exp_price in exp_prices) {                                         ## loops through all the initial points suggested
       if(is.null(df_sw$sw)){df_sw[,sw:=NaN]}                                ## if this is the first iteration, an empty column is needed
@@ -116,6 +117,9 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   FV_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
   FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicle_type")
+  ## in case no value can be found, use the previous-following time step
+  FV_SW[, sw := ifelse(is.nan(sw) & year == 2010, sw[year == 2005], sw), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+  FV_SW[, sw := ifelse(is.nan(sw) & year == 2005, sw[year == 2010], sw), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
   ## reshape, save and store the sw at this level
   FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,logit.exponent)]
