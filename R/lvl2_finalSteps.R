@@ -29,7 +29,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 }
 
 
-#' Creates csv files that contains all EDGE-transport entries for mrremind.
+#' Creates csv files that contains all EDGE-transport entries for mrremind or a list of objects.
 #'
 #' @param logit_params logit parameters
 #' @param pref_data preference factors
@@ -47,9 +47,10 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param level2path directory where data will be saved
 #' @param complexValues values for complex module in REMIND
+#' @param output_folder directory where the data has to be saved, if set to NULL a list of magclass objects will be saved
 
 
-lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, demISO, REMIND_scenario, EDGE_scenario, level2path){
+lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, demISO, REMIND_scenario, EDGE_scenario, level2path, output_folder){
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", REMIND_scenario)
 
@@ -131,8 +132,6 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
   pref_data = lapply(pref_data, f)
   pref_data$FV_final_pref = pref_datatmp$FV_final_pref
 
-  dir.create(file.path(level2path("")), showWarnings = FALSE)
-
   ## remove column not needed in REMIND from int_dat
   int_dat[, MJ_km := NULL]
 
@@ -141,51 +140,70 @@ lvl2_createCSV_inconv <- function(logit_params, pref_data, vot_data, NEC_data, c
   ## add scenario column to load factor
   loadFactor <- addScenarioCols(loadFactor, 0)
 
-  ## writes csv files for intensity, shares and budget, and demand (for calibration and starting point of REMIND)
-  print("Creating cs4r files...")
-  fwrite(demByTech, file = level2path("fe_demand_tech.cs4r"))
-  fwrite(intensity, file = level2path("fe2es.cs4r"))
-  fwrite(capCost, file = level2path("esCapCost.cs4r"))
+  if (!is.null(output_folder)) {
+    dir.create(file.path(level2path("")), showWarnings = FALSE)
+    ## writes csv files for intensity, shares and budget, and demand (for calibration and starting point of REMIND)
+    print("Creating cs4r files...")
+    fwrite(demByTech, file = level2path("fe_demand_tech.cs4r"))
+    fwrite(intensity, file = level2path("fe2es.cs4r"))
+    fwrite(capCost, file = level2path("esCapCost.cs4r"))
 
-  ## writes csv files for lambda parameters, SW, VOT and non-motorized costs, energy intensity, non-energy costs (for the EDGE run in between REMIND iterations)
-  print("Creating csv files for lambdas...")
-  mapply(
-    fwrite,
-    x=logit_params, file=level2path(paste0(names(logit_params), ".csv")),
-    MoreArgs=list(row.names=FALSE, sep=",", quote=F)
-  )
-  print("Creating csv files for preferences...")
-  mapply(
-    fwrite,
-    x=pref_data, file=level2path(paste0(names(pref_data), ".csv")),
-    MoreArgs=list(row.names=FALSE, sep=",", quote=F)
-  )
-  print("Creating csv files for VOT...")
-  mapply(
-    fwrite,
-    x=vot_data, file=level2path(paste0(names(vot_data), ".csv")),
-    MoreArgs=list(row.names=FALSE, sep=",", quote=F)
-  )
+    ## writes csv files for lambda parameters, SW, VOT and non-motorized costs, energy intensity, non-energy costs (for the EDGE run in between REMIND iterations)
+    print("Creating csv files for lambdas...")
+    mapply(
+      fwrite,
+      x=logit_params, file=level2path(paste0(names(logit_params), ".csv")),
+      MoreArgs=list(row.names=FALSE, sep=",", quote=F)
+    )
+    print("Creating csv files for preferences...")
+    mapply(
+      fwrite,
+      x=pref_data, file=level2path(paste0(names(pref_data), ".csv")),
+      MoreArgs=list(row.names=FALSE, sep=",", quote=F)
+    )
+    print("Creating csv files for VOT...")
+    mapply(
+      fwrite,
+      x=vot_data, file=level2path(paste0(names(vot_data), ".csv")),
+      MoreArgs=list(row.names=FALSE, sep=",", quote=F)
+    )
 
-  ## writes csv file for complex realization and reporting
-  print("Creating csv files for complex realization...")
-  mapply(
-    fwrite,
-    x=complexValues$dem, file=level2path(paste0("EDGE_output_", names(complexValues$dem), ".csv")),
-    MoreArgs=list(row.names=FALSE, sep=",", quote=F)
-  )
+    ## writes csv file for complex realization and reporting
+    print("Creating csv files for complex realization...")
+    mapply(
+      fwrite,
+      x=complexValues$dem, file=level2path(paste0("EDGE_output_", names(complexValues$dem), ".csv")),
+      MoreArgs=list(row.names=FALSE, sep=",", quote=F)
+    )
 
-  fwrite(complexValues$shLDV, file = level2path("shares_LDV_transport.cs4r"))
+    fwrite(complexValues$shLDV, file = level2path("shares_LDV_transport.cs4r"))
 
-  print("Creating csv files for energy demand weights...")
-  fwrite(demISO, file = level2path("demISO.csv"))
-  print("Creating csv files for non-motorized costs...")
-  fwrite(price_nonmot, file = level2path("price_nonmot.csv"))
-  print("Creating csv files for energy intensity...")
-  fwrite(int_dat, file = level2path("harmonized_intensities.csv"))
-  print("Creating csv files for non-energy costs...")
-  fwrite(NEC_data, file = level2path("UCD_NEC_iso.csv"))
-  print("Creating csv files for load factor...")
-  fwrite(loadFactor, file = level2path("loadFactor.csv"))
+    print("Creating csv files for energy demand weights...")
+    fwrite(demISO, file = level2path("demISO.csv"))
+    print("Creating csv files for non-motorized costs...")
+    fwrite(price_nonmot, file = level2path("price_nonmot.csv"))
+    print("Creating csv files for energy intensity...")
+    fwrite(int_dat, file = level2path("harmonized_intensities.csv"))
+    print("Creating csv files for non-energy costs...")
+    fwrite(NEC_data, file = level2path("UCD_NEC_iso.csv"))
+    print("Creating csv files for load factor...")
+    fwrite(loadFactor, file = level2path("loadFactor.csv"))
+  } else {
+    EDGETrData = list(fe_demand_tech = demByTech,
+                      fe2es = intensity,
+                      esCapCost = capCost,
+                      logit_params = logit_params,
+                      pref_data = pref_data,
+                      vot_data = vot_data,
+                      complexdem = complexValues$dem,
+                      shares_LDV_transport = complexValues$shLDV,
+                      demISO = demISO,
+                      price_nonmot = price_nonmot,
+                      harmonized_intensities = int_dat,
+                      UCD_NEC_iso = NEC_data,
+                      loadFactor = loadFactor)
+
+    return(EDGETrData)
+  }
 
 }
