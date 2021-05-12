@@ -160,7 +160,7 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   conv_pkm_mj_rest = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W" &
                                      technology %in% c("BEV", "FCEV", "Hybrid Electric")) &
                                    !region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")]
-  conv_pkm_mj_rest= rbind(conv_pkm_mj_rest, Truck_PSI_int)
+  conv_pkm_mj_rest= rbind(conv_pkm_mj_rest)
   conv_pkm_mj_EU = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W") &
                                  region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") ]
 
