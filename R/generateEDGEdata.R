@@ -120,7 +120,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP_MER = merge(GDP_MER_country, REMIND2ISO_MAPPING, by = "iso")
   GDP_MER = GDP_MER[,.(weight = sum(weight)), by = c("region", "year")]
 
-  POP_country = POP_country[,, as.numeric(gsub("\\D", "", REMIND_scenario)),pmatch=TRUE]
+  POP_country = POP_country[,, REMIND_scenario,pmatch=TRUE]
   POP_country <- as.data.table(POP_country)
   POP_country[, year := as.numeric(gsub("y", "", year))]
   POP = merge(POP_country, REMIND2ISO_MAPPING, by.x = "iso2c", by.y = "iso")
