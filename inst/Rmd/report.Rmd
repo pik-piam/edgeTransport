@@ -13,7 +13,6 @@ require(remind)
 require(gdxdt)
 require(gdx)
 require(rmndt)
-require(quitte)
 require(gridExtra)
 ```
 

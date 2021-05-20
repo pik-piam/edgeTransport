@@ -377,7 +377,8 @@ generateEDGEdata <- function(input_folder, output_folder,
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = iso_data$price_nonmot,
-      techswitch = techswitch)
+      techswitch = techswitch,
+      totveh = totveh)
 
     if(saveRDS){
       saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
@@ -445,7 +446,6 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     totveh = num_veh_stations$alltechdem
 
-    i = i+1
   }
 
 
