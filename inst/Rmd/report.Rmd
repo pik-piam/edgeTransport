@@ -8,11 +8,6 @@ output:
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 require(ggplot2)
 require(data.table)
-require(dplyr)
-require(remind)
-require(gdxdt)
-require(gdx)
-require(rmndt)
 require(gridExtra)
 ```
 
