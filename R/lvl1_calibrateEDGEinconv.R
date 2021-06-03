@@ -72,6 +72,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
     if(any(is.na(df_sw$sw))){
       print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
+      stop()
     } else {print(paste0("Max difference in shares for ",grouping_value,": "))
             print(check_shares(df_sw,grouping_value))}## check maximum difference in expected shares
 
@@ -117,9 +118,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   FV_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
   FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicle_type")
-  ## in case no value can be found, use the previous-following time step
-  FV_SW[, sw := ifelse(is.nan(sw) & year == 2010, sw[year == 2005], sw), by = c("region", "technology", "vehicle_type", "subsector_L1")]
-  FV_SW[, sw := ifelse(is.nan(sw) & year == 2005, sw[year == 2010], sw), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
   ## reshape, save and store the sw at this level
   FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,logit.exponent)]

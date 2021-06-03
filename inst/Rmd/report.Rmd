@@ -1,8 +1,9 @@
 ---
 title: "Validation EDGE-Transport model"
 output:
-  html_document:
+  pdf_document: default
   df_print: paged
+  html_document: null
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -658,8 +659,49 @@ demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS, JRC_IDEES){
     theme_plot
 
 
+ ## EU as a whole region
+    EU_totdem = rbind(demandEJ, IEA)
+    EU_totdem = EU_totdem[region %in% c("DEU", "FRA", "UKI", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN")]
+    EU_totdem = EU_totdem[,.(value = sum(value)), by = c("model", "flow", "year")]
+    names_flow = data.table(name = c("Shipping (Dom.)", "Aviation (Dom.)", "Shipping (Intl.)", "Aviation (Intl.)", "Road", "Road HDV", "Road LDV", "Rail"),
+                            flow = c("DOMESNAV", "DOMESAIR", "MARBUNK", "AVBUNK", "ROAD", "ROAD HDV", "ROAD LDV", "RAIL"))
+    EU_totdem = merge(EU_totdem, names_flow, by = "flow")
+    cols2use  <- c(
+          "Aviation (Intl.)" = "#9acd32",
+          "Aviation (Dom.)" = "#7cfc00",
+          "Rail" = "#2e8b57",
+          "Road" = "#6495ed",
+          "Road LDV" = "#1874cd",
+          "Road HDV" = "#87cefa",
+          "Shipping (Intl.)" = "#cd2626",
+          "Shipping (Dom.)" = "#ff4040")
+
+
+    p9c1 = ggplot()+
+    geom_bar(data = EU_totdem[year %in% c(2005, 2010, 2015) & flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & model %in% c("IEAbal", "EDGE-T")], aes(x=model, y=value, group = interaction(model, name), fill = name), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand road [EJ]")+
+    facet_grid(~year, scales = "free")+
+    scale_fill_manual(name = "Mode", values = cols2use)+
+    theme_plot
+
+    p9c2 = ggplot()+
+    geom_bar(data = EU_totdem[year %in% c(2005, 2010, 2015) & !flow %in% c("ROAD", "ROAD LDV", "ROAD HDV") & model %in% c("IEAbal", "EDGE-T")], aes(x=model, y=value, group = interaction(model, name), fill = name), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand, excluding road [EJ]")+
+    facet_grid(~year, scales = "free")+
+    scale_fill_manual(name = "Mode", values = cols2use)+
+    theme_plot
+
+    p9c3 = ggplot()+
+    geom_bar(data = EU_totdem[year %in% c(2005, 2010, 2015)& model %in% c("IEAbal", "EDGE-T")], aes(x=model, y=value, group = interaction(model, name), fill = name), color="black", position="stack", stat = "identity", width = 0.5)+
+    labs(x = "", y = "Final energy demand [EJ]")+
+    facet_grid(~year, scales = "free")+
+    scale_fill_manual(name = "Mode", values = cols2use)+
+    theme_plot
+
+    EU_totdem
+
   return(list(
-    p1=p1,p2=p2,p3=p3,p4=p4,p5b1 = p5b1, p5b2=p5b2, p5b3=p5b3, p6b1=p6b1, p6b2=p6b2,p6b3=p6b3,p6b4=p6b4,p8b1=p8b1, p8b2=p8b2, p8b3=p8b3, p8c1=p8c1, p8c2=p8c2, p8c3=p8c3, p8c4=p8c4
+    p1=p1,p2=p2,p3=p3,p4=p4,p5b1 = p5b1, p5b2=p5b2, p5b3=p5b3, p6b1=p6b1, p6b2=p6b2,p6b3=p6b3,p6b4=p6b4,p8b1=p8b1, p8b2=p8b2, p8b3=p8b3, p8c1=p8c1, p8c2=p8c2, p8c3=p8c3, p8c4=p8c4, p9c1 = p9c1, p9c2 = p9c2, p9c3 = p9c3
     ))
 
 }
@@ -716,6 +758,20 @@ print("Transport w/o road, focus on ESC, ESW, EWN")
 
 plots$p8b3
 
+print("Transport road, EUR")
+
+plots$p9c1
+
+
+print("Transport w/o road, EUR")
+
+plots$p9c2
+
+
+print("Transport, EUR")
+
+plots$p9c3
+
 
 ```
 
@@ -763,6 +819,18 @@ plots$p8c3
 print("Transport w/o road, focus on JPN, NEN, NES")
 
 plots$p8c4
+
+print("Transport road, EUR")
+
+plots$p9c1
+
+print("Transport w/o road, EUR")
+
+plots$p9c2
+
+print("Transport, EUR")
+
+plots$p9c3
 
 ```
 

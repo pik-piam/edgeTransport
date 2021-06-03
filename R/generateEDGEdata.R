@@ -314,10 +314,6 @@ generateEDGEdata <- function(input_folder, output_folder,
     vot_data = iso_data$vot,
     price_nonmot = iso_data$price_nonmot)
 
-  if(any(is.na(calibration_output$list_SW$FV_final_SW))){
-    print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
-  stop()
-  }
 
   if(saveRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
