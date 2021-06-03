@@ -8,7 +8,7 @@
 
 
 lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
-  coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- sector <- NULL
+  coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- sector <- subsector_L1 <- NULL
   conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- vehicle_type <- NULL
   GCAM_folder = file.path(input_folder, GCAM_dir)
 
@@ -136,7 +136,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   tech_output[technology == "LA-BEV", technology := "BEV"]
   tech_output[technology %in% c("Tech-Adv-Electric", "Adv-Electric"), technology := "Electric"]
   tech_output[technology %in% c("Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid"), technology := "Liquids"]
-  tech_output = tech_output[!(technology == "NG" & sector == "trn_pass_road_LDV_2W")]
+  tech_output = tech_output[technology == "NG" & subsector_L1 == "trn_pass_road_LDV_2W", technology := "Liquids"]
 
   ## merge the truck categories
   tech_output[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]

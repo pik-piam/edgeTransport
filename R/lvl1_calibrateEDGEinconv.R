@@ -72,6 +72,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
     if(any(is.na(df_sw$sw))){
       print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
+      stop()
     } else {print(paste0("Max difference in shares for ",grouping_value,": "))
             print(check_shares(df_sw,grouping_value))}## check maximum difference in expected shares
 
