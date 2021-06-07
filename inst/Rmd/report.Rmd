@@ -53,6 +53,7 @@ cols <- c("NG" = "#d11141",
           "Domestic Shipping" = "#ff4040",
           "DOMESNAV" = "#ff4040",
           "Shipping" = "#ff4040",
+          "Dom. Shipping" = "#ff4040",
           "Truck" = "#ff7f50",
           "Trucks (<3.5t)" = "#ff7f50",
           "Trucks (3.5t-16)" = "#8b0000",
@@ -1039,6 +1040,149 @@ demandkmplotf = function(demandkm, POP){
 
 ## energy services demand
 demandkmplotf(demand_km, POP)
+```
+
+# Energy services demand (no bunkers)
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+demandkm_nobunk_plotf = function(demandkm, POP){
+  ## REMIND-EDGE results
+  demandkm<- demandkm[,c("sector","subsector_L3","subsector_L2",
+                         "subsector_L1","vehicle_type","technology", "region","year","demand_F")]
+  demandkm[,demand_F:=demand_F   ## in millionkm
+           *1e-6                      ## in trillion km
+           ]
+
+  demandkm = demandkm[!sector %in% c("trn_shipping_intl", "trn_aviation_intl")]
+  ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
+  demandkm[, aggr_mode := ifelse(subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
+  demandkm[, aggr_mode := ifelse(sector %in% c("trn_freight", "trn_shipping_intl"), "Freight", aggr_mode)]
+  demandkm[, aggr_mode := ifelse(sector %in% c("trn_aviation_intl"), "Pass. non LDV", aggr_mode)]
+  demandkm[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "HSR_tmp_subsector_L2", "Passenger Rail_tmp_subsector_L2", "Cycle_tmp_subsector_L2", "Walk_tmp_subsector_L2", "Domestic Aviation_tmp_subsector_L2", "Bus") | subsector_L1 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
+
+  demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
+  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicle_type), "Large Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
+  demandkm[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
+  demandkm[, veh := ifelse(subsector_L3 == "Domestic Aviation", "Domestic Aviation", veh)]
+  demandkm[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Dom. Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "veh")]
+  setnames(demandkm, old = "veh", new = "vehicle_type")
+
+  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "vehicle_type")]
+
+  demandkm[, vehicle_type_plot := factor(vehicle_type, levels = c("LDV","Truck",
+                                                                  "Freight Rail",
+                                                                  "Motorbikes", "Small Cars", "Large Cars", "Van",
+                                                                  "Domestic Aviation", "Bus", "Passenger Rail",
+                                                                  "Freight", "Non motorized", "Dom. Shipping"))]
+
+
+  demandkm[, mode := ifelse(vehicle_type %in% c("Freight", "Freight Rail", "Truck", "Dom. Shipping"),"freight", "pass")]
+
+  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type_plot", "aggr_mode", "mode")]
+  demandkmglob = demandkm[,.(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+
+
+   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region := "EUR"]
+
+  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by =.(year, vehicle_type_plot, aggr_mode, mode)][, region := "NEU"]
+
+  demandkm = rbind(demandkm, demandkmEUR, demandkmnonEUR, demandkmglob)
+
+
+  ## calculate per capita demand
+  POP = POP[, .(pop = sum(value)), by = c("region", "year")]
+  demandkmcap = merge(demandkm[region!="World"], POP, all.x = TRUE, by =c("year", "region"))
+
+  demandkmcapglob = demandkmcap[,.(demand_F = sum(demand_F), pop = sum(pop)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+
+  demandkmcap = rbind(demandkmcap, demandkmcapglob)
+  ## calculate per capita values
+  demandkmcap = demandkmcap[order(aggr_mode)]
+  demandkmcap[, cap_dem := demand_F*    ## in trillion km
+                1e+6/        ## in million km
+                pop]         ## in million km/million people=pkm/person
+
+
+  demandkm = demandkm[order(aggr_mode)]
+
+  ptot_pass = ggplot()+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    theme_minimal()+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+    ptot_pass2 = ggplot()+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    theme_minimal()+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+  ptot_freight = ggplot()+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    theme_minimal()+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+    ptot_freight1 = ggplot()+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+  pcap_freight1 = ggplot()+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [ktkm/cap]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual("Vehicle Type", values = cols)+
+    scale_x_continuous(breaks = c(2020,2030,2050, maxyear))+
+    theme_plot
+
+    pcap_freight2 = ggplot()+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [ktkm/cap]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual("Vehicle Type", values = cols)+
+    scale_x_continuous(breaks = c(2020,2030,2050, maxyear))+
+    theme_plot
+
+  pcap_pass = ggplot()+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [kpkm/cap]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual("Vehicle Type",values = cols)+
+    scale_x_continuous(breaks = c(2020, 2030, 2050, maxyear))+
+    theme_plot
+
+  pcap_pass2 = ggplot()+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    labs(x = "", y = "Energy Services demand [kpkm/cap]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual("Vehicle Type",values = cols)+
+    scale_x_continuous(breaks = c(2020, 2030, 2050, maxyear))
+
+
+
+  plots = list(ptot_pass = ptot_pass,ptot_pass2 = ptot_pass2, ptot_freight = ptot_freight, ptot_freight1 = ptot_freight1, pcap_pass = pcap_pass, pcap_pass2 = pcap_pass2, pcap_freight1 = pcap_freight1, pcap_freight2 = pcap_freight2)
+  return(plots)
+
+}
+
+## energy services demand
+demandkm_nobunk_plotf(demand_km, POP)
 ```
 
 
