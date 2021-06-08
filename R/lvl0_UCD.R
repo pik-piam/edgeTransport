@@ -282,6 +282,9 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
                               datacols=c("variable"),
                               fewcol = "UCD_region",
                               weights=GDP_country[year==2020 & variable =="gdp_SSP2"][, variable:=NULL])
+    # exchange rate 2020: 1 euro = 1.12 dollar
+    # conversion from US$2005 to EUR2020: inflation/exchange rate = 1.3504/1.12 = 1.205714286
+    trsp_incent[, aveval := aveval/1.205714286] ## in 2005 USD
     setnames(trsp_incent, old ="value", new = "incentive_val")
     trsp_incent[, year :=NULL]
 
