@@ -416,10 +416,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S3S_final_pref[subsector_L3 %in% c("Passenger Rail", "HSR") & region %in% c("ECE", "ECS") & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.01*sw[year==2020]),
                      by=c("region", "subsector_L3")]
-  ## public transport preference in European countries increases (Buses)
-  SWS$S2S3_final_pref[subsector_L2 == "Bus" & region %in% c("EUR", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2010,
-                      sw := ifelse(year <= 2020, sw[year==2010] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), 0.2*sw[year==2010]),
-                      by=c("region", "subsector_L2")]
+
 
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("IND", "MEA", "CHA") & year >= 2010,
                      sw := sw[year == 2010],
