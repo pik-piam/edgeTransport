@@ -17,7 +17,7 @@
 #' @param UCD_dir directory with UCD data
 #' @param enhancedtech switch activating optimistic development of alternative technologies
 #' @param selfmarket_taxes switch activating decrease in registration taxes
-#' @param rebates_febates activating rebates-feebates
+#' @param trsp_incent incentives on transport technologies
 #' @param techswitch technology at the center of the policy packages
 #' @return non fuel price and annual mileage of vehicles
 #' @author Marianna Rottoli
@@ -27,7 +27,7 @@
 #' @importFrom rmndt approx_dt disaggregate_dt aggregate_dt
 
 
-lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, rebates_febates, techswitch){
+lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, trsp_incent, techswitch){
   subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
   #==== Load data ====
   #readUCD
@@ -204,7 +204,7 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 }
 
   calc_non_energy_price=function(UCD_transportation_database, GCAM2ISO_MAPPING){
-    loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- NULL
+    loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- aveval <- incentive_val <- NULL
     subsector_L3 <- NULL
     #=== Calculations ====
     UCD_cost <- UCD_transportation_database[unit %in% c("2005$/veh/yr", "2005$/veh", "2005$/vkt"),]
@@ -271,26 +271,40 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     ## all the cost components that show NA as they ar enot present for the specific transport category are converted in 0
     non_energy_cost[is.na(non_energy_cost)] = 0
 
-    if(rebates_febates){
 
-      incentive_val = 5000  ## dollars incentives starting value, phasing out by 2035, for techswitch
-      feebates_val = 1000  ## extra costs starting value, phasing out by 2035, for conventional liquids and
+    ## for EU countries, historical values are included for alternative vehicles
+    trsp_incent = magpie2dt(trsp_incent)
+    trsp_incent[, aveval := mean(value), by = c("region", "period", "variable")]
+    trsp_incent = unique(trsp_incent[,c("region", "period", "variable", "value")])
+    setnames(trsp_incent, old = c("region", "period"), new = c("iso", "year"))
+    trsp_incent = aggregate_dt(data = trsp_incent, mapping = UCD2iso,
+                             valuecol="value",
+                              datacols=c("variable"),
+                              fewcol = "UCD_region",
+                              weights=GDP_country[year==2020 & variable =="gdp_SSP2"][, variable:=NULL])
+    # exchange rate 2020: 1 euro = 1.12 dollar
+    # conversion from US$2005 to EUR2020: inflation/exchange rate = 1.3504/1.12 = 1.205714286
+    trsp_incent[, aveval := aveval/1.205714286] ## in 2005 USD
+    setnames(trsp_incent, old ="value", new = "incentive_val")
+    trsp_incent[, year :=NULL]
 
-      non_energy_cost[, type := "normal"]
-      non_energy_cost[UCD_technology == techswitch & size.class %in% list4w, Capital_costs_purchase := ifelse(year>=2020 & year<=2035,
-                                                                                                              Capital_costs_purchase + incentive_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1)/(1.5*15000),
-                                                                                                              Capital_costs_purchase),
-                      by = c("UCD_region", "size.class", "UCD_technology", "type")]
-
-      non_energy_cost[UCD_technology == "Liquids" & size.class %in% list4w, Capital_costs_purchase := ifelse(year>=2020 & year<=2035,
-                                                                                                             Capital_costs_purchase - feebates_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1)/(1.5*15000),
-                                                                                                             Capital_costs_purchase),
-                      by = c("UCD_region", "size.class", "UCD_technology", "type")]
-      non_energy_cost[UCD_technology == "NG" & size.class %in% list4w, Capital_costs_purchase := ifelse(year>=2020 & year<=2035,
-                                                                                                        Capital_costs_purchase - feebates_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1)/(1.5*15000),
-                                                                                                        Capital_costs_purchase),
-                      by = c("UCD_region", "size.class", "UCD_technology", "type")]
+    if (techswitch %in% c("BEV", "FCEV")){
+      year_out = 2035
+     } else {
+       year_out = 2025
     }
+    trsp_incent[variable == "PHEV", variable := "HEV-p"]
+
+    non_energy_cost = merge(non_energy_cost, trsp_incent, by.x = c("UCD_region", "UCD_technology"), by.y =c("UCD_region", "variable"), all.x = TRUE)
+    non_energy_cost[is.na(incentive_val), incentive_val := 0]
+
+    non_energy_cost[, type := "normal"]
+    non_energy_cost[size.class %in% list4w, Capital_costs_purchase := ifelse(year>=2020 & year<=year_out,
+                                                                             Capital_costs_purchase + incentive_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1)/(1.5*15000),
+                                                                             Capital_costs_purchase),
+                    by = c("UCD_region", "size.class", "UCD_technology", "type")]
+
+    non_energy_cost[, incentive_val := NULL]
 
     ## self-sustaining market switch: taxes
     if (selfmarket_taxes) {

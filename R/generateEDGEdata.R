@@ -11,6 +11,7 @@
 #' @param POP_country use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)
 #' @param JRC_IDEES_Trsp use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
+#' @param trsp_incent use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)
 #' @param saveRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
@@ -23,9 +24,8 @@
 
 generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
-                             IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL,
+                             IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL, trsp_incent=NULL,
                              saveRDS=FALSE){
-
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
@@ -68,8 +68,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   print(paste0("You selected self-sustaining market, option Taxes to: ", selfmarket_taxes))
   enhancedtech <- EDGEscenarios[options== "enhancedtech", switch]
   print(paste0("You selected the option to select an optimistic trend of costs/performances of alternative technologies to: ", enhancedtech))
-  rebates_febates <- EDGEscenarios[options== "rebates_febates", switch]
-  print(paste0("You selected the option to include rebates and ICE costs markup to: ", rebates_febates))
   smartlifestyle <- EDGEscenarios[options== "smartlifestyle", switch]
   print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
 
@@ -99,6 +97,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   if (is.null(POP_country)) POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
   if (is.null(JRC_IDEES_Trsp)) JRC_IDEES_Trsp = readRDS(file.path(mrremind_folder, "JRC_IDEES_Trsp.RDS"))
   if (is.null(JRC_IDEES_MarBunk)) JRC_IDEES_MarBunk = readRDS(file.path(mrremind_folder, "JRC_IDEES_MarBunk.RDS"))
+  if (is.null(trsp_incent)) trsp_incent = readRDS(file.path(mrremind_folder, "trasp_incent.RDS"))
 
 
   ## rearrange the columns and create regional values
@@ -195,7 +194,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
   print("-- load UCD database")
   UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
-                            input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, rebates_febates = rebates_febates, techswitch = techswitch)
+                            input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, trsp_incent = trsp_incent, techswitch = techswitch)
 
   ## function that integrates GCAM data. No conversion of units happening.
   print("-- correct tech output")

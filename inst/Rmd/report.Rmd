@@ -442,6 +442,50 @@ demandEJTruckplotf <- function(demandEJ){
 demandEJTruckplotf(demand_ej)
 ```
 
+# Buses final energy demand
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## demand EJ for trucks, divided by fuel type
+
+demandEJBusplotf <- function(demandEJ){
+  demandEJ = demandEJ[subsector_L2 == "Bus",]
+  demandEJ <- demandEJ[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+
+  demandEJ[technology == "Hybrid Liquids", technology := "Liquids"]
+  demandEJ[technology == "FCEV", technology := "Hydrogen"]
+  demandEJ[technology == "BEV", technology := "Electricity"]
+  demandEJ = demandEJ[, .(demand_EJ = sum(demand_EJ)), by = c("region", "year", "technology")]
+
+  demandEJglob = demandEJ[, .(demand_EJ = sum(demand_EJ)), by = c("year", "technology")][, region := "World"]
+
+
+   demandEJEUR = demandEJ[region %in% EU_regions, .(demand_EJ = sum(demand_EJ)), by = c("year", "technology")][, region := "EUR"]
+
+  demandEJnonEUR = demandEJ[region %in% non_EU_regions, .(demand_EJ = sum(demand_EJ)), by = c("year", "technology")][, region := "NEU"]
+
+  demandEJ = rbind(demandEJ, demandEJEUR, demandEJnonEUR, demandEJglob)
+
+  p1 = ggplot()+
+    geom_area(data = demandEJ[year > 2005  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    labs(x = "", y = "Final energy demand for trucks [EJ]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+    p2 = ggplot()+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_EJ, group = technology, fill = technology), color="black",position= position_stack())+
+    labs(x = "", y = "Final energy demand for trucks [EJ]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+  return(list(p1, p2))
+
+}
+
+
+demandEJBusplotf(demand_ej)
+```
 
 
 # Trucks energy services demand
@@ -489,6 +533,53 @@ demandkmTruckplotf <- function(demandkm){
 
 demandkmTruckplotf(demand_km)
 ```
+
+# Buses energy services demand
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## demand EJ for trucks, divided by fuel type
+
+demandkmBusplotf <- function(demandkm){
+  demandkm = demandkm[vehicle_type == "Bus_tmp_vehicletype",]
+  demandkm <- demandkm[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_F")]
+
+  demandkm[technology == "Hybrid Liquids", technology := "Liquids"]
+  demandkm[technology == "FCEV", technology := "Hydrogen"]
+  demandkm[technology == "BEV", technology := "Electricity"]
+  demandkm = demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "technology")]
+
+  demandkmglob = demandkm[, .(demand_F = sum(demand_F)), by = c("year", "technology")][, region := "World"]
+
+
+   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = c("year", "technology")][, region := "EUR"]
+
+  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by = c("year", "technology")][, region := "NEU"]
+
+  demandkm = rbind(demandkm, demandkmEUR, demandkmnonEUR, demandkmglob)
+
+  p1 = ggplot()+
+    geom_area(data = demandkm[year > 2005  & year <= maxyear & region %in% EU_regions & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
+    labs(x = "", y = "Energy services demand for buses [million tkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+    p2 = ggplot()+
+    geom_area(data = demandkm[year > 2005 & year <= maxyear  & region %in% c(non_EU_regions, "EUR", "NEU", "World") & year <= maxyear], aes(x=year, y=demand_F, group = technology, fill = technology), color="black",position= position_stack())+
+    labs(x = "", y = " Energy services demand for buses [million tkm]")+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    scale_fill_manual(values = cols)+
+    theme_plot
+
+
+  return(list(p1, p2))
+
+}
+
+
+demandkmBusplotf(demand_km)
+```
+
 
 
 # FE comparison IEA historical data vs EDGE-T projections

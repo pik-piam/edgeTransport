@@ -145,9 +145,8 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
                             ycol = "conv_pkm_MJ",
                             idxcols = c("technology", "vehicle_type"),
                             extrapolate = TRUE)
-
   ## Buses are assumed to be as 7.5 tons truck
-  Bus_PSI_int = Truck_PSI_int[vehicle_type == "Truck (7.5t)"][, vehicle_type := "Bus"]
+  Bus_PSI_int = Truck_PSI_int[vehicle_type == "Truck (7.5t)"][, vehicle_type := "Bus_tmp_vehicletype"]
   Truck_PSI_int = rbind(Truck_PSI_int, Bus_PSI_int)
 
   Truck_PSI_int = merge(Truck_PSI_int, unique(conv_pkm_mj[(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") & technology %in% c("Liquids"),
