@@ -272,7 +272,7 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, UCD_region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[UCD_region %in% richregions,]
-    richave_rail = richave[mode %in% c("Passenger Rail","Truck (0-3.5","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" ) & UCD_region %in% c("Western Europe", "Japan")]
+    richave_rail = richave[mode %in% c("Passenger Rail","Truck (0-3.5","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" ) & UCD_region %in% c("Western Europe")]
     richave_rail = richave_rail[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
     richave = richave[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
     richave = rbind(richave[!mode %in% c("Passenger Rail","Truck (0-3.5t)","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" )], richave_rail)

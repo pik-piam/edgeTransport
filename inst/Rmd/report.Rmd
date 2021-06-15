@@ -1379,7 +1379,7 @@ plotEnInt(mj_km = mj_km_data, vt = "Subcompact Car")
 ```
 
 
-# Costs for selected LDVs
+# Costs for selected vehicle types
 
 ```{r, echo=FALSE, warning=FALSE}
 
@@ -1400,4 +1400,6 @@ plotCost = function(costs, vt){
 plotCost(costs = techcost, vt = "Large Car and SUV")
 plotCost(costs = techcost, vt = "Midsize Car")
 plotCost(costs = techcost, vt = "Subcompact Car")
+plotCost(costs = techcost, vt = "Passenger Rail_tmp_vehicletype")
+
 ```

@@ -90,17 +90,13 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
     tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
     tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
-    ## if year of convergence is 2010, 2015 is selected
-    tmp2[yearconv == 2010, yearconv := 2020]
-    tmp2[yearconv == 2015, yearconv := 2020]
     ## year at which the convergence happens
-    tmp2[, year_at_yearconv := year[time == yearconv], by = c("region", "technology", "vehicle_type")]
-    tmp2[is.na(year_at_yearconv), year_at_yearconv := year[time == yearconv + 5], by = c("region", "technology", "vehicle_type")]
-    tmp2[conv_pkm_MJ_conv, conv_pkm_MJ_conv := conv_pkm_MJ]
-    ## value of the intensity after the convergence
+    tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","technology", "vehicle_type")]
+
+    ## value of the non-fuel price after the convergence
     tmp3 = richave[, c("year", "conv_pkm_MJ", "technology", "vehicle_type")]
-    setnames(tmp3, old = c("conv_pkm_MJ", "year"), new = c("conv_pkm_MJ_trend", "yearconv"))
-    tmp2 = merge(tmp2,tmp3,by=c("yearconv", "technology", "vehicle_type"))
+    setnames(tmp3, old = c("conv_pkm_MJ", "year"), new = c("conv_pkm_MJ_trend", "year_at_yearconv"))
+    tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "technology", "vehicle_type"))
 
     ## after the year of convergence, the values are the "average" developed countries values
     tmp2[year >= year_at_yearconv & year > 2010, conv_pkm_MJ := conv_pkm_MJ_trend, by = c("region","technology", "vehicle_type")]
@@ -157,7 +153,6 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
                                        valuecol="time_price",
                                        datacols=c("sector", "subsector_L3"),
                                        weights=gdp)
-
     ## non-motorized cost, intensive
     price_nonmot = disaggregate_dt(price_nonmot, GCAM2ISO_MAPPING)
     price_nonmot = aggregate_dt(price_nonmot, REMIND2ISO_MAPPING,

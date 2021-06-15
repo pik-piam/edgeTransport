@@ -193,6 +193,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- load value-of-time and logit exponents")
   VOT_lambdas=lvl0_VOTandExponents(GCAM_data = GCAM_data, GDP_country = GDP_country, GDP_POP = GDP_POP, GDP_MER_country = GDP_MER_country, POP_country = POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
 
+
+  ## substitute speed and lf
+  GCAM_data$speed = VOT_lambdas$speed
+  GCAM_data$load_factor = VOT_lambdas$load_factor
+
   ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
   print("-- load UCD database")
   UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING, GDP_POP_MER_country = GDP_POP_MER_country,
