@@ -271,7 +271,6 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   richave = merge(richave, GDP_POP, by = "year")
   ## average gdp per capita of the rich countries
   richave[, GDP_cap := GDP/POP_val]
-
   ## dt on which the GDPcap is checked
   tmp1 = tmp[!region %in% richregions, c("region", "year",
                                          "GDP_cap", "supplysector", "tranSubsector",
@@ -463,34 +462,7 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
 
   ## china has 20% EBuses https://www.bloomberg.com/news/articles/2019-05-15/in-shift-to-electric-bus-it-s-china-ahead-of-u-s-421-000-to-300
 
-  ## costs
-  inspect_ratios_costs = NEcost$non_energy_cost[technology %in% c("Liquids") & subsector_L1 == "trn_pass_road_LDV_4W",]
-  inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by = c("year","technology", "vehicle_type", "type")]
-  inspect_ratios_costs = inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year", "type")] ## if vehicle type is not originally in EU-15
-
-  inspect_ratios_costs[, c("technology", "non_fuel_price") := NULL]
-
-  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost[technology %in% c("Hybrid Electric") & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
-  inspect_ratios_costs = inspect_ratios_costs[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("region", "year")] ## if vehicle type is not originally in EU-15
-  inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
-  inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
-
-  NEcost$non_energy_cost = rbind(NEcost$non_energy_cost, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
-
-  ## costs split
-  inspect_ratios_costs = NEcost$non_energy_cost_split[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W" & region != "EU-12", ] ## EU-12 is already present, so we exclude it
-  inspect_ratios_costs[, ratio := non_fuel_price/non_fuel_price[region == "EU-15"], by=c("year","technology", "vehicle_type", "price_component")]
-  inspect_ratios_costs[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
-
-  inspect_ratios_costs[, c("technology", "non_fuel_price") := NULL]
-
-  inspect_ratios_costs = merge(inspect_ratios_costs, NEcost$non_energy_cost_split[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology") := NULL], all = TRUE)
-  inspect_ratios_costs = inspect_ratios_costs[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("region", "year", "price_component")] ## if vehicle type is not originally in EU-15
-  inspect_ratios_costs[, non_fuel_price := ratio*non_fuel_price]
-  inspect_ratios_costs[, c("technology",  "ratio") := list("Hybrid Electric", NULL)]
-
-  NEcost$non_energy_cost_split = rbind(NEcost$non_energy_cost_split, inspect_ratios_costs[!(region %in% c("EU-15", "EU-12"))|(region %in% c("EU-15", "EU-12") & vehicle_type == "Mini Car")])
-  ## === Correct & Integrate energy intensity == ##
+    ## === Correct & Integrate energy intensity == ##
   ## intensity for electric buses/trucks, FCEV buses/trucks, hydrogen aviation
 
   hydrogen = GCAM_output$conv_pkm_mj[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Hydrogen", 0, "H2 enduse")]
@@ -513,13 +485,6 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   inspect_ratios_eff[, c("technology", "sector_fuel", "ratio") := list("Hybrid Electric", "Liquids-Electricity", NULL)]
 
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, inspect_ratios_eff[!region %in% c("EU-15", "EU-12", "Europe Non EU", "European Free Trade Association")])
-
-
-  ## costs are set to constant for Liq and NG ICE
-  # NEcost$non_energy_cost[subsector_L2 == "trn_pass_road_LDV" & technology %in% c("BEV"), ratio := non_fuel_price/non_fuel_price[year == 2100], by = c("region", "technology", "vehicle_type")]
-  # NEcost$non_energy_cost_split[subsector_L2 == "trn_pass_road_LDV" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price[year == 2015], by = c("region", "technology", "vehicle_type", "cost_component")]
-  # already more or less in the input data: OK
-
 
   ## public buses in china are very cheap: http://www.expatfocus.com/taking-public-transport-in-china
   # Public buses in cities are the most common and popular form of public transport. Public bus fares in China are extremely cheap and usually cost a flat RMB1 or RMB 2 (US$0.15 to US$0.25). You pay the same price regardless of the distance you travel.

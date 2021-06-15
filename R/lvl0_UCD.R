@@ -14,6 +14,7 @@
 #' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param input_folder folder hosting raw data
 #' @param years time steps
+#' @param GDP_POP_MER_country GDP and POP MER country level
 #' @param UCD_dir directory with UCD data
 #' @param enhancedtech switch activating optimistic development of alternative technologies
 #' @param selfmarket_taxes switch activating decrease in registration taxes
@@ -27,7 +28,7 @@
 #' @importFrom rmndt approx_dt disaggregate_dt aggregate_dt
 
 
-lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, UCD_dir="UCD", enhancedtech, selfmarket_taxes, trsp_incent, techswitch){
+lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario, GCAM2ISO_MAPPING, input_folder, years, GDP_POP_MER_country, UCD_dir="UCD", enhancedtech, selfmarket_taxes, trsp_incent, techswitch){
   subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
   #==== Load data ====
   #readUCD
@@ -97,20 +98,10 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     psi_costs=dcast(psi_costs, technology + vehicle_type ~ year, value.var = "tot_purchasecost")
     setnames(psi_costs,old=c("2015","2040"),new=c("y2015","y2040"))
     psi_costs = psi_costs[!(technology %in% c("PHEV-c", "PHEV-e"))] ## PSI reports separately the electric and ICE running modes of a plug-in hybrid
-
-    ## in the conservative scenario, conservative assumptions about costs of alternative technologies
-    if (!(enhancedtech)) {
-      psi_costs[technology %in% c("BEV", "FCEV", "HEV-p", "PHEV"), y2040 := y2040 + 0.8*(y2015-y2040), by = "technology"]
-    }
-
+    psi_costs[technology =="HEV-p", technology := "PHEV"]
     ## in the Hydrogen Hype scenario, costs of battery-based powertrain stay high
     if (enhancedtech & techswitch == "FCEV") {
-      psi_costs[technology %in% c("BEV", "HEV-p", "PHEV"), y2040 := y2040 + 0.8*(y2015-y2040), by = "technology"]
-    }
-
-    ## in the Electric Era scenario, costs of FCEV powertrain stay high
-    if (enhancedtech & techswitch == "BEV") {
-      psi_costs[technology %in% c("FCEV"), y2040 := y2040 + 0.8*(y2015-y2040), by = "technology"]
+      psi_costs[technology %in% c("BEV", "PHEV"), y2040 := y2040 + 0.8*(y2015-y2040), by = "technology"]
     }
 
     psi_costs[, y2100 := 0.1*(y2040-y2015)/(2040-2015)*(2100-2040) + y2040] ## set a value for 2100 that is not present in PSI database. It's set to 1/10 of the decrease between 2015 and 2040 (quite conservative)
@@ -132,7 +123,6 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     for (t in tsteps[tsteps>2100]){
       psi_costs[,paste0("y",t):=y2100]
     }
-
 
     psi_costs = melt(psi_costs, id.vars = c("technology", "vehicle_type"),
                      measure.vars = paste0("y",tsteps))
@@ -176,8 +166,6 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
                   variable=="Capital costs (purchase)" &
                   size.class %in% unique(psi_costs$size.class),]
 
-    tmp = rbind(tmp, tmp[UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
-
     ## delete column with data that is going to come from PSI
     tmp[,c("value"):=NULL]
 
@@ -185,12 +173,12 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     tmp=merge(tmp,
               psi_costs,
               by=intersect(names(psi_costs),names(tmp)),all=TRUE)
-
+    ## fill in entries for PHEVs
+    tmp[UCD_technology == "Hybrid Electric", c("UCD_sector", "UCD_fuel", "variable", "unit", "mode") := list("Passenger", "Liquids-Electricity", "Capital costs (purchase)", "2005$/vkt", "LDV_4W" )]
+    tmp[, vkm.veh := ifelse(UCD_technology == "Hybrid Electric", vkm.veh[UCD_technology =="BEV"], vkm.veh), by = c("UCD_region", "size.class", "Xyear")]
     ## delete mini cars as they are added otherwise later (FIXME)
     tmp=tmp[size.class!="Mini Car",]
-
-    ## attribute the other costs components from BEVs to Hybrid Electic for EU
-    costs_UCD = rbind(costs_UCD, costs_UCD[mode %in% "LDV_4W" & UCD_region %in% c("Western Europe", "Eastern Europe") & UCD_technology == "BEV"][, c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
+    tmp=tmp[UCD_technology!="Hybrid Liquids",]
 
     ## merge back with the original database
     costs_UCD=merge(costs_UCD[!(UCD_region %in% c("Western Europe", "Eastern Europe") & ## EU regions trends come from PSI
@@ -198,14 +186,15 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
                               variable=="Capital costs (purchase)" &
                               size.class %in% unique(psi_costs$size.class)),],
                     tmp,all=TRUE,by=names(tmp))
+    costs_UCD = rbind(costs_UCD, costs_UCD[UCD_technology == "BEV" & variable != "Capital costs (purchase)" & mode != "LDV_2W",][,c("UCD_technology", "UCD_fuel") := list("Hybrid Electric", "Liquids-Electricity")])
 
     costs_UCD[,size.class:=as.character(size.class)]
     return(costs_UCD)
 }
 
-  calc_non_energy_price=function(UCD_transportation_database, GCAM2ISO_MAPPING){
+  calc_non_energy_price=function(UCD_transportation_database, GDP_POP_MER_country, GCAM2ISO_MAPPING){
     loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- aveval <- incentive_val <- NULL
-    subsector_L3 <- NULL
+    subsector_L3 <- weight <- GDP_cap <- POP_val <- GDP <- yearconv <- time <- year_at_yearconv <-value_trend <- value_conv <- NULL
     #=== Calculations ====
     UCD_cost <- UCD_transportation_database[unit %in% c("2005$/veh/yr", "2005$/veh", "2005$/vkt"),]
 
@@ -270,7 +259,73 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     non_energy_cost= dcast(non_energy_cost, year + UCD_region + UCD_sector + mode + UCD_technology + size.class ~ variable, value.var="value")
     ## all the cost components that show NA as they ar enot present for the specific transport category are converted in 0
     non_energy_cost[is.na(non_energy_cost)] = 0
+    # convergence of non_fuel_price according to GDPcap
+    # working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
+    # load gdp per capita
+    non_energy_cost = melt(non_energy_cost, id.vars=c("year", "UCD_region", "UCD_sector", "mode", "UCD_technology", "size.class"))
+    gdp_pop=copy(GDP_POP_MER_country)
+    gdp_pop = merge(gdp_pop, UCD2iso, by = "iso")
+    gdp_pop = gdp_pop[,.(weight = sum(weight), POP_val = sum(value)), by = c("UCD_region", "year")]
+    gdp_pop[, GDP_cap := weight/POP_val]
+    tmp = merge(non_energy_cost, gdp_pop, by = c("UCD_region", "year"))
+    ## define rich regions
+    richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, UCD_region]))
+    ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
+    richave = tmp[UCD_region %in% richregions,]
+    richave_rail = richave[mode %in% c("Passenger Rail","Truck (0-3.5","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" ) & UCD_region %in% c("Western Europe", "Japan")]
+    richave_rail = richave_rail[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
+    richave = richave[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
+    richave = rbind(richave[!mode %in% c("Passenger Rail","Truck (0-3.5t)","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" )], richave_rail)
 
+    gdp_pop = gdp_pop[UCD_region %in% richregions,]
+    gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
+    richave = merge(richave, gdp_pop, by = "year")
+    ## average gdp per capita of the rich countries
+    richave[, GDP_cap := GDP/POP_val]
+
+    ## dt on which the GDPcap is checked
+    tmp1 = tmp[!UCD_region %in% richregions, c("UCD_region", "year", "value", "GDP_cap", "UCD_technology", "UCD_sector", "mode", "size.class", "variable")]
+    ## dt contaning the gdp towards which to converge
+    tmp2 = richave[, c("year", "GDP_cap")]
+    ## dt containing the non fuel price for rich countries
+    tmp3 = richave[, c("year", "UCD_technology", "size.class", "mode", "UCD_sector", "variable")]
+    ## names has to be different across dts for roll join
+    setnames(tmp2, old = c("year"), new = c("time"))
+    setnames(tmp3, old = c("year"), new = c("time"))
+
+    setkey(tmp1,GDP_cap)
+    setkey(tmp2,GDP_cap)
+    ## find the time step at which the GDPcap matches the GDPcap of the rich countries
+    tmp2 <- tmp2[tmp1, roll = "nearest", on = .(GDP_cap)]
+    ## merge with non fuel price of corresponding values
+    tmp2 = merge(tmp2, tmp3, by = c("time", "UCD_technology", "mode", "UCD_sector", "size.class", "variable"))
+
+    ## find year closest to 2010 for each region, this is the year at which is going to converge
+    tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("UCD_region")]
+
+    ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
+    tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("UCD_region", "time")]
+    tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("UCD_region", "time")]
+    ## year at which the convergence happens
+    tmp2[, year_at_yearconv := year[time == yearconv], by = c("UCD_region","UCD_technology", "size.class", "UCD_sector", "mode", "variable")]
+
+    ## value of the non-fuel price after the convergence
+    tmp3 = richave[, c("year", "value", "UCD_technology", "size.class", "variable", "UCD_sector", "mode")]
+    setnames(tmp3, old = c("value", "year"), new = c("value_trend", "year_at_yearconv"))
+    tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "UCD_technology", "size.class", "variable", "UCD_sector", "mode"))
+
+    ## after the year of convergence, the values are the "average" developed countries values
+    tmp2[year >= year_at_yearconv & year > 2010, value := value_trend, by = c("UCD_region","UCD_technology", "size.class", "variable", "UCD_sector", "mode")]
+
+    ## value of yearconv represents the convergence value
+    tmp2[, value_conv := value_trend[time==yearconv], by = c("UCD_region","UCD_technology", "size.class", "variable", "UCD_sector", "mode")]
+    ## convergence is linear until the value corresponding to 2010 is reached
+    tmp2[year <= year_at_yearconv & year >= 2010, value := value[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(value_conv-value[year == 2010]), by =c("UCD_technology", "size.class", "UCD_region", "variable", "UCD_sector", "mode")]
+    ## select only useful columns
+    tmp2 = tmp2[,.(UCD_region, year, value, UCD_technology, size.class, variable, mode, UCD_sector)]
+
+    ## rich countries need to be reintegrated
+    non_energy_cost = rbind(tmp2, non_energy_cost[UCD_region %in% richregions])
 
     ## for EU countries, historical values are included for alternative vehicles
     trsp_incent = magpie2dt(trsp_incent)
@@ -292,8 +347,9 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
       year_out = 2035
      } else {
        year_out = 2025
-    }
+     }
     trsp_incent[variable == "PHEV", variable := "HEV-p"]
+    non_energy_cost = dcast(non_energy_cost, UCD_region + UCD_technology + year + size.class  + mode + UCD_sector ~ variable, value.var = "value")
 
     non_energy_cost = merge(non_energy_cost, trsp_incent, by.x = c("UCD_region", "UCD_technology"), by.y =c("UCD_region", "variable"), all.x = TRUE)
     non_energy_cost[is.na(incentive_val), incentive_val := 0]
@@ -519,7 +575,7 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
   }
 
-  non_energy_cost=calc_non_energy_price(UCD_transportation_database, GCAM2ISO_MAPPING)
+  non_energy_cost=calc_non_energy_price(UCD_transportation_database, GDP_POP_MER_country, GCAM2ISO_MAPPING)
   annual_mileage=calc_annual_mileage(logit_category = non_energy_cost$logit_category, UCD_transportation_database)
 
   UCD_results=list(non_energy_cost=non_energy_cost,
