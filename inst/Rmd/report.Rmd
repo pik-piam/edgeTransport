@@ -75,6 +75,10 @@ datapath <- function(fname){
   file.path("./", fname)
 }
 
+datapath_level0 <- function(fname){
+  file.path("../level_0", fname)
+}
+
 ## load input data from last EDGE run
 demand_km <- readRDS(datapath(fname = "demandF_plot_pkm.RDS")) ## detailed energy services demand, million km
 demand_ej <- readRDS(datapath(fname = "demandF_plot_EJ.RDS")) ## detailed final energy demand, EJ
@@ -87,6 +91,7 @@ loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 JRC_IDEES <- readRDS(datapath(fname = "JRC_IDEES.RDS"))
+techcost <- readRDS(datapath_level0(fname = "UCD_NEC_iso.RDS"))
 ## Load population to calculate per capita values
 POP = readRDS(datapath(fname = "POP.RDS"))
 ## load IEA data as a comparison
@@ -1371,4 +1376,28 @@ plotEnInt = function(mj_km, vt){
 plotEnInt(mj_km = mj_km_data, vt = "Large Car and SUV")
 plotEnInt(mj_km = mj_km_data, vt = "Midsize Car")
 plotEnInt(mj_km = mj_km_data, vt = "Subcompact Car")
+```
+
+
+# Costs for selected LDVs
+
+```{r, echo=FALSE, warning=FALSE}
+
+plotCost = function(costs, vt){
+
+  p=ggplot()+
+    geom_line(data = costs[vehicle_type == vt & year<=maxyear & year>=2010], aes(x = as.character(year), y = non_fuel_price, group = technology, color = technology), size = 1)+
+    facet_wrap(~region, nrow = 3, scales = "free")+
+    expand_limits(y = c(0,0.5))+
+    scale_x_discrete(breaks = c(2015,2050,maxyear))+
+    scale_color_manual(values = cols)+
+    labs(x = "", y = "Costs [$/km]", title = paste0("Example of ", vt))+
+    theme_plot
+
+  return(p)
+}
+
+plotCost(costs = techcost, vt = "Large Car and SUV")
+plotCost(costs = techcost, vt = "Midsize Car")
+plotCost(costs = techcost, vt = "Subcompact Car")
 ```

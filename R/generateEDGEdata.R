@@ -133,6 +133,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP_POP_MER=merge(GDP_MER,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
   GDP_POP_MER[,GDP_cap:=weight/POP_val]
 
+  GDP_POP_MER_country = merge(GDP_MER_country, POP_country,by = c("iso", "year"))
+
   ## filter only non-NA countries from IDEES and transform in data table
   JRC_IDEES_Trsp=as.data.table(JRC_IDEES_Trsp)
   JRC_IDEES_MarBunk=as.data.table(JRC_IDEES_MarBunk)
@@ -193,7 +195,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
   print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
+  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING, GDP_POP_MER_country = GDP_POP_MER_country,
                             input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, trsp_incent = trsp_incent, techswitch = techswitch)
 
   ## function that integrates GCAM data. No conversion of units happening.
@@ -271,11 +273,11 @@ generateEDGEdata <- function(input_folder, output_folder,
             file = level0path("VOT_iso.RDS"))
     saveRDS(iso_data$iso_pricenonmot_results,
             file = level0path("price_nonmot_iso.RDS"))
-    saveRDS(iso_data$iso_UCD_results$nec_cost_split_iso,
+    saveRDS(iso_data$UCD_results$nec_cost_split,
             file = level0path("UCD_NEC_split_iso.RDS"))
-    saveRDS(iso_data$iso_UCD_results$annual_mileage_iso,
+    saveRDS(iso_data$UCD_results$annual_mileage_iso,
             file = level0path("UCD_mileage_iso.RDS"))
-    saveRDS(iso_data$iso_UCD_results$nec_iso,
+    saveRDS(iso_data$UCD_results$nec_cost,
             file = level0path("UCD_NEC_iso.RDS"))
     saveRDS(iso_data$iso_GCAMdata_results,
             file = level0path("GCAM_data_iso.RDS"))
