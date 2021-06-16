@@ -300,16 +300,13 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
   tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
   tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
-  ## if year of convergence is 2010, 2015 is selected
-  tmp2[yearconv == 2010, yearconv := 2020]
-  tmp2[yearconv == 2015, yearconv := 2020]
   ## year at which the convergence happens
   tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","supplysector", "tranSubsector")]
 
   ## value of speed after the convergence
   tmp3 = richave[, c("year", "speed", "supplysector", "tranSubsector")]
   setnames(tmp3, old = c("speed", "year"), new = c("speed_trend", "year_at_yearconv"))
-  tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "supplysector", "tranSubsector"))
+  tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "supplysector", "tranSubsector"), all.x=TRUE)
 
   ## after the year of convergence, the values are the "average" developed countries values
   tmp2[year >= year_at_yearconv & year > 2010, speed := speed_trend, by = c("region","supplysector", "tranSubsector")]
@@ -389,9 +386,6 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
   tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
   tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
-  ## if year of convergence is 2010, 2015 is selected
-  tmp2[yearconv == 2010, yearconv := 2020]
-  tmp2[yearconv == 2015, yearconv := 2020]
   ## year at which the convergence happens
   tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
 
