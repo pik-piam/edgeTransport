@@ -7,7 +7,7 @@
 
 
 lvl2_reportingEntries = function(ESdem, FEdem, gdp_country, REMIND2ISO_MAPPING){
-  category <- share_LDV_totroad <- region <- subsector_L3 <- subsector_L2 <- subsector_L1 <- share_LDV_totliq <- technology <- demand_EJ <- totdem <- demand_F <- entry <- `.` <- NULL
+  category <- share_LDV_totroad <- region <- subsector_L3 <- subsector_L2 <- subsector_L1 <- share_LDV_totliq <- technology <- demand_EJ <- totdem <- demand_F <- entry <- `.` <- unit <- NULL
   aggrCategory = function(dt){
     node <- category <- technology <- sector <- subsector_L1 <- subsector_L2 <- subsector_L3 <- fuel <- NULL
     ## Split results according to nodes (LDV, HDV, El. Trains)

@@ -1,4 +1,4 @@
-ValidationKey: '3020160'
+ValidationKey: '377540'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
@@ -6,3 +6,4 @@ AcceptedWarnings:
 - '''qpdf'' is needed for checks on size reduction of PDFs'
 AcceptedNotes: ~
 allowLinterWarnings: yes
+UseGithubActions: yes
