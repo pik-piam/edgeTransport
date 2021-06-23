@@ -237,9 +237,9 @@ demandEJplotf = function(demandEJ, POP){
 
   demandEJglob = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "World"]
 
-  demandEJEU = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "EUR"]
+  demandEJEU = demandEJ[region %in% EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "EUR"]
 
-  demandEJNEU = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "NEU"]
+  demandEJNEU = demandEJ[region %in% non_EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "NEU"]
 
   demandEJ = rbind(demandEJglob,demandEJ,demandEJEU,demandEJNEU)
   ## calculate per capita demand

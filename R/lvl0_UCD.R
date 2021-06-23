@@ -259,6 +259,34 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     non_energy_cost= dcast(non_energy_cost, year + UCD_region + UCD_sector + mode + UCD_technology + size.class ~ variable, value.var="value")
     ## all the cost components that show NA as they ar enot present for the specific transport category are converted in 0
     non_energy_cost[is.na(non_energy_cost)] = 0
+
+    non_energy_cost = non_energy_cost[!UCD_technology %in% c("Tech-Adv-Electric", "Adv-Electric", "Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid")]
+    non_energy_cost_truck = non_energy_cost[size.class %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)", "Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)","Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)","Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)","Truck (>32t)")]
+    non_energy_cost_truck= non_energy_cost_truck[size.class %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), c("mode", "size.class") := "Truck (0-3.5t)"]
+    non_energy_cost_truck[size.class %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), c("mode", "size.class") := "Truck (7.5t)"]
+    non_energy_cost_truck[size.class %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), c("mode", "size.class") := "Truck (18t)"]
+    non_energy_cost_truck[size.class %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), c("mode", "size.class") := "Truck (26t)"]
+    non_energy_cost_truck[size.class %in% c("Truck (>32t)"), c("mode", "size.class") := "Truck (40t)"]
+    non_energy_cost_truck=non_energy_cost_truck[,.(CAPEX_and_non_fuel_OPEX = mean(CAPEX_and_non_fuel_OPEX),
+                                                   CAPEX = mean(CAPEX),
+                                                   Capital_costs_infrastructure  = mean(Capital_costs_infrastructure),
+                                                   Capital_costs_other =mean(Capital_costs_other),
+                                                   Capital_costs_purchase = mean(Capital_costs_purchase),
+                                                   Capital_costs_total = mean(Capital_costs_total),
+                                                   Operating_costs_maintenance =mean(Operating_costs_maintenance),
+                                                   Operating_costs_registration_and_insurance=mean(Operating_costs_registration_and_insurance),
+                                                   Operating_costs_tolls =mean(Operating_costs_tolls),
+                                                   Operating_subsidy =mean(Operating_subsidy),
+                                                   non_fuel_OPEX=mean(non_fuel_OPEX)), by = c("year","UCD_region", "UCD_sector", "mode", "UCD_technology", "size.class")]
+
+
+    non_energy_cost = rbind(non_energy_cost_truck, non_energy_cost[!(size.class%in%c("3W Rural", "Truck (>12t)", "Truck (0-1t)", "Truck (0-3.5t)",
+                                                                                     "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)",
+                                                                                     "Truck (0-2.7t)", "Truck (2.7-4.5t)", "Truck (4.5-12t)", "Truck (6-14t)",
+                                                                                     "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)",
+                                                                                     "Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)",
+                                                                                     "Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)","Truck (>32t)"))])
+
     # convergence of non_fuel_price according to GDPcap
     # working principle: non_fuel_price follows linear convergence between 2010 and the year it reaches GDPcap@(2010,richcountry). Values from richcountry for the following time steps (i.e. when GDPcap@(t,developing)>GDPcap@(2010,richcountry))
     # load gdp per capita
@@ -272,10 +300,10 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, UCD_region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[UCD_region %in% richregions,]
-    richave_rail = richave[mode %in% c("Passenger Rail","Truck (0-3.5","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" ) & UCD_region %in% c("Western Europe")]
+    richave_rail = richave[mode %in% c("Passenger Rail") & UCD_region %in% c("Western Europe")]
     richave_rail = richave_rail[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
     richave = richave[, .(value = sum(value*weight)/sum(weight)), by = c("UCD_sector", "mode", "UCD_technology", "size.class", "year", "variable")]
-    richave = rbind(richave[!mode %in% c("Passenger Rail","Truck (0-3.5t)","Truck (18t)","Truck (26t)","Truck (40t)","Truck (7.5t)" )], richave_rail)
+    richave = rbind(richave[!mode %in% c("Passenger Rail")], richave_rail)
 
     gdp_pop = gdp_pop[UCD_region %in% richregions,]
     gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
@@ -480,12 +508,6 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
     non_energy_cost=merge(non_energy_cost, logit_category, all=FALSE, by = c("univocal_name","technology"))
     non_energy_cost[, c("univocal_name") := NULL]
-    non_energy_cost[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
-    non_energy_cost[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-    non_energy_cost[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
-    non_energy_cost[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
-    non_energy_cost[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
-    non_energy_cost=non_energy_cost[,.(value = mean(value)), by = c("year","region","sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "type", "price_component")]
 
     ## add load_factor for Hybrid Electric, trucks and buses FCEV and electric, domestic aviation hydrogen
     load_factor = rbind(load_factor, load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
