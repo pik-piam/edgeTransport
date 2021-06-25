@@ -19,7 +19,9 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     EU_folder <- file.path(input_folder, EU_dir)
 
     ## load mappings
-    mapping_TRACCS_roadf_categories = fread(file.path(EU_folder, "mapping_TRACCS_roadvehicles.csv"), skip = 0)
+    mapfile <- system.file("extdata", "mapping_TRACCS_roadvehicles.csv",
+                           package = "edgeTransport", mustWork = TRUE)
+    mapping_TRACCS_roadf_categories = fread(mapfile, skip = 0)
 
     ## conversion unit->million
     CONV_unit_million <- 1e-06
