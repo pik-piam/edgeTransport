@@ -12,7 +12,7 @@
 
 
 lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhancedtech, techswitch){
-  vehicle_type_PSI <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
+  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
   powertrain <- conv_pkm_MJ <- ttw_energy <- NULL
   psi_file <- function(fname){
     file.path(input_folder, PSI_dir, fname)
@@ -36,8 +36,8 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
 
   LDV_PSI_int=LDV_PSI_int[,.(year=scenario, ## rename col scenario with year
                                  technology,vehicle_type_PSI,
-                                 intensity_MJ_km=as.numeric(intensity_KJ_km) ## in KJ/km
-                                   *0.001)]                                  ## in MJ/km
+                                 intensity_MJ_km=as.numeric(intensity_KJ_km) ## in KJ/vkm
+                                   *0.001)]                                  ## in MJ/vkm
 
   ##load mapping that matches PSI vehicle types with EDGE types
   mapping=fread(psi_file("mapping_PSI_EDGE.csv"), na.strings=c("","NA"))
@@ -104,6 +104,7 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   LDV_PSI_int_liq[, value := ifelse(year == 2040, 0.7*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
   LDV_PSI_int_liq[, value := ifelse(year == 2050, 0.6*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
   LDV_PSI_int_liq[, value := ifelse(year == 2100, 0.6*value[year == 2010], value), by = c("vehicle_type", "EDGE_category")]
+
   ## approximate the trend of energy intensity to fill in the missing time steps
   LDV_PSI_int_liq = approx_dt(LDV_PSI_int_liq, unique(LDV_PSI_int_liq$year),
                  xcol = "year", ycol = c("value"),
@@ -124,7 +125,10 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
   LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all = FALSE)
   LDV_PSI_int = rbind(LDV_PSI_int[region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")],
                         LDV_PSI_int[!region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
-
+  ## merge load factor and convert into MJ/pkm
+  LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
+  LDV_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor] ## in MJ/pkm
+  LDV_PSI_int[, loadFactor := NULL] ##  remove load factor
   ## alternative trucks intensity
   Truck_PSI_int = data.table(read.csv(psi_file("Regional delivery_truck_efficiencies.csv")))
   ## use only Electric and FCEV trucks
