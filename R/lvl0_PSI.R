@@ -12,7 +12,7 @@
 
 
 lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhancedtech, techswitch){
-  vehicle_type_PSI <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
+  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
   powertrain <- conv_pkm_MJ <- ttw_energy <- NULL
   psi_file <- function(fname){
     file.path(input_folder, PSI_dir, fname)
