@@ -26,7 +26,7 @@ generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
                              IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL, trsp_incent=NULL,
                              saveRDS=FALSE){
-  scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- NULL
+  scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
   levelNpath <- function(fname, N){
@@ -179,6 +179,9 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
   GCAM_data <- lvl0_GCAMraw(input_folder)
+  ## add Hybrid Electric LF
+  GCAM_data$load_factor = rbind(GCAM_data$load_factor,
+                                GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
 
   target_LF = if(smartlifestyle) 1.8 else 1.7
   target_year = if(smartlifestyle) 2060 else 2080
