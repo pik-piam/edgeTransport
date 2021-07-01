@@ -88,6 +88,7 @@ shares <- readRDS(datapath(fname = "shares.RDS"))
 pref <- readRDS(datapath(fname = "pref_output.RDS"))
 mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
+annual_mileage <- readRDS(datapath(fname = "annual_mileage.RDS"))
 bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 JRC_IDEES <- readRDS(datapath(fname = "JRC_IDEES.RDS"))
@@ -1302,7 +1303,7 @@ demandkm_nobunk_plotf(demand_km, POP)
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
-plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor){
+plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
   vintcomp = vintcomp[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
   newcomp = newcomp[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
 
@@ -1315,8 +1316,8 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor){
                                       "year"), measure.vars = c("vintdem", "newdem"))
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
 
-  annual_mileage = 13000
   allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
+  allfleet = merge(allfleet, annual_mileage, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
   allfleet = allfleet[,.(value = sum(value/loadFactor/annual_mileage)), by = c("region", "technology", "variable", "year")]
   allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year")]
   allfleet[,alphaval := ifelse(variable =="vintdem", 1,0)]
@@ -1366,7 +1367,7 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor){
   }
 
 
-p = plotVint(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor)
+p = plotVint(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor, annual_mileage)
 
 p
 

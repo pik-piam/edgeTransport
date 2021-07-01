@@ -15,7 +15,7 @@
 
 lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     countries <- tech_output <- technologies <- `.` <- region <- EDGE_vehicle_type <- MJ <- mtoe <- km_million <- country_name <- technology <- tkm_million <- MJ_km <- load_factor <- million_tkm <- Liquids <- Electric <- pkm_million <- ktkm <- pkm <- name <- code_airplane_characteristics <- sector_fuel <- vehicle_type <- NULL
-    EJ <- RailTraction <- RailTrafficType <- Unit_short <- convert <- value <- NULL
+    EJ <- RailTraction <- RailTrafficType <- Unit_short <- convert <- value <- annual_mileage <- NULL
     EU_folder <- file.path(input_folder, EU_dir)
 
     ## load mappings
@@ -92,6 +92,29 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
 
     LF_countries_EU=LF_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
 
+    ## road passenger: load annual mileage
+    am_countries_EU<- do.call("rbind",lapply(list_countries$countries,
+                                             function(x) {
+                                               output = suppressMessages(data.table(read_excel(
+                                                 path=file.path(
+                                                   EU_folder,
+                                                   paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
+                                                 sheet="Mileage per Veh. (Km)","A2:I51")))
+                                               colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
+                                               output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                                                             measure.vars = c("2005","2006","2007","2008","2009","2010"))
+                                               setnames(output,old=c("value","variable"),new=c("annual_mileage","year"))
+                                               output=merge(mapping_TRACCS_roadf_categories,output)
+                                               output=output[technology %in% c("All"),]
+                                               output=output[annual_mileage>0,]
+                                               output$country_name <- x
+                                               output=output[,.(vehicle_type=EDGE_vehicle_type,year,annual_mileage,country_name)]
+                                               return(output)
+                                             }))
+
+    am_countries_EU=am_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
+    am_countries_EU[, year := as.numeric(as.character(year))]
+
     ## road passenger and road freight: load energy intensity
     energy_intensity_EU <- do.call("rbind",lapply(list_countries$countries,
                                                   function(x) {
@@ -160,6 +183,11 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     LF_countries_EU[, year := as.numeric(as.character(year))]
     setnames(LF_countries_EU, old = "load_factor", new="loadFactor")
 
+
+    am_countries_EU = merge(am_countries_EU,mapping_TRACCS_iso, by = "country_name")[, -c("country_name")]
+    ## use only one tech
+    am_countries_EU = unique(am_countries_EU[,c("vehicle_type", "iso", "year", "annual_mileage")])
+
     ## load eurostata for bunkers
     map_eurostat = data.table(country_name = c("BE","BG","CZ","DK","DE","EE","IE","EL","ES","FR","HR","IT","CY","LV","LT","LU","HU","MT","NL","AT","PL","PT","RO","SI","SK","FI","SE","UK"),
     iso = c("BEL","BGR","CZE","DNK","DEU","EST","IRL","GRC","ESP","FRA","HRV","ITA","CYP","LVA","LTU","LUX","HUN","MLT","NLD","AUT","POL","PRT","ROU","SVN","SVK","FIN","SWE","GBR"))
@@ -216,11 +244,11 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
 
 
     dem_eurostat = rbind(dem_bunkers, dem_dom, rail_eu, roadFE_eu)
-    load_EU_data=list(
-                      dem_eurostat = dem_eurostat,
-                          energy_intensity_EU=energy_intensity_EU,
-                          roadFE_eu = roadFE_eu,
-                          LF_countries_EU=LF_countries_EU)
+    load_EU_data=list(dem_eurostat = dem_eurostat,
+                      energy_intensity_EU=energy_intensity_EU,
+                      roadFE_eu = roadFE_eu,
+                      LF_countries_EU=LF_countries_EU,
+                      am_countries_EU = am_countries_EU)
     return(load_EU_data)
 
 }
@@ -251,6 +279,7 @@ lvl0_prepareEU <- function(EU_data,
   subsector_L3 <- region <- technology <- conv_pkm_MJ <-iso <- dem <- NULL
   subsector_L1 <- tech_output <- vehicle_type <- tech_output <- MJ <- `.` <- NULL
   i.tech_output <- i.loadFactor <- loadFactor <- LF_OTHERr <- REMIND_scenario <-  NULL
+  annual_mileage <- i.annual_mileage <- NULL
   dem_OTHER = copy(iso_data$TO_iso)
   ## use intensity and LF from GCAM to convert into tkm/pkm for bunkers
   dem_EU = merge(EU_data$dem_eurostat, intensity[region =="EU-15" & vehicle_type %in% unique(EU_data$dem_eurostat$vehicle_type)][,c("year","conv_pkm_MJ","vehicle_type", "technology")])
@@ -309,10 +338,28 @@ lvl0_prepareEU <- function(EU_data,
                                datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "year"),
                                weights=gdp)
 
+  ## annual mileage
+  AM_OTHER = copy(iso_data$UCD_results$annual_mileage)
+  AM_TRACCS = EU_data$am_countries_EU[year == 2010][, year := NULL]
+  AM_OTHER[AM_TRACCS, on=.(iso, vehicle_type), annual_mileage := i.annual_mileage]
+
+  dups <- duplicated(AM_OTHER, by=c("iso", "vehicle_type","technology","year"))
+
+  if(any(dups)){
+    warning("Duplicated techs found in supplied demand.")
+    print(LF_OTHERr[dups])
+    AM_OTHER <- unique(AM_OTHER, by=c("iso", "technology", "vehicle_type", "year"))
+  }
+
+  AM_OTHER <-  aggregate_dt(AM_OTHER, REMIND2ISO_MAPPING,
+                            valuecol="annual_mileage",
+                            datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "year"),
+                            weights=gdp)
   ## save demand, load factor
   output=list(LF=LF_OTHER,
               demkm = dem_OTHER,
-              demISO = demISO)
+              demISO = demISO,
+              AM = AM_OTHER)
 
   return(output)
 }
