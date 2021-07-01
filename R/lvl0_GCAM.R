@@ -405,7 +405,7 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   ## select only useful columns
   tmp2 = tmp2[,.(region, year, loadFactor, vehicle_type, technology, sector, subsector_L3, subsector_L2, subsector_L1)]
   ## rich countries need to be reintegrated
-  load_factor = rbind(tmp2, load_factor[region %in% richregions])
+  load_factor = rbind(tmp2[subsector_L1 != "trn_pass_road_LDV_4W"], load_factor[(region %in% richregions)|(subsector_L1 == "trn_pass_road_LDV_4W")])
 
 
 

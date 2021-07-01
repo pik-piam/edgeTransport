@@ -177,10 +177,6 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
                                   weights=gdp)
 
     annual_mileage <- UCD_data$annual_mileage #already on ISO level
-    annual_mileage <- aggregate_dt(annual_mileage, REMIND2ISO_MAPPING,
-                                  valuecol="annual_mileage",
-                                  datacols=c("sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "technology", "year"),
-                                  weights=gdp)
 
     load_factor <- UCD_data$load_factor
     load_factor <- disaggregate_dt(load_factor, GCAM2ISO_MAPPING)

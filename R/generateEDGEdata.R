@@ -183,14 +183,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
 
-  target_LF = if(smartlifestyle) 1.8 else 1.7
-  target_year = if(smartlifestyle) 2060 else 2080
-
-  GCAM_data$load_factor[
-    subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= 2020 & year <= target_year,
-    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
-
   ##function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
   ## for alternative trucks: all regions (from PSI)
   print("-- merge PSI energy intensity data")
@@ -270,10 +262,21 @@ generateEDGEdata <- function(input_folder, output_folder,
                             GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
+  target_LF = if(smartlifestyle) 1.8 else 1.7
+  target_year = if(smartlifestyle) 2060 else 2080
 
+  alldata$LF[
+    subsector_L1 == "trn_pass_road_LDV_4W" &
+      year >= 2020 & year <= target_year,
+    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
+
+  alldata$LF[
+    subsector_L1 == "trn_pass_road_LDV_4W" &
+      year >= target_year,
+    loadFactor := target_LF]
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = iso_data$UCD_results$annual_mileage,
+  incocost <- lvl0_incocost(annual_mileage = alldata$AM,
                             load_factor = alldata$LF,
                             fcr_veh = UCD_output$fcr_veh)
 
@@ -484,6 +487,7 @@ generateEDGEdata <- function(input_folder, output_folder,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
+    saveRDS(alldata$AM, file = level2path("annual_mileage.RDS"))
     dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
     dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
     saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
