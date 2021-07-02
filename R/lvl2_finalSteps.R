@@ -42,6 +42,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 #' @param capCost capital costs
 #' @param price_nonmot non motorized modes price
 #' @param loadFactor load factors
+#' @param annual_mileage annual mileage
 #' @param demISO ISO level demand in 2010 to be used as a weight in mrremind
 #' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
@@ -50,7 +51,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 #' @param output_folder directory where the data has to be saved, if set to NULL a list of magclass objects will be saved
 
 
-lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, demISO, REMIND_scenario, EDGE_scenario, level2path, output_folder){
+lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, annual_mileage, demISO, REMIND_scenario, EDGE_scenario, level2path, output_folder){
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", REMIND_scenario)
 
@@ -140,6 +141,11 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
   ## add scenario column to load factor
   loadFactor <- addScenarioCols(loadFactor, 0)
 
+  ## add scenario column to annual mileage
+  annual_mileage <- addScenarioCols(annual_mileage, 0)
+  ## select only the relevant columns
+  annual_mileage <- unique(annual_mileage[,c("GDP_scenario", "EDGE_scenario", "region", "year", "annual_mileage", "vehicle_type")])
+
   if (!is.null(output_folder)) {
     dir.create(file.path(level2path("")), showWarnings = FALSE)
     ## writes csv files for intensity, shares and budget, and demand (for calibration and starting point of REMIND)
@@ -188,6 +194,8 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
     fwrite(NEC_data, file = level2path("UCD_NEC_iso.csv"))
     print("Creating csv files for load factor...")
     fwrite(loadFactor, file = level2path("loadFactor.csv"))
+    print("Creating csv files for annual mileage...")
+    fwrite(annual_mileage, file = level2path("annual_mileage.csv"))
   } else {
     EDGETrData = list(fe_demand_tech = demByTech,
                       fe2es = intensity,
@@ -201,7 +209,8 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
                       price_nonmot = price_nonmot,
                       harmonized_intensities = int_dat,
                       UCD_NEC_iso = NEC_data,
-                      loadFactor = loadFactor)
+                      loadFactor = loadFactor,
+                      annual_mileage = annual_mileage)
 
     return(EDGETrData)
   }
