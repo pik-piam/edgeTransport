@@ -7,6 +7,8 @@
 lvl0_VOTandExponents(
   GCAM_data,
   GDP_country,
+  GDP_POP,
+  GDP_MER_country,
   POP_country,
   REMIND_scenario,
   input_folder,
@@ -17,7 +19,11 @@ lvl0_VOTandExponents(
 \arguments{
 \item{GCAM_data}{GCAM based data}
 
-\item{GDP_country}{GDP ISO level}
+\item{GDP_country}{GDP ISO level PPP}
+
+\item{GDP_POP}{GDP per capita PPP}
+
+\item{GDP_MER_country}{GDP iso level MER}
 
 \item{POP_country}{population (ISO level)}
 

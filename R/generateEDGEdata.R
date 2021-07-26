@@ -136,9 +136,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   GDP_POP_MER_country = merge(GDP_MER_country, POP_country,by = c("iso", "year"))
 
   ## filter only non-NA countries from IDEES and transform in data table
-  JRC_IDEES_Trsp=as.data.table(JRC_IDEES_Trsp)
-  JRC_IDEES_MarBunk=as.data.table(JRC_IDEES_MarBunk)
-  JRC_IDEES=rbind(JRC_IDEES_MarBunk, JRC_IDEES_Trsp)
+  JRC_IDEES=rbind(
+    as.data.table(JRC_IDEES_Trsp), as.data.table(JRC_IDEES_MarBunk))
   JRC_IDEES=JRC_IDEES[grep("nergy consumption",variable.unit)]
   JRC_IDEES=JRC_IDEES[!grep("Shares",variable.unit)]
   JRC_IDEES=merge(JRC_IDEES,REMIND2ISO_MAPPING,by.x="iso3c",by.y="iso")
@@ -171,8 +170,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   )
 
   JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
-
-
 
 
   ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup

@@ -12,10 +12,11 @@ lvl0_loadUCD(
   GCAM2ISO_MAPPING,
   input_folder,
   years,
+  GDP_POP_MER_country,
   UCD_dir = "UCD",
   enhancedtech,
   selfmarket_taxes,
-  rebates_febates,
+  trsp_incent,
   techswitch
 )
 }
@@ -34,13 +35,15 @@ lvl0_loadUCD(
 
 \item{years}{time steps}
 
+\item{GDP_POP_MER_country}{GDP and POP MER country level}
+
 \item{UCD_dir}{directory with UCD data}
 
 \item{enhancedtech}{switch activating optimistic development of alternative technologies}
 
 \item{selfmarket_taxes}{switch activating decrease in registration taxes}
 
-\item{rebates_febates}{activating rebates-feebates}
+\item{trsp_incent}{incentives on transport technologies}
 
 \item{techswitch}{technology at the center of the policy packages}
 }
