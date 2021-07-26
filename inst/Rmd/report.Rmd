@@ -10,6 +10,7 @@ output:
 require(ggplot2)
 require(data.table)
 require(gridExtra)
+require(rmndt)
 ```
 
 
@@ -54,6 +55,8 @@ cols <- c("NG" = "#d11141",
           "DOMESNAV" = "#ff4040",
           "Shipping" = "#ff4040",
           "Dom. Shipping" = "#ff4040",
+          "Non Bunkers" = "#9acd32",
+          "Bunkers" = "#87cefa",
           "Truck" = "#ff7f50",
           "Trucks (<3.5t)" = "#ff7f50",
           "Trucks (3.5t-16)" = "#8b0000",
@@ -89,6 +92,7 @@ pref <- readRDS(datapath(fname = "pref_output.RDS"))
 mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 annual_mileage <- readRDS(datapath(fname = "annual_mileage.RDS"))
+annual_sale <- readRDS(datapath(fname = "annual_sales.RDS"))
 bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 JRC_IDEES <- readRDS(datapath(fname = "JRC_IDEES.RDS"))
@@ -353,6 +357,70 @@ demandEJplotf = function(demandEJ, POP){
 ## Final Energy demand
 demEJ = demandEJplotf(demand_ej, POP)
 demEJ
+```
+
+# Total FE demand bunkers and no bunkers
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+demandBunkNoBunkplotf = function(demandEJ, POP){
+  ## EDGE results
+  demandBnB <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+
+  demandBnB[, aggr_mode := ifelse(subsector_L3 %in% c("International Aviation", "International Shipping"), "Bunkers", "Non Bunkers")]
+  demandBnB = demandBnB[,.(demand_EJ, region, year, aggr_mode)]
+
+  demandBnB[, aggr_mode := factor(aggr_mode, levels = c("Non Bunkers", "Bunkers"))]
+
+  legend_ord <- c("Non Bunkers", "Bunkers")
+  demandBnB = demandBnB[,.(demand_EJ = sum(demand_EJ)), by = .(region, year, aggr_mode)]
+
+  demandBnBglob = demandBnB[,.(demand_EJ = sum(demand_EJ)), by = .(year, aggr_mode)][, region:= "World"]
+
+  demandBnBEU = demandBnB[region %in% EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, aggr_mode)][, region:= "EUR"]
+
+ demandBnBNEU = demandBnB[region %in% non_EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, aggr_mode)][, region:= "NEU"]
+
+  demandBnB = rbind(demandBnBglob,demandBnB,demandBnBEU,demandBnBNEU)
+
+  cols2use=as.character(unique(demandBnB[,aggr_mode]))
+
+
+  ptot1=ggplot()+
+    geom_area(data = demandBnB[year > 2005 & year <= maxyear & region %in% EU_regions], aes(x=year, y=demand_EJ, group = aggr_mode, fill = aggr_mode), color = "black", position= position_stack())+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    labs(x = "", y = "Tot final energy demand [EJ]")+
+    theme_minimal()+
+     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.text.y = element_text(size=8),
+          axis.title = element_text(size = 9),
+          title = element_text(size = 9),
+          legend.text = element_text(size = 9),
+          legend.title = element_text(size =9),
+          strip.text = element_text(size=9))
+
+  ptot2=ggplot()+
+    geom_area(data = demandBnB[year > 2005 & year <= maxyear & !region %in% EU_regions], aes(x=year, y=demand_EJ, group = aggr_mode, fill = aggr_mode), color = "black", position= position_stack())+
+    facet_wrap(~region, nrow = 4, scales = "free")+
+    labs(x = "", y = "Tot final energy demand [EJ]")+
+    theme_minimal()+
+     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+    theme(axis.text.x = element_text(angle = 90,  size = 7, vjust=0.5, hjust=1),
+          axis.text.y = element_text(size=8),
+          axis.title = element_text(size = 9),
+          title = element_text(size = 9),
+          legend.text = element_text(size = 9),
+          legend.title = element_text(size =9),
+          strip.text = element_text(size=9))
+
+
+  return(list(ptot1 = ptot1, ptot2=ptot2))
+}
+
+## Final Energy demand
+demEJ = demandBunkNoBunkplotf(demand_ej)
+demEJ
+
 ```
 
 # LDVs final energy demand
@@ -1091,7 +1159,7 @@ demandkmplotf = function(demandkm, POP){
 
   ptot_freight = ggplot()+
     geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
-    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
@@ -1099,10 +1167,11 @@ demandkmplotf = function(demandkm, POP){
 
     ptot_freight1 = ggplot()+
     geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
-    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
+
 
     cols2use = unique(as.character(demandkm[mode =="freight", vehicle_type_plot]))
 
@@ -1241,7 +1310,7 @@ demandkm_nobunk_plotf = function(demandkm, POP){
   cols2use = unique(as.character(demandkm[mode =="freight", vehicle_type_plot]))
   ptot_freight = ggplot()+
     geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
-    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
@@ -1249,7 +1318,7 @@ demandkm_nobunk_plotf = function(demandkm, POP){
 
     ptot_freight1 = ggplot()+
     geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
-    labs(x = "", y = "Energy Services demand [trillion pkm]")+
+    labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
@@ -1372,6 +1441,58 @@ p = plotVint(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor, annua
 p
 
 ```
+
+# Sales LDVs
+
+```{r, echo=FALSE, warning=FALSE}
+
+SalesFun = function(shares_LDV, newcomp, sharesVS1){
+  # browser()
+  ## I need the total demand for each region to get the average composition in the region (sales are on a country level)
+  ## First I calculate the total demand for new sales using the shares on FV level (in newcomp) and on VS1 level
+  newcomp = merge(newcomp, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
+  newcomp[, newdem := totdem*sharetech_new*shareVS1]
+  newcomp = newcomp[,.(value = sum(newdem)), by = c("region", "year", "subsector_L1")]
+  ## I have to interpolate in time the sales nto to loose the sales composition annual values
+  newcomp=approx_dt(dt=newcomp, unique(shares_LDV$year),
+                    xcol= "year",
+                    ycol = "value",
+                    idxcols=c("region","subsector_L1"),
+                    extrapolate=T)
+
+  setnames(newcomp, new = "newdem", old = "value")
+
+  ## I calculate the sales composition (disrespective to the vehicle type)
+  shares_LDV = unique(shares_LDV[,c("region","year", "technology", "shareFS1")])
+  shares_LDV <- shares_LDV[,.(shareFS1=sum(shareFS1)),by=c("region","technology","year")]
+
+  ## I calculate the weighted regional sales (depending on the total volume of sales per country in each region)
+  shares_LDV = merge(shares_LDV, newcomp)
+  shares_LDV[, demfuel := shareFS1*newdem, by = c("year", "region", "technology")]
+  shares_LDV = shares_LDV[, .(demfuel = sum(demfuel)), by = c("year", "region", "technology")]
+  shares_LDV[, shareFS1 := demfuel/sum(demfuel), by = c("year", "region")]
+
+  ## plot features
+  shares_LDV[, technology := factor(technology, levels = c("BEV", "Hybrid Electric", "FCEV", "Liquids", "NG"))]
+
+  cols2use = unique(as.character(shares_LDV[,technology]))
+
+  plot = ggplot()+
+    geom_bar(data = shares_LDV[year<=2060], aes(x=as.numeric(as.character(year)),y=shareFS1, group = technology, fill = technology), position = position_stack(), stat = "identity")+
+   facet_wrap(~region, nrow = 4,scales = "free")+
+    theme_plot +
+  scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+    expand_limits(y = c(0,1))+
+    scale_x_continuous(breaks = c(2015, 2030, 2050, 2060))+
+    labs(x = "", y = "[%]", title = "Market share of new LDV sales")
+  return(plot)
+}
+
+
+SalesFun(annual_sale, newcomp, shares$VS1_shares)
+
+```
+
 
 # Energy intensity for selected LDVs
 
