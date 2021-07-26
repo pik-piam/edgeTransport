@@ -12,7 +12,7 @@
 #' @param JRC_IDEES_Trsp use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
 #' @param trsp_incent use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)
-#' @param saveRDS optional saving of intermediate RDS files
+#' @param storeRDS optional saving of intermediate RDS files
 #'
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
