@@ -11,16 +11,18 @@ generateEDGEdata(
   REMIND_scenario = "SSP2",
   IEAbal = NULL,
   GDP_country = NULL,
+  RatioPPP2MER_country = NULL,
   POP_country = NULL,
   JRC_IDEES_Trsp = NULL,
   JRC_IDEES_MarBunk = NULL,
+  trsp_incent = NULL,
   saveRDS = FALSE
 )
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}
 
-\item{output_folder}{folder hosting REMIND input files}
+\item{output_folder}{folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)}
 
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 
@@ -30,11 +32,15 @@ generateEDGEdata(
 
 \item{GDP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)}
 
+\item{RatioPPP2MER_country}{use mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: calcOutput("RatioPPP2MER", aggregate =F)}
+
 \item{POP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)}
 
 \item{JRC_IDEES_Trsp}{use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")}
 
 \item{JRC_IDEES_MarBunk}{use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")}
+
+\item{trsp_incent}{use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)}
 
 \item{saveRDS}{optional saving of intermediate RDS files}
 }

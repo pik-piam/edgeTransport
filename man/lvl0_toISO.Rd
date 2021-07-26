@@ -13,6 +13,7 @@ lvl0_toISO(
   GDP_country,
   POP,
   GDP_POP,
+  GDP_POP_MER,
   GCAM2ISO_MAPPING,
   REMIND2ISO_MAPPING,
   EDGE_scenario,
@@ -34,7 +35,9 @@ lvl0_toISO(
 
 \item{POP}{population regional level}
 
-\item{GDP_POP}{per capita GDP}
+\item{GDP_POP}{per capita GDPppp}
+
+\item{GDP_POP_MER}{per capita GDPmer}
 
 \item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
 

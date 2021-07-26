@@ -11,7 +11,7 @@ lvl1_preftrend(
   clusters,
   years,
   GDP,
-  GDP_POP,
+  GDP_POP_MER,
   REMIND_scenario,
   EDGE_scenario,
   smartlifestyle,
@@ -31,7 +31,7 @@ lvl1_preftrend(
 
 \item{GDP}{GDP regional level}
 
-\item{GDP_POP}{GDP per capita}
+\item{GDP_POP_MER}{GDP per capita MER}
 
 \item{REMIND_scenario}{SSP scenario}
 
