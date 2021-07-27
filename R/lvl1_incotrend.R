@@ -294,21 +294,21 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
   ## convergence year for FCEV Buses and Trucks is more optimistic in the HydrHype case
   if (techswitch == "FCEV") {
     convsymmFCEV = 2035
-    convsymmHydrogenAir = 2100
-    speedFCEV = 0.1
+    convsymmHydrogenAir = 2080
+    speedFCEV = 0.4
   } else {
-    convsymmFCEV = 2075
-    convsymmHydrogenAir = 2150
-    speedFCEV = 0.1
+    convsymmFCEV = 2045
+    convsymmHydrogenAir = 2100
+    speedFCEV = 0.2
   }
 
   ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
   if (techswitch == "BEV") {
     convsymmBEV = 2035
-    speedBEV = 0.5
+    speedBEV = 0.4
     } else {
-    convsymmBEV = 2075
-    speedBEV = 0.1
+    convsymmBEV = 2050
+    speedBEV = 0.2
   }
 
   ## small trucks
@@ -384,6 +384,18 @@ if (techswitch %in% c("BEV", "FCEV")) {
   ## CHA has very low prices for 2W. this leads to crazy behaviours, hence their preferenc efactor is set to contant
   SWS$S1S2_final_pref[region %in% c("CHA") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2010, sw := sw[year == 2010], by = c("region")]
 
+  eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")
+
+  ## low preference for buses in UKI
+  SWS$S2S3_final_pref[region == "UKI" & subsector_L2 == "Bus" & year == 2020,
+                      sw := sw/1.5]
+  SWS$S2S3_final_pref[region == "UKI" & subsector_L2 == "Bus" & year >= 2025,
+                      sw := sw*2]
+  ## preference for buses high in EU after 2030
+  target_reduction = 0.67
+  SWS$S2S3_final_pref[region %in% eu_regions & subsector_L2 == "Bus" & year >= 2020,
+                      sw := sw*pmax((1 - target_reduction*(year - 2020)/30), 1-target_reduction)]
+  
   ## preference for buses extremely high in OAS and IND
   SWS$S2S3_final_pref[region %in% c("OAS", "SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
                       sw := ifelse(year <= 2030, sw[year==2020] + (0.5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
@@ -421,7 +433,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
-  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("EUR", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI") & year >= 2020,
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
                      by=c("region", "subsector_L3")]
   SWS$S3S_final_pref[subsector_L3 %in% c("Passenger Rail", "HSR") & region %in% c("ECE", "ECS") & year >= 2020,

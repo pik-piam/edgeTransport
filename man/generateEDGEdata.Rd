@@ -16,7 +16,7 @@ generateEDGEdata(
   JRC_IDEES_Trsp = NULL,
   JRC_IDEES_MarBunk = NULL,
   trsp_incent = NULL,
-  saveRDS = FALSE
+  storeRDS = FALSE
 )
 }
 \arguments{
@@ -42,7 +42,7 @@ generateEDGEdata(
 
 \item{trsp_incent}{use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)}
 
-\item{saveRDS}{optional saving of intermediate RDS files}
+\item{storeRDS}{optional saving of intermediate RDS files}
 }
 \value{
 generated EDGE-transport input data
