@@ -478,6 +478,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
     saveRDS(logit_data$mj_km_data, file = level2path("mj_km_data.RDS"))
+    saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
+    saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))
     saveRDS(shares_intensity_demand$demandF_plot_EJ,
             file=level2path("demandF_plot_EJ.RDS"))
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
