@@ -56,7 +56,14 @@ lvl0_toISO <- function(input_data, VOT_data, price_nonmot, UCD_data, GDP, GDP_co
     richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
     ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
     richave = tmp[region %in% richregions & conv_pkm_MJ > 0,]
+    ## similarly to costs, also energy intensity converges to EU+Japan behavior
+    richave_rail = richave[subsector_L1 %in% c("Passenger Rail_tmp_subsector_L1") & region %in% c("DEU", "FRA", "UKI", "JPN", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN")]
+    richave_rail = richave_rail[, .(conv_pkm_MJ = sum(conv_pkm_MJ*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
+
     richave = richave[, .(conv_pkm_MJ = sum(conv_pkm_MJ*weight)/sum(weight)), by = c("subsector_L1", "vehicle_type", "technology", "year")]
+    richave = rbind(richave[!subsector_L1 %in% c("Passenger Rail_tmp_subsector_L1")], richave_rail)
+
+
     gdp_pop = gdp_pop[region %in% richregions,]
     gdp_pop = gdp_pop[, .(GDP = sum(weight), POP_val = sum(POP_val)), by = c("year")]
     richave = merge(richave, gdp_pop, by = "year")

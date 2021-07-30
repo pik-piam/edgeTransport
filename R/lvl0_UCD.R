@@ -190,11 +190,49 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
     costs_UCD[,size.class:=as.character(size.class)]
     return(costs_UCD)
-}
+  }
+
+
+  ## function that loads and applies CAPEX costs for CHA conventional trucks. Final values in 2005USD/vkm
+  apply_CHATrucks_costs=function(costs_UCD){
+
+    ## load costs from CHA Trucks source file
+    CHA_folder <- file.path(input_folder, "CHA_data")
+    costs=data.table(fread(file.path(CHA_folder,"CHA_trucks.csv"), header = T))
+    costs = melt(costs,
+                 id.vars = c("region", "sector", "mode", "size.class", "technology", "fuel", "variable", "unit"),
+                 measure.vars = c("2005", "2020", "2035", "2050", "2065", "2080", "2095"))
+
+    setnames(costs, old = c("region", "variable.1", "technology", "fuel", "sector"), new = c("UCD_region", "Xyear", "UCD_technology", "UCD_fuel", "UCD_sector"))
+    costs[, Xyear := paste0("X", Xyear)]
+    ## create a temporary dt that has original UCD data for the LDV4 purchase costs and EU regions
+    tmp=costs_UCD[UCD_region %in% c("China") & ## CHA regions trends come from folder
+                    mode=="Truck" &
+                    variable=="CAPEX and non-fuel OPEX" &
+                    size.class %in% unique(costs$size.class),]
+
+    ## delete column with data that is going to be substituted
+    tmp[,c("value"):=NULL]
+
+    ## merge with UCD prices and substitute CHA trucks
+    tmp=merge(tmp,
+              costs,
+              by=intersect(names(costs),names(tmp)),all=TRUE)
+
+    ## merge back with the original database
+    costs_UCD=merge(costs_UCD[!(UCD_region %in% c("China") & ## CHA regions trends come from folder
+                                  mode=="Truck" &
+                                  variable=="CAPEX and non-fuel OPEX" &
+                                  size.class %in% unique(costs$size.class)),],
+                    tmp,all=TRUE,by=names(tmp))
+
+    costs_UCD[,size.class:=as.character(size.class)]
+    return(costs_UCD)
+  }
 
   calc_non_energy_price=function(UCD_transportation_database, GDP_POP_MER_country, GCAM2ISO_MAPPING){
     loadFactor <- price_component <- X_UCD_years <- non_fuel_price <- UCD_fuel <- type <- UCD_sector <- vkm.veh <- ID <- aveval <- incentive_val <- NULL
-    subsector_L3 <- weight <- GDP_cap <- POP_val <- GDP <- yearconv <- time <- year_at_yearconv <-value_trend <- value_conv <- NULL
+    subsector_L3 <- weight <- GDP_cap <- POP_val <- GDP <- yearconv <- time <- year_at_yearconv <-value_trend <- value_conv <- yeartarget <- NULL
     #=== Calculations ====
     UCD_cost <- UCD_transportation_database[unit %in% c("2005$/veh/yr", "2005$/veh", "2005$/vkt"),]
 
@@ -225,6 +263,9 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
 
     ## PSI based values: in 2005USD/vkm; UCD based values: in 2005USD/vkm
     UCD_cost=apply_PSI_costs(costs_UCD = UCD_cost,fcr_veh = fcr_veh, mileage_UCD=UCD_vkm_veh)
+    ## CHA trucks: in 2005USD/vkm; UCD based values: in 2005USD/vkm
+    UCD_cost=apply_CHATrucks_costs(costs_UCD = UCD_cost)
+
     UCD_cost[, year := as.numeric(gsub("X", "", Xyear))]
     y = data.table(year = yrs, ID = "id")
     tmp = unique(UCD_cost[,c("UCD_region", "UCD_technology", "mode", "variable", "size.class", "UCD_sector", "UCD_fuel", "unit")])[, ID := "id"]
@@ -409,31 +450,48 @@ lvl0_loadUCD <- function(GCAM_data, GDP_country, EDGE_scenario, REMIND_scenario,
     newtech = rbind(electric, liquids, hydrogen)
     ## documentation for this section is in the paper Rottoli et al 2020
     ## cost of electric truck is 60% more than a as conventional truck today
+    yeartarget_early = 2030  ## target year for electric trucks and electric and hydrogen buses
+    yeartarget_late = 2035  ## target year for FCEV trucks
     newtech[mode %in% trucks & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "Electric", 1.6*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
     ## costs of electric truck breaks even in 2030
-    newtech[mode %in% trucks & year >= 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "Electric", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    newtech[mode %in% trucks & year >= yeartarget_early, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "Electric", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
 
     ## cost of a FCEV truck is 80% more than a as conventional truck today
     newtech[mode %in% trucks & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", 1.8*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
-    ## costs of FCEV truck breaks is 10% more than a conventional truck in 2030
-    newtech[mode %in% trucks & year == 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", 1.1*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
     ## break even for FCEV truck is assumed to occur in 2035
-    newtech[mode %in% trucks & year >= 2035, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    newtech[mode %in% trucks & year >= yeartarget_late, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology == "FCEV", CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
 
     ## for electric and FCEV trucks, in between 2020 and 2030 the cost follows a linear trend
-    newtech[mode %in% trucks & year <= 2030 & year >= 2020 & UCD_technology %in% c("Electric", "FCEV"),
-            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020] - CAPEX_and_non_fuel_OPEX[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + CAPEX_and_non_fuel_OPEX[year == 2030],
+    newtech[mode %in% trucks & year <= yeartarget_early & year >= 2020 & UCD_technology %in% c("Electric"),
+            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020] - CAPEX_and_non_fuel_OPEX[year == yeartarget_early])*(1 - (year - 2020)/(yeartarget_early - 2020)) + CAPEX_and_non_fuel_OPEX[year == yeartarget_early],
+            by = c("UCD_region", "UCD_technology", "mode")]
+
+    newtech[mode %in% trucks & year <= yeartarget_late & year >= 2020 & UCD_technology %in% c("FCEV"),
+            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020] - CAPEX_and_non_fuel_OPEX[year == yeartarget_late])*(1 - (year - 2020)/(yeartarget_late - 2020)) + CAPEX_and_non_fuel_OPEX[year == yeartarget_late],
             by = c("UCD_region", "UCD_technology", "mode")]
 
     ## cost of electric buses is 40% more of a conventional bus today
     newtech[mode %in% buses & year <= 2020, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology %in% c("Electric", "FCEV"), 1.4*CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
     ## electric and FCEV buses breaks-even with conventional buses in 2030
-    newtech[mode %in% buses & year >= 2030, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology %in% c("Electric", "FCEV"), CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
-    ## for electric and FCEV buses, in between 2020 and 2030 the cost follows a linear trend
-    newtech[mode %in% buses & year <= 2030 & year >= 2020 & UCD_technology %in% c("Electric", "FCEV"),
-            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020]-CAPEX_and_non_fuel_OPEX[year == 2030])*(1 - (year - 2020)/(2030 - 2020)) + CAPEX_and_non_fuel_OPEX[year == 2030], by = c("UCD_region", "UCD_technology", "mode")]
+    newtech[mode %in% buses & year >= yeartarget_early, CAPEX_and_non_fuel_OPEX := ifelse(UCD_technology %in% c("Electric", "FCEV"), CAPEX_and_non_fuel_OPEX[UCD_technology=="Liquids"], CAPEX_and_non_fuel_OPEX), by = c("UCD_region", "year", "mode")]
+    ## for electric and FCEV buses, in between 2020 and target year the cost follows a linear trend
+    newtech[mode %in% buses & year <= yeartarget_early & year >= 2020 & UCD_technology %in% c("Electric", "FCEV"),
+            CAPEX_and_non_fuel_OPEX := (CAPEX_and_non_fuel_OPEX[year == 2020]-CAPEX_and_non_fuel_OPEX[year == yeartarget_early])*(1 - (year - 2020)/(yeartarget_early - 2020)) + CAPEX_and_non_fuel_OPEX[year == yeartarget_early], by = c("UCD_region", "UCD_technology", "mode")]
 
-    non_energy_cost = rbind(non_energy_cost, newtech[UCD_technology!="Liquids"])
+    newtech_subs = newtech[UCD_region=="China"]
+    newtech_subs[, yeartarget := yeartarget_early]
+    newtech_subs[mode %in% trucks & UCD_technology == "FCEV", yeartarget := yeartarget_late]
+    newtech_subs[year >= yeartarget | year < 2020, Operating_subsidy := 0] ## after yeartarget all subsidies are phased out
+
+    newtech_subs[year == 2020 & UCD_technology == "Electric", Operating_subsidy := - CAPEX_and_non_fuel_OPEX*0.2]
+    newtech_subs[year == 2020 & UCD_technology == "FCEV", Operating_subsidy := - CAPEX_and_non_fuel_OPEX*0.5]
+
+    newtech_subs[year <= yeartarget & year >= 2020,
+            Operating_subsidy := (Operating_subsidy[year == 2020]-Operating_subsidy[year == yeartarget])*(1 - (year - 2020)/(yeartarget - 2020)) + Operating_subsidy[year == yeartarget], by = c("UCD_region", "UCD_technology", "mode")]
+    newtech_subs[, yeartarget := NULL]
+
+
+    non_energy_cost = rbind(non_energy_cost, newtech[UCD_technology!="Liquids"][UCD_region != "China"], newtech_subs[UCD_technology!="Liquids"])
 
     ## add hydrogen airplanes
     newtech = non_energy_cost[mode %in% "Air Domestic" & UCD_technology == "Liquids"][, UCD_technology := "Hydrogen"]
