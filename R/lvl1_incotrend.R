@@ -384,7 +384,7 @@ if (techswitch %in% c("BEV", "FCEV")) {
   ## CHA has very low prices for 2W. this leads to crazy behaviours, hence their preferenc efactor is set to contant
   SWS$S1S2_final_pref[region %in% c("CHA") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2010, sw := sw[year == 2010], by = c("region")]
 
-  eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")
+  eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "ECS", "ECE", "EWN", "FRA", "UKI")
 
   ## low preference for buses in UKI
   SWS$S2S3_final_pref[region == "UKI" & subsector_L2 == "Bus" & year == 2020,
