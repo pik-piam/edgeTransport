@@ -180,10 +180,19 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
 
+  ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
+  ## needed at this point to be used in the intensity calculation below
+  print("-- load EU data")
+  EU_data <- lvl0_loadEU(input_folder)
+  if(storeRDS)
+     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
+
   ## function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
   ## for alternative trucks: all regions (from PSI)
   print("-- merge PSI energy intensity data")
-  intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(GCAM_data, input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
+  intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(
+    GCAM_data, EU_data$LF_countries_EU, GCAM2ISO_MAPPING,
+    input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
   GCAM_data$conv_pkm_mj = intensity_PSI_GCAM_data
 
   if(storeRDS)
@@ -241,12 +250,6 @@ generateEDGEdata <- function(input_folder, output_folder,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
     EDGE_scenario = EDGE_scenario,
     REMIND_scenario = REMIND_scenario)
-
-  ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
-  print("-- load EU data")
-  EU_data <- lvl0_loadEU(input_folder)
-  if(storeRDS)
-     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
 
   ## function that merges TRACCS, Eurostat databases with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
   print("-- prepare the EU related databases")
