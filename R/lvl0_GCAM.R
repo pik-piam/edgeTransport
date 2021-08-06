@@ -536,19 +536,6 @@ lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
   ## according to "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
   newtech[subsector_L3 %in% c("Domestic Aviation"), conv_pkm_MJ := ifelse(technology == "Hydrogen", 0.5*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
   GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"])
-  ## add plug-in hybrids to all countries, using the same ratio as BEVs for each country (ref: EU-15)
-  inspect_ratios_eff = GCAM_output$conv_pkm_mj[technology %in% c("BEV") & subsector_L1 == "trn_pass_road_LDV_4W", ]
-  inspect_ratios_eff[, ratio := conv_pkm_MJ/conv_pkm_MJ[region == "EU-15"], by = c("year", "technology", "vehicle_type")]
-  inspect_ratios_eff = inspect_ratios_eff[, ratio := ifelse(is.na(ratio), mean(ratio, na.rm = TRUE), ratio), by = c("region", "technology", "year")] ## if vehicle type is not originally in EU-15
-
-  inspect_ratios_eff[, c("sector_fuel", "technology", "conv_pkm_MJ") := NULL]
-
-  inspect_ratios_eff = merge(inspect_ratios_eff, GCAM_output$conv_pkm_mj[technology %in% c("Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & region == "EU-15", ][, c("region", "technology", "sector_fuel") := NULL], all = TRUE)
-  inspect_ratios_eff = inspect_ratios_eff[, conv_pkm_MJ := ifelse(is.na(conv_pkm_MJ), mean(conv_pkm_MJ, na.rm = TRUE), conv_pkm_MJ), by = c("region", "year")] ## if vehicle type is not originally in EU-15
-  inspect_ratios_eff[, conv_pkm_MJ := ratio*conv_pkm_MJ]
-  inspect_ratios_eff[, c("technology", "sector_fuel", "ratio") := list("Hybrid Electric", "Liquids-Electricity", NULL)]
-
-  GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, inspect_ratios_eff[!region %in% c("EU-15", "EU-12", "Europe Non EU", "European Free Trade Association")])
 
   ## public buses in china are very cheap: http://www.expatfocus.com/taking-public-transport-in-china
   # Public buses in cities are the most common and popular form of public transport. Public bus fares in China are extremely cheap and usually cost a flat RMB1 or RMB 2 (US$0.15 to US$0.25). You pay the same price regardless of the distance you travel.
