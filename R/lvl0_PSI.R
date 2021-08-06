@@ -3,6 +3,8 @@
 #' Final values: MJ/km (pkm and tkm)
 #'
 #' @param GCAM_data GCAM based data
+#' @param load_factor TRACCS based load factors for EU-15
+#' @param GCAM2ISO_MAPPING the mapping of GCAM regions to ISO countries
 #' @param input_folder folder hosting raw data
 #' @param PSI_dir  directory with PSI data
 #' @param enhancedtech switch activating optimistic development of alternative technologies
@@ -11,8 +13,10 @@
 #' @importFrom readxl read_excel
 
 
-lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhancedtech, techswitch){
-  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
+lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
+                                   input_folder, PSI_dir="PSI",
+                                   enhancedtech, techswitch){
+  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- i.loadFactor <- NULL
   powertrain <- conv_pkm_MJ <- ttw_energy <- NULL
   psi_file <- function(fname){
     file.path(input_folder, PSI_dir, fname)
@@ -123,10 +127,20 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
                         LDV_PSI_int[vehicle_type == "Large Car and SUV"][, vehicle_type := "Light Truck and SUV"])
   LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("region", "year")]), by = "year", allow.cartesian = TRUE)
   LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all = FALSE)
-  LDV_PSI_int = rbind(LDV_PSI_int[region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")],
-                        LDV_PSI_int[!region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
-  ## merge load factor and convert into MJ/pkm
+  LDV_PSI_int = rbind(LDV_PSI_int[region == "EU-15"],
+                      LDV_PSI_int[region != "EU-15" & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
+
+  ## GCAM load factors for the resto of the world
   LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
+
+  load_factor = load_factor[year == 2010][, year := NULL]
+  ## use average TRACCS load factor for EU-15
+  lf <- load_factor[iso %in% GCAM2ISO_MAPPING[region == "EU-15"]$iso, .(loadFactor=mean(loadFactor)), by=c("vehicle_type")]
+  lf[, region := "EU-15"]
+
+  LDV_PSI_int[lf, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
+
+  ## convert into MJ/pkm
   LDV_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor] ## in MJ/pkm
   LDV_PSI_int[, loadFactor := NULL] ##  remove load factor
   ## alternative trucks intensity
@@ -170,11 +184,11 @@ lvl0_mergePSIintensity <- function(GCAM_data, input_folder, PSI_dir="PSI", enhan
 
   ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
   conv_pkm_mj_rest = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W" &
-                                     technology %in% c("BEV", "FCEV", "Hybrid Electric")) &
-                                   !region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU")]
+                                   technology %in% c("BEV", "FCEV", "Hybrid Electric")) &
+                                 region != "EU-15"]
   conv_pkm_mj_rest= rbind(conv_pkm_mj_rest, Truck_PSI_int)
   conv_pkm_mj_EU = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W") &
-                                 region %in% c("EU-12", "EU-15", "European Free Trade Association", "Europe Non EU") ]
+                                 region == "EU-15"]
 
   conv_pkm_mj=rbind(conv_pkm_mj_rest, conv_pkm_mj_EU, LDV_PSI_int)
 
