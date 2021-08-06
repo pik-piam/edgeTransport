@@ -3,6 +3,8 @@
 #' Final values: MJ/km (pkm and tkm)
 #'
 #' @param GCAM_data GCAM based data
+#' @param load_factor TRACCS based load factors for EU-15
+#' @param GCAM2ISO_MAPPING the mapping of GCAM regions to ISO countries
 #' @param input_folder folder hosting raw data
 #' @param PSI_dir  directory with PSI data
 #' @param enhancedtech switch activating optimistic development of alternative technologies
@@ -14,7 +16,7 @@
 lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
                                    input_folder, PSI_dir="PSI",
                                    enhancedtech, techswitch){
-  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- NULL
+  vehicle_type_PSI <- loadFactor <- scenario <- `.` <- technology <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- sector_fuel <- value <- subsector_L1 <- iso <- subsector_L2 <- subsector_L3 <- intensity_KJ_km <- vehicle_type <- i.loadFactor <- NULL
   powertrain <- conv_pkm_MJ <- ttw_energy <- NULL
   psi_file <- function(fname){
     file.path(input_folder, PSI_dir, fname)
