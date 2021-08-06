@@ -139,7 +139,7 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
   lf[, region := "EU-15"]
 
   LDV_PSI_int[lf, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
-  LDV_PSI_int = merge(LDV_PSI_int, lf, by = c("region", "year", "vehicle_type"))
+
   ## convert into MJ/pkm
   LDV_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor] ## in MJ/pkm
   LDV_PSI_int[, loadFactor := NULL] ##  remove load factor
