@@ -86,12 +86,12 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
   ## GCAM load factors for the resto of the world
   LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
 
-  load_factor = load_factor[year == 2010][, year := NULL]
+  lf2010 = load_factor[year == 2010 & iso %in% GCAM2ISO_MAPPING[region == "EU-15"]$iso][, .(loadFactor=mean(loadFactor)), by="vehicle_type"]
   ## use average TRACCS load factor for EU-15
-  lf <- load_factor[iso %in% GCAM2ISO_MAPPING[region == "EU-15"]$iso, .(loadFactor=mean(loadFactor)), by=c("vehicle_type")]
-  lf[, region := "EU-15"]
 
-  LDV_PSI_int[lf, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
+  lf2010[, region := "EU-15"]
+
+  LDV_PSI_int[lf2010, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
 
   ## convert into MJ/pkm
   LDV_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor] ## in MJ/pkm
@@ -111,6 +111,14 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
   Truck_PSI_int[, conv_pkm_MJ := ttw_energy*  ## kj/km
                                  1e-3] ## MJ/km]
   Truck_PSI_int[, c("X", "unit", "ttw_energy") := NULL]
+  ## Buses are assumed to be as 18 tons truck
+  Bus_PSI_int = Truck_PSI_int[vehicle_type == "Truck (18t)"][, vehicle_type := "Bus_tmp_vehicletype"]
+  Truck_PSI_int = rbind(Truck_PSI_int, Bus_PSI_int)
+
+  Truck_PSI_int = merge(Truck_PSI_int, lf2010, by = "vehicle_type")
+  Truck_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor]
+  Truck_PSI_int[, c("loadFactor", "region") := NULL]
+
   ## approx to the whole time range
   Truck_PSI_int = approx_dt(Truck_PSI_int,
                             xdata = unique(conv_pkm_mj$year),
@@ -118,18 +126,6 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
                             ycol = "conv_pkm_MJ",
                             idxcols = c("technology", "vehicle_type"),
                             extrapolate = TRUE)
-  ## Buses are assumed to be as 18 tons truck
-  Bus_PSI_int = Truck_PSI_int[vehicle_type == "Truck (18t)"][, vehicle_type := "Bus_tmp_vehicletype"]
-  Truck_PSI_int = rbind(Truck_PSI_int, Bus_PSI_int)
-
-  ## Truck (18t) are missing in the EU-15 load factors, using a world average yields TRACCS compatible value of roughly 9t.
-  lf <- rbind(
-    unique(GCAM_data$load_factor[region == "EU-15" & technology == "Liquids", c("year", "vehicle_type", "loadFactor")]),
-    GCAM_data$load_factor[vehicle_type == "Truck (18t)", list(vehicle_type="Truck (18t)", loadFactor=mean(loadFactor)), by=year])
-
-  Truck_PSI_int = merge(Truck_PSI_int, lf, by = c("year", "vehicle_type"))
-  Truck_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor]
-  Truck_PSI_int[, loadFactor := NULL]
 
   Truck_PSI_int = merge(Truck_PSI_int, unique(conv_pkm_mj[(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") & technology %in% c("Liquids"),
                                                           c("region","year", "subsector_L1", "subsector_L2",
