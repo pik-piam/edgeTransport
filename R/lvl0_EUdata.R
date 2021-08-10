@@ -34,61 +34,86 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
     list_countries = list_countries[!grepl("\\$",countries),] #deletes open files, which have a $ in the name
 
     ##road FE: load demand (million EJ)
-    roadFE_eu = do.call("rbind",lapply(list_countries$countries,
-                                      function(x) {
-                                        output = suppressMessages(data.table(read_excel(
-                                          path = file.path(
-                                            EU_folder,
-                                            paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ", x, "_Output.xlsx")),
-                                          sheet="FCcalc","A2:I75")))
+    roadFE_eu = rbindlist(lapply(
+      list_countries$countries,
+      function(x) {
+        output = suppressMessages(data.table(read_excel(
+          path = file.path(
+            EU_folder,
+            paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ", x, "_Output.xlsx")),
+          sheet="FCcalc","A2:I75")))
+        colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
+        output[,technology := ifelse(technology %in% c("Gasoline","Diesel","Flexi-fuel","LPG","B30"),"Liquids",technology)]
+        output[,technology := ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
+        output[,technology := ifelse(technology %in% c("Other"),"Liquids",technology)]
+        output=output[!technology %in% c("All", "Total"),]
+        output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                      measure.vars = c("2005","2006","2007","2008","2009","2010"))
+        setnames(output,old=c("value","variable"), new = c("t","year"))
+        output = merge(mapping_TRACCS_roadf_categories,output)
+        output$country_name <- x
+        output = output[, .(vehicle_type=EDGE_vehicle_type,technology,year,t,country_name)]
+        output = output[, .(t=sum(t)),by=c("year","country_name","technology","vehicle_type")]
+        output[, convert := ifelse(technology == "Liquids", 0.043, 0.048)]
+        output[, MJ := t*     ## in t
+                   convert*  ## in TJ
+                   1000000   ## in MJ
+               ]
+        return(output)
+      }))
 
-                                        colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
-                                        output[,technology := ifelse(technology %in% c("Gasoline","Diesel","Flexi-fuel","LPG","B30"),"Liquids",technology)]
-                                        output[,technology := ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
-                                        output[,technology := ifelse(technology %in% c("Other"),"Liquids",technology)]
-                                        output=output[!technology %in% c("All", "Total"),]
-                                        output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                                                      measure.vars = c("2005","2006","2007","2008","2009","2010"))
-                                        setnames(output,old=c("value","variable"), new = c("t","year"))
-                                        output = merge(mapping_TRACCS_roadf_categories,output)
-                                        output$country_name <- x
-                                        output = output[, .(vehicle_type=EDGE_vehicle_type,technology,year,t,country_name)]
-                                        output = output[, .(t=sum(t)),by=c("year","country_name","technology","vehicle_type")]
-                                        output[, convert := ifelse(technology == "Liquids", 0.043, 0.048)]
-                                        output[, MJ := t*     ## in t
-                                                       convert*  ## in TJ
-                                                       1000000   ## in MJ
-                                               ]
-                                        return(output)
-                                      }))
     roadFE_eu=roadFE_eu[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
     roadFE_eu=merge(roadFE_eu,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
     roadFE_eu[, year := as.numeric(as.character(year))]
     roadFE_eu[, c("t", "convert"):=NULL]
 
-    ## road passenger: load load factors
-    LF_countries_EU<- do.call("rbind",lapply(list_countries$countries,
-                                             function(x) {
-                                               output = suppressMessages(data.table(read_excel(
-                                                 path=file.path(
-                                                   EU_folder,
-                                                   paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
-                                                 sheet="Occupancy ratio","A2:I51")))
-                                               colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
+    ## road passenger: load load factors for cars
+    LF_countries_EU <- rbind(
+      rbindlist(lapply(
+        list_countries$countries,
+        function(x) {
+          output = suppressMessages(data.table(read_excel(
+            path=file.path(
+              EU_folder,
+              paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
+            sheet="Occupancy ratio","A2:I51")))
+          colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
 
-                                               output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                                                               measure.vars = c("2005","2006","2007","2008","2009","2010"))
+          output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                        measure.vars = c("2005","2006","2007","2008","2009","2010"))
 
-                                               setnames(output,old=c("value","variable"),new=c("load_factor","year"))
-                                               output=merge(mapping_TRACCS_roadf_categories,output)
-                                               output[,technology:=ifelse(technology %in% c("Gasoline","Diesel","LPG","Flexi-fuel","B30"),"Liquids",technology)]
-                                               output[,technology:=ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
-                                               output[,technology:=ifelse(technology %in% c("Other"),"BEV",technology)]
-                                               output=output[!technology %in% c("All"),]
-                                               output$country_name <- x
-                                               output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
-                                               return(output)
-                                             }))
+          setnames(output,old=c("value","variable"),new=c("load_factor","year"))
+          output=merge(mapping_TRACCS_roadf_categories,output)
+          output[,technology:=ifelse(technology %in% c("Gasoline","Diesel","LPG","Flexi-fuel","B30"),"Liquids",technology)]
+          output[,technology:=ifelse(technology %in% c("CNG","CNG/Biogas"),"NG",technology)]
+          output[,technology:=ifelse(technology %in% c("Other"),"BEV",technology)]
+          output=output[!technology %in% c("All"),]
+          output$country_name <- x
+          output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
+          return(output)
+        })),
+      rbindlist(lapply(
+        list_countries$countries,
+        function(x) {
+          output = suppressMessages(data.table(read_excel(
+            col_names=FALSE,
+            path=file.path(
+              EU_folder,
+              paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
+            sheet="Tonne-Km","A3:AA18")))
+          output <- output[, c(1:3, 22:27)]
+          colnames(output)=c("category_TRACCS","vehicle_type","technology", 2005:2010)
+          output <- output[!is.na(get("2010"))]
+          output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                        value.name="load_factor", variable.name="year")
+
+          output=merge(mapping_TRACCS_roadf_categories,output)
+          output[, technology := "Liquids"]
+          output$country_name <- x
+          output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
+          return(output)
+        }))
+    )
 
     LF_countries_EU=LF_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
 
