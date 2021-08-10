@@ -115,7 +115,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
         }))
     )
 
-    LF_countries_trucks=LF_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
+    LF_countries_EU=LF_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
 
     ## road passenger: load annual mileage
     am_countries_EU<- do.call("rbind",lapply(list_countries$countries,
