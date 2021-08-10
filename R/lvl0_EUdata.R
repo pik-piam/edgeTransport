@@ -105,12 +105,12 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
           colnames(output)=c("category_TRACCS","vehicle_type","technology", 2005:2010)
           output <- output[!is.na(get("2010"))]
           output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                        variable.name="year")
+                        value.name="load_factor", variable.name="year")
 
           output=merge(mapping_TRACCS_roadf_categories,output)
           output[, technology := "Liquids"]
           output$country_name <- x
-          output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,country_name)]
+          output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
           return(output)
         }))
     )
