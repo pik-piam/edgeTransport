@@ -172,10 +172,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
 
 
-  ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
+  ## function that loads raw data from the GCAM input files and
+  ## modifies them, to make them compatible with EDGE setup
+  ## disaggregated to ISO level
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
-  GCAM_data <- lvl0_GCAMraw(input_folder)
+  GCAM_data <- lvl0_GCAMraw(input_folder, GCAM2ISO_MAPPING, GDP_country)
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])

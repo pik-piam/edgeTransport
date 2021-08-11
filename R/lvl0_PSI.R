@@ -78,20 +78,20 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
                         LDV_PSI_int[vehicle_type == "Large Car and SUV"][, vehicle_type := "Light Truck and SUV"]
                       )
 
-  LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("region", "year")]), by = "year", allow.cartesian = TRUE)
-  LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all = FALSE)
-  LDV_PSI_int = rbind(LDV_PSI_int[region == "EU-15"],
-                      LDV_PSI_int[region != "EU-15" & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
+  LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("iso", "year")]), by = "year", allow.cartesian = TRUE)
+  LDV_PSI_int = merge(LDV_PSI_int, unique(conv_pkm_mj[, c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all = FALSE)
+  eu_15 <- GCAM2ISO_MAPPING[region == "EU-15", iso]
+  LDV_PSI_int = rbind(LDV_PSI_int[iso %in% eu_15],
+                      LDV_PSI_int[!(iso %in% "EU-15") &
+                                  technology %in% c("BEV", "FCEV", "Hybrid Electric")])
 
   ## GCAM load factors for the resto of the world
-  LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
+  LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("iso", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
 
-  lf2010 = load_factor[year == 2010 & iso %in% GCAM2ISO_MAPPING[region == "EU-15"]$iso][, .(loadFactor=mean(loadFactor)), by="vehicle_type"]
-  ## use average TRACCS load factor for EU-15
 
-  lf2010[, region := "EU-15"]
+  lf2010 = load_factor[year == 2010 & iso %in% eu_15][, year := NULL]
 
-  LDV_PSI_int[lf2010, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
+  LDV_PSI_int[lf2010, loadFactor := i.loadFactor, on=c("iso", "vehicle_type")]
 
   ## convert into MJ/pkm
   LDV_PSI_int[, conv_pkm_MJ := conv_pkm_MJ/loadFactor] ## in MJ/pkm
@@ -127,19 +127,24 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
                             idxcols = c("technology", "vehicle_type"),
                             extrapolate = TRUE)
 
-  Truck_PSI_int = merge(Truck_PSI_int, unique(conv_pkm_mj[(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") & technology %in% c("Liquids"),
-                                                          c("region","year", "subsector_L1", "subsector_L2",
-                                                            "subsector_L3", "sector", "vehicle_type")]), by = c("year", "vehicle_type"), allow.cartesian=TRUE)
+
+  Truck_PSI_int = merge(
+    Truck_PSI_int,
+    unique(conv_pkm_mj[(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+                       technology %in% c("Liquids"),
+                       c("iso","year", "subsector_L1", "subsector_L2",
+                         "subsector_L3", "sector", "vehicle_type")]),
+    by = c("year", "vehicle_type"), allow.cartesian=TRUE)
   Truck_PSI_int[, sector_fuel := ifelse(technology == "FCEV","H2 enduse", "elect_td_trn")]
 
 
   ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
   conv_pkm_mj_rest = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W" &
                                    technology %in% c("BEV", "FCEV", "Hybrid Electric")) &
-                                 region != "EU-15"]
+                                 !(iso %in% eu_15)]
   conv_pkm_mj_rest= rbind(conv_pkm_mj_rest, Truck_PSI_int)
   conv_pkm_mj_EU = conv_pkm_mj[!(subsector_L1=="trn_pass_road_LDV_4W") &
-                                 region == "EU-15"]
+                                 iso %in% eu_15]
 
   conv_pkm_mj=rbind(conv_pkm_mj_rest, conv_pkm_mj_EU, LDV_PSI_int)
 

@@ -3,11 +3,13 @@
 #' Demand in million pkm and tmk, EI in MJ/km
 #'
 #' @param input_folder folder hosting raw data
+#' @param GCAM2ISO_MAPPING a mapping between ISO3 codes and GCAM region names
+#' @param GDP_country country level GDP PPP (used for disaggregation)
 #' @param GCAM_dir subdirectory within the data input with GCAM data
 #' @return transport entries (demand, energy intensity, load factor, value of time, structure of the logit, vehicle speed)
 
 
-lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
+lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = "GCAM"){
   coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- sector <- subsector_L1 <- NULL
   conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- vehicle_type <- NULL
   GCAM_folder = file.path(input_folder, GCAM_dir)
@@ -199,13 +201,28 @@ lvl0_GCAMraw <- function(input_folder, GCAM_dir = "GCAM"){
   ## rename category following EDGE-T structure
   vott_all[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsector_L1"]
 
+  ## to ISO
+  tech_output_iso = disaggregate_dt(
+    tech_output, GCAM2ISO_MAPPING,
+    fewcol = "region", manycol = "iso", valuecol = "tech_output",
+    datacols=c("sector", "subsector_L1", "subsector_L2",
+               "subsector_L3", "vehicle_type", "technology"),
+    weights = GDP_country, weightcol = "weight"
+  )
+  
+  int_iso <- disaggregate_dt(conv_pkm_mj, GCAM2ISO_MAPPING)
+  load_factor_iso <- disaggregate_dt(load_factor, GCAM2ISO_MAPPING)
 
-  GCAM_data = list(tech_output = tech_output,
+  vott_iso <- disaggregate_dt(vott_all, GCAM2ISO_MAPPING)
+
+  speed_iso <- disaggregate_dt(speed, GCAM2ISO_MAPPING)
+
+  GCAM_data = list(tech_output = tech_output_iso,
                  logit_category = logit_category,
-                 conv_pkm_mj = conv_pkm_mj,
-                 load_factor = load_factor,
-                 vott_all = vott_all,
-                 speed = speed
+                 conv_pkm_mj = int_iso,
+                 load_factor = load_factor_iso,
+                 vott_all = vott_iso,
+                 speed = speed_iso
   )
   return(GCAM_data)
 }
