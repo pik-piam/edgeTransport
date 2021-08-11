@@ -267,32 +267,23 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   load_factor = GCAM_data[["load_factor"]]
 
   ## speed converges
-  gdp_country = copy(GDP_MER_country)
-  gdp <- aggregate_dt(gdp_country, GCAM2ISO_MAPPING,
-                      valuecol="weight",
-                      datacols=c("variable"))
-
-  pop <- aggregate_dt(POP_country, GCAM2ISO_MAPPING,
-                      valuecol="value",
-                      datacols=c("POP"))
-
-  GDP_POP = merge(gdp, pop, by = c("region", "year"))
+  GDP_POP = merge(GDP_MER_country, POP_country, by = c("iso", "year"))
 
   GDP_POP_cap = GDP_POP[,GDP_cap := weight/value]
 
-  tmp = merge(speed, GDP_POP_cap, by = c("region", "year"))
+  tmp = merge(speed, GDP_POP_cap, by = c("iso", "year"))
   ## define rich regions
-  richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
+  richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, iso]))
   ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
-  richave = tmp[region %in% richregions & speed > 0,]
+  richave = tmp[iso %in% richregions & speed > 0,]
   richave = richave[, .(speed = sum(speed*weight)/sum(weight)), by = c("tranSubsector", "supplysector", "year")]
-  GDP_POP = GDP_POP_cap[region %in% richregions,]
+  GDP_POP = GDP_POP_cap[iso %in% richregions,]
   GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(value)), by = c("year")]
   richave = merge(richave, GDP_POP, by = "year")
   ## average gdp per capita of the rich countries
   richave[, GDP_cap := GDP/POP_val]
   ## dt on which the GDPcap is checked
-  tmp1 = tmp[!region %in% richregions, c("region", "year",
+  tmp1 = tmp[!iso %in% richregions, c("iso", "year",
                                          "GDP_cap", "supplysector", "tranSubsector",
                                          "speed")]
   ## dt contaning the gdp towards which to converge
@@ -312,13 +303,13 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   tmp2 = merge(tmp2, tmp3, by = c("time", "supplysector", "tranSubsector"))
 
   ## find year closest to 2010 for each region, this is the year at which is going to converge
-  tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("region")]
+  tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("iso")]
 
   ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
-  tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
-  tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
+  tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("iso", "time")]
+  tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("iso", "time")]
   ## year at which the convergence happens
-  tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","supplysector", "tranSubsector")]
+  tmp2[, year_at_yearconv := year[time == yearconv], by = c("iso","supplysector", "tranSubsector")]
 
   ## value of speed after the convergence
   tmp3 = richave[, c("year", "speed", "supplysector", "tranSubsector")]
@@ -326,34 +317,22 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "supplysector", "tranSubsector"), all.x=TRUE)
 
   ## after the year of convergence, the values are the "average" developed countries values
-  tmp2[year >= year_at_yearconv & year > 2010, speed := speed_trend, by = c("region","supplysector", "tranSubsector")]
+  tmp2[year >= year_at_yearconv & year > 2010, speed := speed_trend, by = c("iso","supplysector", "tranSubsector")]
 
   ## value of yearconv represents the convergence value
-  tmp2[, speed_conv := speed_trend[time==yearconv], by = c("region","supplysector", "tranSubsector")]
+  tmp2[, speed_conv := speed_trend[time==yearconv], by = c("iso","supplysector", "tranSubsector")]
   ## convergence is linear until the value corresponding to 2010 is reached
-  tmp2[year <= year_at_yearconv & year >= 2010, speed := speed[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(speed_conv-speed[year == 2010]), by =c("supplysector", "tranSubsector", "region")]
+  tmp2[year <= year_at_yearconv & year >= 2010, speed := speed[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(speed_conv-speed[year == 2010]), by =c("supplysector", "tranSubsector", "iso")]
   tmp2[is.na(speed), speed := speed_trend]
   ## select only useful columns
-  tmp2 = tmp2[,.(region, year, speed, supplysector, tranSubsector)]
+  tmp2 = tmp2[,.(iso, year, speed, supplysector, tranSubsector)]
   ## rich countries need to be reintegrated
   speed = rbind(tmp2, speed[region %in% richregions])
   ## load logit categories table
   logit_category = GCAM_data[["logit_category"]]
   ## calculate VOT
-  gdp_country = copy(GDP_country)
-  gdp <- aggregate_dt(gdp_country, GCAM2ISO_MAPPING,
-                      valuecol="weight",
-                      datacols=c("variable"))
-
-  pop <- aggregate_dt(POP_country, GCAM2ISO_MAPPING,
-                      valuecol="value",
-                      datacols=c("POP"))
-
-  GDP_POP = merge(gdp, pop, by = c("region", "year"))
-
-  GDP_POP_cap = GDP_POP[,GDP_cap := weight/value]
-  vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "region", allow.cartesian = TRUE) #for each time step and each region
-  vott_all = merge (vott_all, speed, all = FALSE, by = c("region", "year", "tranSubsector", "supplysector"))
+  vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "iso", allow.cartesian = TRUE) #for each time step and each region
+  vott_all = merge (vott_all, speed, all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
   WEEKS_PER_YEAR = 50
   HOURS_PER_WEEK = 40
   vott_all[, time_price := GDP_cap                             ## [1990$/person/year]
@@ -361,24 +340,22 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
                            /(HOURS_PER_WEEK* WEEKS_PER_YEAR)/  ## [1990$/h]
                            speed]                              ## [1990$/km]
 
-  value_of_time = vott_all[,.(region, year, time_price, tranSubsector, supplysector)]
+  value_of_time = vott_all[,.(iso, year, time_price, tranSubsector, supplysector)]
 
   ## load factor convergence
-  GDP_POP = merge(gdp, pop, by = c("region", "year"))
-  GDP_POP_cap = GDP_POP[,GDP_cap := weight/value]
-  tmp = merge(load_factor, GDP_POP_cap, by = c("region", "year"))
+  tmp = merge(load_factor, GDP_POP_cap, by = c("iso", "year"))
   ## define rich regions
-  richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, region]))
+  richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, iso]))
   ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
-  richave = tmp[region %in% richregions & loadFactor > 0,]
+  richave = tmp[iso %in% richregions & loadFactor > 0,]
   richave = richave[, .(loadFactor = sum(loadFactor*weight)/sum(weight)), by = c("vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "year")]
-  GDP_POP = GDP_POP_cap[region %in% richregions,]
+  GDP_POP = GDP_POP_cap[iso %in% richregions,]
   GDP_POP = GDP_POP[, .(GDP = sum(weight), POP_val = sum(value)), by = c("year")]
   richave = merge(richave, GDP_POP, by = "year")
   ## average gdp per capita of the rich countries
   richave[, GDP_cap := GDP/POP_val]
   ## dt on which the GDPcap is checked
-  tmp1 = tmp[!region %in% richregions, c("region", "year",
+  tmp1 = tmp[!iso %in% richregions, c("iso", "year",
                                          "GDP_cap", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1",
                                          "loadFactor")]
   ## dt contaning the gdp towards which to converge
@@ -398,13 +375,13 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   tmp2 = merge(tmp2, tmp3, by = c("time", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1"))
 
   ## find year closest to 2010 for each region, this is the year at which is going to converge
-  tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("region")]
+  tmp2[, yearconv := time[which.min(abs(time - 2010))], by = c("iso")]
 
   ## in case one time step has multiple matches in more than one time step, the value is attributed only in the last time step
-  tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("region", "time")]
-  tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("region", "time")]
+  tmp2[time == yearconv & yearconv > 1990, time := ifelse(year == min(year), time, 1980), by = c("iso", "time")]
+  tmp2[time == yearconv & yearconv == 1990, time := ifelse(year == max(year), time, 1980), by = c("iso", "time")]
   ## year at which the convergence happens
-  tmp2[, year_at_yearconv := year[time == yearconv], by = c("region","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
+  tmp2[, year_at_yearconv := year[time == yearconv], by = c("iso","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
 
   ## value of speed after the convergence
   tmp3 = richave[, c("year", "loadFactor", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
@@ -412,17 +389,17 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   tmp2 = merge(tmp2,tmp3,by=c("year_at_yearconv", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1"))
 
   ## after the year of convergence, the values are the "average" developed countries values
-  tmp2[year >= year_at_yearconv & year > 2010, loadFactor := loadFactor_trend, by = c("region","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
+  tmp2[year >= year_at_yearconv & year > 2010, loadFactor := loadFactor_trend, by = c("iso","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
 
   ## value of yearconv represents the convergence value
-  tmp2[, loadFactor_conv := loadFactor_trend[time==yearconv], by = c("region","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
+  tmp2[, loadFactor_conv := loadFactor_trend[time==yearconv], by = c("iso","vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1")]
   ## convergence is linear until the value corresponding to 2010 is reached
-  tmp2[year <= year_at_yearconv & year >= 2010, loadFactor := loadFactor[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(loadFactor_conv-loadFactor[year == 2010]), by =c("vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "region")]
+  tmp2[year <= year_at_yearconv & year >= 2010, loadFactor := loadFactor[year == 2010]+(year-2010)/(year_at_yearconv-2010)*(loadFactor_conv-loadFactor[year == 2010]), by =c("vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "iso")]
   tmp2[is.na(loadFactor), loadFactor := loadFactor_trend]
   ## select only useful columns
-  tmp2 = tmp2[,.(region, year, loadFactor, vehicle_type, technology, sector, subsector_L3, subsector_L2, subsector_L1)]
+  tmp2 = tmp2[,.(iso, year, loadFactor, vehicle_type, technology, sector, subsector_L3, subsector_L2, subsector_L1)]
   ## rich countries need to be reintegrated
-  load_factor = rbind(tmp2[subsector_L1 != "trn_pass_road_LDV_4W"], load_factor[(region %in% richregions)|(subsector_L1 == "trn_pass_road_LDV_4W")])
+  load_factor = rbind(tmp2[subsector_L1 != "trn_pass_road_LDV_4W"], load_factor[(iso %in% richregions)|(subsector_L1 == "trn_pass_road_LDV_4W")])
 
 
 
@@ -431,30 +408,30 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   ## FV
 
   value_of_time_LDV = value_of_time[supplysector %in% c("trn_pass_road_LDV_2W", "trn_pass_road_LDV_4W"),
-                                    .(vehicle_type = tranSubsector, subsector_L1 = supplysector, region, year, time_price)]
+                                    .(vehicle_type = tranSubsector, subsector_L1 = supplysector, iso, year, time_price)]
 
   value_time_FV = value_of_time_LDV[!is.na(time_price),]
 
   ## VS1
 
-  value_time_VS1 = data.table(subsector_L1 = character(), vehicle_type = character(), region = character(), year = numeric(), time_price = numeric())
+  value_time_VS1 = data.table(subsector_L1 = character(), vehicle_type = character(), iso = character(), year = numeric(), time_price = numeric())
 
   ## S1S2
 
-  value_time_S1S2 = data.table(subsector_L2 = character(), subsector_L1 = character(), region = character(), year = numeric(), time_price = numeric())
+  value_time_S1S2 = data.table(subsector_L2 = character(), subsector_L1 = character(), iso = character(), year = numeric(), time_price = numeric())
 
   ## S2S3
 
   value_time_S2S3 = value_of_time[tranSubsector == "Bus",
-                                 .(subsector_L3 = supplysector, subsector_L2 = tranSubsector, region, year, time_price)]
+                                 .(subsector_L3 = supplysector, subsector_L2 = tranSubsector, iso, year, time_price)]
 
   ## S3S
 
   value_time_S3S = value_of_time[tranSubsector %in% c("International Aviation", "Passenger Rail", "Domestic Aviation", "HSR"),
-                                 .(sector=supplysector, subsector_L3 = tranSubsector, region, year, time_price)]
+                                 .(sector=supplysector, subsector_L3 = tranSubsector, iso, year, time_price)]
 
   price_nonmot = value_of_time[tranSubsector %in% c("Cycle", "Walk"),
-                              .(sector = supplysector, subsector_L3 = tranSubsector, region, year, tot_price = time_price)]
+                              .(sector = supplysector, subsector_L3 = tranSubsector, iso, year, tot_price = time_price)]
   price_nonmot = merge(price_nonmot, logit_category, all.x = TRUE)
   price_nonmot[, univocal_name := NULL]
 
