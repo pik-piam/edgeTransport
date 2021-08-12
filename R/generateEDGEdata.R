@@ -208,10 +208,22 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM_data$speed = VOT_lambdas$speed
   GCAM_data$load_factor = VOT_lambdas$load_factor
 
-  ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU, and CHA values for conventional trucks. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
+  ## define depreciation rate
+  discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
+  nper_amort_veh = 15    #Number of periods (years) over which vehicle capital payments are amortized
+
+  fcr_veh = discount_rate_veh + discount_rate_veh/(((1+discount_rate_veh)^nper_amort_veh)-1)
+
+  ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
   print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING, GDP_POP_MER_country = GDP_POP_MER_country,
-                            input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, trsp_incent = trsp_incent, techswitch = techswitch)
+  UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
+  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD
+  print("-- load PSI costs")
+  PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years =years, fcr_veh = fcr_veh)
+
+  ## function that loads PSI values for EU countries, results are on ISO level: costs in 2005UCD/pkm (2005USD/tkm), results on ISO level
+
+
 
   ## function that integrates GCAM data. No conversion of units happening.
   print("-- correct tech output")
