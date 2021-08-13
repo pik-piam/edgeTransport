@@ -246,11 +246,11 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
 #'
 
 
-lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_country, POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING, logitexp_dir="GCAM_logit_exponents"){
+lvl0_VOTandExponents <- function(merged_data, GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
   sector <- logit.exponent <- value <-  region <- ISO3 <- `.` <- time <- Year <- Value <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <- univocal_name <- speed_conv <- year_at_yearconv <- yearconv <-weight <- GDP <- speed_trend <- POP_val <- NULL
   loadFactor <- loadFactor_conv <- loadFactor_trend <- subsector_L1 <- subsector_L2 <- NULL
   subsector_L3 <- technology <- vehicle_type <- NULL
-  CONV_2005USD_1990USD = 0.67
+
   exp_folder = function(fname){
     file.path(input_folder, logitexp_dir, fname)
   }
@@ -262,9 +262,9 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   logit_exponent_S3S = fread(exp_folder("S3S_logitexponent.csv"))
 
   ## load VOT factors, speed and load factor
-  vott_all = GCAM_data[["vott_all"]]
-  speed = GCAM_data[["speed"]]
-  load_factor = GCAM_data[["load_factor"]]
+  vott_all = copy(GCAM_data[["vott_all"]])
+  speed = copy(GCAM_data[["speed"]])
+  load_factor = copy(merged_data$LF)
 
   ## speed converges
   GDP_POP = merge(GDP_MER_country, POP_country, by = c("iso", "year"))
@@ -327,23 +327,22 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   ## select only useful columns
   tmp2 = tmp2[,.(iso, year, speed, supplysector, tranSubsector)]
   ## rich countries need to be reintegrated
-  speed = rbind(tmp2, speed[region %in% richregions])
-  ## load logit categories table
-  logit_category = GCAM_data[["logit_category"]]
+  speed = rbind(tmp2, speed[iso %in% richregions])
+
   ## calculate VOT
   vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "iso", allow.cartesian = TRUE) #for each time step and each region
   vott_all = merge (vott_all, speed, all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
   WEEKS_PER_YEAR = 50
   HOURS_PER_WEEK = 40
-  vott_all[, time_price := GDP_cap                             ## [1990$/person/year]
-                           *time.value.multiplier              ## [1990$/person/year] CHECK!
-                           /(HOURS_PER_WEEK* WEEKS_PER_YEAR)/  ## [1990$/h]
-                           speed]                              ## [1990$/km]
+  vott_all[, time_price := GDP_cap                             ## [2005$/person/year]
+                           *time.value.multiplier              ## [2005$/person/year]
+                           /(HOURS_PER_WEEK* WEEKS_PER_YEAR)/  ## [2005$/h]
+                           speed]                              ## [2005$/km]
 
   value_of_time = vott_all[,.(iso, year, time_price, tranSubsector, supplysector)]
 
   ## load factor convergence
-  tmp = merge(load_factor, GDP_POP_cap, by = c("iso", "year"))
+  tmp = merge(merged_data$LF, GDP_POP_cap, by = c("iso", "year"))
   ## define rich regions
   richregions = unique(unique(tmp[year == 2010 & GDP_cap > 25000, iso]))
   ## calculate average non fuel price (averaged on GDP) across rich countries and find total GDP and population
@@ -398,9 +397,9 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
   tmp2[is.na(loadFactor), loadFactor := loadFactor_trend]
   ## select only useful columns
   tmp2 = tmp2[,.(iso, year, loadFactor, vehicle_type, technology, sector, subsector_L3, subsector_L2, subsector_L1)]
-  ## rich countries need to be reintegrated
-  load_factor = rbind(tmp2[subsector_L1 != "trn_pass_road_LDV_4W"], load_factor[(iso %in% richregions)|(subsector_L1 == "trn_pass_road_LDV_4W")])
-
+  ## rich countries need to be reintegrated (only for non 4W -> as the LF for 4W has been previously defined)
+  load_factor = rbind(tmp2[subsector_L1 != "trn_pass_road_LDV_4W"],
+                      load_factor[(iso %in% richregions)|(subsector_L1 == "trn_pass_road_LDV_4W")])
 
 
   ## Ceate level specific VOT data tables
@@ -432,8 +431,11 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
 
   price_nonmot = value_of_time[tranSubsector %in% c("Cycle", "Walk"),
                               .(sector = supplysector, subsector_L3 = tranSubsector, iso, year, tot_price = time_price)]
-  price_nonmot = merge(price_nonmot, logit_category, all.x = TRUE)
-  price_nonmot[, univocal_name := NULL]
+
+  price_nonmot[, subsector_L2 := paste0(subsector_L3, "_tmp_subsector_L2")]
+  price_nonmot[, subsector_L1 := paste0(subsector_L3, "_tmp_subsector_L1")]
+  price_nonmot[, vehicle_type := paste0(subsector_L3, "_tmp_vehicletype")]
+  price_nonmot[, technology := paste0(subsector_L3, "_tmp_technology")]
 
   VOT_output = list(value_time_FV = value_time_FV,
                     value_time_VS1 = value_time_VS1,
@@ -455,95 +457,5 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_country, GDP_POP, GDP_MER_countr
 
   return(result)
 
-}
-
-#' Fix issues with the GCAM data
-#'
-#' Applies corrections to GCAM outdated data. No conversion of units happening.
-#'
-#' @param GCAM_output output from GCAM raw data wrangling
-#' @param NEcost non energy costs
-#' @param logitexp logit exponents
-
-lvl0_correctTechOutput <- function(GCAM_output, NEcost, logitexp){
-  region <- sector <- `.` <- technology <- tech_output <- vehicle_type <- subsector_L3 <- subsector_L2 <- subsector_L1 <- value <- ratio <- type <- non_fuel_price <- cost <- tot_nonfuelprice <- conv_pkm_MJ <- logit.exponent <- NULL
-  ##=== Correct & Integrate demand ===##
-  ##apply the value from 2005 to 1990 in International Shipping in regions Europe Eastern and Central Asia
-  GCAM_output$tech_output = GCAM_output$tech_output[!(region %in% c("Europe Eastern", "Central Asia") & sector =="trn_shipping_intl" & year == 1990),]
-  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[region %in% c("Europe Eastern", "Central Asia") & sector == "trn_shipping_intl" & year == 2005, .(year = 1990, technology, region, tech_output, vehicle_type, subsector_L3, subsector_L2, subsector_L1, sector)])
-
-  ##rescale China road transport to the values that are compatible with "TIMES modelling of transport sector in China and USA: Comparison from a decarbonization perspective" Hongjun Zhang, 2016
-
-  ## load data from the paper (NB they are roughly taken from a graph)
-  dt = data.table(year = c(1990, 2005, 2010), LDV = c(500000, 1500000, 2000000), bus = c(1000000, 2000000, 3000000))
-
-  dt = melt(dt, id.vars = c("year"),
-               measure.vars = c("LDV", "bus"))
-  ## create a temporary dt with only LDV and bus broad categories, with the "bus" category explicitly included
-  tmp1 = GCAM_output$tech_output[region == "China" & subsector_L3 == "trn_pass_road", .(variable = ifelse(grepl("bus", subsector_L2, ignore.case = TRUE), "bus", "LDV")), by = c("region", "year", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "tech_output", "technology")]
-  ## sum up to the "LDV" and "bus" level in another temporary dt
-  tmp = tmp1[,.(tech_output=sum(tech_output)),by=c("region","year","variable")]
-  ## merge and rescale the values based on the paper
-  tmp = merge(tmp, dt, all = TRUE)
-  tmp = tmp[,.(ratio = value/tech_output), by = c("region", "year", "variable")]
-  tmp = merge(tmp, tmp1)
-  tmp[, tech_output := tech_output*ratio]
-  tmp = tmp[, -c("ratio", "variable")]
-  ## include the values again in the original dt
-  GCAM_output$tech_output = GCAM_output$tech_output[!(region == "China" & subsector_L3 == "trn_pass_road"),]
-  GCAM_output$tech_output = rbind(tmp, GCAM_output$tech_output)
-  ## include Electric buses, electric trucks, h2 buses, h2 trucks
-  electric = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
-                                                     subsector_L2 %in% c("Bus")) & technology == "Liquids"][, c("technology", "tech_output") := list("Electric", 0)]
-  FCEV = GCAM_output$tech_output[(subsector_L3 %in% c("trn_freight_road")|
-                                                     subsector_L2 %in% c("Bus")) & technology == "Liquids"][, c("technology", "tech_output") := list("FCEV", 0)]
-
-  hydrogen = GCAM_output$tech_output[subsector_L3 %in% c("Domestic Aviation") & technology == "Liquids"][, c("technology", "tech_output") := list("Hydrogen", 0)]
-
-  newtech = rbind(electric, FCEV, hydrogen)
-
-  GCAM_output$tech_output = rbind(GCAM_output$tech_output, newtech)
-
-  ## add 0 plug-in hybrids for years 1990-2010
-  GCAM_output$tech_output = rbind(GCAM_output$tech_output, GCAM_output$tech_output[technology == "BEV" & subsector_L1=="trn_pass_road_LDV_4W"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
-
-
-  ## IND buses costs http://www.asrtu.org/wp-content/uploads/2018/09/LBNL-Electric-Buses-in-India_BusWorld-v6.pdf
-  ## capita costs
-  ## Diesel = 9 Rs = 0.12 2020$ = 0.09 2005$
-  ## NG = 8 Rs = 0.11 2020$ = 0.08 2005$
-  ## Electric = 17 Rs = 0.23 2020$ = 0.13 2005$
-  ## variable costs
-  ## Diesel = 8 Rs = 0.11 2020$ = 0.08 2005$
-  ## NG = 7 Rs = 0.1 2020$ = 0.08 2005$
-  ## Electric = 7 Rs = 0.1 2020$ = 0.08 2005$
-
-  ## china has 20% EBuses https://www.bloomberg.com/news/articles/2019-05-15/in-shift-to-electric-bus-it-s-china-ahead-of-u-s-421-000-to-300
-
-    ## === Correct & Integrate energy intensity == ##
-  ## intensity for electric buses/trucks, FCEV buses/trucks, hydrogen aviation
-
-  hydrogen = GCAM_output$conv_pkm_mj[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, c("technology", "conv_pkm_MJ", "sector_fuel") := list("Hydrogen", 0, "H2 enduse")]
-  liquids = GCAM_output$conv_pkm_mj[(subsector_L3 %in% c("Domestic Aviation")) & technology == "Liquids"]
-  newtech = rbind(liquids, hydrogen)
-
-  ## according to "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
-  newtech[subsector_L3 %in% c("Domestic Aviation"), conv_pkm_MJ := ifelse(technology == "Hydrogen", 0.5*conv_pkm_MJ[technology=="Liquids"], conv_pkm_MJ), by = c("region", "year", "vehicle_type")]
-  GCAM_output$conv_pkm_mj = rbind(GCAM_output$conv_pkm_mj, newtech[technology!="Liquids"])
-
-  ## public buses in china are very cheap: http://www.expatfocus.com/taking-public-transport-in-china
-  # Public buses in cities are the most common and popular form of public transport. Public bus fares in China are extremely cheap and usually cost a flat RMB1 or RMB 2 (US$0.15 to US$0.25). You pay the same price regardless of the distance you travel.
-  ## same holds for India
-  #http://www.mytravelcost.com/India/prices-public_transport/
-
-  ## === Substitute lambda === ##
-  ## logit exponent is based on Givord et al (see paper)
-  logitexp$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
-  ## make freight less price sensitive
-  logitexp$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
-
-  return(list(GCAM_output = GCAM_output,
-              NEcost = NEcost,
-              logitexp = logitexp))
 }
 

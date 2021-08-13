@@ -353,9 +353,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, CHN_trucks, GCAM_data, 
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= target_year,
     loadFactor := target_LF]
-
   ## LF for electric and h2 trucks/buses assumed ot be the same as liquids
-  LF = rbind(LF, LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1")][, technology := "FCEV"], LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1")][, technology := "Electric"])
+  LF = rbind(LF,
+             LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "FCEV"],
+             LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "Electric"])
 
   ## merge annual mileage
   AM_EU = approx_dt(EU_data$am_countries_EU,
@@ -436,7 +437,20 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, CHN_trucks, GCAM_data, 
               LDV_PSI_i,
               GCAM_data[["conv_pkm_mj"]][!subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")][, sector_fuel := NULL])
 
-  return(list(costs = costs, int = int, LF = LF, AM = AM))
+  ## include hydrogen airplanes intensity
+  ## based on "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
+  int = rbind(int, int[subsector_L3 %in% c("Domestic Aviation"),][,c("conv_pkm_MJ", "technology") := c(0.5*conv_pkm_MJ, "Hydrogen")])
+
+  ## include 0 demand for electric+FCEV buses and trucks, H2 airplanes
+  dem = copy(GCAM_data$tech_output)
+  dem = rbind(dem,
+              dem[subsector_L3 %in% c("Domestic Aviation"),][, c("technology", "tech_output") := list("Hydrogen", 0)],
+              dem[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, c("technology", "tech_output") := list("Electric", 0)],
+              dem[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, c("technology", "tech_output") := list("FCEV", 0)],
+              dem[subsector_L1 %in% c("trn_pass_road_LDV_4W") & technology == "Liquids"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
+
+
+  return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 
 }
