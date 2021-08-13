@@ -217,9 +217,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   if(storeRDS)
     saveRDS(merged_data, file = level0path("merged_data.RDS"))
 
+  conv_data <- lvl0_convergence(GCAM_data = GCAM_data, merged_data = merged_data, GDP_MER_country = GDP_MER_country, POP_country = POP_country)
+
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [2005$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(merged_data = merged_data, GDP_MER_country = GDP_MER_country, POP_country = POP_country, input_folder = input_folder)
+  VOT_lambdas=lvl0_VOTandExponents(GDP_MER_country = GDP_MER_country, POP_country = POP_country, input_folder = input_folder)
   ## substitute lambda
   VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
   ## make freight less price sensitive
@@ -235,7 +237,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level for EU. No conversion of units happening.
   print("-- generate REMIND level data")
-
+  REMINDdat <- lvl0_REMINDdat(merged_data = merged_data, conv_data = conv_data, VOT_lambdas = VOT_lambdas, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
