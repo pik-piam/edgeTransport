@@ -189,6 +189,32 @@ generateEDGEdata <- function(input_folder, output_folder,
   if(storeRDS)
      saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
 
+  ## define depreciation rate
+  discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
+  nper_amort_veh = 15    #Number of periods (years) over which vehicle capital payments are amortized
+  fcr_veh = discount_rate_veh + discount_rate_veh/(((1+discount_rate_veh)^nper_amort_veh)-1)
+
+  ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
+  print("-- load UCD database")
+  UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
+  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD
+  print("-- load PSI costs")
+  PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years = years, fcr_veh = fcr_veh)
+  ## function that loads CHN conventional trucks CAPEX and non/fuel OPEX, results on ISO level: costs in 2005USD/vkm
+  print("-- load China truck costs")
+  CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
+  ## function that loads PSI intensities
+  PSI_int = lvl0_PSIint(input_folder, PSI_dir="PSI", years)
+
+  ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
+  ## output units: costs in 2005$/pkm (or 2005$/tkm)
+  ## LF in p/v (or t/v)
+  ## energy intensity
+  ## Annual mileage in km/year. Every entry in the output is on ISO level
+  print("-- merge costs, LF, annual mileage from the various sources")
+  merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, CHN_trucks = CHN_trucks, EU_data = EU_data, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle)
+
+
   ## function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
   ## for alternative trucks: all regions (from PSI)
   print("-- merge PSI energy intensity data")
@@ -208,18 +234,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   GCAM_data$speed = VOT_lambdas$speed
   GCAM_data$load_factor = VOT_lambdas$load_factor
 
-  ## define depreciation rate
-  discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
-  nper_amort_veh = 15    #Number of periods (years) over which vehicle capital payments are amortized
-
-  fcr_veh = discount_rate_veh + discount_rate_veh/(((1+discount_rate_veh)^nper_amort_veh)-1)
-
-  ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
-  print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
-  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD
-  print("-- load PSI costs")
-  PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years =years, fcr_veh = fcr_veh)
 
   ## function that loads PSI values for EU countries, results are on ISO level: costs in 2005UCD/pkm (2005USD/tkm), results on ISO level
 
@@ -275,18 +289,6 @@ generateEDGEdata <- function(input_folder, output_folder,
                             GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
                             REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
-  target_LF = if(smartlifestyle) 1.8 else 1.7
-  target_year = if(smartlifestyle) 2060 else 2080
-
-  alldata$LF[
-    subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= 2020 & year <= target_year,
-    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
-
-  alldata$LF[
-    subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= target_year,
-    loadFactor := target_LF]
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
   incocost <- lvl0_incocost(annual_mileage = alldata$AM,
