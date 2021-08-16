@@ -118,6 +118,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
   conv_pkm_mj = merge(vehicle_intensity,load_factor, all = TRUE)
   conv_pkm_mj = conv_pkm_mj[,conv_pkm_MJ := MJvkm/loadFactor]
   conv_pkm_mj[, c("MJvkm", "loadFactor") := NULL]
+  conv_pkm_mj = conv_pkm_mj[technology != "LA-BEV"]
   ## load and change the tech_output file so that it reflects the logit tree
   tech_output = fread(file.path(GCAM_folder, "tech_output.csv"), skip = 1, sep=";", header = T)
   tech_output = melt(tech_output, measure.vars=6:26, value.name="tech_output", variable.name = "year")
@@ -246,7 +247,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
 #'
 
 
-lvl0_VOTandExponents <- function(GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
+lvl0_VOTandExponents <- function(conv_data, GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
   sector <- logit.exponent <- value <-  region <- ISO3 <- `.` <- time <- Year <- Value <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <- univocal_name <- speed_conv <- year_at_yearconv <- yearconv <-weight <- GDP <- speed_trend <- POP_val <- NULL
   loadFactor <- loadFactor_conv <- loadFactor_trend <- subsector_L1 <- subsector_L2 <- NULL
   subsector_L3 <- technology <- vehicle_type <- NULL
@@ -270,7 +271,7 @@ lvl0_VOTandExponents <- function(GDP_MER_country, POP_country, input_folder, log
 
   ## calculate VOT
   vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "iso", allow.cartesian = TRUE) #for each time step and each region
-  vott_all = merge (vott_all, speed, all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
+  vott_all = merge (vott_all, conv_data$speed, all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
   WEEKS_PER_YEAR = 50
   HOURS_PER_WEEK = 40
   vott_all[, time_price := GDP_cap                             ## [2005$/person/year]
@@ -329,9 +330,7 @@ lvl0_VOTandExponents <- function(GDP_MER_country, POP_country, input_folder, log
 
   result = list(VOT_output = VOT_output,
                 logit_output = logit_output,
-                price_nonmot = price_nonmot,
-                load_factor = load_factor,
-                speed = speed)
+                price_nonmot = price_nonmot)
 
   return(result)
 

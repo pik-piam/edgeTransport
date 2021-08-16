@@ -205,14 +205,15 @@ generateEDGEdata <- function(input_folder, output_folder,
   CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
   ## function that loads PSI intensities
   PSI_int = lvl0_PSIint(input_folder, PSI_dir="PSI", years)
-
+  ## function that loads alternative trucks/buses costs
+  altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
   ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
   ## output units: costs in 2005$/pkm (or 2005$/tkm)
   ## LF in p/v (or t/v)
   ## energy intensity pkm/MJ
   ## Annual mileage in km/year. Every entry in the output is on ISO level
   print("-- merge costs, LF, annual mileage from the various sources")
-  merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, CHN_trucks = CHN_trucks, EU_data = EU_data, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle)
+  merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
     saveRDS(merged_data, file = level0path("merged_data.RDS"))
@@ -221,7 +222,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [2005$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(GDP_MER_country = GDP_MER_country, POP_country = POP_country, input_folder = input_folder)
+  VOT_lambdas=lvl0_VOTandExponents(conv_data, GDP_MER_country = GDP_MER_country, POP_country = POP_country, input_folder = input_folder)
   ## substitute lambda
   VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
   ## make freight less price sensitive
@@ -237,7 +238,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level for EU. No conversion of units happening.
   print("-- generate REMIND level data")
-  REMINDdat <- lvl0_REMINDdat(merged_data = merged_data, conv_data = conv_data, VOT_lambdas = VOT_lambdas, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+  REMINDdat <- lvl0_REMINDdat(merged_data = merged_data, conv_data = conv_data, VOT_lambdas = VOT_lambdas, GDP_country = GDP_country, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
@@ -266,7 +267,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   #################################################
   print("-- Start of level 1 scripts")
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  IEAbal_comparison <- lvl1_IEAharmonization(int = iso_data$int, demKm = alldata$demkm, IEA = IEAbal)
+  IEAbal_comparison <- lvl1_IEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = IEAbal)
   if(storeRDS)
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
@@ -276,7 +277,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
-    nonfuel_costs = iso_data$UCD_results$nec_cost[type == "normal"][, type := NULL],
+    nonfuel_costs = REMINDdat$NFcost,
     module = "edge_esm")
 
   REMIND_prices[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("technology", "vehicle_type", "year")]

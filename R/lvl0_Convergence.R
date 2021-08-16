@@ -156,19 +156,36 @@ lvl0_REMINDdat = function(merged_data, conv_data, VOT_lambdas, REMIND2ISO_MAPPIN
                     valuecol = "conv_pkm_MJ",
                     datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
                     weights = gdp)
+  int[, sector_fuel := "refined liquids enduse"]
+  int[technology == "FCEV", sector_fuel := "H2 enduse"]
+  int[technology == "NG", sector_fuel := "delivered gas"]
+  int[technology == "Hybrid Electric", sector_fuel := "Liquids-Electricity"]
+  int[technology %in% c("BEV", "LA-BEV", "Electric"), sector_fuel := "elect_td_trn"]
 
   ## costs
   costs = copy(merged_data$costs)
+  setnames(costs, old = "variable", new = "var")
   costs = aggregate_dt(data = costs,
                      mapping = REMIND2ISO_MAPPING,
                      valuecol = "value",
-                     datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "variable"),
-                     weights = gdp)
+                     datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "var"),
+                     weights = gdp[year%in%unique(costs$year)])
+  setnames(costs, old = "var", new = "variable")
+
 
   ## demand
+  dem = copy(merged_data$dem)
+  dem = aggregate_dt(data = dem,
+                       mapping = REMIND2ISO_MAPPING,
+                       valuecol = "tech_output",
+                       datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+                       weights = NULL)
 
 
+  NFcost = costs[,.(non_fuel_price = sum(value)), by = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "year", "region")]
 
+
+  return(list(LF = LF, AM = AM, int = int, costs = costs, NFcost = NFcost, dem = dem))
 
 }
 
