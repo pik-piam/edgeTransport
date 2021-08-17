@@ -230,8 +230,6 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
   if(storeRDS){
-    saveRDS(dem_int, file = level0path("correctedGCAM_data.RDS"))
-    saveRDS(costs_lf_mile, file = level0path("correctedUCD_output.RDS"))
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
 
@@ -248,18 +246,10 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
   if(storeRDS){
-    saveRDS(iso_data$iso_VOT_results,
-            file = level0path("VOT_iso.RDS"))
-    saveRDS(iso_data$iso_pricenonmot_results,
-            file = level0path("price_nonmot_iso.RDS"))
-    saveRDS(iso_data$UCD_results$nec_cost_split,
-            file = level0path("UCD_NEC_split_iso.RDS"))
-    saveRDS(iso_data$UCD_results$annual_mileage_iso,
-            file = level0path("UCD_mileage_iso.RDS"))
-    saveRDS(iso_data$UCD_results$nec_cost,
-            file = level0path("UCD_NEC_iso.RDS"))
-    saveRDS(iso_data$iso_GCAMdata_results,
-            file = level0path("GCAM_data_iso.RDS"))
+    saveRDS(REMINDdat,
+            file = level0path("REMINDdat.RDS"))
+    saveRDS(incocost,
+            file = level0path("incocost.RDS"))
   }
 
   #################################################
@@ -280,8 +270,6 @@ generateEDGEdata <- function(input_folder, output_folder,
     nonfuel_costs = REMINDdat$NFcost,
     module = "edge_esm")
 
-  REMIND_prices[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("technology", "vehicle_type", "year")]
-  REMIND_prices[, tot_price := non_fuel_price+fuel_price_pkm]
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
@@ -289,10 +277,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(
     prices = REMIND_prices,
-    tech_output = alldata$demkm,
+    tech_output = REMINDdat$dem,
     logit_exp_data = VOT_lambdas$logit_output,
-    vot_data = iso_data$vot,
-    price_nonmot = iso_data$price_nonmot)
+    vot_data = REMINDdat$vt,
+    price_nonmot = REMINDdat$pnm)
 
 
   if(storeRDS)
@@ -318,7 +306,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
                           clusters = clusters,
                           incocost = incocost,
-                          calibdem = alldata$demkm,
+                          calibdem = REMINDdat$dem,
                           GDP = GDP,
                           GDP_POP_MER = GDP_POP_MER,
                           years = years,
@@ -348,11 +336,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   for (i in seq(1,3,1)) {
     logit_data <- calculate_logit_inconv_endog(
       prices = REMIND_prices,
-      vot_data = iso_data$vot,
+      vot_data = REMINDdat$vt,
       pref_data = prefs,
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
-      price_nonmot = iso_data$price_nonmot,
+      price_nonmot = REMINDdat$pnm,
       techswitch = techswitch,
       totveh = totveh)
 
@@ -371,7 +359,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     ## regression demand calculation
     print("-- performing demand regression")
     ## demand in million km
-    dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
+    dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                               price_baseline = prices$S3S,
                               GDP_POP = GDP_POP,
                               REMIND_scenario = REMIND_scenario,
@@ -454,8 +442,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
-    saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
-    saveRDS(alldata$AM, file = level2path("annual_mileage.RDS"))
+    saveRDS(REMINDdat$LF, file = level2path("loadFactor.RDS"))
+    saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS"))
     dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
     dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
     saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
