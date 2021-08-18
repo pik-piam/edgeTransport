@@ -87,8 +87,9 @@ lvl0_mergePSIintensity <- function(GCAM_data, load_factor, GCAM2ISO_MAPPING,
   LDV_PSI_int = merge(LDV_PSI_int, GCAM_data$load_factor, by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"))
 
   lf2010 = load_factor[year == 2010 & iso %in% GCAM2ISO_MAPPING[region == "EU-15"]$iso][, .(loadFactor=mean(loadFactor)), by="vehicle_type"]
-  ## use average TRACCS load factor for EU-15
-
+  ## use average TRACCS load factor for category missing in EU-15
+  lfTruck035 = GCAM_data$load_factor[year == 2010 & vehicle_type == "Truck (0-3.5t)"][, .(loadFactor=mean(loadFactor)), by="vehicle_type"]
+  lf2010 = rbind(lf2010, lfTruck035)
   lf2010[, region := "EU-15"]
 
   LDV_PSI_int[lf2010, loadFactor := i.loadFactor, on=c("region", "vehicle_type")]
