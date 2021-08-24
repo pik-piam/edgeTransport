@@ -210,7 +210,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
                "subsector_L3", "vehicle_type", "technology"),
     weights = GDP_country, weightcol = "weight"
   )
-  
+
   int_iso <- disaggregate_dt(conv_pkm_mj, GCAM2ISO_MAPPING)
   load_factor_iso <- disaggregate_dt(load_factor, GCAM2ISO_MAPPING)
 
@@ -247,11 +247,10 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
 #'
 
 
-lvl0_VOTandExponents <- function(conv_data, GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
+lvl0_VOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
   sector <- logit.exponent <- value <-  region <- ISO3 <- `.` <- time <- Year <- Value <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <- univocal_name <- speed_conv <- year_at_yearconv <- yearconv <-weight <- GDP <- speed_trend <- POP_val <- NULL
   loadFactor <- loadFactor_conv <- loadFactor_trend <- subsector_L1 <- subsector_L2 <- NULL
   subsector_L3 <- technology <- vehicle_type <- NULL
-
   exp_folder = function(fname){
     file.path(input_folder, logitexp_dir, fname)
   }
@@ -271,7 +270,7 @@ lvl0_VOTandExponents <- function(conv_data, GDP_MER_country, POP_country, input_
 
   ## calculate VOT
   vott_all = merge(vott_all, GDP_POP_cap, all = TRUE, by = "iso", allow.cartesian = TRUE) #for each time step and each region
-  vott_all = merge (vott_all, conv_data$speed, all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
+  vott_all = merge (vott_all, GCAM_data[["speed"]], all = FALSE, by = c("iso", "year", "tranSubsector", "supplysector"))
   WEEKS_PER_YEAR = 50
   HOURS_PER_WEEK = 40
   vott_all[, time_price := GDP_cap                             ## [2005$/person/year]

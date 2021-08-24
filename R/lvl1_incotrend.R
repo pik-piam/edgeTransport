@@ -253,10 +253,14 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, clusters, years, GDP, GDP_PO
 
   ## merge to the "normally calculated" sws, and create the output at this level
   SWS$FV_final_SW = rbind(SWS$FV_final_SW, tmp)
-
+  ve_type = unique(SWS$VS1_final_SW[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1"), c("vehicle_type", "region")])
   SWS <- SWS[c("FV_final_SW","VS1_final_SW", "S1S2_final_SW", "S2S3_final_SW", "S3S_final_SW")]
   ## add the missing entries to all levels
   SWS = mapply(addmissingSW, SWS, calibr_demand = list(calibdem = calibdem, calibdem = calibdem, calibdem = calibdem, calibdem = calibdem, calibdem = calibdem), grouping_value = c("technology","vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3"))
+  ve = SWS$VS1_final_SW[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1")]
+  ve = merge(ve, ve_type, all.y = TRUE, by = c("region", "vehicle_type"))
+  rest=SWS$VS1_final_SW[!(subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1"))]
+  SWS$VS1_final_SW = rbind(ve, rest)
   ## constant trends for all techs
   SWS <- lapply(SWS, extr_const)
 
@@ -381,16 +385,11 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
   eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "ECS", "ECE", "EWN", "FRA", "UKI")
 
-  ## low preference for buses in UKI
-  SWS$S2S3_final_pref[region == "UKI" & subsector_L2 == "Bus" & year == 2020,
-                      sw := sw/1.5]
-  SWS$S2S3_final_pref[region == "UKI" & subsector_L2 == "Bus" & year >= 2025,
-                      sw := sw*2]
   ## preference for buses high in EU after 2030
   target_reduction = 0.67
   SWS$S2S3_final_pref[region %in% eu_regions & subsector_L2 == "Bus" & year >= 2020,
                       sw := sw*pmax((1 - target_reduction*(year - 2020)/30), 1-target_reduction)]
-  
+
   ## preference for buses extremely high in OAS and IND
   SWS$S2S3_final_pref[region %in% c("OAS", "SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
                       sw := ifelse(year <= 2030, sw[year==2020] + (0.5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
@@ -400,21 +399,6 @@ if (techswitch %in% c("BEV", "FCEV")) {
                       sw := ifelse(year <= 2100, sw[year==2050] + (0.2*sw[year==2050]-sw[year==2050]) * (year-2050) / (2100-2050), sw), by = c("region","subsector_L2")]
   SWS$S2S3_final_pref[region %in% c("OAS",  "SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
-
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year == 2015,
-                      sw := 0.18, by = c("region","subsector_L2")]
-
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year == 2020,
-                      sw := 0.072, by = c("region","subsector_L2")]
-
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year == 2025,
-                      sw := 0.013, by = c("region","subsector_L2")]
-
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >= 2030,
-                      sw := 0.008, by = c("region","subsector_L2")]
-
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "trn_pass_road_LDV"  & year >= 2015 & year <= 2025,
-                      sw := 1, by = c("region","subsector_L2")]
 
   SWS$S2S3_final_pref[region %in% c("IND") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
                       sw := ifelse(year <= 2030, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
@@ -444,9 +428,6 @@ if (techswitch %in% c("BEV", "FCEV")) {
                      sw :=  ifelse(year <= 2100, sw[year==2010] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2100-2010), 0.2*sw[year==2010]),
                      by=c("region", "subsector_L3")]
 
-  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% "REF" & year >= 2010,
-                     sw := ifelse(year==2010, sw, 5*sw[year==2010]),
-                     by=c("region")]
 
   SWS$S3S_final_pref[subsector_L3 == "Cycle" & region %in% "REF" & year >= 2010,
                      sw := ifelse(year==2010, sw, 3*sw[year==2010]),
@@ -463,17 +444,6 @@ if (techswitch %in% c("BEV", "FCEV")) {
   SWS$S3S_final_pref[subsector_L3 %in% c("Domestic Aviation") & region %in% c("IND", "CHA") & year >= 2010,
                      sw := 0.01*sw[year==2010],
                      by=c("region", "subsector_L3")]
-  ## domestic aviation grows way to much, reduce it
-  SWS$S3S_final_pref[region %in% c("USA", "LAM") & subsector_L3 == "Domestic Aviation"  & year == 2015,
-                   sw := 0.001, by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("USA", "LAM") & subsector_L3 == "Domestic Aviation"  & year == 2020,
-                   sw := 0.001, by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("USA", "LAM") & subsector_L3 == "Domestic Aviation"  & year == 2025,
-                   sw := 0.0005, by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("USA", "LAM") & subsector_L3 == "Domestic Aviation"  & year >= 2030,
-                   sw := 0.0005, by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("USA", "LAM") & subsector_L3 == "trn_pass_road"  & year >=2015,
-                   sw := 1, by = c("region","subsector_L3")]
 
   SWS$S3S_final_pref[region %in% c("CHA") & subsector_L3 == "Domestic Aviation"  & year >= 2010 & year <2015,
                      sw := 100*sw[year==2010], by = c("region","subsector_L3")]
@@ -528,33 +498,6 @@ if (techswitch %in% c("BEV", "FCEV")) {
                      sw := 0.4*sw[year==2010], by = c("region","subsector_L3")]
   SWS$S3S_final_pref[region %in% c("ENC") & subsector_L3 == "Domestic Aviation"  & year >=2010,
                      sw := 0.9*sw[year==2010], by = c("region","subsector_L3")]
-
-  SWS$S3S_final_pref[region %in% c("CAZ") & subsector_L3 == "Domestic Aviation"  & year >=2015,
-                     sw := 0.5*sw[year==2015], by = c("region","subsector_L3")]
-
-  SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "Domestic Aviation"  & year >=2010,
-                     sw := sw[year==2010], by = c("region","subsector_L3")]
-
-  SWS$S3S_final_pref[region %in% c("NES") & subsector_L3 == "Domestic Aviation"  & year >=2010 & year < 2020,
-                     sw := 0.5*sw[year==2010], by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("NES") & subsector_L3 == "Domestic Aviation"  & year >=2020 & year < 2030,
-                     sw := 0.3*sw[year==2020], by = c("region","subsector_L3")]
-  SWS$S3S_final_pref[region %in% c("NES") & subsector_L3 == "Domestic Aviation"  & year >=2030,
-                     sw := 0.1*sw[year==2030], by = c("region","subsector_L3")]
-
-
-  #
-  # SWS$S3S_final_pref[region %in% c("ENC") & subsector_L3 == "Domestic Aviation"  & year >=2010,
-  #                    sw := 0.9*sw[year==2010], by = c("region","subsector_L3")]
-
-
-  SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "trn_pass_road"  & year >=2015,
-                     sw := 1, by = c("region","subsector_L3")]
-  SWS$S2S3_final_pref[region %in% c("NEN") & subsector_L3 == "trn_pass_road_LDV"  & year >=2015,
-                     sw := 1, by = c("region","subsector_L2")]
-
-  SWS$S3S_final_pref[region %in% c("NEN") & subsector_L3 == "Passenger Rail"  & year >=2010,
-                     sw := sw[year==2010], by = c("region","subsector_L3")]
 
   if (smartlifestyle) {
     ## roughly distinguish countries by GDPcap
