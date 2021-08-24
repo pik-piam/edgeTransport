@@ -96,7 +96,7 @@ annual_sale <- readRDS(datapath(fname = "annual_sales.RDS"))
 bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 JRC_IDEES <- readRDS(datapath(fname = "JRC_IDEES.RDS"))
-techcost <- readRDS(datapath_level0(fname = "UCD_NEC_iso.RDS"))
+techcost <- readRDS(datapath_level0(fname = "REMINDdat.RDS"))[["NFcost"]]
 ## Load population to calculate per capita values
 POP = readRDS(datapath(fname = "POP.RDS"))
 ## load IEA data as a comparison
@@ -1483,11 +1483,10 @@ demandkm_nobunk_plotf(demand_km, POP)
 # LDVs vintages
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-
-plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
+plotVintLDV = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
+  # browser()
   vintcomp = vintcomp[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
   newcomp = newcomp[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
-
   allfleet = merge(newcomp, vintcomp, all =TRUE, by = c("region", "sector", "subsector_L1", "vehicle_type", "technology",  "year"))
   allfleet = allfleet[sector=="trn_pass"]
   allfleet = merge(allfleet, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
@@ -1496,19 +1495,28 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
   allfleet=melt(allfleet, id.vars = c("region", "sector", "subsector_L1", "vehicle_type", "technology",
                                       "year"), measure.vars = c("vintdem", "newdem"))
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
-
   allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
   allfleet = merge(allfleet, annual_mileage, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
-  allfleet = allfleet[,.(value = sum(value/loadFactor/annual_mileage)), by = c("region", "technology", "variable", "year")]
+
+   fleetcomp =allfleet[,.(value = sum(value/loadFactor/vkm.veh)), by = c("region", "year", "vehicle_type")]
+  pfleetcomp = ggplot()+
+  geom_line(data = fleetcomp[year < maxyear & region %in% EU_regions],
+  aes(x=as.character(year),y=value, group=vehicle_type,
+  color = vehicle_type))+
+  facet_wrap(~region, scales = "free")+
+  labs(y = "Fleet by vehicle type [million Veh]", x="")+
+  theme_plot
+
+
+  allfleet = allfleet[,.(value = sum(value/loadFactor/vkm.veh)), by = c("region", "technology", "variable", "year")]
   allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year")]
   allfleet[,alphaval := ifelse(variable =="vintdem", 1,0)]
-
   allfleet_glob = allfleet[,.(value = sum(value)), by = c("technology", "variable", "year", "alphaval")][, region:= "World"]
 
-  allfleet = rbind(allfleet, allfleet_glob)
+  allfleet_EU = allfleet[region %in% EU_regions,.(value = sum(value)), by = c("technology", "variable", "year", "alphaval")][, region:= "EUR"]
 
+  allfleet = rbind(allfleet, allfleet_glob, allfleet_EU)
   cols2use = unique(as.character(allfleet[,technology]))
-
   p1 = ggplot()+
   geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
@@ -1525,13 +1533,11 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
   scale_fill_manual(values = cols[match(cols2use, names(cols))])+
   labs(y = "LDV fleet [million Veh]", x="")+
     theme_plot
-
-
     p2 = ggplot()+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions, "World", "EUR")],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions, "World", "EUR")],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
   guides(fill = guide_legend(reverse=TRUE))+
@@ -1544,20 +1550,118 @@ plotVint = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
   labs(y = "LDV fleet [million Veh]", x="")+
   theme_plot
 
-  return(list(p1,p2))
+
+
+  return(list(p1,p2, pfleetcomp))
   }
-
-
-p = plotVint(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor, annual_mileage)
-
+p = plotVintLDV(vintcomp[subsector_L1 == "trn_pass_road_LDV_4W"], newcomp[subsector_L1 == "trn_pass_road_LDV_4W"], sharesVS1 = shares$VS1_shares, loadFactor, annual_mileage)
 p
+```
 
+# Trucks and buses vintages
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
+  vint = copy(vintcomp)
+  new = copy(newcomp)
+  vint = vint[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
+  new = new[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
+  allfleet = merge(new, vint, all =TRUE, by = c("region", "sector", "subsector_L1", "vehicle_type", "technology",  "year"))
+  allfleet = allfleet[subsector_L1%in%c("trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")]
+  allfleet = merge(allfleet, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
+  allfleet[,vintdem:=totdem*sharetech_vint*shareVS1]
+  allfleet[,newdem:=totdem*sharetech_new*shareVS1]
+  allfleet=melt(allfleet, id.vars = c("region", "sector", "subsector_L1", "vehicle_type", "technology",
+                                      "year"), measure.vars = c("vintdem", "newdem"))
+  allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
+  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
+  fleetcomp =allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "year", "vehicle_type")]
+  pfleetcomp = ggplot()+
+  geom_line(data = fleetcomp[year < maxyear & region %in% EU_regions],
+  aes(x=as.character(year),y=value, group=vehicle_type,
+  color = vehicle_type))+
+  facet_wrap(~region, scales = "free")+
+  labs(y = "Fleet by vehicle type [million Veh]", x="")+
+  theme_plot
+  allfleet = allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "technology", "variable", "year", "subsector_L1")]
+  allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year", "subsector_L1")]
+  allfleet[,alphaval := ifelse(variable =="vintdem", 1,0)]
+  allfleet_glob = allfleet[,.(value = sum(value)), by = c("technology", "variable", "year", "alphaval", "subsector_L1")][, region:= "World"]
+  allfleet = rbind(allfleet, allfleet_glob)
+  cols2use = unique(as.character(allfleet[,technology]))
+  p1_truck = ggplot()+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
+  guides(fill = guide_legend(reverse=TRUE))+
+    facet_wrap(~region, nrow = 4,scales = "free")+
+      scale_x_discrete(breaks = c(2015, 2030, 2050, maxyear))+
+  scale_alpha_discrete(breaks = c(1,0), name = "Status", labels = c("Vintages","New additions")) +
+  guides(linetype=FALSE,
+         fill=guide_legend(reverse=FALSE, title="Transport mode"))+
+  scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+  labs(y = "Truck fleet [million Veh]", x="")+
+    theme_plot
+    p2_truck = ggplot()+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
+  guides(fill = guide_legend(reverse=TRUE))+
+    facet_wrap(~region, nrow = 4,scales = "free")+
+      scale_x_discrete(breaks = c(2015, 2030, 2050, maxyear))+
+  scale_alpha_discrete(breaks = c(1,0), name = "Status", labels = c("Vintages","New additions")) +
+  guides(linetype=FALSE,
+         fill=guide_legend(reverse=FALSE, title="Transport mode"))+
+  scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+  labs(y = "Truck fleet [million Veh]", x="")+
+  theme_plot
+  p1_bus = ggplot()+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsector_L1 == "Bus_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsector_L1 == "Bus_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
+  guides(fill = guide_legend(reverse=TRUE))+
+    facet_wrap(~region, nrow = 4,scales = "free")+
+      scale_x_discrete(breaks = c(2015, 2030, 2050, maxyear))+
+  scale_alpha_discrete(breaks = c(1,0), name = "Status", labels = c("Vintages","New additions")) +
+  guides(linetype=FALSE,
+         fill=guide_legend(reverse=FALSE, title="Transport mode"))+
+  scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+  labs(y = "Bus fleet [million Veh]", x="")+
+    theme_plot
+  p2_bus = ggplot()+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "Bus_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "Bus_tmp_subsector_L1"],
+  aes(x=as.character(year),y=value, group=interaction(variable, technology),
+  fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
+  guides(fill = guide_legend(reverse=TRUE))+
+    facet_wrap(~region, nrow = 4,scales = "free")+
+      scale_x_discrete(breaks = c(2015, 2030, 2050, maxyear))+
+  scale_alpha_discrete(breaks = c(1,0), name = "Status", labels = c("Vintages","New additions")) +
+  guides(linetype=FALSE,
+         fill=guide_legend(reverse=FALSE, title="Transport mode"))+
+  scale_fill_manual(values = cols[match(cols2use, names(cols))])+
+  labs(y = "Bus fleet [million Veh]", x="")+
+  theme_plot
+  return(list(p1_truck,p2_truck,p1_bus,p2_bus, pfleetcomp))
+}
+p = plotVintTruckBus(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor)
+p
 ```
 
 # Sales LDVs
 
 ```{r, echo=FALSE, warning=FALSE}
-
 SalesFun = function(shares_LDV, newcomp, sharesVS1){
   # browser()
   ## I need the total demand for each region to get the average composition in the region (sales are on a country level)
@@ -1571,24 +1675,18 @@ SalesFun = function(shares_LDV, newcomp, sharesVS1){
                     ycol = "value",
                     idxcols=c("region","subsector_L1"),
                     extrapolate=T)
-
   setnames(newcomp, new = "newdem", old = "value")
-
   ## I calculate the sales composition (disrespective to the vehicle type)
   shares_LDV = unique(shares_LDV[,c("region","year", "technology", "shareFS1")])
   shares_LDV <- shares_LDV[,.(shareFS1=sum(shareFS1)),by=c("region","technology","year")]
-
   ## I calculate the weighted regional sales (depending on the total volume of sales per country in each region)
   shares_LDV = merge(shares_LDV, newcomp)
   shares_LDV[, demfuel := shareFS1*newdem, by = c("year", "region", "technology")]
   shares_LDV = shares_LDV[, .(demfuel = sum(demfuel)), by = c("year", "region", "technology")]
   shares_LDV[, shareFS1 := demfuel/sum(demfuel), by = c("year", "region")]
-
   ## plot features
   shares_LDV[, technology := factor(technology, levels = c("BEV", "Hybrid Electric", "FCEV", "Liquids", "NG"))]
-
   cols2use = unique(as.character(shares_LDV[,technology]))
-
   plot = ggplot()+
     geom_bar(data = shares_LDV[year<=2060], aes(x=as.numeric(as.character(year)),y=shareFS1, group = technology, fill = technology), position = position_stack(), stat = "identity")+
    facet_wrap(~region, nrow = 4,scales = "free")+
@@ -1599,10 +1697,7 @@ SalesFun = function(shares_LDV, newcomp, sharesVS1){
     labs(x = "", y = "[%]", title = "Market share of new LDV sales")
   return(plot)
 }
-
-
-SalesFun(annual_sale, newcomp, shares$VS1_shares)
-
+SalesFun(annual_sale, newcomp[subsector_L1=="trn_pass_road_LDV_4W"], shares$VS1_shares[subsector_L1=="trn_pass_road_LDV_4W"])
 ```
 
 
