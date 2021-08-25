@@ -5,7 +5,7 @@
 #' @param fcr_veh depreciation rate
 
 lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh){
-  subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- NULL
+  subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- vkm.veh <- NULL
 
   pmod_av = 100000 ## $/veh
   prefuelFCEV = 100000 ## $/veh

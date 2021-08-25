@@ -1,6 +1,9 @@
 
 
 lvl0_REMINDdat = function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_country){
+  
+  sector_fuel <- technology <- `.` <- kJ.per.vkm <- conv_vkm_MJ <- ttw_energy <- value <- NULL
+  
   gdp = copy(GDP_country)
 
   ## LF

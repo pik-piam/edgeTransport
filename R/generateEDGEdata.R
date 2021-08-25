@@ -29,6 +29,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
+  sector <- variable <- region <- logit.exponent <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -284,25 +285,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   if(storeRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
 
-  print("-- cluster regions for share weight trends")
-  clusters_overview <- lvl1_SWclustering(
-    input_folder = input_folder,
-    POP = POP,
-    GDP = GDP,
-    REMIND_scenario = REMIND_scenario,
-    REMIND2ISO_MAPPING)
-
-  density=clusters_overview[[1]]
-  clusters=clusters_overview[[2]]
-
-  if(storeRDS){
-    saveRDS(clusters, file = level1path("clusters.RDS"))
-    saveRDS(density, file = level1path("density.RDS"))
-  }
-
   print("-- generating trends for inconvenience costs")
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
-                          clusters = clusters,
                           incocost = incocost,
                           calibdem = REMINDdat$dem,
                           GDP = GDP,
@@ -508,7 +492,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     complexValues = complexValues,
     loadFactor = REMINDdat$LF,
     annual_mileage = REMINDdat$AM,
-    demISO = REMINDdat$dem,
+    demISO = merged_data$dem,
     REMIND_scenario = REMIND_scenario,
     EDGE_scenario = EDGE_scenario,
     level2path = level2path,

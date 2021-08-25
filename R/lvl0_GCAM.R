@@ -235,13 +235,9 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
 #'
 #' VOT values in (1990$/pkm)
 #' @param GCAM_data GCAM based data
-#' @param GDP_country GDP ISO level PPP
-#' @param GDP_POP GDP per capita PPP
 #' @param GDP_MER_country GDP iso level MER
 #' @param POP_country population (ISO level)
-#' @param REMIND_scenario SSP scenario
 #' @param input_folder folder hosting raw data
-#' @param GCAM2ISO_MAPPING GCAM2iso mapping
 #' @param logitexp_dir directory with logit exponents for GCAM
 #' @importFrom rmndt aggregate_dt
 #'
@@ -249,7 +245,7 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
 
 lvl0_VOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_folder, logitexp_dir="GCAM_logit_exponents"){
   sector <- logit.exponent <- value <-  region <- ISO3 <- `.` <- time <- Year <- Value <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <- univocal_name <- speed_conv <- year_at_yearconv <- yearconv <-weight <- GDP <- speed_trend <- POP_val <- NULL
-  loadFactor <- loadFactor_conv <- loadFactor_trend <- subsector_L1 <- subsector_L2 <- NULL
+  loadFactor <- loadFactor_conv <- loadFactor_trend <- subsector_L1 <- subsector_L2 <- speed <- iso <- NULL
   subsector_L3 <- technology <- vehicle_type <- NULL
   exp_folder = function(fname){
     file.path(input_folder, logitexp_dir, fname)
