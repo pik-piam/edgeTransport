@@ -4,10 +4,14 @@
 \alias{lvl0_GCAMraw}
 \title{Read and prepare GCAM data}
 \usage{
-lvl0_GCAMraw(input_folder, GCAM_dir = "GCAM")
+lvl0_GCAMraw(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = "GCAM")
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}
+
+\item{GCAM2ISO_MAPPING}{a mapping between ISO3 codes and GCAM region names}
+
+\item{GDP_country}{country level GDP PPP (used for disaggregation)}
 
 \item{GCAM_dir}{subdirectory within the data input with GCAM data}
 }
