@@ -201,7 +201,14 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   LDV_PSI_i[, sector_fuel := NULL]
 
+  ## extract trends from GCAM
+  trucks_int <- GCAM_data[["conv_pkm_mj"]][EU_data$energy_intensity_EU[year==2010, c("iso", "vehicle_type", "technology", "sector_fuel", "MJ_km")], on=c("iso", "vehicle_type", "technology", "sector_fuel")][!is.na(conv_pkm_MJ) & (grepl("Truck", vehicle_type) | vehicle_type == "Bus_tmp_vehicletype")]
 
+  trucks_int[, fct := conv_pkm_MJ/conv_pkm_MJ[year == 2010], by=c("iso", "vehicle_type", "technology")]
+  trucks_int[, MJ_km := fct * MJ_km]
+
+  trucks_int <- merge(trucks_int, LF)[!is.na(loadFactor)]
+  trucks_int[, conv_pkm_MJ := MJ_km/loadFactor][, c("MJ_km", "loadFactor", "fct", "sector_fuel") := NULL]
 
   Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"), all.x = T)
   Truck_PSI_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
@@ -216,7 +223,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                           extrapolate = TRUE)
 
   ## missing Trucks for EU countries are averaged on the other countries (e.g. Truck (18t) is present in terms of demand, but only the alternative trucks intensity is provided)
-  aveMissingTruck = GCAM_data[["conv_pkm_mj"]][subsector_L3 == "trn_freight_road" & vehicle_type %in% c("Truck (18t)","Truck (7.5t)") & technology %in% c("Liquids", "NG")]
+  aveMissingTruck = GCAM_data[["conv_pkm_mj"]][subsector_L3 == "trn_freight_road" & vehicle_type == "Truck (18t)" & technology %in% c("Liquids", "NG")]
   aveMissingTruck = aveMissingTruck[,.(conv_pkm_MJ = mean(conv_pkm_MJ)), by = c("year", "technology", "subsector_L1", "subsector_L2",
                                                                                 "subsector_L3", "sector", "vehicle_type")]
   ## approx to the whole time range
@@ -228,15 +235,16 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                               extrapolate = TRUE)
 
   aveMissingTruck = merge(aveMissingTruck[, k := 1], data.table(iso = eu_iso, k = 1), all = TRUE, allow.cartesian=TRUE, by = c("k"))[, k := NULL]
-  Truck_PSI_i = rbind(
+  trucks_int = rbindlist(list(
     Truck_PSI_i,
-    GCAM_data[["conv_pkm_mj"]][(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
-                                 technology %in% c("Liquids", "NG"),
-                               c("conv_pkm_MJ", "iso","year", "technology", "subsector_L1", "subsector_L2",
-                                 "subsector_L3", "sector", "vehicle_type")])
+    trucks_int,
+    aveMissingTruck,
+    GCAM_data[["conv_pkm_mj"]][
+      subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1") &
+      !(iso %in% eu_iso) &
+      !(technology %in% c("Electric", "FCEV"))][, sector_fuel := NULL]
+  ), use.names=TRUE)
 
-  Truck_PSI_i = rbind(Truck_PSI_i,
-                      aveMissingTruck)
 
   ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
   int_GCAM = GCAM_data[["conv_pkm_mj"]][!subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")][, sector_fuel := NULL]
@@ -245,7 +253,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                    int_GCAM[year==2100][, year := 2130],
                    int_GCAM[year==2100][, year := 2150])
 
-  int = rbind(Truck_PSI_i,
+  int = rbind(trucks_int,
               LDV_PSI_i,
               int_GCAM)
 
