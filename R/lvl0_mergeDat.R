@@ -207,8 +207,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   trucks_int[, fct := conv_pkm_MJ/conv_pkm_MJ[year == 2010], by=c("iso", "vehicle_type", "technology")]
   trucks_int[, MJ_km := fct * MJ_km]
 
-  trucks_int <- merge(trucks_int, LF)[!is.na(loadFactor)]
-  trucks_int[, conv_pkm_MJ := MJ_km/loadFactor][, c("MJ_km", "loadFactor", "fct", "sector_fuel") := NULL]
+  ## note that TRACCS intensity data is in PKM/TKM *not* in VKM
+  ## trucks_int <- merge(trucks_int, LF)[!is.na(loadFactor)]
+  ## trucks_int[, conv_pkm_MJ := MJ_km/loadFactor][, c("MJ_km", "loadFactor", "fct", "sector_fuel") := NULL]
+  trucks_int[, conv_pkm_MJ := MJ_km][, c("MJ_km", "fct", "sector_fuel") := NULL]
 
   Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"), all.x = T)
   Truck_PSI_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
