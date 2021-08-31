@@ -232,6 +232,11 @@ if (techswitch %in% c("BEV", "FCEV")) {
   target_reduction = 0.67
   SWS$S2S3_final_pref[region %in% eu_regions & subsector_L2 == "Bus" & year >= 2020,
                       sw := sw*pmax((1 - target_reduction*(year - 2020)/30), 1-target_reduction)]
+  SWS$S2S3_final_pref[region %in% c("DEU") & subsector_L2 == "Bus"  & year >=2010 & year <= 2020,
+                      sw := ifelse(year >= 2010, sw[year==2010] + (0.3*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), sw),
+                      by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("DEU") & subsector_L2 == "Bus"  & year >=2020,
+                      sw := sw[year==2020], by = c("region","subsector_L2")]
 
   ## preference for buses extremely high in OAS and IND
   SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
@@ -251,12 +256,16 @@ if (techswitch %in% c("BEV", "FCEV")) {
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
-  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & year >= 2020,
+  SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.2*sw[year==2020]),
                      by=c("region", "subsector_L3")]
   SWS$S3S_final_pref[subsector_L3 %in% c("Passenger Rail", "HSR") & region %in% c("ECE", "ECS") & year >= 2020,
                      sw := ifelse(year <= 2100, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), 0.01*sw[year==2020]),
                      by=c("region", "subsector_L3")]
+  SWS$S3S_final_pref[subsector_L3 %in% c("Passenger Rail", "HSR") & region %in% c("DEU") & year >= 2010,
+                     sw := ifelse(year <= 2020, sw[year==2020] + (0.2*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), 0.2*sw[year==2020]),
+                     by=c("region", "subsector_L3")]
+
 
 
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% c("MEA") & year >= 2010,
