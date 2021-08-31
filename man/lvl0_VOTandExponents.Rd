@@ -6,32 +6,20 @@
 \usage{
 lvl0_VOTandExponents(
   GCAM_data,
-  GDP_country,
-  GDP_POP,
   GDP_MER_country,
   POP_country,
-  REMIND_scenario,
   input_folder,
-  GCAM2ISO_MAPPING,
   logitexp_dir = "GCAM_logit_exponents"
 )
 }
 \arguments{
 \item{GCAM_data}{GCAM based data}
 
-\item{GDP_country}{GDP ISO level PPP}
-
-\item{GDP_POP}{GDP per capita PPP}
-
 \item{GDP_MER_country}{GDP iso level MER}
 
 \item{POP_country}{population (ISO level)}
 
-\item{REMIND_scenario}{SSP scenario}
-
 \item{input_folder}{folder hosting raw data}
-
-\item{GCAM2ISO_MAPPING}{GCAM2iso mapping}
 
 \item{logitexp_dir}{directory with logit exponents for GCAM}
 }

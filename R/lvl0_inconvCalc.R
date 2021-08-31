@@ -5,7 +5,7 @@
 #' @param fcr_veh depreciation rate
 
 lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh){
-  subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- NULL
+  subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- vkm.veh <- NULL
 
   pmod_av = 100000 ## $/veh
   prefuelFCEV = 100000 ## $/veh
@@ -39,10 +39,10 @@ lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh){
   pinco[year >= 2010 & technology == "FCEV", pmod_av := (pmod_av[year==2010]-69300*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
   pinco[year >= 2010 & technology == "BEV", prange := (prange[year==2010]-65000*fcr_veh)/(2010-2020)*(year-2010)+prange[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
 
-  pinco = melt(pinco, id.vars = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "annual_mileage", "loadFactor", "mode"))
+  pinco = melt(pinco, id.vars = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "vkm.veh", "loadFactor"))
   setnames(pinco, old = "variable", new = "logit_type")
-  pinco[, value:= value/(annual_mileage*loadFactor)]
-  pinco[, c("annual_mileage", "loadFactor", "mode"):= NULL]
+  pinco[, value:= value/(vkm.veh*loadFactor)]
+  pinco[, c("vkm.veh", "loadFactor"):= NULL]
 
   return(pinco)
 }

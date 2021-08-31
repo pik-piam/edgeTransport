@@ -111,6 +111,9 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
   ## NEC costs are merged with Capital Costs for 4W and the number of columns is reduced
   NEC_data[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1") := NULL]
   NEC_data[, price_component := "totalNE_cost"]
+
+  capcost4W[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1") := NULL]
+  setnames(capcost4W, old = c("variable", "value"), new = c("price_component", "non_fuel_price"))
   NEC_data = rbind(NEC_data, capcost4W)
 
   ## all the preference dfs have to be with the same structure as FV_pref
@@ -144,8 +147,8 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
   ## add scenario column to annual mileage
   annual_mileage <- addScenarioCols(annual_mileage, 0)
   ## select only the relevant columns
-  annual_mileage <- unique(annual_mileage[,c("GDP_scenario", "EDGE_scenario", "region", "year", "annual_mileage", "vehicle_type")])
-
+  annual_mileage <- unique(annual_mileage[,c("GDP_scenario", "EDGE_scenario", "region", "year", "vkm.veh", "vehicle_type")])
+  setnames(annual_mileage, old = "vkm.veh", new = "annual_mileage")
   if (!is.null(output_folder)) {
     dir.create(file.path(level2path("")), showWarnings = FALSE)
     ## writes csv files for intensity, shares and budget, and demand (for calibration and starting point of REMIND)

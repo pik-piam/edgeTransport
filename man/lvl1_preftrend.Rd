@@ -2,13 +2,12 @@
 % Please edit documentation in R/lvl1_incotrend.R
 \name{lvl1_preftrend}
 \alias{lvl1_preftrend}
-\title{Calculate a trend for share weights and inconvenience costs based on the EDGE scenario and the regional clusters.}
+\title{Calculate a trend for share weights and inconvenience costs based on the EDGE scenario}
 \usage{
 lvl1_preftrend(
   SWS,
   calibdem,
   incocost,
-  clusters,
   years,
   GDP,
   GDP_POP_MER,
@@ -24,8 +23,6 @@ lvl1_preftrend(
 \item{calibdem}{calibration demand}
 
 \item{incocost}{inconvenience costs for 4wheelers}
-
-\item{clusters}{clusters of regions based on geographical structure}
 
 \item{years}{time steps}
 
@@ -45,7 +42,7 @@ lvl1_preftrend(
 projected trend of preference factors
 }
 \description{
-Calculate a trend for share weights and inconvenience costs based on the EDGE scenario and the regional clusters.
+Calculate a trend for share weights and inconvenience costs based on the EDGE scenario
 }
 \author{
 Alois Dirnaichner, Marianna Rottoli

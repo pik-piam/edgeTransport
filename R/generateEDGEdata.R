@@ -29,6 +29,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
+  sector <- variable <- region <- logit.exponent <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -172,10 +173,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
 
 
-  ## function that loads raw data from the GCAM input files and modifies them, to make them compatible with EDGE setup
+  ## function that loads raw data from the GCAM input files and
+  ## modifies them, to make them compatible with EDGE setup
+  ## disaggregated to ISO level
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
-  GCAM_data <- lvl0_GCAMraw(input_folder)
+  GCAM_data <- lvl0_GCAMraw(input_folder, GCAM2ISO_MAPPING, GDP_country)
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
@@ -187,112 +190,65 @@ generateEDGEdata <- function(input_folder, output_folder,
   if(storeRDS)
      saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
 
-  ## function that loads PSI energy intensity for Europe (all LDVs) and for other regions (only alternative vehicles LDVs) and merges them with GCAM intensities. Final values: MJ/km (pkm and tkm)
-  ## for alternative trucks: all regions (from PSI)
-  print("-- merge PSI energy intensity data")
-  intensity_PSI_GCAM_data <- lvl0_mergePSIintensity(
-    GCAM_data, EU_data$LF_countries_EU, GCAM2ISO_MAPPING,
-    input_folder, enhancedtech = enhancedtech, techswitch = techswitch)
-  GCAM_data$conv_pkm_mj = intensity_PSI_GCAM_data
+  ## define depreciation rate
+  discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
+  nper_amort_veh = 15    #Number of periods (years) over which vehicle capital payments are amortized
+  fcr_veh = discount_rate_veh + discount_rate_veh/(((1+discount_rate_veh)^nper_amort_veh)-1)
+
+  ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
+  print("-- load UCD database")
+  UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
+  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD
+  print("-- load PSI costs")
+  PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years = years, fcr_veh = fcr_veh)
+  ## function that loads CHN conventional trucks CAPEX and non/fuel OPEX, results on ISO level: costs in 2005USD/vkm
+  print("-- load China truck costs")
+  CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
+  ## function that loads PSI intensities
+  PSI_int = lvl0_PSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
+  ## function that loads alternative trucks/buses costs
+  altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
+  ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
+  ## output units: costs in 2005$/pkm (or 2005$/tkm)
+  ## LF in p/v (or t/v)
+  ## energy intensity pkm/MJ
+  ## Annual mileage in km/year. Every entry in the output is on ISO level
+  print("-- merge costs, LF, annual mileage from the various sources")
+  merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
-    saveRDS(intensity_PSI_GCAM_data, file = level0path("intensity_PSI_GCAM.RDS"))
+    saveRDS(merged_data, file = level0path("merged_data.RDS"))
 
-  ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [1990$/pkm]
+  ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [2005$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(GCAM_data = GCAM_data, GDP_country = GDP_country, GDP_POP = GDP_POP, GDP_MER_country = GDP_MER_country, POP_country = POP_country, REMIND_scenario, input_folder, GCAM2ISO_MAPPING)
-
-  ## substitute speed and lf
-  GCAM_data$speed = VOT_lambdas$speed
-  GCAM_data$load_factor = VOT_lambdas$load_factor
-
-  ## function that loads and prepares the non_fuel prices. It also load PSI-based purchase prices for EU, and CHA values for conventional trucks. Final values: non fuel price in 1990USD/pkm (1990USD/tkm), annual mileage in vkt/veh/yr (vehicle km traveled per year),non_fuel_split in 1990USD/pkt (1990USD/tkm)
-  print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(GCAM_data = GCAM_data, GDP_country = GDP_country, EDGE_scenario = EDGE_scenario, REMIND_scenario = REMIND_scenario, GCAM2ISO_MAPPING = GCAM2ISO_MAPPING, GDP_POP_MER_country = GDP_POP_MER_country,
-                            input_folder = input_folder, years = years, enhancedtech = enhancedtech, selfmarket_taxes = selfmarket_taxes, trsp_incent = trsp_incent, techswitch = techswitch)
-
-  ## function that integrates GCAM data. No conversion of units happening.
-  print("-- correct tech output")
-  correctedOutput <- lvl0_correctTechOutput(GCAM_data,
-                                            UCD_output$non_energy_cost,
-                                            VOT_lambdas$logit_output)
-  dem_int= list()
-  costs_lf_mile = list()
-  dem_int$tech_output = correctedOutput$GCAM_output$tech_output
-  dem_int$conv_pkm_mj = correctedOutput$GCAM_output$conv_pkm_mj
-  costs_lf_mile$non_energy_cost = correctedOutput$NEcost$non_energy_cost
-  costs_lf_mile$non_energy_cost_split = correctedOutput$NEcost$non_energy_cost_split
-  costs_lf_mile$load_factor = UCD_output$non_energy_cost$load_factor
-  costs_lf_mile$annual_mileage = UCD_output$annual_mileage
-  VOT_lambdas$logit_output = correctedOutput$logitexp
+  VOT_lambdas=lvl0_VOTandExponents(GCAM_data, GDP_MER_country = GDP_MER_country, POP_country = POP_country, input_folder = input_folder)
+  ## substitute lambda
+  VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
+  ## make freight less price sensitive
+  VOT_lambdas$logit_output$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
 
 
   if(storeRDS){
-    saveRDS(dem_int, file = level0path("correctedGCAM_data.RDS"))
-    saveRDS(costs_lf_mile, file = level0path("correctedUCD_output.RDS"))
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
 
 
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level for EU. No conversion of units happening.
-  print("-- generate ISO level data")
-  iso_data <- lvl0_toISO(
-    input_data = dem_int,
-    VOT_data = VOT_lambdas$VOT_output,
-    price_nonmot = VOT_lambdas$price_nonmot,
-    UCD_data = costs_lf_mile,
-    GDP = GDP,
-    GDP_POP = GDP_POP,
-    GDP_POP_MER = GDP_POP_MER,
-    GDP_country = GDP_country,
-    POP = POP,
-    GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
-    REMIND2ISO_MAPPING = REMIND2ISO_MAPPING,
-    EDGE_scenario = EDGE_scenario,
-    REMIND_scenario = REMIND_scenario)
+  print("-- generate REMIND level data")
+  REMINDdat <- lvl0_REMINDdat(merged_data = merged_data, VOT_lambdas = VOT_lambdas, GDP_country = GDP_country, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
-  ## function that merges TRACCS, Eurostat databases with other input data. Final values: EI in MJ/km (pkm and tkm), demand in million km (pkm and tkm), LF in p/v
-  print("-- prepare the EU related databases")
-  alldata <- lvl0_prepareEU(EU_data = EU_data,
-                            iso_data = iso_data,
-                            intensity = intensity_PSI_GCAM_data,
-                            GDP_country = GDP_country,
-                            input_folder = input_folder,
-                            GCAM2ISO_MAPPING = GCAM2ISO_MAPPING,
-                            REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
-
-  target_LF = if(smartlifestyle) 1.8 else 1.7
-  target_year = if(smartlifestyle) 2060 else 2080
-
-  alldata$LF[
-    subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= 2020 & year <= target_year,
-    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
-
-  alldata$LF[
-    subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= target_year,
-    loadFactor := target_LF]
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = alldata$AM,
-                            load_factor = alldata$LF,
-                            fcr_veh = UCD_output$fcr_veh)
+  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
+                            load_factor = REMINDdat$LF,
+                            fcr_veh = fcr_veh)
 
 
   if(storeRDS){
-    saveRDS(iso_data$iso_VOT_results,
-            file = level0path("VOT_iso.RDS"))
-    saveRDS(iso_data$iso_pricenonmot_results,
-            file = level0path("price_nonmot_iso.RDS"))
-    saveRDS(iso_data$UCD_results$nec_cost_split,
-            file = level0path("UCD_NEC_split_iso.RDS"))
-    saveRDS(iso_data$UCD_results$annual_mileage_iso,
-            file = level0path("UCD_mileage_iso.RDS"))
-    saveRDS(iso_data$UCD_results$nec_cost,
-            file = level0path("UCD_NEC_iso.RDS"))
-    saveRDS(iso_data$iso_GCAMdata_results,
-            file = level0path("GCAM_data_iso.RDS"))
+    saveRDS(REMINDdat,
+            file = level0path("REMINDdat.RDS"))
+    saveRDS(incocost,
+            file = level0path("incocost.RDS"))
   }
 
   #################################################
@@ -300,7 +256,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   #################################################
   print("-- Start of level 1 scripts")
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  IEAbal_comparison <- lvl1_IEAharmonization(int = iso_data$int, demKm = alldata$demkm, IEA = IEAbal)
+  IEAbal_comparison <- lvl1_IEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = IEAbal)
   if(storeRDS)
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
@@ -310,11 +266,9 @@ generateEDGEdata <- function(input_folder, output_folder,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
-    nonfuel_costs = iso_data$UCD_results$nec_cost[type == "normal"][, type := NULL],
+    nonfuel_costs = REMINDdat$NFcost,
     module = "edge_esm")
 
-  REMIND_prices[, non_fuel_price := ifelse(is.na(non_fuel_price), mean(non_fuel_price, na.rm = TRUE), non_fuel_price), by = c("technology", "vehicle_type", "year")]
-  REMIND_prices[, tot_price := non_fuel_price+fuel_price_pkm]
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
@@ -322,36 +276,19 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(
     prices = REMIND_prices,
-    tech_output = alldata$demkm,
+    tech_output = REMINDdat$dem,
     logit_exp_data = VOT_lambdas$logit_output,
-    vot_data = iso_data$vot,
-    price_nonmot = iso_data$price_nonmot)
+    vot_data = REMINDdat$vt,
+    price_nonmot = REMINDdat$pnm)
 
 
   if(storeRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
 
-  print("-- cluster regions for share weight trends")
-  clusters_overview <- lvl1_SWclustering(
-    input_folder = input_folder,
-    POP = POP,
-    GDP = GDP,
-    REMIND_scenario = REMIND_scenario,
-    REMIND2ISO_MAPPING)
-
-  density=clusters_overview[[1]]
-  clusters=clusters_overview[[2]]
-
-  if(storeRDS){
-    saveRDS(clusters, file = level1path("clusters.RDS"))
-    saveRDS(density, file = level1path("density.RDS"))
-  }
-
   print("-- generating trends for inconvenience costs")
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
-                          clusters = clusters,
                           incocost = incocost,
-                          calibdem = alldata$demkm,
+                          calibdem = REMINDdat$dem,
                           GDP = GDP,
                           GDP_POP_MER = GDP_POP_MER,
                           years = years,
@@ -381,11 +318,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   for (i in seq(1,3,1)) {
     logit_data <- calculate_logit_inconv_endog(
       prices = REMIND_prices,
-      vot_data = iso_data$vot,
+      vot_data = REMINDdat$vt,
       pref_data = prefs,
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
-      price_nonmot = iso_data$price_nonmot,
+      price_nonmot = REMINDdat$pnm,
       techswitch = techswitch,
       totveh = totveh)
 
@@ -404,7 +341,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     ## regression demand calculation
     print("-- performing demand regression")
     ## demand in million km
-    dem_regr = lvl2_demandReg(tech_output = alldata$demkm,
+    dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                               price_baseline = prices$S3S,
                               GDP_POP = GDP_POP,
                               REMIND_scenario = REMIND_scenario,
@@ -449,7 +386,7 @@ generateEDGEdata <- function(input_folder, output_folder,
       ES_demand_all = dem_regr,
       intensity = intensity_remind,
       techswitch = techswitch,
-      loadFactor = unique(alldata$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
+      loadFactor = unique(REMINDdat$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
       EDGE2teESmap = EDGE2teESmap,
       rep = TRUE)
 
@@ -487,8 +424,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
             level2path("demandF_plot_pkm.RDS"))
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
-    saveRDS(alldata$LF, file = level2path("loadFactor.RDS"))
-    saveRDS(alldata$AM, file = level2path("annual_mileage.RDS"))
+    saveRDS(REMINDdat$LF, file = level2path("loadFactor.RDS"))
+    saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS"))
     dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
     dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
     saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
@@ -533,10 +470,10 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   print("-- generating CSV files to be transferred to mmremind")
   ## only the combinations (region, vehicle) present in the mix have to be included in costs
-  NEC_data = merge(iso_data$UCD_results$nec_cost,
+  NEC_data = merge(REMINDdat$NFcost,
                    unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                    by =c("region", "vehicle_type"))
-  capcost4W = merge(iso_data$UCD_results$capcost4W,
+  capcost4W = merge(REMINDdat$costs[variable == "Capital costs (purchase)"],
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
@@ -544,18 +481,18 @@ generateEDGEdata <- function(input_folder, output_folder,
   EDGETrData = lvl2_createoutput(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,
-    vot_data = iso_data$vot,
+    vot_data = REMINDdat$vt,
     int_dat = IEAbal_comparison$merged_intensity,
     NEC_data = NEC_data,
     capcost4W = capcost4W,
     demByTech = finalInputs$demByTech,
     intensity = finalInputs$intensity,
     capCost = finalInputs$capCost,
-    price_nonmot = iso_data$price_nonmot,
+    price_nonmot = REMINDdat$pnm,
     complexValues = complexValues,
-    loadFactor = alldata$LF,
-    annual_mileage = alldata$AM,
-    demISO = alldata$demISO,
+    loadFactor = REMINDdat$LF,
+    annual_mileage = REMINDdat$AM,
+    demISO = merged_data$dem,
     REMIND_scenario = REMIND_scenario,
     EDGE_scenario = EDGE_scenario,
     level2path = level2path,
