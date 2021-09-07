@@ -65,10 +65,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## load specific transport switches
   EDGEscenarios <- EDGEscenarios[scenario_name == EDGE_scenario]
 
-  selfmarket_taxes <- EDGEscenarios[options == "selfmarket_taxes", switch]
-  print(paste0("You selected self-sustaining market, option Taxes to: ", selfmarket_taxes))
-  enhancedtech <- EDGEscenarios[options== "enhancedtech", switch]
-  print(paste0("You selected the option to select an optimistic trend of costs/performances of alternative technologies to: ", enhancedtech))
   smartlifestyle <- EDGEscenarios[options== "smartlifestyle", switch]
   print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
 
