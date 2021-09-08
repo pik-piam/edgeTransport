@@ -130,11 +130,16 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   ## year where complete phase-out incentives occurs
   year_out = 2030
-
+  ## attribute first (to the countries that have them) the same incentives value until the phase out year
+  costs[variable == "Capital costs (purchase)",  incentive_val := ifelse(year>=2020 & year<=year_out,
+                                                                         incentive_val[year==2020],
+                                                                 0),
+        by = c("iso", "vehicle_type", "technology", "variable")]
+  ## incentives are actually phasing out, so the annualized value of the incentives have to be included
   costs[variable == "Capital costs (purchase)",  value := ifelse(year>=2020 & year<=year_out,
                                                                 value + incentive_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1),
                                                                 value),
-                  by = c("iso", "vehicle_type", "technology")]
+                  by = c("iso", "vehicle_type", "technology", "variable")]
   costs[, incentive_val := NULL]
   costs = merge(costs,
                 unique(AM[,c("iso", "vkm.veh", "year", "vehicle_type")]),
