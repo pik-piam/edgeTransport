@@ -12,6 +12,9 @@ lvl0_mergeDat(
   CHN_trucks,
   GCAM_data,
   PSI_int,
+  trsp_incent,
+  fcr_veh,
+  nper_amort_veh,
   smartlifestyle,
   years,
   REMIND2ISO_MAPPING
@@ -31,6 +34,12 @@ lvl0_mergeDat(
 \item{GCAM_data}{GCAM data}
 
 \item{PSI_int}{PSI-based intensity}
+
+\item{trsp_incent}{transport incentives on capital costs}
+
+\item{fcr_veh}{annualization factor for LDVs}
+
+\item{nper_amort_veh}{years of amortization which a LDV}
 
 \item{smartlifestyle}{switch activatinf sustainable lifestyles}
 
