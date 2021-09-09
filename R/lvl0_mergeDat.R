@@ -10,16 +10,19 @@
 #' @param CHN_trucks CHN trucks costs
 #' @param GCAM_data GCAM data
 #' @param PSI_int PSI-based intensity
+#' @param trsp_incent transport incentives on capital costs
+#' @param fcr_veh annualization factor for LDVs
+#' @param nper_amort_veh years of amortization which a LDV
 #' @param smartlifestyle switch activatinf sustainable lifestyles
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
-lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, smartlifestyle, years, REMIND2ISO_MAPPING){
+lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
-  subsector_L1 <- vkm.veh <- tot_purchasecost <- NULL
+  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- NULL
 
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
@@ -112,7 +115,32 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   eu_noMid = setdiff(unique(costs[vehicle_type == "Midsize Car" & variable == "Capital costs (purchase)", iso]), unique(costs[vehicle_type == "Midsize Car" & variable == "Operating costs (maintenance)", iso]))
   costs = rbind(costs,
                 unique(costs[iso %in% eu_noMid & variable != "Capital costs (purchase)" & subsector_L1 == "trn_pass_road_LDV_4W"][, value := mean(value), by = c("year", "variable", "technology")][, vehicle_type := "Midsize Car"]))
+  ## apply transport incentives to EU countries
+  trsp_inc = copy(trsp_incent)
+  trsp_inc = magpie2dt(trsp_inc)
+  trsp_inc[, aveval := mean(value), by = c("region", "period", "variable")]
+  trsp_inc = unique(trsp_inc[,c("region", "period", "variable", "aveval")])
+  # exchange rate 2020: 1 euro = 1.12 dollar
+  # conversion from US$2005 to EUR2020: inflation/exchange rate = 1.3504/1.12 = 1.205714286
+  trsp_inc[, aveval := aveval/1.205714286] ## in 2005 USD
+  setnames(trsp_inc, old = c("region", "period", "aveval", "variable"), new = c("iso", "year", "incentive_val", "technology"))
+  trsp_inc[, variable := "Capital costs (purchase)"]
+  costs = merge(costs, trsp_inc, by = c("iso", "technology", "variable", "year"), all.x = TRUE)
+  costs[is.na(incentive_val), incentive_val := 0]
 
+  ## year where complete phase-out incentives occurs
+  year_out = 2030
+  ## attribute first (to the countries that have them) the same incentives value until the phase out year
+  costs[variable == "Capital costs (purchase)",  incentive_val := ifelse(year>=2020 & year<=year_out,
+                                                                         incentive_val[year==2020],
+                                                                 0),
+        by = c("iso", "vehicle_type", "technology", "variable")]
+  ## incentives are actually phasing out, so the annualized value of the incentives have to be included
+  costs[variable == "Capital costs (purchase)",  value := ifelse(year>=2020 & year<=year_out,
+                                                                value + incentive_val*1.14*0.78*fcr_veh*(1/nper_amort_veh*(year-2020)-1),
+                                                                value),
+                  by = c("iso", "vehicle_type", "technology", "variable")]
+  costs[, incentive_val := NULL]
   costs = merge(costs,
                 unique(AM[,c("iso", "vkm.veh", "year", "vehicle_type")]),
                 all = TRUE,
