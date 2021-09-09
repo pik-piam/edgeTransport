@@ -1753,7 +1753,7 @@ plotCost(costs = techcost, vt = "Passenger Rail_tmp_vehicletype")
 
 ## Passenger transport in DEU 2018
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE,fig.width = 10, fig.height = 3}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 es_deu_verkehrinzahlen <- function(demandkm){
   demand_deu <- demand_km[region == "DEU" & sector == "trn_pass"]
