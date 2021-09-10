@@ -665,4 +665,34 @@ lvl0_AltHDV=function(UCD_output){
 }
 
 
+#' Load Verkehr-in-Zahlen data
+#'
+#' Loads demand (pkm) for:
+#'   Biking, Walking, Busses, Trains, LDV, planes
+#'
+#' Final units for demand: billion pkm
 
+#' @param input_folder folder hosting raw data
+#' @param viz_dir directory with ViZ data
+#'
+#' @importFrom readxl read_excel
+
+lvl0_loadViZ <- function(input_folder, viz_dir = "ViZ"){
+  `...1` <- `..yrs` <- value <- category <- NULL
+  viz_path <- file.path(input_folder, viz_dir, "verkehr-in-zahlen-2020-xls.xlsx")
+  dt <- data.table(read_excel(path=viz_path, sheet="Seite 224", "A5:T39"))
+
+  dt <- rbind(
+    dt,
+    data.table(read_excel(path=viz_path, sheet="Seite 225","A2:T32", col_names=colnames(dt))))
+
+  yrs <- c("2010", "2018")
+  dt <- cbind(
+    categories <- dt[seq(3, nrow(dt), 9)][["1976...10"]],
+    dt[...1 == "Summe", ..yrs])
+
+  setnames(dt, "V1", "category")
+  dt <- melt(dt, id.vars="category", variable.name="year", variable.factor=FALSE)
+  dt[, `:=`(iso="DEU", unit="billion pkm", year=as.numeric(year), value=as.numeric(value))]
+  return(dt[category != "Summe"])
+}
