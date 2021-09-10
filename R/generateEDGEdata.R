@@ -209,6 +209,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## LF in p/v (or t/v)
   ## energy intensity pkm/MJ
   ## Annual mileage in km/year. Every entry in the output is on ISO level
+
+  print("-- load Verkehr-in-Zahlen data")
+  viz_dt <- lvl0_loadViZ(input_folder=input_folder)
+
   print("-- merge costs, LF, annual mileage from the various sources")
   merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, trsp_incent = trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
