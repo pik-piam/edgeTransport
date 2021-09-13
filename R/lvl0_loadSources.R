@@ -26,7 +26,9 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
   ## conversion unit->million
   CONV_unit_million <- 1e-06
   ## load mapping with country codes
-  mapping_TRACCS_iso= fread(file.path(EU_folder, "mapping_countries_EU.csv"), skip=0)
+  mapping_TRACCS_iso= fread(
+    system.file(
+      "extdata", "mapping_countries_EU.csv", package="edgeTransport"), skip=0)
   ## load Road data
   list_countries = data.table(countries=list.files(path = file.path(EU_folder, "TRACCS_ROAD_Final_EXCEL_2013-12-20"),
                                                    all.files=FALSE))
