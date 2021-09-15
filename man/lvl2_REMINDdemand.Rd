@@ -4,7 +4,7 @@
 \alias{lvl2_REMINDdemand}
 \title{Provide demand trajectories for REMIND}
 \usage{
-lvl2_REMINDdemand(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario)
+lvl2_REMINDdemand(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen)
 }
 \arguments{
 \item{regrdemand}{demand regression}
@@ -13,7 +13,7 @@ lvl2_REMINDdemand(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario)
 
 \item{REMINDtall}{extended REMIND time steps}
 
-\item{REMIND_scenario}{SSP scenario}
+\item{SSP_scen}{SSP scenario}
 }
 \description{
 Provide demand trajectories for REMIND

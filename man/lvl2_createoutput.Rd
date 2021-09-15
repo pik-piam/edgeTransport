@@ -19,7 +19,7 @@ lvl2_createoutput(
   loadFactor,
   annual_mileage,
   demISO,
-  REMIND_scenario,
+  SSP_scen,
   EDGE_scenario,
   level2path,
   output_folder
@@ -54,7 +54,7 @@ lvl2_createoutput(
 
 \item{demISO}{ISO level demand in 2010 to be used as a weight in mrremind}
 
-\item{REMIND_scenario}{SSP scenario}
+\item{SSP_scen}{SSP scenario}
 
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 

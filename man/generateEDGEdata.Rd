@@ -7,8 +7,8 @@
 generateEDGEdata(
   input_folder,
   output_folder,
-  EDGE_scenario,
-  REMIND_scenario = "SSP2",
+  SSP_scen = "SSP2",
+  techscen = NULL,
   IEAbal = NULL,
   GDP_country = NULL,
   RatioPPP2MER_country = NULL,
@@ -24,9 +24,9 @@ generateEDGEdata(
 
 \item{output_folder}{folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)}
 
-\item{EDGE_scenario}{EDGE transport scenario specifier}
+\item{SSP_scen}{SSP or SDP scenario}
 
-\item{REMIND_scenario}{SSP scenario}
+\item{techscen}{EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)}
 
 \item{IEAbal}{use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
 

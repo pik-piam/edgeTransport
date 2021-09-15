@@ -17,7 +17,7 @@ lvl0_toISO(
   GCAM2ISO_MAPPING,
   REMIND2ISO_MAPPING,
   EDGE_scenario,
-  REMIND_scenario = "SSP2"
+  SSP_scen = "SSP2"
 )
 }
 \arguments{
@@ -45,7 +45,7 @@ lvl0_toISO(
 
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 
-\item{REMIND_scenario}{SSP scenario}
+\item{SSP_scen}{SSP scenario}
 }
 \value{
 ISO level data for all entries

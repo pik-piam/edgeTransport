@@ -6,7 +6,6 @@
 #' @param years time steps
 #' @param GDP GDP regional level
 #' @param GDP_POP_MER GDP per capita MER
-#' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param techswitch technology at the center of the policy packages
@@ -14,7 +13,7 @@
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
+lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDGE_scenario, smartlifestyle, techswitch){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
   gdp <- copy(GDP)
@@ -125,26 +124,32 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, REM
   ## from now on, SWs and inconvenience costs will coexist. Names of the entries will reflect that, and the generic label "preference" is preferred
   names(SWS) = gsub(pattern = "SW", "pref", names(SWS))
 
-  ## apply S-type trends for renewables
+  ## apply S-type trends for alternative vehicles
 
-  ## convergence year for FCEV Buses and Trucks is more optimistic in the HydrHype case
-  if (techswitch == "FCEV") {
-    convsymmFCEV = 2035
-    convsymmHydrogenAir = 2080
-    speedFCEV = 0.4
-  } else {
-    convsymmFCEV = 2045
+  if (techswitch == "Liq") {
+    convsymmBEV = 2045
+    speedBEV = 0.2
     convsymmHydrogenAir = 2100
     speedFCEV = 0.2
-  }
-
-  ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
-  if (techswitch == "BEV") {
+    convsymmFCEV = 2045
+  } else if (techswitch == "Liq_El"){
+    convsymmBEV = 2045
+    speedBEV = 0.3
+    convsymmHydrogenAir = 2100
+    speedFCEV = 0.2
+    convsymmFCEV = 2045
+  } else if (techswitch == "BEV"){
     convsymmBEV = 2035
     speedBEV = 0.4
-    } else {
-    convsymmBEV = 2050
+    convsymmHydrogenAir = 2100
+    speedFCEV = 0.2
+    convsymmFCEV = 2045
+  } else if (techswitch == "FCEV"){
+    convsymmBEV = 2045
     speedBEV = 0.2
+    convsymmHydrogenAir = 2080
+    speedFCEV = 0.4
+    convsymmFCEV = 2035
   }
 
   ## small trucks
