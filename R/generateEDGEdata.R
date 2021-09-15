@@ -227,7 +227,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
   ## make freight less price sensitive
   VOT_lambdas$logit_output$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
-  
+
   if(storeRDS){
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
