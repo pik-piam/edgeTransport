@@ -405,7 +405,7 @@ ratioENplotf = function(demandEJ, demandkm){
   demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
   demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
   demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year","veh")]
   setnames(demandkm, old = "veh", new = "vehicle_type")
   demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type")]
@@ -1193,7 +1193,7 @@ demandkmplotf = function(demandkm, POP){
   demandkm[, aggr_mode := ifelse(subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_freight", "trn_shipping_intl"), "Freight", aggr_mode)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_aviation_intl"), "Pass. non LDV", aggr_mode)]
-  demandkm[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "HSR_tmp_subsector_L2", "Passenger Rail_tmp_subsector_L2", "Cycle_tmp_subsector_L2", "Walk_tmp_subsector_L2", "Domestic Aviation_tmp_subsector_L2", "Bus") | subsector_L1 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
+  demandkm[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "HSR_tmp_subsector_L2", "Passenger Rail_tmp_subsector_L2", "Cycle_tmp_subsector_L2", "Non_mot", "Domestic Aviation_tmp_subsector_L2", "Bus") | subsector_L1 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
 
   demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
   demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicle_type), "Large Cars", veh)]
@@ -1207,7 +1207,7 @@ demandkmplotf = function(demandkm, POP){
   demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
   demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
   demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "veh")]
   setnames(demandkm, old = "veh", new = "vehicle_type")
 
@@ -1359,7 +1359,7 @@ demandkm_nobunk_plotf = function(demandkm, POP){
   demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
   demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
   demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Dom. Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "veh")]
   setnames(demandkm, old = "veh", new = "vehicle_type")
 

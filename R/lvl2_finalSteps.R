@@ -200,6 +200,7 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
     print("Creating csv files for annual mileage...")
     fwrite(annual_mileage, file = level2path("annual_mileage.csv"))
   } else {
+    
     EDGETrData = list(fe_demand_tech = demByTech,
                       fe2es = intensity,
                       esCapCost = capCost,
