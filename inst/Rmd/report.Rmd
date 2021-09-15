@@ -1751,7 +1751,7 @@ plotCost(costs = techcost, vt = "Passenger Rail_tmp_vehicletype")
 ```
 # ES validation for selected categories and regions
 
-## Passenger transport in DEU 2018
+## Passenger transport in DEU 2018 - Verkehr-in-Zahlen
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -1785,4 +1785,72 @@ ViZ,LDV, 913.3
 }
 
 es_deu_verkehrinzahlen(demandkm)
+```
+
+## Vehicle numbers in the EU - ACEA
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+vn_eu_acea <- function(demand_km, loadFactor, annual_mileage){
+
+  all_eu <- c(EU_regions, NEU_regions)
+
+  ## vkm
+  demand_vkm <- merge(demand_km, loadFactor,
+                      by=colnames(demand_km)[2:ncol(demand_km)])
+  demand_vkm[, demandVKM := demand_F/loadFactor]
+  nas <- demand_vkm[is.na(demandVKM)]
+  if(length(nas)){
+    warning(sprintf("Missing demand for %s", unique(nas$vehicle_type)))
+  }
+  demand_vkm <- demand_vkm[!is.na(demandVKM)]
+
+  ## mileage
+  demand_vkm <- merge(demand_vkm, annual_mileage,
+                      by=colnames(demand_km)[2:ncol(demand_km)])
+  no_mileage <- demand_vkm[is.na(vkm.veh) | vkm.veh == 0]  
+  if(length(no_mileage)){
+    warning(sprintf("Missing demand for %s", unique(no_mileage$vehicle_type)))
+  }
+  demand_vkm[, veh_num := demandVKM/vkm.veh]
+  
+  aceadt <- rbindlist(list(
+    fread("acea_cars.csv")[, group:="cars"],
+    fread("acea_lcm.csv")[, group:="lcv"],
+    fread("acea_trucks.csv")[, group:="trucks"]
+  ))
+
+  mapping_TRACCS_iso= fread(
+    system.file(
+      "extdata", "mapping_countries_EU.csv", package="edgeTransport"), skip=0)
+  aceadt <- merge(aceadt, mapping_TRACCS_iso, by.x="country", by.y="country_name")
+
+  demand_eu <- demand_vkm[region %in% aceadt$iso]
+  
+
+  demand_deu <- rmndt::approx_dt(demand_deu, c(2015, 2018, 2020), "year", "demand_F",
+                                 idxcols=colnames(demand_deu)[3:9])[year == 2018]
+  toplot <- demand_deu[, .(model="EDGE-T", demand=1e-3*sum(demand_F)), by=c("subsector_L2")] # millions -> billions
+  toplot[, subsector_L2 := gsub("_tmp_subsector_L2", "", subsector_L2)]
+  toplot[, subsector_L2 := gsub("trn_pass_road_", "", subsector_L2)]
+
+  ## Verkehr-in-Zahlen 2020, https://www.bmvi.de/SharedDocs/DE/Artikel/G/verkehr-in-zahlen.html, p224-225
+  vkiz <- fread(text="
+model,subsector_L2,demand
+ViZ,Cycle, 39.8
+ViZ,Domestic Aviation, 70.4
+ViZ,Passenger Rail, 98.2
+ViZ,Walk, 35.9
+ViZ,Bus, 80.1,
+ViZ,LDV, 913.3
+")[, demand := demand]
+
+  toplot <- rbind(toplot, vkiz)
+
+  p <- ggplot(toplot, aes(x=model, y=demand)) +
+    geom_bar(stat="identity", fill="blue") +
+    facet_wrap(~subsector_L2, scales="free_y") +
+    labs(y="Transport Demand 2018 [billion pkm]") +
+    theme_plot
+  return(p)
+}
 ```

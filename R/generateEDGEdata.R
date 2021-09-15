@@ -433,6 +433,9 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     saveRDS(POP, file = level2path("POP.RDS"))
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
+    ## copy ACEA data for comparison
+    acea_files <- list.files(file.path(input_folder, "ACEA"), pattern="*.csv", full.names=T)
+    file.copy(acea_files, level2path(""), overwrite = T)
     md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
     file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
