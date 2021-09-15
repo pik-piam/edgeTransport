@@ -306,10 +306,10 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_
   price_nonmot = value_of_time[tranSubsector %in% c("Cycle", "Walk"),
                               .(sector = supplysector, subsector_L1 = tranSubsector, iso, year, tot_price = time_price)]
 
-  price_nonmot[, subsector_L2 := paste0(subsector_L3, "_tmp_subsector_L2")]
-  price_nonmot[, subsector_L1 := paste0(subsector_L3, "_tmp_subsector_L1")]
-  price_nonmot[, vehicle_type := paste0(subsector_L3, "_tmp_vehicletype")]
-  price_nonmot[, technology := paste0(subsector_L3, "_tmp_technology")]
+  price_nonmot[, subsector_L2 := "Non_mot"]
+  price_nonmot[, subsector_L3 := "trn_pass_road"]
+  price_nonmot[, vehicle_type := paste0(subsector_L1, "_tmp_vehicletype")]
+  price_nonmot[, technology := paste0(subsector_L1, "_tmp_technology")]
 
   VOT_output = list(value_time_FV = value_time_FV,
                     value_time_VS1 = value_time_VS1,

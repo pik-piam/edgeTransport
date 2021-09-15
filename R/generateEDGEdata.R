@@ -228,10 +228,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## make freight less price sensitive
   VOT_lambdas$logit_output$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
   
-  #change logit structure for cycling and walking
-  VOT_lambdas$price_nonmot[subsector_L3=="Walk", c("subsector_L1","subsector_L2","subsector_L3") := list("Walk", "Non_mot", "trn_pass_road")]
-  VOT_lambdas$price_nonmot[subsector_L3=="Cycle", c("subsector_L1","subsector_L2","subsector_L3") := list("Cycle", "Non_mot", "trn_pass_road")]  
-
   if(storeRDS){
     saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
   }
