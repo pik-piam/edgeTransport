@@ -107,7 +107,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   setnames(GDP_country, c("ISO3"), c("iso"))
 
   RatioPPP2MER_country = as.data.table(RatioPPP2MER_country)
-  RatioPPP2MER_country = RatioPPP2MER_country[, c("year", "data") := NULL]
+  RatioPPP2MER_country = RatioPPP2MER_country[, c("year", "d3") := NULL]
   setnames(RatioPPP2MER_country, old = "value", new = "ratio")
 
   GDP_MER_country = merge(GDP_country, RatioPPP2MER_country, by.x = "iso", by.y = "Region")
