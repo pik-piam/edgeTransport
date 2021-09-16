@@ -29,7 +29,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
-  sector <- variable <- region <- logit.exponent <- NULL
+  period <- sector <- variable <- region <- logit.exponent <- NULL
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, REMIND_scenario, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
@@ -100,17 +100,15 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## rearrange the columns and create regional values
   GDP_country = GDP_country[,,paste0("gdp_", REMIND_scenario)]
   GDP_country <- as.data.table(GDP_country)
-  GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
-  setnames(GDP_country, old = "value", new = "weight")
-  GDP = merge(GDP_country, REMIND2ISO_MAPPING, by.x = "ISO3", by.y = "iso")
+  GDP_country[, year := as.numeric(gsub("y", "", period))][, period := NULL]
+  setnames(GDP_country, old = c("value", "region"), new = c("weight", "iso"))
+  GDP = merge(GDP_country, REMIND2ISO_MAPPING, by="iso")
   GDP = GDP[,.(weight = sum(weight)), by = c("region", "year")]
-  setnames(GDP_country, c("ISO3"), c("iso"))
 
   RatioPPP2MER_country = as.data.table(RatioPPP2MER_country)
   RatioPPP2MER_country = RatioPPP2MER_country[, c("year", "data") := NULL]
-  setnames(RatioPPP2MER_country, old = "value", new = "ratio")
-
-  GDP_MER_country = merge(GDP_country, RatioPPP2MER_country, by.x = "iso", by.y = "Region")
+  setnames(RatioPPP2MER_country, old = c("value", "Region"), new = c("ratio", "iso"))
+  GDP_MER_country = merge(GDP_country, RatioPPP2MER_country, by = "iso")
   GDP_MER_country[, weight := weight*ratio]
   GDP_MER_country[, ratio := NULL]
   GDP_MER = merge(GDP_MER_country, REMIND2ISO_MAPPING, by = "iso")
@@ -119,7 +117,8 @@ generateEDGEdata <- function(input_folder, output_folder,
   POP_country = POP_country[,,paste0("pop_", REMIND_scenario)]
   POP_country <- as.data.table(POP_country)
   POP_country[, year := as.numeric(gsub("y", "", year))]
-  POP = merge(POP_country, REMIND2ISO_MAPPING, by.x = "iso2c", by.y = "iso")
+  setnames(POP_country, "iso3c", "iso")
+  POP = merge(POP_country, REMIND2ISO_MAPPING, by = "iso")
   POP = POP[,.(value = sum(value)), by = c("region", "year")]
   setnames(POP_country, old = c("iso2c", "variable"), new = c("iso", "POP"),skip_absent=TRUE)
 
