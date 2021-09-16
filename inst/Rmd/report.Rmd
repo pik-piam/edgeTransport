@@ -1825,32 +1825,12 @@ vn_eu_acea <- function(demand_km, loadFactor, annual_mileage){
   aceadt <- merge(aceadt, mapping_TRACCS_iso, by.x="country", by.y="country_name")
 
   demand_eu <- demand_vkm[region %in% aceadt$iso]
-  
 
-  demand_deu <- rmndt::approx_dt(demand_deu, c(2015, 2018, 2020), "year", "demand_F",
-                                 idxcols=colnames(demand_deu)[3:9])[year == 2018]
-  toplot <- demand_deu[, .(model="EDGE-T", demand=1e-3*sum(demand_F)), by=c("subsector_L2")] # millions -> billions
-  toplot[, subsector_L2 := gsub("_tmp_subsector_L2", "", subsector_L2)]
-  toplot[, subsector_L2 := gsub("trn_pass_road_", "", subsector_L2)]
+  ## apply ACEA classification
+  demand_eu[subsector_L2 == "trn_pass_road_LDV", group := "cars"]
+  demand_eu[subsector_L3 == "trn_freight_road" & vehicle_type == "Truck (0-3.5t)", group := "lcv"]
+  demand_eu[subsector_L3 == "trn_freight_road" & vehicle_type != "Truck (0-3.5t)", group := "trucks"]
 
-  ## Verkehr-in-Zahlen 2020, https://www.bmvi.de/SharedDocs/DE/Artikel/G/verkehr-in-zahlen.html, p224-225
-  vkiz <- fread(text="
-model,subsector_L2,demand
-ViZ,Cycle, 39.8
-ViZ,Domestic Aviation, 70.4
-ViZ,Passenger Rail, 98.2
-ViZ,Walk, 35.9
-ViZ,Bus, 80.1,
-ViZ,LDV, 913.3
-")[, demand := demand]
 
-  toplot <- rbind(toplot, vkiz)
-
-  p <- ggplot(toplot, aes(x=model, y=demand)) +
-    geom_bar(stat="identity", fill="blue") +
-    facet_wrap(~subsector_L2, scales="free_y") +
-    labs(y="Transport Demand 2018 [billion pkm]") +
-    theme_plot
-  return(p)
 }
 ```
