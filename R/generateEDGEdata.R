@@ -212,11 +212,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- merge costs, LF, annual mileage from the various sources")
   merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, trsp_incent = trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
-  #change logit structure for cycling and walking
-  merged_data$dem[subsector_L3=="Walk", c("subsector_L1","subsector_L2","subsector_L3") := list("Walk", "Non_mot", "trn_pass_road")]
-  merged_data$dem[subsector_L3=="Cycle", c("subsector_L1","subsector_L2","subsector_L3") := list("Cycle", "Non_mot", "trn_pass_road")]
-  
-  
+
   if(storeRDS)
     saveRDS(merged_data, file = level0path("merged_data.RDS"))
 
