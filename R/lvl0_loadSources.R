@@ -126,16 +126,41 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
                                                path=file.path(
                                                  EU_folder,
                                                  paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
-                                               sheet="Mileage per Veh. (Km)","A2:I51")))
+                                               sheet="Mileage per Veh. (Km)","A2:I74")))
                                              colnames(output)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
                                              output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
                                                            measure.vars = c("2005","2006","2007","2008","2009","2010"))
                                              setnames(output,old=c("value","variable"),new=c("annual_mileage","year"))
+                                             #Delete all and total values
+                                             output=output[!technology%in%c("All","Total")]
+                                             #Merge with EDGE_vehicle_type
                                              output=merge(mapping_TRACCS_roadf_categories,output)
-                                             output=output[technology %in% c("All"),]
                                              output=output[annual_mileage>0,]
+                                             
+                                             help_veh_population = suppressMessages(data.table(read_excel(
+                                               path=file.path(
+                                                 EU_folder,
+                                                 paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
+                                               sheet="Population (Veh.)","A2:I74")))
+                                             colnames(help_veh_population)=c("category_TRACCS","vehicle_type","technology",as.character(seq(2005,2010,1)))
+                                             help_veh_population = melt(help_veh_population, id.vars = c("category_TRACCS","vehicle_type","technology"),
+                                                                        measure.vars = c("2005","2006","2007","2008","2009","2010"))
+                                             setnames(help_veh_population,old=c("value","variable"),new=c("veh_population","year"))
+                                             #Delete all and total values
+                                             help_veh_population=help_veh_population[!technology%in%c("All","Total")]
+                                             help_veh_population=merge(mapping_TRACCS_roadf_categories,help_veh_population)
+                                             help_veh_population=help_veh_population[veh_population>0,]
+                                             sum_veh_population=help_veh_population[,sum(veh_population), by=c("EDGE_vehicle_type","year")]
+                                             setnames(sum_veh_population,old=c("V1"),new=c("Total"))
+                                             help_veh_population[sum_veh_population, on= c(EDGE_vehicle_type="EDGE_vehicle_type", year="year"), Total := i.Total]
+                                             help_veh_population[, weight:= veh_population/Total]
+                                             help_veh_population[,.(vehicle_type,technology,weight,year)]
+                                             output[help_veh_population,on=c(vehicle_type="vehicle_type", technology="technology" , year="year"), weight:=i.weight]
+                                             output=output[,annual_mileage:=annual_mileage*weight]
+                                             output=output[,sum(annual_mileage), by=c("EDGE_vehicle_type","year")]
+                                             setnames(output,old=c("V1","EDGE_vehicle_type"),new=c("annual_mileage","vehicle_type"))
+                                             
                                              output$country_name <- x
-                                             output=output[,.(vehicle_type=EDGE_vehicle_type,year,annual_mileage,country_name)]
                                              return(output)
                                            }))
   
