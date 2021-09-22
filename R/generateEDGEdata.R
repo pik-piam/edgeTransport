@@ -341,15 +341,57 @@ generateEDGEdata <- function(input_folder, output_folder,
 
     ## regression demand calculation
     print("-- performing demand regression")
-    ## demand in million km
-    dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
-                              price_baseline = prices$S3S,
-                              GDP_POP = GDP_POP,
-                              REMIND_scenario = REMIND_scenario,
-                              smartlifestyle = smartlifestyle)
+    ## if NAVIGATE international task: use Business-Leisure version
+    NAVIGATEintl <- FALSE
+    if (NAVIGATEintl) {
+      ## function that loads historical country-specific international aviation demand [billions RPK]
+      print("-- prepare international aviation specific data")
+      IntAv_Prep <- lvl0_IntAvPreparation(input_folder= input_folder,
+                                          GDP_country = GDP_country)
 
-    if(storeRDS)
-      saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
+      ## Baseline demand regression run, for international aviation
+      print("-- performing demand regression for Intl Av")
+      NAVIGATE_intl_dem_base <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
+                                                           price_baseline = prices$S3S,
+                                                           GDP_POP = GDP_POP,
+                                                           REMIND_scenario = REMIND_scenario,
+                                                           smartlifestyle = smartlifestyle,
+                                                           ICCT_data = IntAv_Prep,
+                                                           input_folder = input_folder,
+                                                           Baseline_Run = TRUE)
+
+      ## regression demand calculation
+      print("-- performing demand regression")
+      ## demand in million km
+      NAVIGATE_intl_dem <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
+                                                      price_baseline = prices$S3S,
+                                                      GDP_POP = GDP_POP,
+                                                      REMIND_scenario = REMIND_scenario,
+                                                      smartlifestyle = smartlifestyle,
+                                                      ICCT_data = IntAv_Prep,
+                                                      RPK_cap_baseline = NAVIGATE_intl_dem_base,
+                                                      input_folder = input_folder,
+                                                      Baseline_Run = FALSE)
+
+      dem_regr = NAVIGATE_intl_dem[["D_star"]]
+
+      if(storeRDS){
+        saveRDS(NAVIGATE_intl_dem[["D_star"]], file = level2path("demand_regression.RDS"))
+        saveRDS(NAVIGATE_intl_dem[["D_star_av"]], file = level2path("demand_regression_aviation.RDS"))
+      }
+
+
+    } else {
+      ## demand in million km
+      dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
+                                price_baseline = prices$S3S,
+                                GDP_POP = GDP_POP,
+                                REMIND_scenario = REMIND_scenario,
+                                smartlifestyle = smartlifestyle)
+      if(storeRDS)
+        saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
+
+    }
 
     ## calculate vintages (new shares, prices, intensity)
     prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
