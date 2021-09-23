@@ -147,7 +147,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                 by = c("vehicle_type", "year", "iso"))
 
   ## for the countries that do not feature mileage for specific vehicle, assumed average mileage
-  costs[subsector_L1 == "trn_pass_road_LDV_4W", vkm.veh := ifelse(is.na(vkm.veh), mean(vkm.veh, na.rm = TRUE), vkm.veh), by = c("year", "vehicle_type")]
+  costs[subsector_L1 %in% c("trn_pass_road_LDV_4W", "Bus_tmp_subsector_L1", "trn_freight_road_tmp_subsector_L1"), vkm.veh := ifelse(is.na(vkm.veh), mean(vkm.veh, na.rm = TRUE), vkm.veh), by = c("year", "vehicle_type")]
 
   costs[!is.na(vkm.veh) & unit == "2005$/veh/yr", value := value/vkm.veh]
   costs[!is.na(vkm.veh) & unit == "2005$/veh/yr", unit := "2005$/vkt"]
