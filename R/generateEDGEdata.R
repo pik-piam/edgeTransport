@@ -13,6 +13,7 @@
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
 #' @param trsp_incent use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)
 #' @param storeRDS optional saving of intermediate RDS files
+#' @param loadRDS optional load intermediate RDS files for input data to save time
 #'
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
@@ -365,7 +366,7 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
       NAVIGATE_intl_dem_base <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
                                                            price_baseline = prices$S3S,
                                                            GDP_POP = GDP_POP,
-                                                           REMIND_scenario = REMIND_scenario,
+                                                           REMIND_scenario = SSP_scen,
                                                            smartlifestyle = smartlifestyle,
                                                            ICCT_data = IntAv_Prep,
                                                            input_folder = input_folder,
@@ -377,7 +378,7 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
       NAVIGATE_intl_dem <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
                                                       price_baseline = prices$S3S,
                                                       GDP_POP = GDP_POP,
-                                                      REMIND_scenario = REMIND_scenario,
+                                                      REMIND_scenario = SSP_scen,
                                                       smartlifestyle = smartlifestyle,
                                                       ICCT_data = IntAv_Prep,
                                                       RPK_cap_baseline = NAVIGATE_intl_dem_base,
@@ -397,7 +398,6 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
       dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
                                 GDP_POP = GDP_POP,
-                                REMIND_scenario = REMIND_scenario,
                                 smartlifestyle = smartlifestyle)
       if(storeRDS)
         saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
