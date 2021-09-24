@@ -6,7 +6,6 @@
 #' @param years time steps
 #' @param GDP GDP regional level
 #' @param GDP_POP_MER GDP per capita MER
-#' @param REMIND_scenario SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param techswitch technology at the center of the policy packages
@@ -14,7 +13,7 @@
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, REMIND_scenario, EDGE_scenario, smartlifestyle, techswitch){
+lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDGE_scenario, smartlifestyle, techswitch){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
   gdp <- copy(GDP)
@@ -125,26 +124,32 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, REM
   ## from now on, SWs and inconvenience costs will coexist. Names of the entries will reflect that, and the generic label "preference" is preferred
   names(SWS) = gsub(pattern = "SW", "pref", names(SWS))
 
-  ## apply S-type trends for renewables
+  ## apply S-type trends for alternative vehicles
 
-  ## convergence year for FCEV Buses and Trucks is more optimistic in the HydrHype case
-  if (techswitch == "FCEV") {
-    convsymmFCEV = 2035
-    convsymmHydrogenAir = 2080
-    speedFCEV = 0.4
-  } else {
-    convsymmFCEV = 2045
+  if (techswitch == "Liq") {
+    convsymmBEV = 2045
+    speedBEV = 0.2
     convsymmHydrogenAir = 2100
     speedFCEV = 0.2
-  }
-
-  ## convergence base year for electric Buses and Trucks is more optimistic in the ElecEra case
-  if (techswitch == "BEV") {
+    convsymmFCEV = 2045
+  } else if (techswitch == "Liq_El"){
+    convsymmBEV = 2045
+    speedBEV = 0.3
+    convsymmHydrogenAir = 2100
+    speedFCEV = 0.2
+    convsymmFCEV = 2045
+  } else if (techswitch == "BEV"){
     convsymmBEV = 2035
     speedBEV = 0.4
-    } else {
-    convsymmBEV = 2050
+    convsymmHydrogenAir = 2100
+    speedFCEV = 0.2
+    convsymmFCEV = 2045
+  } else if (techswitch == "FCEV"){
+    convsymmBEV = 2045
     speedBEV = 0.2
+    convsymmHydrogenAir = 2080
+    speedFCEV = 0.4
+    convsymmFCEV = 2035
   }
 
   ## small trucks
@@ -229,31 +234,18 @@ if (techswitch %in% c("BEV", "FCEV")) {
 
 
   ## preference for buses high in EU after 2030
-  target_reduction = 0.67
+  target_reduction = 0.5
   SWS$S2S3_final_pref[region %in% eu_regions & subsector_L2 == "Bus" & year >= 2020,
-                      sw := sw*pmax((1 - target_reduction*(year - 2020)/30), 1-target_reduction)]
-  SWS$S2S3_final_pref[region %in% c("DEU") & subsector_L2 == "Bus"  & year >=2010 & year <= 2020,
-                      sw := ifelse(year >= 2010, sw[year==2010] + (0.3*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), sw),
-                      by = c("region","subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("DEU") & subsector_L2 == "Bus"  & year >=2020,
-                      sw := sw[year==2020], by = c("region","subsector_L2")]
+                      sw := sw*pmax((1 - target_reduction*(year - 2010)/30), 1-target_reduction)]
 
   ## preference for buses extremely high in OAS and IND
-  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2030,
-                      sw := ifelse(year <= 2030, sw[year==2020] + (0.5*sw[year==2020]-sw[year==2020]) * (year-2020) / (2030-2020), sw), by = c("region","subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2030 & year <= 2050,
-                      sw := ifelse(year <= 2050, sw[year==2030] + (0.3*sw[year==2030]-sw[year==2030]) * (year-2030) / (2050-2030), sw), by = c("region","subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2050 & year <= 2100,
-                      sw := ifelse(year <= 2100, sw[year==2050] + (0.2*sw[year==2050]-sw[year==2050]) * (year-2050) / (2100-2050), sw), by = c("region","subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2100,
+  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
+                      sw := sw*(1 - 0.6 * (year-2020) / (2100-2020)), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year > 2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
-  SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2010 & year <= 2020,
-                      sw := ifelse(year <= 2020, sw[year==2010] + (0.01*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), sw), by = c("region","subsector_L2")]
   SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
-                      sw := ifelse(year >= 2020, sw[year==2020] + (0.01*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), sw), by = c("region","subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2100,
-                      sw := sw[year==2100], by = c("region","subsector_L2")]
+                      sw := sw*(1 - 0.8 * (year-2020) / (2100-2020)), by = c("region","subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,

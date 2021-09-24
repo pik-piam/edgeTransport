@@ -7,8 +7,8 @@
 generateEDGEdata(
   input_folder,
   output_folder,
-  EDGE_scenario,
-  REMIND_scenario = "SSP2",
+  SSP_scen = "SSP2",
+  techscen = NULL,
   IEAbal = NULL,
   GDP_country = NULL,
   RatioPPP2MER_country = NULL,
@@ -16,7 +16,8 @@ generateEDGEdata(
   JRC_IDEES_Trsp = NULL,
   JRC_IDEES_MarBunk = NULL,
   trsp_incent = NULL,
-  storeRDS = FALSE
+  storeRDS = FALSE,
+  loadRDS = FALSE
 )
 }
 \arguments{
@@ -24,9 +25,9 @@ generateEDGEdata(
 
 \item{output_folder}{folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)}
 
-\item{EDGE_scenario}{EDGE transport scenario specifier}
+\item{SSP_scen}{SSP or SDP scenario}
 
-\item{REMIND_scenario}{SSP scenario}
+\item{techscen}{EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)}
 
 \item{IEAbal}{use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
 
@@ -43,6 +44,8 @@ generateEDGEdata(
 \item{trsp_incent}{use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)}
 
 \item{storeRDS}{optional saving of intermediate RDS files}
+
+\item{loadRDS}{optional load intermediate RDS files for input data to save time}
 }
 \value{
 generated EDGE-transport input data

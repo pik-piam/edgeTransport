@@ -1,8 +1,8 @@
 # Prepare EDGE Transport Data for the REMIND model
 
-R package **edgeTransport**, version **0.1.67**
+R package **edgeTransport**, version **0.2.0**
 
-[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)     [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
+[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)    
 
 ## Purpose and Functionality
 
@@ -46,7 +46,7 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M (2021). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.1.67.
+Dirnaichner A, Rottoli M (2021). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.2.0.
 
 A BibTeX entry for LaTeX users is
 
@@ -55,7 +55,7 @@ A BibTeX entry for LaTeX users is
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Alois Dirnaichner and Marianna Rottoli},
   year = {2021},
-  note = {R package version 0.1.67},
+  note = {R package version 0.2.0},
 }
 ```
 

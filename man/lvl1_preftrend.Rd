@@ -11,7 +11,6 @@ lvl1_preftrend(
   years,
   GDP,
   GDP_POP_MER,
-  REMIND_scenario,
   EDGE_scenario,
   smartlifestyle,
   techswitch
@@ -29,8 +28,6 @@ lvl1_preftrend(
 \item{GDP}{GDP regional level}
 
 \item{GDP_POP_MER}{GDP per capita MER}
-
-\item{REMIND_scenario}{SSP scenario}
 
 \item{EDGE_scenario}{EDGE transport scenario specifier}
 
