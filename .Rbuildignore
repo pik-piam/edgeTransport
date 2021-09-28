@@ -2,3 +2,5 @@
 ^.*\.zenodo.json$
 ^\.buildlibrary$
 ^GDP*\.RDS$
+^\.github$
+^codecov\.yml$
