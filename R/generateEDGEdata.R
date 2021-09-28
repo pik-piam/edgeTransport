@@ -12,7 +12,7 @@
 #' @param JRC_IDEES_Trsp use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
 #' @param trsp_incent use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)
-#' @param storeRDS optional saving of intermediate RDS files
+#' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadRDS optional load intermediate RDS files for input data to save time
 #'
 #' @return generated EDGE-transport input data
@@ -30,6 +30,12 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
   sector <- variable <- region <- logit.exponent <- EDGETscen <- SSPscen <- default <- NULL
+
+  if(is.null(output_folder) & storeRDS == TRUE){
+    print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
+    storeRDS <- FALSE
+  }
+
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, SSP_scen, EDGE_scenario, paste0("level_", N))
     if(!dir.exists(path)){
