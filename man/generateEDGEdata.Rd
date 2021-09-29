@@ -43,7 +43,7 @@ generateEDGEdata(
 
 \item{trsp_incent}{use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)}
 
-\item{storeRDS}{optional saving of intermediate RDS files}
+\item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
 
 \item{loadRDS}{optional load intermediate RDS files for input data to save time}
 }

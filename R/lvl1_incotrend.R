@@ -126,7 +126,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDG
 
   ## apply S-type trends for alternative vehicles
 
-  if (techswitch == "Liq") {
+  if (techswitch == "Liquids") {
     convsymmBEV = 2045
     speedBEV = 0.2
     convsymmHydrogenAir = 2100
@@ -179,8 +179,8 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDG
                     by=c("region","vehicle_type","technology")]
 
 
-if (techswitch %in% c("BEV", "FCEV")) {
-  if (techswitch == "FCEV") {
+if (techswitch %in% c("ElecEra", "HydrHype")) {
+  if (techswitch == "HydrHype") {
     ## BEV are constrained, for long distance application
     SWS$FV_final_pref[technology == "Electric" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
                                                                    (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
