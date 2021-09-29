@@ -13,6 +13,7 @@
 #' @param JRC_IDEES_MarBunk use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")
 #' @param trsp_incent use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)
 #' @param storeRDS optional saving of intermediate RDS files
+#' @param loadRDS optional loading from previously stored RDS files instead of the raw data
 #'
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
@@ -25,7 +26,7 @@
 generateEDGEdata <- function(input_folder, output_folder,
                              EDGE_scenario, REMIND_scenario="SSP2",
                              IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL, trsp_incent=NULL,
-                             storeRDS=FALSE){
+                             storeRDS=FALSE, loadRDS=FALSE){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
   non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
   Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
@@ -182,7 +183,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
-  EU_data <- lvl0_loadEU(input_folder)
+  if(loadRDS){
+    EU_data <- readRDS(level0path("load_EU_data.RDS"))
+  }else{
+    EU_data <- lvl0_loadEU(input_folder)
+  }
   if(storeRDS)
      saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
 
