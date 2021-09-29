@@ -290,10 +290,10 @@ if (techswitch %in% c("BEV", "FCEV")) {
                      by=c("region", "subsector_L3")]
 
 
-  SWS$S3S_final_pref[subsector_L3 == "Cycle" & region %in% "REF" & year >= 2010,
+  SWS$S3S_final_pref[subsector_L1 == "Cycle" & region %in% "REF" & year >= 2010,
                      sw := ifelse(year==2010, sw, 3*sw[year==2010]),
                      by=c("region")]
-  SWS$S3S_final_pref[subsector_L3 == "Walk" & region %in% "REF" & year >= 2010,
+  SWS$S3S_final_pref[subsector_L1 == "Walk" & region %in% "REF" & year >= 2010,
                      sw := ifelse(year==2010, sw, 3*sw[year==2010]),
                      by=c("region")]
 
@@ -365,24 +365,24 @@ if (techswitch %in% c("BEV", "FCEV")) {
     richregions = unique(unique(gdpcap[year == 2010 & GDP_cap > 25000, region]))
 
     ## Preference for Walking increases assuming that the infrastructure and the services are smarter closer etc.
-    SWS$S3S_final_pref[subsector_L3 %in% c("Walk") & year >= 2020 & region %in% richregions,
+    SWS$S3S_final_pref[subsector_L1 %in% c("Walk") & year >= 2020 & region %in% richregions,
                        sw := sw[year==2020] + (4*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
 
     ## Preference for Cycling sharply increases in rich countries assuming that the infrastructure and the services are smarter closer etc.
-    SWS$S3S_final_pref[subsector_L3 %in% c("Cycle") & year >= 2020 & region %in% richregions,
+    SWS$S3S_final_pref[subsector_L1 %in% c("Cycle") & year >= 2020 & region %in% richregions,
                        sw := sw[year==2020] + (20*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
 
     ## Preference for Walking increases assuming that the infrastructure and the services are smarter closer etc.
-    SWS$S3S_final_pref[subsector_L3 %in% c("Walk") & year >= 2020 & !(region %in% richregions),
+    SWS$S3S_final_pref[subsector_L1 %in% c("Walk") & year >= 2020 & !(region %in% richregions),
                        sw := sw[year==2020] + (2*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
 
     ## Preference for Cycling sharply increases in rich countries assuming that the infrastructure and the services are smarter closer etc.
-    SWS$S3S_final_pref[subsector_L3 %in% c("Cycle") & year >= 2020 & !(region %in% richregions),
+    SWS$S3S_final_pref[subsector_L1 %in% c("Cycle") & year >= 2020 & !(region %in% richregions),
                        sw := sw[year==2020] + (10*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
 
 
     ## Preference for Cycling sharply increases in rich countries assuming that the infrastructure and the services are smarter closer etc.
-    SWS$S3S_final_pref[subsector_L3 %in% c("Cycle", "Walk") & year >= 2020 & region %in% richregions,
+    SWS$S3S_final_pref[subsector_L1 %in% c("Cycle", "Walk") & year >= 2020 & region %in% richregions,
                        sw := sw[year==2020] + (sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), by = c("region","subsector_L3")]
 
     SWS$S3S_final_pref[subsector_L3 %in% c("trn_pass_road") & year >= 2020 & region %in% richregions,
