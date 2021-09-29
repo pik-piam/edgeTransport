@@ -2,3 +2,4 @@
 ^.*\.zenodo.json$
 ^\.buildlibrary$
 ^GDP*\.RDS$
+^\.Rproj\.user$

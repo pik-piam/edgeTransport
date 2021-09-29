@@ -122,6 +122,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
   ## road passenger: load annual mileage
   am_countries_EU<- do.call("rbind",lapply(list_countries$countries,
                                            function(x) {
+                                             browser()
                                              output = suppressMessages(data.table(read_excel(
                                                path=file.path(
                                                  EU_folder,
@@ -154,8 +155,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
                                              setnames(sum_veh_population,old=c("V1"),new=c("Total"))
                                              help_veh_population[sum_veh_population, on= c(EDGE_vehicle_type="EDGE_vehicle_type", year="year"), Total := i.Total]
                                              help_veh_population[, weight:= veh_population/Total]
-                                             help_veh_population[,.(vehicle_type,technology,weight,year)]
-                                             output[help_veh_population,on=c(vehicle_type="vehicle_type", technology="technology" , year="year"), weight:=i.weight]
+                                             output[help_veh_population,on=c(EDGE_vehicle_type="EDGE_vehicle_type",category_TRACCS="category_TRACCS",vehicle_type="vehicle_type", technology="technology" , year="year"), weight:=i.weight]
                                              output=output[,annual_mileage:=annual_mileage*weight]
                                              output=output[,sum(annual_mileage), by=c("EDGE_vehicle_type","year")]
                                              setnames(output,old=c("V1","EDGE_vehicle_type"),new=c("annual_mileage","vehicle_type"))
