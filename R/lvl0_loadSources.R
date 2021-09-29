@@ -122,7 +122,6 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
   ## road passenger: load annual mileage
   am_countries_EU<- do.call("rbind",lapply(list_countries$countries,
                                            function(x) {
-                                             browser()
                                              output = suppressMessages(data.table(read_excel(
                                                path=file.path(
                                                  EU_folder,
