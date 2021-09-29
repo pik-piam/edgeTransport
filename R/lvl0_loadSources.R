@@ -149,17 +149,9 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
                                              #Delete all and total values
                                              help_veh_population=help_veh_population[!technology%in%c("All","Total")]
                                              help_veh_population=merge(mapping_TRACCS_roadf_categories,help_veh_population)
-                                             help_veh_population=help_veh_population[veh_population>0,]
-                                             sum_veh_population=help_veh_population[,sum(veh_population), by=c("EDGE_vehicle_type","year")]
-                                             setnames(sum_veh_population,old=c("V1"),new=c("Total"))
-                                             help_veh_population[sum_veh_population, on= c(EDGE_vehicle_type="EDGE_vehicle_type", year="year"), Total := i.Total]
-                                             help_veh_population[, weight:= veh_population/Total]
-                                             help_veh_population[,.(vehicle_type,technology,weight,year)]
-                                             output[help_veh_population,on=c(vehicle_type="vehicle_type", technology="technology" , year="year"), weight:=i.weight]
-                                             output=output[,annual_mileage:=annual_mileage*weight]
-                                             output=output[,sum(annual_mileage), by=c("EDGE_vehicle_type","year")]
-                                             setnames(output,old=c("V1","EDGE_vehicle_type"),new=c("annual_mileage","vehicle_type"))
-                                             
+                                             help_veh_population[, weight := veh_population/sum(veh_population), by=c("EDGE_vehicle_type","year")]
+                                             output <- merge(output, help_veh_population, by=colnames(output)[1:ncol(output)-1])
+                                             output=output[, .(annual_mileage = sum(annual_mileage*weight)), by=c("EDGE_vehicle_type","year")]
                                              output$country_name <- x
                                              return(output)
                                            }))
