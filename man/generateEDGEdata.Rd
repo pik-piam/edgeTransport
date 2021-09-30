@@ -8,7 +8,8 @@ generateEDGEdata(
   input_folder,
   output_folder,
   SSP_scen = "SSP2",
-  techscen = NULL,
+  tech_scen = "Mix",
+  smartlifestyle = FALSE,
   IEAbal = NULL,
   GDP_country = NULL,
   RatioPPP2MER_country = NULL,
@@ -27,7 +28,9 @@ generateEDGEdata(
 
 \item{SSP_scen}{SSP or SDP scenario}
 
-\item{techscen}{EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)}
+\item{tech_scen}{EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)}
+
+\item{smartlifestyle}{If True, GDP demand regression provides lower overall demand levels.}
 
 \item{IEAbal}{use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
 
