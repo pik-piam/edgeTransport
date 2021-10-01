@@ -4,7 +4,6 @@
 #' @param tech_output historically calibrated demand
 #' @param price_baseline baseline prices
 #' @param GDP_POP GDP per capita
-#' @param REMIND_scenario SSP scenario
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @importFrom rmndt approx_dt
 #' @return transport demand projections
@@ -13,7 +12,7 @@
 #' @importFrom data.table shift frank
 
 
-lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, REMIND_scenario, smartlifestyle){
+lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL

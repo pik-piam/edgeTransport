@@ -20,7 +20,7 @@ The package can be installed from github...
 Data can be generated as follows:
 
 `
-generateEDGEdata(input_folder, output_folder, mappings_folder, EDGE_scenario, REMIND_scenario, saveRDS = FALSE)
+generateEDGEdata(input_folder, output_folder, SSP_scen = "SSP2", techscen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)
 `
 
 Where:
@@ -29,21 +29,26 @@ Where:
 
 `output_folder` character string containing the path where output data are saved
 
-`mappings_folder` character string containing the path to regional and sectoral mappings
+`SSP_scen` character string containing the selected SSP scenario. Options are: `SDP`, `SSP1`, `SSP2`, `SSP2-Ariadne`, `SSP2_LowEn`, `SSP5`. By default, `SSP2` is selected
 
-`EDGE_scenario` character string containing the selected transport scenario. Options are: `ConvCase`, `ElecEra`, `HydrHype`, `ConvCaseWise`, `ElecEraWise`, `HydrHypeWise`
+`techscen` character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP "coherent" technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.
 
-`REMIND_scenario` character string containing the selected SSP scenario. Options are: `SSP1`, `SSP2`, `SSP3`, `SSP4`, `SSP5`. By default, `SSP2` is selected
+`IEAbal` use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: `calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)`
 
-`saveRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved, and a reporting PDF to validate the data is produced in level_2. By default, the parameter is set to `FALSE`.
+`GDP_country` use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: `calcOutput("GDPppp", aggregate =F)`
 
-In order to produce a complete new input data set for REMIND, the function needs to run with all options of `EDGE_scenario`. Afterwards, the results have to be collected to produce [mrremind](https://github.com/pik-piam/mrremind)-compatible input data as follows:
+`RatioPPP2MER_country use` mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: `calcOutput("RatioPPP2MER", aggregate =F)`
 
-`
-collectScens(scen_folder, output_folder)
-`
-Where `scen_folder` is the folder where scenarios results were previously stored.
-where `output_folder` is the folder where the mrremind-compatible input data is to be saved. If set to NULL, a sub-folder called `mrremindData` is created in `scen_folder`.
+`POP_country` use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: `calcOutput("Population", aggregate =F)`
+
+`JRC_IDEES_Trsp` use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="Transport")`
+
+`JRC_IDEES_MarBunk` use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="maritimeBunkers")`
+
+`trsp_incent` use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: `readSource("TransportSubsidies", convert=T)`
+
+`storeRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved, and a reporting PDF to validate the data is produced in level_2. By default, the parameter is set to `FALSE`.
+
 
 ## Data generation structure
 
@@ -61,9 +66,9 @@ The data preparation routine allows to provide combinations of transport scenari
 
 `ElecEra` stands for *Electric Era* incentives to BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
 
-`HydrHype`stands for *Hydrogen Hype* incentives to FCEVs, slow development of BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
+`ElecEraWise` stands for *Electric Era* with also *sustainable demand* projections and lifestyle changes concerning: a moderate growth of demand, an increased preference for public transport and non-motorized modes.
 
-The same scenarios can be run with the suffix `Wise` to introduce lifestyle changes on top of the assumptions of the corresponding baselines. Lifestyle changes concern: a more moderate growth of demand, an increased preference for public transport and non-motorized modes.
+`HydrHype` stands for *Hydrogen Hype* incentives to FCEVs, slow development of BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
 
 The macro-economic scenarios are based on the Shared Socio-Economic Pathways [see @riahi_shared_2017]. The entries that vary across scenarios are GDP and population projections. There are no assumptions specific to transport structure across the various SSPs.
 

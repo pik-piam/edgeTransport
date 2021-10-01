@@ -11,10 +11,8 @@ lvl1_preftrend(
   years,
   GDP,
   GDP_POP_MER,
-  REMIND_scenario,
-  EDGE_scenario,
   smartlifestyle,
-  techswitch
+  tech_scen
 )
 }
 \arguments{
@@ -30,13 +28,9 @@ lvl1_preftrend(
 
 \item{GDP_POP_MER}{GDP per capita MER}
 
-\item{REMIND_scenario}{SSP scenario}
-
-\item{EDGE_scenario}{EDGE transport scenario specifier}
-
 \item{smartlifestyle}{switch activating sustainable lifestyles}
 
-\item{techswitch}{technology at the center of the policy packages}
+\item{tech_scen}{technology at the center of the policy packages}
 }
 \value{
 projected trend of preference factors

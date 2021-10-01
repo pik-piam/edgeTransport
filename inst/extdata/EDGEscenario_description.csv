@@ -1,7 +1,0 @@
-scenario_name;options;switch
-ConvCase;smartlifestyle;FALSE
-ElecEra;smartlifestyle;FALSE
-HydrHype;smartlifestyle;FALSE
-ConvCaseWise;smartlifestyle;TRUE
-ElecEraWise;smartlifestyle;TRUE
-HydrHypeWise;smartlifestyle;TRUE

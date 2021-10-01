@@ -3,14 +3,14 @@
 #' @param regrdemand demand regression
 #' @param EDGE2teESmap mapping between EDGE-T and REMIND technologies
 #' @param REMINDtall extended REMIND time steps
-#' @param REMIND_scenario SSP scenario
+#' @param SSP_scen SSP scenario
 #' @importFrom rmndt approx_dt
 #'
 
 
-lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scenario){
+lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen){
     `.` <- demand <- region <- all_in <- all_GDPscen <- value <- NULL
-    gdp_ssp_scenario <- paste0("gdp_", REMIND_scenario)
+    gdp_ssp_scenario <- paste0("gdp_", SSP_scen)
     regrdemand=merge(regrdemand, unique(EDGE2teESmap[,c("EDGE_top","all_in")]),
                      by.x="sector",by.y="EDGE_top",all.x=TRUE)
     regrdemand=regrdemand[,.(value=demand,region,year,all_in)]
@@ -44,16 +44,16 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, REMIND_scena
 #' @param loadFactor load factors
 #' @param annual_mileage annual mileage
 #' @param demISO ISO level demand in 2010 to be used as a weight in mrremind
-#' @param REMIND_scenario SSP scenario
+#' @param SSP_scen SSP scenario
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param level2path directory where data will be saved
 #' @param complexValues values for complex module in REMIND
 #' @param output_folder directory where the data has to be saved, if set to NULL a list of magclass objects will be saved
 
 
-lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, annual_mileage, demISO, REMIND_scenario, EDGE_scenario, level2path, output_folder){
+lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, annual_mileage, demISO, SSP_scen, EDGE_scenario, level2path, output_folder){
   price_component <- MJ_km <- NULL
-  gdp_scenario <- paste0("gdp_", REMIND_scenario)
+  gdp_scenario <- paste0("gdp_", SSP_scen)
 
   addScenarioCols <- function(data, nc){
     ## Add scenario cols after column nc
