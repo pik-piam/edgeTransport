@@ -152,6 +152,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
                                              help_veh_population[, weight := veh_population/sum(veh_population), by=c("EDGE_vehicle_type","year")]
                                              output <- merge(output, help_veh_population, by=colnames(output)[1:ncol(output)-1])
                                              output=output[, .(annual_mileage = sum(annual_mileage*weight)), by=c("EDGE_vehicle_type","year")]
+                                             setnames(output, "EDGE_vehicle_type", "vehicle_type")
                                              output$country_name <- x
                                              return(output)
                                            }))
