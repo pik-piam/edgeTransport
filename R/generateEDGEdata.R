@@ -4,7 +4,8 @@
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
 #' @param SSP_scen SSP or SDP scenario
-#' @param techscen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
+#' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
+#' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
 #' @param IEAbal use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
 #' @param GDP_country use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)
 #' @param RatioPPP2MER_country use mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: calcOutput("RatioPPP2MER", aggregate =F)
@@ -23,7 +24,8 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techscen = NULL,
+generateEDGEdata <- function(input_folder, output_folder,
+                             SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              IEAbal=NULL, GDP_country=NULL, RatioPPP2MER_country = NULL, POP_country=NULL, JRC_IDEES_Trsp=NULL, JRC_IDEES_MarBunk=NULL, trsp_incent=NULL,
                              storeRDS=FALSE, loadRDS=FALSE){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
@@ -35,6 +37,8 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
     storeRDS <- FALSE
   }
+
+  stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
 
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, SSP_scen, EDGE_scenario, paste0("level_", N))
@@ -63,44 +67,16 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
              2130, 2150)
   ## load mappings
   REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(iso = CountryCode,region = RegionCode)]
-  EDGEscenarios = fread(system.file("extdata", "EDGEscenario_description.csv", package = "edgeTransport"))
+
   GCAM2ISO_MAPPING = fread(system.file("extdata", "iso_GCAM.csv", package = "edgeTransport"))
   EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
   EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "edgeTransport"))
 
-  ## load specific transport switches
-  EDGEscenarios <- EDGEscenarios[SSPscen == SSP_scen]
-  if (is.null(techscen)){
-    EDGEscenarios <- EDGEscenarios[default == TRUE,]
-  } else if (SSP_scen=="SSP2" & techscen %in% c("ConvCase", "ElecEra", "HydrHype")){
-    ## the non-default scenario allow for selecting e.g. SSP2+ElecEra or SSP2+HydrHype
-    EDGEscenarios <- EDGEscenarios[EDGETscen == techscen,]
-  } else {
-    print("Either set techscen to NULL, or use the non-default allowed combinations: SSP2->ElecEra, SSP2->ConvCase, SSP2->HydrHype")
-    quit()
-  }
-
-  EDGE_scenario <- EDGEscenarios[, EDGETscen]
-
-  smartlifestyle <- EDGEscenarios[, smartlifestyle]
-
-  if (EDGE_scenario %in% c("ConvCase")) {
-    techswitch <- "Liquids"
-  } else if (EDGE_scenario %in% c("ElecEra", "ElecEraWise")) {
-    techswitch <- "BEV"
-  } else if (EDGE_scenario %in% c("Mix")) {
-    techswitch <- "Liq_El"
-  } else if (EDGE_scenario %in% c("HydrHype")) {
-    techswitch <- "FCEV"
-  }
-
+  EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
   print(paste0("You selected the ", EDGE_scenario, " transport scenario."))
   print(paste0("You selected the ", SSP_scen, " socio-economic scenario."))
   print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
 
-  if (!is.null(techscen)) {
-    print(paste0("This is a non-default SSP-transport scenario match. Is it intended?"))
-  }
   #################################################
   ## LVL 0 scripts
   #################################################
@@ -312,9 +288,8 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
                           GDP = GDP,
                           GDP_POP_MER = GDP_POP_MER,
                           years = years,
-                          EDGE_scenario = EDGE_scenario,
                           smartlifestyle = smartlifestyle,
-                          techswitch = techswitch)
+                          tech_scen = tech_scen)
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
@@ -342,7 +317,7 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
-      techswitch = techswitch,
+      tech_scen = tech_scen,
       totveh = totveh)
 
     if(storeRDS){
@@ -445,7 +420,6 @@ generateEDGEdata <- function(input_folder, output_folder, SSP_scen="SSP2", techs
         c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
       ES_demand_all = dem_regr,
       intensity = intensity_remind,
-      techswitch = techswitch,
       loadFactor = unique(REMINDdat$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
       EDGE2teESmap = EDGE2teESmap,
       rep = TRUE)

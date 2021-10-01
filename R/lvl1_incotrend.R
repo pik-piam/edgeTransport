@@ -6,14 +6,13 @@
 #' @param years time steps
 #' @param GDP GDP regional level
 #' @param GDP_POP_MER GDP per capita MER
-#' @param EDGE_scenario EDGE transport scenario specifier
 #' @param smartlifestyle switch activating sustainable lifestyles
-#' @param techswitch technology at the center of the policy packages
+#' @param tech_scen technology at the center of the policy packages
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDGE_scenario, smartlifestyle, techswitch){
+lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, smartlifestyle, tech_scen){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- NULL
   ## load gdp as weight
   gdp <- copy(GDP)
@@ -126,25 +125,25 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDG
 
   ## apply S-type trends for alternative vehicles
 
-  if (techswitch == "Liquids") {
+  if (tech_scen == "ConvCase") {
     convsymmBEV = 2045
     speedBEV = 0.2
     convsymmHydrogenAir = 2100
     speedFCEV = 0.2
     convsymmFCEV = 2045
-  } else if (techswitch == "Liq_El"){
+  } else if (tech_scen == "Mix"){
     convsymmBEV = 2045
     speedBEV = 0.3
     convsymmHydrogenAir = 2100
     speedFCEV = 0.2
     convsymmFCEV = 2045
-  } else if (techswitch == "BEV"){
+  } else if (tech_scen == "ElecEra"){
     convsymmBEV = 2035
     speedBEV = 0.4
     convsymmHydrogenAir = 2100
     speedFCEV = 0.2
     convsymmFCEV = 2045
-  } else if (techswitch == "FCEV"){
+  } else if (tech_scen == "HydrHype"){
     convsymmBEV = 2045
     speedBEV = 0.2
     convsymmHydrogenAir = 2080
@@ -179,8 +178,8 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, EDG
                     by=c("region","vehicle_type","technology")]
 
 
-if (techswitch %in% c("BEV", "FCEV")) {
-  if (techswitch == "FCEV") {
+if (tech_scen %in% c("ElecEra", "HydrHype")) {
+  if (tech_scen == "HydrHype") {
     ## BEV are constrained, for long distance application
     SWS$FV_final_pref[technology == "Electric" & year >= 2025 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
                                                                    (!vehicle_type %in% smtruck & subsector_L1 == "trn_freight_road_tmp_subsector_L1")),
