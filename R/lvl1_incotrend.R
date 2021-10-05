@@ -20,12 +20,19 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
 
   eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "ECS", "ECE", "EWN", "FRA", "UKI")
 
+  ## the logistic function features the following parameters
+  ## initial: this is the "height" of the S-shape. The shape is always
+  ##   point-symmetric wrt y=0.5, so a value of 0.2 yields an S-shape from
+  ##   0.2 to 0.8
+  ## yrs: the year or, more general, the value on the y-axis
+  ## ysymm: the symmetry point, or x-shift of the S-shaped curve.
+  ## speed: the number of years that it takes for the curve to rise by approx e
   apply_logistic_trends <- function(initial, yrs, ysymm, speed){
     logistic_trend <- function(year){
       a <- speed
       b <- ysymm
 
-      exp(a * (year - b))/(exp(a * (year - b)) + 1)
+      exp((year - b)/a)/(exp((year - b)/a) + 1)
     }
 
     scl <- sapply(yrs, logistic_trend)
@@ -127,27 +134,27 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
 
   if (tech_scen == "ConvCase") {
     convsymmBEV = 2045
-    speedBEV = 0.2
+    speedBEV = 5
     convsymmHydrogenAir = 2100
-    speedFCEV = 0.2
+    speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "Mix"){
     convsymmBEV = 2045
-    speedBEV = 0.3
+    speedBEV = 3.3
     convsymmHydrogenAir = 2100
-    speedFCEV = 0.2
+    speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "ElecEra"){
     convsymmBEV = 2035
-    speedBEV = 0.4
+    speedBEV = 2.5
     convsymmHydrogenAir = 2100
-    speedFCEV = 0.2
+    speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "HydrHype"){
     convsymmBEV = 2045
-    speedBEV = 0.2
+    speedBEV = 5
     convsymmHydrogenAir = 2080
-    speedFCEV = 0.4
+    speedFCEV = 2.5
     convsymmFCEV = 2035
   }
 
@@ -174,7 +181,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
   ## hydrogen airplanes develop following an S-shaped curve
   ## in optimistic scenarios, the percentage of hydrogen-fuelled aviation can be around 40% https://www.fch.europa.eu/sites/default/files/FCH%20Docs/20200507_Hydrogen%20Powered%20Aviation%20report_FINAL%20web%20%28ID%208706035%29.pdf
   SWS$FV_final_pref[technology == "Hydrogen" & year >= 2025 & subsector_L3 == "Domestic Aviation",
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmHydrogenAir, speed = 0.1),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmHydrogenAir, speed = 10),
                     by=c("region","vehicle_type","technology")]
 
 
@@ -239,12 +246,12 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
 
   ## preference for buses extremely high in OAS and IND
   SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
-                      sw := sw*(1 - 0.6 * (year-2020) / (2100-2020)), by = c("region","subsector_L2")]
+                      sw := sw*(1 - 0.7*apply_logistic_trends(0, year, 2030, 10)), by = c("region","subsector_L2")]
   SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year > 2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
   SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
-                      sw := sw*(1 - 0.8 * (year-2020) / (2100-2020)), by = c("region","subsector_L2")]
+                      sw := sw*(1 - 0.95*apply_logistic_trends(0, year, 2020, 5)), by = c("region","subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,
