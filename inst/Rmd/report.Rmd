@@ -1561,7 +1561,7 @@ p
 # Trucks and buses vintages
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
+plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
   vint = copy(vintcomp)
   new = copy(newcomp)
   vint = vint[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
@@ -1576,15 +1576,7 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
   allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
 
-  ## Add electric and FCEV trucks mileage
-  annual_mileage_trucks <- rbindlist(list(
-    annual_mileage,
-    annual_mileage[subsector_L3 == "trn_freight_road" & technology == "Liquids"][, technology := "Electric"],
-    annual_mileage[subsector_L3 == "trn_freight_road" & technology == "Liquids"][, technology := "FCEV"],
-    annual_mileage[subsector_L2 == "Bus" & technology == "Liquids"][, technology := "Electric"],
-    annual_mileage[subsector_L2 == "Bus" & technology == "Liquids"][, technology := "FCEV"]))
-  
-  allfleet = merge(allfleet, annual_mileage_trucks, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
+  allfleet = merge(allfleet, annual_mileage, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
 
   fleetcomp =allfleet[,.(value = sum(value/loadFactor/vkm.veh)), by = c("region", "year", "vehicle_type")]
   pfleetcomp = ggplot()+
@@ -1672,7 +1664,7 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
 
   return(list(p1_truck,p2_truck,p1_bus,p2_bus, pfleetcomp))
 }
-p = plotVintTruckBus(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor)
+p = plotVintTruckBus(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor, annual_mileage)
 p
 ```
 

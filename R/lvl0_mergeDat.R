@@ -76,7 +76,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   ## calculate PSI costs in terms of 2005$/pkm annualized
   PSI_c = copy(PSI_costs)
   PSI_c[, c("variable", "unit") := list("Capital costs (purchase)", "2005$/veh/yr")]
-  PSI_c = merge(PSI_c, unique(AM[, c("iso", "year")]), by = "year", allow.cartesian=TRUE)
+  PSI_c = merge(PSI_c, unique(AM[subsector_L1 == "trn_pass_road_LDV_4W", c("iso", "year")]), by = "year", allow.cartesian=TRUE)
   PSI_c = rbind(PSI_c[iso %in% eu_iso], PSI_c[!iso %in% eu_iso & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
   setnames(PSI_c, old ="tot_purchasecost", new = "value")
   PSI_c = merge(PSI_c, logit_cat, by = c("vehicle_type", "technology"), all.x = T)[, univocal_name := NULL]
@@ -142,7 +142,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                   by = c("iso", "vehicle_type", "technology", "variable")]
   costs[, incentive_val := NULL]
   costs = merge(costs,
-                unique(AM[,c("iso", "vkm.veh", "year", "vehicle_type")]),
+                unique(AM[subsector_L1 == "trn_pass_road_LDV_4W",c("iso", "vkm.veh", "year", "vehicle_type")]),
                 all = TRUE,
                 by = c("vehicle_type", "year", "iso"))
 
