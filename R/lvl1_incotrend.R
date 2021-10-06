@@ -24,7 +24,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
   ## initial: this is the "height" of the S-shape. The shape is always
   ##   point-symmetric wrt y=0.5, so a value of 0.2 yields an S-shape from
   ##   0.2 to 0.8
-  ## yrs: the year or, more general, the value on the y-axis
+  ## yrs: the year or, more general, the value on the x-axis
   ## ysymm: the symmetry point, or x-shift of the S-shaped curve.
   ## speed: the number of years that it takes for the curve to rise by approx e
   apply_logistic_trends <- function(initial, yrs, ysymm, speed){
