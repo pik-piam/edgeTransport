@@ -14,8 +14,6 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
     GDP_country = readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
     RatioPPP2MER_country = readRDS(file.path(mrremind_folder, "RatioPPP2MER_country.RDS"))
     POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
-    JRC_IDEES_Trsp = readRDS(file.path(mrremind_folder, "JRC_IDEES_Trsp.RDS"))
-    JRC_IDEES_MarBunk = readRDS(file.path(mrremind_folder, "JRC_IDEES_MarBunk.RDS"))
     trsp_incent = readRDS(file.path(mrremind_folder, "trasp_incent.RDS"))
   }else{
     IEAbal = calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
@@ -31,8 +29,6 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
       getSets(x)[1] <- "iso2c"
       x
     }
-    JRC_IDEES_Trsp = readSource("JRC_IDEES", subtype="Transport")
-    JRC_IDEES_MarBunk = readSource("JRC_IDEES", subtype="MBunkers")
     trsp_incent = readSource(type="TransportSubsidies")
   }
 
@@ -71,42 +67,6 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
 
   GDP_POP_MER_country = merge(GDP_MER_country, POP_country,by = c("iso", "year"))
 
-  ## filter only non-NA countries from IDEES and transform in data table
-  JRC_IDEES=rbind(
-    as.data.table(JRC_IDEES_Trsp), as.data.table(JRC_IDEES_MarBunk))
-  JRC_IDEES=JRC_IDEES[grep("nergy consumption",variable.unit)]
-  JRC_IDEES=JRC_IDEES[!grep("Shares",variable.unit)]
-  JRC_IDEES=merge(JRC_IDEES,REMIND2ISO_MAPPING,by.x="iso3c",by.y="iso")
-  JRC_IDEES=JRC_IDEES[,.(value=sum(value)),by = c("variable.unit","region","year")]
-  JRC_IDEES[,year :=as.numeric(gsub("y","",year))]
-  JRC_IDEES=JRC_IDEES[year %in%c(1990,2000,2005,2010,2015)]
-  JRC_IDEES[, EJ:= value*  ##in ktoe
-                   1e3*    ## in toe
-                   4.1868E-8]  ## in EJ
-  useful_var = c(
-    ## international shipping
-    "Maritime Bunkers|Energy Consumption|Total energy consumption.ktoe",
-    ## international aviation
-    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Extra-EU.ktoe",
-    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Intra-EU.ktoe",
-    ## domestic shipping
-    "Transport|Navigation|Energy Consumption|Total energy consumption.ktoe",
-    ## domestic aviation
-    "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|Domestic.ktoe",
-    ## road freight
-    "Transport|Energy consumption|Freight transport|Road transport|Heavy duty vehicles.ktoe",
-    ## road passenger LDVs
-    "Transport|Energy consumption|Passenger transport|Road transport|Passenger cars.ktoe",
-    ## road passenger HDVs
-    "Transport|Road|Energy Consumption|Total energy consumption|Passenger transport|Motor coaches, buses and trolley buses.ktoe",
-    ## rail passenger
-    "Transport|Rail|Energy Consumption|Total energy consumption|Passenger transport|Conventional passenger trains.ktoe",
-    ## rail freight
-    "Transport|Rail|Energy Consumption|Total energy consumption|Freight transport.ktoe"
-  )
-
-  JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
-
   return(list(
     GDP_MER_country=GDP_MER_country,
     POP_country=POP_country,
@@ -115,8 +75,7 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
     GDP=GDP,
     GDP_POP=GDP_POP,
     GDP_POP_MER=GDP_POP_MER,
-    IEAbal=IEAbal,
-    JRC_IDEES=JRC_IDEES
+    IEAbal=IEAbal
   ))
 
 }

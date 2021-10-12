@@ -382,7 +382,6 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS"))
 
     ## do these two files *really* have to be provided by edgeTransport?
-    saveRDS(mrr$JRC_IDEES, file = level2path("JRC_IDEES.RDS"))
     saveRDS(mrr$POP, file = level2path("POP.RDS"))
 
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
