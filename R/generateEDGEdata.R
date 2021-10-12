@@ -19,10 +19,11 @@
 generateEDGEdata <- function(input_folder, output_folder,
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS=FALSE, loadLvl0Cache=FALSE){
-  scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <- technology <- NULL
-  non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <- ratio <- NULL
-  Year <- value <- DP_cap <- POP_val <- GDP_cap <- region <- weight <- MJ <- variable.unit <- EJ <- grouping_value <- NULL
-  sector <- variable <- region <- logit.exponent <- EDGETscen <- SSPscen <- default <- NULL
+  scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
+    technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
+      ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
+        EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
+          SSPscen <- default <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE){
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
@@ -122,7 +123,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## energy intensity pkm/MJ
   ## Annual mileage in km/year. Every entry in the output is on ISO level
   print("-- merge costs, LF, annual mileage from the various sources")
-  merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, trsp_incent = trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+  merged_data <- lvl0_mergeDat(
+    UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
+    PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
+    trsp_incent = mrr$trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
+    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years,
+    REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
     saveRDS(merged_data, file = level0path("merged_data.RDS"))
