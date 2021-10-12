@@ -40,26 +40,26 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
 
-  levelNpath <- function(fname, N){
-    path <- file.path(output_folder, SSP_scen, EDGE_scenario, paste0("level_", N))
+  levelNpath <- function(fname,folder, N){
+    path <- file.path(output_folder, folder , paste0("level_", N))
     if(!dir.exists(path)){
       dir.create(path, recursive = T)
     }
     return(file.path(path, fname))
   }
 
-  level0path <- function(fname){
-    levelNpath(fname, 0)
+  level0path <- function(fname, folder){
+    levelNpath(fname,folder, 0)
   }
 
-  level1path <- function(fname){
-    levelNpath(fname, 1)
+  level1path <- function(fname,folder){
+    levelNpath(fname,folder, 1)
   }
 
-  level2path <- function(fname){
-    levelNpath(fname, 2)
+  level2path <- function(fname,folder){
+    levelNpath(fname,folder, 2)
   }
-
+  
 
   years <- c(1990,
              seq(2005, 2060, by = 5),
@@ -76,6 +76,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print(paste0("You selected the ", EDGE_scenario, " transport scenario."))
   print(paste0("You selected the ", SSP_scen, " socio-economic scenario."))
   print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
+  folder <- paste0(SSP_scen,"-",EDGE_scenario,"_",format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   #################################################
   ## LVL 0 scripts
@@ -179,12 +180,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
   if(loadRDS){
-    EU_data <- readRDS(level0path("load_EU_data.RDS"))
+    EU_data <- readRDS(level0path("load_EU_data.RDS", folder))
   }else{
     EU_data <- lvl0_loadEU(input_folder)
   }
   if(storeRDS)
-     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
+     saveRDS(EU_data, file = level0path("load_EU_data.RDS", folder))
 
   ## define depreciation rate
   discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
@@ -213,7 +214,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   merged_data <- lvl0_mergeDat(UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts, PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data, trsp_incent = trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh, GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years, REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
-    saveRDS(merged_data, file = level0path("merged_data.RDS"))
+    saveRDS(merged_data, file = level0path("merged_data.RDS", folder))
 
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [2005$/pkm]
   print("-- load value-of-time and logit exponents")
@@ -225,7 +226,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
   if(storeRDS){
-    saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS"))
+    saveRDS(VOT_lambdas, file = level0path("logit_exp.RDS", folder))
   }
 
 
@@ -242,9 +243,9 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   if(storeRDS){
     saveRDS(REMINDdat,
-            file = level0path("REMINDdat.RDS"))
+            file = level0path("REMINDdat.RDS", folder))
     saveRDS(incocost,
-            file = level0path("incocost.RDS"))
+            file = level0path("incocost.RDS", folder))
   }
 
   #################################################
@@ -254,7 +255,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- Harmonizing energy intensities to match IEA final energy balances")
   IEAbal_comparison <- lvl1_IEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = IEAbal)
   if(storeRDS)
-    saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
+    saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS",folder))
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
   REMIND_prices <- merge_prices(
@@ -266,7 +267,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     module = "edge_esm")
 
   if(storeRDS)
-    saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
+    saveRDS(REMIND_prices, file = level1path("full_prices.RDS",folder))
 
 
   print("-- EDGE calibration")
@@ -279,7 +280,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
   if(storeRDS)
-    saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
+    saveRDS(calibration_output, file = level1path("calibration_output.RDS",folder))
 
   print("-- generating trends for inconvenience costs")
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
@@ -292,7 +293,7 @@ generateEDGEdata <- function(input_folder, output_folder,
                           tech_scen = tech_scen)
 
   if(storeRDS)
-    saveRDS(prefs, file = level1path("prefs.RDS"))
+    saveRDS(prefs, file = level1path("prefs.RDS",folder))
 
 
 
@@ -309,7 +310,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
-  for (i in seq(1,3,1)) {
+  for (i in seq(1,1,1)) {
     logit_data <- calculate_logit_inconv_endog(
       prices = REMIND_prices,
       vot_data = REMINDdat$vt,
@@ -321,12 +322,12 @@ generateEDGEdata <- function(input_folder, output_folder,
       totveh = totveh)
 
     if(storeRDS){
-      saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
-      saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
+      saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS",folder))
+      saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS",folder))
     }
 
     if(storeRDS)
-      saveRDS(logit_data, file = level2path("logit_data.RDS"))
+      saveRDS(logit_data, file = level2path("logit_data.RDS",folder))
 
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
@@ -369,8 +370,8 @@ generateEDGEdata <- function(input_folder, output_folder,
       dem_regr = NAVIGATE_intl_dem[["D_star"]]
 
       if(storeRDS){
-        saveRDS(NAVIGATE_intl_dem[["D_star"]], file = level2path("demand_regression.RDS"))
-        saveRDS(NAVIGATE_intl_dem[["D_star_av"]], file = level2path("demand_regression_aviation.RDS"))
+        saveRDS(NAVIGATE_intl_dem[["D_star"]], file = level2path("demand_regression.RDS",folder))
+        saveRDS(NAVIGATE_intl_dem[["D_star_av"]], file = ("demand_regression_aviation.RDS"))
       }
 
 
@@ -381,7 +382,7 @@ generateEDGEdata <- function(input_folder, output_folder,
                                 GDP_POP = GDP_POP,
                                 smartlifestyle = smartlifestyle)
       if(storeRDS)
-        saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
+        saveRDS(dem_regr, file = level2path("demand_regression.RDS",folder))
 
     }
 
@@ -400,7 +401,7 @@ generateEDGEdata <- function(input_folder, output_folder,
 
 
     if(storeRDS)
-      saveRDS(vintages, file = level2path("vintages.RDS"))
+      saveRDS(vintages, file = level2path("vintages.RDS",folder))
 
     print("-- aggregating shares, intensity and demand along REMIND tech dimensions")
     shares_intensity_demand <- shares_intensity_and_demand(
@@ -447,31 +448,31 @@ generateEDGEdata <- function(input_folder, output_folder,
                   2130, 2150)
 
   if (storeRDS) {
-    saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
-    saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
-    saveRDS(shares, file = level2path("shares.RDS"))
-    saveRDS(logit_data$mj_km_data, file = level2path("mj_km_data.RDS"))
-    saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
-    saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))
+    saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS",folder))
+    saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS",folder))
+    saveRDS(shares, file = level2path("shares.RDS",folder))
+    saveRDS(logit_data$mj_km_data, file = level2path("mj_km_data.RDS",folder))
+    saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS",folder))
+    saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS",folder))
     saveRDS(shares_intensity_demand$demandF_plot_EJ,
-            file=level2path("demandF_plot_EJ.RDS"))
+            file=level2path("demandF_plot_EJ.RDS",folder))
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
-            level2path("demandF_plot_pkm.RDS"))
-    saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
-    saveRDS(REMINDdat$LF, file = level2path("loadFactor.RDS"))
-    saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS"))
+            level2path("demandF_plot_pkm.RDS",folder))
+    saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS",folder))
+    saveRDS(REMINDdat$LF, file = level2path("loadFactor.RDS",folder))
+    saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS",folder))
     dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
     dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
-    saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
+    saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS",folder))
     EU_data$roadFE_eu=EU=merge(EU_data$roadFE_eu[year %in% c(1990, 2005, 2010)], REMIND2ISO_MAPPING,by="iso")
     EU_data$roadFE_eu=EU_data$roadFE_eu[,.(EJ=sum(MJ)*1e-12), by = c("year","region","vehicle_type")]
-    saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS"))
+    saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS",folder))
 
-    saveRDS(JRC_IDEES, file = level2path("JRC_IDEES.RDS"))
+    saveRDS(JRC_IDEES, file = level2path("JRC_IDEES.RDS",folder))
 
-    saveRDS(POP, file = level2path("POP.RDS"))
-    saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
-    md_template = level2path("report.Rmd")
+    saveRDS(POP, file = level2path("POP.RDS", folder))
+    saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS",folder))
+    md_template = level2path("report.Rmd", folder)
     ## ship and run the file in the output folder
     file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
               md_template, overwrite = T)
@@ -530,6 +531,7 @@ generateEDGEdata <- function(input_folder, output_folder,
     SSP_scen = SSP_scen,
     EDGE_scenario = EDGE_scenario,
     level2path = level2path,
+    folder = folder,
     output_folder = output_folder)
 
   if (!is.null(EDGETrData)) {

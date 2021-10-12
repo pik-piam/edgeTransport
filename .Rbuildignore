@@ -4,3 +4,4 @@
 ^GDP*\.RDS$
 ^\.github$
 ^codecov\.yml$
+^\.Rproj\.user$
