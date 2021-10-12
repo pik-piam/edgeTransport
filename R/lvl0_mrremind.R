@@ -8,10 +8,10 @@
 #' @return a list of mrremind-derived data, see end of this file.
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @importFrom magclass getSets getSets<-
-#' @export
+#' @importFrom madrat readSource calcOutput
+
 
 lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremind_folder=NULL){
-
   Year <- `.` <- weight <- ratio <- value <- region <- GDP_cap <- POP_val <- NULL
   if(load_cache & file.exists(mrremind_folder)){
     IEAbal = readRDS(file.path(mrremind_folder, "IEAbal.RDS"))
@@ -20,20 +20,20 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
     POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
     trsp_incent = readRDS(file.path(mrremind_folder, "trasp_incent.RDS"))
   }else{
-    IEAbal = mrremind::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
+    IEAbal = madrat::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
     GDP_country = {
-      x <- mrremind::calcOutput("GDPppp", aggregate = F)
+      x <- calcOutput("GDPppp", aggregate = F)
       getSets(x)[1] <- "ISO3"
       getSets(x)[2] <- "Year"
       x
     }
-    RatioPPP2MER_country = mrremind::calcOutput("RatioPPP2MER", aggregate = F)
+    RatioPPP2MER_country <- calcOutput("RatioPPP2MER", aggregate = F)
     POP_country = {
-      x <- mrremind::calcOutput("Population", aggregate = F)
+      x <- calcOutput("Population", aggregate = F)
       getSets(x)[1] <- "iso2c"
       x
     }
-    trsp_incent = mrremind::readSource(type="TransportSubsidies")
+    trsp_incent = readSource(type="TransportSubsidies")
   }
 
   ## rearrange the columns and create regional values
