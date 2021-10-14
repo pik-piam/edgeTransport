@@ -10,15 +10,8 @@ generateEDGEdata(
   SSP_scen = "SSP2",
   tech_scen = "Mix",
   smartlifestyle = FALSE,
-  IEAbal = NULL,
-  GDP_country = NULL,
-  RatioPPP2MER_country = NULL,
-  POP_country = NULL,
-  JRC_IDEES_Trsp = NULL,
-  JRC_IDEES_MarBunk = NULL,
-  trsp_incent = NULL,
   storeRDS = FALSE,
-  loadRDS = FALSE
+  loadLvl0Cache = FALSE
 )
 }
 \arguments{
@@ -32,23 +25,9 @@ generateEDGEdata(
 
 \item{smartlifestyle}{If True, GDP demand regression provides lower overall demand levels.}
 
-\item{IEAbal}{use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
-
-\item{GDP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: calcOutput("GDPppp", aggregate =F)}
-
-\item{RatioPPP2MER_country}{use mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: calcOutput("RatioPPP2MER", aggregate =F)}
-
-\item{POP_country}{use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: calcOutput("Population", aggregate =F)}
-
-\item{JRC_IDEES_Trsp}{use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="Transport")}
-
-\item{JRC_IDEES_MarBunk}{use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: calcOutput("JRC_IDEES", subtype="maritimeBunkers")}
-
-\item{trsp_incent}{use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: readSource("TransportSubsidies", convert=T)}
-
 \item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
 
-\item{loadRDS}{optional load intermediate RDS files for input data to save time}
+\item{loadLvl0Cache}{optional load intermediate RDS files for input data to save time}
 }
 \value{
 generated EDGE-transport input data
