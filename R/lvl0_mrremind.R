@@ -79,7 +79,8 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
     GDP=GDP,
     GDP_POP=GDP_POP,
     GDP_POP_MER=GDP_POP_MER,
-    IEAbal=IEAbal
+    IEAbal=IEAbal,
+    trsp_incent=trsp_incent
   ))
 
 }
