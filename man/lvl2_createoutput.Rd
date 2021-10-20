@@ -22,6 +22,7 @@ lvl2_createoutput(
   SSP_scen,
   EDGE_scenario,
   level2path,
+  folder,
   output_folder
 )
 }
