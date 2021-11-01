@@ -35,7 +35,7 @@ Where:
 
 `IEAbal` use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: `calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)`
 
-`GDP_country` use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: `calcOutput("GDPppp", aggregate =F)`
+`GDP_country` use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: `calcOutput("GDP", aggregate =F)`
 
 `RatioPPP2MER_country use` mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: `calcOutput("RatioPPP2MER", aggregate =F)`
 
