@@ -22,7 +22,7 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
   }else{
     IEAbal = madrat::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
     GDP_country = {
-      x <- calcOutput("GDPppp", aggregate = F)
+      x <- calcOutput("GDP", aggregate = F)
       getSets(x)[1] <- "ISO3"
       getSets(x)[2] <- "Year"
       x
