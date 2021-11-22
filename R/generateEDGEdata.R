@@ -31,9 +31,11 @@ generateEDGEdata <- function(input_folder, output_folder,
   }
 
   stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
+  EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
+  folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   levelNpath <- function(fname, N){
-    path <- file.path(output_folder, SSP_scen, EDGE_scenario, paste0("level_", N))
+    path <- file.path(output_folder, folder, paste0("level_", N))
     if(!dir.exists(path)){
       dir.create(path, recursive = T)
     }
@@ -64,7 +66,6 @@ generateEDGEdata <- function(input_folder, output_folder,
   EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
   EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "edgeTransport"))
 
-  EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
   print(paste0("You selected the ", EDGE_scenario, " transport scenario."))
   print(paste0("You selected the ", SSP_scen, " socio-economic scenario."))
   print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
