@@ -4,3 +4,6 @@
 ^GDP*\.RDS$
 ^\.github$
 ^codecov\.yml$
+^\.Rproj\.user$
+^\.pre-commit-config\.yaml$
+^TAGS
