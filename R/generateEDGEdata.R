@@ -16,7 +16,7 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder,
+generateEDGEdata <- function(input_folder, output_folder, cache_folder="cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS=FALSE, loadLvl0Cache=FALSE){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
@@ -33,6 +33,10 @@ generateEDGEdata <- function(input_folder, output_folder,
   stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
   folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+
+  if(!dir.exists(cache_folder)){
+    dir.create(cache_folder)
+  }
 
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, folder, paste0("level_", N))
@@ -76,7 +80,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- Start of level 0 scripts")
 
   mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       load_cache=loadLvl0Cache,
+                       cache_folder, load_cache=loadLvl0Cache,
                        mrremind_folder=file.path(input_folder, "mrremind"))
 
   ## function that loads raw data from the GCAM input files and
@@ -93,12 +97,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
   if(loadLvl0Cache){
-    EU_data <- readRDS(level0path("load_EU_data.RDS"))
+    EU_data <- readRDS(file.path(cache_folder, "load_EU_data.RDS"))
   }else{
     EU_data <- lvl0_loadEU(input_folder)
   }
   if(storeRDS)
-     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
+     saveRDS(EU_data, file = file.path(cache_folder, "load_EU_data.RDS"))
 
   ## define depreciation rate
   discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
@@ -128,7 +132,8 @@ generateEDGEdata <- function(input_folder, output_folder,
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
-    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years,
+    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle,
+    SSP_scen = SSP_scen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
@@ -211,7 +216,8 @@ generateEDGEdata <- function(input_folder, output_folder,
                           GDP_POP_MER = mrr$GDP_POP_MER,
                           years = years,
                           smartlifestyle = smartlifestyle,
-                          tech_scen = tech_scen)
+                          tech_scen = tech_scen,
+                          SSP_scen = SSP_scen)
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
@@ -300,7 +306,8 @@ generateEDGEdata <- function(input_folder, output_folder,
       dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
                                 GDP_POP = mrr$GDP_POP,
-                                smartlifestyle = smartlifestyle)
+                                smartlifestyle = smartlifestyle,
+                                SSP_scen = SSP_scen)
       if(storeRDS)
         saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
 
