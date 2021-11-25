@@ -12,7 +12,8 @@
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, smartlifestyle, tech_scen){
+lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP,
+                           GDP_POP_MER, smartlifestyle, tech_scen, SSP_scen){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
@@ -54,22 +55,54 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
   }
 
   ## smartlifestyle setup
-  walkFactorRich = 3
-  walkFactorOther = 1
-  walkYear = 2100
-  cycleFactorRich = 19
-  cycleFactorOther = 19
-  cycleYear = 2100
-  LDVFactor = -0.1
+  ## walking and cycling for low-density and other regions
+  walkFactorLow = 2
+  walkFactorOther = 3
+  walkYear = 2050
+  cycleFactorLow = 2
+  cycleFactorOther = 4
+  cycleYear = 2050
+  LDVFactor = -0.8
   LDVYear = 2100
-  busFactor = 0.5
-  busYear = 2100
-  railFactor = 0.5
-  railYear = 2100
+  busFactor = 0.7
+  busYear = 2080
+  railFactor = 0.2
+  railYear = 2080
   ## Small-large cars preference increases by 400%
-  smallCarFactor = 4
-  smallCarYear = 2100
+  smallCarFactor = 1.5
+  smallCarYear = 2080
+  largeCarFactor = -2
+  largeCarYear = 2080
+  domAvFactor = -4
+  domAvYear = 2080
 
+  ## for the SDP_RC we overwrite factors at random
+  if (SSP_scen == "SDP_RC"){
+    ## more/earlier walking and cycling
+    walkFactorLow = 3
+    walkFactorOther = 3
+    walkYear = 2040
+    cycleFactorLow = 4
+    cycleFactorOther = 6
+    cycleYear = 2040
+    ## less LDV
+    LDVFactor = -1.2
+    LDVYear = 2080
+    busFactor = 0.8
+    busYear = 2070
+    ## more rail
+    railFactor = 0.4
+    railYear = 2070
+    ## Small-large cars preference increases by 400%
+    smallCarFactor = 2
+    smallCarYear = 2080
+    largeCarFactor = -4
+    largeCarYear = 2080
+    domAvFactor = -6.
+    domAvYear = 2080
+  }
+
+  
   eu_regions <- c("EUR", "DEU", "ENC", "ESC", "ESW", "ECS", "ECE", "EWN", "FRA", "UKI")
 
   ## the logistic function features the following parameters
@@ -385,24 +418,25 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
   if (smartlifestyle) {
     ## roughly distinguish countries by GDPcap
     richregions = unique(unique(gdpcap[year == 2010 & GDP_cap > 25000, region]))
+    lowdensregs = c("USA", "CAZ", "REF")
 
     ## Preference for Walking increases assuming that the infrastructure and the services are smarter closer etc.
     SWS$S3S_final_pref[
-          subsector_L3 %in% c("Walk") & year >= 2020 & region %in% richregions,
-          sw := sw[year==2020]*(1 + walkFactorRich * (year-2020) / (walkYear-2020)),
+          subsector_L3 %in% c("Walk") & year >= 2020 & region %in% lowdensregs,
+          sw := sw[year==2020]*(1 + walkFactorLow * (year-2020) / (walkYear-2020)),
           by = c("region","subsector_L3")]
 
     ## Preference for Cycling sharply increases in rich countries assuming that the infrastructure and the services are smarter closer etc.
     SWS$S3S_final_pref[
-          subsector_L3 == "Cycle" & year >= 2020 & region %in% richregions,
-          sw := sw[year==2020]*(1 + cycleFactorRich * (year-2020) / (cycleYear-2020))]
+          subsector_L3 == "Cycle" & year >= 2020 & region %in% lowdensregs,
+          sw := sw[year==2020]*(1 + cycleFactorLow * (year-2020) / (cycleYear-2020))]
 
     SWS$S3S_final_pref[
-          subsector_L3 == "Walk" & year >= 2020 & !(region %in% richregions),
+          subsector_L3 == "Walk" & year >= 2020 & !(region %in% lowdensregs),
           sw := sw[year==2020] * (1 + walkFactorOther * (year-2020) / (walkYear-2020))]
 
     SWS$S3S_final_pref[
-          subsector_L3 == "Cycle" & year >= 2020 & !(region %in% richregions),
+          subsector_L3 == "Cycle" & year >= 2020 & !(region %in% lowdensregs),
           sw := sw[year==2020] * (1 + cycleFactorOther * (year-2020) / (cycleYear-2020))]
 
     ## LDV prefs decrease slightly for rich regions
@@ -424,6 +458,12 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
           vehicle_type %in% c("Compact Car", "Mini Car", "Subcompact Car") & year >= 2020,
           sw := sw[year==2020] * (1 + smallCarFactor * (year-2020) / (smallCarYear-2020))]
 
+    SWS$VS1_final_pref[
+          vehicle_type %in% c("Large Car", "SUV", "Van") & year >= 2020,
+          sw := sw[year==2020] * (1 + largeCarFactor * (year-2020) / (largeCarYear-2020))]
+    SWS$VS1_final_pref[
+          subsector_L3 == "Domestic Aviation" & year >= 2020,
+          sw := sw[year==2020] * (1 + domAvFactor * (year-2020) / (domAvYear-2020))]
   }
 
 

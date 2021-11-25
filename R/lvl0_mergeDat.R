@@ -19,7 +19,7 @@
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
-lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle, years, REMIND2ISO_MAPPING){
+lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle, SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
   subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- NULL
@@ -44,6 +44,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   ## set target for LF for LDVs
   target_LF = if(smartlifestyle) 1.8 else 1.7
   target_year = if(smartlifestyle) 2060 else 2080
+
+  if(SSP_scen == "SDP_RC"){
+    target_LF = 1.9
+    target_year = 2060
+  }
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
@@ -345,6 +350,16 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   AM=AM[!is.nan(vkm.veh)]
 
   dem = dem[year <= 2010]
+
+  ## add some base demand for Cycle & Walk (2%)
+  dem[, demldv := sum(tech_output), by=c("year", "iso")]
+  dem[subsector_L3 == "Cycle" & tech_output == 0 & iso %in% c("USA", "AUS", "CAN"), tech_output := demldv*0.006]
+  dem[subsector_L3 == "Cycle" & tech_output == 0 & iso %in% c("IND", "CHN"), tech_output := demldv*0.02]
+  dem[subsector_L3 == "Cycle" & tech_output == 0, tech_output := demldv*0.01]
+  dem[subsector_L3 == "Walk" & tech_output == 0, tech_output := demldv*0.002]
+  ## dem[subsector_L3 == "Cycle" & , tech_output := demldv*0.02]
+  ## dem[subsector_L3 == "Walk" & tech_output == 0, tech_output := demldv*0.002]
+  dem[, demldv := NULL]
 
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
