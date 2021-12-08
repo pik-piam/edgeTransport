@@ -3,11 +3,13 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
+#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
+#' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -16,9 +18,9 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, cache_folder="cache",
+generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS=FALSE, loadLvl0Cache=FALSE){
+                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -183,8 +185,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder="cache",
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
+  if(is.null(gdxPath)){
+    gdxPath <- file.path(input_folder, "REMIND/fulldata_EU.gdx")
+  }
   REMIND_prices <- merge_prices(
-    gdx = file.path(input_folder, "REMIND/fulldata_EU.gdx"),
+    gdx = gdxPath,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,

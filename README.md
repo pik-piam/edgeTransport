@@ -1,12 +1,12 @@
 # Prepare EDGE Transport Data for the REMIND model
 
-R package **edgeTransport**, version **0.3.2**
+R package **edgeTransport**, version **0.3.3**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)  [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
 
 ## Purpose and Functionality
 
-EDGE-T is a fork of the GCAM transport module https://jgcri.github.io/gcam-doc/energy.html#transportation with a high level of detail in its representation of technological and modal options. It is a partial equilibrium model with a nested multinomial logit structure and relies on the modified logit formulation. Most of the sources are not publicly available. PIK-internal users can find the sources in the distributed file system in the folder `/p/projects/rd3mod/inputdata/sources/EDGE-T_Standalone`.
+EDGE-T is a fork of the GCAM transport module https://jgcri.github.io/gcam-doc/energy.html#transportation with a high level of detail in its representation of technological and modal options. It is a partial equilibrium model with a nested multinomial logit structure and relies on the modified logit formulation. Most of the sources are not publicly available. PIK-internal users can find the sources in the distributed file system in the folder `/p/projects/rd3mod/inputdata/sources/EDGE-Transport-Standalone`.
 
 
 ## Installation
@@ -46,7 +46,7 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M (2021). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.3.2.
+Dirnaichner A, Rottoli M (2021). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.3.3.
 
 A BibTeX entry for LaTeX users is
 
@@ -55,6 +55,6 @@ A BibTeX entry for LaTeX users is
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Alois Dirnaichner and Marianna Rottoli},
   year = {2021},
-  note = {R package version 0.3.2},
+  note = {R package version 0.3.3},
 }
 ```
