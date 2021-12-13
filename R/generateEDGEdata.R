@@ -20,7 +20,7 @@
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL){
+                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL, specName =NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -34,7 +34,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
   stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
-  folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+  
+  if (is.null(specName)){
+     folder <- paste0(SSP_scen,"-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+}else{
+    folder <- paste0(SSP_scen,specName,"-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))}
+     
 
   if(!dir.exists(cache_folder)){
     dir.create(cache_folder)
@@ -253,6 +258,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     if(storeRDS){
       saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
       saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
+      saveRDS(logit_data[["prices_list"]], file = level1path("prices_list.RDS"))
     }
 
     if(storeRDS)
