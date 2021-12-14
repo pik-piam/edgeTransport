@@ -28,24 +28,28 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
     convsymmBEV = 2045
     speedBEV = 5
     convsymmHydrogenAir = 2100
+    speedHydrogenAir = 5
     speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "Mix"){
     convsymmBEV = 2045
     speedBEV = 3.3
     convsymmHydrogenAir = 2100
+    speedHydrogenAir = 5
     speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "ElecEra"){
     convsymmBEV = 2035
     speedBEV = 2.5
     convsymmHydrogenAir = 2100
+    speedHydrogenAir = 5
     speedFCEV = 5
     convsymmFCEV = 2045
   } else if (tech_scen == "HydrHype"){
     convsymmBEV = 2045
     speedBEV = 5
     convsymmHydrogenAir = 2080
+    speedHydrogenAir = 5
     speedFCEV = 2.5
     convsymmFCEV = 2035
     ## BEV busses and heavy trucks constrained
@@ -79,7 +83,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
   ## yrs: the year or, more general, the value on the x-axis
   ## ysymm: the symmetry point, or x-shift of the S-shaped curve.
   ## speed: the number of years that it takes for the curve to rise by approx e
-  apply_logistic_trends <- function(initial, yrs, ysymm, speed){
+  apply_logistic_trends <- function(initial, yrs, ysymm, speed, final = 1){
     logistic_trend <- function(year){
       a <- speed
       b <- ysymm
@@ -89,7 +93,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
 
     scl <- sapply(yrs, logistic_trend)
 
-    initial + scl * (1 - initial)
+    initial + scl * (final - initial)
   }
 
 
@@ -205,7 +209,7 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
   ## hydrogen airplanes develop following an S-shaped curve
   ## in optimistic scenarios, the percentage of hydrogen-fuelled aviation can be around 40% https://www.fch.europa.eu/sites/default/files/FCH%20Docs/20200507_Hydrogen%20Powered%20Aviation%20report_FINAL%20web%20%28ID%208706035%29.pdf
   SWS$FV_final_pref[technology == "Hydrogen" & year >= 2025 & subsector_L3 == "Domestic Aviation",
-                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmHydrogenAir, speed = 10),
+                    value := apply_logistic_trends(value[year == 2025], year, ysymm = convsymmHydrogenAir, speed = speedHydrogenAir),
                     by=c("region","vehicle_type","technology")]
 
 
