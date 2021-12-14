@@ -11,11 +11,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r Settings, echo=FALSE}
 rm(list=ls())
 library(magclass)
@@ -31,9 +26,6 @@ library(remind2)
 library(madrat)
 library(devtools)
 load_all("C:/Users/johannah/Documents/EDGE-Transport/Git_clones/edgeTransport")
-```
-
-```{r Settings, echo=FALSE}
 output_folder="C:/Users/johannah/Documents/EDGE-Transport/Output"
 listofruns= list(
   "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2Refgd40Ref-Mix_2021-12-10_10.25.26",
@@ -49,7 +41,7 @@ sr15marker_RCP=NULL
 mrremind_folder="C:/Users/johannah/Documents/EDGE-Transport/EDGE-T_standalone_InputData/mrremind"
 load_Cache=TRUE
 AggrReg="H12"
-# load plotdata
+#load plotdata
 data <- lvl2_generate_plotdata(listofruns, load_Cache, mrremind_folder, AggrReg)
 
 #load historical data 
@@ -110,26 +102,26 @@ for (var0 in vars) {
 mainReg <- "GLO"
 
 vars <- c(
+  
   "ES|Transport|Pass (bn pkm/yr)",
-  "ES|Transport|Pass|Road|LDV (bn pkm/yr)" , 
-  "ES|Transport|Pass|Road|Bus (bn pkm/yr)",
-  "ES|Transport|Pass|Long distance (bn pkm/yr)",
   "ES|Transport|Pass|Rail (bn pkm/yr)",
-  "ES|Transport|Freight|Road (bn tkm/yr)", 
-  "ES|Transport|Freight|Rail (bn tkm/yr)"
+  "ES|Transport|Pass|Road|Bus (bn pkm/yr)",
+  "ES|Transport|Pass|Road|LDV (bn pkm/yr)",
+  "ES|Transport|Freight|Rail (bn tkm/yr)",
+  "ES|Transport|Freight|Road (bn tkm/yr)"
 )
 
 for (var0 in vars) {
-  if (var0 %in% var0 %in% unique(data$LinePlot_data$variable)) {
+  if (sub(" (.*)", "",var0) %in% unique(data$LinePlot_data$variable)) {
     p1 <- mipLineHistorical(
-      data$LinePlot_data[region==mainReg & variable==var0],
+      data$LinePlot_data[region==mainReg & variable==sub(" (.*)", "",var0)],
       x_hist = historical[mainReg, , var0],
       ylab = var0,
       scales = "free_y",
       xlim = c(1990, 2050)
     )
     print(p1)
-    p2 <- mipLineHistorical(data$LinePlot_data[!region==mainReg & variable==var0],
+    p2 <- mipLineHistorical(data$LinePlot_data[!region==mainReg & variable==sub(" (.*)", "",var0)],
       x_hist = historical[, , var0][mainReg, , , invert = TRUE],
       ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
       xlim = c(1990, 2050)
@@ -148,27 +140,25 @@ for (var0 in vars) {
 mainReg <- "GLO"
 
 vars <- c(
-  "EInt|Transport|Pass (bn pkm/yr)",
-  "EInt|Transport|Pass|Road|LDV (bn pkm/yr)" , 
-  "EInt|Transport|Pass|Road|Bus (bn pkm/yr)",
-  "EInt|Transport|Pass|Long distance (bn pkm/yr)",
-  "EInt|Transport|Pass|Rail (bn pkm/yr)",
-  "EInt|Transport|Freight|Road (bn tkm/yr)", 
-  "EInt|Transport|Freight|Rail (bn tkm/yr)"
+  
+  "EInt|Transport|Pass|Road|Bus|BEV (MJ/km)",
+  "EInt|Transport|Pass|Road|Bus|ICE (MJ/km)",
+  "EInt|Transport|Pass|Road|LDV|Midsize Car|BEV (MJ/km)",
+  "EInt|Transport|Pass|Road|LDV|Midsize Car|ICE (MJ/km)"
 )
 
 for (var0 in vars) {
-  if (var0 %in% var0 %in% unique(data$LinePlot_data$variable)) {
+  if (sub(" (.*)", "",var0) %in% unique(data$LinePlot_data$variable)) {
     p1 <- mipLineHistorical(
-      data$LinePlot_data[region==mainReg & variable==var0],
-      x_hist = historical[mainReg, , var0],
+      data$LinePlot_data[region==mainReg & variable==sub(" (.*)", "",var0)],
+      #x_hist = historical[mainReg, , var0],
       ylab = var0,
       scales = "free_y",
       xlim = c(1990, 2050)
     )
     print(p1)
-    p2 <- mipLineHistorical(data$LinePlot_data[!region==mainReg & variable==var0],
-      x_hist = historical[, , var0][mainReg, , , invert = TRUE],
+    p2 <- mipLineHistorical(data$LinePlot_data[!region==mainReg & variable==sub(" (.*)", "",var0)],
+      #x_hist = historical[, , var0][mainReg, , , invert = TRUE],
       ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
       xlim = c(1990, 2050)
     )
@@ -193,130 +183,6 @@ for (var0 in vars) {
 ```  
 
 
-```{r Line plot per cap, echo=FALSE}
-
-lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
-                               global=FALSE, mainReg_plot=mainReg, per_gdp=FALSE, histdata_plot=NULL){
-    
-    
-    ## models for historical data
-    histmap = list(
-      "Population"="WDI",
-      "GDP|PPP"="James_IMF",
-      "FE"="IEA",
-      "FE|Transport"="IEA",
-      "FE|Buildings"="IEA",
-      "FE|Industry"="IEA"
-    )
-    
-    items <- c(vars,
-               "Population (million)",
-               "GDP|PPP (billion US$2005/yr)")
-    var <- as.data.table(as.quitte(data[,, items]))[, "unit" := NULL]
-    
-    plain_items <- gsub("(.+) \\(.+\\)", "\\1", items)
-    
-    if(!is.null(histdata_plot)){
-      if(!all(items %in% getNames(histdata_plot, dim=3))){
-        missing <- items[!items %in% getNames(histdata_plot, dim=3)]
-        stop(paste("Items missing in historical dataset:",
-                   paste(missing, collapse=", ")))
-      }else if(!all(plain_items %in% names(histmap))){
-        missing <- items[!plain_items %in% names(histmap)]
-        stop(paste("No model defined for item in historical dataset:",
-                   paste(missing, collapse=", ")))
-      }else{
-        hist_dt <- as.data.table(as.quitte(histdata_plot[,, items]))
-        models <- unlist(histmap[plain_items])
-        varhist <- hist_dt[
-          model %in% models][ # IEA: energy, IMF: GDP, WDI: Population
-            , c("unit", "model") := list(NULL, "REMIND")]
-        var <- rbind(var, varhist)
-      }
-    }
-    
-    plain_vars <- gsub("(.+) \\(.+\\)", "\\1", vars)
-    
-    variable <- Population <- NULL
-    region <- `GDP|PPP` <- model <- value <- scenario <- NULL
-    
-    hvar <- data.table::dcast(var, ... ~ variable)
-    
-    for(fe in plain_vars){
-      hvar[, (fe) := get(fe)/Population*percap_factor]
-    }
-    
-    if(per_gdp){
-      hvar[, `GDP|PPP` := `GDP|PPP`/Population]
-      var <- data.table::melt(hvar, id.vars=c("model", "scenario", "region", "period", "GDP|PPP"))
-    }else{
-      hvar[, `GDP|PPP` := NULL]
-      var <- data.table::melt(hvar, id.vars=c("model", "scenario", "region", "period"))
-    }
-    
-    var <- var[variable != "Population"][
-      , variable := factor(variable, levels=plain_vars)]
-    
-    highlight_yrs <- c(2030, 2050, 2070)
-    highlights <- var[scenario != "historical" & period %in% highlight_yrs]
-    
-    reg_cols <- plotstyle(as.character(unique(var$region)))
-    reg_labels <- plotstyle(as.character(unique(var$region)), out="legend")
-    
-    var <- var[value > 0]
-    if(per_gdp){
-      if(global){
-        p <- ggplot() +
-          geom_line(data=var[scenario != "historical" & region == mainReg_plot],
-                    aes(x=`GDP|PPP`, y=value, linetype=scenario)) +
-          geom_point(data=var[scenario == "historical" & region == mainReg_plot],
-                     aes(x=`GDP|PPP`, y=value), shape=4) +
-          geom_point(data=highlights[region == mainReg_plot], aes(x=`GDP|PPP`, y=value), shape=1)
-      }else{
-        p <- ggplot() +
-          geom_line(data=var[scenario != "historical" & region != mainReg_plot],
-                    aes(x=`GDP|PPP`, y=value, linetype=scenario, color=region)) +
-          geom_point(data=var[scenario == "historical" & region != mainReg_plot],
-                     aes(x=`GDP|PPP`, y=value, color=region), shape=4) +
-          geom_point(data=highlights[region != mainReg_plot], aes(x=`GDP|PPP`, y=value, color=region), shape=1) +
-          scale_color_manual(values = reg_cols,  labels = reg_labels)
-      }
-      
-      p <- p +
-        facet_wrap(~ variable, scales="free_y") +
-        ylab(ylabstr) +
-        xlab("GDP PPP per Cap. (kUS$2005)") +
-        expand_limits(y=0) +							
-        theme_minimal()
-      
-    }else{
-      if(global){
-        p <- ggplot() +
-          geom_line(data=var[scenario != "historical" & region == mainReg_plot],
-                    aes(x=period, y=value, linetype=scenario)) +
-          geom_point(data=var[scenario == "historical" & region == mainReg_plot],
-                     aes(x=period, y=value), shape=4)
-      }else{
-        p <- ggplot() +
-          geom_line(data=var[scenario != "historical" & region != mainReg_plot],
-                    aes(x=period, y=value, linetype=scenario, color=region)) +
-          geom_point(data=var[scenario == "historical" & region != mainReg_plot],
-                     aes(x=period, y=value, color=region), shape=4) +
-          scale_color_manual(values = reg_cols,  labels = reg_labels)
-      }
-      p <- p +
-        facet_wrap(~ variable, scales="free_y") +
-        xlab("year") +
-        ylab(ylabstr) +
-        expand_limits(y=0) +
-        theme_minimal()
-      
-    }
-    return(p)
-  }
-
-
-```
 
 
 
