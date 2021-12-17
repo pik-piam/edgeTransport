@@ -23,39 +23,68 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
 
 
   ## apply S-type trends for alternative vehicles
-
-  if (tech_scen == "ConvCase") {
-    convsymmBEV = 2045
-    speedBEV = 5
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "Mix"){
-    convsymmBEV = 2045
-    speedBEV = 3.3
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "ElecEra"){
-    convsymmBEV = 2035
-    speedBEV = 2.5
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "HydrHype"){
-    convsymmBEV = 2045
-    speedBEV = 5
-    convsymmHydrogenAir = 2080
-    speedHydrogenAir = 5
-    speedFCEV = 2.5
-    convsymmFCEV = 2035
-    ## BEV busses and heavy trucks constrained
-    convsymmBEVlongDist = 2065
-    speedBEVlongDist = 5
-  }
+  switch(
+    tech_scen,
+    "ConvCase" = {
+      convsymmBEV = 2045
+      speedBEV = 5
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "ElecEra" = {
+      convsymmBEV = 2035
+      speedBEV = 2.5
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "HydrHype" = {
+      convsymmBEV = 2045
+      speedBEV = 5
+      convsymmHydrogenAir = 2080
+      speedHydrogenAir = 5
+      speedFCEV = 2.5
+      convsymmFCEV = 2035
+      ## BEV busses and heavy trucks constrained
+      convsymmBEVlongDist = 2065
+      speedBEVlongDist = 5
+    },
+    "Mix4" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "Mix3" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2060
+    },
+    "Mix2" = {
+      convsymmBEV = 2050
+      speedBEV = 10
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2080
+    },
+    "Mix1" = {
+      convsymmBEV = 2065
+      speedBEV = 15
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2100
+    }
+  )
 
   ## smartlifestyle setup
   walkFactorRich = 3
