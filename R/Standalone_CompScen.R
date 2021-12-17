@@ -965,7 +965,6 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
   #Set vehicle_types as variable
   setnames( plot_dem_ej_modes,"vehicle_type","variable")
-  plot_dem_ej_modes[, sub(" ","_",variable)]
   plot_dem_ej_modes[, variable:= paste0("FE|",variable)]
   
   p <- mipArea(plot_dem_ej_modes[region==mainReg], scales="free_y")
@@ -996,7 +995,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
   #Set vehicle_types as variable
   setnames( plot_dem_ej_modes,"vehicle_type","variable")
-  plot_dem_ej_modes <-plot_dem_ej_modes[, sub("international","",variable)]
+  plot_dem_ej_modes <-plot_dem_ej_modes[, variable:= sub("international","",variable)]
   plot_dem_ej_modes[, variable:= paste0("FE|",variable)]
   
   p <- mipArea(plot_dem_ej_modes[region==mainReg], scales="free_y")
@@ -1027,7 +1026,6 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
   #Set vehicle_types as variable
   setnames( plot_dem_ej_modes,"vehicle_type","variable")
-  plot_dem_ej_modes[, sub(" ","_",variable)]
   plot_dem_ej_modes[, variable:= paste0("FE|",variable)]
   
   p <- mipArea(plot_dem_ej_modes[region==mainReg], scales="free_y")
@@ -1057,7 +1055,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
   #Set vehicle_types as variable
   setnames( plot_dem_ej_modes,"vehicle_type","variable")
-  plot_dem_ej_modes <- plot_dem_ej_modes[, sub("international","",variable)]
+  plot_dem_ej_modes <- plot_dem_ej_modes[, variable:= sub("international","",variable)]
   plot_dem_ej_modes[, variable:= paste0("FE|",variable)]
   
   p <- mipArea(plot_dem_ej_modes[region==mainReg], scales="free_y")
@@ -1429,8 +1427,8 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   swlatex(sw,"\\subsection{Passenger bunkers}")
   #Set vehicle type as variable
   setnames(plot_Energy_services_Pass_bunk,"vehicle_type","variable")
-  plot_dem_ej_modes <- plot_dem_ej_modes[, sub("international","",variable)]  
-  plot_Energy_services_Pass_bunk[, variable:= paste0("ES|",variable)]
+  #plot_Energy_services_Pass_bunk <- plot_Energy_services_Pass_bunk[, variable:= sub("international","",variable)]  
+  #plot_Energy_services_Pass_bunk[, variable:= paste0("ES|",variable)]
 
   p <- mipArea(plot_Energy_services_Pass_bunk[region== mainReg], stack_priority = c("variable"), scales="free_y")
   p <- p + theme(legend.position="none")
@@ -1472,8 +1470,8 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   swlatex(sw,"\\subsection{Freight bunkers by vehicle type}")
   #Set technology as variable
   setnames(plot_Energy_services_Frght_bunk,"vehicle_type","variable")
-  plot_dem_ej_modes <- plot_dem_ej_modes[, sub("international","",variable)]
-  plot_Energy_services_Frght_bunk[, variable:= paste0("ES|",variable)]
+  #plot_dem_ej_modes <- plot_dem_ej_modes[, variable:= sub("international","",variable)]
+  #plot_Energy_services_Frght_bunk[, variable:= paste0("ES|",variable)]
   
   
   p <- mipArea(plot_Energy_services_Frght_bunk[region== mainReg], scales="free_y")
@@ -2127,7 +2125,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{BEV}")
   Plot_FV_final_pref <- Inco_cost_LDV_4W[technology == "BEV"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2135,7 +2133,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{FCEV}")
   Plot_FV_final_pref <- Inco_cost_LDV_4W[technology == "FCEV"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2143,7 +2141,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{Liquids}")
   Plot_FV_final_pref <- Inco_cost_LDV_4W[technology == "Liquids"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2151,7 +2149,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{NG}")
   Plot_FV_final_pref <- Inco_cost_LDV_4W[technology == "NG"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
 
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2161,7 +2159,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{BEV}")
   Plot_FV_final_pref <- All_prices_LDV_4W[technology == "BEV"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2169,7 +2167,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{FCEV}")
   Plot_FV_final_pref <- All_prices_LDV_4W[technology == "FCEV"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2177,7 +2175,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{Liquids}")
   Plot_FV_final_pref <- All_prices_LDV_4W[technology == "Liquids"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2185,7 +2183,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{NG}")
   Plot_FV_final_pref <- All_prices_LDV_4W[technology == "NG"]
-  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref <- Plot_FV_final_pref[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref <- Plot_FV_final_pref[!duplicated(Plot_FV_final_pref)]
   
   p <- mipBarYearData(Plot_FV_final_pref[period %in% c(2010,2020, 2030, 2050)])
@@ -2197,7 +2195,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{BEV}")
   Plot_FV_final_pref_Trucks <- All_prices_LDV_4W[technology == "BEV"]
-  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[!duplicated(Plot_FV_final_pref_Trucks)]
   
   p <- mipBarYearData(Plot_FV_final_pref_Trucks[period %in% c(2010,2020, 2030, 2050)])
@@ -2205,7 +2203,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{FCEV}")
   Plot_FV_final_pref_Trucks <- All_prices_LDV_4W[technology == "FCEV"]
-  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[!duplicated(Plot_FV_final_pref_Trucks)]
   
   p <- mipBarYearData(Plot_FV_final_pref_Trucks[period %in% c(2010,2020, 2030, 2050)])
@@ -2213,7 +2211,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{Liquids}")
   Plot_FV_final_pref_Trucks <- All_prices_LDV_4W[technology == "Liquids"]
-  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[!duplicated(Plot_FV_final_pref_Trucks)]
   
   p <- mipBarYearData(Plot_FV_final_pref_Trucks[period %in% c(2010,2020, 2030, 2050)])
@@ -2221,7 +2219,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   swlatex(sw,"\\subsubsection{NG}")
   Plot_FV_final_pref_Trucks <- All_prices_LDV_4W[technology == "NG"]
-  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][unit:=USD2005/pkm]
+  Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[,c("period","region","scenario","variable","value")][,model:= "EDGE-Transport"][,unit:="USD2005/pkm"]
   Plot_FV_final_pref_Trucks <- Plot_FV_final_pref_Trucks[!duplicated(Plot_FV_final_pref_Trucks)]
   
   p <- mipBarYearData(Plot_FV_final_pref_Trucks[period %in% c(2010,2020, 2030, 2050)])
