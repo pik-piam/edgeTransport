@@ -307,8 +307,12 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
   SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year > 2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
-  SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
-                      sw := sw*(1 - 0.95*apply_logistic_trends(0, year, 2020, 5)), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS") & subsector_L2 == "Bus"  & year >= 2015 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 9)), by = c("region", "subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("IND") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 2)), by = c("region", "subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 1.5)), by = c("region", "subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,
