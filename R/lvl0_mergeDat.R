@@ -90,7 +90,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                     logit_cat[vehicle_type %in% unique(altCosts$vehicle_type) & vehicle_type != "Domestic Aviation_tmp_vehicletype"][, technology := "FCEV"],
                     logit_cat[vehicle_type == "Domestic Aviation_tmp_vehicletype"][, technology := "Hydrogen"])
   logit_cat = unique(logit_cat[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "univocal_name")])
-
+  
+  ## LF for h2 aircraft assumed to be the same as for liquids
+  LF = rbind(LF,
+             LF[subsector_L1 %in% c("Domestic Aviation_tmp_subsector_L1", "International Aviation_tmp_subsector_L1") & technology == "Liquids"][, technology := "Hydrogen"])
+  
   setnames(UCD_c, old = "UCD_technology", new = "technology")
 
   UCD_c = merge(UCD_c, logit_cat, by = c("vehicle_type", "technology"), all.x = T, allow.cartesian = T)[, univocal_name := NULL]
