@@ -52,6 +52,14 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
       convsymmBEVlongDist = 2065
       speedBEVlongDist = 5
     },
+    "Mix" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
     "Mix4" = {
       convsymmBEV = 2045
       speedBEV = 3.3
