@@ -23,39 +23,76 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP, GDP_POP_MER, sma
 
 
   ## apply S-type trends for alternative vehicles
-
-  if (tech_scen == "ConvCase") {
-    convsymmBEV = 2045
-    speedBEV = 5
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "Mix"){
-    convsymmBEV = 2045
-    speedBEV = 3.3
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "ElecEra"){
-    convsymmBEV = 2035
-    speedBEV = 2.5
-    convsymmHydrogenAir = 2100
-    speedHydrogenAir = 5
-    speedFCEV = 5
-    convsymmFCEV = 2045
-  } else if (tech_scen == "HydrHype"){
-    convsymmBEV = 2045
-    speedBEV = 5
-    convsymmHydrogenAir = 2080
-    speedHydrogenAir = 5
-    speedFCEV = 2.5
-    convsymmFCEV = 2035
-    ## BEV busses and heavy trucks constrained
-    convsymmBEVlongDist = 2065
-    speedBEVlongDist = 5
-  }
+  switch(
+    tech_scen,
+    "ConvCase" = {
+      convsymmBEV = 2045
+      speedBEV = 5
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "ElecEra" = {
+      convsymmBEV = 2035
+      speedBEV = 2.5
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "HydrHype" = {
+      convsymmBEV = 2045
+      speedBEV = 5
+      convsymmHydrogenAir = 2080
+      speedHydrogenAir = 5
+      speedFCEV = 2.5
+      convsymmFCEV = 2035
+      ## BEV busses and heavy trucks constrained
+      convsymmBEVlongDist = 2065
+      speedBEVlongDist = 5
+    },
+    "Mix" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "Mix4" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 5
+      convsymmFCEV = 2045
+    },
+    "Mix3" = {
+      convsymmBEV = 2045
+      speedBEV = 3.3
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2060
+    },
+    "Mix2" = {
+      convsymmBEV = 2050
+      speedBEV = 10
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2080
+    },
+    "Mix1" = {
+      convsymmBEV = 2065
+      speedBEV = 15
+      convsymmHydrogenAir = 2100
+      speedHydrogenAir = 5
+      speedFCEV = 10
+      convsymmFCEV = 2100
+    }
+  )
 
   ## smartlifestyle setup
   walkFactorRich = 3
@@ -278,8 +315,12 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
   SWS$S2S3_final_pref[region %in% c("SSA", "NES", "LAM", "MEA") & subsector_L2 == "Bus"  & year > 2100,
                       sw := sw[year==2100], by = c("region","subsector_L2")]
 
-  SWS$S2S3_final_pref[region %in% c("IND", "CHA", "OAS") & subsector_L2 == "Bus"  & year >=2020 & year <= 2100,
-                      sw := sw*(1 - 0.95*apply_logistic_trends(0, year, 2020, 5)), by = c("region","subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("OAS") & subsector_L2 == "Bus"  & year >= 2015 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 9)), by = c("region", "subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("IND") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 2)), by = c("region", "subsector_L2")]
+  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
+                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 1.5)), by = c("region", "subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,
