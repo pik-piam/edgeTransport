@@ -160,7 +160,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   ## ---- Read historical data ----
   items <- c("IEA ETP RTS","IEA ETP 2DS","IEA ETP B2DS","IEA","JRC")
-  historical <- read.report("C:/Users/johannah/Documents/EDGE-Transport/compScens_vgl_REMIND/CompScen_mifs/historical.mif", as.list = F)
+  historical <- read.report(hist, as.list = F)
   historical <- historical[,,items, pmatch = F]
   # Clean zeros and global data for JRC
   historical@.Data[historical@.Data == 0] = NA 
@@ -240,7 +240,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   Mapp_UE = data.table(
     technology = c("FCEV","BEV","Electric","Liquids","Hydrogen"),
-    UE_efficiency =c(0.5,0.8,0.8, 0.3, 0.35))
+    UE_efficiency =c(0.36,0.64,0.8, 0.23, 0.25))
   
   ## ---- Load scenario data ----  
 
