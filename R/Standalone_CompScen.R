@@ -6,8 +6,8 @@
 #' @param filename name of the pdf file to be produced
 #' @param y_bar years to plot on y axis
 #' @param mainReg Main region to plot in single window
-#' @param load_Cache switch load from local cache on and off
-#' @param mrremind_folder path to internal cache folder for local use
+#' @param load_cache switch load from local cache on and off
+#' @param cache_folder path to internal cache folder for local use
 #' @param AggrReg Region aggregation for generating plot data
 #'
 #' @author Johanna Hoppe
@@ -17,14 +17,16 @@
 #' @import data.table
 #' @import rmndt
 #' @importFrom luplot magpie2ggplot2
-#' @importFrom ggplot2 facet_grid ggplot geom_col facet_wrap geom_point aes_ geom_ribbon guides guide_legend
+#' @importFrom ggplot2 facet_grid ggplot geom_col facet_wrap geom_point aes_ geom_ribbon guides guide_legend aes expand_limits alpha geom_line theme theme_minimal xlab ylab scale_color_manual
 #' @importFrom lusweave swopen swlatex swfigure swclose
-#' @importFrom magclass read.report mbind getRegions new.magpie getYears add_dimension setNames getNames<- time_interpolate
+#' @importFrom magclass read.report mbind getRegions new.magpie getYears add_dimension setNames getNames<- time_interpolate getNames
 #' @importFrom quitte as.quitte
 
 lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
-                             mainReg = "EUR", filename = "CompareScenarios", load_Cache = FALSE, mrremind_folder = NULL, AggrReg = "H12") {
+                             mainReg = "EUR", filename = "CompareScenarios",
+                             load_cache = FALSE, cache_folder = NULL, AggrReg = "H12") {
 
+  `.` <- FE_carrier <- UE_efficiency <- Year <- aggr_vehtype <- fewcol <- gran_vehtype <- international <- logit.exponent <- logit_type <- missingH12 <- model <- newdem <- period <- region <- scenario <- sector <- share <- shareVS1 <- sharetech_new <- sharetech_vint <- subsector_L1 <- subsector_L2 <- subsector_L3 <- technology <- tot_price <- totdem <- unit <- value <- variable <- vehicle_type <- vintdem <- vkm.veh <- weight <- NULL
 
   fileName <- paste0(filename, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), ".pdf")
   ## ----- Line Plots per Cap----
@@ -162,17 +164,22 @@ lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100)
   historical["GLO", , "JRC", pmatch = FALSE] <- NA
 
   ## ---- Load GDP and POP ----
-  if (load_Cache & file.exists(mrremind_folder)) {
-    GDP_country <- readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
-    POP <- readRDS(file.path(mrremind_folder, "POP_country.RDS"))
-  } else {
-GDP_country <- {
-    x <- calcOutput("GDP", aggregate = FALSE)
-    getSets(x)[1] <- "ISO3"
-    getSets(x)[2] <- "Year"
-    x
+  if(load_cache & file.exists(cache_folder)){
+    GDP_country = readRDS(file.path(cache_folder, "GDP_country.RDS"))
+    POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
+  }else{
+    GDP_country = {
+      x <- calcOutput("GDP", aggregate = F)
+      getSets(x)[1] <- "ISO3"
+      getSets(x)[2] <- "Year"
+      x
+    }
+    POP_country = {
+      x <- calcOutput("Population", aggregate = F)
+      getSets(x)[1] <- "iso2c"
+      x
+    }
   }
-}
   GDP_country <- as.data.table(GDP_country)
   GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
   GDP_country[, variable := paste0(sub("gdp_", "", variable))]
