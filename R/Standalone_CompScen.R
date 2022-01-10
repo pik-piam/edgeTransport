@@ -23,12 +23,13 @@
 #' @importFrom quitte as.quitte
 
 lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
-                             mainReg = "EUR", filename = "CompareScenarios",
+                             mainReg = "EUR", filename = "CompareScenarios_EDGET",
                              load_cache = FALSE, cache_folder = NULL, AggrReg = "H12") {
 
   `.` <- FE_carrier <- UE_efficiency <- Year <- aggr_vehtype <- fewcol <- gran_vehtype <- international <- logit.exponent <- logit_type <- missingH12 <- model <- newdem <- period <- region <- scenario <- sector <- share <- shareVS1 <- sharetech_new <- sharetech_vint <- subsector_L1 <- subsector_L2 <- subsector_L3 <- technology <- tot_price <- totdem <- unit <- value <- variable <- vehicle_type <- vintdem <- vkm.veh <- weight <- NULL
 
-  fileName <- paste0(filename, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), ".pdf")
+  #fileName <- paste0(filename, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), ".pdf")
+  fileName <- paste0(filename, ".pdf")
   ## ----- Line Plots per Cap----
   lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
                                global = FALSE, mainReg_plot = mainReg, per_gdp = FALSE, histdata_plot = NULL) {
@@ -184,7 +185,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100)
   GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
   GDP_country[, variable := paste0(sub("gdp_", "", variable))]
   setnames(GDP_country, c("ISO3", "variable", "value", "year"), c("CountryCode", "scenario", "weight", "period"))
-  POP <- as.data.table(POP)
+  POP <- as.data.table(POP_country)
   POP[, year := as.numeric(gsub("y", "", year))]
   POP[, variable := paste0(sub("pop_", "", variable))]
   setnames(POP, c("iso2c", "variable", "year"), c("CountryCode", "scenario", "period"))
@@ -537,62 +538,10 @@ lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100)
   plot_EInt_MidsizeCar_ICE <- plot_EInt[vehicle_type == "Midsize Car" & technology == "Liquids", c("period", "region", "scenario", "value", "unit")][, variable := "EInt|Transport|Pass|Road|LDV|MidsizeCar|ICE"]
   plot_EInt_Bus_ICE <- plot_EInt[vehicle_type == "Bus_tmp_vehicletype" & technology == "Liquids", c("period", "region", "scenario", "value", "unit")][, variable := "EInt|Transport|Pass|Road|Bus|ICE"]
 
-  # #Group vehicle types for plotting
-  # plot_EInt <- merge(plot_EInt,Mapp_Aggr_vehtype, by.x="vehicle_type" ,by.y="gran_vehtype")
-  # plot_EInt <- plot_EInt[,-c("vehicle_type")]
-  # setnames(plot_EInt ,"aggr_vehtype","vehicle_type")
-  #
-  # #Aggregate data
-  # plot_EInt <-plot_EInt[, .(value=sum(value)), by= c("period","region","scenario","sector","technology", "vehicle_type", "unit","international")]
-  #
-  # #EInt|Transport
-  # EInt_Transport <- copy(plot_EInt)
-  # EInt_Transport <- EInt_Transport[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport"]
-  # #EInt|Transport w/o bunkers
-  # EInt_Transport_wobunk <- copy(plot_EInt)
-  # EInt_Transport_wobunk <- EInt_Transport_wobunk[international=="no bunkers"]
-  # EInt_Transport_wobunk <- EInt_Transport_wobunk[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport w/o bunkers"]
-  # #EInt|Transport|Pass
-  # EInt_Transport_Pass <- copy(plot_EInt)
-  # EInt_Transport_Pass <- EInt_Transport_Pass[sector %in% c("trn_pass","trn_aviation_intl")]
-  # EInt_Transport_Pass <- EInt_Transport_Pass[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Pass"]
-  # #EInt|Transport|Pass|Rail
-  # EInt_Transport_Pass_Rail <- copy(plot_EInt)
-  # EInt_Transport_Pass_Rail <- EInt_Transport_Pass_Rail[vehicle_type=="Passenger Trains"]
-  # EInt_Transport_Pass_Rail <- EInt_Transport_Pass_Rail[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Pass|Rail"]
-  # #EInt|Transport|Pass|Road
-  # EInt_Transport_Pass_Road <- copy(plot_EInt)
-  # EInt_Transport_Pass_Road <- EInt_Transport_Pass_Road[vehicle_type %in% c("Busses","Small Cars","Large Cars","Motorbikes")]
-  # EInt_Transport_Pass_Road <- EInt_Transport_Pass_Road[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Pass|Road"]
-  # #EInt|Transport|Pass|Road|Bus
-  # EInt_Transport_Pass_Road_Bus <- copy(plot_EInt)
-  # EInt_Transport_Pass_Road_Bus <- EInt_Transport_Pass_Road_Bus[vehicle_type %in% c("Busses")]
-  # EInt_Transport_Pass_Road_Bus <- EInt_Transport_Pass_Road_Bus[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Pass|Road|Bus"]
-  # #EInt|Transport|Pass|Road|LDV
-  # EInt_Transport_Pass_Road_LDV<- copy(plot_EInt)
-  # EInt_Transport_Pass_Road_LDV <- EInt_Transport_Pass_Road_LDV[vehicle_type %in% c("Motorbikes","Small Cars","Large Cars")]
-  # EInt_Transport_Pass_Road_LDV <- EInt_Transport_Pass_Road_LDV[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Pass|Road|LDV"]
-  # #EInt|Transport|Freight
-  # EInt_Transport_Freight<- copy(plot_EInt)
-  # EInt_Transport_Freight <- EInt_Transport_Freight[sector %in% c("trn_freight","trn_shipping_intl")]
-  # EInt_Transport_Freight <- EInt_Transport_Freight[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Freight"]
-  # #EInt|Transport|Freight|Navigation
-  # EInt_Transport_Freight_Nav<- copy(plot_EInt)
-  # EInt_Transport_Freight_Nav <- EInt_Transport_Freight_Nav[vehicle_type %in% c("Ships domestic","Ships international")]
-  # EInt_Transport_Freight_Nav <- EInt_Transport_Freight_Nav[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Freight|Navigation"]
-  # #EInt|Transport|Freight|Rail
-  # EInt_Transport_Freight_Rail<- copy(plot_EInt)
-  # EInt_Transport_Freight_Rail <- EInt_Transport_Freight_Rail[vehicle_type %in% c("Freight Trains")]
-  # EInt_Transport_Freight_Rail <- EInt_Transport_Freight_Rail[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Freight|Rail"]
-  # #EInt|Transport|Freight|Road
-  # EInt_Transport_Freight_Road<- copy(plot_EInt)
-  # EInt_Transport_Freight_Road <- EInt_Transport_Freight_Road[vehicle_type %in% c("Trucks")]
-  # EInt_Transport_Freight_Road <- EInt_Transport_Freight_Road[, .(value=sum(value)), by= c("period","region","scenario","unit")][,variable:="EInt|Transport|Freight|Road"]
-  #
+
   LinePlot_data <- rbind(FE_Transport, FE_Transport_wobunk, FE_Transport_Pass, FE_Transport_Pass_Rail,  FE_Transport_Pass_Road, FE_Transport_Pass_Road_Bus, FE_Transport_Pass_Road_LDV, FE_Transport_Freight, FE_Transport_Freight_Nav, FE_Transport_Freight_Rail, FE_Transport_Freight_Road,
                         ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Rail,  ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
                         plot_EInt_MidsizeCar_BEV, plot_EInt_Bus_BEV, plot_EInt_MidsizeCar_ICE, plot_EInt_Bus_ICE
-                        # EInt_Transport,EInt_Transport_wobunk, EInt_Transport_Pass, EInt_Transport_Pass_Rail,  EInt_Transport_Pass_Road, EInt_Transport_Pass_Road_Bus, EInt_Transport_Pass_Road_LDV, EInt_Transport_Freight, EInt_Transport_Freight_Nav,EInt_Transport_Freight_Rail, EInt_Transport_Freight_Road
   )
 
   LinePlot_data[, model := "EDGE-T"]
@@ -989,36 +938,36 @@ lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
-  swlatex(sw, "\\subsubsection{Passenger bunkers by transport modes}")
-
-
-  plot_dem_ej_modes <- copy(plot_dem_ej)
-  # Choose Passenger bunkers
-  plot_dem_ej_modes <- plot_dem_ej_modes[sector == "trn_aviation_intl"]
-  # Aggregate by transport modes
-  plot_dem_ej_modes <- plot_dem_ej_modes[, sector := NULL][, FE_carrier := NULL]
-  plot_dem_ej_modes <- plot_dem_ej_modes[, value := sum(value), by = c("period", "region", "scenario", "vehicle_type")]
-  plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
-  # Set vehicle_types as variable
-  setnames(plot_dem_ej_modes, "vehicle_type", "variable")
-  plot_dem_ej_modes <- plot_dem_ej_modes[, variable := sub("international", "", variable)]
-  plot_dem_ej_modes[, variable := paste0("FE|", variable)]
-
-  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
-  p <- p + theme(legend.position = "none")
-  swfigure(sw, print, p, sw_option = "height=3.5,width=7")
-
-  p <- mipBarYearData(plot_dem_ej_modes[region == mainReg & period %in% y_bar])
-  p <- p + theme(legend.position = "none")
-  swfigure(sw, print, p, sw_option = "height=4.5,width=7")
-
-  p <- mipBarYearData(plot_dem_ej_modes[!region == mainReg & period %in% y_bar])
-  swfigure(sw, print, p, sw_option = "height=9,width=8")
-
-  swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_modes[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
-  swfigure(sw, print, p, sw_option = "height=8,width=16")
-  swlatex(sw, "\\twocolumn")
+  # swlatex(sw, "\\subsubsection{Passenger bunkers by transport modes}")
+  # 
+  # 
+  # plot_dem_ej_modes <- copy(plot_dem_ej)
+  # # Choose Passenger bunkers
+  # plot_dem_ej_modes <- plot_dem_ej_modes[sector == "trn_aviation_intl"]
+  # # Aggregate by transport modes
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, sector := NULL][, FE_carrier := NULL]
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, value := sum(value), by = c("period", "region", "scenario", "vehicle_type")]
+  # plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
+  # # Set vehicle_types as variable
+  # setnames(plot_dem_ej_modes, "vehicle_type", "variable")
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, variable := sub("international", "", variable)]
+  # plot_dem_ej_modes[, variable := paste0("FE|", variable)]
+  # 
+  # p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
+  # p <- p + theme(legend.position = "none")
+  # swfigure(sw, print, p, sw_option = "height=3.5,width=7")
+  # 
+  # p <- mipBarYearData(plot_dem_ej_modes[region == mainReg & period %in% y_bar])
+  # p <- p + theme(legend.position = "none")
+  # swfigure(sw, print, p, sw_option = "height=4.5,width=7")
+  # 
+  # p <- mipBarYearData(plot_dem_ej_modes[!region == mainReg & period %in% y_bar])
+  # swfigure(sw, print, p, sw_option = "height=9,width=8")
+  # 
+  # swlatex(sw, "\\onecolumn")
+  # p <- mipArea(plot_dem_ej_modes[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  # swfigure(sw, print, p, sw_option = "height=8,width=16")
+  # swlatex(sw, "\\twocolumn")
 
   swlatex(sw, "\\subsubsection{Freight without bunkers by transport modes}")
 
@@ -1050,35 +999,35 @@ lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
-  swlatex(sw, "\\subsubsection{Freight bunkers by transport modes}")
-
-  plot_dem_ej_modes <- copy(plot_dem_ej)
-  # Choose Freight bunkers
-  plot_dem_ej_modes <- plot_dem_ej_modes[sector == "trn_shipping_intl"]
-  # Aggregate by transport modes
-  plot_dem_ej_modes <- plot_dem_ej_modes[, sector := NULL][, FE_carrier := NULL]
-  plot_dem_ej_modes <- plot_dem_ej_modes[, value := sum(value), by = c("period", "region", "scenario", "vehicle_type")]
-  plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
-  # Set vehicle_types as variable
-  setnames(plot_dem_ej_modes, "vehicle_type", "variable")
-  plot_dem_ej_modes <- plot_dem_ej_modes[, variable := sub("international", "", variable)]
-  plot_dem_ej_modes[, variable := paste0("FE|", variable)]
-
-  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
-  p <- p + theme(legend.position = "none")
-  swfigure(sw, print, p, sw_option = "height=3.5,width=7")
-
-  p <- mipBarYearData(plot_dem_ej_modes[region == mainReg & period %in% y_bar])
-  p <- p + theme(legend.position = "none")
-  swfigure(sw, print, p, sw_option = "height=4.5,width=7")
-
-  p <- mipBarYearData(plot_dem_ej_modes[!region == mainReg & period %in% y_bar])
-  swfigure(sw, print, p, sw_option = "height=9,width=8")
-
-  swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_modes[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
-  swfigure(sw, print, p, sw_option = "height=8,width=16")
-  swlatex(sw, "\\twocolumn")
+  # swlatex(sw, "\\subsubsection{Freight bunkers by transport modes}")
+  # 
+  # plot_dem_ej_modes <- copy(plot_dem_ej)
+  # # Choose Freight bunkers
+  # plot_dem_ej_modes <- plot_dem_ej_modes[sector == "trn_shipping_intl"]
+  # # Aggregate by transport modes
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, sector := NULL][, FE_carrier := NULL]
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, value := sum(value), by = c("period", "region", "scenario", "vehicle_type")]
+  # plot_dem_ej_modes <- plot_dem_ej_modes[!duplicated(plot_dem_ej_modes)]
+  # # Set vehicle_types as variable
+  # setnames(plot_dem_ej_modes, "vehicle_type", "variable")
+  # plot_dem_ej_modes <- plot_dem_ej_modes[, variable := sub("international", "", variable)]
+  # plot_dem_ej_modes[, variable := paste0("FE|", variable)]
+  # 
+  # p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
+  # p <- p + theme(legend.position = "none")
+  # swfigure(sw, print, p, sw_option = "height=3.5,width=7")
+  # 
+  # p <- mipBarYearData(plot_dem_ej_modes[region == mainReg & period %in% y_bar])
+  # p <- p + theme(legend.position = "none")
+  # swfigure(sw, print, p, sw_option = "height=4.5,width=7")
+  # 
+  # p <- mipBarYearData(plot_dem_ej_modes[!region == mainReg & period %in% y_bar])
+  # swfigure(sw, print, p, sw_option = "height=9,width=8")
+  # 
+  # swlatex(sw, "\\onecolumn")
+  # p <- mipArea(plot_dem_ej_modes[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  # swfigure(sw, print, p, sw_option = "height=8,width=16")
+  # swlatex(sw, "\\twocolumn")
 
   ## ---- FE Transport modes bunkers vs no bunkers----
   swlatex(sw, "\\subsection{Final energy bunkers vs. no bunkers}")
