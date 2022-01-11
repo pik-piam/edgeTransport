@@ -11,7 +11,6 @@
 #' @param AggrReg Region aggregation for generating plot data
 #'
 #' @author Johanna Hoppe
-#' @examples
 #' @export
 #' @import mip
 #' @import data.table
@@ -22,7 +21,7 @@
 #' @importFrom magclass read.report mbind getRegions new.magpie getYears add_dimension setNames getNames<- time_interpolate getNames
 #' @importFrom quitte as.quitte
 
-lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
+compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                              mainReg = "EUR", filename = "CompareScenarios_EDGET",
                              load_cache = FALSE, cache_folder = "cache", AggrReg = "H12") {
 
