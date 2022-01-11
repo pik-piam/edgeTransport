@@ -24,7 +24,7 @@
 
 lvl2_compareScen <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                              mainReg = "EUR", filename = "CompareScenarios_EDGET",
-                             load_cache = FALSE, cache_folder = NULL, AggrReg = "H12") {
+                             load_cache = FALSE, cache_folder = "cache", AggrReg = "H12") {
 
   `.` <- FE_carrier <- UE_efficiency <- Year <- aggr_vehtype <- fewcol <- gran_vehtype <- international <- logit.exponent <- logit_type <- missingH12 <- model <- newdem <- period <- region <- scenario <- sector <- share <- shareVS1 <- sharetech_new <- sharetech_vint <- subsector_L1 <- subsector_L2 <- subsector_L3 <- technology <- tot_price <- totdem <- unit <- value <- variable <- vehicle_type <- vintdem <- vkm.veh <- weight <- NULL
 
