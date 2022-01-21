@@ -338,7 +338,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   int[, conv_pkm_MJ := ifelse(is.na(conv_pkm_MJ), mean(conv_pkm_MJ, na.rm = TRUE), conv_pkm_MJ), by = c("year", "technology", "vehicle_type")]
 
   LF = merge(LF, unique(dem[!vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
-  LF[, loadFactor := ifelse(is.na(loadFactor), mean(loadFactor, na.rm = TRUE), loadFactor), by = c("year", "technology", "vehicle_type")]
+  LF[, loadFactor := ifelse(is.na(loadFactor), mean(loadFactor, na.rm = TRUE), loadFactor), by = c("year", "vehicle_type")]
+  LF[year > 2100, loadFactor := rep(LF[year == 2100]$loadFactor, 3)]
+  if(nrow(LF[is.na(loadFactor) | loadFactor == 0]) > 0){
+    stop("Zero load factor provided.")
+  }
+
 
   AM = merge(AM, unique(dem[unique(AM$vehicle_type),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
   AM[, vkm.veh := ifelse(is.na(vkm.veh), mean(vkm.veh, na.rm = TRUE), vkm.veh), by = c("year", "technology", "vehicle_type")]
