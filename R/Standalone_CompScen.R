@@ -21,6 +21,7 @@ lvl2_compareScen <- function(listofruns, hist, y_bar=c(2010,2030,2050,2100),
   
   
   fileName=paste0(filename,"_",format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),".pdf")
+  browser() 
   ##----- Line Plots per Cap----
   lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
                                global=FALSE, mainReg_plot=mainReg, per_gdp=FALSE, histdata_plot=NULL){
