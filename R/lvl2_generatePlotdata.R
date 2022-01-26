@@ -27,9 +27,9 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
 
 
   ## ---- Load GDP and POP ----
-  if(load_cache & file.exists("C:/Users/johannah/Documents/Git_repos/edgeTransport/cache")){
-    GDP_country = readRDS(file.path("C:/Users/johannah/Documents/Git_repos/edgeTransport/cache", "GDP_country.RDS"))
-    POP_country = readRDS(file.path("C:/Users/johannah/Documents/Git_repos/edgeTransport/cache", "POP_country.RDS"))
+  if(load_cache & file.exists(cache_folder)){
+    GDP_country = readRDS(file.path(cache_folder, "GDP_country.RDS"))
+    POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
   }else{
     GDP_country = {
       x <- calcOutput("GDP", aggregate = F)

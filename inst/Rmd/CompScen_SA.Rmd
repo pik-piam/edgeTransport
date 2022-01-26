@@ -46,7 +46,7 @@ if (Standalone_mode == TRUE){
   load_all("C:/Users/johannah/Documents/Git_repos/edgeTransport")
 
   #load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
-  data_extended <- lvl2_generate_plotdata(listofruns=listofruns[8:11], load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
+  data_extended <- lvl2_generate_plotdata(listofruns=listofruns[8:11], load_Cache=load_Cache, cache_folder=cache_folder, AggrReg="H12")
   data <- data_extended$LinePlot_data
   
 }else { 
@@ -430,8 +430,8 @@ if (Standalone_mode == TRUE){
   & scenario == scenchoice & region %in% regionchoice]
   plotdata <- plotdata[,c("subsector_L3","period","scenario","sw","region")][,scenario:=NULL][,unit:="-"]
   setnames(plotdata, c("sw","subsector_L3"),c("value","groupvalue"))
-  lineplot(varname = "shareweight trend S3S", data= plotdata)
-  
+  p <- lineplot(varname = "shareweight trend S3S", data= plotdata)
+  print(p)
 
   plotdata <- data_extended$Pref_S2S3[subsector_L2 %in% c("Bus","trn_pass_road_LDV") & scenario == scenchoice & region %in% regionchoice]
   plotdata <- plotdata[,c("subsector_L2","period","scenario","sw","region")][,scenario:=NULL][,unit:="-"]
