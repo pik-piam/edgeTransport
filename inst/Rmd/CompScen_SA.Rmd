@@ -47,7 +47,7 @@ if (Standalone_mode == TRUE){
 
   #load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
   data_extended <- lvl2_generate_plotdata(listofruns=listofruns[8:11], load_Cache=load_Cache, cache_folder=cache_folder, AggrReg="H12")
-  data <- data_extended$LinePlot_data
+  data <- rbind(data_extended$LinePlot_data,data_extended$shares)
   
 }else { 
   ## read model results
@@ -318,7 +318,7 @@ for (var0 in vars) {
 ```
 
 
-```{r, fig.width=15, fig.height=9, eval = FALSE,echo=FALSE, results= 'asis'}
+```{r, fig.width=15, fig.height=9, eval = TRUE,echo=FALSE, results= 'asis'}
 
   cat('\n## ES shares by transport mode \n')
   cat('\n###Passenger\n')
@@ -333,8 +333,8 @@ for (var0 in vars) {
     "ES|Transport|Pass|Road|non-motorized|Share"
   )
 
-  plotdata <- data[grepl("Base",data$scenario) & variable %in% vars]
-  plotdata[,scenario:=droplevels(scenario)]
+  plotdata <- data[variable %in% vars]
+  #plotdata[,scenario:=droplevels(scenario)]
   p1 <- mipBarYearData(plotdata[region==mainReg & period %in% y_bar])
   p1 <- p1 + theme(legend.position="none")
   print(p1)
@@ -342,22 +342,22 @@ for (var0 in vars) {
   p2 <- mipBarYearData( plotdata[!region==mainReg & period %in% y_bar])
   print(p2)
   
-  cat('\n###Freight\n')
-    vars <- c(
-    "ES|Transport|Freight|Road|Share",
-    "ES|Transport|Freight|Rail|Share",
-    "ES|Transport|Freight|International Shipping|Share",
-    "ES|Transport|Freight|Navigation|Share"
-  )
-
-  plotdata <- data[grepl("Base",data$scenario) & variable %in% vars]
-  plotdata[,scenario:=droplevels(scenario)]
-  p1 <- mipBarYearData(plotdata[region==mainReg & period %in% y_bar])
-  p1 <- p1 + theme(legend.position="none")
-  print(p1)
-  
-  p2 <- mipBarYearData( plotdata[!region==mainReg & period %in% y_bar])
-  print(p2)
+  # cat('\n###Freight\n')
+  #   vars <- c(
+  #   "ES|Transport|Freight|Road|Share",
+  #   "ES|Transport|Freight|Rail|Share",
+  #   "ES|Transport|Freight|Shipping international",
+  #   "ES|Transport|Freight|Navigation|Share"
+  # )
+  # 
+  # plotdata <- data[variable %in% vars]
+  # #plotdata[,scenario:=droplevels(scenario)]
+  # p1 <- mipBarYearData(plotdata[region==mainReg & period %in% y_bar])
+  # p1 <- p1 + theme(legend.position="none")
+  # print(p1)
+  # 
+  # p2 <- mipBarYearData( plotdata[!region==mainReg & period %in% y_bar])
+  # print(p2)
 
 ```
 
@@ -400,11 +400,29 @@ for (var0 in vars) {
 
 ```
 
+```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
+if (Standalone_mode == TRUE){
+  cat('\n## Prices S3S\n')
+  scen <- unique(data_extended$Logit_Prices_S3S$scenario)
+  
+for (scen0 in scen) {
+  plotdata <- data_extended$Logit_Prices_S3S[scenario==scen0]
+  plotdata <- plotdata[groupvalue %in% c("Walk","Cycle","trn_pass_road","Domestic Aviation","Passenger Rail","HSR")]
+  plotdata[,scenario:=NULL]
+  setnames(plotdata, "groupvalue","scenario")
+  cat(paste0("\n##",scen0,"\n"))
+  
+  p2 <- mipBarYearData(plotdata[period %in% c(2010,2020, 2030, 2050)],ylab="Prices logit_S3S [USD2005/pkm]")
+  print(p2)}
+
+cat('\n')
+}
+``` 
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
 if (Standalone_mode == TRUE){
   cat('\n## Prices S2S3\n')
-  scen <- unique(data_extended$Logit_Prices_S3S$scenario)
+  scen <- unique(data_extended$Logit_Prices_S2S3$scenario)
   
 for (scen0 in scen) {
   plotdata <- data_extended$Logit_Prices_S2S3[scenario==scen0]
@@ -420,6 +438,43 @@ cat('\n')
 }
 ```  
 
+```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
+if (Standalone_mode == TRUE){
+  cat('\n## Prices S1S2\n')
+  scen <- unique(data_extended$Logit_Prices_S1S2$scenario)
+  
+for (scen0 in scen) {
+  plotdata <- data_extended$Logit_Prices_S1S2[scenario==scen0]
+  plotdata <- plotdata[groupvalue %in% c("trn_pass_road_LDV_4W","trn_pass_road_LDV_2W") ]
+  plotdata[,scenario:=NULL]
+  setnames(plotdata, "groupvalue","scenario")
+  cat(paste0("\n##",scen0,"\n"))
+  
+  p2 <- mipBarYearData(plotdata[period %in% c(2010,2020, 2030, 2050)],ylab="Prices logit_S1S2 [USD2005/pkm]")
+  print(p2)}
+
+cat('\n')
+}
+```  
+
+```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
+if (Standalone_mode == TRUE){
+  cat('\n## Prices VS1\n')
+  scen <- unique(data_extended$Logit_Prices_VS1$scenario)
+  
+for (scen0 in scen) {
+  plotdata <- data_extended$Logit_Prices_VS1[scenario==scen0]
+  plotdata <- plotdata[groupvalue %in% c("Compact Car","Subcompact Car","Van","Midsize Car","Large Car","Mini Car","Large Car and SUV")  ]
+  plotdata[,scenario:=NULL]
+  setnames(plotdata, "groupvalue","scenario")
+  cat(paste0("\n##",scen0,"\n"))
+  
+  p2 <- mipBarYearData(plotdata[period %in% c(2010,2020, 2030, 2050)],ylab="Prices logit_VS1 [USD2005/pkm]")
+  print(p2)}
+
+cat('\n')
+}
+```  
 
 
 ```{r, echo=FALSE, eval = TRUE, warning=FALSE}

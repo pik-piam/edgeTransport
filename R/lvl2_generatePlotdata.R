@@ -150,7 +150,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
     shares[[i]] <- readRDS(level2path(listofruns[[i]], "shares.RDS"))
     shares[[i]]$scenario <- scenNames[i]
     logit_data <- readRDS(level2path(listofruns[[i]], "logit_data.RDS"))
-    prices[[i]] <- logit_data$share_list
+    prices[[i]] <- logit_data$prices_list
     prices[[i]]$scenario <- scenNames[i]
     pref[[i]] <- logit_data$pref_data
     pref[[i]]$scenario <- scenNames[i]
@@ -167,6 +167,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
     annual_sale[[i]]$scenario <- scenNames[i]
   }
   
+
   # Clean SSP_Scen
   SSP_Scen <- sub("gdp_", "", SSP_Scen)
   SSP_Scen <- sub("EU", "", SSP_Scen)
@@ -421,7 +422,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   
   LinePlot_data <- rbind(FE_Transport, FE_Transport_wobunk, FE_Transport_Pass, FE_Transport_Pass_Rail,  FE_Transport_Pass_Road, FE_Transport_Pass_Road_Bus, FE_Transport_Pass_Road_LDV, FE_Transport_Freight, FE_Transport_Freight_Nav, FE_Transport_Freight_Rail, FE_Transport_Freight_Road,
-                         ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Av_dom, ES_Transport_Pass_Av_intl, ES_Transport_Pass_Rail,ES_Transport_Pass_nonmot,  ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
+                         ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Av_dom, ES_Transport_Pass_Av_intl, ES_Transport_Pass_Rail,ES_Transport_Pass_nonmot,ES_Transport_Freight_Shipintl, ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
                          plot_EInt_MidsizeCar_BEV, plot_EInt_Bus_BEV, plot_EInt_MidsizeCar_ICE, plot_EInt_Bus_ICE
   )
   
@@ -452,7 +453,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
     "ES|Transport|Freight|Shipping international",
     "ES|Transport|Freight|Navigation"
   )
-  
+
   ES_shares_Freight <- LinePlot_data[variable %in% vars][,unit:=NULL]
   ES_Freight_tot <- LinePlot_data[variable=="ES|Transport|Freight"][,unit:=NULL][,variable:=NULL]
   setnames(ES_Freight_tot,"value","tot")
@@ -462,7 +463,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   
   LogitCostplotdata <- function(priceData,prefData,logitExp,groupValue,weight, yrs, Regionmapping){
-  
+
 
     all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
                       "subsector_L3", "sector")
@@ -535,7 +536,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
       seq(match(groupValue, all_subsectors) ,
           length(all_subsectors), 1)], "scenario", "value"), with = FALSE][, variable := "Inconvenience cost"]
     
-    priceData <- melt(priceData[, -c("tot_price", "share")], id.vars = c("scenario", "region", "period", all_subsectors[
+    priceData <- melt(priceData[, -c("tot_price")], id.vars = c("scenario", "region", "period", all_subsectors[
       seq(match(groupValue, all_subsectors) ,
           length(all_subsectors), 1)]))
     
@@ -570,12 +571,12 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   }
   
   
-  
+
   Prices_S3S <- Pref_S3S <- logit_exp_S3S <- list()
 
   # Prepare logit price data S3S
   for (i in 1:length(listofruns)) {
-    Prices_S3S[[i]] <- copy(prices[[i]]$S3S_shares)
+    Prices_S3S[[i]] <- copy(prices[[i]]$S2S3)
     Prices_S3S[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
   
@@ -598,9 +599,8 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   logit_exp_S3S <- do.call(rbind.data.frame, logit_exp_S3S)
   setkey(logit_exp_S3S, NULL)
-  
   Prices_S3S <- LogitCostplotdata(priceData=Prices_S3S,prefData=Pref_S3S,logitExp=logit_exp_S3S,groupValue="subsector_L3",weight=weight_dem_pkm ,yrs,Regionmapping)
-  
+
   Prices_S3S <- Prices_S3S[,c("variable", "period", "scenario", "region", "value","subsector_L3","unit")]
   setnames(Prices_S3S,"subsector_L3","groupvalue")
   
@@ -609,7 +609,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   # Prepare logit price data S2S3
   for (i in 1:length(listofruns)) {
-    Prices_S2S3[[i]] <- copy(prices[[i]]$S2S3_shares)
+    Prices_S2S3[[i]] <- copy(prices[[i]]$S1S2)
     Prices_S2S3[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
   
@@ -642,7 +642,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   # Prepare logit price data S1S2
   for (i in 1:length(listofruns)) {
-    Prices_S1S2[[i]] <- copy(prices[[i]]$S1S2_shares)
+    Prices_S1S2[[i]] <- copy(prices[[i]]$VS1)
     Prices_S1S2[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
   
@@ -674,7 +674,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   # Prepare logit price data VS1
   for (i in 1:length(listofruns)) {
-    Prices_VS1[[i]] <- copy(prices[[i]]$VS1_shares)
+    Prices_VS1[[i]] <- copy(prices[[i]]$FV)
     Prices_VS1[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
   
@@ -698,9 +698,9 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   logit_exp_VS1 <- do.call(rbind.data.frame, logit_exp_VS1)
   setkey(logit_exp_VS1, NULL)
 
-  missing_logit <- weight_dem_pkm[,c("vehicle_type","subsector_L2","subsector_L3","sector")]
-  missing_logit <- missing_logit[!duplicated(missing_logit)]
-  Prices_VS1 <- merge(Prices_VS1, missing_logit,by=c("vehicle_type"), all.x = TRUE)
+  # missing_logit <- weight_dem_pkm[,c("vehicle_type","subsector_L2","subsector_L3","sector")]
+  # missing_logit <- missing_logit[!duplicated(missing_logit)]
+  # Prices_VS1 <- merge(Prices_VS1, missing_logit,by=c("vehicle_type"), all.x = TRUE)
   Prices_VS1 <- LogitCostplotdata(priceData=Prices_VS1,prefData=Pref_VS1,logitExp=logit_exp_VS1,groupValue="vehicle_type",weight=weight_dem_pkm , yrs,Regionmapping)
   Prices_VS1 <- Prices_VS1[, c("variable", "period", "scenario", "region", "value","vehicle_type","unit")]
   setnames(Prices_VS1,"vehicle_type","groupvalue")
