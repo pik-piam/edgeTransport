@@ -27,9 +27,8 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
 
   `.` <- FE_carrier <- UE_efficiency <- Year <- aggr_vehtype <- fewcol <- gran_vehtype <- international <- logit.exponent <- logit_type <- missingH12 <- model <- newdem <- period <- region <- scenario <- sector <- share <- shareVS1 <- sharetech_new <- sharetech_vint <- subsector_L1 <- subsector_L2 <- subsector_L3 <- technology <- tot_price <- totdem <- unit <- value <- variable <- vehicle_type <- vintdem <- vkm.veh <- weight <- NULL
 
-  fileName <- paste0(filename, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), ".pdf")
-  browser()
-  #fileName <- paste0(filename, ".pdf")
+  #fileName <- paste0(filename, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), ".pdf")
+  fileName <- paste0(filename, ".pdf")
   ## ----- Line Plots per Cap----
   lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
                                global = FALSE, mainReg_plot = mainReg, per_gdp = FALSE, histdata_plot = NULL) {
@@ -267,14 +266,15 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
     SSP_Scen[i] <- unique(tmp$GDP_scenario)
     Tech_Scen[i] <- unique(tmp$EDGE_scenario)
 
-    candidate <- sub("_20.*", "", listofruns[[i]]) %>% sub(".*/", "")
     # Create unique Scenario names for plotting
-    if (candidate %in% scenNames) {
-      scenNames[i] <- paste0(candidate, "_", count_scen)
+    if (any(grepl(listofruns[[i]], scenNames))) {
+      scenNames[i] <- paste0(SSP_Scen[i], "-", Tech_Scen[i])
+      scenNames[i] <- paste0(sub(".*/", "", scenNames[i]), "_", count_scen)
       count_scen <- count_scen + 1
-    }else{
-      scenNames[i] <- candidate
-    }
+    } else {
+      scenNames[i] <- sub("_20.*", "", listofruns[[i]])
+      scenNames[i] <- sub(".*/", "", scenNames[i])
+}
 
     # load input data from EDGE runs for comparison
     demand_km[[i]] <- readRDS(level2path(listofruns[[i]], "demandF_plot_pkm.RDS")) ## detailed energy services demand, million pkm
@@ -480,19 +480,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   ES_Transport_Pass <- copy(plot_dem_pkm)
   ES_Transport_Pass <- ES_Transport_Pass[sector %in% c("trn_pass", "trn_aviation_intl")]
   ES_Transport_Pass <- ES_Transport_Pass[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass"]
-  # ES|Transport|Pass|Aviation|International
-  ES_Transport_Pass_Av_intl <- copy(plot_dem_pkm)
-  ES_Transport_Pass_Av_intl <- ES_Transport_Pass_Av_intl[sector %in% c("trn_aviation_intl")]
-  ES_Transport_Pass_Av_intl <- ES_Transport_Pass_Av_intl[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Aviation|International"]
-  # ES|Transport|Pass|Aviation|Domestic
-  ES_Transport_Pass_Av_dom <- copy(plot_dem_pkm)
-  ES_Transport_Pass_Av_dom <- ES_Transport_Pass_Av_dom[vehicle_type == "Aircraft domestic"]
-  ES_Transport_Pass_Av_dom <- ES_Transport_Pass_Av_dom[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Aviation|Domestic"]
-  # ES|Transport|Pass|non-motorized
-  ES_Transport_Pass_nonmot <- copy(plot_dem_pkm)
-  ES_Transport_Pass_nonmot <- ES_Transport_Pass_nonmot[vehicle_type %in% c("Cycling", "Walking")]
-  ES_Transport_Pass_nonmot <- ES_Transport_Pass_nonmot[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable :="ES|Transport|Pass|non-motorized"]
-  
   # ES|Transport|Pass|Rail
   ES_Transport_Pass_Rail <- copy(plot_dem_pkm)
   ES_Transport_Pass_Rail <- ES_Transport_Pass_Rail[vehicle_type == "Passenger Trains"]
@@ -515,14 +502,8 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   ES_Transport_Freight <- ES_Transport_Freight[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight"]
   # ES|Transport|Freight|Navigation
   ES_Transport_Freight_Nav <- copy(plot_dem_pkm)
-  ES_Transport_Freight_Nav <- ES_Transport_Freight_Nav[vehicle_type %in% c("Ships domestic")]
+  ES_Transport_Freight_Nav <- ES_Transport_Freight_Nav[vehicle_type %in% c("Ships domestic", "Ships international")]
   ES_Transport_Freight_Nav <- ES_Transport_Freight_Nav[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Navigation"]
-  # ES|Transport|Freight|Shipping International
-  ES_Transport_Freight_Shipintl <- copy(plot_dem_pkm)
-  ES_Transport_Freight_Shipintl <- ES_Transport_Freight_Shipintl[vehicle_type %in% c("Ships international")]
-  ES_Transport_Freight_Shipintl <- ES_Transport_Freight_Shipintl[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Shipping international"]
-  
-  
   # ES|Transport|Freight|Rail
   ES_Transport_Freight_Rail <- copy(plot_dem_pkm)
   ES_Transport_Freight_Rail <- ES_Transport_Freight_Rail[vehicle_type %in% c("Freight Trains")]
@@ -532,8 +513,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   ES_Transport_Freight_Road <- ES_Transport_Freight_Road[vehicle_type %in% c("Trucks")]
   ES_Transport_Freight_Road <- ES_Transport_Freight_Road[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Road"]
 
-  
-  
 
   # EInt
   plot_EInt <- copy(EInt_mj_km)
@@ -559,47 +538,12 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
 
 
   LinePlot_data <- rbind(FE_Transport, FE_Transport_wobunk, FE_Transport_Pass, FE_Transport_Pass_Rail,  FE_Transport_Pass_Road, FE_Transport_Pass_Road_Bus, FE_Transport_Pass_Road_LDV, FE_Transport_Freight, FE_Transport_Freight_Nav, FE_Transport_Freight_Rail, FE_Transport_Freight_Road,
-                        ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Av_dom, ES_Transport_Pass_Av_intl, ES_Transport_Pass_Rail,ES_Transport_Pass_nonmot,  ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
+                        ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Rail,  ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
                         plot_EInt_MidsizeCar_BEV, plot_EInt_Bus_BEV, plot_EInt_MidsizeCar_ICE, plot_EInt_Bus_ICE
   )
 
   LinePlot_data[, model := "EDGE-T"]
 
-  #Prepare Energy Service Shares
-  
-  vars <- c(
-    "ES|Transport|Pass|Aviation|Domestic",
-    "ES|Transport|Pass|Aviation|International",
-    "ES|Transport|Pass|Rail",
-    "ES|Transport|Pass|Road|Bus",
-    "ES|Transport|Pass|Road|LDV",
-    "ES|Transport|Pass|non-motorized"
-  )
-  
-  ES_shares_Pass <- LinePlot_data[variable %in% vars][,unit:=NULL]
-
-  ES_Pass_tot <- LinePlot_data[variable=="ES|Transport|Pass"][,unit:=NULL][,variable:=NULL]
-  setnames(ES_Pass_tot,"value","tot")
-  ES_shares_Pass <- merge(ES_shares_Pass,ES_Pass_tot, by=c("region","period","scenario","model"))
-  ES_shares_Pass <- ES_shares_Pass[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  ES_shares_Pass <- ES_shares_Pass[,variable:=paste0(variable,"|Share")]
-  
-  vars <- c(
-    "ES|Transport|Freight|Road",
-    "ES|Transport|Freight|Rail",
-    "ES|Transport|Freight|Shipping international",
-    "ES|Transport|Freight|Navigation"
-  )
-  
-  ES_shares_Freight <- LinePlot_data[variable %in% vars][,unit:=NULL]
-  ES_Freight_tot <- LinePlot_data[variable=="ES|Transport|Freight"][,unit:=NULL][,variable:=NULL]
-  setnames(ES_Freight_tot,"value","tot")
-  ES_shares_Freight <- merge(ES_shares_Freight,ES_Freight_tot, by=c("region","period","scenario","model"))
-  ES_shares_Freight <- ES_shares_Freight[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  ES_shares_Freight <- ES_shares_Freight[,variable:=paste0(variable,"|Share")]
-  
-  
-  
   Prices_S2S3 <- Pref_S2S3 <- logit_exp_S2S3 <- list()
 
   # Prepare logit price data S2S3
@@ -669,19 +613,18 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                             weights = weight_dem_pkm_S2S3[period %in% unique(Pref_S2S3$period)])
   setnames(Pref_S2S3, c("fewcol"), c("region"))
 
-  #CONV_2005USD_1990USD <- 0.67
+  CONV_2005USD_1990USD <- 0.67
   Prices_S2S3_Plot_data_Bus <- rbind(Prices_S2S3[subsector_L2 == "Bus", c("variable", "period", "scenario", "region", "value")], Pref_S2S3[subsector_L2 == "Bus", c("variable", "period", "scenario", "region", "value")])
-  #Prices_S2S3_Plot_data_Bus <- Prices_S2S3_Plot_data_Bus[, value := value * CONV_2005USD_1990USD]
+  Prices_S2S3_Plot_data_Bus <- Prices_S2S3_Plot_data_Bus[, value := value * CONV_2005USD_1990USD]
   Prices_S2S3_Plot_data_Bus <- Prices_S2S3_Plot_data_Bus[, unit := "$2005/pkm"]
 
   Prices_S2S3_Plot_data_LDV <- rbind(Prices_S2S3[subsector_L2 == "trn_pass_road_LDV", c("variable", "period", "scenario", "region", "value")], Pref_S2S3[subsector_L2 == "trn_pass_road_LDV", c("variable", "period", "scenario", "region", "value")])
-  #Prices_S2S3_Plot_data_LDV <- Prices_S2S3_Plot_data_LDV[, value := value * CONV_2005USD_1990USD]
+  Prices_S2S3_Plot_data_LDV <- Prices_S2S3_Plot_data_LDV[, value := value * CONV_2005USD_1990USD]
   Prices_S2S3_Plot_data_LDV <- Prices_S2S3_Plot_data_LDV[, unit := "$2005/pkm"]
 
   data <- list(LinePlot_data = LinePlot_data,
               Prices_S2S3_Plot_data_Bus = Prices_S2S3_Plot_data_Bus,
-              Prices_S2S3_Plot_data_LDV = Prices_S2S3_Plot_data_LDV,
-              shares = rbind(ES_shares_Pass,ES_shares_Freight))
+              Prices_S2S3_Plot_data_LDV = Prices_S2S3_Plot_data_LDV)
 
   ## Temporary solution: Adjust new regionmapping to old regionmapping
   Regionmapping_21_H12 <- Regionmapping
@@ -1577,7 +1520,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
 
 
 
-  swlatex(sw, "\\subsection{Energy Services line plots}")
+  swlatex(sw, "\\subsubsection{Energy Services line plots}")
 
   vars <- c(
 
@@ -1615,7 +1558,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
 
 
 
-  swlatex(sw, "\\subsection{Energy Services for Passenger Transport (per Capita, year)}")
+  swlatex(sw, "\\subsubsection{Energy Services for Passenger Transport (per Capita, year)}")
 
   ES_pass <- copy(plot_Energy_services)
   ES_pass <- ES_pass[sector %in% c("trn_pass", "trn_aviation_intl")][, variable := "ES|Transport|Pass"]
@@ -1665,7 +1608,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                         global = FALSE, per_gdp = TRUE)
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
-  swlatex(sw, "\\subsection{Energy Intensity line plots}")
+  swlatex(sw, "\\subsubsection{Energy Intensity line plots}")
 
   vars <- c(
 
@@ -1695,43 +1638,8 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
       print(paste0(var0, " not in runs"))
     }
   }
-  ## ---- ES mode shares ----
-swlatex(sw, "\\subsection{ES mode shares}")
-  swlatex(sw, "\\subsubsection{Passenger}")
-  
-  y_bar=c(2010,2015,2020,2025,2030,2040,2050,2100)
-  vars <- c(
-    "ES|Transport|Pass|Aviation|Domestic|Share",
-    "ES|Transport|Pass|Aviation|International|Share",
-    "ES|Transport|Pass|non-motorized|Share",
-    "ES|Transport|Pass|Rail|Share",
-    "ES|Transport|Pass|Road|Bus|Share",
-    "ES|Transport|Pass|Road|LDV|Share"
-  )
-  
-  plotdata <- data$shares[variable %in% vars]
-  p1 <- mipBarYearData(plotdata[region==mainReg & period %in% y_bar])
-  p1 <- p1 + theme(legend.position="none")
-  swfigure(sw, print, p1, sw_option = "height=9,width=16")
-  
-  p2 <- mipBarYearData( plotdata[!region==mainReg & period %in% y_bar])
-  swfigure(sw, print, p2, sw_option = "height=9,width=16")
-  
-  swlatex(sw, "\\subsubsection{Freight}")
-  vars <- c(
-    "ES|Transport|Freight|Road|Share",
-    "ES|Transport|Freight|Rail|Share",
-    "ES|Transport|Freight|International Shipping|Share",
-    "ES|Transport|Freight|Navigation|Share"
-  )
-  
-  plotdata <- data$shares[variable %in% vars]
-  p1 <- mipBarYearData(plotdata[region==mainReg & period %in% y_bar])
-  p1 <- p1 + theme(legend.position="none")
-  swfigure(sw, print, p1, sw_option = "height=9,width=16")
-  
-  p2 <- mipBarYearData( plotdata[!region==mainReg & period %in% y_bar])
-  swfigure(sw, print, p2, sw_option = "height=9,width=16")
+
+
 
   ## ---- LDVs vintages and sales ----
 
@@ -2153,11 +2061,11 @@ swlatex(sw, "\\subsection{ES mode shares}")
                                    weights = weight_dem_pkm_FV_12[period %in% unique(REMIND_prices_LDV_4W$period)])
   # Average vehicle is only vehicle type and can be removed
   REMIND_prices_LDV_4W <- REMIND_prices_LDV_4W[, aggr_vehtype := NULL]
-  #Convert 1990USD to 2005USD
-  #REMIND_prices_LDV_4W <- REMIND_prices_LDV_4W[, value := value * CONV_2005USD_1990USD]
+  # Convert 1990USD to 2005USD
+  REMIND_prices_LDV_4W <- REMIND_prices_LDV_4W[, value := value * CONV_2005USD_1990USD]
   REMIND_prices_LDV_4W <- REMIND_prices_LDV_4W[, unit := "$2005/pkm"]
 
-  #Inco_cost_LDV_4W <- Inco_cost_LDV_4W[, value := value * CONV_2005USD_1990USD]
+  Inco_cost_LDV_4W <- Inco_cost_LDV_4W[, value := value * CONV_2005USD_1990USD]
   Inco_cost_LDV_4W <- Inco_cost_LDV_4W[, unit := "$2005/pkm"]
 
   # Sum up different types of incovenience cost for total cost plots
@@ -2272,14 +2180,9 @@ swlatex(sw, "\\subsection{ES mode shares}")
 
   swlatex(sw, "\\subsection{Total cost transport passenger road}")
 
-
-  p <- mipBarYearData(data$Prices_S2S3_Plot_data_LDV[period %in% c(2010,2020,2030,2040,2050,2100)&region==mainReg], ylab = "Prices logit_S2S3 LDV [USD2005/pkm]")
+  p <- mipBarYearData(data$Prices_S2S3_Plot_data_LDV[period %in% c(2010, 2020, 2030, 2050)], ylab = "Prices logit_S2S3 LDV [USD2005/pkm]")
   swfigure(sw, print, p, sw_option = "height=9,width=16")
-  p <- mipBarYearData(data$Prices_S2S3_Plot_data_LDV[period %in% c(2010,2020,2030,2040,2050,2100)], ylab = "Prices logit_S2S3 LDV [USD2005/pkm]")
-  swfigure(sw, print, p, sw_option = "height=9,width=16")
-  p <- mipBarYearData(data$Prices_S2S3_Plot_data_Bus[period %in% c(2010,2020,2030,2040,2050,2100)&region==mainReg], ylab = "Prices logit_S2S3 Bus [USD2005/pkm]")
-  swfigure(sw, print, p, sw_option = "height=9,width=16")
-  p <- mipBarYearData(data$Prices_S2S3_Plot_data_Bus[period %in% c(2010,2020,2030,2040,2050,2100)], ylab = "Prices logit_S2S3 Bus [USD2005/pkm]")
+  p <- mipBarYearData(data$Prices_S2S3_Plot_data_Bus[period %in% c(2010, 2020, 2030, 2050)], ylab = "Prices logit_S2S3 Bus [USD2005/pkm]")
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   ## Close output-pdf

@@ -32,7 +32,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     storeRDS <- FALSE
   }
 
-  stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
+  ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
   
   if (is.null(specName)){
