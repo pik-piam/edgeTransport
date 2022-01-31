@@ -450,7 +450,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   vars <- c(
     "ES|Transport|Freight|Road",
     "ES|Transport|Freight|Rail",
-    "ES|Transport|Freight|Shipping international",
+    "ES|Transport|Freight|International Shipping",
     "ES|Transport|Freight|Navigation"
   )
 
@@ -670,6 +670,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   Prices_S1S2 <- Prices_S1S2[, c("variable", "period", "scenario", "region", "value","subsector_L1","unit")]
   setnames(Prices_S1S2,"subsector_L1","groupvalue")
   
+
   Prices_VS1 <- Pref_VS1 <- logit_exp_VS1 <- list()
   
   # Prepare logit price data VS1
@@ -698,13 +699,14 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   logit_exp_VS1 <- do.call(rbind.data.frame, logit_exp_VS1)
   setkey(logit_exp_VS1, NULL)
 
-  # missing_logit <- weight_dem_pkm[,c("vehicle_type","subsector_L2","subsector_L3","sector")]
-  # missing_logit <- missing_logit[!duplicated(missing_logit)]
-  # Prices_VS1 <- merge(Prices_VS1, missing_logit,by=c("vehicle_type"), all.x = TRUE)
   Prices_VS1 <- LogitCostplotdata(priceData=Prices_VS1,prefData=Pref_VS1,logitExp=logit_exp_VS1,groupValue="vehicle_type",weight=weight_dem_pkm , yrs,Regionmapping)
   Prices_VS1 <- Prices_VS1[, c("variable", "period", "scenario", "region", "value","vehicle_type","unit")]
   setnames(Prices_VS1,"vehicle_type","groupvalue")
 
+  
+
+  
+  
   
   data <- list(LinePlot_data = LinePlot_data,
                Logit_Prices_S3S= Prices_S3S,
