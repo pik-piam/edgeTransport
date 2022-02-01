@@ -290,8 +290,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
               dem[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, c("technology", "tech_output") := list("FCEV", 0)],
               dem[subsector_L1 %in% c("trn_pass_road_LDV_4W") & technology == "Liquids"][, c("technology", "tech_output") := list("Hybrid Electric", 0)])
 
+  demNM = dem[vehicle_type %in% c("Walk_tmp_vehicletype", "Cycle_tmp_vehicletype")]
   ## substitute the EU based demand
-  demNM = dem[iso %in% unique(EU_data$dem_eurostat$iso) & vehicle_type %in% c("Walk_tmp_vehicletype", "Cycle_tmp_vehicletype")]
   demBunk = dem[!(iso %in% unique(EU_data$dem_eurostat[vehicle_type %in% c("International Aviation_tmp_vehicletype", "International Ship_tmp_vehicletype"),iso])) &
                   vehicle_type %in% c("International Aviation_tmp_vehicletype", "International Ship_tmp_vehicletype")]  ## International aviation and shipping come from Eurostat -> not the same ISO as in TRACCS are provided
   demRail = dem[!(iso %in% unique(EU_data$dem_eurostat[vehicle_type %in% c("Freight Rail_tmp_vehicletype", "Passenger Rail_tmp_vehicletype"),iso])) &
@@ -351,6 +351,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   dem = dem[year <= 2010]
 
+  ## from https://www.iea.org/reports/tracking-rail-2020-2
+  dem[year <= 2010 & iso == "CHN" & subsector_L3 == "HSR", tech_output := 70000]
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 
