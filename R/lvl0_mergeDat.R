@@ -353,6 +353,9 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   ## from https://www.iea.org/reports/tracking-rail-2020-2
   dem[year <= 2010 & iso == "CHN" & subsector_L3 == "HSR", tech_output := 70000]
+  ## from https://doi.org/10.1016/j.apenergy.2015.08.124
+  fact <- 3000000/dem[year == 2010 & iso == "CHN" & subsector_L2 == "Bus", sum(tech_output)]
+  dem[year <= 2010 & iso == "CHN" & subsector_L2 == "Bus", tech_output := tech_output * fact]
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 

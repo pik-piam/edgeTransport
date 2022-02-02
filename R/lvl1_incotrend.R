@@ -8,6 +8,8 @@
 #' @param GDP_POP_MER GDP per capita MER
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param tech_scen technology at the center of the policy packages
+#'
+#' @importFrom npreg ss
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
 
@@ -264,11 +266,6 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
                                                                            subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
                     value := ifelse(year <= 2100, value[year==2020] + (0.01*value[year==2020]-value[year==2020]) * (year-2020)/(2100-2020), 0.1*value[year==2020]),
                     by=c("region", "vehicle_type", "technology")]
-  ## normalize again
-  SWS$FV_final_pref[year >= 2020 & (vehicle_type %in% c("Bus_tmp_vehicletype")|
-                                                                 subsector_L1 == "trn_freight_road_tmp_subsector_L1"),
-                    value := value/max(value),
-                    by=c("region", "vehicle_type", "year")]
 }
 
   ## electric trains develop linearly to 2100
@@ -298,7 +295,7 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
                       sw := ifelse(year <= 2020, sw[year==2010] + (0.05*sw[year==2010]-sw[year==2010]) * (year-2010) / (2020-2010), sw),
                       by = c("region","subsector_L1")]
   SWS$S1S2_final_pref[region %in% c("OAS", "CHA", "IND") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2020 & year <= 2100,
-                      sw := ifelse(year >= 2020, sw[year==2020] + (0.05*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), sw),
+                      sw := ifelse(year >= 2020, sw[year==2020] + (0.1*sw[year==2020]-sw[year==2020]) * (year-2020) / (2100-2020), sw),
                       by = c("region","subsector_L1")]
   SWS$S1S2_final_pref[region %in% c("OAS", "CHA", "IND") & subsector_L1 == "trn_pass_road_LDV_2W"  & year >=2100,
                       sw := sw[year==2100], by = c("region","subsector_L1")]
@@ -319,8 +316,6 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
                       sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 9)), by = c("region", "subsector_L2")]
   SWS$S2S3_final_pref[region %in% c("IND") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
                       sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 2)), by = c("region", "subsector_L2")]
-  SWS$S2S3_final_pref[region %in% c("CHA") & subsector_L2 == "Bus"  & year >= 2010 & year <= 2100,
-                      sw := sw * (1 - 0.95 * apply_logistic_trends(0, year, 2010, 1.5)), by = c("region", "subsector_L2")]
 
   ## public transport preference in European countries increases (Rail)
   SWS$S3S_final_pref[subsector_L3 == "Passenger Rail" & region %in% eu_regions & region!= "DEU" & year >= 2020,
@@ -491,7 +486,57 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
                      by = c("region", "year", "subsector_L1")]
 
   SWS$FV_final_pref[logit_type =="sw", value := value/max(value),
-                     by = c("region", "year", "vehicle_type")]
+                    by = c("region", "year", "vehicle_type")]
 
+  ## overwrite CHA bus vs LDV trends
+  s2s3 <- SWS$S2S3_final_pref
+  trendt <- fread(text="
+year,trend
+2010,1
+2015,0.5
+2060,0.3
+2150,0.1
+")
+  tst <- npreg::ss(trendt[, year], trendt[, trend], all.knots = T, lambda=1e-3)
+  plot(tst, ylim=c(0, 0.5))
+  points(trendt[, year], trendt[, trend])
+
+  s2s3[region == "CHA" & subsector_L2 == "Bus" & year > 2010, sw := s2s3[region == "CHA" & year == 2010 & subsector_L2 == "Bus", sw]]
+  s2s3[region == "CHA" & subsector_L2 == "Bus" & year <= 2010, trend := sw / s2s3[region == "CHA" & year == 2010 & subsector_L2 == "Bus", sw]]
+  s2s3[region == "CHA" & subsector_L2 == "Bus" & year > 2010, trend := predict(tst, x=year)$y]
+  s2s3[region == "CHA" & subsector_L2 == "Bus", sw := trend * sw]
+  
+  SWS[["S2S3_final_pref"]] <- s2s3
+
+  s3s <- SWS$S3S_final_pref
+
+  trendt <- fread(text="
+year,trend
+2010,1
+2020,1.1
+2030,0.3
+2040,0.17
+2060,0.12
+2100,0.1
+2150,0.1
+")
+
+  
+  tst <- npreg::ss(trendt[, year], trendt[, trend], all.knots = T, lambda=1e-6)
+  ## plot(tst)
+  ## points(trendt[, year], trendt[, trend])
+  
+  s3s[region == "CHA" & subsector_L3 == "Passenger Rail" & year > 2010, sw := s3s[region == "CHA" & year == 2010 & subsector_L3 == "Passenger Rail", sw]]
+  s3s[region == "CHA" & subsector_L3 == "Passenger Rail" & year <= 2010, trend := sw / s3s[region == "CHA" & year == 2010 & subsector_L3 == "Passenger Rail", sw]]
+  s3s[region == "CHA" & subsector_L3 == "Passenger Rail" & year > 2010, trend := predict(tst, x=year)$y]
+  s3s[region == "CHA" & subsector_L3 == "Passenger Rail", sw := trend * sw]
+
+
+  s3s[region == "CHA" & subsector_L3 == "HSR" & year > 2010, sw := s3s[region == "CHA" & year == 2010 & subsector_L3 == "HSR", sw]]
+  s3s[region == "CHA" & subsector_L3 == "HSR" & year <= 2010, trend := sw / s3s[region == "CHA" & year == 2010 & subsector_L3 == "HSR", sw]]
+  s3s[region == "CHA" & subsector_L3 == "HSR", trend := predict(tst, x=year)$y]
+  s3s[region == "CHA" & subsector_L3 == "HSR", sw := trend * sw]
+  
+  SWS[["S3S_final_pref"]] <- s3s
   return(SWS)
 }
