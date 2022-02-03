@@ -409,9 +409,9 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
-    file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
-              md_template, overwrite = T)
-    render(md_template, output_format="pdf_document")
+    #file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
+              #md_template, overwrite = T)
+    #render(md_template, output_format="pdf_document")
   }
 
 

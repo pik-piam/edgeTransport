@@ -95,7 +95,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
                      "HSR_tmp_vehicletype", "Passenger Rail_tmp_vehicletype", "Bus_tmp_vehicletype", "Moped", "Motorcycle (50-250cc)", "Motorcycle (>250cc)", "International Ship_tmp_vehicletype", "Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),
     aggr_vehtype = c("Small Cars", "Large Cars", "Large Cars", "Large Cars", "Large Cars", "Small Cars", "Small Cars", "Large Cars", "Aircraft international",
                      "Ships domestic", "Freight Trains", "Trucks", "Trucks", "Trucks", "Trucks", "Trucks", "Aircraft domestic",
-                     "Passenger Trains", "Passenger Trains", "Busses", "Motorbikes", "Motorbikes", "Motorbikes", "Ships international", "Cycling", "Walking"),
+                     "Passenger HSR", "Passenger Trains", "Busses", "Motorbikes", "Motorbikes", "Motorbikes", "Ships international", "Cycling", "Walking"),
     international = c("no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers",
                       "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "no bunkers", "bunkers", "no bunkers", "no bunkers")
   )
@@ -273,7 +273,15 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   # FE|Transport|Pass|Rail
   FE_Transport_Pass_Rail <- copy(plot_dem_ej)
   FE_Transport_Pass_Rail <- FE_Transport_Pass_Rail[vehicle_type == "Passenger Trains"]
-  FE_Transport_Pass_Rail <- FE_Transport_Pass_Rail[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "FE|Transport|Pass|Rail"]
+  FE_Transport_Pass_Rail <- FE_Transport_Pass_Rail[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "FE|Transport|Pass|Rail|non-HSR"]
+  # FE|Transport|Pass|Rail
+  FE_Transport_Pass_HSR <- copy(plot_dem_ej)
+  FE_Transport_Pass_HSR <- FE_Transport_Pass_HSR[vehicle_type == "Passenger HSR"]
+  FE_Transport_Pass_HSR <- FE_Transport_Pass_HSR[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "FE|Transport|Pass|Rail|HSR"]
+  # FE|Transport|Pass|Rail
+  FE_Transport_Pass_RailHSR <- copy(plot_dem_ej)
+  FE_Transport_Pass_RailHSR <- FE_Transport_Pass_RailHSR[vehicle_type %in% c("Passenger HSR","Passenger Trains")]
+  FE_Transport_Pass_RailHSR <- FE_Transport_Pass_RailHSR[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "FE|Transport|Pass|Rail"]
   # FE|Transport|Pass|Road
   FE_Transport_Pass_Road <- copy(plot_dem_ej)
   FE_Transport_Pass_Road <- FE_Transport_Pass_Road[vehicle_type %in% c("Busses", "Small Cars", "Large Cars", "Motorbikes")]
@@ -351,15 +359,23 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   ES_Transport_Pass_Av_dom <- copy(plot_dem_pkm)
   ES_Transport_Pass_Av_dom <- ES_Transport_Pass_Av_dom[vehicle_type == "Aircraft domestic"]
   ES_Transport_Pass_Av_dom <- ES_Transport_Pass_Av_dom[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Aviation|Domestic"]
-  # ES|Transport|Pass|non-motorized
+  # ES|Transport|Pass|Road|Non-Motorized
   ES_Transport_Pass_nonmot <- copy(plot_dem_pkm)
   ES_Transport_Pass_nonmot <- ES_Transport_Pass_nonmot[vehicle_type %in% c("Cycling", "Walking")]
-  ES_Transport_Pass_nonmot <- ES_Transport_Pass_nonmot[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable :="ES|Transport|Pass|non-motorized"]
+  ES_Transport_Pass_nonmot <- ES_Transport_Pass_nonmot[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable :="ES|Transport|Pass|Road|Non-Motorized"]
   
-  # ES|Transport|Pass|Rail
+  # ES|Transport|Pass|Rail|non-HSR
   ES_Transport_Pass_Rail <- copy(plot_dem_pkm)
   ES_Transport_Pass_Rail <- ES_Transport_Pass_Rail[vehicle_type == "Passenger Trains"]
-  ES_Transport_Pass_Rail <- ES_Transport_Pass_Rail[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Rail"]
+  ES_Transport_Pass_Rail <- ES_Transport_Pass_Rail[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Rail|non-HSR"]
+  # ES|Transport|Pass|Rail|HSR
+  ES_Transport_Pass_HSR <- copy(plot_dem_pkm)
+  ES_Transport_Pass_HSR <- ES_Transport_Pass_HSR[vehicle_type == "Passenger HSR"]
+  ES_Transport_Pass_HSR <- ES_Transport_Pass_HSR[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Rail|HSR"]
+  # ES|Transport|Pass|Rail
+  ES_Transport_Pass_RailHSR <- copy(plot_dem_pkm)
+  ES_Transport_Pass_RailHSR <- ES_Transport_Pass_RailHSR[vehicle_type %in% c("Passenger HSR","Passenger Trains")]
+  ES_Transport_Pass_RailHSR <- ES_Transport_Pass_RailHSR[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Pass|Rail"]
   # ES|Transport|Pass|Road
   ES_Transport_Pass_Road <- copy(plot_dem_pkm)
   ES_Transport_Pass_Road <- ES_Transport_Pass_Road[vehicle_type %in% c("Busses", "Small Cars", "Large Cars", "Motorbikes")]
@@ -383,7 +399,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   # ES|Transport|Freight|Shipping International
   ES_Transport_Freight_Shipintl <- copy(plot_dem_pkm)
   ES_Transport_Freight_Shipintl <- ES_Transport_Freight_Shipintl[vehicle_type %in% c("Ships international")]
-  ES_Transport_Freight_Shipintl <- ES_Transport_Freight_Shipintl[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Shipping international"]
+  ES_Transport_Freight_Shipintl <- ES_Transport_Freight_Shipintl[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|International Shipping"]
   
   
   # ES|Transport|Freight|Rail
@@ -421,32 +437,52 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   plot_EInt_Bus_ICE <- plot_EInt[vehicle_type == "Bus_tmp_vehicletype" & technology == "Liquids", c("period", "region", "scenario", "value", "unit")][, variable := "EInt|Transport|Pass|Road|Bus|ICE"]
   
   
-  LinePlot_data <- rbind(FE_Transport, FE_Transport_wobunk, FE_Transport_Pass, FE_Transport_Pass_Rail,  FE_Transport_Pass_Road, FE_Transport_Pass_Road_Bus, FE_Transport_Pass_Road_LDV, FE_Transport_Freight, FE_Transport_Freight_Nav, FE_Transport_Freight_Rail, FE_Transport_Freight_Road,
-                         ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Av_dom, ES_Transport_Pass_Av_intl, ES_Transport_Pass_Rail,ES_Transport_Pass_nonmot,ES_Transport_Freight_Shipintl, ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
+  LinePlot_data <- rbind(FE_Transport, FE_Transport_wobunk, FE_Transport_Pass, FE_Transport_Pass_Rail,FE_Transport_Pass_HSR,FE_Transport_Pass_RailHSR,  FE_Transport_Pass_Road, FE_Transport_Pass_Road_Bus, FE_Transport_Pass_Road_LDV, FE_Transport_Freight, FE_Transport_Freight_Nav, FE_Transport_Freight_Rail, FE_Transport_Freight_Road,
+                         ES_Transport, ES_Transport_wobunk, ES_Transport_Pass, ES_Transport_Pass_Av_dom, ES_Transport_Pass_Av_intl, ES_Transport_Pass_Rail,ES_Transport_Pass_RailHSR, ES_Transport_Pass_HSR,ES_Transport_Pass_nonmot,ES_Transport_Freight_Shipintl, ES_Transport_Pass_Road, ES_Transport_Pass_Road_Bus, ES_Transport_Pass_Road_LDV, ES_Transport_Freight, ES_Transport_Freight_Nav, ES_Transport_Freight_Rail, ES_Transport_Freight_Road,
                          plot_EInt_MidsizeCar_BEV, plot_EInt_Bus_BEV, plot_EInt_MidsizeCar_ICE, plot_EInt_Bus_ICE
   )
   
   LinePlot_data[, model := "EDGE-T"]
   
-  #Prepare Energy Service Shares
+  #Prepare Energy Service Shares with bunkers
   
   vars <- c(
     "ES|Transport|Pass|Aviation|Domestic",
     "ES|Transport|Pass|Aviation|International",
-    "ES|Transport|Pass|Rail",
+    "ES|Transport|Pass|Rail|non-HSR",
+    "ES|Transport|Pass|Rail|HSR",
     "ES|Transport|Pass|Road|Bus",
     "ES|Transport|Pass|Road|LDV",
-    "ES|Transport|Pass|non-motorized"
+    "ES|Transport|Pass|Road|Non-Motorized"
   )
   
-  ES_shares_Pass <- LinePlot_data[variable %in% vars][,unit:=NULL]
+
+  ES_shares_Pass_wbunk <- LinePlot_data[variable %in% vars][,unit:=NULL]
+  if (length(unique(ES_shares_Pass_wbunk$variable)) < 7) print("Error in Pass ES Shares with bunkers")
+  ES_shares_Pass_wbunk[, tot:= sum(value), by= c("period","region","scenario","model")]
+  ES_shares_Pass_wbunk[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
+  ES_shares_Pass_wbunk <- ES_shares_Pass_wbunk[,variable:=paste0(variable,"|Share")]
   
-  ES_Pass_tot <- LinePlot_data[variable=="ES|Transport|Pass"][,unit:=NULL][,variable:=NULL]
-  setnames(ES_Pass_tot,"value","tot")
-  ES_shares_Pass <- merge(ES_shares_Pass,ES_Pass_tot, by=c("region","period","scenario","model"))
-  ES_shares_Pass <- ES_shares_Pass[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  ES_shares_Pass <- ES_shares_Pass[,variable:=paste0(variable,"|Share")]
   
+  #Prepare Energy Service Shares without bunkers
+  
+  vars <- c(
+    "ES|Transport|Pass|Aviation|Domestic",
+    "ES|Transport|Pass|Rail|non-HSR",
+    "ES|Transport|Pass|Rail|HSR",
+    "ES|Transport|Pass|Road|Bus",
+    "ES|Transport|Pass|Road|LDV",
+    "ES|Transport|Pass|Road|Non-Motorized"
+  )
+  
+
+  ES_shares_Pass_wobunk <- LinePlot_data[variable %in% vars][,unit:=NULL]
+  if (length(unique(ES_shares_Pass_wobunk$variable)) < 6) print("Error in Freight ES Shares without bunkers")
+  ES_shares_Pass_wobunk[, tot:= sum(value), by= c("period","region","scenario","model")]
+  ES_shares_Pass_wobunk[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
+  ES_shares_Pass_wobunk <- ES_shares_Pass_wobunk[,variable:=paste0(variable,"|Share w/o bunkers")]
+  
+  #Prepare Energy Service Shares with bunkers
   vars <- c(
     "ES|Transport|Freight|Road",
     "ES|Transport|Freight|Rail",
@@ -454,12 +490,25 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
     "ES|Transport|Freight|Navigation"
   )
 
-  ES_shares_Freight <- LinePlot_data[variable %in% vars][,unit:=NULL]
-  ES_Freight_tot <- LinePlot_data[variable=="ES|Transport|Freight"][,unit:=NULL][,variable:=NULL]
-  setnames(ES_Freight_tot,"value","tot")
-  ES_shares_Freight <- merge(ES_shares_Freight,ES_Freight_tot, by=c("region","period","scenario","model"))
-  ES_shares_Freight <- ES_shares_Freight[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  ES_shares_Freight <- ES_shares_Freight[,variable:=paste0(variable,"|Share")]
+  ES_shares_Freight_wbunk <- LinePlot_data[variable %in% vars][,unit:=NULL]
+  if (length(unique(ES_shares_Freight_wbunk$variable)) < 4) print("Error in Freight ES Shares with bunkers")
+  ES_shares_Freight_wbunk[, tot:= sum(value), by= c("period","region","scenario","model")]
+  ES_shares_Freight_wbunk[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
+  ES_shares_Freight_wbunk <- ES_shares_Freight_wbunk[,variable:=paste0(variable,"|Share")]
+  
+  #Prepare Energy Service Shares without bunkers
+  vars <- c(
+    "ES|Transport|Freight|Road",
+    "ES|Transport|Freight|Rail",
+    "ES|Transport|Freight|Navigation"
+  )
+
+  ES_shares_Freight_wobunk <- LinePlot_data[variable %in% vars][,unit:=NULL]
+  if (length(unique(ES_shares_Freight_wobunk$variable)) < 3) print("Error in Pass ES Shares without bunkers")
+  ES_shares_Freight_wobunk[, tot:= sum(value), by= c("period","region","scenario","model")]
+  ES_shares_Freight_wobunk[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
+  ES_shares_Freight_wobunk <- ES_shares_Freight_wobunk[,variable:=paste0(variable,"|Share w/o bunkers")]
+  
   
   
   LogitCostplotdata <- function(priceData,prefData,logitExp,groupValue,weight, yrs, Regionmapping){
@@ -478,27 +527,6 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
       seq(match(groupValue, all_subsectors) ,
           length(all_subsectors), 1)])]
     
-    # prefData  <- approx_dt(prefData,
-    #                   xdata = yrs,
-    #                   xcol = "period",
-    #                   ycol = "sw",
-    #                   idxcols = c("period", "region", "scenario", "unit", all_subsectors[
-    #                     seq(match(groupValue, all_subsectors) ,
-    #                         length(all_subsectors), 1)]),
-    #                   extrapolate = T)
-    # priceData  <- approx_dt(priceData,
-    #                        xdata = yrs,
-    #                        xcol = "period",
-    #                        ycol = c("tot_VOT_price",
-    #                        "fuel_price_pkm",
-    #                        "non_fuel_price",
-    #                        "tot_price"),
-    #                        idxcols = c("period", "region", "scenario", "unit", all_subsectors[
-    #                          seq(match(groupValue, all_subsectors) ,
-    #                              length(all_subsectors), 1)]),
-    #                        extrapolate = T)
-    
-    
     prefData <- prefData[period %in% yrs]
     priceData<-  priceData[period %in% yrs]
     
@@ -506,10 +534,6 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   # Calculate Inconvenience Cost from share Weight
     prefData <- merge(prefData, logitExp, all.y = TRUE)
     
-    # if (nrow(prefData[is.na(prefData$logit.exponent)]) > 0){
-    #   print(paste0("There are NAs in the logit exponent that are now set to -10: ",prefData[is.na(prefData)]))
-    #   prefData <- prefData[is.na(logit.exponent), logit.exponent := -10]
-    # }
 
     price_tot <- priceData[, c("period", "region", "scenario", "tot_price", all_subsectors[
       seq(match(groupValue, all_subsectors) ,
@@ -599,6 +623,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   logit_exp_S3S <- do.call(rbind.data.frame, logit_exp_S3S)
   setkey(logit_exp_S3S, NULL)
+  Prices_S3S[subsector_L3 %in% c("Cycle","Walk"), tot_VOT_price:=tot_price]
   Prices_S3S <- LogitCostplotdata(priceData=Prices_S3S,prefData=Pref_S3S,logitExp=logit_exp_S3S,groupValue="subsector_L3",weight=weight_dem_pkm ,yrs,Regionmapping)
 
   Prices_S3S <- Prices_S3S[,c("variable", "period", "scenario", "region", "value","subsector_L3","unit")]
@@ -615,6 +640,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
   
   Prices_S2S3 <- do.call(rbind.data.frame, Prices_S2S3)
   setkey(Prices_S2S3, NULL)
+
   
   # Prepare logit pref data S2S3
   for (i in 1:length(listofruns)) {
@@ -717,7 +743,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
                Pref_S2S3= Pref_S2S3,
                Pref_S1S2= Pref_S1S2,
                Pref_VS1= Pref_VS1,
-               shares = rbind(ES_shares_Pass,ES_shares_Freight))
+               shares = rbind(ES_shares_Pass_wbunk,ES_shares_Pass_wobunk ,ES_shares_Freight_wbunk,ES_shares_Freight_wobunk))
   
   
   return(data)
