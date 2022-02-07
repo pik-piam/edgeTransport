@@ -3,7 +3,12 @@ title: "Compare Scenarios report EDGE-Transport"
 output: 
  html_document:
    toc: yes
-  
+hist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif"
+listofruns: list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-04.*", full.names = T)
+
+y_bar: c(2010,2020,2030,2050,2100)
+regionchoice: c("CHA")
+ 
   # word_document:
   #   toc: yes
   # html_document: 
@@ -29,27 +34,18 @@ library(rmndt)
 library(remind2)
 library(mrremind)
 library(devtools)
+library(knitr)
+library(htmlTable)
+load_all("C:/Users/johannah/Documents/Git_repos/edgeTransport")
 
-Standalone_mode = TRUE
-load_cache=TRUE
-cache_folder="C:/Users/johannah/Documents/Git_repos/edgeTransport/cache"
-hist <- "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif"
-listofruns <- list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-03.*", full.names = T)
 
-y_bar=c(2010,2030,2050,2100)
-reg=NULL
-regionchoice <- c("CHA")
-AggrReg="H12"
 
-#Read in data
-if (Standalone_mode == TRUE){
-  load_all("C:/Users/johannah/Documents/Git_repos/edgeTransport")
 
-  #load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
-  data_extended <- lvl2_generate_plotdata(listofruns=listofruns, load_Cache=load_Cache, cache_folder=cache_folder, AggrReg="H12")
-  data <- rbind(data_extended$LinePlot_data,data_extended$shares)
+#load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
+data_extended <- lvl2_generate_plotdata(listofruns)
+data <- rbind(data_extended$LinePlot_data,data_extended$shares)
   
-}
+
 
 #load historical data 
     vars <- c(
@@ -69,49 +65,7 @@ if (Standalone_mode == TRUE){
   historical["GLO",,"JRC", pmatch = F] = NA
   historical <- magpie2dt(historical)
   
-  
-  #Create IEA ETP intensity data
-  # hist_ES <- historical[grepl("ES\\|Transport",historical$variable) & grepl("IEA ETP",historical$model),]
-  # setnames(hist_ES,"value","ES")
-  # hist_ES[,variable:=sub("..\\|","",variable)]
-  # hist_ES[,variable:=sub(" \\(.*\\)","",variable)]
-  # hist_ES <- hist_ES[variable %in% vars]
-  # hist_FE <- historical[grepl("FE\\|Transport", historical$variable)& grepl("IEA ETP",historical$model),]
-  # setnames(hist_FE,"value","FE")
-  # hist_FE[,variable:=sub("..\\|","",variable)]
-  # hist_FE[,variable:=sub(" \\(.*\\)","",variable)]
-  # hist_FE[!grepl("LDV",variable),variable:=sub("Electricity","Electric",variable)]
-  # hist_FE[grepl("LDV",variable),variable:=sub("Electricity","BEV",variable)]
-  # hist_FE <- hist_FE[variable %in% vars]
-  # hist_EInt <- merge(hist_ES,hist_FE, by = c("region","year","variable","scenario","model"), all.x = TRUE)
-  # hist_EInt <- hist_EInt[ES > 0]
-  # hist_EInt[,value:=FE/ES][,variable:=paste0(variable," (MJ/pkm)")][,FE:=NULL][,ES:=NULL]
-  # hist_EInt[,variable:=paste0("EInt|",variable)]
-  # historicaldt <- rbind(historical,hist_EInt)
-  # historical <- as.magpie(historicaldt)
-  
-  #Include more aggregations from IEA bal data
-  
-  if (load_cache & file.exists(cache_folder)){
-    IEA <- readRDS(file.path(cache_folder, "IEAbal.RDS"))} else {
-      IEAbal <- madrat::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)}
-  
-  IEA <- IEA[, , c("fedie", "fepet", "fegat", "feelt"), pmatch = TRUE]
-  IEA_dt <- magpie2dt(IEA, datacols=c("se", "fe", "te", "mod", "flow"), regioncol="region", yearcol="year")
-  IEA_dt <- IEA_dt[te != "dot"]  #delete fedie.dot
-  IEA_dt2plot <- copy(IEA_dt)
-  IEA_dt2plot <- IEA_dt2plot[, .(value = sum(value)), by=.(region, year, flow)]
-  IEA_dt2plot <- IEA_dt2plot[!flow %in% c("PIPELINE", "TRNONSPE", "NETRANS")]
-  IEA_dt2plot <- IEA_dt2plot[,model:="IEA"][,unit:="EJ/yr"]
-  IEAmapping <- data.table(
-   flow = c("AVBUNK","DOMESAIR","DOMESNAV","MARBUNK","RAIL","ROAD"),
-   variable = c("FE|Transport|Pass|Aviation|International","FE|Transport|Pass|Aviation|Domestic","FE|Transport|Freight|Navigation","FE|Transport|Freight|International Shipping","FE|Transport|Rail", "FE|Transport|Road"))
-  IEA_dt2plot <- merge(IEA_dt2plot,IEAmapping)
-  IEA_dt2plot[,flow:=NULL][,scenario:="IEA bal"]
-  setnames(IEA_dt2plot,"year","period")
-  IEA_dt2plot_glo <- copy(IEA_dt2plot)
-  IEA_dt2plot_glo <- IEA_dt2plot_glo[,.(value=sum(value)),by=c("period","variable","scenario","model","unit")][,region:="GLO"]
-  IEA_dt2plot <- rbind(IEA_dt2plot,IEA_dt2plot_glo)
+
   
   #Include ETP shares
   datapath <- "C:/Users/johannah/Documents/EDGE-Transport/Validation/ETP_RTS_ES_China.csv"
@@ -242,6 +196,36 @@ for (var0 in vars) {
 }
 ```
 
+```{r, fig.width=20, fig.height=15, eval = TRUE,echo=FALSE, results= 'asis'}
+  vars <- c(
+    "ES|Transport|Pass|Road|LDV|Share w/o bunkers",  
+    "ES|Transport|Pass|Road|Bus|Share w/o bunkers",
+    "ES|Transport|Pass|Rail|non-HSR|Share w/o bunkers",
+    "ES|Transport|Pass|Aviation|Domestic|Share w/o bunkers",
+    "ES|Transport|Pass|Rail|HSR|Share w/o bunkers",
+    "ES|Transport|Pass|Road|Non-Motorized|Share w/o bunkers"
+  )
+  
+  for (reg0 in regionchoice){
+    
+    Shares <- data[variable %in% vars & region == reg0 & period %in% y_bar]
+    Shares[,value:=round(value,1)]
+    Shares <- dcast(Shares, variable + unit + region + scenario + model ~ period)
+    Shares <- as.data.table(Shares)
+    Shares <- Shares[match(vars,variable)]
+    Shares <- addHtmlTableStyle(Shares,css.cell = rbind(rep("background: lightgrey; 
+                                            font-size: 3
+                                            em;", times = ncol(Shares)),
+                                     matrix("",
+                                            ncol = ncol(Shares),
+                                            nrow = nrow(Shares))))
+    t <- htmlTable(Shares,rnames=FALSE, caption = paste0("ES Shares trn_pass ",reg0))
+    print(t)
+    }
+  
+  
+  
+```
 
 ```{r, fig.width=15, fig.height=9, eval = TRUE,echo=FALSE, results= 'asis'}
 
@@ -268,10 +252,11 @@ for (var0 in vars) {
   )
 
   plotdata <- data[variable %in% vars]
-  p1 <- mipBarYearData(plotdata[region %in% regionchoice & period %in% y_bar])
+  p1 <- mipArea(plotdata[region %in% regionchoice & period %in% y_bar], scales="free_y")
   p1 <- p1 + theme_mip(size = 18)
   print(p1)
   
+
 
   
   cat('\n###Freight\n')
@@ -290,7 +275,6 @@ for (var0 in vars) {
 
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
-if (Standalone_mode == TRUE){
   cat('\n## Prices S3S\n')
   scen <- unique(data_extended$Logit_Prices_S3S$scenario)
   
@@ -307,11 +291,10 @@ for (reg0 in regionchoice) {
   print(p2)}
 
 cat('\n')
-}
+
 ``` 
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
-if (Standalone_mode == TRUE){
   cat('\n## Prices S2S3\n')
   
 for (reg0 in regionchoice) {
@@ -327,11 +310,10 @@ for (reg0 in regionchoice) {
   print(p2)}
 
 cat('\n')
-}
+
 ```  
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
-if (Standalone_mode == TRUE){
   cat('\n## Prices S1S2\n')
   
 for (reg0 in regionchoice) {
@@ -347,11 +329,10 @@ for (reg0 in regionchoice) {
   print(p2)}
 
 cat('\n')
-}
+
 ```  
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
-if (Standalone_mode == TRUE){
   cat('\n## Prices VS1\n')
   
 for (reg0 in regionchoice) {
@@ -367,12 +348,12 @@ for (reg0 in regionchoice) {
   print(p2)}
 
 cat('\n')
-}
+
 ```  
 
 
 ```{r, fig.width=15, fig.height=9,echo=FALSE, eval = TRUE, warning=FALSE}
-if (Standalone_mode == TRUE){
+
   cat('\n## Shareweight trends\n')
 
 for (reg0 in regionchoice) {
@@ -398,11 +379,10 @@ for (reg0 in regionchoice) {
   p <- lineplot(varname = "Shareweight trend S1S2", data= plotdata)
   print(p)}
   
-}
+
 ```
 
 ```{r, fig.width=15, fig.height=9,echo=FALSE, eval = TRUE, warning=FALSE}
-if (Standalone_mode == TRUE){
   cat('\n## Equivalent inconvenience cost trends\n')
   
 for (reg0 in regionchoice) {
@@ -428,7 +408,7 @@ for (reg0 in regionchoice) {
   plotdata <- plotdata[,c("groupvalue","period","scenario","value","region","unit")]
   p <- lineplot(varname = "Equivalent inconvenience cost trend vehicle types LDV 4W", data= plotdata)
   print(p)}
-}
+
 ```
 
 

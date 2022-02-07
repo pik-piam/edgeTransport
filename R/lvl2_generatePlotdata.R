@@ -3,7 +3,6 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param listofruns list of folders hosting raw data
 #' @param output_folder folder for storage of the resulting report
-#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.
 #' @param AggrReg
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
@@ -17,7 +16,7 @@
 #' @importFrom madrat
 #' @export
 
-lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="cache", AggrReg="H12"){
+lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
   
 
   scenNames <- SSP_Scen <- Tech_Scen <- c()
@@ -27,10 +26,6 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
 
 
   ## ---- Load GDP and POP ----
-  if(load_cache & file.exists(cache_folder)){
-    GDP_country = readRDS(file.path(cache_folder, "GDP_country.RDS"))
-    POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
-  }else{
     GDP_country = {
       x <- calcOutput("GDP", aggregate = F)
       getSets(x)[1] <- "ISO3"
@@ -42,7 +37,7 @@ lvl2_generate_plotdata <- function(listofruns, load_Cache=FALSE, cache_folder="c
       getSets(x)[1] <- "iso2c"
       x
     }
-  }
+  
   GDP_country <- as.data.table(GDP_country)
   GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
   GDP_country[, variable := paste0(sub("gdp_", "", variable))]
