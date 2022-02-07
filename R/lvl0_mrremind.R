@@ -2,6 +2,7 @@
 #'
 #' @param SSP_scen SSP/SDP/other REMIND GDP scenario
 #' @param REMIND2ISO_MAPPING mapping from REMIND regions to ISO3 country codes
+#' @param cache_folder folder to use to store cache
 #' @param load_cache (default=FALSE) load cached files from the input folder
 #'          to bypass the heavy mrremind machinery.
 #' @param mrremind_folder folder hosting mrremind cache, required if load_cache=TRUE
@@ -11,14 +12,15 @@
 #' @importFrom madrat readSource calcOutput
 
 
-lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremind_folder=NULL){
+lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder,
+                          load_cache=FALSE, mrremind_folder=NULL){
   Year <- `.` <- weight <- ratio <- value <- region <- GDP_cap <- POP_val <- NULL
-  if(load_cache & file.exists(mrremind_folder)){
-    IEAbal = readRDS(file.path(mrremind_folder, "IEAbal.RDS"))
-    GDP_country = readRDS(file.path(mrremind_folder, "GDP_country.RDS"))
-    RatioPPP2MER_country = readRDS(file.path(mrremind_folder, "RatioPPP2MER_country.RDS"))
-    POP_country = readRDS(file.path(mrremind_folder, "POP_country.RDS"))
-    trsp_incent = readRDS(file.path(mrremind_folder, "trasp_incent.RDS"))
+  if(load_cache & file.exists(cache_folder)){
+    IEAbal = readRDS(file.path(cache_folder, "IEAbal.RDS"))
+    GDP_country = readRDS(file.path(cache_folder, "GDP_country.RDS"))
+    RatioPPP2MER_country = readRDS(file.path(cache_folder, "RatioPPP2MER_country.RDS"))
+    POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
+    trsp_incent = readRDS(file.path(cache_folder, "trasp_incent.RDS"))
   }else{
     IEAbal = madrat::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
     GDP_country = {
@@ -34,6 +36,14 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, load_cache=FALSE, mrremi
       x
     }
     trsp_incent = readSource(type="TransportSubsidies")
+    ## store to cache
+    if(file.exists(cache_folder)){
+      saveRDS(IEAbal, file.path(cache_folder, "IEAbal.RDS"))
+      saveRDS(GDP_country, file.path(cache_folder, "GDP_country.RDS"))
+      saveRDS(RatioPPP2MER_country, file.path(cache_folder, "RatioPPP2MER_country.RDS"))
+      saveRDS(POP_country, file.path(cache_folder, "POP_country.RDS"))
+      saveRDS(trsp_incent, file.path(cache_folder, "trasp_incent.RDS"))
+    }    
   }
 
   ## rearrange the columns and create regional values

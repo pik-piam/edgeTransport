@@ -7,17 +7,21 @@
 generateEDGEdata(
   input_folder,
   output_folder,
+  cache_folder = "cache",
   SSP_scen = "SSP2",
   tech_scen = "Mix",
   smartlifestyle = FALSE,
   storeRDS = FALSE,
-  loadLvl0Cache = FALSE
+  loadLvl0Cache = FALSE,
+  gdxPath = NULL
 )
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}
 
 \item{output_folder}{folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)}
+
+\item{cache_folder}{folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.}
 
 \item{SSP_scen}{SSP or SDP scenario}
 
@@ -28,6 +32,8 @@ generateEDGEdata(
 \item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
 
 \item{loadLvl0Cache}{optional load intermediate RDS files for input data to save time}
+
+\item{gdxPath}{optional path to a GDX file to load price signals from a REMIND run.}
 }
 \value{
 generated EDGE-transport input data

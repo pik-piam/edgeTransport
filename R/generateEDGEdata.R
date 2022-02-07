@@ -3,11 +3,13 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
+#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
+#' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -16,9 +18,9 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder,
+generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS=FALSE, loadLvl0Cache=FALSE){
+                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -30,9 +32,13 @@ generateEDGEdata <- function(input_folder, output_folder,
     storeRDS <- FALSE
   }
 
-  stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
+  ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
   folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+
+  if(!dir.exists(cache_folder)){
+    dir.create(cache_folder)
+  }
 
   levelNpath <- function(fname, N){
     path <- file.path(output_folder, folder, paste0("level_", N))
@@ -76,7 +82,7 @@ generateEDGEdata <- function(input_folder, output_folder,
   print("-- Start of level 0 scripts")
 
   mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       load_cache=loadLvl0Cache,
+                       cache_folder, load_cache=loadLvl0Cache,
                        mrremind_folder=file.path(input_folder, "mrremind"))
 
   ## function that loads raw data from the GCAM input files and
@@ -93,12 +99,12 @@ generateEDGEdata <- function(input_folder, output_folder,
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
   if(loadLvl0Cache){
-    EU_data <- readRDS(level0path("load_EU_data.RDS"))
+    EU_data <- readRDS(file.path(cache_folder, "load_EU_data.RDS"))
   }else{
     EU_data <- lvl0_loadEU(input_folder)
   }
   if(storeRDS)
-     saveRDS(EU_data, file = level0path("load_EU_data.RDS"))
+     saveRDS(EU_data, file = file.path(cache_folder, "load_EU_data.RDS"))
 
   ## define depreciation rate
   discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
@@ -179,8 +185,11 @@ generateEDGEdata <- function(input_folder, output_folder,
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
+  if(is.null(gdxPath)){
+    gdxPath <- file.path(input_folder, "REMIND/fulldata_EU.gdx")
+  }
   REMIND_prices <- merge_prices(
-    gdx = file.path(input_folder, "REMIND/fulldata_EU.gdx"),
+    gdx = gdxPath,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
