@@ -123,23 +123,23 @@ lvl1_preftrend <- function(SWS, calibdem, incocost, years, GDP,
     walkFactorLow = 3
     walkFactorOther = 3
     walkYear = 2040
-    cycleFactorLow = 4
-    cycleFactorOther = 6
+    cycleFactorLow = 8
+    cycleFactorOther = 10
     cycleYear = 2040
     ## less LDV
-    LDVFactor = -1.2
+    LDVFactor = -1.4
     LDVYear = 2080
-    busFactor = 0.8
+    busFactor = 0.7
     busYear = 2070
     ## more rail
-    railFactor = 0.4
-    railYear = 2070
+    railFactor = 10
+    railYear = 2050
     ## Small-large cars preference increases by 400%
     smallCarFactor = 2
     smallCarYear = 2080
     largeCarFactor = -4
     largeCarYear = 2080
-    domAvFactor = -6.
+    domAvFactor = -8.
     domAvYear = 2080
   }
 
