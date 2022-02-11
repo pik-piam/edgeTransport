@@ -5,6 +5,7 @@
 #' @param price_baseline baseline prices
 #' @param GDP_POP GDP per capita
 #' @param smartlifestyle switch activating sustainable lifestyles
+#' @param SSP_scen REMIND SSP scenario
 #' @importFrom rmndt approx_dt
 #' @return transport demand projections
 #' @author Marianna Rottoli

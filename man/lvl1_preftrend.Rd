@@ -12,7 +12,8 @@ lvl1_preftrend(
   GDP,
   GDP_POP_MER,
   smartlifestyle,
-  tech_scen
+  tech_scen,
+  SSP_scen
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ lvl1_preftrend(
 \item{smartlifestyle}{switch activating sustainable lifestyles}
 
 \item{tech_scen}{technology at the center of the policy packages}
+
+\item{SSP_scen}{REMIND SSP scenario}
 }
 \value{
 projected trend of preference factors

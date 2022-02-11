@@ -14,15 +14,18 @@
 #' @param fcr_veh annualization factor for LDVs
 #' @param nper_amort_veh years of amortization which a LDV
 #' @param smartlifestyle switch activatinf sustainable lifestyles
+#' @param SSP_scen REMIND SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
-lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle, SSP_scen, years, REMIND2ISO_MAPPING){
+lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data,
+                         PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
+                         SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
-  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- NULL
+  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
 
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,

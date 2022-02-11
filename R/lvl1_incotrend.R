@@ -8,6 +8,7 @@
 #' @param GDP_POP_MER GDP per capita MER
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param tech_scen technology at the center of the policy packages
+#' @param SSP_scen REMIND SSP scenario
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
 
