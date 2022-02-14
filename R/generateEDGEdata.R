@@ -228,7 +228,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                           tech_scen = tech_scen)
   
   prefs <- Substitute_sw_val(prefs)
-  browser()
+
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
 
