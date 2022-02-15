@@ -155,7 +155,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
                        tmps[region == "JPN"][, region := reg]
                      }))))
   S2target <- rbind(S2target, tmps)
-  S2target[, c("techscen", "level", "approx") := NULL]
 
   S2target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "sector",
