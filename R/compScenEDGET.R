@@ -514,7 +514,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   ES_Transport_Freight_Road <- ES_Transport_Freight_Road[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Road"]
 
 
-
   # EInt
   plot_EInt <- copy(EInt_mj_km)
   setkey(plot_EInt, NULL)

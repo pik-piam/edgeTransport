@@ -10,6 +10,8 @@
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
+#' @param preftab path to file with trends for share weights
+#' @param write.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -20,7 +22,8 @@
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL, preftab = NULL){
+                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
+                             preftab = NULL, write.report = FALSE){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -34,6 +37,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
   ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
+
   folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   if(!dir.exists(cache_folder)){
@@ -252,11 +256,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     if(storeRDS){
       saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
       saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
+      saveRDS(logit_data[["prices_list"]], file = level1path("prices_list.RDS"))
     }
 
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
 
+    Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
     prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
@@ -402,9 +408,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
     ## ship and run the file in the output folder
-    file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
-              md_template, overwrite = T)
-    render(md_template, output_format="pdf_document")
+
+    if(write.report){
+      file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
+                md_template, overwrite = T)
+      render(md_template, output_format="pdf_document")
+    }
   }
 
 

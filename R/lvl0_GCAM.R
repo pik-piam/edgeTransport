@@ -181,8 +181,11 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
                           col2use = "tranSubsector")
   ## Apply convergence in time to the fastest vehicle across regions
   speed[, maxspeed := max(speed[year == 2100]), by = .(tranSubsector)]
-  speed[year >= 2020, speed := speed[year == 2020]*(2100-year)/(2100-2010) + maxspeed*(year-2020)/(2100-2020), by =c("tranSubsector", "region")]
+  speed[year >= 2020, speed := speed[year == 2020]*(2100-year)/(2100-2020) + maxspeed*(year-2020)/(2100-2020), by =c("tranSubsector", "region")]
   speed[, maxspeed := NULL]
+  ## Speed correction to enhance influence of VOT for 2W (Robert's idea)
+  speed[supplysector == "trn_pass_road_LDV_2W" & speed != 1, speed := speed * 0.75]
+
   ## rename category following EDGE-T structure
   speed[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsector_L1"]
   ## VOT
