@@ -25,10 +25,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   gdpcap <- copy(GDP_POP_MER)
 
   ## function that extrapolate constant values
-  filldt <- function(dt){
+  filldt <- function(dt, proxy){
     yrs_toadd <- setdiff(years, unique(dt$year))
     for (yr in yrs_toadd) {
-      tmp_dt <- dt[year==2020]
+      tmp_dt <- dt[year == proxy]
       tmp_dt[, year := yr]
       tmp_dt[, sw := NA]
       dt <- rbind(dt, tmp_dt)
@@ -41,7 +41,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:10])
   ptab[, year := as.numeric(as.character(year))]
   ## add missing years
-  ptab <- filldt(ptab)
+  ptab <- filldt(ptab, 2020)
   
   ## merge tech prefs
   FVdt <- SWS$FV_final_SW
@@ -51,7 +51,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
 
-  tmps <- filldt(FVdt[grepl("_tmp_", technology)])[
+  tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
     , `:=`(sw=1, level="FV", scenario=unique(FVtarget$scenario), approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## merge placeholder
@@ -89,15 +89,24 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   VStarget[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(VSdt[grepl("_tmp_", vehicle_type)])[
-    , `:=`(sw=1, level="VS", scenario=unique(VStarget$scenario), approx="linear")]
+  tmps <- filldt(VSdt[grepl("_tmp_", vehicle_type)], 2010)[
+    , `:=`(sw=1, level="VS1", scenario=unique(VStarget$scenario), approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
+  ## add missing placeholders (HSR and rail)
+  tmps <- unique(
+    rbind(
+      tmps, rbindlist(
+              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+                     function(reg){
+                       tmps[region == "JPN"][, region := reg]
+                     }))))
   VStarget <- rbind(VStarget, tmps)
 
   VStarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "sector", "subsector_L1",
                 "subsector_L2", "subsector_L3", "vehicle_type")]
   VStarget[sw < 0, sw := 0]
+  VStarget[, c("scenario", "level", "approx") := NULL]
 
   ## merge L1 sws (4W vs 2W)
   S1dt <- SWS$S1S2_final_SW
@@ -110,9 +119,17 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   S1target[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(S1dt[grepl("_tmp_", subsector_L1)])[
+  tmps <- filldt(S1dt[grepl("_tmp_", subsector_L1)], 2010)[
     , `:=`(sw=1, level="S1S2", scenario=unique(S1target$scenario), approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
+  ## add missing placeholders (HSR and rail)
+  tmps <- unique(
+    rbind(
+      tmps, rbindlist(
+              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+                     function(reg){
+                       tmps[region == "JPN"][, region := reg]
+                     }))))
   S1target <- rbind(S1target, tmps)
 
   S1target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
@@ -131,9 +148,16 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP,
   S2target[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(S2dt[grepl("_tmp_", subsector_L2)])[
+  tmps <- filldt(S2dt[grepl("_tmp_", subsector_L2)], 2010)[
     , `:=`(sw=1, level="S2S3", scenario=unique(S2target$scenario), approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
+  tmps <- unique(
+    rbind(
+      tmps, rbindlist(
+              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+                     function(reg){
+                       tmps[region == "JPN"][, region := reg]
+                     }))))
   S2target <- rbind(S2target, tmps)
 
   S2target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
