@@ -227,7 +227,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                           smartlifestyle = smartlifestyle,
                           tech_scen = tech_scen)
   
-  prefs <- Substitute_sw_val(prefs)
+  #prefs <- Substitute_sw_val(prefs)
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))

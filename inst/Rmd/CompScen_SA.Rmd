@@ -76,12 +76,12 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
      variable.name = "period",
      value.name = "value")
   ETP_RTS[, tot:= sum(value), by= c("period")]
-  ETP_RTS[,value:=value/tot*100][,unit:="%"][,tot:=NULL]   
-  ETP_RTS[,variable:=paste0(variable,"|Share")][,model:="ETP RTS"][,region:="CHA"]   
+  ETP_RTS[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
+  ETP_RTS[,variable:=paste0(variable,"|Share")][,model:="ETP RTS"][,region:="CHA"]
 
-    
+
   #Include Traccs Shares
-  
+
   #Include Assumption Shares
   datapath <- "C:/Users/johannah/Documents/EDGE-Transport/Validation/Assumed_Shares_CHA.csv"
   Assu_data <- fread(datapath,header=TRUE)
@@ -90,8 +90,8 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
      id.vars="variable",
      variable.name = "period",
      value.name = "value")
-  Assu_data[,unit:="%"][,model:="Assumption"][,region:="CHA"] 
-  
+  Assu_data[,unit:="%"][,model:="Assumption"][,region:="CHA"]
+
   #MOT shares
   MOT_data <- data.table(
     variable = c("ES|Transport|Pass|Road|LDV","ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus","ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Rail","ES|Transport|Pass|Rail","ES|Transport|Pass|Aviation","ES|Transport|Pass|Aviation"),
@@ -101,7 +101,7 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
   MOT_data[, tot:= sum(value), by= c("period")]
   MOT_data[,value:=value/tot*100][,unit:="%"][,tot:=NULL][,region:="CHA"]
   MOT_data <- MOT_data[,variable:=paste0(variable,"|Share")]
-  
+
   vars <- c(
     "ES|Transport|Pass|Aviation|Domestic|Share",
     "ES|Transport|Pass|Aviation|International|Share",
@@ -111,11 +111,11 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
     "ES|Transport|Pass|Road|LDV|Share",
     "ES|Transport|Pass|Road|Non-Motorized|Share"
   )
-  
+
   EDGET <- data[variable %in% vars & region=="CHA" & period %in% c(2010,2020,2030,2050,2100)]
   EDGET <- EDGET[,model:=paste0(model," ",scenario)][,scenario:=NULL]
-  
-  
+
+
   ValComp_data <- rbind(EDGET,Assu_data,ETP_RTS[period %in% c(2010,2020,2030,2050,2100)],MOT_data[period==2020])
 
   
