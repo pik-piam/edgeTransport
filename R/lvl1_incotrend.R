@@ -56,9 +56,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
            by=c("region", "vehicle_type", "technology")]
   FVtarget[sw < 0, sw := 0]
   ## introduces NA for sw == 0
-  FVtarget[, sw := sw/max(sw),
+  FVtarget[, sw := ifelse(max(sw) == 0, 0, sw/max(sw)),
            by = c("region", "year", "vehicle_type")]
-  FVtarget[is.na(sw), sw := 0]
   
   setnames(FVtarget, "sw", "value")
   FVtarget[, logit_type := "sw"]
@@ -183,15 +182,14 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
 
   ## The values of SWS have to be normalized again
   return(list(
-    S3S_final_pref=S3target[, sw := sw/max(sw),
+    S3S_final_pref=S3target[, sw := ifelse(max(sw) == 0, 0, sw/max(sw)),
                             by = c("region", "year", "sector")],
-    S2S3_final_pref=S2target[, sw := sw/max(sw),
+    S2S3_final_pref=S2target[, sw := ifelse(max(sw) == 0, 0, sw/max(sw)),
                              by = c("region", "year", "subsector_L3")],
-    S1S2_final_pref=S1target[, sw := sw/max(sw),
+    S1S2_final_pref=S1target[, sw := ifelse(max(sw) == 0, 0, sw/max(sw)),
                              by = c("region", "year", "subsector_L2")],
-    VS1_final_pref=VStarget[, sw := sw/max(sw),
+    VS1_final_pref=VStarget[, sw := ifelse(max(sw) == 0, 0, sw/max(sw)),
                             by = c("region", "year", "subsector_L1")],
     FV_final_pref=FVtarget
   ))
-
 }
