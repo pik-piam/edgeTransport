@@ -268,6 +268,8 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
                         idxcols = c("iso", "vehicle_type", "technology"),
                         extrapolate=T)
   
+  ## extend rail to 1990
+  rail_eu <- rbind(rail_eu, rail_eu[year == 2005][, year := 1990])
   
   dem_eurostat = rbind(dem_bunkers, dem_dom, rail_eu, roadFE_eu)
   load_EU_data=list(dem_eurostat = dem_eurostat,

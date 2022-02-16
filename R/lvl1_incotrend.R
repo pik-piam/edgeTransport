@@ -91,7 +91,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+              lapply(c("IND", "MEA", "REF"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
@@ -121,7 +121,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+              lapply(c("IND", "MEA", "REF"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
@@ -150,7 +150,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("FRA", "IND", "MEA", "REF", "ESW", "DEU", "ECE", "EWN"),
+              lapply(c("IND", "MEA", "REF"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
