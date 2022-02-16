@@ -144,7 +144,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
     shares[[i]] <- readRDS(level2path(listofruns[[i]], "shares.RDS"))
     shares[[i]]$scenario <- scenNames[i]
     logit_data <- readRDS(level2path(listofruns[[i]], "logit_data.RDS"))
-    prices[[i]] <- logit_data$prices_list
+    prices[[i]] <- logit_data$share_list
     prices[[i]]$scenario <- scenNames[i]
     pref[[i]] <- logit_data$pref_data
     pref[[i]]$scenario <- scenNames[i]
@@ -506,11 +506,11 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
 
 
   LogitCostplotdata <- function(priceData,prefData,logitExp,groupValue,weight, yrs, Regionmapping){
-
-
+ 
     all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
                       "subsector_L3", "sector")
-
+    
+    browser()
     # change variable names for mip
     setnames(priceData, c("year"), c("period"))
     setnames(prefData, c("year"), c("period"))
@@ -537,7 +537,10 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
                 length(all_subsectors), 1)]))
 
     prefData[, value := tot_price * (sw^(1 / logit.exponent) - 1)]
-
+ 
+    priceData <- priceData[, c("period", "region", "scenario","tot_VOT_price","fuel_price_pkm","non_fuel_price", all_subsectors[
+      seq(match(groupValue, all_subsectors) ,
+          length(all_subsectors), 1)]), with = FALSE]
     #Check for zero shareweights that still have ES demand
     ES_check <- weight[,!c("unit")]
     setnames(ES_check,"manycol","region")
@@ -554,13 +557,13 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
       seq(match(groupValue, all_subsectors) ,
           length(all_subsectors), 1)], "scenario", "value"), with = FALSE][, variable := "Inconvenience cost"]
 
-    priceData <- melt(priceData[, -c("tot_price")], id.vars = c("scenario", "region", "period", all_subsectors[
+    priceData <- melt(priceData, id.vars = c("scenario", "region", "period", all_subsectors[
       seq(match(groupValue, all_subsectors) ,
           length(all_subsectors), 1)]))
 
     setnames(prefData, "region", "manycol")
     setnames(priceData, "region", "manycol")
-
+    browser() 
     priceData <- aggregate_dt(priceData,
                               Regionmapping,
                               manycol = "manycol",
@@ -589,12 +592,11 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
   }
 
 
-
   Prices_S3S <- Pref_S3S <- logit_exp_S3S <- list()
 
   # Prepare logit price data S3S
   for (i in 1:length(listofruns)) {
-    Prices_S3S[[i]] <- copy(prices[[i]]$S2S3)
+    Prices_S3S[[i]] <- copy(prices[[i]]$S3S_shares)
     Prices_S3S[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
 
@@ -628,7 +630,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
 
   # Prepare logit price data S2S3
   for (i in 1:length(listofruns)) {
-    Prices_S2S3[[i]] <- copy(prices[[i]]$S1S2)
+    Prices_S2S3[[i]] <- copy(prices[[i]]$S2S3_shares)
     Prices_S2S3[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
 
@@ -662,7 +664,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
 
   # Prepare logit price data S1S2
   for (i in 1:length(listofruns)) {
-    Prices_S1S2[[i]] <- copy(prices[[i]]$VS1)
+    Prices_S1S2[[i]] <- copy(prices[[i]]$S1S2_shares)
     Prices_S1S2[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
 
@@ -695,7 +697,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
 
   # Prepare logit price data VS1
   for (i in 1:length(listofruns)) {
-    Prices_VS1[[i]] <- copy(prices[[i]]$FV)
+    Prices_VS1[[i]] <- copy(prices[[i]]$VS1_shares)
     Prices_VS1[[i]]$scenario <- copy(prices[[i]]$scenario)
   }
 
