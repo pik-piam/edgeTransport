@@ -55,8 +55,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   FVtarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "vehicle_type", "technology")]
   FVtarget[sw < 0, sw := 0]
+  ## introduces NA for sw == 0
   FVtarget[, sw := sw/max(sw),
            by = c("region", "year", "vehicle_type")]
+  FVtarget[is.na(sw), sw := 0]
   
   setnames(FVtarget, "sw", "value")
   FVtarget[, logit_type := "sw"]
