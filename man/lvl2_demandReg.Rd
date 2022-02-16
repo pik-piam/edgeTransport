@@ -4,7 +4,7 @@
 \alias{lvl2_demandReg}
 \title{Estimate future transport demand using a price trajectory, GDP, and historical demand.}
 \usage{
-lvl2_demandReg(tech_output, price_baseline, GDP_POP, smartlifestyle)
+lvl2_demandReg(tech_output, price_baseline, GDP_POP, smartlifestyle, SSP_scen)
 }
 \arguments{
 \item{tech_output}{historically calibrated demand}
@@ -14,6 +14,8 @@ lvl2_demandReg(tech_output, price_baseline, GDP_POP, smartlifestyle)
 \item{GDP_POP}{GDP per capita}
 
 \item{smartlifestyle}{switch activating sustainable lifestyles}
+
+\item{SSP_scen}{REMIND SSP scenario}
 }
 \value{
 transport demand projections
