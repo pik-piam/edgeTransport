@@ -98,6 +98,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
+  if(storeRDS)
+     saveRDS(GCAM_data, file = file.path(cache_folder, "load_GCAM_data.RDS"))
 
   ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   ## needed at this point to be used in the intensity calculation below

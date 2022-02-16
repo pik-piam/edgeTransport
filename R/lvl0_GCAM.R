@@ -123,6 +123,12 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
   tech_output = fread(file.path(GCAM_folder, "tech_output.csv"), skip = 1, sep=";", header = T)
   tech_output = melt(tech_output, measure.vars=6:26, value.name="tech_output", variable.name = "year")
   tech_output[, c("Units", "scenario", "year") := list(NULL, NULL, as.numeric(as.character(year)))]
+  ## faulty data for HSR in EU-12, interpolate
+  tech_output[year == 1990 & region == "EU-12" & subsector == "HSR", tech_output := 0]
+  tech_output[year == 2010 & region == "EU-12" & subsector == "HSR", tech_output := NA]
+  tech_output[region == "EU-12" & subsector == "HSR", tech_output := na.approx(tech_output, x=year),
+              by=c("region", "sector", "subsector", "technology")]
+
   tech_output = tech_output[year <= 2010 & !subsector %in% c("road","LDV","bus","4W","2W")]
   tech_output[, technology := ifelse(subsector %in% c("Walk","Cycle"), paste0(subsector,"_tmp_technology"),technology)]
 
@@ -333,4 +339,3 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_
   return(result)
 
 }
-
