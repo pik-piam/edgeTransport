@@ -58,7 +58,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   ## introduces NA for sw == 0
   FVtarget[, sw := sw/max(sw),
            by = c("region", "year", "vehicle_type")]
-  FVtarget[is.na(sw), sw := 0]
   
   setnames(FVtarget, "sw", "value")
   FVtarget[, logit_type := "sw"]
@@ -174,13 +173,25 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   S3target[year <= 2010 & is.na(sw), sw := 0]
 
   ## no placeholder on S3
-
   S3target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "sector", "subsector_L3")]
   S3target[sw < 0, sw := 0]
   S3target[, c("techscen", "level", "approx") := NULL]
-  
 
+  #Set HSR technology sw to 1->there is only one option
+  FVtarget[subsector_L3=="HSR" & is.na(value), value := 1]
+  #Sw for ECE 1990 HSR is missing in S2 targets (was not calibrated)
+  swfix <- VStarget[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
+  swfix[,year:=1990]
+  VStarget <- rbind(VStarget,swfix)
+  swfix <- S1target[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
+  swfix[,year:=1990]
+  S1target <- rbind(S1target,swfix)
+  swfix <- S2target[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
+  swfix[,year:=1990]
+  S2target <- rbind(S2target,swfix)  
+  
+  
   ## The values of SWS have to be normalized again
   return(list(
     S3S_final_pref=S3target[, sw := sw/max(sw),
@@ -191,7 +202,9 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
                              by = c("region", "year", "subsector_L2")],
     VS1_final_pref=VStarget[, sw := sw/max(sw),
                             by = c("region", "year", "subsector_L1")],
-    FV_final_pref=FVtarget
+   
+     FV_final_pref=FVtarget
   ))
-
+ 
+  
 }

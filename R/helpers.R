@@ -175,7 +175,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   Exp <- merge(Exp,GDP_POP_21[period==Conv_year,.(region,GDP_POP=value)],all.x=TRUE)
   Exp[,lead_reg:= max(GDP_POP),by="cluster"]
   Exp[,lead_reg:= ifelse(GDP_POP==lead_reg, 1,0)]
-  
+  browser()
   
   Exp_conv <- Exp[variable %in% vars]
   Exp_conv[,period:=as.numeric(as.character(period))]
