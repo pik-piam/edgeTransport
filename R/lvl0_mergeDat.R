@@ -360,6 +360,19 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   ## from https://www.iea.org/reports/tracking-rail-2020-2
   dem[year <= 2010 & iso == "CHN" & subsector_L3 == "HSR", tech_output := 70000]
+  ## from https://theicct.org/sites/default/files/China_Freight_Assessment_English_20181022.pdf
+  ## total road freight demand seems to be around 5 billion tkm * 0.8, a factor 3 roughly
+  dem[year <= 2010 & iso == "CHN" & subsector_L3 == "trn_freight_road", tech_output := tech_output * 3]
+  ## missing cost estimates for heavy trucks (use lighter trucks estimates)
+  browser()
+  costs <- rbindlist(list(
+    costs,
+    costs[year <= 2010 & iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
+    costs[year <= 2010 & iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"],
+    costs[year <= 2010 & iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
+    costs[year <= 2010 & iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"]
+  ))
+
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 
