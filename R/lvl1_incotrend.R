@@ -46,6 +46,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
 
+  FVtarget[subsector_L3 == "HSR", sw := 1]
+
   tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
     , `:=`(sw=1, level="FV", techscen=unique(FVtarget$techscen), approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
