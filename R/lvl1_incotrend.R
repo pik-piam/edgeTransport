@@ -37,10 +37,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   ptab[, year := as.numeric(as.character(year))]
   ## add missing years
   ptab <- filldt(ptab, 2020)
-  
+
   ## merge tech prefs
   FVdt <- SWS$FV_final_SW
-  
+
   FVtarget <- ptab[level == "FV"]
   ## insert historical values
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
