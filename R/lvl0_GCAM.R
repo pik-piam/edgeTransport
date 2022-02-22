@@ -155,6 +155,21 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
   tech_output[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
   tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type","technology","year")]
 
+  ## the category "truck > 14t" in China does most likely contain also heavy trucks
+  ## otherwise there are none
+  tech_output <- rbindlist(list(
+    tech_output,
+    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicle_type="Truck (26t)")],
+    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicle_type="Truck (40t)")],
+    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicle_type="Truck (26t)")],
+    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicle_type="Truck (40t)")]))
+  tech_output[region == "China" & vehicle_type == "Truck (18t)", tech_output := tech_output/2]
+  tech_output[region == "USA" & vehicle_type == "Truck (18t)", tech_output := tech_output/3]
+
   tech_output = rename_region(tech_output)
 
   ## speed motorized modes
