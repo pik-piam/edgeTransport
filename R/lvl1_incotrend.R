@@ -75,7 +75,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   ## insert historical values
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
-
   FVtarget[subsector_L3 == "HSR", sw := 1]
 
   tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
@@ -130,7 +129,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("IND", "MEA", "REF"),
+              lapply(c("IND", "MEA", "REF", "ECE"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
@@ -160,7 +159,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("IND", "MEA", "REF"),
+              lapply(c("IND", "MEA", "REF", "ECE"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
@@ -189,7 +188,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   tmps <- unique(
     rbind(
       tmps, rbindlist(
-              lapply(c("IND", "MEA", "REF"),
+              lapply(c("IND", "MEA", "REF", "ECE"),
                      function(reg){
                        tmps[region == "JPN"][, region := reg]
                      }))))
@@ -250,21 +249,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
     browser()
   }
 
-  #Additional random fixes for shareweights
-  #Set HSR technology sw to 1->there is only one option
-  FVtarget[subsector_L3=="HSR" & is.na(value), value := 1]
-  #Sw for ECE 1990 HSR is missing in S2 targets (was not calibrated)
-  swfix <- VStarget[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
-  swfix[,year:=1990]
-  VStarget <- rbind(VStarget,swfix)
-  swfix <- S1target[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
-  swfix[,year:=1990]
-  S1target <- rbind(S1target,swfix)
-  swfix <- S2target[region=="ECE"& year=="2010" & subsector_L3=="HSR"]
-  swfix[,year:=1990]
-  S2target <- rbind(S2target,swfix)  
-  
-  
   ## The values of SWS have to be normalized again
   return(list(
     S3S_final_pref=S3target,
