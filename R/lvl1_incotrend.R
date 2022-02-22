@@ -40,11 +40,43 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
 
   ## merge tech prefs
   FVdt <- SWS$FV_final_SW
+  ## random fixings for missing demand data
+  FVdt <- rbindlist(list(
+    FVdt,
+    FVdt[region == "CHA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
+      , vehicle_type := "Motorcycle (>250cc)"],
+    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
+      , vehicle_type := "Motorcycle (>250cc)"],
+    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Truck (18t)"][
+      , vehicle_type := "Truck (26t)"],
+    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Truck (18t)"][
+      , vehicle_type := "Truck (40t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
+      , vehicle_type := "Truck (18t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
+      , vehicle_type := "Truck (26t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
+      , vehicle_type := "Truck (40t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Truck (18t)"][
+      , vehicle_type := "Truck (26t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Truck (18t)"][
+      , vehicle_type := "Truck (40t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
+      , vehicle_type := "Motorcycle (>250cc)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
+      , vehicle_type := "Moped"],
+    FVdt[region == "USA" & year <= 2010 & vehicle_type == "Motorcycle (>250cc)"][
+      , vehicle_type := "Motorcycle (50-250cc)"],
+    FVdt[region == "USA" & year <= 2010 & vehicle_type == "Motorcycle (>250cc)"][
+      , vehicle_type := "Moped"]
+  ))
 
   FVtarget <- ptab[level == "FV"]
   ## insert historical values
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
+
+  FVtarget[subsector_L3 == "HSR", sw := 1]
 
   tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
     , `:=`(sw=1, level="FV", techscen=unique(FVtarget$techscen), approx="linear")]
@@ -55,10 +87,16 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   FVtarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "vehicle_type", "technology")]
   FVtarget[sw < 0, sw := 0]
+
   ## introduces NA for sw == 0
   FVtarget[, sw := sw/max(sw),
            by = c("region", "year", "vehicle_type")]
-  
+  nas <- FVtarget[is.na(sw)]
+  if(nrow(nas) > 0){
+    print("Warning: NAs in SWs found.")
+    browser()
+  }
+
   setnames(FVtarget, "sw", "value")
   FVtarget[, logit_type := "sw"]
   FVtarget[, c("techscen", "level", "approx") := NULL]
@@ -76,7 +114,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
 
   ## merge size prefs
   VSdt <- SWS$VS1_final_SW
-  
+
   VStarget <- ptab[level == "VS1"]
   VStarget[, technology := NULL]
   ## insert historical values
@@ -106,7 +144,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
 
   ## merge L1 sws (4W vs 2W)
   S1dt <- SWS$S1S2_final_SW
-  
+
   S1target <- ptab[level == "S1S2"]
   S1target[, c("technology", "vehicle_type") := NULL]
   ## insert historical values
@@ -133,10 +171,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
                 "subsector_L2", "subsector_L3")]
   S1target[sw < 0, sw := 0]
   S1target[, c("techscen", "level", "approx") := NULL]
-  
-  ## merge L2 sws 
+
+  ## merge L2 sws
   S2dt <- SWS$S2S3_final_SW
-  
+
   S2target <- ptab[level == "S2S3"]
   S2target[, c("technology", "vehicle_type", "subsector_L1") := NULL]
   ## insert historical values
@@ -162,10 +200,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
                 "subsector_L2", "subsector_L3")]
   S2target[sw < 0, sw := 0]
   S2target[, c("techscen", "level", "approx") := NULL]
-  
-  ## merge L3 sws 
+
+  ## merge L3 sws
   S3dt <- SWS$S3S_final_SW
-  
+
   S3target <- ptab[level == "S3S"]
   S3target[, c("technology", "vehicle_type", "subsector_L1", "subsector_L2") := NULL]
   ## insert historical values
@@ -178,6 +216,41 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   S3target[sw < 0, sw := 0]
   S3target[, c("techscen", "level", "approx") := NULL]
 
+  ## normalization
+  S3target[, sw := sw/max(sw),
+           by = c("region", "year", "sector")]
+  nas <- S3target[is.na(sw)]
+  if(nrow(nas) > 0){
+    print("Warning: NAs in SWs found.")
+    browser()
+  }
+
+
+  S2target[, sw := sw/max(sw),
+           by = c("region", "year", "subsector_L3")]
+  nas <- S2target[is.na(sw)]
+  if(nrow(nas) > 0){
+    print("Warning: NAs in SWs found.")
+    browser()
+  }
+
+  S1target[, sw := sw/max(sw),
+           by = c("region", "year", "subsector_L2")]
+  nas <- S1target[is.na(sw)]
+  if(nrow(nas) > 0){
+    print("Warning: NAs in SWs found.")
+    browser()
+  }
+
+  VStarget[, sw := sw/max(sw),
+           by = c("region", "year", "subsector_L1")]
+  nas <- VStarget[is.na(sw)]
+  if(nrow(nas) > 0){
+    print("Warning: NAs in SWs found.")
+    browser()
+  }
+
+  #Additional random fixes for shareweights
   #Set HSR technology sw to 1->there is only one option
   FVtarget[subsector_L3=="HSR" & is.na(value), value := 1]
   #Sw for ECE 1990 HSR is missing in S2 targets (was not calibrated)
@@ -194,17 +267,10 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   
   ## The values of SWS have to be normalized again
   return(list(
-    S3S_final_pref=S3target[, sw := sw/max(sw),
-                            by = c("region", "year", "sector")],
-    S2S3_final_pref=S2target[, sw := sw/max(sw),
-                             by = c("region", "year", "subsector_L3")],
-    S1S2_final_pref=S1target[, sw := sw/max(sw),
-                             by = c("region", "year", "subsector_L2")],
-    VS1_final_pref=VStarget[, sw := sw/max(sw),
-                            by = c("region", "year", "subsector_L1")],
-   
-     FV_final_pref=FVtarget
+    S3S_final_pref=S3target,
+    S2S3_final_pref=S2target,
+    S1S2_final_pref=S1target,
+    VS1_final_pref=VStarget,
+    FV_final_pref=FVtarget
   ))
- 
-  
 }
