@@ -104,7 +104,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(ISO = CountryCode, region = RegionCode)]
   #Choose regions to be considered from MIF file
   regions <- unique(REMIND2ISO_MAPPING$region)
-  
+
   
   #Data for GDP per capita plot
   GDP_country = {
@@ -160,14 +160,16 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   
   #Expectation: Convergence of Passenger mode shares in 2150 according to country with highest GDP/cap projection in 2150
   vars <- c(
-    "ES|Transport|Pass|Aviation|Domestic|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|non-HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Bus|Share w/o bunkers",
-    "ES|Transport|Pass|Road|LDV|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share w/o bunkers"
+    "ES|Transport|Pass|Aviation|International|Share",
+    "ES|Transport|Pass|Road|LDV|Share",
+    "ES|Transport|Pass|Road|Bus|Share",
+    "ES|Transport|Pass|Rail|non-HSR|Share",
+    "ES|Transport|Pass|Aviation|Domestic|Share",
+    "ES|Transport|Pass|Rail|HSR|Share",
+    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share",
+    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share"
   )
+  
 
   Conv_year <- 2150
   Exp <- data[variable %in% vars & region %in%regions]
@@ -175,7 +177,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   Exp <- merge(Exp,GDP_POP_21[period==Conv_year,.(region,GDP_POP=value)],all.x=TRUE)
   Exp[,lead_reg:= max(GDP_POP),by="cluster"]
   Exp[,lead_reg:= ifelse(GDP_POP==lead_reg, 1,0)]
-  browser()
+
   
   Exp_conv <- Exp[variable %in% vars]
   Exp_conv[,period:=as.numeric(as.character(period))]
@@ -244,17 +246,18 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   
   
   vars <- c(
-    "ES|Transport|Pass|Aviation|Domestic|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|non-HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Bus|Share w/o bunkers",
-    "ES|Transport|Pass|Road|LDV|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share w/o bunkers"
+    "ES|Transport|Pass|Aviation|International|Share",
+    "ES|Transport|Pass|Road|LDV|Share",
+    "ES|Transport|Pass|Road|Bus|Share",
+    "ES|Transport|Pass|Rail|non-HSR|Share",
+    "ES|Transport|Pass|Aviation|Domestic|Share",
+    "ES|Transport|Pass|Rail|HSR|Share",
+    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share",
+    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share"
   )
   
   
-  
+
   for (region0 in regions){
     
     if (is.null(sheets[[region0]])){
@@ -273,23 +276,26 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     xlxs_data <- data[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
     xlxs_data[,value:=round(value,1)]
     xlxs_data <- dcast(xlxs_data, variable + unit + region + scenario + model ~ period)
+    xlxs_data <- xlxs_data[match(vars,variable)]
+    
     Exp_conv0 <- Exp_conv[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
     Exp_conv0[,value:=round(value,1)]
     Exp_conv0 <- dcast(Exp_conv0, variable + unit + region + scenario + model ~ period)
-    
+    Exp_conv0 <-Exp_conv0[match(vars,variable)]
+
     Prices0 <- Prices[region==region0]
     Prefs0 <- Prefs[region==region0]
     target <- c("trn_pass_road_LDV","Bus","Passenger Rail","Domestic Aviation","HSR","Walk","Cycle","trn_pass_road")
     Prices0 <- Prices0[match(target,mode)][,region:=NULL]
     Prefs0 <- Prefs0[match(target,mode)][,region:=NULL]
     Prefs0 <- Prefs0[,c("mode","2010")]
-    
+
     xlsx::addDataFrame(xlxs_data, sheet = sheets[[region0]], startRow = 3, startColumn = 1,
                        colnamesStyle = colname_style,
                        rownamesStyle = rowname_style,
                        row.names = FALSE)
     
-    xlsx::addDataFrame(Exp_conv0, sheet = sheets[[region0]], startRow = 15, startColumn = 1,
+    xlsx::addDataFrame(Exp_conv0, sheet = sheets[[region0]], startRow = 16, startColumn = 1,
                        colnamesStyle = colname_style,
                        rownamesStyle = rowname_style,
                        row.names = FALSE)
@@ -337,15 +343,15 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     
     
     #ADD GDP_POP plot
-    png("plot.png", height=900, width=1600, res=250, pointsize=8)
-    p1 <- ggplot(GDP_POP_21[(region %in% c("DEU","IND","CHA","USA") | region == region0) & period <= 2150], aes(x = as.character(period), y = value,group = region, color = region))+
-      geom_line(size = 1)+
-      scale_x_discrete(breaks = c(2010,2020,2030,2050,2100))+
-      labs(x = "", y = paste0("GDP per Capita"), title = paste0("GDP per Capita for all regions"))
-    plot(p1)
-    dev.off()
-    addPicture("plot.png", sheet = sheets[[region0]], scale = 1, startRow = 2,
-               startColumn = 24)
+    # png("plot.png", height=900, width=1600, res=250, pointsize=8)
+    # p1 <- ggplot(GDP_POP_21[(region %in% c("DEU","IND","CHA","USA") | region == region0) & period <= 2150], aes(x = as.character(period), y = value,group = region, color = region))+
+    #   geom_line(size = 1)+
+    #   scale_x_discrete(breaks = c(2010,2020,2030,2050,2100))+
+    #   labs(x = "", y = paste0("GDP per Capita"), title = paste0("GDP per Capita for all regions"))
+    # plot(p1)
+    # dev.off()
+    # addPicture("plot.png", sheet = sheets[[region0]], scale = 1, startRow = 2,
+    #            startColumn = 24)
     
     
     
