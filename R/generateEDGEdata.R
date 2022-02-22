@@ -330,7 +330,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                         mj_km_data = mj_km_data,
                         years = years)
 
-
+    nas <- vintages[["shares"]]$FV_shares[is.na(share)]
+    if(nrow(nas) > 0){
+      print("NAs found in FV vintage shares.")
+      nas
+      browser()
+    }
     shares$FV_shares = vintages[["shares"]]$FV_shares
     prices = vintages[["prices"]]
     mj_km_data = vintages[["mj_km_data"]]
@@ -350,6 +355,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     demByTech <- shares_intensity_demand[["demand"]] ##in [-]
     intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
     norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## in million km
+
+    nas <- norm_demand[is.na(demand_F)]
+    if(nrow(nas) > 0){
+      print("NAs found in final demand output.")
+      nas
+      browser()
+    }
 
     num_veh_stations = calc_num_vehicles_stations(
       norm_dem = norm_demand[
