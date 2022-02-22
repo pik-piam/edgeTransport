@@ -364,13 +364,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   ## total road freight demand seems to be around 5 billion tkm * 0.8, a factor 3 roughly
   dem[year <= 2010 & iso == "CHN" & subsector_L3 == "trn_freight_road", tech_output := tech_output * 3]
   ## missing cost estimates for heavy trucks (use lighter trucks estimates)
-
   costs <- rbindlist(list(
     costs,
-    costs[year <= 2010 & iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
-    costs[year <= 2010 & iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"],
-    costs[year <= 2010 & iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
-    costs[year <= 2010 & iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"]
+    costs[iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
+    costs[iso == "CHN" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"],
+    costs[iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (26t)"],
+    costs[iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"]
   ))
 
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
