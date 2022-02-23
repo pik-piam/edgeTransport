@@ -4,7 +4,7 @@ output:
  html_document:
    toc: yes
 hist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif"
-listofruns: list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-04.*", full.names = T)
+listofruns <-  list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-.*", full.names = T)
 
 y_bar: c(2010,2020,2030,2050,2100)
 regionchoice: c("CHA")
@@ -17,11 +17,7 @@ regionchoice: c("CHA")
   #     number_sections: true  ## if you want number sections at each table header
 ---`
 
-
-
-
 ```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
-rm(list=ls())
 library(magclass)
 library(lusweave)
 library(mip)
@@ -36,12 +32,14 @@ library(mrremind)
 library(devtools)
 library(knitr)
 library(htmlTable)
+load_all("C:/Users/johannah/Documents/Git_repos/edgeTrpLib")
 load_all("C:/Users/johannah/Documents/Git_repos/edgeTransport")
+```
 
-
-
-
+```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
 #load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
+
+browser()
 data_extended <- lvl2_generate_plotdata(listofruns)
 data <- rbind(data_extended$LinePlot_data,data_extended$shares)
 
@@ -66,57 +64,6 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
   historical <- magpie2dt(historical)
 
 
-
-  #Include ETP shares
-  datapath <- "C:/Users/johannah/Documents/EDGE-Transport/Validation/ETP_RTS_ES_China.csv"
-  ETP_RTS <- fread(datapath,header=TRUE)
-  ETP_RTS <- melt(
-     ETP_RTS,
-     id.vars="variable",
-     variable.name = "period",
-     value.name = "value")
-  ETP_RTS[, tot:= sum(value), by= c("period")]
-  ETP_RTS[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  ETP_RTS[,variable:=paste0(variable,"|Share")][,model:="ETP RTS"][,region:="CHA"]
-
-
-  #Include Traccs Shares
-
-  #Include Assumption Shares
-  datapath <- "C:/Users/johannah/Documents/EDGE-Transport/Validation/Assumed_Shares_CHA.csv"
-  Assu_data <- fread(datapath,header=TRUE)
-  Assu_data <- melt(
-     Assu_data,
-     id.vars="variable",
-     variable.name = "period",
-     value.name = "value")
-  Assu_data[,unit:="%"][,model:="Assumption"][,region:="CHA"]
-
-  #MOT shares
-  MOT_data <- data.table(
-    variable = c("ES|Transport|Pass|Road|LDV","ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus","ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Rail","ES|Transport|Pass|Rail","ES|Transport|Pass|Aviation","ES|Transport|Pass|Aviation"),
-    period = c(2015,2020,2015,2020,2015,2020,2015,2020),
-    value = c(2000,4000,1074,886,1196,1471,727,1171))
-  MOT_data[,unit:="bn pkm/yr"][,model:="China Ministry of Transportation"]
-  MOT_data[, tot:= sum(value), by= c("period")]
-  MOT_data[,value:=value/tot*100][,unit:="%"][,tot:=NULL][,region:="CHA"]
-  MOT_data <- MOT_data[,variable:=paste0(variable,"|Share")]
-
-  vars <- c(
-    "ES|Transport|Pass|Aviation|Domestic|Share",
-    "ES|Transport|Pass|Aviation|International|Share",
-    "ES|Transport|Pass|Rail|HSR|Share",
-    "ES|Transport|Pass|Rail|non-HSR|Share",
-    "ES|Transport|Pass|Road|Bus|Share",
-    "ES|Transport|Pass|Road|LDV|Share",
-    "ES|Transport|Pass|Road|Non-Motorized|Share"
-  )
-
-  EDGET <- data[variable %in% vars & region=="CHA" & period %in% c(2010,2020,2030,2050,2100)]
-  EDGET <- EDGET[,model:=paste0(model," ",scenario)][,scenario:=NULL]
-
-
-  ValComp_data <- rbind(EDGET,Assu_data,ETP_RTS[period %in% c(2010,2020,2030,2050,2100)],MOT_data[period==2020])
 
 
 # Extra plotting functions
@@ -196,36 +143,6 @@ for (var0 in vars) {
 }
 ```
 
-```{r, fig.width=20, fig.height=15, eval = TRUE,echo=FALSE, results= 'asis'}
-  vars <- c(
-    "ES|Transport|Pass|Road|LDV|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Bus|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|non-HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Aviation|Domestic|Share w/o bunkers",
-    "ES|Transport|Pass|Rail|HSR|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Share w/o bunkers"
-  )
-
-  for (reg0 in regionchoice){
-
-    Shares <- data[variable %in% vars & region == reg0 & period %in% y_bar]
-    Shares[,value:=round(value,1)]
-    Shares <- dcast(Shares, variable + unit + region + scenario + model ~ period)
-    Shares <- as.data.table(Shares)
-    Shares <- Shares[match(vars,variable)]
-    Shares <- addHtmlTableStyle(Shares,css.cell = rbind(rep("background: lightgrey;
-                                            font-size: 3
-                                            em;", times = ncol(Shares)),
-                                     matrix("",
-                                            ncol = ncol(Shares),
-                                            nrow = nrow(Shares))))
-    t <- htmlTable(Shares,rnames=FALSE, caption = paste0("ES Shares trn_pass ",reg0))
-    print(t)
-    }
-
-
-
-```
 
 ```{r, fig.width=15, fig.height=9, eval = TRUE,echo=FALSE, results= 'asis'}
 
