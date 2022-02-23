@@ -17,6 +17,8 @@
 #' @import data.table
 #' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGEtransport
 #' @importFrom rmarkdown render
+#' @importFrom gdxdt readgdx
+#' @importFrom quitte write.mif
 #' @export
 
 
@@ -424,10 +426,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
-    edgeTrpLib::reportEDGETransport(
+    report <- reportEDGETransport(
                   output_folder = output_folder, sub_folder = "level_2",
                   loadmif = FALSE, extendedReporting = TRUE, scenario_title = tech_scen,
-                  model_name = "EDGE-Transport", name_mif = sprintf("EDGE-T_%s.mif", tech_scen))
+                  model_name = "EDGE-Transport",
+                  gdx = gdxPath)
+
+    write.mif(report, file.path(output_folder, sprintf("EDGE-T_%s.mif", tech_scen)))
 
     if(plot.report){
       ## ship and run the file in the output folder
