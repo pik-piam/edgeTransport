@@ -118,7 +118,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     getSets(x)[1] <- "iso2c"
     x
   }
-  
+
   GDP_country <- as.data.table(GDP_country)
   GDP_country[, year := as.numeric(gsub("y", "", Year))][, Year := NULL]
   GDP_country[, variable := paste0(sub("gdp_", "", variable))]
@@ -135,8 +135,8 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   POP_21 <- aggregate_dt(POP, Regionmapping_21_EU11[, -c("X", "missingH12")], yearcol = "period", fewcol = "region", manycol = "CountryCode", datacols = "scenario", valuecol = "value")
   setnames(POP_21,"value","POP")
   
-  GDP_POP_21 <- merge(GDP_21[scenario=="SSP2"],POP_21[scenario=="SSP2"])
-  GDP_POP_21[,value:= weight/POP][,weight:=NULL][,POP:=NULL] 
+  GDP_POP_21 <- merge(GDP_21[scenario == "SSP2"],POP_21[scenario == "SSP2"])
+  GDP_POP_21[, value := weight/POP][, weight := NULL][, POP := NULL] 
   
   #Read in EDGE-T data
   data <- readMIF(file.path(EDGE_T_run,"EDGE-T_SA.mif"))
@@ -200,7 +200,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     value.name = "Value")
   historical <- as.data.table(historical)   
   historical[, Period := as.numeric(gsub("X", "", Period))]
-  setnames(historical,c("Variable","Unit","Region","Scenario","Model","Period","Value"),c("variable","unit","region","scenario","model","period","value"))
+  setnames(historical, c("Variable", "Unit", "Region", "Scenario", "Model", "Period", "Value"),c("variable", "unit", "region", "scenario", "model", "period", "value"))
   
   vars <- c(
     "ES|Transport|Pass|Aviation",
@@ -209,23 +209,23 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     "ES|Transport|Pass|Road|LDV"
   )
   
-  hist_ES_Pass_Shares <- historical[variable %in% vars & grepl("IEA ETP",model)][,unit:=NULL]
-  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[!value=="N/A"]
-  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[,value:=as.double(value)]
+  hist_ES_Pass_Shares <- historical[variable %in% vars & grepl("IEA ETP", model)][, unit := NULL]
+  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[!value == "N/A"]
+  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[, value := as.double(value)]
   hist_ES_Pass_Shares[, tot:= sum(value), by= c("period","region","scenario","model")]
-  hist_ES_Pass_Shares[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
-  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[,variable:=paste0(variable,"|Share")]
-  browser()
+  hist_ES_Pass_Shares[,value:=value/tot*100][, unit := "%"][, tot := NULL]
+  hist_ES_Pass_Shares <- hist_ES_Pass_Shares[, variable := paste0(variable, "|Share")]
+
   
   hist_ES_Pass_Shares_RTS <- hist_ES_Pass_Shares[model == "IEA ETP RTS"]
   hist_ES_Pass_Shares_RTS <- hist_ES_Pass_Shares_RTS[period %in% c(2014,2025,2030,2050,2060)]
-  hist_ES_Pass_Shares_RTS[,value:=round(value,1)]
+  hist_ES_Pass_Shares_RTS[, value := round(value, 1)]
   hist_ES_Pass_Shares_RTS <- dcast(hist_ES_Pass_Shares_RTS, variable + unit + region + scenario + model ~ period)
   hist_ES_Pass_Shares_RTS <- as.data.table(hist_ES_Pass_Shares_RTS)
   
   #Read prices and prefs
-  Prices <- fread(file.path(EDGE_T_run,"Mode_Prices_NEW_VOT.csv"),header = TRUE)
-  Prefs <- fread(file.path(EDGE_T_run,"Mode_Prefs.csv"),header = TRUE)
+  Prices <- fread(file.path(EDGE_T_run, "Mode_Prices_NEW_VOT.csv"), header = TRUE)
+  Prefs <- fread(file.path(EDGE_T_run, "Mode_Prefs.csv"), header = TRUE)
   
   wb <- xlsx::loadWorkbook(Excel_path)
   sheets <- getSheets(wb)
@@ -241,8 +241,8 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     Font(wb, isBold = TRUE) +
     Alignment(wrapText = TRUE, horizontal = "ALIGN_CENTER") +
     Border(color = "black",
-           position =c("TOP", "BOTTOM"),
-           pen =c("BORDER_THIN", "BORDER_THIN"))
+           position = c("TOP", "BOTTOM"),
+           pen = c("BORDER_THIN", "BORDER_THIN"))
   
   
   vars <- c(
@@ -274,14 +274,14 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
       sheets <- getSheets(wb)}
     
     xlxs_data <- data[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
-    xlxs_data[,value:=round(value,1)]
+    xlxs_data[,value:=round(as.numeric(value),1)]
     xlxs_data <- dcast(xlxs_data, variable + unit + region + scenario + model ~ period)
     xlxs_data <- xlxs_data[match(vars,variable)]
     
-    Exp_conv0 <- Exp_conv[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
-    Exp_conv0[,value:=round(value,1)]
-    Exp_conv0 <- dcast(Exp_conv0, variable + unit + region + scenario + model ~ period)
-    Exp_conv0 <-Exp_conv0[match(vars,variable)]
+    # Exp_conv0 <- Exp_conv[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
+    # Exp_conv0[,value:=round(value,1)]
+    # Exp_conv0 <- dcast(Exp_conv0, variable + unit + region + scenario + model ~ period)
+    # Exp_conv0 <-Exp_conv0[match(vars,variable)]
 
     Prices0 <- Prices[region==region0]
     Prefs0 <- Prefs[region==region0]
