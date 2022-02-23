@@ -11,19 +11,21 @@
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
-#' @param write.report write a report which is place in the level2 folder. Defaults to FALSE.
+#' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGEtransport
 #' @importFrom rmarkdown render
+#' @importFrom gdxdt readgdx
+#' @importFrom quitte write.mif
 #' @export
 
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
-                             preftab = NULL, write.report = FALSE){
+                             preftab = NULL, plot.report = FALSE){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -424,9 +426,17 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
-    ## ship and run the file in the output folder
+    report <- reportEDGETransport(
+                  output_folder = output_folder, sub_folder = "level_2",
+                  loadmif = FALSE, extendedReporting = TRUE, scenario_title = tech_scen,
+                  model_name = "EDGE-Transport",
+                  gdx = gdxPath)
 
-    if(write.report){
+    write.mif(report, file.path(output_folder, sprintf("EDGE-T_%s.mif", tech_scen)))
+
+    if(plot.report){
+      ## ship and run the file in the output folder
+
       file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
                 md_template, overwrite = T)
       render(md_template, output_format="pdf_document")
