@@ -101,7 +101,7 @@ Calc_pref_and_prices <- function(output_folder,logit_data, prefs){
 Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
 
   ## load mappings
-  REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(ISO = CountryCode, region = RegionCode)]
+  REMIND2ISO_MAPPING <- fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(ISO = CountryCode, region = RegionCode)]
   #Choose regions to be considered from MIF file
   regions <- unique(REMIND2ISO_MAPPING$region)
 
@@ -149,44 +149,44 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   
   setnames(data,c("Variable","Unit","Region","Scenario","Model","Period","Value"),c("variable","unit","region","scenario","model","period","value"))
   
-  #Weighted Population denisty for region clusters
-  Weighted_POP <-  fread(WD_POP,header=TRUE ,sep=",")[,.(ISO,value = PWD_G,year,Area)]
-  Weighted_POP <- merge(Weighted_POP,REMIND2ISO_MAPPING,all.x = TRUE)
-  Weighted_POP <- Weighted_POP[,value:=value*(Area/sum(Area)),by=c("region")]
-  Weighted_POP <- Weighted_POP[,.(value=sum(value)),by=.(region)]
-  Weighted_POP[,range:=(max(value)-min(value))/4]
-  Weighted_POP[value<=range,cluster:=1][value>range & value<=2*range,cluster:=2][value>2*range & value<=3*range,cluster:=3][value>3*range,cluster:=4]
-  cluster <-Weighted_POP[,.(region,cluster)]
-  
-  #Expectation: Convergence of Passenger mode shares in 2150 according to country with highest GDP/cap projection in 2150
-  vars <- c(
-    "ES|Transport|Pass|Aviation|International|Share",
-    "ES|Transport|Pass|Road|LDV|Share",
-    "ES|Transport|Pass|Road|Bus|Share",
-    "ES|Transport|Pass|Rail|non-HSR|Share",
-    "ES|Transport|Pass|Aviation|Domestic|Share",
-    "ES|Transport|Pass|Rail|HSR|Share",
-    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share",
-    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share"
-  )
-  
-
-  Conv_year <- 2150
-  Exp <- data[variable %in% vars & region %in%regions]
-  Exp <- merge(Exp,cluster,all.x=TRUE)
-  Exp <- merge(Exp,GDP_POP_21[period==Conv_year,.(region,GDP_POP=value)],all.x=TRUE)
-  Exp[,lead_reg:= max(GDP_POP),by="cluster"]
-  Exp[,lead_reg:= ifelse(GDP_POP==lead_reg, 1,0)]
-
-  
-  Exp_conv <- Exp[variable %in% vars]
-  Exp_conv[,period:=as.numeric(as.character(period))]
-  Exp_conv[,lead_share:=value[lead_reg==1 & period==Conv_year],by=c("cluster","variable")] 
-  Exp_conv[period >= 2020, value := value[period == 2020]*(Conv_year-period)/(Conv_year-2020) + lead_share*(period-2020)/(Conv_year-2020), by =c("variable", "region")]
-  Exp_conv[,sum:=sum(value),by=c("region","period")]
-  #Print lead regions
-  print(paste0("Lead regions:",unique(Exp_conv[lead_reg==1,.(cluster,region)])))  
-  Exp_conv <- Exp_conv[, c("model","scenario","region","variable","unit","period","value")]
+  # #Weighted Population denisty for region clusters
+  # Weighted_POP <-  fread(WD_POP,header=TRUE ,sep=",")[,.(ISO,value = PWD_G,year,Area)]
+  # Weighted_POP <- merge(Weighted_POP,REMIND2ISO_MAPPING,all.x = TRUE)
+  # Weighted_POP <- Weighted_POP[,value:=value*(Area/sum(Area)),by=c("region")]
+  # Weighted_POP <- Weighted_POP[,.(value=sum(value)),by=.(region)]
+  # Weighted_POP[,range:=(max(value)-min(value))/4]
+  # Weighted_POP[value<=range,cluster:=1][value>range & value<=2*range,cluster:=2][value>2*range & value<=3*range,cluster:=3][value>3*range,cluster:=4]
+  # cluster <-Weighted_POP[,.(region,cluster)]
+  # 
+  # #Expectation: Convergence of Passenger mode shares in 2150 according to country with highest GDP/cap projection in 2150
+  # vars <- c(
+  #   "ES|Transport|Pass|Aviation|International|Share",
+  #   "ES|Transport|Pass|Road|LDV|Share",
+  #   "ES|Transport|Pass|Road|Bus|Share",
+  #   "ES|Transport|Pass|Rail|non-HSR|Share",
+  #   "ES|Transport|Pass|Aviation|Domestic|Share",
+  #   "ES|Transport|Pass|Rail|HSR|Share",
+  #   "ES|Transport|Pass|Road|Non-Motorized|Walking|Share",
+  #   "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share"
+  # )
+  # 
+  # 
+  # Conv_year <- 2150
+  # Exp <- data[variable %in% vars & region %in%regions]
+  # Exp <- merge(Exp,cluster,all.x=TRUE)
+  # Exp <- merge(Exp,GDP_POP_21[period==Conv_year,.(region,GDP_POP=value)],all.x=TRUE)
+  # Exp[,lead_reg:= max(GDP_POP),by="cluster"]
+  # Exp[,lead_reg:= ifelse(GDP_POP==lead_reg, 1,0)]
+  # 
+  # 
+  # Exp_conv <- Exp[variable %in% vars]
+  # Exp_conv[,period:=as.numeric(as.character(period))]
+  # Exp_conv[,lead_share:=value[lead_reg==1 & period==Conv_year],by=c("cluster","variable")] 
+  # Exp_conv[period >= 2020, value := value[period == 2020]*(Conv_year-period)/(Conv_year-2020) + lead_share*(period-2020)/(Conv_year-2020), by =c("variable", "region")]
+  # Exp_conv[,sum:=sum(value),by=c("region","period")]
+  # #Print lead regions
+  # print(paste0("Lead regions:",unique(Exp_conv[lead_reg==1,.(cluster,region)])))  
+  # Exp_conv <- Exp_conv[, c("model","scenario","region","variable","unit","period","value")]
 
   
   
@@ -215,7 +215,7 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   hist_ES_Pass_Shares[, tot:= sum(value), by= c("period","region","scenario","model")]
   hist_ES_Pass_Shares[,value:=value/tot*100][,unit:="%"][,tot:=NULL]
   hist_ES_Pass_Shares <- hist_ES_Pass_Shares[,variable:=paste0(variable,"|Share")]
-  
+  browser()
   
   hist_ES_Pass_Shares_RTS <- hist_ES_Pass_Shares[model == "IEA ETP RTS"]
   hist_ES_Pass_Shares_RTS <- hist_ES_Pass_Shares_RTS[period %in% c(2014,2025,2030,2050,2060)]
@@ -295,10 +295,10 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
                        rownamesStyle = rowname_style,
                        row.names = FALSE)
     
-    xlsx::addDataFrame(Exp_conv0, sheet = sheets[[region0]], startRow = 16, startColumn = 1,
-                       colnamesStyle = colname_style,
-                       rownamesStyle = rowname_style,
-                       row.names = FALSE)
+    # xlsx::addDataFrame(Exp_conv0, sheet = sheets[[region0]], startRow = 16, startColumn = 1,
+    #                    colnamesStyle = colname_style,
+    #                    rownamesStyle = rowname_style,
+    #                    row.names = FALSE)
     
     xlsx::addDataFrame(Prices0, sheet = sheets[[region0]], startRow = 56, startColumn = 3,
                        colnamesStyle = colname_style,
@@ -320,17 +320,17 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
     #                    rownamesStyle = rowname_style,
     #                    row.names = FALSE)
     # 
-    
-    vars2 <- c(
-      "ES|Transport|Pass|Aviation|Domestic",
-      "ES|Transport|Pass|Rail|HSR",
-      "ES|Transport|Pass|Rail|non-HSR",
-      "ES|Transport|Pass|Road|Bus",
-      "ES|Transport|Pass|Road|LDV",
-      "ES|Transport|Pass|Road|Non-Motorized|Cycling",
-      "ES|Transport|Pass|Road|Non-Motorized|Walking"
-    )
-    
+    # 
+    # vars2 <- c(
+    #   "ES|Transport|Pass|Aviation|Domestic",
+    #   "ES|Transport|Pass|Rail|HSR",
+    #   "ES|Transport|Pass|Rail|non-HSR",
+    #   "ES|Transport|Pass|Road|Bus",
+    #   "ES|Transport|Pass|Road|LDV",
+    #   "ES|Transport|Pass|Road|Non-Motorized|Cycling",
+    #   "ES|Transport|Pass|Road|Non-Motorized|Walking"
+    # )
+    # 
     
     
     # #Add energy services plot
