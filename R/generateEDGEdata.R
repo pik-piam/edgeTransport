@@ -421,6 +421,9 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
+
+    saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
+
     ## ship and run the file in the output folder
 
     if(write.report){
