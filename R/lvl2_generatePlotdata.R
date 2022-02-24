@@ -510,7 +510,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
     all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
                       "subsector_L3", "sector")
     
-    browser()
+
     # change variable names for mip
     setnames(priceData, c("year"), c("period"))
     setnames(prefData, c("year"), c("period"))
@@ -563,7 +563,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
 
     setnames(prefData, "region", "manycol")
     setnames(priceData, "region", "manycol")
-    browser() 
+
     priceData <- aggregate_dt(priceData,
                               Regionmapping,
                               manycol = "manycol",
@@ -620,6 +620,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
   logit_exp_S3S <- do.call(rbind.data.frame, logit_exp_S3S)
   setkey(logit_exp_S3S, NULL)
   Prices_S3S[subsector_L3 %in% c("Cycle","Walk"), tot_VOT_price:=tot_price]
+
   Prices_S3S <- LogitCostplotdata(priceData=Prices_S3S,prefData=Pref_S3S,logitExp=logit_exp_S3S,groupValue="subsector_L3",weight=weight_dem_pkm ,yrs,Regionmapping)
 
   Prices_S3S <- Prices_S3S[,c("variable", "period", "scenario", "region", "value","subsector_L3","unit")]
