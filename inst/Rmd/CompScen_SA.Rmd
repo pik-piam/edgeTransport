@@ -4,7 +4,7 @@ output:
  html_document:
    toc: yes
 hist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif"
-listofruns <-  list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-.*", full.names = T)
+listofruns: list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-04.*", full.names = T)
 
 y_bar: c(2010,2020,2030,2050,2100)
 regionchoice: c("CHA")

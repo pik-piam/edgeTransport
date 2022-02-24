@@ -620,7 +620,7 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
   logit_exp_S3S <- do.call(rbind.data.frame, logit_exp_S3S)
   setkey(logit_exp_S3S, NULL)
   Prices_S3S[subsector_L3 %in% c("Cycle","Walk"), tot_VOT_price:=tot_price]
-  browser()
+
   Prices_S3S <- LogitCostplotdata(priceData=Prices_S3S,prefData=Pref_S3S,logitExp=logit_exp_S3S,groupValue="subsector_L3",weight=weight_dem_pkm ,yrs,Regionmapping)
 
   Prices_S3S <- Prices_S3S[,c("variable", "period", "scenario", "region", "value","subsector_L3","unit")]

@@ -266,7 +266,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
 
-    Calc_pref_and_prices(file.path(output_folder,folder), logit_data, prefs)
+    Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
     prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
@@ -427,7 +427,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
     report <- reportEDGETransport(
-                  output_folder = output_folder, sub_folder = "level_2",
+                  output_folder = folder, sub_folder = "level_2",
                   loadmif = FALSE, extendedReporting = TRUE, scenario_title = tech_scen,
                   model_name = "EDGE-Transport",
                   gdx = gdxPath)

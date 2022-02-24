@@ -92,13 +92,13 @@ Calc_pref_and_prices <- function(output_folder,logit_data, prefs){
 #' @param EDGE_T_run path to output folder of EDGE-T run 
 #' @author Johanna Hoppe
 #'
-#' @import xlsx
+#' @importFrom xlsx getSheets
 #' @import data.table
 #' @importFrom ggplot2 ggplot
 #' @export
 
 
-Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
+Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
 
   ## load mappings
   REMIND2ISO_MAPPING <- fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(ISO = CountryCode, region = RegionCode)]
@@ -137,9 +137,11 @@ Update_Validation_Excel_tool <- function(Excel_path,hist,WD_POP,EDGE_T_run){
   
   GDP_POP_21 <- merge(GDP_21[scenario == "SSP2"],POP_21[scenario == "SSP2"])
   GDP_POP_21[, value := weight/POP][, weight := NULL][, POP := NULL] 
-  
+
+  mif <- list.files(EDGE_T_run, "*.mif", full.names=T)
+  stopifnot(length(mif) == 1)
   #Read in EDGE-T data
-  data <- readMIF(file.path(EDGE_T_run,"EDGE-T_SA.mif"))
+  data <- readMIF(mif)
   data <- melt(
       data,
       id.vars=c("Variable","Unit","Region","Scenario","Model"),
