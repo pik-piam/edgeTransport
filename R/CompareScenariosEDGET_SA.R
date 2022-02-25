@@ -9,13 +9,14 @@
 #' @importFrom rmarkdown render
 #' @export
 
-CompareScenariosEDGET_SA <- function(target, hist, listofruns, y_bar, regionchoice){
+CompareScenariosEDGET_SA <- function(outputFormat, target, hist, listofruns, y_bar, yrs, regionchoice){
   #ship and run the file in the output folder
   file.copy(
     system.file("Rmd", "CompScen_SA.Rmd", package = "edgeTransport"),
     target, overwrite = T)
-  params <- list(hist = hist, listofruns = listofruns, y_bar = y_bar, regionchoice=regionchoice)
-  render(target, output_format="html_document", params = params)
+  YAMLparams <- list(hist = hist, mif = mif, y_bar = y_bar, yrs=yrs, regionchoice=regionchoice)
+  
+  render(file.path(target,"CompScen_SA.Rmd"), output_format=outputFormat, params = YAMLparams)
 }
 
 

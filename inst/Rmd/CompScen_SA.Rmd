@@ -1,76 +1,56 @@
 ---
 title: "Compare Scenarios report EDGE-Transport"
-output:
- html_document:
-   toc: yes
-hist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif"
-listofruns: list.files("C:/Users/johannah/Documents/EDGE-Transport/Output","SSP2-Mix._2022-02-04.*", full.names = T)
 
-y_bar: c(2010,2020,2030,2050,2100)
-regionchoice: c("CHA")
+output: 
+  pdf_document:
+    toc: yes
+    number_sections: yes
+    toc_depth: 6
+    includes: 
+      in_header: cs_pdf_header_include.tex
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 6
+    number_sections: yes
 
-  # word_document:
-  #   toc: yes
-  # html_document:
-  #     toc: true # table of content true
-  #     toc_depth: 3  # upto three depths of headings (specified by #, ## and ###)
-  #     number_sections: true  ## if you want number sections at each table header
----`
+params:
+  hist: !r c("C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical.mif")
+  mif: !r c("C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix2_2022-02-25_09.28.33/EDGE-T_SA.mif")
+  y_bar: !r c(2010,2020,2030,2050,2100)
+  yrs: !r c(seq(2010, 2060, 5), seq(2070, 2100, 10))
+  regionchoice: !r c("CHA","JPN","DEU","IND","USA","CAZ")
+
+---
 
 ```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
-library(magclass)
-library(lusweave)
 library(mip)
-library(luplot)
 library(ggplot2)
 library(quitte)
 library(data.table)
-library(utils)
-library(rmndt)
-library(remind2)
-library(mrremind)
-library(devtools)
-library(knitr)
-library(htmlTable)
-load_all("C:/Users/johannah/Documents/Git_repos/edgeTrpLib")
-load_all("C:/Users/johannah/Documents/Git_repos/edgeTransport")
 ```
 
 ```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
-#load plotdata (listofruns=listofruns, load_Cache=load_Cache, cache_folder="cache", AggrReg="H12")
 
-browser()
-data_extended <- lvl2_generate_plotdata(listofruns)
-data <- rbind(data_extended$LinePlot_data,data_extended$shares)
-
-
-
-#load historical data
-    vars <- c(
-    "ES|Transport|Freight|Road",
-    "ES|Transport|Freight|Rail",
-    "ES|Transport|Freight|International Shipping",
-    "ES|Transport|Freight|Navigation"
-  )
-
-
- ## ---- Read historical data ----
-  items <- c("IEA ETP RTS","IEA ETP 2DS","IEA ETP B2DS","IEA","JRC")
-  historical <- read.report(hist, as.list = F)
-  historical <- historical[,,items, pmatch = F]
-  # Clean zeros and global data for JRC
-  historical@.Data[historical@.Data == 0] = NA
-  historical["GLO",,"JRC", pmatch = F] = NA
-  historical <- magpie2dt(historical)
-
-
+counter <- 2
+data <- list()
+for (i in 1:length(params$mif)){
+  data0 <- read.quitte(params$mif[i],factors=FALSE)
+  data0 <- as.data.table(data0)
+  if (i > 1) {
+   if ((length(data[scenario %in% unique(data0$scenario)]) > 0)){
+    data0[, scenario := paste0(scenario,"_",counter)]
+    counter <- counter+1}
+  } 
+  data <- rbind(data,data0)
+}
 
 
 # Extra plotting functions
- lineplot = function(varname, data){
+lineplot = function(varname, data){
     p=ggplot(data, aes(x = as.character(period), y = value,group = scenario, color = scenario))+
-      geom_line(size = 1)+
-      facet_wrap(~groupvalue, nrow = 4, scales = "free")+
+      geom_line(size = 0.5)+
+      facet_wrap(~data$variable, nrow = 4, scales = "free")+
       scale_x_discrete(breaks = c(1990,2010,2030,2050,2100))+
       labs(x = "", y = paste0(varname," [", unique(data$unit),"]"), title = paste0(varname))
     return(p)
@@ -79,68 +59,67 @@ data <- rbind(data_extended$LinePlot_data,data_extended$shares)
 ```
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = FALSE, results= 'asis'}
-cat('\n## FE Transport \n')
-
-vars <- c(
-  "FE|Transport",
-  "FE|Transport|Pass",
-  "FE|Transport|Pass|Rail",
-  "FE|Transport|Pass|Road|Bus",
-  "FE|Transport|Pass|Road|LDV",
-  "FE|Transport|Freight",
-  "FE|Transport|Freight|Navigation",
-  "FE|Transport|Freight|Rail",
-  "FE|Transport|Freight|Road"
-)
-
-for (var0 in vars) {
-
-  if (sub(" \\(.*\\)", "",var0) %in% unique(data$variable)) {
-
-    cat('\n###', var0, '\n')
-    p2 <- mipLineHistorical(data[variable==sub(" \\(.*\\)", "",var0)],
-      x_hist = historical[, , var0],
-      ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
-      xlim = c(1990, 2050)
-    )
-    print(p2)
-    cat('\n')
-  } else {
-    print(paste0(var0, " not in runs"))
-  }
-}
+# cat('\n## FE Transport \n')
+# 
+# vars <- c(
+#   "FE|Transport",
+#   "FE|Transport|Pass",
+#   "FE|Transport|Pass|Rail",
+#   "FE|Transport|Pass|Road|Bus",
+#   "FE|Transport|Pass|Road|LDV",
+#   "FE|Transport|Freight",
+#   "FE|Transport|Freight|Navigation",
+#   "FE|Transport|Freight|Rail",
+#   "FE|Transport|Freight|Road"
+# )
+# 
+# for (var0 in vars) {
+# 
+#   if (sub(" \\(.*\\)", "",var0) %in% unique(data$variable)) {
+# 
+#     cat('\n###', var0, '\n')
+#     p2 <- mipLineHistorical(data[variable==sub(" \\(.*\\)", "",var0)],
+#       x_hist = historical[, , var0],
+#       ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
+#       xlim = c(1990, 2050)
+#     )
+#     print(p2)
+#     cat('\n')
+#   } else {
+#     print(paste0(var0, " not in runs"))
+#   }
+# }
 ```
 
 
 ```{r, fig.width=15, fig.height=9,eval = FALSE, echo=FALSE, results= 'asis'}
 
- cat('\n## ES Transport \n')
-
-y_bar=c(2010,2030,2050,2100)
-
-vars <- c(
-  "ES|Transport|Pass",
-  "ES|Transport|Pass|Rail",
-  "ES|Transport|Pass|Road|Bus",
-  "ES|Transport|Pass|Road|LDV",
-  "ES|Transport|Freight|Rail",
-  "ES|Transport|Freight|Road"
-)
-
-for (var0 in vars) {
-  if (sub(" \\(.*\\)", "",var0) %in% unique(data$variable)) {
-    cat('\n###', var0, '\n')
-    p2 <- mipLineHistorical(data[variable==sub(" \\(.*\\)", "",var0)],
-      x_hist = historical[, , var0],
-      ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
-      xlim = c(1990, 2050)
-    )
-    print(p2)
-    cat('\n')
-  } else {
-    print(paste0(var0, "not in runs"))
-  }
-}
+#  cat('\n## ES Transport \n')
+# 
+# 
+# vars <- c(
+#   "ES|Transport|Pass",
+#   "ES|Transport|Pass|Rail",
+#   "ES|Transport|Pass|Road|Bus",
+#   "ES|Transport|Pass|Road|LDV",
+#   "ES|Transport|Freight|Rail",
+#   "ES|Transport|Freight|Road"
+# )
+# 
+# for (var0 in vars) {
+#   if (sub(" \\(.*\\)", "",var0) %in% unique(data$variable)) {
+#     cat('\n###', var0, '\n')
+#     p2 <- mipLineHistorical(data[variable==sub(" \\(.*\\)", "",var0)],
+#       x_hist = historical[, , var0],
+#       ylab = var0, scales = "free_y", plot.priority = c("x_hist", "x", "x_proj"), facet.ncol = 3,
+#       xlim = c(1990, 2050)
+#     )
+#     print(p2)
+#     cat('\n')
+#   } else {
+#     print(paste0(var0, "not in runs"))
+#   }
+# }
 ```
 
 
@@ -148,14 +127,6 @@ for (var0 in vars) {
 
   cat('\n## ES shares by transport mode \n')
 
-  cat('\n## ES shares comparison \n')
-  cat('\n###Passenger\n')
-
-  setnames(ValComp_data,"model","scenario")
-
-  p1 <- mipBarYearData(ValComp_data)
-  p1 <- p1 + theme_mip(size = 18)
-  print(p1)
 
   cat('\n###Passenger w/o bunkers \n')
 
@@ -165,11 +136,12 @@ for (var0 in vars) {
     "ES|Transport|Pass|Rail|HSR|Share w/o bunkers",
     "ES|Transport|Pass|Road|Bus|Share w/o bunkers",
     "ES|Transport|Pass|Road|LDV|Share w/o bunkers",
-    "ES|Transport|Pass|Road|Non-Motorized|Share w/o bunkers"
+    "ES|Transport|Pass|Road|Non-Motorized|Walking|Share w/o bunkers",
+    "ES|Transport|Pass|Road|Non-Motorized|Cycling|Share w/o bunkers"
   )
 
   plotdata <- data[variable %in% vars]
-  p1 <- mipArea(plotdata[region %in% regionchoice & period %in% y_bar], scales="free_y")
+  p1 <- mipBarYearData(plotdata[region %in% params$regionchoice & period %in% params$y_bar])
   p1 <- p1 + theme_mip(size = 18)
   print(p1)
 
@@ -184,7 +156,29 @@ for (var0 in vars) {
   )
 
   plotdata <- data[variable %in% vars]
-  p1 <- mipBarYearData(plotdata[region %in% regionchoice & period %in% y_bar])
+  p1 <- mipBarYearData(plotdata[region %in% params$regionchoice & period %in% params$y_bar])
+  p1 <- p1 + theme_mip(size = 18)
+  print(p1)
+
+```
+
+```{r, fig.width=15, fig.height=9, eval = TRUE,echo=FALSE, results= 'asis'}
+
+  cat('\n## ES shares by vehicle Sizes \n')
+
+  cat('\n###Passenger\n')
+
+  vars <- c(
+       "ES|Transport|Pass|Road|LDV|Large|Share",
+       "ES|Transport|Pass|Road|LDV|Medium|Share",
+       "ES|Transport|Pass|Road|LDV|SUV|Share",
+       "ES|Transport|Pass|Road|LDV|Mini|Share",
+       "ES|Transport|Pass|Road|LDV|Small|Share",
+       "ES|Transport|Pass|Road|LDV|Van|Share"
+  )
+
+  plotdata <- data[variable %in% vars]
+  p1 <- mipBarYearData(plotdata[region %in% params$regionchoice & period %in% params$y_bar])
   p1 <- p1 + theme_mip(size = 18)
   print(p1)
 
@@ -193,17 +187,19 @@ for (var0 in vars) {
 
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
   cat('\n## Prices S3S\n')
-  scen <- unique(data_extended$Logit_Prices_S3S$scenario)
+  scen <- unique(data$scenario)
 
-for (reg0 in regionchoice) {
-  plotdata <- data_extended$Logit_Prices_S3S[region==reg0]
-  plotdata <- plotdata[groupvalue %in% c("Walk","Cycle","trn_pass_road","Domestic Aviation","Passenger Rail","HSR")]
-   plotdata[,region:=NULL]
+for (reg0 in params$regionchoice) {
+  plotdata <- data[grepl("Logit cost\\|S3S\\|(Walk|Cycle|trn_pass_road|Domestic Aviation|Passenger Rail|HSR)",variable)]
+  plotdata <- plotdata[region==reg0][,region:=NULL]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|S3S\\|","",variable)][period %in% params$y_bar]
   setnames(plotdata, "scenario","region")
-  setnames(plotdata, "groupvalue","scenario")
+  plotdata <- plotdata[, scenario:=gsub("\\|Eq inconvenience cost|\\|tot_VOT_price|\\|fuel_price_pkm|\\|non_fuel_price","",variable)]
+  plotdata <- plotdata[, variable:=gsub("Walk\\||Cycle\\||trn_pass_road\\||Domestic Aviation\\||Passenger Rail\\||HSR\\|","",variable)]
+
   cat(paste0("\n##",reg0,"\n"))
 
-  p2 <- mipBarYearData(plotdata[period %in% y_bar],ylab="Prices logit_S3S [USD2005/pkm]")
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit_S3S [USD2005/pkm]")
   p2 <- p2 + theme_mip(size = 18)
   print(p2)}
 
@@ -214,15 +210,17 @@ cat('\n')
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
   cat('\n## Prices S2S3\n')
 
-for (reg0 in regionchoice) {
-  plotdata <- data_extended$Logit_Prices_S2S3[region==reg0]
-  plotdata <- plotdata[groupvalue %in% c("Bus","trn_pass_road_LDV")]
-  plotdata[,region:=NULL]
+for (reg0 in params$regionchoice) {
+  plotdata <- data[grepl("Logit cost\\|S2S3\\|(Bus|trn_pass_road_LDV)",variable)]
+  plotdata <- plotdata[region==reg0][, region:=NULL]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|S2S3\\|", "",variable)][period %in% params$y_bar]
   setnames(plotdata, "scenario","region")
-  setnames(plotdata, "groupvalue","scenario")
+  plotdata <- plotdata[, scenario := gsub("\\|Eq inconvenience cost|\\|tot_VOT_price|\\|fuel_price_pkm|\\|non_fuel_price", "", variable)]
+  plotdata <- plotdata[, variable := gsub("Bus\\||trn_pass_road_LDV\\|","", variable)]
+  
   cat(paste0("\n##",reg0,"\n"))
 
-  p2 <- mipBarYearData(plotdata[period %in% y_bar],ylab="Prices logit_S2S3 [USD2005/pkm]")
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit_S2S3 [USD2005/pkm]")
   p2 <- p2 + theme_mip(size = 18)
   print(p2)}
 
@@ -233,15 +231,17 @@ cat('\n')
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
   cat('\n## Prices S1S2\n')
 
-for (reg0 in regionchoice) {
-  plotdata <- data_extended$Logit_Prices_S1S2[region==reg0]
-  plotdata <- plotdata[groupvalue %in% c("trn_pass_road_LDV_4W","trn_pass_road_LDV_2W") ]
-  plotdata[,region:=NULL]
+for (reg0 in params$regionchoice) {
+  plotdata <- data[grepl("Logit cost\\|S1S2\\|(trn_pass_road_LDV_4W|trn_pass_road_LDV_2W)",variable)]
+  plotdata <- plotdata[region==reg0][,region:=NULL]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|S1S2\\|", "",variable)][period %in% params$y_bar]  
   setnames(plotdata, "scenario","region")
-  setnames(plotdata, "groupvalue","scenario")
+  plotdata <- plotdata[, scenario := gsub("\\|Eq inconvenience cost|\\|tot_VOT_price|\\|fuel_price_pkm|\\|non_fuel_price", "", variable)]
+  plotdata <- plotdata[, variable := gsub("trn_pass_road_LDV_4W\\||trn_pass_road_LDV_2W\\|", "", variable)]
+  
   cat(paste0("\n##",reg0,"\n"))
 
-  p2 <- mipBarYearData(plotdata[period %in% y_bar],ylab="Prices logit_S1S2 [USD2005/pkm]")
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit_S1S2 [USD2005/pkm]")
   p2 <- p2 + theme_mip(size = 18)
   print(p2)}
 
@@ -252,19 +252,61 @@ cat('\n')
 ```{r, fig.width=15, fig.height=9, echo=FALSE, eval = TRUE, results= 'asis'}
   cat('\n## Prices VS1\n')
 
-for (reg0 in regionchoice) {
-  plotdata <- data_extended$Logit_Prices_VS1[region==reg0]
-  plotdata <- plotdata[groupvalue %in% c("Compact Car","Subcompact Car","Van","Midsize Car","Large Car","Mini Car","Large Car and SUV")  ]
-   plotdata[,region:=NULL]
+for (reg0 in params$regionchoice) {
+  plotdata <- data[grepl("Logit cost\\|VS1\\|LDV\\|(Mini|Medium|Large|SUV|Van|Small)",variable)]
+  plotdata <- plotdata[region==reg0][,region:=NULL]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|VS1\\|LDV\\|", "",variable)][period %in% params$y_bar]  
   setnames(plotdata, "scenario","region")
-  setnames(plotdata, "groupvalue","scenario")
+  plotdata <- plotdata[, scenario := gsub("\\|Eq inconvenience cost|\\|tot_VOT_price|\\|fuel_price_pkm|\\|non_fuel_price", "", variable)]
+  plotdata <- plotdata[, variable := gsub("Mini\\||Large\\||SUV\\||Van\\||Small\\||Medium\\|", "", variable)]
 
   cat(paste0("\n##",reg0,"\n"))
-  p2 <- mipBarYearData(plotdata[period %in% y_bar],ylab="Prices logit_VS1 [USD2005/pkm]")
+  p2 <- mipBarYearData(plotdata[period %in% params$y_bar],ylab="Prices logit_VS1 [USD2005/pkm]")
   p2 <- p2 + theme_mip(size = 18)
   print(p2)}
 
 cat('\n')
+
+```
+
+```{r, fig.width=15, fig.height=9,echo=FALSE, eval = TRUE, warning=FALSE}
+
+  cat('\n## Average LDV non fuel prices\n')
+
+  plotdata <- data[grepl("Logit cost\\|S1S2\\|trn_pass_road_LDV_4W\\|non_fuel_price",variable) & period %in% params$yrs & region %in% params$regionchoice]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|S1S2\\|", "",variable)][, variable := NULL]
+  
+  # Extra plotting functions
+ 
+  p=ggplot(plotdata, aes(x = as.character(period), y = value, group = region, color = region))+
+      geom_line(size = 0.5)+
+      facet_wrap(~scenario, nrow = 4, scales = "free")+
+      scale_x_discrete(breaks = c(2010,2030,2050,2100))+
+      labs(x = "", y = paste0("Average LDV 4W non fuel prices","[", unique(data$unit),"]"), title = paste0("Average LDV 4W non fuel prices"))
+
+  print(p)
+
+
+```
+
+```{r, fig.width=15, fig.height=9,echo=FALSE, eval = TRUE, warning=FALSE}
+
+  cat('\n## Average LDV total price\n')
+
+  plotdata <- data[grepl("Logit cost\\|S1S2\\|trn_pass_road_LDV_4W\\|",variable) & period %in% params$yrs & region %in% params$regionchoice]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|S1S2\\|trn_pass_road_LDV_4W\\|", "",variable)]
+  plotdata <- plotdata[, .(value = sum(value)), by = c("region","scenario","period","unit")]
+  
+  # Extra plotting functions
+ 
+  p=ggplot(plotdata, aes(x = as.character(period), y = value, group = region, color = region))+
+      geom_line(size = 0.5)+
+      facet_wrap(~scenario, nrow = 4, scales = "free")+
+      scale_x_discrete(breaks = c(2010,2030,2050,2100))+
+      labs(x = "", y = paste0("Total LDV 4W logit costs","[", unique(data$unit),"]"), title = paste0("Total LDV 4W logit costs"))
+
+  print(p)
+
 
 ```
 
@@ -273,57 +315,27 @@ cat('\n')
 
   cat('\n## Shareweight trends\n')
 
-for (reg0 in regionchoice) {
+for (reg0 in params$regionchoice) {
 
-  plotdata <- data_extended$Pref_S3S[subsector_L3 %in% c("Walk","Cycle","trn_pass_road","Domestic Aviation","Passenger Rail","HSR")
-  & region == reg0]
-  plotdata <- plotdata[,c("subsector_L3","period","scenario","sw","region")][,unit:="-"]
-  setnames(plotdata, c("sw","subsector_L3"),c("value","groupvalue"))
+  plotdata <- data[grepl("Shareweight\\|S3\\|(Walk|Cycle|trn_pass_road|Domestic Aviation|Passenger Rail|HSR)",variable) & region == reg0]
+  plotdata <- plotdata[, variable := gsub("Shareweight\\|S3\\|", "",variable)]
 
   cat(paste0("\n##",reg0,"\n"))
-  p <- lineplot(varname = "Shareweight trend S3S", data= plotdata)
+  p <- lineplot(varname = "Shareweight trend S3", data = plotdata)
   print(p)
 
-  plotdata <- data_extended$Pref_S2S3[subsector_L2 %in% c("Bus","trn_pass_road_LDV") & region == reg0]
-  plotdata <- plotdata[,c("subsector_L2","period","scenario","sw","region")][,unit:="-"]
-  setnames(plotdata, c("sw","subsector_L2"),c("value","groupvalue"))
-  p <- lineplot(varname = "Shareweight trend S2S3", data= plotdata)
+  plotdata <- data[grepl("Shareweight\\|S2\\|(Bus|trn_pass_road_LDV)",variable) & region == reg0]
+  plotdata <- plotdata[, variable := gsub("Shareweight\\|S2\\|", "",variable)]
+  
+  p <- lineplot(varname = "Shareweight trend S2", data= plotdata)
   print(p)
 
-  plotdata <- data_extended$Pref_S1S2[subsector_L1 %in% c("trn_pass_road_LDV_4W","trn_pass_road_LDV_2W") & region == reg0]
-  plotdata <- plotdata[,c("subsector_L1","period","scenario","sw","region")][,unit:="-"]
-  setnames(plotdata, c("sw","subsector_L1"),c("value","groupvalue"))
-  p <- lineplot(varname = "Shareweight trend S1S2", data= plotdata)
+  plotdata <- data[grepl("Shareweight\\|S1\\|(trn_pass_road_LDV_2W|trn_pass_road_LDV_4W)",variable) & region == reg0]
+  plotdata <- plotdata[, variable := gsub("Shareweight\\|S1\\|", "",variable)]
+  
+  p <- lineplot(varname = "Shareweight trend S1", data= plotdata)
   print(p)}
 
 
 ```
 
-```{r, fig.width=15, fig.height=9,echo=FALSE, eval = TRUE, warning=FALSE}
-  cat('\n## Equivalent inconvenience cost trends\n')
-
-for (reg0 in regionchoice) {
-  plotdata <- data_extended$Logit_Prices_S3S[groupvalue %in% c("Walk","Cycle","trn_pass_road","Domestic Aviation","Passenger Rail","HSR")
-  & region == reg0 & variable == "Inconvenience cost"]
-  plotdata <- plotdata[,c("groupvalue","period","scenario","value","region","unit")]
-  p <- lineplot(varname = "Equivalent inconvenience cost trend S3S", data= plotdata)
-  print(p)
-
-  plotdata <- data_extended$Logit_Prices_S2S3[groupvalue %in% c("Bus","trn_pass_road_LDV") & region == reg0 & variable == "Inconvenience cost"]
-  plotdata <- plotdata[,c("groupvalue","period","scenario","value","region","unit")]
-  p <- lineplot(varname = "Equivalent inconvenience cost trend S2S3", data= plotdata)
-  print(p)
-
-  plotdata <- data_extended$Logit_Prices_S1S2[groupvalue %in% c("trn_pass_road_LDV_4W","trn_pass_road_LDV_2W")
-   &  region == reg0 & variable == "Inconvenience cost"]
-  plotdata <- plotdata[,c("groupvalue","period","scenario","value","region","unit")]
-  p <- lineplot(varname = "Equivalent inconvenience cost trend S1S2", data= plotdata)
-  print(p)
-
-  plotdata <- data_extended$Logit_Prices_VS1[groupvalue %in% c("Compact Car","Subcompact Car","Van","Midsize Car","Large Car","Mini Car","Large Car and SUV")
-   & region == reg0 & variable == "Inconvenience cost"]
-  plotdata <- plotdata[,c("groupvalue","period","scenario","value","region","unit")]
-  p <- lineplot(varname = "Equivalent inconvenience cost trend vehicle types LDV 4W", data= plotdata)
-  print(p)}
-
-```
