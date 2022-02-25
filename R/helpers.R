@@ -387,23 +387,23 @@ Update_sw_trend <- function(Excel_path,sw_trends){
     sw_targets <- rbind(sw_targets, sw_targets0)}
   sw_targets <- as.data.table(sw_targets)
 
-  sw_targets[,subsector_L2:=ifelse(mode %in% c("Bus","trn_pass_road_LDV"),mode,"")]
-  sw_targets[,subsector_L3:=ifelse(mode %in% c("Bus","trn_pass_road_LDV"),"trn_pass_road",mode)][,mode:=NULL]
+  sw_targets[,subsector_L2:=ifelse(mode %in% c("Bus","trn_pass_road_LDV"), mode, "")]
+  sw_targets[,subsector_L3:=ifelse(mode %in% c("Bus","trn_pass_road_LDV"), "trn_pass_road", mode)][, mode:=NULL]
   
-  sw_table <- melt(
+  sw_table <- data.table::melt(
     sw_table,
     id.vars=c("region","technology","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector","level","techscen","approx"),
     variable.name = "period",
     value.name = "value")
-  sw_table <- as.data.table(sw_table)
-  sw_targets <- melt(
+
+  sw_targets <- data.table::melt(
     sw_targets,
     id.vars=c("subsector_L2","subsector_L3","region"),
     variable.name = "period",
     value.name = "value")
-  sw_targets <- as.data.table(sw_targets)
-  sw_targets[,techscen:="Mix2"][,subsector_L1:=""]
-  sw_table[sw_targets,value := i.value, on=c("region", "period", "subsector_L2", "subsector_L3","subsector_L1","techscen")]
+
+  sw_targets[, techscen := unique(sw_table$techscen)][, subsector_L1 := ""]
+  sw_table[sw_targets, value := i.value, on=c("region", "period", "subsector_L2", "subsector_L3", "subsector_L1", "techscen")]
   sw_table <- dcast(sw_table,region + technology + vehicle_type + subsector_L1 + subsector_L2 + subsector_L3 + sector + level + techscen + approx ~ period)
   write.csv(sw_table,sw_trends,row.names=FALSE)
 }
