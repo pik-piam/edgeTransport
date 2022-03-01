@@ -426,21 +426,21 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     md_template = level2path("report.Rmd")
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
-    
+
     report <- reportEDGETransport(
                   output_folder = file.path(output_folder,folder), sub_folder = "level_2",
                   loadmif = FALSE, extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
                   model_name = "EDGE-Transport",
                   gdx = gdxPath)
 
-    write.mif(report, file.path(output_folder,folder,"EDGE-T_SA.mif"))
+    write.mif(report, file.path(output_folder, folder, "EDGE-T_SA.mif"))
 
     if(plot.report){
       ## ship and run the file in the output folder
 
       file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
                 md_template, overwrite = T)
-      render(md_template, output_format="pdf_document")
+      render(md_template, output_format = "pdf_document")
     }
   }
 
