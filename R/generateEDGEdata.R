@@ -420,6 +420,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     ## do these two files *really* have to be provided by edgeTransport?
     saveRDS(mrr$POP, file = level2path("POP.RDS"))
+    saveRDS(mrr$GDP, file = level2path("GDP.RDS"))
 
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
@@ -428,7 +429,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     
     report <- reportEDGETransport(
                   output_folder = file.path(output_folder,folder), sub_folder = "level_2",
-                  loadmif = FALSE, extendedReporting = TRUE, scenario_title = tech_scen,
+                  loadmif = FALSE, extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
                   model_name = "EDGE-Transport",
                   gdx = gdxPath)
 
