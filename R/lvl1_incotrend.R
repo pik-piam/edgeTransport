@@ -506,7 +506,8 @@ if (tech_scen %in% c("ElecEra", "HydrHype")) {
 
     SWS$VS1_final_pref[
           vehicle_type %in% c("Large Car", "SUV", "Van") & year >= 2020,
-          sw := sw[year==2020] * (1 + largeCarFactor * (year-2020) / (largeCarYear-2020))]
+          sw := max(sw[year==2020] * (1 + largeCarFactor * (year-2020) / (largeCarYear-2020)), 0), by = c("vehicle_type", "region", "year")]
+
     SWS$VS1_final_pref[
           subsector_L3 == "Domestic Aviation" & year >= 2020,
           sw := sw[year==2020] * (1 + domAvFactor * (year-2020) / (domAvYear-2020))]
