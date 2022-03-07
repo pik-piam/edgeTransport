@@ -91,6 +91,7 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   value_time_VS1=vot_data[["value_time_VS1"]]
   value_time_S1S2=vot_data[["value_time_S1S2"]]
   value_time_S2S3=vot_data[["value_time_S2S3"]]
+  value_time_S3S=vot_data[["value_time_S3S"]]
   base_SW=calibr_demand[tech_output>0,]
   base_SW=base_SW[,share:=tech_output/sum(tech_output),by=c("region","year","vehicle_type")]
   base_SW=merge(base_SW,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsector_L1", "vehicle_type", "subsector_L2", "subsector_L3"))
@@ -189,10 +190,15 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
 
 
   S2S3_sw=S2S3_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsector_L3,sector)]
-
+ 
   ## rename the database, now it's going from S2 to S3
   S3S_sw=merge(S2S3_sw,logit_exponent_S3S,all.x=TRUE)
   S3S_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector")]
+
+  S3S_sw=merge(S3S_sw,value_time_S3S,all.x = TRUE,by = c("region", "year", "sector","subsector_L3"))
+  S3S_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S3S_sw[,tot_price:=tot_price+time_price]
+  S3S_sw[,time_price:=NULL]
 
   S3S_sw=sw_calc(df_sw = S3S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
 
