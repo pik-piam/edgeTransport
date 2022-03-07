@@ -14,16 +14,19 @@
 #' @param fcr_veh annualization factor for LDVs
 #' @param nper_amort_veh years of amortization which a LDV
 #' @param smartlifestyle switch activatinf sustainable lifestyles
+#' @param SSP_scen REMIND SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
-lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data, PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle, years, REMIND2ISO_MAPPING){
+lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data,
+                         PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
+                         SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
-  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- NULL
-
+  val <- markup <- NULL
+  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
                     logit_cat[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV"][, technology := "Hybrid Electric"])
@@ -44,6 +47,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   ## set target for LF for LDVs
   target_LF = if(smartlifestyle) 1.8 else 1.7
   target_year = if(smartlifestyle) 2060 else 2080
+
+  if(SSP_scen == "SDP_RC"){
+    target_LF = 1.9
+    target_year = 2060
+  }
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
@@ -75,9 +83,40 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   eu_iso = unique(REMIND2ISO_MAPPING[region %in% c("DEU", "FRA", "UKI", "ECS", "ENC", "ESW", "EWN", "ESC", "ECE", "NEN", "NES"), iso])
   ## calculate PSI costs in terms of 2005$/pkm annualized
   PSI_c = copy(PSI_costs)
+  ## define markups on alternative techs based on the percentage difference we find in EU countries
+  PSI_c = rbind(PSI_c, PSI_c[year == 2040][, year := 2100])
+  ## in 2100, purchase price for BEVs is 0.8*purchase price, for Hybrid Electric is 0.7, for FCEVs is 0.9
+  decr = data.table(technology = c("BEV", "Hybrid Electric", "FCEV", "Liquids", "NG"), val = c(0.8, 0.7, 0.9, 1, 1))
+  PSI_c = merge(PSI_c, decr, by = "technology")
+  PSI_c[year == 2100, tot_purchasecost := tot_purchasecost[technology== "Liquids"]*val, by = "vehicle_type"]
+
+
+  ## add "Large Car"and "Light Truck and SUV" taking the same values as for "Large Car and SUV"
+  PSI_c = rbind(PSI_c,
+                PSI_c[vehicle_type == "Large Car and SUV",][, vehicle_type := "Light Truck and SUV"],
+                PSI_c[vehicle_type == "Large Car and SUV",][, vehicle_type := "Large Car"])
+
+  PSI_c = approx_dt(PSI_c,
+                       xdata = years,
+                       xcol = "year",
+                       ycol = "tot_purchasecost",
+                       idxcols = c("technology", "vehicle_type"),
+                       extrapolate = TRUE)
+
+  PSI_c[, val := NULL]
+  PSI_c[, markup := ifelse(technology %in% c("BEV", "Hybrid Electric", "FCEV"),
+                           tot_purchasecost[technology %in% c("FCEV", "BEV", "Hybrid Electric")]/
+                             tot_purchasecost[technology == "Liquids"],
+                           0), by = c("year")]
+
   PSI_c[, c("variable", "unit") := list("Capital costs (purchase)", "2005$/veh/yr")]
   PSI_c = merge(PSI_c, unique(AM[, c("iso", "year")]), by = "year", allow.cartesian=TRUE)
-  PSI_c = rbind(PSI_c[iso %in% eu_iso], PSI_c[!iso %in% eu_iso & technology %in% c("BEV", "FCEV", "Hybrid Electric")])
+
+  ## apply the markup to the respective technologies
+  PSI_c[!iso %in% eu_iso & year >= 2015, tot_purchasecost := ifelse(technology %in% c("BEV", "FCEV", "Hybrid Electric"),
+                                                                    tot_purchasecost[technology=="Liquids"]*markup,
+                                                                    tot_purchasecost), by = c("iso", "year", "vehicle_type")][, markup := NULL]
+
   setnames(PSI_c, old ="tot_purchasecost", new = "value")
   PSI_c = merge(PSI_c, logit_cat, by = c("vehicle_type", "technology"), all.x = T)[, univocal_name := NULL]
   ## calculate UCD costs for LDVs in terms of 2005$/pkm annualized
@@ -357,6 +396,16 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   AM=AM[!is.nan(vkm.veh)]
 
   dem = dem[year <= 2010]
+
+  ## add some base demand for Cycle & Walk (2%)
+  dem[, demldv := sum(tech_output), by=c("year", "iso")]
+  dem[subsector_L3 == "Cycle" & tech_output == 0 & iso %in% c("USA", "AUS", "CAN"), tech_output := demldv*0.006]
+  dem[subsector_L3 == "Cycle" & tech_output == 0 & iso %in% c("IND", "CHN"), tech_output := demldv*0.02]
+  dem[subsector_L3 == "Cycle" & tech_output == 0, tech_output := demldv*0.01]
+  dem[subsector_L3 == "Walk" & tech_output == 0, tech_output := demldv*0.002]
+  ## dem[subsector_L3 == "Cycle" & , tech_output := demldv*0.02]
+  ## dem[subsector_L3 == "Walk" & tech_output == 0, tech_output := demldv*0.002]
+  dem[, demldv := NULL]
 
   ## from https://www.iea.org/reports/tracking-rail-2020-2
   dem[year <= 2010 & iso == "CHN" & subsector_L3 == "HSR", tech_output := 70000]

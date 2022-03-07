@@ -16,6 +16,7 @@ lvl0_mergeDat(
   fcr_veh,
   nper_amort_veh,
   smartlifestyle,
+  SSP_scen,
   years,
   REMIND2ISO_MAPPING
 )
@@ -42,6 +43,8 @@ lvl0_mergeDat(
 \item{nper_amort_veh}{years of amortization which a LDV}
 
 \item{smartlifestyle}{switch activatinf sustainable lifestyles}
+
+\item{SSP_scen}{REMIND SSP scenario}
 
 \item{years}{time steps}
 
