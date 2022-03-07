@@ -142,7 +142,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
-    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, years = years,
+    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, SSP_scen = SSP_scen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
@@ -227,7 +227,9 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                           calibdem = REMINDdat$dem,
                           years = years,
                           smartlifestyle = smartlifestyle,
-                          tech_scen = tech_scen)
+                          tech_scen = tech_scen,
+                          SSP_scen = SSP_scen
+                          )
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
@@ -318,7 +320,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
       dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
                                 GDP_POP = mrr$GDP_POP,
-                                smartlifestyle = smartlifestyle)
+                                smartlifestyle = smartlifestyle,
+                                SSP_scen = SSP_scen)
       if(storeRDS)
         saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
 
