@@ -423,9 +423,14 @@ lvl0_PSI_costs=function(input_folder, years, fcr_veh){
   ## substitute the "scenario" with the year it stands for
   psi_costs[,scenario:=ifelse(scenario=="current", 2015, 2040)]
 
+  ## the costs for 2040 are too pessimistic according to the latest estimates https://www.transportenvironment.org/discover/hitting-the-ev-inflection-point/: they are reduced to 1/3 of the original value for BEVs and hybdrid electric and to 1/2 for FCEVs (only battery and storage components). This leads to about 80% of the total purchase cost
+  psi_costs[, tot_purchase_euro2017 := as.numeric(tot_purchase_euro2017)]
+  psi_costs[scenario == 2040 & technology %in% c("PHEV-c", "PHEV-e", "BEV"), tot_purchase_euro2017 := 0.8*tot_purchase_euro2017]
+  psi_costs[scenario == 2040 & technology %in% c("FCEV"), tot_purchase_euro2017 := 0.9*tot_purchase_euro2017]
+
   psi_costs=psi_costs[,.(year=scenario, ## rename col scenario with year
                          technology,vehicle_type_PSI,
-                         tot_purchasecost=as.numeric(tot_purchase_euro2017)   ## in 2017euro
+                         tot_purchasecost=tot_purchase_euro2017   ## in 2017euro
                          *1.14                                                ## in 2017USD
                          *0.78                                                ## in 2005USD
                          *fcr_veh)]                                           ## in annualized 2005USD
@@ -439,13 +444,6 @@ lvl0_PSI_costs=function(input_folder, years, fcr_veh){
   psi_costs=merge(psi_costs,mapping,all=FALSE,by="vehicle_type_PSI")[,-"vehicle_type_PSI"]
   psi_costs = psi_costs[!(technology %in% c("PHEV-c", "PHEV-e"))] ## PSI reports separately the electric and ICE running modes of a plug-in hybrid
   psi_costs[technology =="HEV-p", technology := "PHEV"]
-
-  psi_costs = approx_dt(psi_costs,
-                        xdata = years,
-                        xcol = "year",
-                        ycol = "tot_purchasecost",
-                        idxcols = c("technology", "vehicle_type"),
-                        extrapolate = TRUE)
 
   psi_costs[, technology:=ifelse(technology=="ICEV-g","NG",technology)]
   psi_costs[, technology:=ifelse(technology %in% c("ICEV-p","ICEV-d"),"Liquids",technology)]
