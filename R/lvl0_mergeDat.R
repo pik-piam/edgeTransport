@@ -25,7 +25,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                          SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
-  val <- markup <- NULL
+  val <- markup <- UCD_technology <- valUCD <- NULL
   subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
@@ -112,6 +112,22 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   PSI_c[, c("variable", "unit") := list("Capital costs (purchase)", "2005$/veh/yr")]
   PSI_c = merge(PSI_c, unique(AM[, c("iso", "year")]), by = "year", allow.cartesian=TRUE)
 
+  ## load the UCD based purchase costs
+  UCD_c = copy(UCD_output$UCD_cost)
+  ## find the purchase costs of liquid and NG technologies for non-EU countries (for EU, data comes from PSI)
+  purchCost = UCD_c[!iso %in% eu_iso & variable %in% "Capital costs (purchase)" & UCD_technology %in% c("Liquids", "NG")][, c("iso", "UCD_technology", "year", "value", "vehicle_type")]
+  setnames(purchCost, old="value", new="valUCD")
+  setnames(purchCost, old="UCD_technology", new="technology")
+  ## merge the data from UCD with the PSI values as they contain the corresponding markups for each tech/veh type
+  purchCost=merge(PSI_c, purchCost, by = c("year", "technology", "iso", "vehicle_type"))
+  purchCost[, tot_purchasecost := valUCD]
+  purchCost[, valUCD := NULL]
+
+  ## remove the "extra vehicle types" that have purchase cost associated but not all other costs - they are all in non_eu countries- as they are not in the original demand trends
+  tokeep = merge(PSI_c, unique(purchCost[,c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all.y=TRUE)
+
+  ## use the PSI database for eu countries, and the filtered-out version for non-eu contries
+  PSI_c =rbind(PSI_c[iso %in% eu_iso], tokeep)
   ## apply the markup to the respective technologies
   PSI_c[!iso %in% eu_iso & year >= 2015, tot_purchasecost := ifelse(technology %in% c("BEV", "FCEV", "Hybrid Electric"),
                                                                     tot_purchasecost[technology=="Liquids"]*markup,
@@ -120,7 +136,6 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   setnames(PSI_c, old ="tot_purchasecost", new = "value")
   PSI_c = merge(PSI_c, logit_cat, by = c("vehicle_type", "technology"), all.x = T)[, univocal_name := NULL]
   ## calculate UCD costs for LDVs in terms of 2005$/pkm annualized
-  UCD_c = copy(UCD_output$UCD_cost)
   UCD_c = rbind(UCD_c,
                 altCosts)
 
@@ -139,7 +154,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   CHN_c[, unit := "2005$/vkt"]
 
   other_costs = UCD_c[!(iso %in% "CHN" & vehicle_type %in% unique(CHN_c$vehicle_type) & technology %in% c("Liquids", "NG") & variable %in% unique(CHN_c$variable))]
-  other_costs = other_costs[!(technology %in% c("BEV", "FCEV", "Hybrid Electric") & subsector_L1 == "trn_pass_road_LDV_4W" & variable %in% unique(PSI_c$variable))]
+  other_costs = other_costs[!(subsector_L1 == "trn_pass_road_LDV_4W" &
+                                variable %in% unique(PSI_c$variable))]
 
 
   costs = rbind(CHN_c,
@@ -192,8 +208,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   costs[!is.na(vkm.veh) & unit == "2005$/veh/yr", unit := "2005$/vkt"]
   costs = costs[!is.na(unit)]
   costs = merge(costs,
-                unique(LF[,c("iso", "loadFactor", "year", "vehicle_type")]),
-                by = c("vehicle_type", "year", "iso"))
+                unique(LF[,c("iso", "loadFactor", "year", "vehicle_type", "technology")]),
+                by = c("vehicle_type", "year", "iso", "technology"))
 
   costs[, value := value/loadFactor]
 
@@ -222,8 +238,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
                 costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("REF"), iso]) & vehicle_type == "Compact Car"][, vehicle_type := "Mini Car"],
                 costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("SSA"), iso]) & vehicle_type == "Motorcycle (50-250cc)"][, vehicle_type := "Moped"],
                 costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("SSA"), iso]) & vehicle_type == "Motorcycle (50-250cc)"][, vehicle_type := "Motorcycle (>250cc)"],
-                costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("NEN", "NES"), iso]) & vehicle_type == "Large Car and SUV" & technology %in% c("Liquids", "NG")][, vehicle_type := "Midsize Car"],
-                costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("ENC", "NEN", "NES", "UKI"), iso]) & vehicle_type == "Compact Car"][, vehicle_type := "Mini Car"])  ## OAS has missing 40t
+                costs[iso %in% unique(REMIND2ISO_MAPPING[region %in% c("ENC", "NEN", "NES", "UKI"), iso]) & vehicle_type == "Compact Car"][, vehicle_type := "Mini Car"])
 
   ## merge PSI intensity, GCAM intensity and TRACCS intensity
   LDV_PSI_i = merge(PSI_int$LDV_PSI_int, unique(LF[, c("iso", "year", "vehicle_type", "loadFactor")]), by = c("year", "vehicle_type"))
