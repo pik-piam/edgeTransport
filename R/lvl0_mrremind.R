@@ -5,7 +5,6 @@
 #' @param cache_folder folder to use to store cache
 #' @param load_cache (default=FALSE) load cached files from the input folder
 #'          to bypass the heavy mrremind machinery.
-#' @param mrremind_folder folder hosting mrremind cache, required if load_cache=TRUE
 #' @return a list of mrremind-derived data, see end of this file.
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @importFrom magclass getSets getSets<-
@@ -13,7 +12,7 @@
 
 
 lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder,
-                          load_cache=FALSE, mrremind_folder=NULL){
+                          load_cache=FALSE){
   Year <- `.` <- weight <- ratio <- value <- region <- GDP_cap <- POP_val <- NULL
   if(load_cache & file.exists(cache_folder)){
     IEAbal = readRDS(file.path(cache_folder, "IEAbal.RDS"))

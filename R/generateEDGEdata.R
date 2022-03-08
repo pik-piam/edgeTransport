@@ -88,8 +88,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   print("-- Start of level 0 scripts")
 
   mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       cache_folder, load_cache=loadLvl0Cache,
-                       mrremind_folder=file.path(input_folder, "mrremind"))
+                       cache_folder, load_cache=loadLvl0Cache)
 
   ## function that loads raw data from the GCAM input files and
   ## modifies them, to make them compatible with EDGE setup
