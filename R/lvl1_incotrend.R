@@ -13,7 +13,7 @@
 
 
 lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
-                           smartlifestyle, tech_scen, SSP_scen){
+                           smartlifestyle, tech_scen, SSP_scen, mitab.path=NULL){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
@@ -35,7 +35,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   if(is.null(preftab)){
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
-  ptab <- fread(preftab, header=T)[techscen == tech_scen]
+  ptab <- fread(preftab, header=T)
   ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:10])
   ptab[, year := as.numeric(as.character(year))]
   ## add missing years
@@ -251,6 +251,50 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
     print("Warning: NAs in SWs found.")
     browser()
   }
+
+
+  ## Adjust tech mixes
+  apply_logistic_trends <- function(yrs, final, ysymm, speed, initial = 1){
+    logistic_trend <- function(year){
+      a <- speed
+      b <- ysymm
+
+      exp((year - b)/a)/(exp((year - b)/a) + 1)
+    }
+
+    scl <- sapply(yrs, logistic_trend)
+
+    initial + scl * (final - initial)
+  }
+
+  ## mitab <- CJ(SSP_scenario=c("SSP1", "SSP2", "SSP5", "SSP2EU", "SDP"),
+  ##    tech_scenario=c("Mix2", "Mix3", "Mix4"),
+  ##    regioncat=c("rich", "poor"),
+  ##    vehvar=c("Truck|heavy", "Truck|light", "Bus", "Aviation", "Ship", "LDV|2W", "Rail"),
+  ##    techvar=c("Liquids", "Electric", "Hydrogen"),
+  ##    target=1, symmyr=2050, speed=10)
+  ## fwrite(mitab, "edget-mitigation.csv")
+  ## browser()
+  if(tech_scen != "Mix1"){
+    if(is.null(mitab.path)){
+      mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
+    }
+    mitab <- fread(mitab.path)[SSP_scenario == SSP_scen, tech_scenario == tech_scen]
+    mimap <- fread("~/git/edgeTransport/inst/extdata/mitigation-techmap.csv")
+    techmap <- fread(text="technology,techvar
+FCEV,Hydrogen
+BEV,Electric
+NG,Liquids
+Hybrid Electric,Liquids")
+    ## mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
+    FVtarget <- mimap[FVtarget, on="vehicle_type"]
+    FVtarget <- techmap[FVtarget, on="technology"]
+    FVtarget <- mitab[FVtarget, on=c("vehvar", "techvar")]
+    FVtarget[, sw := ifelse(is.na(variable), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
+             by=c("region", "vehicle_type", "technology")]
+  }
+
+
 
   ## The values of SWS have to be normalized again
   return(list(

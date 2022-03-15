@@ -33,7 +33,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
                                global = FALSE, mainReg_plot = mainReg, per_gdp = FALSE, histdata_plot = NULL) {
 
-
     ## models for historical data
     histmap <- list(
       "Population" = "WDI",
@@ -48,6 +47,8 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                "Population (million)",
                "GDP|PPP (billion US$2005/yr)")
     var <- as.data.table(as.quitte(data[, , items]))[, "unit" := NULL]
+    var <- var[period <= 2100]
+
 
     plain_items <- gsub("(.+) \\(.+\\)", "\\1", items)
 
