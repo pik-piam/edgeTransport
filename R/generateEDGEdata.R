@@ -88,8 +88,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   print("-- Start of level 0 scripts")
 
   mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       cache_folder, load_cache=loadLvl0Cache,
-                       mrremind_folder=file.path(input_folder, "mrremind"))
+                       cache_folder, load_cache=loadLvl0Cache)
 
   ## function that loads raw data from the GCAM input files and
   ## modifies them, to make them compatible with EDGE setup
@@ -122,7 +121,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
   print("-- load UCD database")
   UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
-  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD
+  ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD. Only years 2015 and 2040 are included.
   print("-- load PSI costs")
   PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years = years, fcr_veh = fcr_veh)
   ## function that loads CHN conventional trucks CAPEX and non/fuel OPEX, results on ISO level: costs in 2005USD/vkm

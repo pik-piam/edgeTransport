@@ -28,14 +28,15 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
   setnames(gdp_pop, old = "weight", new = "GDP_val")
   ## create ct with the various elasticities
   price_el = gdp_pop[,-"variable"]
-  tmp = CJ(region=unique(price_el$region), var =c("income_elasticity_pass_sm",
-                                            "price_elasticity_pass_sm",
-                                            "income_elasticity_pass_lo",
-                                            "price_elasticity_pass_lo",
-                                            "income_elasticity_freight_sm",
-                                            "price_elasticity_freight_sm",
-                                            "income_elasticity_freight_lo",
-                                            "price_elasticity_freight_lo"))
+  tmp = CJ(region=unique(price_el$region),
+           var=c("income_elasticity_pass_sm",
+                  "price_elasticity_pass_sm",
+                  "income_elasticity_pass_lo",
+                  "price_elasticity_pass_lo",
+                  "income_elasticity_freight_sm",
+                  "price_elasticity_freight_sm",
+                  "income_elasticity_freight_lo",
+                  "price_elasticity_freight_lo"))
   ## define max and min values of the elasticities
   ## pass sm
   tmp[, vrich := ifelse(var == "income_elasticity_pass_sm", 0.25, NA)]
@@ -76,17 +77,25 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
 
   price_el = merge(price_el, tmp, by = "region", allow.cartesian = TRUE)
   price_el[, eps := ifelse(GDP_cap < 15000, vpoor, NA)]
-  price_el[, eps := ifelse(GDP_cap >= 25000, rich, eps)]
-  price_el[, eps := ifelse(GDP_cap > 25000 & GDP_cap < 30000, vrich, eps)]
-  price_el[, eps := ifelse(GDP_cap < 25000 & GDP_cap >= 15000, norm, eps)]
+  price_el[, eps := ifelse(GDP_cap > 30000, vrich, eps)]
+  price_el[, eps := ifelse(GDP_cap > 25000 & GDP_cap <= 30000, rich, eps)]
+  price_el[, eps := ifelse(GDP_cap <= 25000 & GDP_cap >= 15000, norm, eps)]
 
+  poor_co <- 15000
+  rich_co <- 30000
+  
   ## interpolate of gdpcap values
-  price_el = approx_dt(dt = price_el,
-                       xdata=unique(price_el$GDP_cap),
-                       xcol = "GDP_cap",
-                       ycol="eps",
-                       idxcols="var",
-                       extrapolate = TRUE)
+  ## price_el = approx_dt(dt = price_el,
+  ##                      xdata=unique(price_el$GDP_cap),
+  ##                      xcol = "GDP_cap",
+  ##                      ycol="eps",
+  ##                      idxcols="var",
+  ##                      extrapolate = TRUE)
+
+  ## price_el[, eps := ifelse(GDP_cap < 15000, vpoor,
+  ##                   ifelse(GDP_cap > 30000, vrich,
+  ##                          vpoor - (GDP_cap - poor_co)/(rich_co - poor_co)*(vpoor - vrich)))
+  ##          ]
 
   price_el[region %in% c("REF", "CHA", "IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm", "income_elasticity_freight_sm"), eps := 0]
   price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
@@ -105,27 +114,17 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
 
   }
 
-  ### Adjustments for SDP scens
-  if (SSP_scen %in% c("SDP_MC")){
-    ## we allow for more demand in developing countries due to fairness
-    price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.35]
-    price_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.45]
-    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := -0.25]
-  }
   
-    if (SSP_scen %in% c("SDP_RC")){
-    ## we allow for more demand in developing countries due to fairness
-    price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.15]
-    price_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.25]
-    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := -0.85]
-  }
-  
-      if (SSP_scen %in% c("SDP_EI")){
+  if (SSP_scen %in% c("SDP_MC", "SDP_RC")){
     ## we allow for more demand in developing countries due to fairness
     price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.45]
     price_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.55]
-    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := -0.15]
+    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := -0.1]
+    
   }
+
+  ## time dependent modifications
+  ## browser()
 
   price_el[var %in% c("price_elasticity_freight_lo", "price_elasticity_freight_sm", "price_elasticity_pass_lo", "price_elasticity_pass_sm"), eps := 0]
   price_el = dcast(price_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
