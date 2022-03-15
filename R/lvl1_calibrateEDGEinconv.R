@@ -200,7 +200,6 @@ lvl1_calibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_da
   S3S_sw[,tot_price:=tot_price+time_price]
   S3S_sw[,time_price:=NULL]
 
-
   S3S_sw=sw_calc(df_sw = S3S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
 
   ## reshape, save and store the sw at this level
