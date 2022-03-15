@@ -12,7 +12,7 @@
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
+lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
                            smartlifestyle, tech_scen, SSP_scen, mitab.path=NULL){
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
@@ -274,12 +274,11 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years,
   ##    techvar=c("Liquids", "Electric", "Hydrogen"),
   ##    target=1, symmyr=2050, speed=10)
   ## fwrite(mitab, "edget-mitigation.csv")
-  ## browser()
   if(tech_scen != "Mix1"){
     if(is.null(mitab.path)){
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
     }
-    mitab <- fread(mitab.path)[SSP_scenario == SSP_scen, tech_scenario == tech_scen]
+    mitab <- fread(mitab.path)[SSP_scenario == SSP_scen & tech_scenario == tech_scen]
     mimap <- fread("~/git/edgeTransport/inst/extdata/mitigation-techmap.csv")
     techmap <- fread(text="technology,techvar
 FCEV,Hydrogen
@@ -289,11 +288,19 @@ Hybrid Electric,Liquids")
     ## mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
     FVtarget <- mimap[FVtarget, on="vehicle_type"]
     FVtarget <- techmap[FVtarget, on="technology"]
-    FVtarget <- mitab[FVtarget, on=c("vehvar", "techvar")]
-    FVtarget[, sw := ifelse(is.na(variable), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
-             by=c("region", "vehicle_type", "technology")]
-  }
+    FVtarget[is.na(techvar), techvar := technology]
 
+    richregions <- unique(unique(GDP_POP_MER[year == 2010 & GDP_cap > 25000, region]))
+    FVtarget[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+
+    FVtarget <- mitab[FVtarget, on=c("vehvar", "techvar", "regioncat")]
+    FVtarget[, value := ifelse(
+                 is.na(vehvar), value, apply_logistic_trends(year, target, symmyr, speed) * value),
+             by=c("region", "vehicle_type", "technology")]
+    FVtarget[, colnames(mitab) := NULL]
+    FVtarget[logit_type == "sw", value := sw/max(sw),
+             by = c("region", "year", "vehicle_type")]
+  }
 
 
   ## The values of SWS have to be normalized again

@@ -25,7 +25,7 @@
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
-                             preftab = NULL, plot.report = FALSE){
+                             preftab = NULL, plot.report = FALSE, mitab.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -225,9 +225,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                           incocost = incocost,
                           calibdem = REMINDdat$dem,
                           years = years,
+                          GDP_POP_MER = mrr$GDP_POP_MER,
                           smartlifestyle = smartlifestyle,
                           tech_scen = tech_scen,
-                          SSP_scen = SSP_scen
+                          SSP_scen = SSP_scen,
+                          mitab.path = mitab.path
                           )
 
   if(storeRDS)
