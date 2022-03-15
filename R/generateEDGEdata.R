@@ -11,6 +11,8 @@
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
+#' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
+#' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
@@ -25,7 +27,7 @@
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
-                             preftab = NULL, plot.report = FALSE, mitab.path = NULL){
+                             preftab = NULL, plot.report = FALSE, mitab4W.path = NULL, mitab.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -258,6 +260,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
       tech_scen = tech_scen,
+      SSP_scen = SSP_scen,
+      preftab4W = mitab4W.path,
       totveh = totveh)
 
     if(storeRDS){
