@@ -221,6 +221,16 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   if(storeRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
 
+
+  ## load inconvenience factor table for LDVs
+  if(is.null(mitab4W.path)){
+    mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
+  }
+
+  ## select the right combination of techscen and SSP scen
+  preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
+
+
   print("-- generating trends for inconvenience costs")
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
                           preftab = preftab,
@@ -260,8 +270,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
       tech_scen = tech_scen,
-      SSP_scen = SSP_scen,
-      preftab4W = mitab4W.path,
+      ptab4W = preftab4W,
       totveh = totveh)
 
     if(storeRDS){
@@ -485,10 +494,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
+
+
   ## save the output csv files or create a list of objects
   EDGETrData = lvl2_createoutput(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,
+    ptab4W = preftab4W,
     vot_data = REMINDdat$vt,
     int_dat = IEAbal_comparison$merged_intensity,
     NEC_data = NEC_data,
