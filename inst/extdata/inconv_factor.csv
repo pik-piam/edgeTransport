@@ -6,6 +6,7 @@ SDP,ConvCase,targetValBEV,0.1
 SDP,ConvCase,startYeICE,2020
 SDP,ConvCase,targetYeICE,2027
 SDP,ConvCase,targetValICE,0.1
+SDP,ConvCase,ratioPHEV,0.5
 SDP,ElecEra,startYeBEV,2025
 SDP,ElecEra,startValBEV,0.6
 SDP,ElecEra,targetYeBEV,2035
@@ -13,6 +14,7 @@ SDP,ElecEra,targetValBEV,0
 SDP,ElecEra,startYeICE,2020
 SDP,ElecEra,targetYeICE,2027
 SDP,ElecEra,targetValICE,0.2
+SDP,ElecEra,ratioPHEV,0.5
 SDP,HydrHype,startYeBEV,2025
 SDP,HydrHype,startValBEV,0.9
 SDP,HydrHype,targetYeBEV,2035
@@ -20,12 +22,14 @@ SDP,HydrHype,targetValBEV,0
 SDP,HydrHype,startYeICE,2020
 SDP,HydrHype,targetYeICE,2027
 SDP,HydrHype,targetValICE,0.2
+SDP,HydrHype,ratioPHEV,0.5
 SDP,Mix,startYeBEV,2025
 SDP,Mix,startValBEV,0.6
 SDP,Mix,targetYeBEV,2035
 SDP,Mix,targetValBEV,0
 SDP,Mix,startYeICE,2020
 SDP,Mix,targetYeICE,2027
+SDP,Mix,ratioPHEV,0.5
 SDP,Mix,targetValICE,0.1
 SDP,Mix1,startYeBEV,2025
 SDP,Mix1,startValBEV,0.9
@@ -34,6 +38,7 @@ SDP,Mix1,targetValBEV,0
 SDP,Mix1,startYeICE,2020
 SDP,Mix1,targetYeICE,2027
 SDP,Mix1,targetValICE,0
+SDP,Mix1,ratioPHEV,0.5
 SDP,Mix2,startYeBEV,2025
 SDP,Mix2,startValBEV,0.8
 SDP,Mix2,targetYeBEV,2035
@@ -41,6 +46,7 @@ SDP,Mix2,targetValBEV,0.15
 SDP,Mix2,startYeICE,2020
 SDP,Mix2,targetYeICE,2027
 SDP,Mix2,targetValICE,0.05
+SDP,Mix2,ratioPHEV,0.5
 SDP,Mix3,startYeBEV,2025
 SDP,Mix3,startValBEV,0.7
 SDP,Mix3,targetYeBEV,2035
@@ -48,6 +54,7 @@ SDP,Mix3,targetValBEV,0.1
 SDP,Mix3,startYeICE,2020
 SDP,Mix3,targetYeICE,2027
 SDP,Mix3,targetValICE,0.1
+SDP,Mix3,ratioPHEV,0.5
 SDP,Mix4,startYeBEV,2025
 SDP,Mix4,startValBEV,0.6
 SDP,Mix4,targetYeBEV,2035
@@ -55,6 +62,7 @@ SDP,Mix4,targetValBEV,0
 SDP,Mix4,startYeICE,2020
 SDP,Mix4,targetYeICE,2027
 SDP,Mix4,targetValICE,0.2
+SDP,Mix4,ratioPHEV,0.5
 SSP1,ConvCase,startYeBEV,2025
 SSP1,ConvCase,startValBEV,0.8
 SSP1,ConvCase,targetYeBEV,2035
@@ -62,6 +70,7 @@ SSP1,ConvCase,targetValBEV,0.1
 SSP1,ConvCase,startYeICE,2020
 SSP1,ConvCase,targetYeICE,2027
 SSP1,ConvCase,targetValICE,0.1
+SSP1,ConvCase,ratioPHEV,0.5
 SSP1,ElecEra,startYeBEV,2025
 SSP1,ElecEra,startValBEV,0.6
 SSP1,ElecEra,targetYeBEV,2035
@@ -69,6 +78,7 @@ SSP1,ElecEra,targetValBEV,0
 SSP1,ElecEra,startYeICE,2020
 SSP1,ElecEra,targetYeICE,2027
 SSP1,ElecEra,targetValICE,0.2
+SSP1,ElecEra,ratioPHEV,0.5
 SSP1,HydrHype,startYeBEV,2025
 SSP1,HydrHype,startValBEV,0.9
 SSP1,HydrHype,targetYeBEV,2035
@@ -76,6 +86,7 @@ SSP1,HydrHype,targetValBEV,0
 SSP1,HydrHype,startYeICE,2020
 SSP1,HydrHype,targetYeICE,2027
 SSP1,HydrHype,targetValICE,0.2
+SSP1,HydrHype,ratioPHEV,0.5
 SSP1,Mix,startYeBEV,2025
 SSP1,Mix,startValBEV,0.6
 SSP1,Mix,targetYeBEV,2035
@@ -83,6 +94,7 @@ SSP1,Mix,targetValBEV,0
 SSP1,Mix,startYeICE,2020
 SSP1,Mix,targetYeICE,2027
 SSP1,Mix,targetValICE,0.1
+SSP1,Mix,ratioPHEV,0.5
 SSP1,Mix1,startYeBEV,2025
 SSP1,Mix1,startValBEV,0.9
 SSP1,Mix1,targetYeBEV,2035
@@ -90,6 +102,7 @@ SSP1,Mix1,targetValBEV,0
 SSP1,Mix1,startYeICE,2020
 SSP1,Mix1,targetYeICE,2027
 SSP1,Mix1,targetValICE,0
+SSP1,Mix1,ratioPHEV,0.5
 SSP1,Mix2,startYeBEV,2025
 SSP1,Mix2,startValBEV,0.8
 SSP1,Mix2,targetYeBEV,2035
@@ -97,6 +110,7 @@ SSP1,Mix2,targetValBEV,0.15
 SSP1,Mix2,startYeICE,2020
 SSP1,Mix2,targetYeICE,2027
 SSP1,Mix2,targetValICE,0.05
+SSP1,Mix2,ratioPHEV,0.5
 SSP1,Mix3,startYeBEV,2025
 SSP1,Mix3,startValBEV,0.7
 SSP1,Mix3,targetYeBEV,2035
@@ -104,6 +118,7 @@ SSP1,Mix3,targetValBEV,0.1
 SSP1,Mix3,startYeICE,2020
 SSP1,Mix3,targetYeICE,2027
 SSP1,Mix3,targetValICE,0.1
+SSP1,Mix3,ratioPHEV,0.5
 SSP1,Mix4,startYeBEV,2025
 SSP1,Mix4,startValBEV,0.6
 SSP1,Mix4,targetYeBEV,2035
@@ -111,6 +126,7 @@ SSP1,Mix4,targetValBEV,0
 SSP1,Mix4,startYeICE,2020
 SSP1,Mix4,targetYeICE,2027
 SSP1,Mix4,targetValICE,0.2
+SSP1,Mix4,ratioPHEV,0.5
 SSP2,ConvCase,startYeBEV,2025
 SSP2,ConvCase,startValBEV,0.8
 SSP2,ConvCase,targetYeBEV,2035
@@ -118,6 +134,7 @@ SSP2,ConvCase,targetValBEV,0.1
 SSP2,ConvCase,startYeICE,2020
 SSP2,ConvCase,targetYeICE,2027
 SSP2,ConvCase,targetValICE,0.1
+SSP2,ConvCase,ratioPHEV,0.5
 SSP2,ElecEra,startYeBEV,2025
 SSP2,ElecEra,startValBEV,0.6
 SSP2,ElecEra,targetYeBEV,2035
@@ -125,6 +142,7 @@ SSP2,ElecEra,targetValBEV,0
 SSP2,ElecEra,startYeICE,2020
 SSP2,ElecEra,targetYeICE,2027
 SSP2,ElecEra,targetValICE,0.2
+SSP2,ElecEra,ratioPHEV,0.5
 SSP2,HydrHype,startYeBEV,2025
 SSP2,HydrHype,startValBEV,0.9
 SSP2,HydrHype,targetYeBEV,2035
@@ -132,6 +150,7 @@ SSP2,HydrHype,targetValBEV,0
 SSP2,HydrHype,startYeICE,2020
 SSP2,HydrHype,targetYeICE,2027
 SSP2,HydrHype,targetValICE,0.2
+SSP2,HydrHype,ratioPHEV,0.5
 SSP2,Mix,startYeBEV,2025
 SSP2,Mix,startValBEV,0.6
 SSP2,Mix,targetYeBEV,2035
@@ -139,6 +158,7 @@ SSP2,Mix,targetValBEV,0
 SSP2,Mix,startYeICE,2020
 SSP2,Mix,targetYeICE,2027
 SSP2,Mix,targetValICE,0.1
+SSP2,Mix,ratioPHEV,0.5
 SSP2,Mix1,startYeBEV,2025
 SSP2,Mix1,startValBEV,0.9
 SSP2,Mix1,targetYeBEV,2035
@@ -146,6 +166,7 @@ SSP2,Mix1,targetValBEV,0
 SSP2,Mix1,startYeICE,2020
 SSP2,Mix1,targetYeICE,2027
 SSP2,Mix1,targetValICE,0
+SSP2,Mix1,ratioPHEV,0.5
 SSP2,Mix2,startYeBEV,2025
 SSP2,Mix2,startValBEV,0.8
 SSP2,Mix2,targetYeBEV,2035
@@ -153,6 +174,7 @@ SSP2,Mix2,targetValBEV,0.15
 SSP2,Mix2,startYeICE,2020
 SSP2,Mix2,targetYeICE,2027
 SSP2,Mix2,targetValICE,0.05
+SSP2,Mix2,ratioPHEV,0.5
 SSP2,Mix3,startYeBEV,2025
 SSP2,Mix3,startValBEV,0.7
 SSP2,Mix3,targetYeBEV,2035
@@ -160,6 +182,7 @@ SSP2,Mix3,targetValBEV,0.1
 SSP2,Mix3,startYeICE,2020
 SSP2,Mix3,targetYeICE,2027
 SSP2,Mix3,targetValICE,0.1
+SSP2,Mix3,ratioPHEV,0.5
 SSP2,Mix4,startYeBEV,2025
 SSP2,Mix4,startValBEV,0.6
 SSP2,Mix4,targetYeBEV,2035
@@ -167,6 +190,7 @@ SSP2,Mix4,targetValBEV,0
 SSP2,Mix4,startYeICE,2020
 SSP2,Mix4,targetYeICE,2027
 SSP2,Mix4,targetValICE,0.2
+SSP2,Mix4,ratioPHEV,0.5
 SSP3,ConvCase,startYeBEV,2025
 SSP3,ConvCase,startValBEV,0.8
 SSP3,ConvCase,targetYeBEV,2035
@@ -174,6 +198,7 @@ SSP3,ConvCase,targetValBEV,0.1
 SSP3,ConvCase,startYeICE,2020
 SSP3,ConvCase,targetYeICE,2027
 SSP3,ConvCase,targetValICE,0.1
+SSP3,ConvCase,ratioPHEV,0.5
 SSP3,ElecEra,startYeBEV,2025
 SSP3,ElecEra,startValBEV,0.6
 SSP3,ElecEra,targetYeBEV,2035
@@ -181,6 +206,7 @@ SSP3,ElecEra,targetValBEV,0
 SSP3,ElecEra,startYeICE,2020
 SSP3,ElecEra,targetYeICE,2027
 SSP3,ElecEra,targetValICE,0.2
+SSP3,ElecEra,ratioPHEV,0.5
 SSP3,HydrHype,startYeBEV,2025
 SSP3,HydrHype,startValBEV,0.9
 SSP3,HydrHype,targetYeBEV,2035
@@ -188,6 +214,7 @@ SSP3,HydrHype,targetValBEV,0
 SSP3,HydrHype,startYeICE,2020
 SSP3,HydrHype,targetYeICE,2027
 SSP3,HydrHype,targetValICE,0.2
+SSP3,HydrHype,ratioPHEV,0.5
 SSP3,Mix,startYeBEV,2025
 SSP3,Mix,startValBEV,0.6
 SSP3,Mix,targetYeBEV,2035
@@ -195,6 +222,7 @@ SSP3,Mix,targetValBEV,0
 SSP3,Mix,startYeICE,2020
 SSP3,Mix,targetYeICE,2027
 SSP3,Mix,targetValICE,0.1
+SSP3,Mix,ratioPHEV,0.5
 SSP3,Mix1,startYeBEV,2025
 SSP3,Mix1,startValBEV,0.9
 SSP3,Mix1,targetYeBEV,2035
@@ -202,6 +230,7 @@ SSP3,Mix1,targetValBEV,0
 SSP3,Mix1,startYeICE,2020
 SSP3,Mix1,targetYeICE,2027
 SSP3,Mix1,targetValICE,0
+SSP3,Mix1,ratioPHEV,0.5
 SSP3,Mix2,startYeBEV,2025
 SSP3,Mix2,startValBEV,0.8
 SSP3,Mix2,targetYeBEV,2035
@@ -209,6 +238,7 @@ SSP3,Mix2,targetValBEV,0.15
 SSP3,Mix2,startYeICE,2020
 SSP3,Mix2,targetYeICE,2027
 SSP3,Mix2,targetValICE,0.05
+SSP3,Mix2,ratioPHEV,0.5
 SSP3,Mix3,startYeBEV,2025
 SSP3,Mix3,startValBEV,0.7
 SSP3,Mix3,targetYeBEV,2035
@@ -216,6 +246,7 @@ SSP3,Mix3,targetValBEV,0.1
 SSP3,Mix3,startYeICE,2020
 SSP3,Mix3,targetYeICE,2027
 SSP3,Mix3,targetValICE,0.1
+SSP3,Mix3,ratioPHEV,0.5
 SSP3,Mix4,startYeBEV,2025
 SSP3,Mix4,startValBEV,0.6
 SSP3,Mix4,targetYeBEV,2035
@@ -223,6 +254,7 @@ SSP3,Mix4,targetValBEV,0
 SSP3,Mix4,startYeICE,2020
 SSP3,Mix4,targetYeICE,2027
 SSP3,Mix4,targetValICE,0.2
+SSP3,Mix4,ratioPHEV,0.5
 SSP4,ConvCase,startYeBEV,2025
 SSP4,ConvCase,startValBEV,0.8
 SSP4,ConvCase,targetYeBEV,2035
@@ -230,6 +262,7 @@ SSP4,ConvCase,targetValBEV,0.1
 SSP4,ConvCase,startYeICE,2020
 SSP4,ConvCase,targetYeICE,2027
 SSP4,ConvCase,targetValICE,0.1
+SSP4,ConvCase,ratioPHEV,0.5
 SSP4,ElecEra,startYeBEV,2025
 SSP4,ElecEra,startValBEV,0.6
 SSP4,ElecEra,targetYeBEV,2035
@@ -237,6 +270,7 @@ SSP4,ElecEra,targetValBEV,0
 SSP4,ElecEra,startYeICE,2020
 SSP4,ElecEra,targetYeICE,2027
 SSP4,ElecEra,targetValICE,0.2
+SSP4,ElecEra,ratioPHEV,0.5
 SSP4,HydrHype,startYeBEV,2025
 SSP4,HydrHype,startValBEV,0.9
 SSP4,HydrHype,targetYeBEV,2035
@@ -244,6 +278,7 @@ SSP4,HydrHype,targetValBEV,0
 SSP4,HydrHype,startYeICE,2020
 SSP4,HydrHype,targetYeICE,2027
 SSP4,HydrHype,targetValICE,0.2
+SSP4,HydrHype,ratioPHEV,0.5
 SSP4,Mix,startYeBEV,2025
 SSP4,Mix,startValBEV,0.6
 SSP4,Mix,targetYeBEV,2035
@@ -251,6 +286,7 @@ SSP4,Mix,targetValBEV,0
 SSP4,Mix,startYeICE,2020
 SSP4,Mix,targetYeICE,2027
 SSP4,Mix,targetValICE,0.1
+SSP4,Mix,ratioPHEV,0.5
 SSP4,Mix1,startYeBEV,2025
 SSP4,Mix1,startValBEV,0.9
 SSP4,Mix1,targetYeBEV,2035
@@ -258,6 +294,7 @@ SSP4,Mix1,targetValBEV,0
 SSP4,Mix1,startYeICE,2020
 SSP4,Mix1,targetYeICE,2027
 SSP4,Mix1,targetValICE,0
+SSP4,Mix1,ratioPHEV,0.5
 SSP4,Mix2,startYeBEV,2025
 SSP4,Mix2,startValBEV,0.8
 SSP4,Mix2,targetYeBEV,2035
@@ -265,6 +302,7 @@ SSP4,Mix2,targetValBEV,0.15
 SSP4,Mix2,startYeICE,2020
 SSP4,Mix2,targetYeICE,2027
 SSP4,Mix2,targetValICE,0.05
+SSP4,Mix2,ratioPHEV,0.5
 SSP4,Mix3,startYeBEV,2025
 SSP4,Mix3,startValBEV,0.7
 SSP4,Mix3,targetYeBEV,2035
@@ -272,6 +310,7 @@ SSP4,Mix3,targetValBEV,0.1
 SSP4,Mix3,startYeICE,2020
 SSP4,Mix3,targetYeICE,2027
 SSP4,Mix3,targetValICE,0.1
+SSP4,Mix3,ratioPHEV,0.5
 SSP4,Mix4,startYeBEV,2025
 SSP4,Mix4,startValBEV,0.6
 SSP4,Mix4,targetYeBEV,2035
@@ -279,6 +318,7 @@ SSP4,Mix4,targetValBEV,0
 SSP4,Mix4,startYeICE,2020
 SSP4,Mix4,targetYeICE,2027
 SSP4,Mix4,targetValICE,0.2
+SSP4,Mix4,ratioPHEV,0.5
 SSP5,ConvCase,startYeBEV,2025
 SSP5,ConvCase,startValBEV,0.8
 SSP5,ConvCase,targetYeBEV,2035
@@ -286,6 +326,7 @@ SSP5,ConvCase,targetValBEV,0.1
 SSP5,ConvCase,startYeICE,2020
 SSP5,ConvCase,targetYeICE,2027
 SSP5,ConvCase,targetValICE,0.1
+SSP5,ConvCase,ratioPHEV,0.5
 SSP5,ElecEra,startYeBEV,2025
 SSP5,ElecEra,startValBEV,0.6
 SSP5,ElecEra,targetYeBEV,2035
@@ -293,6 +334,7 @@ SSP5,ElecEra,targetValBEV,0
 SSP5,ElecEra,startYeICE,2020
 SSP5,ElecEra,targetYeICE,2027
 SSP5,ElecEra,targetValICE,0.2
+SSP5,ElecEra,ratioPHEV,0.5
 SSP5,HydrHype,startYeBEV,2025
 SSP5,HydrHype,startValBEV,0.9
 SSP5,HydrHype,targetYeBEV,2035
@@ -300,6 +342,7 @@ SSP5,HydrHype,targetValBEV,0
 SSP5,HydrHype,startYeICE,2020
 SSP5,HydrHype,targetYeICE,2027
 SSP5,HydrHype,targetValICE,0.2
+SSP5,HydrHype,ratioPHEV,0.5
 SSP5,Mix,startYeBEV,2025
 SSP5,Mix,startValBEV,0.6
 SSP5,Mix,targetYeBEV,2035
@@ -307,6 +350,7 @@ SSP5,Mix,targetValBEV,0
 SSP5,Mix,startYeICE,2020
 SSP5,Mix,targetYeICE,2027
 SSP5,Mix,targetValICE,0.1
+SSP5,Mix,ratioPHEV,0.5
 SSP5,Mix1,startYeBEV,2025
 SSP5,Mix1,startValBEV,0.9
 SSP5,Mix1,targetYeBEV,2035
@@ -314,6 +358,7 @@ SSP5,Mix1,targetValBEV,0
 SSP5,Mix1,startYeICE,2020
 SSP5,Mix1,targetYeICE,2027
 SSP5,Mix1,targetValICE,0
+SSP5,Mix1,ratioPHEV,0.5
 SSP5,Mix2,startYeBEV,2025
 SSP5,Mix2,startValBEV,0.8
 SSP5,Mix2,targetYeBEV,2035
@@ -321,6 +366,7 @@ SSP5,Mix2,targetValBEV,0.15
 SSP5,Mix2,startYeICE,2020
 SSP5,Mix2,targetYeICE,2027
 SSP5,Mix2,targetValICE,0.05
+SSP5,Mix2,ratioPHEV,0.5
 SSP5,Mix3,startYeBEV,2025
 SSP5,Mix3,startValBEV,0.7
 SSP5,Mix3,targetYeBEV,2035
@@ -328,6 +374,7 @@ SSP5,Mix3,targetValBEV,0.1
 SSP5,Mix3,startYeICE,2020
 SSP5,Mix3,targetYeICE,2027
 SSP5,Mix3,targetValICE,0.1
+SSP5,Mix3,ratioPHEV,0.5
 SSP5,Mix4,startYeBEV,2025
 SSP5,Mix4,startValBEV,0.6
 SSP5,Mix4,targetYeBEV,2035
