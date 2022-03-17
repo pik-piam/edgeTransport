@@ -33,6 +33,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen){
 #'
 #' @param logit_params logit parameters
 #' @param pref_data preference factors
+#' @param ptab4W table including all the inconvenience cost factors for LDVs
 #' @param vot_data value of time
 #' @param NEC_data non fuel cots
 #' @param capcost4W capital costs 4wheelers
@@ -51,7 +52,7 @@ lvl2_REMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen){
 #' @param output_folder directory where the data has to be saved, if set to NULL a list of magclass objects will be saved
 
 
-lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, annual_mileage, demISO, SSP_scen, EDGE_scenario, level2path, output_folder){
+lvl2_createoutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data, capcost4W, demByTech, int_dat, intensity, capCost, price_nonmot, complexValues, loadFactor, annual_mileage, demISO, SSP_scen, EDGE_scenario, level2path, output_folder){
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", SSP_scen)
 
@@ -199,6 +200,8 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
     fwrite(loadFactor, file = level2path("loadFactor.csv"))
     print("Creating csv files for annual mileage...")
     fwrite(annual_mileage, file = level2path("annual_mileage.csv"))
+    print("Creating csv files for inconvenience cost factors...")
+    fwrite(ptab4W, file = level2path("ptab4W.csr4"))
   } else {
     EDGETrData = list(fe_demand_tech = demByTech,
                       fe2es = intensity,
@@ -213,7 +216,8 @@ lvl2_createoutput <- function(logit_params, pref_data, vot_data, NEC_data, capco
                       harmonized_intensities = int_dat,
                       UCD_NEC_iso = NEC_data,
                       loadFactor = loadFactor,
-                      annual_mileage = annual_mileage)
+                      annual_mileage = annual_mileage,
+                      ptab4W = ptab4W)
 
     return(EDGETrData)
   }

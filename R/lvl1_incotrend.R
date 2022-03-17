@@ -278,14 +278,14 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
     if(is.null(mitab.path)){
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
     }
-    mitab <- fread(mitab.path)[SSP_scenario == SSP_scen & tech_scenario == tech_scen]
-    mimap <- fread("~/git/edgeTransport/inst/extdata/mitigation-techmap.csv")
+    mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[SSP_scenario == SSP_scen & tech_scenario == tech_scen]
+    mimap <- system.file("extdata", "mitigation-techmap.csv", package="edgeTransport")
     techmap <- fread(text="technology,techvar
 FCEV,Hydrogen
 BEV,Electric
 NG,Liquids
 Hybrid Electric,Liquids")
-    ## mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
+    mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
     FVtarget <- mimap[FVtarget, on="vehicle_type"]
     FVtarget <- techmap[FVtarget, on="technology"]
     FVtarget[is.na(techvar), techvar := technology]
