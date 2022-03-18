@@ -371,7 +371,6 @@ Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
 #' @param sw_trends path to sw trend table
 #' @author Johanna Hoppe
 #'
-#' @import xlsx
 #' @import data.table
 #' @importFrom readxl read_excel
 #' @export
