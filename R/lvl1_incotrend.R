@@ -35,7 +35,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   if(is.null(preftab)){
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
-  ptab <- fread(preftab, header=T)
+  ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
   ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:10])
   ptab[, year := as.numeric(as.character(year))]
   ## add missing years
