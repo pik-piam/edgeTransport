@@ -16,7 +16,7 @@
 #' @import data.table
 #' @import rmndt
 #' @importFrom luplot magpie2ggplot2
-#' @importFrom ggplot2 facet_grid ggplot geom_col facet_wrap geom_point aes_ geom_ribbon guides guide_legend aes expand_limits alpha geom_line theme theme_minimal xlab ylab scale_color_manual
+#' @import ggplot2
 #' @importFrom lusweave swopen swlatex swfigure swclose
 #' @importFrom magclass read.report mbind getRegions new.magpie getYears add_dimension setNames getNames<- time_interpolate getNames
 #' @importFrom quitte as.quitte
@@ -33,7 +33,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   lineplots_perCap <- function(data, vars, percap_factor, ylabstr,
                                global = FALSE, mainReg_plot = mainReg, per_gdp = FALSE, histdata_plot = NULL) {
 
-
     ## models for historical data
     histmap <- list(
       "Population" = "WDI",
@@ -48,6 +47,8 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
                "Population (million)",
                "GDP|PPP (billion US$2005/yr)")
     var <- as.data.table(as.quitte(data[, , items]))[, "unit" := NULL]
+    var <- var[period <= 2100]
+
 
     plain_items <- gsub("(.+) \\(.+\\)", "\\1", items)
 
@@ -514,7 +515,6 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   ES_Transport_Freight_Road <- ES_Transport_Freight_Road[, .(value = sum(value)), by = c("period", "region", "scenario", "unit")][, variable := "ES|Transport|Freight|Road"]
 
 
-
   # EInt
   plot_EInt <- copy(EInt_mj_km)
   setkey(plot_EInt, NULL)
@@ -734,7 +734,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Tot, "FE_carrier", "variable")
 
-  p <- mipArea(plot_dem_ej_Tot[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Tot[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -746,7 +746,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Tot[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Tot[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -762,7 +762,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_dem_ej_Pass_tot, "FE_carrier", "variable")
 
   p <- mipArea(plot_dem_ej_Pass_tot[region == mainReg], scales = "free_y")
-  p <- p + theme(legend.position = "none")
+  p <- p + theme(legend.position = "none") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
   p <- mipBarYearData(plot_dem_ej_Pass_tot[region == mainReg & period %in% y_bar])
@@ -773,7 +773,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_tot[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_tot[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -800,7 +800,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_LDV[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_LDV[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -814,7 +814,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set FE_carrier as variable
   setnames(plot_dem_ej_Pass_nonLDV, "FE_carrier", "variable")
 
-  p <- mipArea(plot_dem_ej_Pass_nonLDV[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_nonLDV[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -826,7 +826,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_nonLDV[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_nonLDV[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -842,7 +842,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set FE_carrier as variable
   setnames(plot_dem_ej_Frght_tot, "FE_carrier", "variable")
 
-  p <- mipArea(plot_dem_ej_Frght_tot[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_tot[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -854,7 +854,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Frght_tot[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_tot[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -869,7 +869,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set FE_carrier as variable
   setnames(plot_dem_ej_Frght_Trucks_tot, "FE_carrier", "variable")
 
-  p <- mipArea(plot_dem_ej_Frght_Trucks_tot[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_Trucks_tot[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -881,7 +881,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Frght_Trucks_tot[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_Trucks_tot[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -921,7 +921,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_dem_ej_modes, "vehicle_type", "variable")
   plot_dem_ej_modes[, variable := paste0("FE|", variable)]
 
-  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -933,7 +933,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_modes[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_modes[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -982,7 +982,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_dem_ej_modes, "vehicle_type", "variable")
   plot_dem_ej_modes[, variable := paste0("FE|", variable)]
 
-  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_modes[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -994,7 +994,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_modes[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_modes[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1037,7 +1037,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_dem_ej_wwobunk[, variable := paste0("FE|", variable)]
 
   p <- mipArea(plot_dem_ej_wwobunk[region == mainReg], scales = "free_y")
-  p <- p + theme(legend.position = "none")
+  p <- p + theme(legend.position = "none") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
   p <- mipBarYearData(plot_dem_ej_wwobunk[region == mainReg & period %in% y_bar])
@@ -1048,7 +1048,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_wwobunk[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_wwobunk[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1152,7 +1152,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Tot_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Tot_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Tot_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1164,7 +1164,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Tot_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Tot_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1179,7 +1179,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Pass_tot_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Pass_tot_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_tot_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -1191,7 +1191,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_tot_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_tot_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1206,7 +1206,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Pass_LDV_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Pass_LDV_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_LDV_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -1218,7 +1218,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_LDV_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_LDV_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1232,7 +1232,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Pass_nonLDV_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Pass_nonLDV_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_nonLDV_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -1244,7 +1244,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Pass_nonLDV_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Pass_nonLDV_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1260,7 +1260,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Frght_tot_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Frght_tot_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_tot_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -1272,7 +1272,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Frght_tot_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_tot_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1288,7 +1288,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # Set technology as variable
   setnames(plot_dem_ej_Frght_Trucks_UE, "technology", "variable")
 
-  p <- mipArea(plot_dem_ej_Frght_Trucks_UE[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_Trucks_UE[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=3.5,width=7")
 
@@ -1300,7 +1300,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=8")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_dem_ej_Frght_Trucks_UE[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_dem_ej_Frght_Trucks_UE[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1362,7 +1362,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_Energy_services_Pass_wobunk, "vehicle_type", "variable")
   plot_Energy_services_Pass_wobunk[, variable := paste0("ES|", variable)]
 
-  p <- mipArea(plot_Energy_services_Pass_wobunk[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Pass_wobunk[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1374,7 +1374,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Pass_wobunk[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Pass_wobunk[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1384,7 +1384,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # plot_Energy_services_Pass_bunk <- plot_Energy_services_Pass_bunk[, variable:= sub("international","",variable)]
   # plot_Energy_services_Pass_bunk[, variable:= paste0("ES|",variable)]
 
-  p <- mipArea(plot_Energy_services_Pass_bunk[region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  p <- mipArea(plot_Energy_services_Pass_bunk[region == mainReg], stack_priority = c("variable"), scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1396,7 +1396,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Pass_bunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  p <- mipArea(plot_Energy_services_Pass_bunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1405,7 +1405,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_Energy_services_Frght_wobunk, "vehicle_type", "variable")
   plot_Energy_services_Frght_wobunk[, variable := paste0("ES|", variable)]
 
-  p <- mipArea(plot_Energy_services_Frght_wobunk[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Frght_wobunk[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1417,7 +1417,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Frght_wobunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  p <- mipArea(plot_Energy_services_Frght_wobunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1428,7 +1428,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   # plot_Energy_services_Frght_bunk[, variable:= paste0("ES|",variable)]
 
 
-  p <- mipArea(plot_Energy_services_Frght_bunk[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Frght_bunk[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1440,7 +1440,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Frght_bunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y")
+  p <- mipArea(plot_Energy_services_Frght_bunk[!region == mainReg], stack_priority = c("variable"), scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1453,7 +1453,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   setnames(plot_Energy_services_LDV, "technology", "variable")
   plot_Energy_services_LDV[, variable := paste0("ES|", variable)]
 
-  p <- mipArea(plot_Energy_services_LDV[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_LDV[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1465,7 +1465,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_LDV[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_LDV[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1478,7 +1478,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Energy_services_Bus <- plot_Energy_services_Bus[, value := sum(value), by = c("period", "region", "scenario", "variable", "unit")]
   plot_Energy_services_Bus <- plot_Energy_services_Bus[!duplicated(plot_Energy_services_Bus)]
 
-  p <- mipArea(plot_Energy_services_Bus[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Bus[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1490,7 +1490,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Bus[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Bus[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1503,7 +1503,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Energy_services_Truck <- plot_Energy_services_Truck[, value := sum(value), by = c("period", "region", "scenario", "variable", "unit")]
   plot_Energy_services_Truck <- plot_Energy_services_Truck[!duplicated(plot_Energy_services_Truck)]
 
-  p <- mipArea(plot_Energy_services_Truck[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Truck[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1515,7 +1515,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Energy_services_Truck[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Energy_services_Truck[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1695,7 +1695,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_LDV_stock_tech[, variable := paste0("Stock|", variable)]
   plot_LDV_stock_tech[, unit := "million Veh"]
 
-  p <- mipArea(plot_LDV_stock_tech[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_stock_tech[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1707,7 +1707,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_LDV_stock_tech[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_stock_tech[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1718,7 +1718,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_LDV_stock_veht[, variable := paste0("Stock|", variable)]
   plot_LDV_stock_veht[, unit := "million Veh"]
 
-  p <- mipArea(plot_LDV_stock_veht[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_stock_veht[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1730,7 +1730,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_LDV_stock_veht[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_stock_veht[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1741,7 +1741,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_LDV_sales_tech[, variable := paste0("Sales|", variable)]
   plot_LDV_sales_tech[, unit := "million Veh"]
 
-  p <- mipArea(plot_LDV_sales_tech[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_sales_tech[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1753,7 +1753,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_LDV_sales_tech[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_sales_tech[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1764,7 +1764,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_LDV_sales_veht[, variable := paste0("Sales|", variable)]
   plot_LDV_stock_veht[, unit := "million Veh"]
 
-  p <- mipArea(plot_LDV_sales_veht[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_sales_veht[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1776,7 +1776,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_LDV_sales_veht[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_LDV_sales_veht[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1819,7 +1819,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Trucks_stock_tech[, variable := paste0("Stock|", variable)]
   plot_Trucks_stock_tech[, unit := "million Veh"]
 
-  p <- mipArea(plot_Trucks_stock_tech[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_stock_tech[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1831,7 +1831,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Trucks_stock_tech[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_stock_tech[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1842,7 +1842,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Trucks_stock_veht[, variable := paste0("Stock|", variable)]
   plot_Trucks_stock_veht[, unit := "million Veh"]
 
-  p <- mipArea(plot_Trucks_stock_veht[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_stock_veht[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1854,7 +1854,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Trucks_stock_veht[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_stock_veht[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1865,7 +1865,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Trucks_sales_tech[, variable := paste0("Sales|", variable)]
   plot_Trucks_sales_tech[, unit := "million Veh"]
 
-  p <- mipArea(plot_Trucks_sales_tech[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_sales_tech[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1877,7 +1877,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Trucks_sales_tech[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_sales_tech[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 
@@ -1888,7 +1888,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   plot_Trucks_sales_veht[, variable := paste0("Sales|", variable)]
   plot_Trucks_sales_veht[, unit := "million Veh"]
 
-  p <- mipArea(plot_Trucks_sales_veht[region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_sales_veht[region == mainReg], scales = "free_y") + xlim(NA, 2100)
   p <- p + theme(legend.position = "none")
   swfigure(sw, print, p, sw_option = "height=4,width=7")
 
@@ -1900,7 +1900,7 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
   swfigure(sw, print, p, sw_option = "height=9,width=16")
 
   swlatex(sw, "\\onecolumn")
-  p <- mipArea(plot_Trucks_sales_veht[!region == mainReg], scales = "free_y")
+  p <- mipArea(plot_Trucks_sales_veht[!region == mainReg], scales = "free_y") + xlim(NA, 2100)
   swfigure(sw, print, p, sw_option = "height=8,width=16")
   swlatex(sw, "\\twocolumn")
 

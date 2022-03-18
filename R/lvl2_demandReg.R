@@ -22,79 +22,87 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
   index_price_f_sm <- index_price_f_lo <- index_GDP_f_sm <- index_GDPcap_p_lo <- index_GDP_f_lo <- NULL
   index_price_p_sm <- index_GDPcap_p_sm <- index_POP <- index_price_p_lo <- D_star_f_sm <- D_star_p_sm <- NULL
   D_star_p_lo <- D_star_f_lo <- D_star_f_sm <- value <- variable <- vrich <- vpoor <-NULL
-  ## conversion rate 2005->1990 USD
-  CONV_2005USD_1990USD = 0.67
+
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
   gdp_pop = copy(GDP_POP)
   setnames(gdp_pop, old = "weight", new = "GDP_val")
   ## create ct with the various elasticities
   price_el = gdp_pop[,-"variable"]
-  tmp = CJ(region=unique(price_el$region), var =c("income_elasticity_pass_sm",
-                                            "price_elasticity_pass_sm",
-                                            "income_elasticity_pass_lo",
-                                            "price_elasticity_pass_lo",
-                                            "income_elasticity_freight_sm",
-                                            "price_elasticity_freight_sm",
-                                            "income_elasticity_freight_lo",
-                                            "price_elasticity_freight_lo"))
+  tmp = CJ(region=unique(price_el$region),
+           var=c("income_elasticity_pass_sm",
+                  "price_elasticity_pass_sm",
+                  "income_elasticity_pass_lo",
+                  "price_elasticity_pass_lo",
+                  "income_elasticity_freight_sm",
+                  "price_elasticity_freight_sm",
+                  "income_elasticity_freight_lo",
+                  "price_elasticity_freight_lo"))
   ## define max and min values of the elasticities
   ## pass sm
-  tmp[, vrich := ifelse(var == "income_elasticity_pass_sm", 0.25, NA)]
-  tmp[, vrich := ifelse(var == "price_elasticity_pass_sm", -0.65, vrich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_pass_sm", 0.1, NA)]
   tmp[, rich := ifelse(var == "income_elasticity_pass_sm", 0.5, NA)]
-  tmp[, rich := ifelse(var == "price_elasticity_pass_sm", -1.25, rich)]
+  tmp[, norm := ifelse(var == "income_elasticity_pass_sm", 0.75, NA)]
   tmp[, vpoor := ifelse(var == "income_elasticity_pass_sm", 0.8, NA)]
+  tmp[, vrich := ifelse(var == "price_elasticity_pass_sm", -0.65, vrich)]
+  tmp[, rich := ifelse(var == "price_elasticity_pass_sm", -1.25, rich)]
   tmp[, vpoor := ifelse(var == "price_elasticity_pass_sm", -1, vpoor)]
-  tmp[, norm := ifelse(var == "income_elasticity_pass_sm", 1, NA)]
   tmp[, norm := ifelse(var == "price_elasticity_pass_sm", -0.625, norm)]
   ## pass lo (see The income elasticity of air travel a meta analysis, Gallet et al 2014)
-  tmp[, vrich := ifelse(var == "income_elasticity_pass_lo", 1.5, vrich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_pass_lo", 0.3, vrich)]
+  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 0.8, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_pass_lo", 1.1, vpoor)]
+  tmp[, norm := ifelse(var == "income_elasticity_pass_lo", 1.3, norm)]
   tmp[, vrich := ifelse(var == "price_elasticity_pass_lo", -0.25, vrich)]
-  tmp[, rich := ifelse(var == "income_elasticity_pass_lo", 1.5, rich)]
   tmp[, rich := ifelse(var == "price_elasticity_pass_lo", -0.5, rich)]
-  tmp[, vpoor := ifelse(var == "income_elasticity_pass_lo", 1.5, vpoor)]
   tmp[, vpoor := ifelse(var == "price_elasticity_pass_lo", -0.7, vpoor)]
-  tmp[, norm := ifelse(var == "income_elasticity_pass_lo", 1.5, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_pass_lo", -1, norm)]
   ## freight sm
-  tmp[, vrich := ifelse(var == "income_elasticity_freight_sm", 0.1875, vrich)]
+  tmp[, vrich := ifelse(var == "income_elasticity_freight_sm", 0.16, vrich)]
+  tmp[, rich := ifelse(var == "income_elasticity_freight_sm", 0.4, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_freight_sm", 1.5, vpoor)]
+  tmp[, norm := ifelse(var == "income_elasticity_freight_sm", 0.9, norm)]
   tmp[, vrich := ifelse(var == "price_elasticity_freight_sm", -0.1875, vrich)]
-  tmp[, rich := ifelse(var == "income_elasticity_freight_sm", 0.375, rich)]
   tmp[, rich := ifelse(var == "price_elasticity_freight_sm", -0.325, rich)]
-  tmp[, vpoor := ifelse(var == "income_elasticity_freight_sm", 0.6, vpoor)]
   tmp[, vpoor := ifelse(var == "price_elasticity_freight_sm", -0.4, vpoor)]
-  tmp[, norm := ifelse(var == "income_elasticity_freight_sm", 0.75, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_freight_sm", -0.65, norm)]
   ## freight lo
   tmp[, vrich := ifelse(var == "income_elasticity_freight_lo", 0.1, vrich)]
-  tmp[, vrich := ifelse(var == "price_elasticity_freight_lo", -0.1625, vrich)]
   tmp[, rich := ifelse(var == "income_elasticity_freight_lo", 0.2, rich)]
+  tmp[, vpoor := ifelse(var == "income_elasticity_freight_lo", 0.5, vpoor)]
+  tmp[, norm := ifelse(var == "income_elasticity_freight_lo", 0.3, norm)]
+  tmp[, vrich := ifelse(var == "price_elasticity_freight_lo", -0.1625, vrich)]
   tmp[, rich := ifelse(var == "price_elasticity_freight_lo", -0.325, rich)]
-  tmp[, vpoor := ifelse(var == "income_elasticity_freight_lo", 0.3, vpoor)]
   tmp[, vpoor := ifelse(var == "price_elasticity_freight_lo", -0.5, vpoor)]
-  tmp[, norm := ifelse(var == "income_elasticity_freight_lo", 0.4, norm)]
   tmp[, norm := ifelse(var == "price_elasticity_freight_lo", -0.65, norm)]
 
   price_el = merge(price_el, tmp, by = "region", allow.cartesian = TRUE)
   price_el[, eps := ifelse(GDP_cap < 15000, vpoor, NA)]
-  price_el[, eps := ifelse(GDP_cap >= 25000, rich, eps)]
-  price_el[, eps := ifelse(GDP_cap > 25000 & GDP_cap < 30000, vrich, eps)]
-  price_el[, eps := ifelse(GDP_cap < 25000 & GDP_cap >= 15000, norm, eps)]
+  price_el[, eps := ifelse(GDP_cap > 35000, vrich, eps)]
+  price_el[, eps := ifelse(GDP_cap > 25000 & GDP_cap <= 35000, rich, eps)]
+  price_el[, eps := ifelse(GDP_cap <= 25000 & GDP_cap >= 15000, norm, eps)]
 
+  poor_co <- 15000
+  rich_co <- 30000
+  ## browser()
   ## interpolate of gdpcap values
-  price_el = approx_dt(dt = price_el,
-                       xdata=unique(price_el$GDP_cap),
-                       xcol = "GDP_cap",
-                       ycol="eps",
-                       idxcols="var",
-                       extrapolate = TRUE)
+  ## price_el = approx_dt(dt = price_el,
+  ##                      xdata=unique(price_el$GDP_cap),
+  ##                      xcol = "GDP_cap",
+  ##                      ycol="eps",
+  ##                      idxcols="var",
+  ##                      extrapolate = TRUE)
 
-  price_el[region %in% c("REF", "CHA", "IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm", "income_elasticity_freight_sm"), eps := 0]
-  price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
-  price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
-  price_el[region %in% c("SSA", "CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.3]
-  price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_sm"), eps := 0.1]
-  price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES", "DEU") & var %in% c("income_elasticity_pass_lo"), eps := 0.1]
+  ## price_el[, eps := ifelse(GDP_cap < 15000, vpoor,
+  ##                   ifelse(GDP_cap > 30000, vrich,
+  ##                          vpoor - (GDP_cap - poor_co)/(rich_co - poor_co)*(vpoor - vrich)))
+  ##          ]
+
+  ## price_el[region %in% c("REF", "CHA", "IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm", "income_elasticity_freight_sm"), eps := 0]
+  ## price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
+  ## price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
+  ## price_el[region %in% c("SSA", "CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.3]
+  ## price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_sm"), eps := 0.1]
+  ## price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES", "DEU") & var %in% c("income_elasticity_pass_lo"), eps := 0.1]
 
   if (smartlifestyle) {
     price_el[region =="REF" & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
@@ -114,8 +122,10 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
     price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := -0.1]
     
   }
-  
- 
+
+  ## time dependent modifications
+  ## browser()
+
   price_el[var %in% c("price_elasticity_freight_lo", "price_elasticity_freight_sm", "price_elasticity_pass_lo", "price_elasticity_pass_sm"), eps := 0]
   price_el = dcast(price_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
 

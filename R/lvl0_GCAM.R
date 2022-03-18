@@ -123,6 +123,12 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
   tech_output = fread(file.path(GCAM_folder, "tech_output.csv"), skip = 1, sep=";", header = T)
   tech_output = melt(tech_output, measure.vars=6:26, value.name="tech_output", variable.name = "year")
   tech_output[, c("Units", "scenario", "year") := list(NULL, NULL, as.numeric(as.character(year)))]
+  ## faulty data for HSR in EU-12, interpolate
+  tech_output[year == 1990 & region == "EU-12" & subsector == "HSR", tech_output := 0]
+  tech_output[year == 2010 & region == "EU-12" & subsector == "HSR", tech_output := NA]
+  tech_output[region == "EU-12" & subsector == "HSR", tech_output := na.approx(tech_output, x=year),
+              by=c("region", "sector", "subsector", "technology")]
+
   tech_output = tech_output[year <= 2010 & !subsector %in% c("road","LDV","bus","4W","2W")]
   tech_output[, technology := ifelse(subsector %in% c("Walk","Cycle"), paste0(subsector,"_tmp_technology"),technology)]
 
@@ -148,6 +154,21 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
   tech_output[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
   tech_output[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
   tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type","technology","year")]
+
+  ## the category "truck > 14t" in China does most likely contain also heavy trucks
+  ## otherwise there are none
+  tech_output <- rbindlist(list(
+    tech_output,
+    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicle_type="Truck (26t)")],
+    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicle_type="Truck (40t)")],
+    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicle_type="Truck (26t)")],
+    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicle_type="Truck (40t)")]))
+  tech_output[region == "China" & vehicle_type == "Truck (18t)", tech_output := tech_output/2]
+  tech_output[region == "USA" & vehicle_type == "Truck (18t)", tech_output := tech_output/3]
 
   tech_output = rename_region(tech_output)
 
@@ -181,8 +202,11 @@ lvl0_GCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir =
                           col2use = "tranSubsector")
   ## Apply convergence in time to the fastest vehicle across regions
   speed[, maxspeed := max(speed[year == 2100]), by = .(tranSubsector)]
-  speed[year >= 2020, speed := speed[year == 2020]*(2100-year)/(2100-2010) + maxspeed*(year-2020)/(2100-2020), by =c("tranSubsector", "region")]
+  speed[year >= 2020, speed := speed[year == 2020]*(2100-year)/(2100-2020) + maxspeed*(year-2020)/(2100-2020), by =c("tranSubsector", "region")]
   speed[, maxspeed := NULL]
+  ## Speed correction to enhance influence of VOT for 2W (Robert's idea)
+  speed[supplysector == "trn_pass_road_LDV_2W" & speed != 1, speed := speed * 0.75]
+
   ## rename category following EDGE-T structure
   speed[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsector_L1"]
   ## VOT
@@ -330,4 +354,3 @@ lvl0_VOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_
   return(result)
 
 }
-

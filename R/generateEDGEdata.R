@@ -7,25 +7,32 @@
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
+#' @param val_excel_input switch: if TRUE, the validation routine of preferences takes place.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
+#' @param preftab path to file with trends for share weights
+#' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
+#' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
+#' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGETransport
 #' @importFrom rmarkdown render
+#' @importFrom quitte write.mif
 #' @export
 
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL){
+                             val_excel_input = FALSE, storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
+                             preftab = NULL, plot.report = FALSE, mitab4W.path = NULL, mitab.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
-          SSPscen <- default <- NULL
+          SSPscen <- default <- techscen <- share <- demand_F <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE){
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
@@ -34,6 +41,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
   ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
+
   folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   if(!dir.exists(cache_folder)){
@@ -82,8 +90,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   print("-- Start of level 0 scripts")
 
   mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       cache_folder, load_cache=loadLvl0Cache,
-                       mrremind_folder=file.path(input_folder, "mrremind"))
+                       cache_folder, load_cache=loadLvl0Cache)
 
   ## function that loads raw data from the GCAM input files and
   ## modifies them, to make them compatible with EDGE setup
@@ -94,6 +101,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
+  if(storeRDS)
+     saveRDS(GCAM_data, file = file.path(cache_folder, "load_GCAM_data.RDS"))
 
   ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   ## needed at this point to be used in the intensity calculation below
@@ -212,16 +221,27 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   if(storeRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
 
+
+  ## load inconvenience factor table for LDVs
+  if(is.null(mitab4W.path)){
+    mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
+  }
+
+  ## select the right combination of techscen and SSP scen
+  preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
+
+
   print("-- generating trends for inconvenience costs")
   prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
+                          preftab = preftab,
                           incocost = incocost,
                           calibdem = REMINDdat$dem,
-                          GDP = mrr$GDP,
-                          GDP_POP_MER = mrr$GDP_POP_MER,
                           years = years,
+                          GDP_POP_MER = mrr$GDP_POP_MER,
                           smartlifestyle = smartlifestyle,
                           tech_scen = tech_scen,
-                          SSP_scen = SSP_scen
+                          SSP_scen = SSP_scen,
+                          mitab.path = mitab.path
                           )
 
   if(storeRDS)
@@ -250,15 +270,21 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
       tech_scen = tech_scen,
+      ptab4W = preftab4W,
       totveh = totveh)
 
     if(storeRDS){
       saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
       saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
+      saveRDS(logit_data[["prices_list"]], file = level1path("prices_list.RDS"))
     }
 
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
+
+    if (val_excel_input){
+      Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
+    }
 
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
@@ -326,7 +352,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                         mj_km_data = mj_km_data,
                         years = years)
 
-
+    nas <- vintages[["shares"]]$FV_shares[is.na(share)]
+    if(nrow(nas) > 0){
+      print("NAs found in FV vintage shares.")
+      nas
+      browser()
+    }
     shares$FV_shares = vintages[["shares"]]$FV_shares
     prices = vintages[["prices"]]
     mj_km_data = vintages[["mj_km_data"]]
@@ -346,6 +377,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     demByTech <- shares_intensity_demand[["demand"]] ##in [-]
     intensity_remind <- shares_intensity_demand[["demandI"]] ##in million pkm/EJ
     norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## in million km
+
+    nas <- norm_demand[is.na(demand_F)]
+    if(nrow(nas) > 0){
+      print("NAs found in final demand output.")
+      nas
+      browser()
+    }
 
     num_veh_stations = calc_num_vehicles_stations(
       norm_dem = norm_demand[
@@ -402,13 +440,28 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     ## do these two files *really* have to be provided by edgeTransport?
     saveRDS(mrr$POP, file = level2path("POP.RDS"))
+    saveRDS(mrr$GDP, file = level2path("GDP.RDS"))
 
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
     md_template = level2path("report.Rmd")
-    ## ship and run the file in the output folder
-    file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
-              md_template, overwrite = T)
-    render(md_template, output_format="pdf_document")
+
+    saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
+
+    report <- reportEDGETransport(
+                  output_folder = file.path(output_folder,folder), sub_folder = "level_2",
+                  loadmif = FALSE, extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
+                  model_name = "EDGE-Transport",
+                  gdx = gdxPath)
+
+    write.mif(report, file.path(output_folder, folder, "EDGE-T_SA.mif"))
+
+    if(plot.report){
+      ## ship and run the file in the output folder
+
+      file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
+                md_template, overwrite = T)
+      render(md_template, output_format = "pdf_document")
+    }
   }
 
 
@@ -444,10 +497,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
+
+
   ## save the output csv files or create a list of objects
   EDGETrData = lvl2_createoutput(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,
+    ptab4W = preftab4W,
     vot_data = REMINDdat$vt,
     int_dat = IEAbal_comparison$merged_intensity,
     NEC_data = NEC_data,

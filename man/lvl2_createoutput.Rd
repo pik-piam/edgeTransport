@@ -7,6 +7,7 @@
 lvl2_createoutput(
   logit_params,
   pref_data,
+  ptab4W,
   vot_data,
   NEC_data,
   capcost4W,
@@ -29,6 +30,8 @@ lvl2_createoutput(
 \item{logit_params}{logit parameters}
 
 \item{pref_data}{preference factors}
+
+\item{ptab4W}{table including all the inconvenience cost factors for LDVs}
 
 \item{vot_data}{value of time}
 
