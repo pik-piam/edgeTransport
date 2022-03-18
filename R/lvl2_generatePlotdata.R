@@ -6,8 +6,8 @@
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
 #' @import data.table
-#' @import magclass getSets
-#' @import madrat calcOutput
+#' @importFrom magclass getSets
+#' @importFrom madrat calcOutput
 #' @export
 
 lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
