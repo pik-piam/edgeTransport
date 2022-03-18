@@ -6,13 +6,13 @@
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
 #' @import data.table
-#' @importFrom magclass
-#' @importFrom lusweave
-#' @importFrom data.table
-#' @importFrom utils
-#' @importFrom rmndt
-#' @importFrom remind2
-#' @importFrom madrat
+#' @import magclass
+#' @import lusweave
+#' @import data.table
+#' @import utils
+#' @import rmndt
+#' @import remind2
+#' @import madrat
 #' @export
 
 lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
