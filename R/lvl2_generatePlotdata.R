@@ -2,7 +2,7 @@
 #'
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param listofruns list of folders hosting raw data
-#' @param AggrReg
+#' @param AggrReg Regional Aggregation
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
 #' @import data.table
