@@ -92,7 +92,7 @@ Calc_pref_and_prices <- function(output_folder, logit_data, prefs){
 #' @param EDGE_T_run path to output folder of EDGE-T run
 #' @author Johanna Hoppe
 #'
-#' @importFrom xlsx getSheets
+#' @importFrom xlsx getSheets loadWorkbook CellStyle createSheet createCell createRow setCellValue setCellStyle addDataFrame saveWorkbook
 #' @import data.table
 #' @importFrom ggplot2 ggplot
 #' @export
