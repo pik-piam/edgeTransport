@@ -16,7 +16,7 @@
 #' @import data.table
 #' @import rmndt
 #' @importFrom luplot magpie2ggplot2
-#' @importFrom ggplot2 facet_grid ggplot geom_col facet_wrap geom_point aes_ geom_ribbon guides guide_legend aes expand_limits alpha geom_line theme theme_minimal xlab ylab scale_color_manual
+#' @import ggplot2
 #' @importFrom lusweave swopen swlatex swfigure swclose
 #' @importFrom magclass read.report mbind getRegions new.magpie getYears add_dimension setNames getNames<- time_interpolate getNames
 #' @importFrom quitte as.quitte

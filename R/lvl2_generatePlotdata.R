@@ -11,7 +11,10 @@
 #' @export
 
 lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
-
+  Year <- variable <- missingH12 <- region <- fewcol <- gran_vehtype <- aggr_vehtype <- scenario <-
+  weight <- sector <- unit <- vehicle_type <- technology <- period <- subsector_L1 <- subsector_L2 <-
+  subsector_L3 <- `.` <- period <- value <- tot <- model <- sw <- logit.exponent <- check <- variable <- 
+  unit <- tot_VOT_price <- tot_price <- global <- international <- NULL
 
   scenNames <- SSP_Scen <- Tech_Scen <- c()
   demand_km <- demand_ej <- vintcomp <- newcomp <- shares <- pref <- mj_km_data <- loadFactor <- annual_mileage <- annual_sale <- prices <- logit_exp <- list()
