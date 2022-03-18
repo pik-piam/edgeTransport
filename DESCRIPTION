@@ -28,6 +28,8 @@ Imports:
     lusweave,
     mip,
     quitte,
+    zoo,
+    xlsx,
 Suggests:
     testthat,
     knitr,
