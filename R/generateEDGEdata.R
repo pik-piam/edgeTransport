@@ -20,7 +20,6 @@
 #' @import data.table
 #' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGETransport
 #' @importFrom rmarkdown render
-#' @importFrom gdxdt readgdx
 #' @importFrom quitte write.mif
 #' @export
 
