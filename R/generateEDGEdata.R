@@ -7,6 +7,7 @@
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
+#' @param val_excel_input switch: if TRUE, the validation routine of preferences takes place.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
@@ -26,7 +27,7 @@
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
+                             val_excel_input = FALSE, storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE, mitab4W.path = NULL, mitab.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
@@ -282,7 +283,10 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
 
-    Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
+    if (val_excel_input){
+      Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
+    }
+
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
     prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
