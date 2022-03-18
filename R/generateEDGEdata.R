@@ -18,9 +18,8 @@
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGEtransport
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGETransport
 #' @importFrom rmarkdown render
-#' @importFrom gdxdt readgdx
 #' @importFrom quitte write.mif
 #' @export
 
@@ -33,7 +32,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
-          SSPscen <- default <- NULL
+          SSPscen <- default <- techscen <- share <- demand_F <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE){
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")

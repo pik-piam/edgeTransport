@@ -6,18 +6,21 @@
 \usage{
 lvl1_preftrend(
   SWS,
+  preftab,
   calibdem,
   incocost,
   years,
-  GDP,
   GDP_POP_MER,
   smartlifestyle,
   tech_scen,
-  SSP_scen
+  SSP_scen,
+  mitab.path = NULL
 )
 }
 \arguments{
 \item{SWS}{preference factors}
+
+\item{preftab}{mode and veh preferences table}
 
 \item{calibdem}{calibration demand}
 
@@ -25,15 +28,15 @@ lvl1_preftrend(
 
 \item{years}{time steps}
 
-\item{GDP}{GDP regional level}
-
-\item{GDP_POP_MER}{GDP per capita MER}
+\item{GDP_POP_MER}{GDP population on MER base}
 
 \item{smartlifestyle}{switch activating sustainable lifestyles}
 
 \item{tech_scen}{technology at the center of the policy packages}
 
-\item{SSP_scen}{REMIND SSP scenario}
+\item{SSP_scen}{SSP or SDP scenario}
+
+\item{mitab.path}{mitigation pathways table path}
 }
 \value{
 projected trend of preference factors

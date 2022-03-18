@@ -11,9 +11,14 @@ generateEDGEdata(
   SSP_scen = "SSP2",
   tech_scen = "Mix",
   smartlifestyle = FALSE,
+  val_excel_input = FALSE,
   storeRDS = FALSE,
   loadLvl0Cache = FALSE,
-  gdxPath = NULL
+  gdxPath = NULL,
+  preftab = NULL,
+  plot.report = FALSE,
+  mitab4W.path = NULL,
+  mitab.path = NULL
 )
 }
 \arguments{
@@ -29,11 +34,21 @@ generateEDGEdata(
 
 \item{smartlifestyle}{If True, GDP demand regression provides lower overall demand levels.}
 
+\item{val_excel_input}{switch: if TRUE, the validation routine of preferences takes place.}
+
 \item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
 
 \item{loadLvl0Cache}{optional load intermediate RDS files for input data to save time}
 
 \item{gdxPath}{optional path to a GDX file to load price signals from a REMIND run.}
+
+\item{preftab}{path to file with trends for share weights}
+
+\item{plot.report}{write a report which is place in the level2 folder. Defaults to FALSE.}
+
+\item{mitab4W.path}{path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.}
+
+\item{mitab.path}{path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.}
 }
 \value{
 generated EDGE-transport input data

@@ -1,11 +1,15 @@
 #' Calculate a trend for share weights and inconvenience costs based on the EDGE scenario
 #'
 #' @param SWS preference factors
+#' @param preftab mode and veh preferences table
 #' @param calibdem calibration demand
 #' @param incocost inconvenience costs for 4wheelers
 #' @param years time steps
+#' @param GDP_POP_MER GDP population on MER base
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param tech_scen technology at the center of the policy packages
+#' @param SSP_scen SSP or SDP scenario
+#' @param mitab.path mitigation pathways table path
 #'
 #' @importFrom zoo na.approx na.spline
 #' @return projected trend of preference factors
@@ -17,6 +21,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
+  SSP_scenario <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
+  vehvar <- target <- symmyr <- speed <- NULL
 
 
   ## function that extrapolate constant values

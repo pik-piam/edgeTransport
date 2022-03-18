@@ -2,21 +2,19 @@
 #'
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #' @param listofruns list of folders hosting raw data
-#' @param AggrReg
+#' @param AggrReg Regional Aggregation
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
 #' @import data.table
-#' @import magclass
-#' @import lusweave
-#' @import data.table
-#' @import utils
-#' @import rmndt
-#' @import remind2
-#' @import madrat
+#' @importFrom magclass getSets
+#' @importFrom madrat calcOutput
 #' @export
 
 lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
-
+  Year <- variable <- missingH12 <- region <- fewcol <- gran_vehtype <- aggr_vehtype <- scenario <-
+  weight <- sector <- unit <- vehicle_type <- technology <- period <- subsector_L1 <- subsector_L2 <-
+  subsector_L3 <- `.` <- period <- value <- tot <- model <- sw <- logit.exponent <- check <- variable <- 
+  unit <- tot_VOT_price <- tot_price <- global <- international <- NULL
 
   scenNames <- SSP_Scen <- Tech_Scen <- c()
   demand_km <- demand_ej <- vintcomp <- newcomp <- shares <- pref <- mj_km_data <- loadFactor <- annual_mileage <- annual_sale <- prices <- logit_exp <- list()

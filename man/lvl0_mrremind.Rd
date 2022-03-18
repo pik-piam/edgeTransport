@@ -4,13 +4,7 @@
 \alias{lvl0_mrremind}
 \title{Read and prepare mrremind data}
 \usage{
-lvl0_mrremind(
-  SSP_scen,
-  REMIND2ISO_MAPPING,
-  cache_folder,
-  load_cache = FALSE,
-  mrremind_folder = NULL
-)
+lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder, load_cache = FALSE)
 }
 \arguments{
 \item{SSP_scen}{SSP/SDP/other REMIND GDP scenario}
@@ -21,8 +15,6 @@ lvl0_mrremind(
 
 \item{load_cache}{(default=FALSE) load cached files from the input folder
 to bypass the heavy mrremind machinery.}
-
-\item{mrremind_folder}{folder hosting mrremind cache, required if load_cache=TRUE}
 }
 \value{
 a list of mrremind-derived data, see end of this file.

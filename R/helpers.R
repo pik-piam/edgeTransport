@@ -49,6 +49,7 @@ collectScens <- function(scen_folder, output_folder = NULL){
 
 
 Calc_pref_and_prices <- function(output_folder, logit_data, prefs){
+  subsector_L2 <- subsector_L3 <- NULL
 
   EDGET_time <- c(seq(2010,2060,5),seq(2060,2100,10))
   Prices_S2S3 <- logit_data$share_list$S2S3_shares[subsector_L2 %in% c("Bus","trn_pass_road_LDV")]
@@ -88,7 +89,6 @@ Calc_pref_and_prices <- function(output_folder, logit_data, prefs){
 #'
 #' @param Excel_path path to Excel Sheet
 #' @param hist path to historical.mif
-#' @param WD_POP path to weighted poulation density data
 #' @param EDGE_T_run path to output folder of EDGE-T run
 #' @author Johanna Hoppe
 #'
@@ -99,7 +99,8 @@ Calc_pref_and_prices <- function(output_folder, logit_data, prefs){
 
 
 Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
-
+  CountryCode <- RegionCode <- Year <- variable <- scenario <- value <- weight <- Period <- NULL
+  model <- unit <- tot <- period <- Font <- Alignment <- Border <- region <- `.` <- NULL
   ## load mappings
   REMIND2ISO_MAPPING <- fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(ISO = CountryCode, region = RegionCode)]
   #Choose regions to be considered from MIF file
@@ -370,15 +371,15 @@ Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
 #' @param Excel_path path to Validation Excel Sheet
 #' @param sw_trends path to sw trend table
 #' @author Johanna Hoppe
-#'
-#' @import xlsx
+#' @param SSP_scen SSP or SDP scenario
 #' @import data.table
 #' @importFrom readxl read_excel
+#' @importFrom utils write.csv
 #' @export
 
 
 Update_sw_trend <- function(Excel_path, SSP_scen, sw_trends){
-
+  subsector_L2 <- subsector_L3 <- SSP_scenario <- techscen <- subsector_L1 <- value <- i.value <- NULL
   sw_table <- fread(sw_trends, header=TRUE)
 
   sw_targets <- list()
