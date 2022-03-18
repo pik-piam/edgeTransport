@@ -6,7 +6,7 @@
 #' @return generated EDGE-transport plot data
 #' @author Johanna Hoppe
 #' @import data.table
-#' @import magclass getSets getSets<-
+#' @import magclass getSets
 #' @import madrat calcOutput
 #' @export
 
