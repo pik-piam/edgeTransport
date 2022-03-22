@@ -280,7 +280,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   ##    techvar=c("Liquids", "Electric", "Hydrogen"),
   ##    target=1, symmyr=2050, speed=10)
   ## fwrite(mitab, "edget-mitigation.csv")
-  if(tech_scen != "Mix1"){
+  if(tech_scen %in% c("Mix2", "Mix3", "Mix4")){
     if(is.null(mitab.path)){
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
     }
