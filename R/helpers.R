@@ -92,7 +92,6 @@ Calc_pref_and_prices <- function(output_folder, logit_data, prefs){
 #' @param EDGE_T_run path to output folder of EDGE-T run
 #' @author Johanna Hoppe
 #'
-#' @importFrom xlsx getSheets loadWorkbook CellStyle createSheet createCell createRow setCellValue setCellStyle addDataFrame saveWorkbook
 #' @import data.table
 #' @importFrom ggplot2 ggplot
 #' @export
@@ -231,7 +230,7 @@ Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
   Prefs <- fread(file.path(EDGE_T_run, "Mode_Prefs.csv"), header = TRUE)
 
   wb <- xlsx::loadWorkbook(Excel_path)
-  sheets <- getSheets(wb)
+  sheets <- xlsx::getSheets(wb)
   # define style for title
   title_style <- xlsx::CellStyle(wb) +
     Font(wb, heightInPoints = 16,
@@ -274,7 +273,7 @@ Update_Validation_Excel_tool <- function(Excel_path, hist, EDGE_T_run){
       xlsx::setCellValue(sheetTitle[[1,1]], paste0("Validation ", region0))
       # set the cell style
       xlsx::setCellStyle(sheetTitle[[1,1]], title_style)
-      sheets <- getSheets(wb)}
+      sheets <- xlsx::getSheets(wb)}
 
     xlxs_data <- data[period %in% c(2010,2020,2030,2050,2100,2150) & region == region0 & variable %in% vars]
     xlxs_data[,value:=round(as.numeric(value),1)]
