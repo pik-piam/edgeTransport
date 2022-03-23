@@ -382,6 +382,7 @@ SSP5,Mix4,targetValBEV,0
 SSP5,Mix4,startYeICE,2020
 SSP5,Mix4,targetYeICE,2027
 SSP5,Mix4,targetValICE,0.2
+SSP5,Mix4,ratioPHEV,0.5
 SDP_MC,ConvCase,startYeBEV,2025
 SDP_MC,ConvCase,startValBEV,0.8
 SDP_MC,ConvCase,targetYeBEV,2035
