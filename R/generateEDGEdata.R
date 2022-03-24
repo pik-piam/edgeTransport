@@ -131,7 +131,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
   ## function that loads PSI intensities
   PSI_int = lvl0_PSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
-  ## function that loads alternative trucks/buses costs
+  ## function that loads alternative trucks/buses costs and h2 planes
   altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
   ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
   ## output units: costs in 2005$/pkm (or 2005$/tkm)
