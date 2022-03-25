@@ -14,6 +14,8 @@
 #' @param preftab path to file with trends for share weights
 #' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
 #' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
+#' @param ssp_demreg.path path to file with key factors for the demand regression depending on SSP/SDP scenarios.
+#' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
