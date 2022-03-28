@@ -14,6 +14,8 @@
 #' @param preftab path to file with trends for share weights
 #' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
 #' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
+#' @param ssp_demreg.path path to file with key factors for the demand regression depending on SSP/SDP scenarios.
+#' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
@@ -26,8 +28,11 @@
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             val_excel_input = FALSE, storeRDS = FALSE, loadLvl0Cache = FALSE, gdxPath = NULL,
-                             preftab = NULL, plot.report = FALSE, mitab4W.path = NULL, mitab.path = NULL){
+                             val_excel_input = FALSE, storeRDS = FALSE, loadLvl0Cache = FALSE,
+                             gdxPath = NULL,
+                             preftab = NULL, plot.report = FALSE,
+                             mitab4W.path = NULL, mitab.path = NULL,
+                             ssp_demreg.path = NULL, regional_demreg.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -333,12 +338,22 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
 
     } else {
+      ssp_demreg_tab <- NULL
+      if(file.exists(ssp_demreg.path)){
+        ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
+      }
+      reg_demreg_tab <- NULL
+      if(file.exists(regional_demreg.path)){
+        reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
+      }
       ## demand in million km
       dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
                                 GDP_POP = mrr$GDP_POP,
                                 smartlifestyle = smartlifestyle,
-                                SSP_scen = SSP_scen)
+                                SSP_scen = SSP_scen,
+                                ssp_factors = ssp_demreg_tab,
+                                regional_factors = reg_demreg_tab)
       if(storeRDS)
         saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
 

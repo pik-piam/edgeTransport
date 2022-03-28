@@ -18,7 +18,9 @@ generateEDGEdata(
   preftab = NULL,
   plot.report = FALSE,
   mitab4W.path = NULL,
-  mitab.path = NULL
+  mitab.path = NULL,
+  ssp_demreg.path = NULL,
+  regional_demreg.path = NULL
 )
 }
 \arguments{
@@ -49,6 +51,10 @@ generateEDGEdata(
 \item{mitab4W.path}{path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.}
 
 \item{mitab.path}{path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.}
+
+\item{ssp_demreg.path}{path to file with key factors for the demand regression depending on SSP/SDP scenarios.}
+
+\item{regional_demreg.path}{path to file with key factors for the demand regression depending on regions and SSP scenarios.}
 }
 \value{
 generated EDGE-transport input data
