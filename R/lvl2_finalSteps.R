@@ -103,6 +103,8 @@ lvl2_createoutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_dat
   capcost4W <- addScenarioCols(capcost4W, 0)
   complexValues$shLDV <- addScenarioCols(complexValues$shLDV, 0)
   demISO <- addScenarioCols(demISO, 0)
+
+  ptab4W[, c("SSPscen", "techscen") := NULL]
   ptab4W <- addScenarioCols(ptab4W, 0)
 
   ## for the data used in REMIND directly, we put the scens after time and region
