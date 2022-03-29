@@ -339,11 +339,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     } else {
       ssp_demreg_tab <- NULL
-      if(file.exists(ssp_demreg.path)){
+      if(!is.null(ssp_demreg.path) && file.exists(ssp_demreg.path)){
         ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
       }
       reg_demreg_tab <- NULL
-      if(file.exists(regional_demreg.path)){
+      if(!is.null(regional_demreg.path) && file.exists(regional_demreg.path)){
         reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
       }
       ## demand in million km
