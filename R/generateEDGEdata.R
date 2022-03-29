@@ -343,9 +343,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
         ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
       }
       reg_demreg_tab <- NULL
-      if(!is.null(regional_demreg.path) && file.exists(regional_demreg.path)){
-        reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
+      if(is.null(regional_demreg.path)){
+        print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
+        regional_demreg.path <- system.file("regional_regression_factors.csv", package="edgeTransport")
       }
+      reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
       ## demand in million km
       dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
