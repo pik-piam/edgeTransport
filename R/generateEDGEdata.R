@@ -345,7 +345,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
       reg_demreg_tab <- NULL
       if(is.null(regional_demreg.path)){
         print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
-        regional_demreg.path <- system.file("regional_regression_factors.csv", package="edgeTransport")
+        regional_demreg.path <- system.file("extdata", "regional_regression_factors.csv", package="edgeTransport")
       }
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
       ## demand in million km
