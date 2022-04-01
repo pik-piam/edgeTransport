@@ -96,7 +96,7 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
 
   }
 
-  if(!is.null(ssp_factors)){
+  if(!is.null(ssp_factors) && SSP_scen %in% unique(ssp_factors$SSP_scenario)){
     ## apply ssp_factors
     price_el <- ssp_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL] %>%
       melt(id.vars = "var", variable.name = "year", value.name = "SSP_factor") %>%
@@ -110,9 +110,9 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
     price_el[year > 2100, SSP_factor := price_el[year == 2100, SSP_factor], by="year"]
 
     price_el[, eps := eps + SSP_factor]
-}
+  }
 
-  if(!is.null(regional_factors)){
+  if(!is.null(regional_factors) && SSP_scen %in% unique(regional_factors$SSP_scenario)){
     ## apply regional factors
     price_el <- regional_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL] %>%
       melt(id.vars = c("region", "var"), variable.name = "year", value.name = "region_factor") %>%
@@ -127,6 +127,7 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
 
     price_el[, eps := eps + region_factor]
   }
+
   ## price_el[region == "USA" & var == "income_elasticity_pass_sm"]
   
   ## if (SSP_scen %in% c("SDP_MC", "SDP_RC")){
