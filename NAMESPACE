@@ -2,6 +2,7 @@
 
 export(Update_Validation_Excel_tool)
 export(Update_sw_trend)
+export(calcgenerateEDGEdata)
 export(collectScens)
 export(compScenEDGET)
 export(generateEDGEdata)

@@ -543,3 +543,41 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   }
 
 }
+
+#' @export
+#' @rdname generateEDGEdata
+calcgenerateEDGEdata <- function(input_folder, output_folder,
+                                 cache_folder = "cache", SSP_scen = "SSP2",
+                                 tech_scen = "Mix", smartlifestyle = FALSE,
+                                 val_excel_input = FALSE, storeRDS = FALSE,
+                                 loadLvl0Cache = FALSE, gdxPath = NULL,
+                                 preftab = NULL, plot.report = FALSE,
+                                 mitab4W.path = NULL, mitab.path = NULL,
+                                 ssp_demreg.path = NULL,
+                                 regional_demreg.path = NULL) {
+  "!# @monitor edgeTransport:::generateEDGEdata"
+  "!# @monitor edgeTransport:::compScenEDGET"
+  "!# @monitor edgeTransport:::lvl0_GCAMraw"
+  "!# @monitor edgeTransport:::lvl0_incocost"
+  "!# @monitor edgeTransport:::lvl0_loadEU"
+  "!# @monitor edgeTransport:::lvl0_loadUCD"
+  "!# @monitor edgeTransport:::lvl0_mrremind"
+  "!# @monitor edgeTransport:::lvl1_calibrateEDGEinconv"
+  "!# @monitor edgeTransport:::lvl1_IEAharmonization"
+  "!# @monitor edgeTransport:::lvl2_createoutput"
+  "!# @monitor edgeTransport:::lvl2_demandReg"
+  "!# @monitor edgeTransport:::lvl2_demandRegNAVIGATEIntl"
+  "!# @monitor edgeTransport:::lvl2_REMINDdemand"
+  "!# @monitor edgeTransport:::vl1_preftrend"
+
+  return(list(
+    x = generateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
+                         tech_scen, smartlifestyle, val_excel_input, storeRDS,
+                         loadLvl0Cache, gdxPath, preftab, plot.report,
+                         mitab4W.path, mitab.path, ssp_demreg.path,
+                         regional_demreg.path),
+    class = 'data.table',
+    unit = NA,
+    description = NA))
+
+}
