@@ -176,17 +176,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                               REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
-  ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
-                            load_factor = REMINDdat$LF,
-                            fcr_veh = fcr_veh)
 
 
   if(storeRDS){
     saveRDS(REMINDdat,
             file = level0path("REMINDdat.RDS"))
-    saveRDS(incocost,
-            file = level0path("incocost.RDS"))
   }
 
   #################################################
@@ -213,6 +207,18 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
+
+
+  ## function that calculates the inconvenience cost starting point between 1990 and 2020
+  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
+                            load_factor = REMINDdat$LF,
+                            fcr_veh = fcr_veh,
+                            REMINDp = REMIND_prices)
+
+  if(storeRDS){
+    saveRDS(incocost,
+            file = level0path("incocost.RDS"))
+  }
 
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(
