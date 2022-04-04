@@ -1,961 +1,1537 @@
 SSP_scenario,tech_scenario,regioncat,level,subsector_L3,subsector_L2,FV_vehvar,FV_techvar,target,symmyr,speed
-SDP,Mix2,poor,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix2,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix2,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix3,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix3,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix4,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Aviation,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Aviation,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Bus,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Bus,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Rail,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Rail,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Ship,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Ship,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|light,Electric,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SDP,Mix4,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix2,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix2,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix3,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix3,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix4,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Bus,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Rail,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Ship,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP1,Mix4,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix2,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix2,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix3,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix3,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix4,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2,Mix4,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix2,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix2,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix3,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix3,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix4,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Bus,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Rail,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Ship,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP2EU,Mix4,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix2,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix2,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix3,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix3,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix4,poor,FV,"","",Truck|light,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Aviation,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Aviation,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Aviation,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Bus,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Bus,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Bus,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",LDV|2W,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",LDV|2W,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",LDV|2W,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Rail,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Rail,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Rail,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Ship,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Ship,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Ship,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|heavy,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|heavy,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|heavy,Liquids,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|light,Electric,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|light,Hydrogen,1,2050,10
-SSP5,Mix4,rich,FV,"","",Truck|light,Liquids,1,2050,10
-SDP,Mix2,poor,S2,"",Bus,"","",1,2050,10
-SDP,Mix2,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix2,rich,S2,"",Bus,"","",1,2050,10
-SDP,Mix2,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix3,poor,S2,"",Bus,"","",1,2050,10
-SDP,Mix3,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix3,rich,S2,"",Bus,"","",1,2050,10
-SDP,Mix3,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix4,poor,S2,"",Bus,"","",1,2050,10
-SDP,Mix4,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix4,rich,S2,"",Bus,"","",1,2050,10
-SDP,Mix4,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix2,poor,S2,"",Bus,"","",1,2050,10
-SSP1,Mix2,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix2,rich,S2,"",Bus,"","",1,2050,10
-SSP1,Mix2,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix3,poor,S2,"",Bus,"","",1,2050,10
-SSP1,Mix3,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix3,rich,S2,"",Bus,"","",1,2050,10
-SSP1,Mix3,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix4,poor,S2,"",Bus,"","",1,2050,10
-SSP1,Mix4,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP1,Mix4,rich,S2,"",Bus,"","",1,2050,10
-SSP1,Mix4,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix2,poor,S2,"",Bus,"","",1,2050,10
-SSP2,Mix2,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix2,rich,S2,"",Bus,"","",1,2050,10
-SSP2,Mix2,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix3,poor,S2,"",Bus,"","",1,2050,10
-SSP2,Mix3,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix3,rich,S2,"",Bus,"","",1,2050,10
-SSP2,Mix3,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix4,poor,S2,"",Bus,"","",1,2050,10
-SSP2,Mix4,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2,Mix4,rich,S2,"",Bus,"","",1,2050,10
-SSP2,Mix4,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix2,poor,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix2,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix2,rich,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix2,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix3,poor,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix3,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix3,rich,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix3,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix4,poor,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix4,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP2EU,Mix4,rich,S2,"",Bus,"","",1,2050,10
-SSP2EU,Mix4,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix2,poor,S2,"",Bus,"","",1,2050,10
-SSP5,Mix2,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix2,rich,S2,"",Bus,"","",1,2050,10
-SSP5,Mix2,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix3,poor,S2,"",Bus,"","",1,2050,10
-SSP5,Mix3,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix3,rich,S2,"",Bus,"","",1,2050,10
-SSP5,Mix3,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix4,poor,S2,"",Bus,"","",1,2050,10
-SSP5,Mix4,poor,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SSP5,Mix4,rich,S2,"",Bus,"","",1,2050,10
-SSP5,Mix4,rich,S2,"",trn_pass_road_LDV,"","",1,2050,10
-SDP,Mix2,poor,S3,Cycle,"","","",1,2050,10
-SDP,Mix2,poor,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix2,poor,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix2,poor,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix2,poor,S3,HSR,"","","",1,2050,10
-SDP,Mix2,poor,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix2,poor,S3,Walk,"","","",1,2050,10
-SDP,Mix2,poor,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix2,poor,S3,trn_pass_road,"","","",1,2050,10
-SDP,Mix2,rich,S3,Cycle,"","","",1,2050,10
-SDP,Mix2,rich,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix2,rich,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix2,rich,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix2,rich,S3,HSR,"","","",1,2050,10
-SDP,Mix2,rich,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix2,rich,S3,Walk,"","","",1,2050,10
-SDP,Mix2,rich,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix2,rich,S3,trn_pass_road,"","","",1,2050,10
-SDP,Mix3,poor,S3,Cycle,"","","",1,2050,10
-SDP,Mix3,poor,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix3,poor,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix3,poor,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix3,poor,S3,HSR,"","","",1,2050,10
-SDP,Mix3,poor,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix3,poor,S3,Walk,"","","",1,2050,10
-SDP,Mix3,poor,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix3,poor,S3,trn_pass_road,"","","",1,2050,10
-SDP,Mix3,rich,S3,Cycle,"","","",1,2050,10
-SDP,Mix3,rich,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix3,rich,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix3,rich,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix3,rich,S3,HSR,"","","",1,2050,10
-SDP,Mix3,rich,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix3,rich,S3,Walk,"","","",1,2050,10
-SDP,Mix3,rich,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix3,rich,S3,trn_pass_road,"","","",1,2050,10
-SDP,Mix4,poor,S3,Cycle,"","","",1,2050,10
-SDP,Mix4,poor,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix4,poor,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix4,poor,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix4,poor,S3,HSR,"","","",1,2050,10
-SDP,Mix4,poor,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix4,poor,S3,Walk,"","","",1,2050,10
-SDP,Mix4,poor,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix4,poor,S3,trn_pass_road,"","","",1,2050,10
-SDP,Mix4,rich,S3,Cycle,"","","",1,2050,10
-SDP,Mix4,rich,S3,Domestic Aviation,"","","",1,2050,10
-SDP,Mix4,rich,S3,Domestic Ship,"","","",1,2050,10
-SDP,Mix4,rich,S3,Freight Rail,"","","",1,2050,10
-SDP,Mix4,rich,S3,HSR,"","","",1,2050,10
-SDP,Mix4,rich,S3,Passenger Rail,"","","",1,2050,10
-SDP,Mix4,rich,S3,Walk,"","","",1,2050,10
-SDP,Mix4,rich,S3,trn_freight_road,"","","",1,2050,10
-SDP,Mix4,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Cycle,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix2,poor,S3,HSR,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix2,poor,S3,Walk,"","","",1,2050,10
-SSP1,Mix2,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix2,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Cycle,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix2,rich,S3,HSR,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix2,rich,S3,Walk,"","","",1,2050,10
-SSP1,Mix2,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix2,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Cycle,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix3,poor,S3,HSR,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix3,poor,S3,Walk,"","","",1,2050,10
-SSP1,Mix3,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix3,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Cycle,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix3,rich,S3,HSR,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix3,rich,S3,Walk,"","","",1,2050,10
-SSP1,Mix3,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix3,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Cycle,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix4,poor,S3,HSR,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix4,poor,S3,Walk,"","","",1,2050,10
-SSP1,Mix4,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix4,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Cycle,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Freight Rail,"","","",1,2050,10
-SSP1,Mix4,rich,S3,HSR,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP1,Mix4,rich,S3,Walk,"","","",1,2050,10
-SSP1,Mix4,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP1,Mix4,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Cycle,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix2,poor,S3,HSR,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix2,poor,S3,Walk,"","","",1,2050,10
-SSP2,Mix2,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix2,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Cycle,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix2,rich,S3,HSR,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix2,rich,S3,Walk,"","","",1,2050,10
-SSP2,Mix2,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix2,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Cycle,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix3,poor,S3,HSR,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix3,poor,S3,Walk,"","","",1,2050,10
-SSP2,Mix3,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix3,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Cycle,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix3,rich,S3,HSR,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix3,rich,S3,Walk,"","","",1,2050,10
-SSP2,Mix3,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix3,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Cycle,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix4,poor,S3,HSR,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix4,poor,S3,Walk,"","","",1,2050,10
-SSP2,Mix4,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix4,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Cycle,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2,Mix4,rich,S3,HSR,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2,Mix4,rich,S3,Walk,"","","",1,2050,10
-SSP2,Mix4,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2,Mix4,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix2,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix2,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix3,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix3,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix4,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Cycle,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Freight Rail,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,HSR,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,Walk,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP2EU,Mix4,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Cycle,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix2,poor,S3,HSR,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix2,poor,S3,Walk,"","","",1,2050,10
-SSP5,Mix2,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix2,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Cycle,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix2,rich,S3,HSR,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix2,rich,S3,Walk,"","","",1,2050,10
-SSP5,Mix2,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix2,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Cycle,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix3,poor,S3,HSR,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix3,poor,S3,Walk,"","","",1,2050,10
-SSP5,Mix3,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix3,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Cycle,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix3,rich,S3,HSR,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix3,rich,S3,Walk,"","","",1,2050,10
-SSP5,Mix3,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix3,rich,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Cycle,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix4,poor,S3,HSR,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix4,poor,S3,Walk,"","","",1,2050,10
-SSP5,Mix4,poor,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix4,poor,S3,trn_pass_road,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Cycle,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Domestic Aviation,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Domestic Ship,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Freight Rail,"","","",1,2050,10
-SSP5,Mix4,rich,S3,HSR,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Passenger Rail,"","","",1,2050,10
-SSP5,Mix4,rich,S3,Walk,"","","",1,2050,10
-SSP5,Mix4,rich,S3,trn_freight_road,"","","",1,2050,10
-SSP5,Mix4,rich,S3,trn_pass_road,"","","",1,2050,10
+SDP,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP1,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP2EU,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SSP5,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP,Mix2,poor,S2,,Bus,,,1,2050,10
+SDP,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix2,rich,S2,,Bus,,,1,2050,10
+SDP,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix3,poor,S2,,Bus,,,1,2050,10
+SDP,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix3,rich,S2,,Bus,,,1,2050,10
+SDP,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix4,poor,S2,,Bus,,,1,2050,10
+SDP,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix4,rich,S2,,Bus,,,1,2050,10
+SDP,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix2,poor,S2,,Bus,,,1,2050,10
+SSP1,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix2,rich,S2,,Bus,,,1,2050,10
+SSP1,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix3,poor,S2,,Bus,,,1,2050,10
+SSP1,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix3,rich,S2,,Bus,,,1,2050,10
+SSP1,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix4,poor,S2,,Bus,,,1,2050,10
+SSP1,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP1,Mix4,rich,S2,,Bus,,,1,2050,10
+SSP1,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix2,poor,S2,,Bus,,,1,2050,10
+SSP2,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix2,rich,S2,,Bus,,,1,2050,10
+SSP2,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix3,poor,S2,,Bus,,,1,2050,10
+SSP2,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix3,rich,S2,,Bus,,,1,2050,10
+SSP2,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix4,poor,S2,,Bus,,,1,2050,10
+SSP2,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2,Mix4,rich,S2,,Bus,,,1,2050,10
+SSP2,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix2,poor,S2,,Bus,,,1,2050,10
+SSP2EU,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix2,rich,S2,,Bus,,,1,2050,10
+SSP2EU,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix3,poor,S2,,Bus,,,1,2050,10
+SSP2EU,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix3,rich,S2,,Bus,,,1,2050,10
+SSP2EU,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix4,poor,S2,,Bus,,,1,2050,10
+SSP2EU,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP2EU,Mix4,rich,S2,,Bus,,,1,2050,10
+SSP2EU,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix2,poor,S2,,Bus,,,1,2050,10
+SSP5,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix2,rich,S2,,Bus,,,1,2050,10
+SSP5,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix3,poor,S2,,Bus,,,1,2050,10
+SSP5,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix3,rich,S2,,Bus,,,1,2050,10
+SSP5,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix4,poor,S2,,Bus,,,1,2050,10
+SSP5,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SSP5,Mix4,rich,S2,,Bus,,,1,2050,10
+SSP5,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SDP,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SDP,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SDP,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SDP,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SDP,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SDP,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SSP1,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP1,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SSP1,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP5,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP5,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP5,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP5,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP5,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP5,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SSP5,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP5,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SSP5,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP5,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP5,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SSP5,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_EI,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_EI,Mix2,poor,S2,,Bus,,,1,2050,10
+SDP_EI,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix2,rich,S2,,Bus,,,1,2050,10
+SDP_EI,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix3,poor,S2,,Bus,,,1,2050,10
+SDP_EI,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix3,rich,S2,,Bus,,,1,2050,10
+SDP_EI,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix4,poor,S2,,Bus,,,1,2050,10
+SDP_EI,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix4,rich,S2,,Bus,,,1,2050,10
+SDP_EI,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_MC,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_MC,Mix2,poor,S2,,Bus,,,1,2050,10
+SDP_MC,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix2,rich,S2,,Bus,,,1,2050,10
+SDP_MC,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix3,poor,S2,,Bus,,,1,2050,10
+SDP_MC,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix3,rich,S2,,Bus,,,1,2050,10
+SDP_MC,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix4,poor,S2,,Bus,,,1,2050,10
+SDP_MC,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix4,rich,S2,,Bus,,,1,2050,10
+SDP_MC,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix2,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix2,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix3,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix3,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Aviation,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Aviation,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Bus,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Bus,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Bus,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,LDV|2W,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Rail,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Rail,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Ship,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|heavy,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|heavy,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|light,Electric,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|light,Hydrogen,1,2050,10
+SDP_RC,Mix4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SDP_RC,Mix2,poor,S2,,Bus,,,1,2050,10
+SDP_RC,Mix2,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix2,rich,S2,,Bus,,,1,2050,10
+SDP_RC,Mix2,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix3,poor,S2,,Bus,,,1,2050,10
+SDP_RC,Mix3,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix3,rich,S2,,Bus,,,1,2050,10
+SDP_RC,Mix3,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix4,poor,S2,,Bus,,,1,2050,10
+SDP_RC,Mix4,poor,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix4,rich,S2,,Bus,,,1,2050,10
+SDP_RC,Mix4,rich,S2,,trn_pass_road_LDV,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,trn_pass_road,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Domestic Aviation,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,trn_freight_road,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,trn_pass_road,,,,1,2050,10
