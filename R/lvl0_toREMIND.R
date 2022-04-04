@@ -34,6 +34,7 @@ lvl0_REMINDdat = function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   int[technology == "NG", sector_fuel := "delivered gas"]
   int[technology == "Hybrid Electric", sector_fuel := "Liquids-Electricity"]
   int[technology %in% c("BEV", "LA-BEV", "Electric"), sector_fuel := "elect_td_trn"]
+  int[technology %in% c("Hydrogen"), sector_fuel := "H2 enduse"]
 
   ## costs
   costs = copy(merged_data$costs)
