@@ -581,7 +581,7 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
                          loadLvl0Cache, gdxPath, preftab, plot.report,
                          mitab4W.path, mitab.path, ssp_demreg.path,
                          regional_demreg.path),
-    class = 'data.table',
+    class = 'list',
     unit = NA,
     description = NA))
 
