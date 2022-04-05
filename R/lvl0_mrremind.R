@@ -2,19 +2,16 @@
 #'
 #' @param SSP_scen SSP/SDP/other REMIND GDP scenario
 #' @param REMIND2ISO_MAPPING mapping from REMIND regions to ISO3 country codes
-#' @param cache_folder folder to use to store cache
-#' @param load_cache (default=FALSE) load cached files from the input folder
-#'          to bypass the heavy mrremind machinery.
+#' @param cache_folder folder to use to store and load inputdata cache
 #' @return a list of mrremind-derived data, see end of this file.
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @importFrom magclass getSets getSets<-
 #' @importFrom madrat readSource calcOutput
 
 
-lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder,
-                          load_cache=FALSE){
+lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
   Year <- `.` <- weight <- ratio <- value <- region <- GDP_cap <- POP_val <- NULL
-  if(load_cache & file.exists(cache_folder)){
+  if(!is.null(cache_folder) && file.exists(file.path(cache_folder, "IEAbal.RDS"))){
     IEAbal = readRDS(file.path(cache_folder, "IEAbal.RDS"))
     GDP_country = readRDS(file.path(cache_folder, "GDP_country.RDS"))
     RatioPPP2MER_country = readRDS(file.path(cache_folder, "RatioPPP2MER_country.RDS"))
@@ -36,7 +33,7 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder,
     }
     trsp_incent = readSource(type="TransportSubsidies")
     ## store to cache
-    if(file.exists(cache_folder)){
+    if(!is.null(cache_folder)){
       saveRDS(IEAbal, file.path(cache_folder, "IEAbal.RDS"))
       saveRDS(GDP_country, file.path(cache_folder, "GDP_country.RDS"))
       saveRDS(RatioPPP2MER_country, file.path(cache_folder, "RatioPPP2MER_country.RDS"))
