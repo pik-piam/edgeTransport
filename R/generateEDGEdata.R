@@ -1,6 +1,11 @@
 #' Generate EDGE-Transport Input Data for the REMIND model.
 #'
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
+#'
+#' `calcgenerateEDGEdata()` is a wrapper for `generateEDGEdata()` to make use of
+#' madrat caching.
+#'
+#' @md
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
 #' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.
