@@ -141,7 +141,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
   ## function that loads PSI intensities
   PSI_int = lvl0_PSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
-  ## function that loads alternative trucks/buses costs
+  ## function that loads alternative trucks/buses costs and h2 planes
   altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
   ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
   ## output units: costs in 2005$/pkm (or 2005$/tkm)
@@ -181,17 +181,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                               REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
-  ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
-                            load_factor = REMINDdat$LF,
-                            fcr_veh = fcr_veh)
 
 
   if(storeRDS){
     saveRDS(REMINDdat,
             file = level0path("REMINDdat.RDS"))
-    saveRDS(incocost,
-            file = level0path("incocost.RDS"))
   }
 
   #################################################
@@ -218,6 +212,18 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
+
+
+  ## function that calculates the inconvenience cost starting point between 1990 and 2020
+  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
+                            load_factor = REMINDdat$LF,
+                            fcr_veh = fcr_veh,
+                            REMINDp = REMIND_prices)
+
+  if(storeRDS){
+    saveRDS(incocost,
+            file = level0path("incocost.RDS"))
+  }
 
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(

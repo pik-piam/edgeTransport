@@ -67,6 +67,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "FCEV"],
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "Electric"])
 
+  ## LF for H2 aviation is the same as Liquids aviation
+  LF = rbind(LF,
+             LF[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, technology := "Hydrogen"])
+
   ## merge annual mileage
   AM_EU = approx_dt(EU_data$am_countries_EU,
                     xdata = unique(GCAM_data$load_factor$year),
