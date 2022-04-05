@@ -7,6 +7,7 @@
 
 lvl0_incocost <- function(annual_mileage, load_factor, fcr_veh, REMINDp){
   subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- vkm.veh <- NULL
+  `.` <- meanp <- non_fuel_price <- pmod_av_startv <- prange_startv <- prisk <- region <- resc <- tot_price <- NULL
 
   ## very high values attributed to years before 2010, as almost 0 alternative cars are in the mix
   pmod_av = 100000 ## $/veh

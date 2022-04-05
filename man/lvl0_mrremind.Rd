@@ -4,17 +4,14 @@
 \alias{lvl0_mrremind}
 \title{Read and prepare mrremind data}
 \usage{
-lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder, load_cache = FALSE)
+lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder)
 }
 \arguments{
 \item{SSP_scen}{SSP/SDP/other REMIND GDP scenario}
 
 \item{REMIND2ISO_MAPPING}{mapping from REMIND regions to ISO3 country codes}
 
-\item{cache_folder}{folder to use to store cache}
-
-\item{load_cache}{(default=FALSE) load cached files from the input folder
-to bypass the heavy mrremind machinery.}
+\item{cache_folder}{folder to use to store and load inputdata cache}
 }
 \value{
 a list of mrremind-derived data, see end of this file.

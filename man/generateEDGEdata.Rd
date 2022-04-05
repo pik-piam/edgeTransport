@@ -2,18 +2,36 @@
 % Please edit documentation in R/generateEDGEdata.R
 \name{generateEDGEdata}
 \alias{generateEDGEdata}
+\alias{calcgenerateEDGEdata}
 \title{Generate EDGE-Transport Input Data for the REMIND model.}
 \usage{
 generateEDGEdata(
   input_folder,
   output_folder,
-  cache_folder = "cache",
+  cache_folder = NULL,
   SSP_scen = "SSP2",
   tech_scen = "Mix",
   smartlifestyle = FALSE,
   val_excel_input = FALSE,
   storeRDS = FALSE,
-  loadLvl0Cache = FALSE,
+  gdxPath = NULL,
+  preftab = NULL,
+  plot.report = FALSE,
+  mitab4W.path = NULL,
+  mitab.path = NULL,
+  ssp_demreg.path = NULL,
+  regional_demreg.path = NULL
+)
+
+calcgenerateEDGEdata(
+  input_folder,
+  output_folder,
+  cache_folder = NULL,
+  SSP_scen = "SSP2",
+  tech_scen = "Mix",
+  smartlifestyle = FALSE,
+  val_excel_input = FALSE,
+  storeRDS = FALSE,
   gdxPath = NULL,
   preftab = NULL,
   plot.report = FALSE,
@@ -28,7 +46,7 @@ generateEDGEdata(
 
 \item{output_folder}{folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)}
 
-\item{cache_folder}{folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.}
+\item{cache_folder}{folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T).}
 
 \item{SSP_scen}{SSP or SDP scenario}
 
@@ -39,8 +57,6 @@ generateEDGEdata(
 \item{val_excel_input}{switch: if TRUE, the validation routine of preferences takes place.}
 
 \item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
-
-\item{loadLvl0Cache}{optional load intermediate RDS files for input data to save time}
 
 \item{gdxPath}{optional path to a GDX file to load price signals from a REMIND run.}
 
@@ -61,6 +77,10 @@ generated EDGE-transport input data
 }
 \description{
 Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
+}
+\details{
+\code{calcgenerateEDGEdata()} is a wrapper for \code{generateEDGEdata()} to make use of
+madrat caching.
 }
 \author{
 Alois Dirnaichner, Marianna Rottoli
