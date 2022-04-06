@@ -281,12 +281,14 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   ##    target=1, symmyr=2050, speed=10)
   ## fwrite(mitab, "edget-mitigation.csv")
   if(tech_scen %in% c("Mix2", "Mix3", "Mix4")){
+    ## treat a region as a rich region starting from:
+    richcutoff <- 25000
     if(is.null(mitab.path)){
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
     }
     mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[SSP_scenario == SSP_scen & tech_scenario == tech_scen]
     mimap <- system.file("extdata", "mitigation-techmap.csv", package="edgeTransport")
-    techmap <- fread(text="technology,techvar
+    techmap <- fread(text="technology,FV_techvar
 FCEV,Hydrogen
 BEV,Electric
 NG,Liquids
@@ -294,18 +296,60 @@ Hybrid Electric,Liquids")
     mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
     FVtarget <- mimap[FVtarget, on="vehicle_type"]
     FVtarget <- techmap[FVtarget, on="technology"]
-    FVtarget[is.na(techvar), techvar := technology]
+    FVtarget[is.na(FV_techvar), FV_techvar := technology]
 
-    richregions <- unique(unique(GDP_POP_MER[year == 2010 & GDP_cap > 25000, region]))
+    richregions <- unique(unique(GDP_POP_MER[year == 2010 & GDP_cap > richcutoff, region]))
     FVtarget[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
 
-    FVtarget <- mitab[FVtarget, on=c("vehvar", "techvar", "regioncat")]
+    ## remove L2 and L3 from mitab to avoid a join on these sectors
+    FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on=c("FV_vehvar", "FV_techvar", "regioncat")]
     FVtarget[, value := ifelse(
-                 is.na(vehvar), value, apply_logistic_trends(year, target, symmyr, speed) * value),
+                 is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
              by=c("region", "vehicle_type", "technology")]
-    FVtarget[, colnames(mitab) := NULL]
-    FVtarget[logit_type == "sw", value := sw/max(sw),
+    cname_to_remove <- colnames(mitab)[!grepl("subsector_", colnames(mitab))]
+    FVtarget[, (cname_to_remove) := NULL]
+    FVtarget[logit_type == "sw", value := value/max(value),
              by = c("region", "year", "vehicle_type")]
+    nas <- FVtarget[logit_type != "pchar" & is.na(value)]
+    if(nrow(nas) > 0){
+      print(sprintf("NAs found in FV shareweight trends for %s scenario.", tech_scen))
+      browser()
+    }
+
+    ## level S2: Bus vs LDV
+    S2target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    ## remove L3 from mitab to avoid a join on these sectors
+    S2target <- mitab[level == "S2"][, subsector_L3 := NULL][
+      S2target, on=c("subsector_L2", "regioncat")]
+    S2target[, sw := ifelse(
+                 is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
+             by=c("region", "subsector_L2")]
+    S2target[, (cname_to_remove) := NULL]
+    S2target[, sw := sw/max(sw),
+             by = c("region", "year", "subsector_L3")]
+    nas <- S2target[is.na(sw)]
+    if(nrow(nas) > 0){
+      print(sprintf("NAs found in S2 shareweight trends for %s scenario.", tech_scen))
+      browser()
+    }
+
+    ## level S3: all other mode shares
+    S3target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    ## remove L3 from mitab to avoid a join on these sectors
+    S3target <- mitab[level == "S3"][, subsector_L2 := NULL][
+      S3target, on=c("subsector_L3", "regioncat")]
+    S3target[, sw := ifelse(
+                 is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
+             by=c("region", "subsector_L3")]
+    S3target[, (cname_to_remove) := NULL]
+    S3target[, sw := sw/max(sw),
+             by = c("region", "year", "sector")]
+    nas <- S3target[is.na(sw)]
+    if(nrow(nas) > 0){
+      print(sprintf("NAs found in S3 shareweight trends for %s scenario.", tech_scen))
+      browser()
+    }
+
   }
 
 
