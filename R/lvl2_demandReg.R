@@ -102,8 +102,8 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
       melt(id.vars = "var", variable.name = "year", value.name = "SSP_factor") %>%
       .[, year := as.numeric(as.character(year))] %>%
       .[price_el, on=c("year", "var")] %>%
-      .[year < 2020, SSP_factor := 0] %>%
-      .[year >= 2020 & year <= 2100, SSP_factor := na.approx(SSP_factor, x=year),
+      .[year <= 2010, SSP_factor := 0] %>%
+      .[year >= 2010 & year <= 2100, SSP_factor := na.approx(SSP_factor, x=year),
         by=c("region", "var")] %>%
       .[year <= 2100 & is.na(SSP_factor), SSP_factor := 0]
     
@@ -118,8 +118,8 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
       melt(id.vars = c("region", "var"), variable.name = "year", value.name = "region_factor") %>%
       .[, year := as.numeric(as.character(year))] %>%
       .[price_el, on=c("region", "year", "var")] %>%
-      .[year < 2020, region_factor := 0] %>%
-      .[year >= 2020 & year <= 2100, region_factor := na.approx(region_factor, x=year),
+      .[year <= 2010, region_factor := 0] %>%
+      .[year >= 2010 & year <= 2100, region_factor := na.approx(region_factor, x=year),
         by=c("region", "var")] %>%
       .[year <= 2100 & is.na(region_factor), region_factor := 0]
     
