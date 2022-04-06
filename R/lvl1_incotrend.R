@@ -310,7 +310,7 @@ Hybrid Electric,Liquids")
     FVtarget[, (cname_to_remove) := NULL]
     FVtarget[logit_type == "sw", value := value/max(value),
              by = c("region", "year", "vehicle_type")]
-    nas <- FVtarget[is.na(value)]
+    nas <- FVtarget[logit_type != "pchar" & is.na(value)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in FV shareweight trends for %s scenario.", tech_scen))
       browser()
