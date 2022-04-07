@@ -31,7 +31,6 @@ Imports:
     zoo,
     magrittr
 Suggests:
-    xlsx,
     testthat,
     knitr,
     markdown,
