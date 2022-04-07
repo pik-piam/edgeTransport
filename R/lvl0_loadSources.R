@@ -670,6 +670,3 @@ lvl0_AltHDV=function(UCD_output){
   return(costs)
 
 }
-
-
-
