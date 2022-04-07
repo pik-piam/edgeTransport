@@ -118,6 +118,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   ## load the UCD based purchase costs
   UCD_c = copy(UCD_output$UCD_cost)
+  ## Capital costs (other) are set to 0 as it is unclear what they represent
+  UCD_c[variable == "Capital costs (other)", value := 0]
   ## find the purchase costs of liquid and NG technologies for non-EU countries (for EU, data comes from PSI)
   purchCost = UCD_c[!iso %in% eu_iso & variable %in% "Capital costs (purchase)" & UCD_technology %in% c("Liquids", "NG")][, c("iso", "UCD_technology", "year", "value", "vehicle_type")]
   setnames(purchCost, old="value", new="valUCD")
