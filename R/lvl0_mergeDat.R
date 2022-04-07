@@ -159,13 +159,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   CHN_c = merge(CHN_trucks, logit_cat, by = c("vehicle_type", "technology"), all.x = T)[, univocal_name := NULL]
   CHN_c[, unit := "2005$/vkt"]
 
-  other_costs = UCD_c[!(iso %in% "CHN" & vehicle_type %in% unique(CHN_c$vehicle_type) & technology %in% c("Liquids", "NG") & variable %in% unique(CHN_c$variable))]
+  other_costs = copy(UCD_c)
   other_costs = other_costs[!(subsector_L1 == "trn_pass_road_LDV_4W" &
                                 variable %in% unique(PSI_c$variable))]
 
 
-  costs = rbind(CHN_c,
-                PSI_c,
+  costs = rbind(PSI_c,
                 other_costs)
 
   ## hybrid electric costs, other than Purchase, are assumed to be equal to BEVs

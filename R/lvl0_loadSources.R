@@ -616,8 +616,8 @@ lvl0_AltHDV=function(UCD_output){
   hydrogen = costs[vehicle_type %in% c(trucks, buses) & UCD_technology == "Liquids" & variable == "CAPEX and non-fuel OPEX"][, "UCD_technology" := "FCEV"]
   altcost = rbind(electric, hydrogen)
 
-  yeartarget_early = 2030  ## target year for electric trucks and electric and hydrogen buses
-  yeartarget_late = 2035  ## target year for FCEV trucks
+  yeartarget_early = 2035  ## target year for electric trucks and electric and hydrogen buses
+  yeartarget_late = 2150  ## target year for FCEV trucks
 
   ## cost of electric truck is 60% more than a as conventional truck today
   altcost[vehicle_type %in% trucks & year <= 2020 & UCD_technology == "Electric", value := 1.6*value, by = c("iso", "year", "vehicle_type")]
@@ -637,10 +637,15 @@ lvl0_AltHDV=function(UCD_output){
   altcost[vehicle_type %in% buses & year <= 2020, value := 1.4*value, by = c("iso", "year", "vehicle_type")]
 
   ## for electric and FCEV buses, in between 2020 and target year the cost follows a linear trend
-  altcost[vehicle_type %in% buses & year <= yeartarget_early & year >= 2020,
+  altcost[vehicle_type %in% buses & UCD_technology == "Electric" & year <= yeartarget_early & year >= 2020,
           value := (value[year == 2020]-value[year == yeartarget_early])*(1 - (year - 2020)/(yeartarget_early - 2020)) + value[year == yeartarget_early],
           by = c("iso", "UCD_technology", "vehicle_type")]
 
+  ## for electric and FCEV buses, in between 2020 and target year the cost follows a linear trend
+  altcost[vehicle_type %in% buses & UCD_technology == "FCEV" & year <= yeartarget_late & year >= 2020,
+          value := (value[year == 2020]-value[year == yeartarget_late])*(1 - (year - 2020)/(yeartarget_late - 2020)) + value[year == yeartarget_late],
+          by = c("iso", "UCD_technology", "vehicle_type")]
+  
   ## assumed same other costs components to be equal to ICE trucks/buses
   tmp = rbind(costs[vehicle_type %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "Electric"],
               costs[vehicle_type %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "FCEV"])
