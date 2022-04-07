@@ -22,7 +22,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
   SSP_scenario <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
-  vehvar <- target <- symmyr <- speed <- NULL
+  vehvar <- target <- symmyr <- speed <- FV_techvar <- NULL
 
 
   ## function that extrapolate constant values
@@ -42,7 +42,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
   ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
-  ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:10])
+
+  ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:9])
   ptab[, year := as.numeric(as.character(year))]
   ## add missing years
   ptab <- filldt(ptab, 2020)
@@ -85,9 +86,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   FVtarget[FVdt, sw := i.sw, on=c("region", "year", "vehicle_type", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
   FVtarget[subsector_L3 == "HSR", sw := 1]
-
   tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
-    , `:=`(sw=1, level="FV", techscen=unique(FVtarget$techscen), approx="linear")]
+    , `:=`(sw=1, level="FV", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## merge placeholder
   FVtarget <- rbind(FVtarget, tmps)

@@ -12,7 +12,6 @@
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
-#' @param val_excel_input switch: if TRUE, the validation routine of preferences takes place.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
@@ -32,7 +31,7 @@
 
 generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             val_excel_input = FALSE, storeRDS = FALSE,
+                             storeRDS = FALSE,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
@@ -293,10 +292,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
 
-    if (val_excel_input){
-      Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
-    }
-
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
     prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
@@ -555,7 +550,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 calcgenerateEDGEdata <- function(input_folder, output_folder,
                                  cache_folder = NULL, SSP_scen = "SSP2",
                                  tech_scen = "Mix", smartlifestyle = FALSE,
-                                 val_excel_input = FALSE, storeRDS = FALSE,
+                                 storeRDS = FALSE,
                                  gdxPath = NULL,
                                  preftab = NULL, plot.report = FALSE,
                                  mitab4W.path = NULL, mitab.path = NULL,
@@ -578,7 +573,7 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
 
   return(list(
     x = generateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
-                         tech_scen, smartlifestyle, val_excel_input, storeRDS,
+                         tech_scen, smartlifestyle, storeRDS,
                          gdxPath, preftab, plot.report,
                          mitab4W.path, mitab.path, ssp_demreg.path,
                          regional_demreg.path),

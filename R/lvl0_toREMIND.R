@@ -100,4 +100,3 @@ lvl0_REMINDdat = function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   return(list(LF = LF, AM = AM, int = int, costs = costs, NFcost = NFcost, dem = dem, vt = vt, pnm = pnm))
 
 }
-
