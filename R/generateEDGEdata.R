@@ -8,13 +8,11 @@
 #' @md
 #' @param input_folder folder hosting raw data
 #' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
-#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T). NOTE: the cache folder will be created in the output_folder if it does not exist.
+#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T).
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
 #' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
-#' @param val_excel_input switch: if TRUE, the validation routine of preferences takes place.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
-#' @param loadLvl0Cache optional load intermediate RDS files for input data to save time
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
 #' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
@@ -25,15 +23,15 @@
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGETransport
+#' @importFrom edgeTrpLib merge_prices calculate_logit_inconv_endog calcVint shares_intensity_and_demand calculate_capCosts prepare4REMIND calc_num_vehicles_stations reportEDGETransport2
 #' @importFrom rmarkdown render
 #' @importFrom quitte write.mif
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache",
+generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
-                             val_excel_input = FALSE, storeRDS = FALSE, loadLvl0Cache = FALSE,
+                             storeRDS = FALSE,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
@@ -54,7 +52,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
   folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
-  if(!dir.exists(cache_folder)){
+  if(!is.null(cache_folder) && !dir.exists(cache_folder)){
     dir.create(cache_folder)
   }
 
@@ -99,8 +97,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   #################################################
   print("-- Start of level 0 scripts")
 
-  mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING,
-                       cache_folder, load_cache=loadLvl0Cache)
+  mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder)
 
   ## function that loads raw data from the GCAM input files and
   ## modifies them, to make them compatible with EDGE setup
@@ -111,19 +108,16 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
-  if(storeRDS)
-     saveRDS(GCAM_data, file = file.path(cache_folder, "load_GCAM_data.RDS"))
-
   ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
-  if(loadLvl0Cache){
+  if(!is.null(cache_folder) && file.exists(file.path(cache_folder, "load_EU_data.RDS"))){
     EU_data <- readRDS(file.path(cache_folder, "load_EU_data.RDS"))
   }else{
     EU_data <- lvl0_loadEU(input_folder)
   }
-  if(storeRDS)
-     saveRDS(EU_data, file = file.path(cache_folder, "load_EU_data.RDS"))
+  if(!is.null(cache_folder))
+    saveRDS(EU_data, file = file.path(cache_folder, "load_EU_data.RDS"))
 
   ## define depreciation rate
   discount_rate_veh = 0.05   #Consumer discount rate for vehicle purchases (PSI based values)
@@ -141,7 +135,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
   ## function that loads PSI intensities
   PSI_int = lvl0_PSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
-  ## function that loads alternative trucks/buses costs
+  ## function that loads alternative trucks/buses costs and h2 planes
   altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
   ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
   ## output units: costs in 2005$/pkm (or 2005$/tkm)
@@ -181,17 +175,11 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
                               REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
-  ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
-                            load_factor = REMINDdat$LF,
-                            fcr_veh = fcr_veh)
 
 
   if(storeRDS){
     saveRDS(REMINDdat,
             file = level0path("REMINDdat.RDS"))
-    saveRDS(incocost,
-            file = level0path("incocost.RDS"))
   }
 
   #################################################
@@ -218,6 +206,18 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
 
+
+
+  ## function that calculates the inconvenience cost starting point between 1990 and 2020
+  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
+                            load_factor = REMINDdat$LF,
+                            fcr_veh = fcr_veh,
+                            REMINDp = REMIND_prices)
+
+  if(storeRDS){
+    saveRDS(incocost,
+            file = level0path("incocost.RDS"))
+  }
 
   print("-- EDGE calibration")
   calibration_output <- lvl1_calibrateEDGEinconv(
@@ -291,10 +291,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     if(storeRDS)
       saveRDS(logit_data, file = level2path("logit_data.RDS"))
-
-    if (val_excel_input){
-      Calc_pref_and_prices(file.path(output_folder, folder), logit_data, prefs)
-    }
 
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
@@ -469,7 +465,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
-    report <- reportEDGETransport(
+    report <- reportEDGETransport2(
                   output_folder = file.path(output_folder,folder), sub_folder = "level_2",
                   loadmif = FALSE, extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
                   model_name = "EDGE-Transport",
@@ -552,10 +548,10 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = "cache"
 #' @export
 #' @rdname generateEDGEdata
 calcgenerateEDGEdata <- function(input_folder, output_folder,
-                                 cache_folder = "cache", SSP_scen = "SSP2",
+                                 cache_folder = NULL, SSP_scen = "SSP2",
                                  tech_scen = "Mix", smartlifestyle = FALSE,
-                                 val_excel_input = FALSE, storeRDS = FALSE,
-                                 loadLvl0Cache = FALSE, gdxPath = NULL,
+                                 storeRDS = FALSE,
+                                 gdxPath = NULL,
                                  preftab = NULL, plot.report = FALSE,
                                  mitab4W.path = NULL, mitab.path = NULL,
                                  ssp_demreg.path = NULL,
@@ -577,8 +573,8 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
 
   return(list(
     x = generateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
-                         tech_scen, smartlifestyle, val_excel_input, storeRDS,
-                         loadLvl0Cache, gdxPath, preftab, plot.report,
+                         tech_scen, smartlifestyle, storeRDS,
+                         gdxPath, preftab, plot.report,
                          mitab4W.path, mitab.path, ssp_demreg.path,
                          regional_demreg.path),
     class = 'list',

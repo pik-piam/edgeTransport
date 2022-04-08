@@ -67,6 +67,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "FCEV"],
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "Electric"])
 
+  ## LF for H2 aviation is the same as Liquids aviation
+  LF = rbind(LF,
+             LF[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, technology := "Hydrogen"])
+
   ## merge annual mileage
   AM_EU = approx_dt(EU_data$am_countries_EU,
                     xdata = unique(GCAM_data$load_factor$year),
@@ -114,6 +118,8 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
 
   ## load the UCD based purchase costs
   UCD_c = copy(UCD_output$UCD_cost)
+  ## Capital costs (other) are set to 0 as it is unclear what they represent
+  UCD_c[variable == "Capital costs (other)", value := 0]
   ## find the purchase costs of liquid and NG technologies for non-EU countries (for EU, data comes from PSI)
   purchCost = UCD_c[!iso %in% eu_iso & variable %in% "Capital costs (purchase)" & UCD_technology %in% c("Liquids", "NG")][, c("iso", "UCD_technology", "year", "value", "vehicle_type")]
   setnames(purchCost, old="value", new="valUCD")
@@ -153,13 +159,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   CHN_c = merge(CHN_trucks, logit_cat, by = c("vehicle_type", "technology"), all.x = T)[, univocal_name := NULL]
   CHN_c[, unit := "2005$/vkt"]
 
-  other_costs = UCD_c[!(iso %in% "CHN" & vehicle_type %in% unique(CHN_c$vehicle_type) & technology %in% c("Liquids", "NG") & variable %in% unique(CHN_c$variable))]
+  other_costs = copy(UCD_c)
   other_costs = other_costs[!(subsector_L1 == "trn_pass_road_LDV_4W" &
                                 variable %in% unique(PSI_c$variable))]
 
 
-  costs = rbind(CHN_c,
-                PSI_c,
+  costs = rbind(PSI_c,
                 other_costs)
 
   ## hybrid electric costs, other than Purchase, are assumed to be equal to BEVs

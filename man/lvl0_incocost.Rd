@@ -4,7 +4,7 @@
 \alias{lvl0_incocost}
 \title{Calculates the inconvenience costs for 4wheelers}
 \usage{
-lvl0_incocost(annual_mileage, load_factor, fcr_veh)
+lvl0_incocost(annual_mileage, load_factor, fcr_veh, REMINDp)
 }
 \arguments{
 \item{annual_mileage}{annual mileage of vehicles}
@@ -12,6 +12,8 @@ lvl0_incocost(annual_mileage, load_factor, fcr_veh)
 \item{load_factor}{load factor vehicles}
 
 \item{fcr_veh}{depreciation rate}
+
+\item{REMINDp}{REMIND prices}
 }
 \description{
 Calculates the inconvenience costs for 4wheelers
