@@ -2,9 +2,29 @@
 % Please edit documentation in R/generateEDGEdata.R
 \name{generateEDGEdata}
 \alias{generateEDGEdata}
+\alias{calcgenerateEDGEdata}
 \title{Generate EDGE-Transport Input Data for the REMIND model.}
 \usage{
 generateEDGEdata(
+  input_folder,
+  output_folder,
+  cache_folder = "cache",
+  SSP_scen = "SSP2",
+  tech_scen = "Mix",
+  smartlifestyle = FALSE,
+  val_excel_input = FALSE,
+  storeRDS = FALSE,
+  loadLvl0Cache = FALSE,
+  gdxPath = NULL,
+  preftab = NULL,
+  plot.report = FALSE,
+  mitab4W.path = NULL,
+  mitab.path = NULL,
+  ssp_demreg.path = NULL,
+  regional_demreg.path = NULL
+)
+
+calcgenerateEDGEdata(
   input_folder,
   output_folder,
   cache_folder = "cache",
@@ -61,6 +81,10 @@ generated EDGE-transport input data
 }
 \description{
 Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
+}
+\details{
+\code{calcgenerateEDGEdata()} is a wrapper for \code{generateEDGEdata()} to make use of
+madrat caching.
 }
 \author{
 Alois Dirnaichner, Marianna Rottoli
