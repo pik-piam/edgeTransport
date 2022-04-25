@@ -31,32 +31,13 @@ lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
   gdp_pop = copy(GDP_POP)
   setnames(gdp_pop, old = "weight", new = "GDP_val")
-  ## create ct with the various elasticities
 
-  tab_reg <- fread(text="
-var,gdp_cap,target
-income_elasticity_pass_sm,10000,0.8
-income_elasticity_pass_sm,20000,0.75
-income_elasticity_pass_sm,30000,0.5
-income_elasticity_pass_sm,40000,0.1
-income_elasticity_pass_lo,10000,1.1
-income_elasticity_pass_lo,20000,1.3
-income_elasticity_pass_lo,30000,0.8
-income_elasticity_pass_lo,40000,0.3
-income_elasticity_freight_sm,10000,1.5
-income_elasticity_freight_sm,20000,0.9
-income_elasticity_freight_sm,30000,0.4
-income_elasticity_freight_sm,40000,0.16
-income_elasticity_freight_lo,10000,0.5
-income_elasticity_freight_lo,20000,0.3
-income_elasticity_freight_lo,30000,0.2
-income_elasticity_freight_lo,40000,0.1
-")
+  facts <- ssp_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
 
-  income_el <- rbindlist(lapply(unique(tab_reg$var), function(cat){
+  income_el <- rbindlist(lapply(unique(facts$var), function(cat){
     appfun <- approxfun(
-      x=tab_reg[var == cat, gdp_cap],
-      y=tab_reg[var == cat, target], rule = 2)
+      x=facts[var == cat, gdp_cap],
+      y=facts[var == cat, target], rule = 2)
     copy(gdp_pop)[, `:=`(var=cat, eps=appfun(GDP_cap))]
   }))
 
@@ -70,21 +51,6 @@ income_elasticity_freight_lo,40000,0.1
 
   }
 
-  if(!is.null(ssp_factors) && SSP_scen %in% unique(ssp_factors$SSP_scenario)){
-    ## apply ssp_factors
-    income_el <- ssp_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL] %>%
-      melt(id.vars = "var", variable.name = "year", value.name = "SSP_factor") %>%
-      .[, year := as.numeric(as.character(year))] %>%
-      .[income_el, on=c("year", "var")] %>%
-      .[year <= 2010, SSP_factor := 0] %>%
-      .[year >= 2010 & year <= 2100, SSP_factor := na.approx(SSP_factor, x=year),
-        by=c("region", "var")] %>%
-      .[year <= 2100 & is.na(SSP_factor), SSP_factor := 0]
-    
-    income_el[year > 2100, SSP_factor := income_el[year == 2100, SSP_factor], by="year"]
-
-    income_el[, eps := eps + SSP_factor]
-  }
 
   if(!is.null(regional_factors) && SSP_scen %in% unique(regional_factors$SSP_scenario)){
     ## apply regional factors

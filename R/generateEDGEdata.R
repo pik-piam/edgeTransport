@@ -340,9 +340,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     } else {
       ssp_demreg_tab <- NULL
-      if(!is.null(ssp_demreg.path) && file.exists(ssp_demreg.path)){
-        ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
+      if(is.null(ssp_demreg.path)){
+        print("No path to a file with scenario-specific tuning parameters for the regression provided. Using default file.")
+        ssp_demreg.path <- system.file("extdata", "ssp_regression_factors.csv", package="edgeTransport")
       }
+      ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
+
+
       reg_demreg_tab <- NULL
       if(is.null(regional_demreg.path)){
         print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
