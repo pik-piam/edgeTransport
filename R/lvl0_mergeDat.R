@@ -6,6 +6,7 @@
 #' @param UCD_output UCD data
 #' @param EU_data EU data
 #' @param PSI_costs PSI-based costs
+#' @param GDP_MER GDP MER per capita
 #' @param altCosts alternative trucks cost
 #' @param CHN_trucks CHN trucks costs
 #' @param GCAM_data GCAM data
@@ -20,11 +21,11 @@
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
-lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, GCAM_data,
+lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
                          SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
-  k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- NULL
+  k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- weight <- NULL
   val <- markup <- UCD_technology <- valUCD <- NULL
   subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
@@ -129,6 +130,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, altCosts, CHN_trucks, G
   purchCost[, tot_purchasecost := valUCD]
   purchCost[, valUCD := NULL]
 
+  ## merge with GDP_MER to rescale the capital costs in terms with the aim of representing 2nd hand market
+  GDPcoeff = copy(GDP_MER)
+  GDPcoeff[, factor := ifelse(weight<=30000, 1/30000*weight, 1)]
+  purchCost = merge(purchCost, GDPcoeff, by = c("iso", "year"))
+  purchCost[, tot_purchasecost := tot_purchasecost*factor]
+  purchCost[, c("weight", "factor") := NULL]
   ## remove the "extra vehicle types" that have purchase cost associated but not all other costs - they are all in non_eu countries- as they are not in the original demand trends
   tokeep = merge(PSI_c, unique(purchCost[,c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all.y=TRUE)
 
