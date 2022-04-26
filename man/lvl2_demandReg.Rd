@@ -10,7 +10,7 @@ lvl2_demandReg(
   GDP_POP,
   smartlifestyle,
   SSP_scen,
-  ssp_factors = NULL,
+  ssp_factors,
   regional_factors = NULL
 )
 }
