@@ -132,7 +132,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   ## merge with GDP_MER to rescale the capital costs in terms with the aim of representing 2nd hand market
   GDPcoeff = copy(GDP_MER)
-  GDPcoeff[, factor := ifelse(weight<=30000, 1/30000*weight, 1)]
+  GDPcoeff[, factor := ifelse(weight<=30000 | weight >= 4000, (1-0.3)/(30000-4000)*(weight-4000)+0.3, 1)]
   purchCost = merge(purchCost, GDPcoeff, by = c("iso", "year"))
   purchCost[, tot_purchasecost := tot_purchasecost*factor]
   purchCost[, c("weight", "factor") := NULL]
