@@ -130,18 +130,6 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   purchCost[, tot_purchasecost := valUCD]
   purchCost[, valUCD := NULL]
 
-  ## merge with GDP_MER to rescale the capital costs in terms with the aim of representing 2nd hand market
-  GDPcoeff = copy(GDP_MER)
-
-  min_gdp <- 4000     ## minimum GDPcap after which the linear trend starts
-  max_gdp <- 30000    ## maximum GDPcap marking the level where no factor is to be implemented
-  lower_bound <- 0.3  ## maximum decrease to be applied to the original costs value
-
-  GDPcoeff[, factor := ifelse(weight<= max_gdp & weight >= min_gdp, (1-lower_bound)/(max_gdp-min_gdp)*(weight-min_gdp)+lower_bound, 1)]
-  GDPcoeff[, factor := ifelse(weight<=  min_gdp, lower_bound, weight)]
-  purchCost = merge(purchCost, GDPcoeff, by = c("iso", "year"))
-  purchCost[, tot_purchasecost := tot_purchasecost*factor]
-  purchCost[, c("weight", "factor") := NULL]
   ## remove the "extra vehicle types" that have purchase cost associated but not all other costs - they are all in non_eu countries- as they are not in the original demand trends
   tokeep = merge(PSI_c, unique(purchCost[,c("iso", "vehicle_type")]), by = c("iso", "vehicle_type"), all.y=TRUE)
 
@@ -188,6 +176,23 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   eu_noMid = setdiff(unique(costs[vehicle_type == "Midsize Car" & variable == "Capital costs (purchase)", iso]), unique(costs[vehicle_type == "Midsize Car" & variable == "Operating costs (maintenance)", iso]))
   costs = rbind(costs,
                 unique(costs[iso %in% eu_noMid & variable != "Capital costs (purchase)" & subsector_L1 == "trn_pass_road_LDV_4W"][, value := mean(value), by = c("year", "variable", "technology")][, vehicle_type := "Midsize Car"]))
+
+  ## merge with GDP_MER to rescale the capital costs in terms with the aim of representing 2nd hand market
+  GDPcoeff = copy(GDP_MER)
+  GDPcoeff[, gdpcap := weight/value][, c("weight", "value", "POP", "variable") := NULL]
+
+  min_gdp <- 4000     ## minimum GDPcap after which the linear trend starts
+  max_gdp <- 30000    ## maximum GDPcap marking the level where no factor is to be implemented
+  lower_bound <- 0.3  ## maximum decrease to be applied to the original costs value
+
+  GDPcoeff[, factor := ifelse(gdpcap < max_gdp & gdpcap > min_gdp, (1-lower_bound)/(max_gdp-min_gdp)*(gdpcap)+lower_bound, 1)]
+  GDPcoeff[, factor := ifelse(gdpcap <=  min_gdp, lower_bound, factor)]
+  GDPcoeff[, factor := ifelse(gdpcap >=  max_gdp, 1, factor)]
+
+  costs = merge(costs, GDPcoeff, by = c("iso", "year"))
+  costs[variable == "Capital costs (purchase)", value := value*factor]
+  costs[, c("weight", "factor", "gdpcap") := NULL]
+
   ## apply transport incentives to EU countries
   trsp_inc = copy(trsp_incent)
   trsp_inc = magpie2dt(trsp_inc)
