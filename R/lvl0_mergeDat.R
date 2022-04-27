@@ -185,7 +185,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   max_gdp <- 30000    ## maximum GDPcap marking the level where no factor is to be implemented
   lower_bound <- 0.3  ## maximum decrease to be applied to the original costs value
 
-  GDPcoeff[, factor := ifelse(gdpcap < max_gdp & gdpcap > min_gdp, (1-lower_bound)/(max_gdp-min_gdp)*(gdpcap)+lower_bound, 1)]
+  GDPcoeff[, factor := ifelse(gdpcap < max_gdp & gdpcap > min_gdp, (1-lower_bound)/(max_gdp-min_gdp)*(gdpcap-min_gdp)+lower_bound, 1)]
   GDPcoeff[, factor := ifelse(gdpcap <=  min_gdp, lower_bound, factor)]
   GDPcoeff[, factor := ifelse(gdpcap >=  max_gdp, 1, factor)]
 
