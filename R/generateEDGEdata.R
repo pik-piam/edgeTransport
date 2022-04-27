@@ -146,7 +146,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   merged_data <- lvl0_mergeDat(
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
-    trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
+    trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_POP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
     GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, SSP_scen = SSP_scen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
