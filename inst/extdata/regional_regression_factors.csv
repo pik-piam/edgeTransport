@@ -33,7 +33,7 @@ SSP1,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SSP1,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SSP1,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SSP1,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SSP1,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SSP1,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SSP1,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SSP1,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SSP1,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -59,7 +59,7 @@ SSP5,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SSP5,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SSP5,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SSP5,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SSP5,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SSP5,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SSP5,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SSP5,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SSP5,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -85,7 +85,7 @@ SSP2EU,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SSP2EU,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SSP2EU,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SSP2EU,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SSP2EU,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SSP2EU,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SSP2EU,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SSP2EU,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SSP2EU,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -111,7 +111,7 @@ SDP,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SDP,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SDP,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SDP,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SDP,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SDP,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SDP,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SDP,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SDP,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -137,7 +137,7 @@ SDP_MC,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SDP_MC,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SDP_MC,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SDP_MC,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SDP_MC,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SDP_MC,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SDP_MC,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SDP_MC,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SDP_MC,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -163,7 +163,7 @@ SDP_RC,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SDP_RC,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SDP_RC,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SDP_RC,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SDP_RC,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SDP_RC,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SDP_RC,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SDP_RC,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SDP_RC,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
@@ -189,7 +189,7 @@ SDP_EI,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SDP_EI,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SDP_EI,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SDP_EI,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SDP_EI,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SDP_EI,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SDP_EI,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SDP_EI,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SDP_EI,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
