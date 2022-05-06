@@ -26,7 +26,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                          SSP_scen, years, REMIND2ISO_MAPPING){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- weight <- NULL
-  val <- markup <- UCD_technology <- valUCD <- NULL
+  val <- markup <- UCD_technology <- valUCD <- gdpcap <- NULL
   subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
