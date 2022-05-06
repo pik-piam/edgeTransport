@@ -7,7 +7,7 @@ SSP2,MEA,income_elasticity_pass_lo,0,-0.4,-0.2,0
 SSP2,UKI,income_elasticity_pass_lo,0,-0.2,-0.1,0
 SSP2,MEA,income_elasticity_freight_sm,0,0.8,0.4,0
 SSP2,REF,income_elasticity_freight_sm,0,-0.9,-0.2,0
-SSP2,CHA,income_elasticity_freight_sm,0,-0.7,-0.1,-0.2
+SSP2,CHA,income_elasticity_freight_sm,-0.5,-0.4,-0.4,-5
 SSP2,UKI,income_elasticity_freight_sm,0,0.2,0.1,0
 SSP2,IND,income_elasticity_freight_lo,0,1.1,0.6,0
 SSP2,SSA,income_elasticity_freight_lo,0,0.2,0.4,0
