@@ -79,6 +79,7 @@ lvl0_mrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
 
   return(list(
     GDP_MER_country=GDP_MER_country,
+    GDP_POP_MER_country = GDP_POP_MER_country,
     POP_country=POP_country,
     GDP_country=GDP_country,
     POP=POP,

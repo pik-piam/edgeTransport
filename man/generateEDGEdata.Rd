@@ -38,25 +38,6 @@ calcgenerateEDGEdata(
   ssp_demreg.path = NULL,
   regional_demreg.path = NULL
 )
-
-calcgenerateEDGEdata(
-  input_folder,
-  output_folder,
-  cache_folder = "cache",
-  SSP_scen = "SSP2",
-  tech_scen = "Mix",
-  smartlifestyle = FALSE,
-  val_excel_input = FALSE,
-  storeRDS = FALSE,
-  loadLvl0Cache = FALSE,
-  gdxPath = NULL,
-  preftab = NULL,
-  plot.report = FALSE,
-  mitab4W.path = NULL,
-  mitab.path = NULL,
-  ssp_demreg.path = NULL,
-  regional_demreg.path = NULL
-)
 }
 \arguments{
 \item{input_folder}{folder hosting raw data}

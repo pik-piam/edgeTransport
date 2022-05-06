@@ -8,6 +8,7 @@ lvl0_mergeDat(
   UCD_output,
   EU_data,
   PSI_costs,
+  GDP_MER,
   altCosts,
   CHN_trucks,
   GCAM_data,
@@ -27,6 +28,8 @@ lvl0_mergeDat(
 \item{EU_data}{EU data}
 
 \item{PSI_costs}{PSI-based costs}
+
+\item{GDP_MER}{GDP MER per capita}
 
 \item{altCosts}{alternative trucks cost}
 
