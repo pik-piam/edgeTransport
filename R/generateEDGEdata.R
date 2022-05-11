@@ -392,7 +392,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     shares_intensity_demand <- shares_intensity_and_demand(
       logit_shares=shares,
       MJ_km_base=mj_km_data,
-      EDGE2CESmap=EDGE2CESmap,
       REMINDyears=years,
       demand_input = dem_regr)
 
@@ -443,9 +442,10 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
     saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
-    saveRDS(logit_data$mj_km_data, file = level2path("mj_km_data.RDS"))
     saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
     saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))
+    saveRDS(shares_intensity_demand$demandF_plot_mjkm,
+            file = level2path("demandF_plot_mjkm.RDS"))
     saveRDS(shares_intensity_demand$demandF_plot_EJ,
             file=level2path("demandF_plot_EJ.RDS"))
     saveRDS(shares_intensity_demand$demandF_plot_pkm,
