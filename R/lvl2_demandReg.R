@@ -14,6 +14,7 @@
 #' @author Marianna Rottoli
 #'
 #' @importFrom data.table shift frank
+#' @export
 
 
 lvl2_demandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
