@@ -1,4 +1,4 @@
-SSP_scenario,region,var,2020,2030,2050,2100
+SSP_scenario,region,var,2015,2030,2050,2100
 SSP2,OAS,income_elasticity_pass_sm,-0.7,-0.3,-0.4,0
 SSP2,IND,income_elasticity_pass_sm,0,-0.3,0,0
 SSP2,CHA,income_elasticity_pass_sm,-0.7,-0.3,0.1,-0.2
