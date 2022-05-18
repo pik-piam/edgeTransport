@@ -46,23 +46,24 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   LF = rbind(LF_EU, GCAM_data$load_factor[!(iso %in% unique(LF_EU$iso) & vehicle_type %in% unique(LF_EU$vehicle_type))])
 
   ## set target for LF for LDVs
-  target_LF = if(smartlifestyle) 1.8 else 1.7
+  target_LF = if(smartlifestyle) 0.2 else 0
   target_year = if(smartlifestyle) 2060 else 2080
 
   if(SSP_scen == "SDP_RC"){
-    target_LF = 1.9
+    target_LF = 0.3
     target_year = 2060
   }
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= 2020 & year <= target_year,
-    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
+    loadFactor := loadFactor * (1 + target_LF*(year - 2020)/(target_year - 2020))]
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= target_year,
-    loadFactor := target_LF]
+    loadFactor := loadFactor * (1 + target_LF)]
+
   ## LF for electric and h2 trucks/buses assumed ot be the same as liquids
   LF = rbind(LF,
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "FCEV"],
