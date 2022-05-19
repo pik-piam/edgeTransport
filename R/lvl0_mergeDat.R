@@ -364,7 +364,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
               LDV_PSI_i,
               int_GCAM)
 
-  ## ARIADNE intensity adjustments
+  ## ARIADNE intensity adjustments, source: DLR/HBEFA 4.2
 
   if(ariadne_adjustments){
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
