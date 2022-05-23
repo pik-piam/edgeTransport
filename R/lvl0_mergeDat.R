@@ -72,6 +72,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   ## LF for H2 aviation is the same as Liquids aviation
   LF = rbind(LF,
              LF[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, technology := "Hydrogen"])
+  ## 3.5t load factor as provided by GCAM is unrealistically high
+  LF[iso %in% LF_EU$iso & vehicle_type == "Truck (0-3.5t)", loadFactor := 0.4]
+  ## 40t LF in TRACCS is too, low, using KBA data (2019 dataset)
+  ## https://www.kba.de/DE/Statistik/Produktkatalog/produkte/Kraftverkehr/vd3_uebersicht.html?nn=3514348
+  LF[iso == "DEU" & vehicle_type == "Truck (40t)", loadFactor := 11.5]
 
   ## merge annual mileage
   AM_EU = approx_dt(EU_data$am_countries_EU,
