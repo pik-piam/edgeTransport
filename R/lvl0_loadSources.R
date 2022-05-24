@@ -70,8 +70,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
   roadFE_eu[, c("t", "convert"):=NULL]
 
   ## road passenger: load load factors for cars
-  LF_countries_EU <- rbind(
-    rbindlist(lapply(
+  LF_countries_EU <- rbindlist(lapply(
       list_countries$countries,
       function(x) {
         output = suppressMessages(data.table(read_excel(
@@ -93,29 +92,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
         output$country_name <- x
         output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
         return(output)
-      })),
-    rbindlist(lapply(
-      list_countries$countries,
-      function(x) {
-        output = suppressMessages(data.table(read_excel(
-          col_names=FALSE,
-          path=file.path(
-            EU_folder,
-            paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
-          sheet="Tonne-Km","A3:AA18")))
-        output <- output[, c(1:3, 22:27)]
-        colnames(output)=c("category_TRACCS","vehicle_type","technology", 2005:2010)
-        output <- output[!is.na(get("2010"))]
-        output = melt(output, id.vars = c("category_TRACCS","vehicle_type","technology"),
-                      value.name="load_factor", variable.name="year")
-
-        output=merge(mapping_TRACCS_roadf_categories,output)
-        output[, technology := "Liquids"]
-        output$country_name <- x
-        output=output[,.(vehicle_type=EDGE_vehicle_type,technology,year,load_factor,country_name)]
-        return(output)
       }))
-  )
 
   LF_countries_EU=LF_countries_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
 
@@ -152,7 +129,7 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
             path=file.path(
               EU_folder,
               paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
-            sheet="FC_EFs","A2:I73")))
+            sheet="Veh-Km","A2:I73")))
         setnames(output, c("category_TRACCS", "vehicle_type", "TRACCS_technology",
                            as.character(seq(2005,2010,1))))
         output <- melt(output, id.vars = c("category_TRACCS","vehicle_type","TRACCS_technology"),
@@ -165,6 +142,42 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data"){
         return(output)
       }))
 
+  ## demand tkm
+  demand_tkm <- rbindlist(
+    lapply(
+      list_countries$countries,
+      function(x) {
+        output = suppressMessages(data.table(
+          read_excel(
+            path=file.path(
+              EU_folder,
+              paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
+            sheet="Tonne-Km","A2:I18")))
+        setnames(output, c("category_TRACCS", "vehicle_type", "TRACCS_technology",
+                           as.character(seq(2005,2010,1))))
+        output <- melt(output, id.vars = c("category_TRACCS", "vehicle_type", "TRACCS_technology"),
+                       measure.vars = as.character(seq(2005,2010,1)))
+        setnames(output, old=c("value", "variable"), new=c("tkm", "year"))
+        output=output[!TRACCS_technology %in% c("Total", "Other", "All")]
+        ## output=output[!is.na(MJ_km),]
+        output$country_name <- x
+
+        return(output)
+      }))
+
+  ## load factor for trucks from vkm and tkm
+  ## we derive this from total demands as this is less
+  ## ambivalent with the different size classes (how to weight different load factors?)
+  LF_trucks <- demand_vkm[demand_tkm, on=c("country_name", "year", "category_TRACCS",
+                                      "vehicle_type", "TRACCS_technology")]
+  LF_trucks[TRACCS_technology %in% c("Gasoline", "Diesel", "Flexi-fuel", "B30"), technology := "Liquids"]
+  LF_trucks[TRACCS_technology %in% c("CNG", "CNG/Biogas", "LPG"), technology := "NG"]
+  LF_trucks <- merge(mapping_TRACCS_roadf_categories, LF_trucks)
+  LF_trucks <- LF_trucks[, .(vkm=sum(vkm), tkm=sum(tkm)), by=c("country_name", "year", "EDGE_vehicle_type", "technology")]
+  LF_trucks[, load_factor := tkm/vkm][, c("tkm", "vkm") := NULL]
+  setnames(LF_trucks, "EDGE_vehicle_type", "vehicle_type")
+  LF_trucks <- LF_trucks[country_name=="FYROM", country_name:="Macedonia, the former Yugoslav Republic of"]
+  LF_countries_EU <- rbind(LF_countries_EU, LF_trucks, use.names=TRUE)
 
   ## road passenger and road freight: load energy intensity
   energy_intensity_EU <- rbindlist(
