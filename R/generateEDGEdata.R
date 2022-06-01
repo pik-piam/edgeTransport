@@ -544,6 +544,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   if (!is.null(EDGETrData)) {
     return(EDGETrData)
+  }else{
+    return(file.path(output_folder, folder))
   }
 
 }
