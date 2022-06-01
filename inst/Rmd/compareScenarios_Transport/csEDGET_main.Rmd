@@ -1,0 +1,322 @@
+---
+title: "Edge Transport Compare Scenarios"
+date: "`r format(Sys.Date())`"
+output:
+  pdf_document:
+    toc: yes
+    number_sections: yes
+    toc_depth: 6
+    includes: 
+      in_header: cs_pdf_header_include.tex
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 6
+    number_sections: yes
+geometry: "a4paper,landscape,left=0.5cm,right=0.5cm,top=1.5cm,bottom=0.5cm,footnotesep=0.0cm,footskip=0.1cm"
+params:
+  mifScen: ""
+  mifScenNames: null
+  mifHist: ""
+  yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
+  yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
+  yearsBarPlot: !r c(2010, 2030, 2050, 2100)
+  reg: !r c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","GLO")
+  sections: !r c("01_energy_demand","02_energy_services","04_costs_and_shareweight_trends")
+  userSectionPath: null
+  mainReg: "GLO"
+  figWidth: 14 
+  figHeight: 8
+  warning: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  error = TRUE,
+  message = FALSE,
+  warning = params$warning,
+  fig.width = params$figWidth, 
+  fig.height = params$figHeight)
+```
+
+
+```{r fix interactive plot size}
+# Hack to use the same fig.width and fig.height as described in previous chunk 
+# for chunks in RStudio Notebook mode.
+if (interactive()) {
+  insertExprAtStartOfFun <- function(fun, funName, env, expr) {
+    body(env[[funName]]) <- call("{", expr, body(fun))
+  }
+  fn <- ".rs.setNotebookGraphicsOption"
+  envToolsRstudio <- as.environment("tools:rstudio")
+  if (!exists(".old.rs.setNotebookGraphicsOption")) 
+    old.rs.setNotebookGraphicsOption <- envToolsRstudio[[fn]]
+  insertExprAtStartOfFun(
+    old.rs.setNotebookGraphicsOption,
+    fn,
+    envToolsRstudio,
+    rlang::expr({
+      width <- !!knitr::opts_chunk$get()$fig.width
+      height <- !!knitr::opts_chunk$get()$fig.height
+      units <- "in"
+    })
+  )
+}
+```
+
+
+```{r libraries, include=FALSE}
+library(gridExtra)
+options(tidyverse.quiet = TRUE)
+library(tidyverse)
+library(kableExtra)
+library(quitte)
+library(devtools)
+library(edgeTrpLib)
+library(data.table)
+library(mrremind)
+library(mip)
+setConfig(forcecache = T) 
+```
+
+
+```{r read mifs}
+# Read *.mif-files.
+tibble(path = unname(params$mifScen)) %>% 
+  mutate(
+    newScenarioName = params$mifScenNames,
+    data = map(path, read.quitte, factors=FALSE)) %>% 
+  unnest(cols = data) ->
+  dataScen
+if ('newScenarioName' %in% colnames(dataScen)) {
+  dataScen %>% 
+    mutate(scenario = newScenarioName) ->
+    dataScen
+} 
+dataScen %>% 
+  select(model, scenario, region, variable, unit, period, value) ->
+  dataScen
+
+params$mifHist %>% 
+  read.quitte(factors=FALSE) ->
+  dataHist
+```
+
+
+```{r preprocess}
+# Filter years and NA.
+dataScen %>% 
+  filter(period %in% params$yearsScen) ->
+  dataScen
+dataHist %>% 
+  filter(period %in% params$yearsHist, !is.na(value)) ->
+  dataHist
+
+# Combine into one data frame and remove old.
+data <- bind_rows(dataScen, dataHist)
+rm(dataScen, dataHist)
+
+# In the variable names, replace |+|, |++|, |+++|, ... by |.
+data %>% 
+  mutate(variable = str_replace_all(variable, "\\|\\++\\|", "|")) ->
+  data
+
+# Filter regions -> shortcut does not work at the moment due to the fact YAML parameters cannot be edited (When more time, workaround will be found)
+# if (!is.null(params$reg)) {
+#   
+#   if (params$reg=="Reg12 + World"){
+#     params$reg= c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","GLO")
+#   }
+#   if (params$reg=="Reg21 + World"){
+#     params$reg= c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NES","NEN","ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","GLO")
+#   }
+#   if (params$reg=="EUR9 + EUR"){
+#     params$reg= c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR")
+#   }
+
+  data %>% 
+    filter(region %in% params$reg) ->
+    data
+
+```
+
+
+```{r Corrections}
+# TODO: Should not be done in compareScenarios.
+
+# Change unit million US$2005/yr to billion US$2005/yr.
+# Relevant for ARIADNE historical EUR GDP|PPP.
+bind_rows(
+  data %>% filter(unit != "million US$2005/yr"),
+  data %>% 
+    filter(unit == "million US$2005/yr") %>% 
+    mutate(
+      unit = "billion US$2005/yr",
+      value = value / 1000)) ->
+  data
+# Change bn pkm/yr or bn tkm/yr to km/yr to bn km/yr .
+# Relevant for historical ETP data
+bind_rows(
+  data %>% filter(unit != "bn pkm/yr" & unit != "bn tkm/yr"),
+  data %>% 
+    filter(unit == "bn pkm/yr" | unit == "bn tkm/yr" ) %>% 
+    mutate(unit = "bn km/yr")) ->
+  data
+```
+
+
+```{r reference models for historical}
+# Sometimes it is necessary to choose a single model for the historical data, 
+# e.g., calculating per capita variables. These reference models are defined here.
+histRefModel <- c(
+  "Population" = "WDI",
+  "GDP|PPP pCap" = "James_IMF")
+```
+
+
+```{r calcuate pCap variables}
+# For all variables in following table, add a new variable to data with the name
+# "OldName pCap". Calculate its value by
+#     OldValue * conversionFactor 
+# and set its unit to newUnit. 
+# The new variable "OldName pCap" will be available in the plot sections.
+pCapVariables <- tribble(
+  ~variable, ~newUnit, ~conversionFactor,
+  "GDP|PPP", "kUS$2005", 1e6,
+  "ES|Transport|Pass|w/o bunkers", "km/yr", 1e9,
+  "ES|Transport|Pass|Aviation|International", "km/yr", 1e9,
+  "ES|Transport|Pass|Aviation|Domestic", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|Bus", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|Non-Motorized|Walking", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|Non-Motorized|Cycling", "km/yr", 1e9,
+  "ES|Transport|Pass|Rail|non-HSR", "km/yr", 1e9,
+  "ES|Transport|Pass|Rail|HSR", "km/yr", 1e9,
+  "ES|Transport|Freight|w/o bunkers", "tkm/yr", 1e9,
+  "ES|Transport|Freight|International Shipping", "tkm/yr", 1e9,
+  "ES|Transport|Freight|Road", "tkm/yr", 1e9,
+  "ES|Transport|Freight|Navigation", "tkm/yr", 1e9,
+  "ES|Transport|Freight|Rail", "tkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Four Wheelers", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Two Wheelers", "km/yr", 1e9,
+  "ES|Transport|Pass|non-LDV", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|BEV", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|FCEV", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Gases", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Hybrid Electric", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Liquids", "km/yr", 1e9,
+  "ES|Transport|Freight", "tkm/yr", 1e9,
+  "ES|Transport|Freight|Road|Electric", "km/yr", 1e9,
+  "ES|Transport|Freight|Road|FCEV", "km/yr", 1e9,
+  "ES|Transport|Freight|Road|Gases", "km/yr", 1e9,
+  "ES|Transport|Freight|Road|Liquids", "km/yr", 1e9)
+
+data %>% 
+  filter(variable == "Population") %>%
+  filter(scenario != "historical" | model == histRefModel["Population"]) %>% 
+  select(scenario, region, period, value) %>% 
+  mutate(
+    population = value * 1e6, # unit originally is million, now is 1
+    value = NULL) -> 
+  dataPop
+
+data %>% 
+  inner_join(pCapVariables, 'variable') %>% 
+  left_join(dataPop, c('scenario', 'region', 'period')) %>% 
+  mutate(
+    value = value / population * conversionFactor,
+    variable = paste0(variable, " pCap"),
+    unit = newUnit,
+    newUnit = NULL, conversionFactor = NULL, population = NULL) ->
+  dataPCap
+
+data %>% 
+  bind_rows(dataPCap) ->
+  data
+```
+
+
+```{r add gdp column}
+# Create a new column gdp with the value of GDP|PPP pCap (kUS$2005).
+data %>% 
+  filter(variable == "GDP|PPP pCap") %>% 
+  filter(scenario != "historical" | model == histRefModel["GDP|PPP pCap"]) %>% 
+  select(scenario, region, period, value) %>% 
+  rename(gdp = value) ->   
+  dataGDP
+data %>% 
+  left_join(dataGDP, c('scenario', 'region', 'period')) ->
+  data
+```
+
+
+```{r calcuate pGDP variables}
+# For all variables in following table, add a new variable to data with the name
+# "OldName pGDP". Calculate its value by 
+#     OldValue / (GDP|PPP pCap) * conversionFactor 
+# and set its unit to newUnit. 
+# The new variable "OldName pGDP" will be available in the plot sections.
+pGdpVariables <- tribble(
+  ~variable, ~newUnit, ~conversionFactor,
+  "FE", "MJ/US$2005", 1e3,
+  "FE|CDR", "MJ/US$2005", 1e3,
+  "FE|Transport", "MJ/US$2005", 1e3,
+  "FE|Buildings", "MJ/US$2005", 1e3,
+  "FE|Industry", "MJ/US$2005", 1e3)
+data %>% 
+  inner_join(pGdpVariables, 'variable') %>% 
+  mutate(
+    value = value / gdp * conversionFactor,
+    variable = paste0(variable, " pGDP"),
+    unit = newUnit,
+    newUnit = NULL, conversionFactor = NULL) ->
+  dataPGdp
+data %>% 
+  bind_rows(dataPGdp) ->
+  data
+```
+
+```{r quitte}
+data <- as.quitte(data)
+```
+
+```{r global variables}
+# Set global variables for use in plotting.
+options(mip.mainReg = params$mainReg)
+options(mip.yearsBarPlot = params$yearsBarPlot)
+options(mip.histRefModel = histRefModel)
+```
+
+```{r define plot functions}
+source("cs2_plot_functions.R", local=TRUE)
+```
+
+
+```{r sectionPaths, include=FALSE}
+if (length(params$sections) == 1 && params$sections == "all") {
+  dir() %>% 
+    str_subset("^csEDGET_[0-9]{2}.+\\.Rmd$") %>% 
+    sort() ->
+    sectionPaths
+} else {
+  if (length(params$sections) > 0) {
+    sectionPaths <- paste0("csEDGET_", params$sections, ".Rmd")
+  } else {
+    sectionPaths <- character(0)
+  }
+}
+```
+
+
+```{r prepare mark}
+# CLICK "RUN ALL CHUNKS ABOVE" HERE TO PREPARE THE ENVIRONMENT
+```
+
+
+```{r include sections, child = sectionPaths}
+```
+
+
+```{r include user section, child = params$userSectionPath}
+```
