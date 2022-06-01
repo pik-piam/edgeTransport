@@ -99,7 +99,7 @@ Hybrid Electric,Liquids")
                                         "subsector_L3", "subsector_L2","subsector_L1",
                                         "vehicle_type", "technology", "fuel")])
 
-    EDGE2CESmap <- fread(system.file("extdata", "mapping_EDGECES.csv", package = "edgeTrpLib"))
+    EDGE2CESmap <- fread(system.file("extdata", "mapping_EDGECES.csv", package = "edgeTransport"))
     ## first I need to merge with a mapping that represents how the entries match to the CES
     demandF <- merge(demandF, EDGE2CESmap, all=TRUE,
                     by = c("sector", "subsector_L2", "fuel"))

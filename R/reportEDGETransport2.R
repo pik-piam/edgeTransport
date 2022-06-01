@@ -300,7 +300,7 @@ reportEDGETransport2 <- function(output_folder = ".", sub_folder = "EDGE-T/",
 
 
 
-  Aggrdata <- fread(system.file("extdata", "EDGETdataAggregation.csv", package = "edgeTrpLib"),header = TRUE)
+  Aggrdata <- fread(system.file("extdata", "EDGETdataAggregation.csv", package = "edgeTransport"),header = TRUE)
 
 
   ## load input data from last EDGE run

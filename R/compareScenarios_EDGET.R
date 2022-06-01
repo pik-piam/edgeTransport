@@ -104,7 +104,7 @@ compareScenarios_EDGET <- function(
     return(.compareScenarios2Rmd(yamlParams, outputDir, outputFile))
   }
   render(
-    system.file("rmd/compareScenarios_Transport/csEDGET_main.Rmd", package = "edgeTrpLib"),
+    system.file("rmd/compareScenarios_Transport/csEDGET_main.Rmd", package = "edgeTransport"),
     intermediates_dir = outputDir,
     output_dir = outputDir,
     output_file = outputFile,
@@ -116,7 +116,7 @@ compareScenarios_EDGET <- function(
 # Copies the CompareScenarios2-Rmds to the specified location and modifies
 # their YAML header according to \code{yamlParams}.
 .compareScenarios2Rmd <- function(yamlParams, outputDir, outputFile) {
-  pathMain <- system.file("rmd/compareScenarios_Transport/csEDGET_main.Rmd", package = "edgeTrpLib")
+  pathMain <- system.file("rmd/compareScenarios_Transport/csEDGET_main.Rmd", package = "edgeTransport")
   linesMain <- readLines(pathMain)
   delimiters <- grep("^(---|\\.\\.\\.)\\s*$", linesMain)
   headerMain <- linesMain[(delimiters[1]):(delimiters[2])]
@@ -136,7 +136,7 @@ compareScenarios_EDGET <- function(
   pathDir <- file.path(outputDir, paste0(outputFile, "_Rmd"))
   if (!dir.exists(pathDir)) dir.create(pathDir)
   dirFiles <- dir(
-    system.file("rmd/compareScenarios_Transport", package = "edgeTrpLib"),
+    system.file("rmd/compareScenarios_Transport", package = "edgeTransport"),
     full.names = TRUE)
   rmdDirFiles <- grep(
     dirFiles,
@@ -148,6 +148,6 @@ compareScenarios_EDGET <- function(
     path = file.path(pathDir, "cs2_main.Rmd"),
     template = system.file(
       "rmd/compareScenarios_Transport/csEDGET_main.Rmd",
-      package = "edgeTrpLib"),
+      package = "edgeTransport"),
     include_yaml = FALSE)
 }
