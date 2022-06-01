@@ -344,6 +344,10 @@ Hybrid Electric,Liquids")
       browser()
     }
 
+  }else{
+    if(tech_scen != "Mix1"){
+      print(sprintf("Warning: No mitigation factors found for %s scenario.", tech_scen))
+    }
   }
 
 
