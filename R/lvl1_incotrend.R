@@ -261,16 +261,8 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
 
   ## Adjust tech mixes
   apply_logistic_trends <- function(yrs, final, ysymm, speed, initial = 1){
-    logistic_trend <- function(year){
-      a <- speed
-      b <- ysymm
-
-      exp((year - b)/a)/(exp((year - b)/a) + 1)
-    }
-
-    scl <- sapply(yrs, logistic_trend)
-
-    initial + scl * (final - initial)
+    fct <- exp((yrs - ysymm)/speed)/(exp((yrs - ysymm)/speed) + 1)
+    initial + fct * (final - initial)
   }
 
   ## mitab <- CJ(SSP_scenario=c("SSP1", "SSP2", "SSP5", "SSP2EU", "SDP"),
@@ -280,13 +272,14 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   ##    techvar=c("Liquids", "Electric", "Hydrogen"),
   ##    target=1, symmyr=2050, speed=10)
   ## fwrite(mitab, "edget-mitigation.csv")
-  if(tech_scen %in% c("Mix2", "Mix3", "Mix4")){
-    ## treat a region as a rich region starting from:
-    richcutoff <- 25000
-    if(is.null(mitab.path)){
+  if(is.null(mitab.path)){
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
     }
-    mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[SSP_scenario == SSP_scen & tech_scenario == tech_scen]
+  mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
+    SSP_scenario == SSP_scen & tech_scenario == tech_scen]
+  if(nrow(mitab) > 0){
+    ## treat a region as a rich region starting from:
+    richcutoff <- 25000
     mimap <- system.file("extdata", "mitigation-techmap.csv", package="edgeTransport")
     techmap <- fread(text="technology,FV_techvar
 FCEV,Hydrogen
@@ -303,6 +296,7 @@ Hybrid Electric,Liquids")
 
     ## remove L2 and L3 from mitab to avoid a join on these sectors
     FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on=c("FV_vehvar", "FV_techvar", "regioncat")]
+
     FVtarget[, value := ifelse(
                  is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
              by=c("region", "vehicle_type", "technology")]
@@ -350,6 +344,10 @@ Hybrid Electric,Liquids")
       browser()
     }
 
+  }else{
+    if(tech_scen != "Mix1"){
+      print(sprintf("Warning: No mitigation factors found for %s scenario.", tech_scen))
+    }
   }
 
 
