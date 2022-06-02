@@ -321,44 +321,44 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   LDV_PSI_i[, sector_fuel := NULL]
 
+  Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"))
 
+  Truck_TRACCS_i = merge(EU_data$energy_intensity_EU[year %in% c(2005, 2010) & vehicle_type %in% Truck_PSI_i$vehicle_type], LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("iso", "year", "vehicle_type", "technology"))
 
-  Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"), all.x = T)
-  Truck_PSI_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
-  Truck_PSI_i = Truck_PSI_i[!is.na(conv_pkm_MJ)]
-  Truck_PSI_i[, c("loadFactor", "conv_vkm_MJ") := NULL]
+  setnames(Truck_TRACCS_i, "MJ_km", "conv_vkm_MJ")
+  Truck_i <- rbind(Truck_TRACCS_i, Truck_PSI_i, use.names=T, fill=T)
+
+  Truck_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
+  Truck_i[, c("loadFactor", "conv_vkm_MJ") := NULL]
   ## approx to the whole time range
-  Truck_PSI_i = approx_dt(Truck_PSI_i,
-                          xdata = years,
-                          xcol = "year",
-                          ycol = "conv_pkm_MJ",
-                          idxcols = c("iso", "technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
-                          extrapolate = TRUE)
+  Truck_i = approx_dt(
+    Truck_i,
+    xdata = years,
+    xcol = "year",
+    ycol = "conv_pkm_MJ",
+    idxcols = c("iso", "technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+    extrapolate = TRUE)
+  Truck_i[, sector_fuel := NULL]
 
-  ## missing Trucks for EU countries are averaged on the other countries (e.g. Truck (18t) is present in terms of demand, but only the alternative trucks intensity is provided)
-  aveMissingTruck = GCAM_data[["conv_pkm_mj"]][subsector_L3 == "trn_freight_road" & vehicle_type %in% c("Truck (18t)", "Truck (7.5t)") & technology %in% c("Liquids", "NG")]
-  aveMissingTruck = aveMissingTruck[,.(conv_pkm_MJ = mean(conv_pkm_MJ)), by = c("year", "technology", "subsector_L1", "subsector_L2",
-                                                                                "subsector_L3", "sector", "vehicle_type")]
-  ## approx to the whole time range
-  aveMissingTruck = approx_dt(aveMissingTruck,
-                              xdata = unique(Truck_PSI_i$year),
-                              xcol = "year",
-                              ycol = "conv_pkm_MJ",
-                              idxcols = c("technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
-                              extrapolate = TRUE)
-
-  aveMissingTruck = merge(aveMissingTruck[, k := 1], data.table(iso = eu_iso, k = 1), all = TRUE, allow.cartesian=TRUE, by = c("k"))[, k := NULL]
-  Truck_PSI_i = rbind(
-    Truck_PSI_i,
-    GCAM_data[["conv_pkm_mj"]][(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
-                                 technology %in% c("Liquids", "NG"),
-                               c("conv_pkm_MJ", "iso","year", "technology", "subsector_L1", "subsector_L2",
-                                 "subsector_L3", "sector", "vehicle_type")])
-
-  setnames(aveMissingTruck, "conv_pkm_MJ", "pkm_MJ_missing")
-  Truck_PSI_i = merge(Truck_PSI_i, aveMissingTruck, all=T)
-  Truck_PSI_i[is.na(conv_pkm_MJ), conv_pkm_MJ := pkm_MJ_missing]
-  Truck_PSI_i[, pkm_MJ_missing := NULL]
+  GCAM_ti <- GCAM_data[["conv_pkm_mj"]][, c(
+                        "conv_pkm_MJ", "iso", "year", "technology",
+                        "subsector_L1", "subsector_L2",
+                        "subsector_L3", "sector", "vehicle_type")]
+  Truck_i = rbind(
+    Truck_i,
+    GCAM_ti[(
+      !(iso %in% eu_iso) &
+      subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      technology %in% c("Liquids", "NG")],
+    GCAM_ti[(
+      iso %in% eu_iso &
+      (subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      vehicle_type != "Truck (0-3.5t)" &
+      technology == "NG")],
+    GCAM_ti[(
+      iso %in% eu_iso &
+      vehicle_type == "Truck (26t)" &
+      technology == "NG")][, vehicle_type := "Truck (18t)"])
 
   ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
   int_GCAM = GCAM_data[["conv_pkm_mj"]][!subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")][, sector_fuel := NULL]
@@ -367,15 +367,14 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                    int_GCAM[year==2100][, year := 2130],
                    int_GCAM[year==2100][, year := 2150])
 
-  int = rbind(Truck_PSI_i,
+  int = rbind(Truck_i,
               LDV_PSI_i,
               int_GCAM)
-
   ## ARIADNE intensity adjustments, source: DLR/HBEFA 4.2
 
   if(ariadne_adjustments){
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
-        conv_pkm_MJ := conv_pkm_MJ * 2.3/2.0]
+        conv_pkm_MJ := conv_pkm_MJ * 2.3/2.8]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV",
         conv_pkm_MJ := conv_pkm_MJ * 0.81/0.95]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "FCEV",
@@ -388,15 +387,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
         conv_pkm_MJ := .SD[year == 2030]$conv_pkm_MJ, by = c("vehicle_type")]
 
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "Liquids",
-        conv_pkm_MJ := conv_pkm_MJ * 7.28/5.1]
+        conv_pkm_MJ := conv_pkm_MJ * 7.28/6.25]
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "BEV",
-        conv_pkm_MJ := conv_pkm_MJ * 2.94/2.1]
+        conv_pkm_MJ := conv_pkm_MJ * 2.94/2.3]
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "FCEV",
-        conv_pkm_MJ := conv_pkm_MJ * 4.7/4.0]
-
-    ## liquids constant from 2030 on
-    int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "Liquids" & year >= 2030,
-        conv_pkm_MJ := .SD[year == 2030]$conv_pkm_MJ, by = c("vehicle_type")]
+        conv_pkm_MJ := conv_pkm_MJ * 4.7/4.4]
 
 }
 
