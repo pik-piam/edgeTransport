@@ -1,6 +1,6 @@
 Package: edgeTransport
 Title: Prepare EDGE Transport Data for the REMIND model
-Version: 0.13.0
+Version: 0.15.0
 Authors@R: c(
     person("Alois", "Dirnaichner", email = "dirnaichner@pik-potsdam.de", role = c("aut", "cre")),
     person("Marianna", "Rottoli", email = "rottoli@pik-potsdam.de", role = "aut"))
@@ -11,12 +11,11 @@ Depends:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
-Date: 2022-05-13
+Date: 2022-06-03
 Config/testthat/edition: 3
 Imports:
-    edgeTrpLib,
     rmndt,
     magclass,
     readxl,
@@ -29,7 +28,13 @@ Imports:
     mip,
     quitte,
     zoo,
-    magrittr
+    magrittr,
+    gdx,
+    gdxdt,
+    remind2,
+    rlang,
+    yaml,
+    ymlthis
 Suggests:
     testthat,
     knitr,

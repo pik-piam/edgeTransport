@@ -37,4 +37,63 @@ collectScens <- function(scen_folder, output_folder = NULL){
     }
   }
 
+}
+
+#' Compare REMIND outputs for different runs
+#'
+#' @param runs list of the form `scen`=<folder>, where `scen` is used to identify the run
+#'   and folder is the output folder of the run.
+#' @param pdf_path path to the PDF file to be produced.
+#' @author Alois Dirnaichner
+#' @import data.table
+#' @importFrom grDevices pdf dev.off
+#' @importFrom graphics plot.new text
+#' @export
+
+
+compareOutputs <- function(runs, pdf_path){
+  scen <- all_regi <- tall <- value <- i.value <- V1 <- NULL
+  fe2es <- rbindlist(lapply(names(runs), function(scen){
+    fread(file.path(runs[[scen]], "level_2/fe2es.cs4r"))[, scen := scen]
+  }))
+
+  fetech <- rbindlist(lapply(names(runs), function(scen){
+    fread(file.path(runs[[scen]], "level_2/fe_demand_tech.cs4r"))[, scen := scen]
+  }))
+
+  capcost <- rbindlist(lapply(names(runs), function(scen){
+    fread(file.path(runs[[scen]], "level_2/esCapCost.cs4r"))[, scen := scen]
+  }))
+
+
+  pdf(file=pdf_path, onefile = T)
+  for(regi in unique(fe2es$all_regi)){
+    plot.new()
+    text(x=0, y=1, labels=regi, font=4)
+    fe2es_plot <- fe2es[all_regi == regi & tall >= 2010 & tall <= 2100]
+    pt <- ggplot(fe2es_plot) +
+      geom_line(aes(x=tall, y=value, linetype=scen)) +
+      facet_wrap(~all_teEs) +
+      labs(x="year", y="trillion pkm/TWa or tkm/TWa")
+    print(pt)
+
+    fetech_plot <- fetech[all_regi == regi & tall >= 2010 & tall <= 2100]
+    fetech_plot <- fetech_plot[fe2es_plot, on=c("tall", "all_regi", "GDP_scenario", "EDGE_scenario", "all_teEs", "scen")][
+    , sum(value * i.value), by=c("tall", "all_regi", "GDP_scenario", "EDGE_scenario", "all_in", "scen")]
+
+    pt <- ggplot(fetech_plot) +
+      geom_line(aes(x=tall, y=V1, linetype=scen)) +
+      facet_wrap(~all_in) +
+      labs(x="year", y="trillion pkm/tkm")
+    print(pt)
+
+    capcost_plot <- capcost[all_regi == regi & tall >= 2010 & tall <= 2100]
+    pt <- ggplot(capcost_plot) +
+      geom_line(aes(x=tall, y=value, linetype=scen)) +
+      facet_wrap(~all_teEs) +
+      labs(x="year", y="US$2005/pkm or US$2005/tkm")
+    print(pt)
   }
+  dev.off()
+
+}

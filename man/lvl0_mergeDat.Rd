@@ -19,7 +19,8 @@ lvl0_mergeDat(
   smartlifestyle,
   SSP_scen,
   years,
-  REMIND2ISO_MAPPING
+  REMIND2ISO_MAPPING,
+  ariadne_adjustments = TRUE
 )
 }
 \arguments{
@@ -52,6 +53,9 @@ lvl0_mergeDat(
 \item{years}{time steps}
 
 \item{REMIND2ISO_MAPPING}{REMIND regional mapping}
+
+\item{ariadne_adjustments}{adjust intensity levels according to the ARIADNE project.
+Affects mainly DEU and EU countries.}
 }
 \value{
 costs, intensity, LF, AM, demand

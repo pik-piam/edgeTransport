@@ -17,16 +17,18 @@
 #' @param smartlifestyle switch activatinf sustainable lifestyles
 #' @param SSP_scen REMIND SSP scenario
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
+#' @param ariadne_adjustments adjust intensity levels according to the ARIADNE project.
+#'   Affects mainly DEU and EU countries.
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
 lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
-                         SSP_scen, years, REMIND2ISO_MAPPING){
+                         SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE){
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- weight <- NULL
-  val <- markup <- UCD_technology <- valUCD <- gdpcap <- NULL
+  pkm_MJ_missing <- val <- markup <- UCD_technology <- valUCD <- gdpcap <- NULL
   subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
@@ -46,23 +48,24 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   LF = rbind(LF_EU, GCAM_data$load_factor[!(iso %in% unique(LF_EU$iso) & vehicle_type %in% unique(LF_EU$vehicle_type))])
 
   ## set target for LF for LDVs
-  target_LF = if(smartlifestyle) 1.8 else 1.7
+  target_LF = if(smartlifestyle) 0.2 else 0
   target_year = if(smartlifestyle) 2060 else 2080
 
   if(SSP_scen == "SDP_RC"){
-    target_LF = 1.9
+    target_LF = 0.3
     target_year = 2060
   }
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= 2020 & year <= target_year,
-    loadFactor := loadFactor + (year - 2020)/(target_year - 2020) * (target_LF - loadFactor)]
+    loadFactor := loadFactor * (1 + target_LF*(year - 2020)/(target_year - 2020))]
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= target_year,
-    loadFactor := target_LF]
+    loadFactor := loadFactor * (1 + target_LF)]
+
   ## LF for electric and h2 trucks/buses assumed ot be the same as liquids
   LF = rbind(LF,
              LF[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology == "Liquids"][, technology := "FCEV"],
@@ -71,6 +74,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   ## LF for H2 aviation is the same as Liquids aviation
   LF = rbind(LF,
              LF[subsector_L3 == "Domestic Aviation" & technology == "Liquids"][, technology := "Hydrogen"])
+  ## 3.5t load factor as provided by GCAM is unrealistically high
+  LF[iso %in% LF_EU$iso & vehicle_type == "Truck (0-3.5t)", loadFactor := 0.4]
+  ## 40t LF in TRACCS is too, low, using KBA data (2019 dataset)
+  ## https://www.kba.de/DE/Statistik/Produktkatalog/produkte/Kraftverkehr/vd3_uebersicht.html?nn=3514348
+  LF[iso == "DEU" & vehicle_type == "Truck (40t)", loadFactor := 11.5]
 
   ## merge annual mileage
   AM_EU = approx_dt(EU_data$am_countries_EU,
@@ -313,42 +321,44 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   LDV_PSI_i[, sector_fuel := NULL]
 
+  Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"))
 
+  Truck_TRACCS_i = merge(EU_data$energy_intensity_EU[year %in% c(2005, 2010) & vehicle_type %in% Truck_PSI_i$vehicle_type], LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("iso", "year", "vehicle_type", "technology"))
 
-  Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"), all.x = T)
-  Truck_PSI_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
-  Truck_PSI_i = Truck_PSI_i[!is.na(conv_pkm_MJ)]
-  Truck_PSI_i[, c("loadFactor", "conv_vkm_MJ") := NULL]
+  setnames(Truck_TRACCS_i, "MJ_km", "conv_vkm_MJ")
+  Truck_i <- rbind(Truck_TRACCS_i, Truck_PSI_i, use.names=T, fill=T)
+
+  Truck_i[, conv_pkm_MJ := conv_vkm_MJ/loadFactor]
+  Truck_i[, c("loadFactor", "conv_vkm_MJ") := NULL]
   ## approx to the whole time range
-  Truck_PSI_i = approx_dt(Truck_PSI_i,
-                          xdata = years,
-                          xcol = "year",
-                          ycol = "conv_pkm_MJ",
-                          idxcols = c("iso", "technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
-                          extrapolate = TRUE)
+  Truck_i = approx_dt(
+    Truck_i,
+    xdata = years,
+    xcol = "year",
+    ycol = "conv_pkm_MJ",
+    idxcols = c("iso", "technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+    extrapolate = TRUE)
+  Truck_i[, sector_fuel := NULL]
 
-  ## missing Trucks for EU countries are averaged on the other countries (e.g. Truck (18t) is present in terms of demand, but only the alternative trucks intensity is provided)
-  aveMissingTruck = GCAM_data[["conv_pkm_mj"]][subsector_L3 == "trn_freight_road" & vehicle_type %in% c("Truck (18t)","Truck (7.5t)") & technology %in% c("Liquids", "NG")]
-  aveMissingTruck = aveMissingTruck[,.(conv_pkm_MJ = mean(conv_pkm_MJ)), by = c("year", "technology", "subsector_L1", "subsector_L2",
-                                                                                "subsector_L3", "sector", "vehicle_type")]
-  ## approx to the whole time range
-  aveMissingTruck = approx_dt(aveMissingTruck,
-                              xdata = unique(Truck_PSI_i$year),
-                              xcol = "year",
-                              ycol = "conv_pkm_MJ",
-                              idxcols = c("technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
-                              extrapolate = TRUE)
-
-  aveMissingTruck = merge(aveMissingTruck[, k := 1], data.table(iso = eu_iso, k = 1), all = TRUE, allow.cartesian=TRUE, by = c("k"))[, k := NULL]
-  Truck_PSI_i = rbind(
-    Truck_PSI_i,
-    GCAM_data[["conv_pkm_mj"]][(subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
-                                 technology %in% c("Liquids", "NG"),
-                               c("conv_pkm_MJ", "iso","year", "technology", "subsector_L1", "subsector_L2",
-                                 "subsector_L3", "sector", "vehicle_type")])
-
-  Truck_PSI_i = rbind(Truck_PSI_i,
-                      aveMissingTruck)
+  GCAM_ti <- GCAM_data[["conv_pkm_mj"]][, c(
+                        "conv_pkm_MJ", "iso", "year", "technology",
+                        "subsector_L1", "subsector_L2",
+                        "subsector_L3", "sector", "vehicle_type")]
+  Truck_i = rbind(
+    Truck_i,
+    GCAM_ti[(
+      !(iso %in% eu_iso) &
+      subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      technology %in% c("Liquids", "NG")],
+    GCAM_ti[(
+      iso %in% eu_iso &
+      (subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      vehicle_type != "Truck (0-3.5t)" &
+      technology == "NG")],
+    GCAM_ti[(
+      iso %in% eu_iso &
+      vehicle_type == "Truck (26t)" &
+      technology == "NG")][, vehicle_type := "Truck (18t)"])
 
   ##merge with GCAM intensities and substitute all LDVs for EU and only alternative LDVs for other regions
   int_GCAM = GCAM_data[["conv_pkm_mj"]][!subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")][, sector_fuel := NULL]
@@ -357,10 +367,33 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                    int_GCAM[year==2100][, year := 2130],
                    int_GCAM[year==2100][, year := 2150])
 
-  int = rbind(Truck_PSI_i,
+  int = rbind(Truck_i,
               LDV_PSI_i,
               int_GCAM)
+  ## ARIADNE intensity adjustments, source: DLR/HBEFA 4.2
 
+  if(ariadne_adjustments){
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
+        conv_pkm_MJ := conv_pkm_MJ * 2.3/2.8]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV",
+        conv_pkm_MJ := conv_pkm_MJ * 0.81/0.95]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "FCEV",
+        conv_pkm_MJ := conv_pkm_MJ * 1.41/1.75]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Hybrid Electric",
+        conv_pkm_MJ := conv_pkm_MJ * 1.55/1.3]
+
+    ## liquids constant from 2030 on
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year >= 2030,
+        conv_pkm_MJ := .SD[year == 2030]$conv_pkm_MJ, by = c("vehicle_type")]
+
+    int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "Liquids",
+        conv_pkm_MJ := conv_pkm_MJ * 7.28/6.25]
+    int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "BEV",
+        conv_pkm_MJ := conv_pkm_MJ * 2.94/2.3]
+    int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "FCEV",
+        conv_pkm_MJ := conv_pkm_MJ * 4.7/4.4]
+
+}
 
   ## include hydrogen airplanes intensity
   ## based on "A review on potential use of hydrogen in aviation applications", Dincer, 2016: the energy intensity of a hydrogen airplane is around 1MJ/pkm. The range of energy intensity of a fossil-based airplane is here around 3-2 MJ/pkm->a factor of 0.5 is assumed
@@ -418,8 +451,16 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   dem[is.na(tech_output), tech_output := 0]
 
   ## fill in missing categories for int and LF
-  int = merge(int, unique(dem[!vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
+  int = merge(
+    int,
+    unique(
+      dem[subsector_L3 == "trn_freight_road",
+          c("iso", "vehicle_type", "technology",
+            "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]),
+    all = TRUE,
+    by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
   int[, conv_pkm_MJ := ifelse(is.na(conv_pkm_MJ), mean(conv_pkm_MJ, na.rm = TRUE), conv_pkm_MJ), by = c("year", "technology", "vehicle_type")]
+  int <- int[!(iso == "DEU" & vehicle_type %in% c("Van", "Mini Car"))]
 
   LF = merge(LF, unique(dem[!vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
   LF[, loadFactor := ifelse(is.na(loadFactor), mean(loadFactor, na.rm = TRUE), loadFactor), by = c("year", "vehicle_type")]
