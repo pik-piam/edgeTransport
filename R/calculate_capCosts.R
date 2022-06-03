@@ -17,7 +17,7 @@ calculate_capCosts <-function(base_price, Fdemand_ES, stations,
                               REMINDyears,
                               scenario){
 
-  teEs <- region <- variable <- value <- demand_F <- `.` <- subsector_L3 <- vehicle_type <- NULL
+  teEs <- region <- variable <- value <- demand_EJ <- `.` <- subsector_L3 <- vehicle_type <- NULL
   vehicles_number <- annual_mileage <- load_factor <- demand <- technology <- cost_st_km <- NULL
   subsector_L2 <- NULL
 
