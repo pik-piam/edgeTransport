@@ -77,7 +77,8 @@ calculate_capCosts <-function(base_price, Fdemand_ES, stations,
   data=merge(data,EDGE2CESmap,all.x=TRUE,by=intersect(names(data),names(EDGE2CESmap)))
   data=merge(data,EDGE2teESmap,all=TRUE,by=intersect(names(data),names(EDGE2teESmap)))
   ## summarise and find the average prices
-  data=data[,.(non_fuel_price=sum(non_fuel_price*demand_F/sum(demand_F))), by=c("region","year","teEs")]
+
+  data=data[,.(non_fuel_price=sum(non_fuel_price*demand_EJ/sum(demand_EJ))), by=c("region","year","teEs")]
 
   ## merge with the stations costs
   data = merge(data, stations, all = TRUE, by = c("teEs", "region", "year"))
