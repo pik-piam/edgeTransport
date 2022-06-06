@@ -46,6 +46,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     storeRDS <- FALSE
   }
 
+
+
   ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
   EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
 
@@ -265,8 +267,10 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   print("-- LOGIT calculation: three iterations to provide endogenous update of inconvenience costs")
   ## filter out prices and intensities that are related to not used vehicles-technologies in a certain region
   REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
-  IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
 
+  #What was the purpose of this line? In the new preftab table, all vehicle classes are included to unify the structure. Vehicle classes that are not available
+  #in the country, receive a zero sw. The missing input data for that vehcile classes causing NAs in the line underneath
+  #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
@@ -438,6 +442,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                   2130, 2150)
 
   if (storeRDS) {
+    #Copy gdx file to output folder
+    file.copy(gdxPath, output_folder)
     saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
     saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
@@ -469,8 +475,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
     report <- reportEDGETransport2(
-                  output_folder = file.path(output_folder,folder), sub_folder = "level_2",
-                  loadmif = FALSE, extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
+                  output_folder = file.path(output_folder, folder, "level_2"),
+                  extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
                   model_name = "EDGE-Transport",
                   gdx = gdxPath)
 
