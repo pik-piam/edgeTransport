@@ -26,11 +26,11 @@ Freight;trn_freight_road;trn_freight_road_tmp_subsector_L2;trn_freight_road_tmp_
 Pass;Cycle;Cycle_tmp_subsector_L2;Cycle_tmp_subsector_L1;Cycle_tmp_vehicletype;Cycle_tmp_technology;Pass|non-LDV;NA;NA;Pass|Road|Non-Motorized|Cycling;Pass|Road|Non-Motorized;NA;Pass|w/o bunkers
 Pass;Domestic Aviation;Domestic Aviation_tmp_subsector_L2;Domestic Aviation_tmp_subsector_L1;Domestic Aviation_tmp_vehicletype;Hydrogen;Pass|non-LDV;NA;Pass|Aviation|Domestic;NA;NA;NA;Pass|w/o bunkers
 Pass;Domestic Aviation;Domestic Aviation_tmp_subsector_L2;Domestic Aviation_tmp_subsector_L1;Domestic Aviation_tmp_vehicletype;Liquids;Pass|non-LDV;NA;Pass|Aviation|Domestic;NA;NA;NA;Pass|w/o bunkers
-Pass;HSR;HSR_tmp_subsector_L2;HSR_tmp_subsector_L1;HSR_tmp_vehicletype;Electric;Pass|non-LDV;NA;Pass|Rail|HSR;NA;NA;NA;Pass|w/o bunkers
+Pass;HSR;HSR_tmp_subsector_L2;HSR_tmp_subsector_L1;HSR_tmp_vehicletype;Electric;Pass|non-LDV;NA;Pass|Rail;NA;NA;Pass|Rail|HSR;Pass|w/o bunkers
 Pass;International Aviation;International Aviation_tmp_subsector_L2;International Aviation_tmp_subsector_L1;International Aviation_tmp_vehicletype;Hydrogen;Pass|non-LDV;NA;Pass|Aviation|International;NA;NA;NA;NA
 Pass;International Aviation;International Aviation_tmp_subsector_L2;International Aviation_tmp_subsector_L1;International Aviation_tmp_vehicletype;Liquids;Pass|non-LDV;NA;Pass|Aviation|International;NA;NA;NA;NA
-Pass;Passenger Rail;Passenger Rail_tmp_subsector_L2;Passenger Rail_tmp_subsector_L1;Passenger Rail_tmp_vehicletype;Electric;Pass|non-LDV;NA;Pass|Rail|non-HSR;NA;NA;NA;Pass|w/o bunkers
-Pass;Passenger Rail;Passenger Rail_tmp_subsector_L2;Passenger Rail_tmp_subsector_L1;Passenger Rail_tmp_vehicletype;Liquids;Pass|non-LDV;NA;Pass|Rail|non-HSR;NA;NA;NA;Pass|w/o bunkers
+Pass;Passenger Rail;Passenger Rail_tmp_subsector_L2;Passenger Rail_tmp_subsector_L1;Passenger Rail_tmp_vehicletype;Electric;Pass|non-LDV;NA;Pass|Rail;NA;NA;Pass|Rail|non-HSR;Pass|w/o bunkers
+Pass;Passenger Rail;Passenger Rail_tmp_subsector_L2;Passenger Rail_tmp_subsector_L1;Passenger Rail_tmp_vehicletype;Liquids;Pass|non-LDV;NA;Pass|Rail;NA;NA;Pass|Rail|non-HSR;Pass|w/o bunkers
 Pass;Walk;Walk_tmp_subsector_L2;Walk_tmp_subsector_L1;Walk_tmp_vehicletype;Walk_tmp_technology;Pass|non-LDV;NA;NA;Pass|Road|Non-Motorized|Walking;Pass|Road|Non-Motorized;NA;Pass|w/o bunkers
 Pass;trn_pass_road;Bus;Bus_tmp_subsector_L1;Bus_tmp_vehicletype;Electric;Pass|non-LDV;NA;Pass|Road|Bus;NA;NA;NA;Pass|w/o bunkers
 Pass;trn_pass_road;Bus;Bus_tmp_subsector_L1;Bus_tmp_vehicletype;FCEV;Pass|non-LDV;NA;Pass|Road|Bus;NA;NA;NA;Pass|w/o bunkers
