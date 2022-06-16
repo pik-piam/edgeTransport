@@ -15,13 +15,14 @@ output:
     number_sections: yes
 geometry: "a4paper,landscape,left=0.5cm,right=0.5cm,top=1.5cm,bottom=0.5cm,footnotesep=0.0cm,footskip=0.1cm"
 params:
-  mifScen: ""
+  mifScen: "C:/Users/johannah/Documents/Remind/C_SSP2-Base_bIT-rem-2/EDGE-T/EDGE-T.mif"
   mifScenNames: null
-  mifHist: ""
+  mifHist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical_21.mif"
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
   yearsBarPlot: !r c(2010, 2030, 2050, 2100)
   reg: !r c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","GLO")
+  modelsHistExclude: !r c()
   sections: !r c("01_energy_demand","02_energy_services","04_costs_and_shareweight_trends")
   userSectionPath: null
   mainReg: "GLO"
@@ -110,7 +111,7 @@ dataScen %>%
   filter(period %in% params$yearsScen) ->
   dataScen
 dataHist %>% 
-  filter(period %in% params$yearsHist, !is.na(value)) ->
+  filter(period %in% params$yearsHist, !(model %in% params$modelsHistExclude), !is.na(value)) ->
   dataHist
 
 # Combine into one data frame and remove old.
