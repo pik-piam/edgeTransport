@@ -391,6 +391,8 @@ reportEDGETransport2 <- function(output_folder = ".",
       tmp <- data.table(region=regionSubsetList[[i]], aggr_reg =namesReg[i])
       RegAggregation <- rbind(RegAggregation, tmp)
     }
+  } else {
+    RegAggregation <- NULL
   }
 
 
