@@ -183,7 +183,7 @@ reportEDGETransport2 <- function(output_folder = ".",
 
         unit <- switch(mode,
                    "FE" = "EJ/yr",
-                   "ES" = if(var == "Pass"){"bn pkm/yr"}else{"bn tkm/yr"},
+                   "ES" = if(var0 == "Pass"){"bn pkm/yr"}else{"bn tkm/yr"},
                    "VKM" = "bn vkm/yr")
 
         #Aggregate data
@@ -293,68 +293,96 @@ reportEDGETransport2 <- function(output_folder = ".",
     return(venum)
   }
 
-  reportStockAndSales <- function(annual_mileage){
-    if (file.exists(datapath(fname = "vintcomp.RDS"))){
-      vintages_file <- datapath(fname = "vintcomp.RDS")
-      vintgs <- readRDS(vintages_file)
-      return(NULL)
-    } else {
-      print("EDGE-T Reporting: No vintages file found.")
-      return(NULL)
-    }
+  vintageReport <- function(load_factor){
+    ## this function should return the format originally provided by
+    ## the vintages-snippet in the EDGE_transport.R script in REMIND
+    ## full_demand_vkm: total demand per year and vehicle/technology
+    ## vintage_demand_vkm: demand of stock vehicles per year and construction year
+    ## (excluding new sales of the current year)
+    vintages <- readRDS(datapath("vintages.RDS"))
+    shares <- readRDS(datapath("shares.RDS"))
 
+    vint <- vintages[["vintcomp_startyear"]]
+    newd <- vintages[["newcomp"]]
+    sharesVS1 <- shares[["VS1_shares"]]
+    setnames(sharesVS1, "share", "shareVS1")
+
+    newd <- sharesVS1[newd, on=c("region", "year", "subsector_L1", "vehicle_type")]
+    newd[, demNew := totdem * sharetech_new * shareVS1]
+
+    vint <- newd[vint, on=c("region", "subsector_L1", "vehicle_type", "technology", "year", "sector")]
+    vint <- vint[!is.na(demNew)]
+    vint <- vint[, c("year", "region", "vehicle_type", "technology", "variable", "demNew", "demVintEachYear")]
+    vint[, demand_F := demNew + sum(demVintEachYear), by=c("region", "year", "vehicle_type", "technology")]
+    vint <- load_factor[vint, on=c("year", "region", "vehicle_type", "technology")]
+    vint[, full_demand_vkm := demand_F/loadFactor]
+    vint[, vintage_demand_vkm := demVintEachYear/loadFactor]
+
+    vint[, c("demand_F", "demVintEachYear", "loadFactor", "demNew") := NULL]
+
+    setnames(vint, "variable", "construction_year")
+
+    return(vint)
+  }
+
+
+  reportStockAndSales <- function(annual_mileage, load_factor){
     year_c <- construction_year <- Stock <- Sales <- vintage_demand_vkm <- fct <- category <- NULL
+    vint <- vintageReport(load_factor)
+    vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
+    vint[, sales_demand := full_demand_vkm - stock_demand]
+    vint <- unique(vint[, c("construction_year", "vintage_demand_vkm", "full_demand_vkm") := NULL])
 
+    annual_mileage_trucks <- fread(
+      text="vehicle_type,annual_mileage
+Truck (0-3.5t),21500
+Truck (7.5t),34500
+Truck (18t),53000
+Truck (26t),74000
+Truck (40t),136500")
 
-    ## backward compat. fix
-    fct <- 1.
-    if("variable" %in% colnames(vintgs)){
-      fct <- 1e-6
-      setnames(vintgs, "variable", "construction_year")
-    }
+    cjam <- CJ(region=annual_mileage$region, year=annual_mileage$year,
+               vehicle_type=annual_mileage_trucks$vehicle_type,
+               unique=T)
+    annual_mileage_trucks <- annual_mileage_trucks[cjam, on="vehicle_type"]
 
-    vintgs[, year_c := as.numeric(gsub("C_", "", construction_year))]
+    vint <- annual_mileage[vint, on=c("year", "region", "vehicle_type")]
+    vint[, `:=`(Stock = stock_demand / annual_mileage, Sales = sales_demand / annual_mileage)][
+     , c("annual_mileage", "stock_demand", "sales_demand") := NULL]
+    vint <- melt(vint, measure.vars=c("Stock", "Sales"), variable.name="category")
 
-    ## stock is the full stock up to the end of the current year
-    ## sales are the sales of the current year
+    vint[grepl("^Truck", vehicle_type), typ := "Truck"]
+    vint[grepl("^Bus", vehicle_type), typ := "Bus"]
+    vint[is.na(typ), typ := "LDV"]
 
-    setnames(vintgs, "full_demand_vkm", "Stock")
-    vintgs[, Stock := Stock * fct]
-    vintgs[, Sales := Stock - sum(vintage_demand_vkm), by = .(year, region, vehicle_type, technology)]
-    vintgs[, c("construction_year", "vintage_demand_vkm", "year_c") := NULL]
-    vintgs <- unique(vintgs)
-
-    vintgs <- data.table::melt(vintgs, measure.vars = c("Stock", "Sales"), variable.name = "category")
-    ## vkm -> v-num
-    vintgs = merge(vintgs, annual_mileage, by = c("year", "region", "vehicle_type"))
-    vintgs[, value := value / annual_mileage]
-    vintgs[, variable := ifelse(
+    vint[, variable := ifelse(
       vehicle_type == "Bus_tmp_vehicletype",
       sprintf("%s|Transport|Bus|%s", category, technology),
-      sprintf("%s|Transport|LDV|%s|%s", category, vehicle_type, technology))]
+      sprintf("%s|Transport|%s|%s|%s", category, typ, vehicle_type, technology))]
 
     ## totals
-    vintgs <- rbindlist(list(
-      vintgs,
-      vintgs[, .(value = sum(value), variable = gsub("(.+)\\|.+$", "\\1", variable)),
+    vint <- rbindlist(list(
+      vint,
+      vint[, .(value = sum(value), variable = gsub("(.+)\\|.+$", "\\1", variable)),
              by = c("category", "year", "region", "vehicle_type")],
-      vintgs[grepl("|LDV|", variable, fixed = TRUE),
+      vint[grepl("|LDV|", variable, fixed = TRUE),
              .(value = sum(value), variable=sprintf("%s|Transport|LDV", category)),
+           by = c("category", "year", "region")],
+      vint[grepl("|Truck|", variable, fixed = TRUE),
+             .(value = sum(value), variable=sprintf("%s|Transport|Truck", category)),
              by = c("category", "year", "region")]), fill = TRUE)
 
-    vintgs[, c("vehicle_type", "technology", "annual_mileage", "category") := NULL]
-    vintgs <- unique(vintgs[!is.na(value)])
-
-    setnames(vintgs, "year", "period")
-
-    vintgs = approx_dt(vintgs, c(2005, 2010, unique(vintgs$period), 2110, 2130, 2150),
-                       xcol = "period", ycol = "value", idxcols = c("region", "variable"), extrapolate = T)
-    vintgs[period <= 2010|period > 2100, value := 0]
-
+    vint[, c("vehicle_type", "technology", "category", "typ") := NULL]
     ## remove the variable (e.g. vehicle_types) that are not present for this specific region
-    vintgs[, `:=`(model = model_name, scenario = scenario_title, unit = "Million vehicles")]
+    vint <- unique(vint[!is.na(value)])
 
-    return(vintgs)
+    setnames(vint, "year", "period")
+
+    vint = approx_dt(vint, c(2005, 2010, unique(vint$period), 2110, 2130, 2150),
+                     xcol = "period", ycol = "value", idxcols = c("region", "variable"), extrapolate = T)
+
+    vint[, `:=`(model = model_name, scenario = scenario_title, unit = "Million vehicles")]
+    return(vint)
 
   }
 
@@ -511,7 +539,7 @@ reportEDGETransport2 <- function(output_folder = ".",
   totals <- rbindlist(totals, use.names = TRUE)
   toMIF <- rbind(toMIF, totals)
 
-  toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage)), use.names=TRUE)
+  toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage, load_factor)), use.names=TRUE)
 
   #Aggregate variables to "World" region
   toMIF <- rbindlist(list(toMIF, toMIF[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]), use.names=TRUE)

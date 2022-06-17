@@ -444,8 +444,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   if (storeRDS) {
     #Copy gdx file to output folder
     file.copy(gdxPath, output_folder)
-    saveRDS(vintages[["vintcomp"]], file = level2path("vintcomp.RDS"))
-    saveRDS(vintages[["newcomp"]], file = level2path("newcomp.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
     saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
     saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))

@@ -282,9 +282,10 @@ compScenEDGET <- function(listofruns, hist, y_bar = c(2010, 2030, 2050, 2100),
     demand_km[[i]]$scenario <- scenNames[i]
     demand_ej[[i]] <- readRDS(level2path(listofruns[[i]], "demandF_plot_EJ.RDS")) ## detailed final energy demand, EJ
     demand_ej[[i]]$scenario <- scenNames[i]
-    vintcomp[[i]] <- readRDS(level2path(listofruns[[i]], "vintcomp.RDS"))
+    vintages <- readRDS(level2path(listofruns[[i]], "vintages.RDS"))
+    vintcomp[[i]] <- vintages[["vintcomp"]]
     vintcomp[[i]]$scenario <- scenNames[i]
-    newcomp[[i]] <- readRDS(level2path(listofruns[[i]], "newcomp.RDS"))
+    newcomp[[i]] <- vintages[["newcomp"]]
     newcomp[[i]]$scenario <- scenNames[i]
     shares[[i]] <- readRDS(level2path(listofruns[[i]], "shares.RDS"))
     shares[[i]]$scenario <- scenNames[i]

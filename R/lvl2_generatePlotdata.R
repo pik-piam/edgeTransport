@@ -11,6 +11,7 @@
 #' @export
 
 lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
+  warning("edgeTransport::lvl2_generate_plotdata is deprecated! Please use reportEDGETransport2.")
   Year <- variable <- missingH12 <- region <- fewcol <- gran_vehtype <- aggr_vehtype <- scenario <-
   weight <- sector <- unit <- vehicle_type <- technology <- period <- subsector_L1 <- subsector_L2 <-
   subsector_L3 <- `.` <- period <- value <- tot <- model <- sw <- logit.exponent <- check <- variable <- 
@@ -135,9 +136,10 @@ lvl2_generate_plotdata <- function(listofruns, AggrReg="H12"){
     demand_km[[i]]$scenario <- scenNames[i]
     demand_ej[[i]] <- readRDS(level2path(listofruns[i], "demandF_plot_EJ.RDS")) ## detailed final energy demand, EJ
     demand_ej[[i]]$scenario <- scenNames[i]
-    vintcomp[[i]] <- readRDS(level2path(listofruns[[i]], "vintcomp.RDS"))
+    vintages <- readRDS(level2path(listofruns[[i]], "vintages.RDS"))
+    vintcomp[[i]] <- vintages[["vintcomp"]]
     vintcomp[[i]]$scenario <- scenNames[i]
-    newcomp[[i]] <- readRDS(level2path(listofruns[[i]], "newcomp.RDS"))
+    newcomp[[i]] <- vintages[["newcomp"]]
     newcomp[[i]]$scenario <- scenNames[i]
     shares[[i]] <- readRDS(level2path(listofruns[[i]], "shares.RDS"))
     shares[[i]]$scenario <- scenNames[i]
