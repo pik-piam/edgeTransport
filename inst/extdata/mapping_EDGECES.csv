@@ -1,26 +1,26 @@
-sector,subsector_L2,fuel,CES_node
-trn_pass,trn_pass_road_LDV,Electricity,feelt_p_sm
-trn_pass,trn_pass_road_LDV,Liquids,fepet_p_sm
-trn_pass,trn_pass_road_LDV,Hydrogen,feh2t_p_sm
-trn_pass,trn_pass_road_LDV,NG,fegat_p_sm
-trn_pass,Bus,Liquids,fedie_p_sm
-trn_pass,Bus,NG,fegat_p_sm
-trn_pass,trn_pass_road_bus,Liquids,fedie_p_sm
-trn_pass,trn_pass_road_bus,NG,fegat_p_sm
-trn_pass,Domestic Aviation_tmp_subsector_L2,Liquids,fedie_p_sm
-trn_pass,Domestic Aviation_tmp_subsector_L2,Hydrogen,feh2t_p_sm
-trn_pass,HSR_tmp_subsector_L2,Electric,feelt_p_sm
-trn_pass,Passenger Rail_tmp_subsector_L2,Electric,feelt_p_sm
-trn_pass,Passenger Rail_tmp_subsector_L2,Liquids,fedie_p_sm
-trn_freight,trn_freight_road_tmp_subsector_L2,Liquids,fedie_f_sm
-trn_freight,trn_freight_road_tmp_subsector_L2,NG,fegat_f_sm
-trn_freight,Domestic Ship_tmp_subsector_L2,Liquids,fedie_f_sm
-trn_freight,Freight Rail_tmp_subsector_L2,Coal,fedie_f_sm
-trn_freight,Freight Rail_tmp_subsector_L2,Electric,feelt_f_sm
-trn_freight,Freight Rail_tmp_subsector_L2,Liquids,fedie_f_sm
-trn_aviation_intl,International Aviation_tmp_subsector_L2,Liquids,fedie_p_lo
-trn_shipping_intl,International Ship_tmp_subsector_L2,Liquids,fedie_f_lo
-trn_freight,trn_freight_road_tmp_subsector_L2,Electric,feelt_f_sm
-trn_pass,Bus,Electric,feelt_p_sm
-trn_freight,trn_freight_road_tmp_subsector_L2,Hydrogen,feh2t_f_sm
-trn_pass,Bus,Hydrogen,feh2t_p_sm
+sector;subsector_L2;fuel;CES_node
+trn_pass;trn_pass_road_LDV;Electricity;feelt_p_sm
+trn_pass;trn_pass_road_LDV;Liquids;fepet_p_sm
+trn_pass;trn_pass_road_LDV;Hydrogen;feh2t_p_sm
+trn_pass;trn_pass_road_LDV;NG;fegat_p_sm
+trn_pass;Bus;Liquids;fedie_p_sm
+trn_pass;Bus;NG;fegat_p_sm
+trn_pass;trn_pass_road_bus;Liquids;fedie_p_sm
+trn_pass;trn_pass_road_bus;NG;fegat_p_sm
+trn_pass;Domestic Aviation_tmp_subsector_L2;Liquids;fedie_p_sm
+trn_pass;Domestic Aviation_tmp_subsector_L2;Hydrogen;feh2t_p_sm
+trn_pass;HSR_tmp_subsector_L2;Electricity;feelt_p_sm
+trn_pass;Passenger Rail_tmp_subsector_L2;Electricity;feelt_p_sm
+trn_pass;Passenger Rail_tmp_subsector_L2;Liquids;fedie_p_sm
+trn_freight;trn_freight_road_tmp_subsector_L2;Liquids;fedie_f_sm
+trn_freight;trn_freight_road_tmp_subsector_L2;NG;fegat_f_sm
+trn_freight;Domestic Ship_tmp_subsector_L2;Liquids;fedie_f_sm
+trn_freight;Freight Rail_tmp_subsector_L2;Coal;fedie_f_sm
+trn_freight;Freight Rail_tmp_subsector_L2;Electricity;feelt_f_sm
+trn_freight;Freight Rail_tmp_subsector_L2;Liquids;fedie_f_sm
+trn_aviation_intl;International Aviation_tmp_subsector_L2;Liquids;fedie_p_lo
+trn_shipping_intl;International Ship_tmp_subsector_L2;Liquids;fedie_f_lo
+trn_freight;trn_freight_road_tmp_subsector_L2;Electricity;feelt_f_sm
+trn_pass;Bus;Electricity;feelt_p_sm
+trn_freight;trn_freight_road_tmp_subsector_L2;Hydrogen;feh2t_f_sm
+trn_pass;Bus;Hydrogen;feh2t_p_sm
