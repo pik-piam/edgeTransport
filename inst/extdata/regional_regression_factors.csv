@@ -1,4 +1,12 @@
 SSP_scenario,region,var,2015,2030,2050,2100
+SSP1,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SSP2,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SSP2EU,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SSP5,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SDP,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SDP_MC,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SDP_RC,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
+SDP_EI,DEU,income_elasticity_pass_sm,1,0.4,0.3,0
 SSP2,MEA,income_elasticity_freight_lo,0.3,0,0,0
 SSP2,CHA,income_elasticity_freight_lo,-0.4,0,-0.3,-2
 SSP2,JPN,income_elasticity_freight_lo,0,0,-1,-2
