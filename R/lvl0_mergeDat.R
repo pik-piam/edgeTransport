@@ -93,6 +93,11 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   AM = rbind(AM_EU, UCD_output$UCD_mileage[!(iso %in% unique(AM_EU$iso) & vehicle_type %in% unique(AM_EU$vehicle_type))])
   AM = merge(AM, logit_cat, by = "vehicle_type", allow.cartesian = T, all.x = TRUE)[, univocal_name:= NULL]
   AM = AM[year >= 1990]
+  if(ariadne_adjustments){
+    ## according to ViZ data from 2020 there has been a 10% reduction wrt 2010 values
+    ## (from 14 kkm to 13.6 kkm per vehicle and year)
+    AM[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W", vkm.veh := vkm.veh * 0.9]
+  }
   eu_iso = unique(REMIND2ISO_MAPPING[region %in% c("DEU", "FRA", "UKI", "ECS", "ENC", "ESW", "EWN", "ESC", "ECE", "NEN", "NES"), iso])
   ## calculate PSI costs in terms of 2005$/pkm annualized
   PSI_c = copy(PSI_costs)
