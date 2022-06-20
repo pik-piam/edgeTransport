@@ -1,0 +1,26 @@
+# Energy Intensities
+## Passenger
+```{r}
+items <- c(
+          "EInt|Transport|Pass|w/o bunkers",
+          "EInt|Transport|Pass|Aviation|International",
+          "EInt|Transport|Pass|Rail",
+          "EInt|Transport|Pass|Aviation|Domestic",
+          "EInt|Transport|Pass|Road",
+          "EInt|Transport|Pass|Road|LDV",
+          "EInt|Transport|Pass|Road|Bus",
+  )
+walk(items, showLinePlots, data = data)
+```
+
+## Freight
+```{r}
+items <- c(
+            "EInt|Transport|Freight|w/o bunkers",
+            "EInt|Transport|Freight|International Shipping",
+            "EInt|Transport|Freight|Navigation",
+            "EInt|Transport|Freight|Rail",
+            "EInt|Transport|Freight|Road"
+  )
+walk(items, showLinePlots, data = data)
+```

@@ -539,7 +539,7 @@ Truck (40t),136500")
   totals <- rbindlist(totals, use.names = TRUE)
   toMIF <- rbind(toMIF, totals)
 
-  toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage, load_factor)), use.names=TRUE)
+  #toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage, load_factor)), use.names=TRUE)
 
   #Aggregate variables to "World" region
   toMIF <- rbindlist(list(toMIF, toMIF[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]), use.names=TRUE)
@@ -552,6 +552,31 @@ Truck (40t),136500")
 
 
   if (extendedReporting) {
+
+    reportInt <- function(var, datatable){
+     repFE <- datatable[variable == paste0("FE|Transport|", var)]
+     #EJ to MJ
+     repFE[, value := value*1e12]
+     repFE[, variable := NULL][, unit := NULL]
+     setnames(repFE, "value", "FE")
+     repES <- datatable[variable == paste0("ES|Transport|", var)]
+     repES[, variable := NULL][, unit := NULL]
+
+     #check if variable is found
+     if (!(length(repFE)>0 && length(repES) > 0)){
+       print(paste0("Variable not found to calculate Energy Intensity ", var))
+     }
+
+     repInt <- merge(repFE, repES, by = c("region", "period", "scenario", "model"))
+     repInt[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|", var)]
+
+     if (sub("\\|.*", "", var) == "Pass"){
+      repInt[, unit := "MJ/pkm"]
+     }else{
+      repInt[, unit := "MJ/tkm"]}
+
+     return(repInt)
+     }
 
     LogitCostplotdata <- function(priceData, prefData, logitExp, groupValue, Reg_Aggregation, weightpkm){
 
@@ -758,6 +783,23 @@ Truck (40t),136500")
     # UE[, value:= value*UE_efficiency][, variable := gsub("FE","UE", variable)]
 
     # toMIF <- rbind(toMIF, UE)
+
+    varslist <- list("Pass|w/o bunkers",
+                     "Pass|Aviation|International",
+                     "Pass|Rail",
+                     "Pass|Aviation|Domestic",
+                     "Pass|Road",
+                     "Pass|Road|LDV",
+                     "Pass|Road|Bus",
+                     "Freight|w/o bunkers",
+                     "Freight|International Shipping",
+                     "Freight|Navigation",
+                     "Freight|Rail",
+                     "Freight|Road")
+
+    EInt <- sapply(varslist, reportInt, datatable = toMIF, simplify = FALSE, USE.NAMES = TRUE)
+    EInt <- rbindlist(EInt, use.names = TRUE)
+    toMIF <- rbind(toMIF, EInt)
 
     #Calculate logit Costs
     #Read in additional data if exist
