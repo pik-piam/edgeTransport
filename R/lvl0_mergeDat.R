@@ -505,6 +505,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
     costs[iso == "USA" & vehicle_type == "Truck (18t)"][, vehicle_type := "Truck (40t)"]
   ))
 
+  ## Demand level corrections, adjusting to ETP demands
+  dem[iso == "CHN" & subsector_L2 == "Bus", tech_output := tech_output/2.5]
+  dem[iso == "IND" & subsector_L2 == "Bus", tech_output := tech_output/2]
+  dem[iso %in% REMIND2ISO_MAPPING[region == "OAS", iso] & subsector_L2 == "Bus", tech_output := tech_output/5]
+  dem[iso %in% REMIND2ISO_MAPPING[region == "NEU", iso] & subsector_L2 == "Bus", tech_output := tech_output/2]
+
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 
