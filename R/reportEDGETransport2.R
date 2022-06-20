@@ -887,9 +887,9 @@ Truck (40t),136500")
       GDP[, weight := weight*0.001][, unit := "billion US$2005/yr"]
       setnames(GDP, c("year", "weight"), c("period", "value"))
       setnames(POP, "year", "period")
-
-      POP[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]
-      GDP[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]
+      #Aggregate World
+      POP <- rbindlist(list(POP, POP[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]), use.names = TRUE)
+      GDP <- rbindlist(list(GDP, GDP[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]), use.names = TRUE)
 
       if (!is.null(regionSubsetList)){
         toMIF <- rbindlist(list(
