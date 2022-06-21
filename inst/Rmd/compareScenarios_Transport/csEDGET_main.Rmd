@@ -178,6 +178,7 @@ pCapVariables <- tribble(
   ~variable, ~newUnit, ~conversionFactor,
   "GDP|PPP", "kUS$2005", 1e6,
   "ES|Transport|Pass|w/o bunkers", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Aviation", "pkm/yr", 1e9,
   "ES|Transport|Pass|Aviation|International", "pkm/yr", 1e9,
   "ES|Transport|Pass|Aviation|Domestic", "pkm/yr", 1e9,
   "ES|Transport|Pass|Road|Bus", "pkm/yr", 1e9,

@@ -5,10 +5,12 @@ tot_wbunk <- "ES|Transport|Pass"
 tot_wobunk <- "ES|Transport|Pass|w/o bunkers"
 items <- c(
     "ES|Transport|Pass|Aviation|International",
+    "ES|Transport|Pass|Aviation",
     "ES|Transport|Pass|Aviation|Domestic",
     "ES|Transport|Pass|Rail|HSR",
     "ES|Transport|Pass|Rail|non-HSR",
     "ES|Transport|Pass|Road|Bus",
+    "ES|Transport|Pass|Road|LDV",
     "ES|Transport|Pass|Road|LDV|Four Wheelers",
     "ES|Transport|Pass|Road|LDV|Two Wheelers",
     "ES|Transport|Pass|Road|Non-Motorized|Walking",
@@ -27,11 +29,13 @@ walk(items, showLinePlots, data = data)
 
 items <- c(
     "ES|Transport|Pass|w/o bunkers pCap",
+    "ES|Transport|Pass|Aviation pCap",
     "ES|Transport|Pass|Aviation|International pCap",
     "ES|Transport|Pass|Aviation|Domestic pCap",
     "ES|Transport|Pass|Rail|HSR pCap",
     "ES|Transport|Pass|Rail|non-HSR pCap",
     "ES|Transport|Pass|Road|Bus pCap",
+    "ES|Transport|Pass|Road|LDV pCap",
     "ES|Transport|Pass|Road|LDV|Four Wheelers pCap",
     "ES|Transport|Pass|Road|LDV|Two Wheelers pCap",
     "ES|Transport|Pass|Road|Non-Motorized|Walking pCap",

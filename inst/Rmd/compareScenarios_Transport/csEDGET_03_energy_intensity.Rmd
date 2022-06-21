@@ -8,6 +8,8 @@ items <- c(
           "EInt|Transport|Pass|Aviation|Domestic",
           "EInt|Transport|Pass|Road",
           "EInt|Transport|Pass|Road|LDV",
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers",
+          "EInt|Transport|Pass|Road|LDV|Two Wheelers",
           "EInt|Transport|Pass|Road|Bus"
   )
 walk(items, showLinePlots, data = data)

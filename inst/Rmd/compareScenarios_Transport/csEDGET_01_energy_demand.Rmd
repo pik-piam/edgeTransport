@@ -117,6 +117,12 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data=data)
 ```
 
+### Passenger Aviation
+```{r}
+tot <- "FE|Transport|Pass|Aviation"
+showLinePlots(data, tot)
+```
+
 ### Freight
 ```{r}
 tot <- "FE|Transport|Freight"
