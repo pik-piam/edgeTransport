@@ -1,5 +1,5 @@
 # Energy Intensities
-## Passenger
+## Passenger per pkm
 ```{r}
 items <- c(
           "EInt|Transport|Pass|w/o bunkers",
@@ -13,7 +13,7 @@ items <- c(
 walk(items, showLinePlots, data = data)
 ```
 
-## Freight
+## Freight per tkm
 ```{r}
 items <- c(
             "EInt|Transport|Freight|w/o bunkers",
@@ -21,6 +21,32 @@ items <- c(
             "EInt|Transport|Freight|Navigation",
             "EInt|Transport|Freight|Rail",
             "EInt|Transport|Freight|Road"
+  )
+walk(items, showLinePlots, data = data)
+```
+
+## Passenger per vkm
+```{r}
+items <- c(
+          "EInt|Transport|VKM|Pass|w/o bunkers",
+          "EInt|Transport|VKM|Pass|Aviation|International",
+          "EInt|Transport|VKM|Pass|Rail",
+          "EInt|Transport|VKM|Pass|Aviation|Domestic",
+          "EInt|Transport|VKM|Pass|Road",
+          "EInt|Transport|VKM|Pass|Road|LDV",
+          "EInt|Transport|VKM|Pass|Road|Bus"
+  )
+walk(items, showLinePlots, data = data)
+```
+
+## Freight per vkm
+```{r}
+items <- c(
+            "EInt|Transport|VKM|Freight|w/o bunkers",
+            "EInt|Transport|VKM|Freight|International Shipping",
+            "EInt|Transport|VKM|Freight|Navigation",
+            "EInt|Transport|VKM|Freight|Rail",
+            "EInt|Transport|VKM|Freight|Road"
   )
 walk(items, showLinePlots, data = data)
 ```
