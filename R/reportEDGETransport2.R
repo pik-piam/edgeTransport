@@ -344,7 +344,8 @@ reportEDGETransport2 <- function(output_folder = ".",
     cjam <- CJ(region = annual_mileage$region, year = annual_mileage$year,
                vehicle_type = annual_mileage_trucks$vehicle_type,
                unique=T)
-    annual_mileage_trucks <- annual_mileage_trucks[cjam, on = "vehicle_type"]
+    annual_mileage_trucks <- annual_mileage_trucks[cjam, on="vehicle_type"]
+    annual_mileage <- rbind(annual_mileage, annual_mileage_trucks, use.names = TRUE)
 
     vint <- annual_mileage[vint, on=c("year", "region", "vehicle_type")]
     vint[, `:=`(Stock = stock_demand / annual_mileage, Sales = sales_demand / annual_mileage)][, c("annual_mileage", "stock_demand", "sales_demand") := NULL]
@@ -382,7 +383,6 @@ reportEDGETransport2 <- function(output_folder = ".",
 
     vint[, `:=`(model = model_name, scenario = scenario_title, unit = "Million vehicles")]
     return(vint)
-
   }
 
   reportTotals <- function(aggrname, datatable, varlist){
