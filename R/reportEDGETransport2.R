@@ -334,21 +334,20 @@ reportEDGETransport2 <- function(output_folder = ".",
     vint <- unique(vint[, c("construction_year", "vintage_demand_vkm", "full_demand_vkm") := NULL])
 
     annual_mileage_trucks <- fread(
-      text="vehicle_type,annual_mileage
-Truck (0-3.5t),21500
-Truck (7.5t),34500
-Truck (18t),53000
-Truck (26t),74000
-Truck (40t),136500")
+      text = "vehicle_type,annual_mileage
+              Truck (0-3.5t), 21500
+              Truck (7.5t), 34500
+              Truck (18t), 53000
+              Truck (26t), 74000
+              Truck (40t), 136500")
 
-    cjam <- CJ(region=annual_mileage$region, year=annual_mileage$year,
-               vehicle_type=annual_mileage_trucks$vehicle_type,
+    cjam <- CJ(region = annual_mileage$region, year = annual_mileage$year,
+               vehicle_type = annual_mileage_trucks$vehicle_type,
                unique=T)
-    annual_mileage_trucks <- annual_mileage_trucks[cjam, on="vehicle_type"]
+    annual_mileage_trucks <- annual_mileage_trucks[cjam, on = "vehicle_type"]
 
     vint <- annual_mileage[vint, on=c("year", "region", "vehicle_type")]
-    vint[, `:=`(Stock = stock_demand / annual_mileage, Sales = sales_demand / annual_mileage)][
-     , c("annual_mileage", "stock_demand", "sales_demand") := NULL]
+    vint[, `:=`(Stock = stock_demand / annual_mileage, Sales = sales_demand / annual_mileage)][, c("annual_mileage", "stock_demand", "sales_demand") := NULL]
     vint <- melt(vint, measure.vars=c("Stock", "Sales"), variable.name="category")
 
     vint[grepl("^Truck", vehicle_type), typ := "Truck"]
@@ -483,9 +482,6 @@ Truck (40t),136500")
     `ES|Transport|Pass` = c("ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Road|Non-Motorized","ES|Transport|Pass|Rail|HSR",
                             "ES|Transport|Pass|Rail|non-HSR","ES|Transport|Pass|Aviation|International", "ES|Transport|Pass|Aviation|Domestic"),
     `ES|Transport|Freight` = c("ES|Transport|Freight|Road","ES|Transport|Freight|International Shipping","ES|Transport|Freight|Rail", "ES|Transport|Freight|Navigation"),
-    `ES|Transport` = c("ES|Transport|Freight|Road","ES|Transport|Freight|International Shipping","ES|Transport|Freight|Rail", "ES|Transport|Freight|Navigation",
-                       "ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Road|Non-Motorized","ES|Transport|Pass|Rail|HSR",
-                       "ES|Transport|Pass|Rail|non-HSR","ES|Transport|Pass|Aviation|International", "ES|Transport|Pass|Aviation|Domestic"),
     `ES|Transport|VKM|Pass|Road` = c("ES|Transport|VKM|Pass|Road|LDV", "ES|Transport|VKM|Pass|Road|Bus"),
     `ES|Transport|VKM||Road` = c("ES|Transport|VKM|Freight|Road", "ES|Transport|VKM|Pass|Road|LDV", "ES|Transport|VKM|Pass|Road|Bus"),
     `ES|Transport|VKM|Rail` = c("ES|Transport|VKM|Pass|Rail|HSR", "ES|Transport|VKM|Pass|Rail|non-HSR", "ES|Transport|VKM|Freight|Rail" ),
@@ -539,7 +535,7 @@ Truck (40t),136500")
   totals <- rbindlist(totals, use.names = TRUE)
   toMIF <- rbind(toMIF, totals)
 
-  #toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage, load_factor)), use.names=TRUE)
+  toMIF <- rbindlist(list(toMIF, reportStockAndSales(annual_mileage, load_factor)), use.names=TRUE)
 
   #Aggregate variables to "World" region
   toMIF <- rbindlist(list(toMIF, toMIF[, .(value = sum(value), region = "World"), by = .(model, scenario, variable, unit, period)]), use.names=TRUE)
@@ -554,6 +550,7 @@ Truck (40t),136500")
   if (extendedReporting) {
 
     reportInt <- function(var, datatable){
+     #Energy Intensity MJ/pkm or MJ/tkm
      repFE <- datatable[variable == paste0("FE|Transport|", var)]
      #EJ to MJ
      repFE[, value := value*1e12]
@@ -564,7 +561,7 @@ Truck (40t),136500")
 
      #check if variable is found
      if (!(length(repFE)>0 && length(repES) > 0)){
-       print(paste0("Variable not found to calculate Energy Intensity ", var))
+       print(paste0("Variable not found to calculate (p/t)km Energy Intensity ", var))
      }
 
      repInt <- merge(repFE, repES, by = c("region", "period", "scenario", "model"))
@@ -575,7 +572,19 @@ Truck (40t),136500")
      }else{
       repInt[, unit := "MJ/tkm"]}
 
-     return(repInt)
+     #Energy Intensity MJ/vkm
+     repVKM <- datatable[variable == paste0("ES|Transport|VKM|", var)]
+     repVKM[, variable := NULL][, unit := NULL]
+
+     #check if variable is found
+     if (!(length(repFE)>0 && length(repVKM) > 0)){
+       print(paste0("Variable not found to calculate VKM Energy Intensity ", var))
+     }
+
+     repIntVKM <- merge(repFE, repVKM, by = c("region", "period", "scenario", "model"))
+     repIntVKM[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|VKM|", var)][, unit := "MJ/vkm"]
+
+     return(rbind(repInt, repIntVKM))
      }
 
     LogitCostplotdata <- function(priceData, prefData, logitExp, groupValue, Reg_Aggregation, weightpkm){
@@ -783,7 +792,6 @@ Truck (40t),136500")
     # UE[, value:= value*UE_efficiency][, variable := gsub("FE","UE", variable)]
 
     # toMIF <- rbind(toMIF, UE)
-
     varslist <- list("Pass|w/o bunkers",
                      "Pass|Aviation|International",
                      "Pass|Rail",
