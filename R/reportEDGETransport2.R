@@ -145,7 +145,7 @@ reportEDGETransport2 <- function(output_folder = ".",
     return(tmp)
   }
 
-  reporting <- function(dt, mode){
+  reporting <- function(dt, mode) {
     datatable <- copy(dt)
     aggr_mode_tech <- aggr_LDV <- aggr_LDV_tech <- det_veh_tech <- aggr_bunkers <- aggr_bunkers_tech <- aggr_veh_tech <- capture.output <- NULL
     report <- list()
@@ -326,7 +326,7 @@ reportEDGETransport2 <- function(output_folder = ".",
   }
 
 
-  reportStockAndSales <- function(annual_mileage, load_factor){
+  reportStockAndSales <- function(annual_mileage, load_factor) {
     year_c <- construction_year <- Stock <- Sales <- vintage_demand_vkm <- fct <- category <- NULL
     vint <- vintageReport(load_factor)
     vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
@@ -369,6 +369,12 @@ Truck (40t),136500")
       vint[grepl("|LDV|", variable, fixed = TRUE),
              .(value = sum(value), variable=sprintf("%s|Transport|LDV", category)),
            by = c("category", "year", "region")],
+      vint[grepl("|LDV|", variable, fixed = TRUE),
+             .(value = sum(value), variable=sprintf("%s|Transport|LDV|%s", category, technology)),
+           by = c("category", "year", "region", "technology")],
+      vint[grepl("|Truck|", variable, fixed = TRUE),
+             .(value = sum(value), variable=sprintf("%s|Transport|Truck|%s", category, technology)),
+           by = c("category", "year", "region", "technology")],
       vint[grepl("|Truck|", variable, fixed = TRUE),
              .(value = sum(value), variable=sprintf("%s|Transport|Truck", category)),
              by = c("category", "year", "region")]), fill = TRUE)
