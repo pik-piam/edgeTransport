@@ -345,7 +345,8 @@ lvl0_loadEU <- function(input_folder, EU_dir = "EU_data") {
                     roadFE_eu = roadFE_eu,
                     LF_countries_EU=LF_countries_EU,
                     am_countries_EU = am_countries_EU,
-                    demand_pkm_EU = demand_pkm)
+                    demand_pkm_EU = demand_pkm,
+                    demand_tkm_EU = demand_tkm)
   return(load_EU_data)
 
 }
