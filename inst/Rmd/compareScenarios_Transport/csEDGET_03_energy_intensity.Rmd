@@ -12,7 +12,7 @@ items <- c(
           "EInt|Transport|Pass|Road|LDV|Two Wheelers",
           "EInt|Transport|Pass|Road|Bus"
   )
-walk(items, showLinePlots, data = data)
+walk(items, showLinePlots, data = data, scales = "fixed")
 ```
 
 ## Freight per tkm
@@ -24,7 +24,7 @@ items <- c(
             "EInt|Transport|Freight|Rail",
             "EInt|Transport|Freight|Road"
   )
-walk(items, showLinePlots, data = data)
+walk(items, showLinePlots, data = data, scales = "fixed")
 ```
 
 ## Passenger per vkm
@@ -38,7 +38,7 @@ items <- c(
           "EInt|Transport|VKM|Pass|Road|LDV",
           "EInt|Transport|VKM|Pass|Road|Bus"
   )
-walk(items, showLinePlots, data = data)
+walk(items, showLinePlots, data = data, scales = "fixed")
 ```
 
 ## Freight per vkm
@@ -50,5 +50,5 @@ items <- c(
             "EInt|Transport|VKM|Freight|Rail",
             "EInt|Transport|VKM|Freight|Road"
   )
-walk(items, showLinePlots, data = data)
+walk(items, showLinePlots, data = data, scales = "fixed")
 ```

@@ -5,12 +5,10 @@ tot_wbunk <- "ES|Transport|Pass"
 tot_wobunk <- "ES|Transport|Pass|w/o bunkers"
 items <- c(
     "ES|Transport|Pass|Aviation|International",
-    "ES|Transport|Pass|Aviation",
     "ES|Transport|Pass|Aviation|Domestic",
     "ES|Transport|Pass|Rail|HSR",
     "ES|Transport|Pass|Rail|non-HSR",
     "ES|Transport|Pass|Road|Bus",
-    "ES|Transport|Pass|Road|LDV",
     "ES|Transport|Pass|Road|LDV|Four Wheelers",
     "ES|Transport|Pass|Road|LDV|Two Wheelers",
     "ES|Transport|Pass|Road|Non-Motorized|Walking",
@@ -21,7 +19,7 @@ showAreaAndBarPlots(data, items[2:9], tot_wobunk, orderVars = "user")
 showAreaAndBarPlots(data, items, tot_wbunk, fill=TRUE, orderVars = "user")
 showAreaAndBarPlots(data, items[2:9], tot_wobunk, fill=TRUE, orderVars = "user")
 showLinePlots(data, tot_wbunk)
-walk(items, showLinePlots, data = data)
+walk(c("ES|Transport|Pass|Aviation", items[1:5], "ES|Transport|Pass|Road|LDV", items[6:9]), showLinePlots, data = data)
 ```
 
 ## Passenger per Capita
@@ -42,6 +40,7 @@ items <- c(
     "ES|Transport|Pass|Road|Non-Motorized|Cycling pCap")
 showMultiLinePlots(data, items)    
 showMultiLinePlotsByVariable(data, items, "GDP|PPP pCap")
+walk(items, showLinePlotsByVariable, data = data, xVar = "GDP|PPP pCap")
 ```
 
 ## LDV Four Wheelers 
@@ -133,6 +132,7 @@ items <- c(
     )
 showMultiLinePlots(data, items)    
 showMultiLinePlotsByVariable(data, items, "GDP|PPP pCap")
+walk(items, showLinePlotsByVariable, data = data, xVar = "GDP|PPP pCap")
 ```
 
 ## Trucks

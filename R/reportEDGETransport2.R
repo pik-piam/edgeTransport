@@ -553,8 +553,6 @@ reportEDGETransport2 <- function(output_folder = ".",
     reportInt <- function(var, datatable){
      #Energy Intensity MJ/pkm or MJ/tkm
      repFE <- datatable[variable == paste0("FE|Transport|", var)]
-     #EJ to MJ
-     repFE[, value := value*1e12]
      repFE[, variable := NULL][, unit := NULL]
      setnames(repFE, "value", "FE")
      repES <- datatable[variable == paste0("ES|Transport|", var)]
@@ -567,7 +565,8 @@ reportEDGETransport2 <- function(output_folder = ".",
 
      repInt <- merge(repFE, repES, by = c("region", "period", "scenario", "model"))
      repInt[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|", var)]
-
+     #FE in EJ to MJ + ES ib bn pkm to pkm 1e12/1e9
+     repInt[, value := value*1e3]
      if (sub("\\|.*", "", var) == "Pass"){
       repInt[, unit := "MJ/pkm"]
      }else{
@@ -583,8 +582,9 @@ reportEDGETransport2 <- function(output_folder = ".",
      }
 
      repIntVKM <- merge(repFE, repVKM, by = c("region", "period", "scenario", "model"))
-     repIntVKM[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|VKM|", var)][, unit := "MJ/vkm"]
-
+     repIntVKM[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|VKM|", var)]
+     #FE in EJ to MJ + ES ib bn vkm to vkm 1e12/1e9
+     repIntVKM[, value := value*1e3][, unit := "MJ/vkm"]
      return(rbind(repInt, repIntVKM))
      }
 
