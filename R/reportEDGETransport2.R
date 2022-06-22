@@ -373,6 +373,9 @@ Truck (40t),136500")
              .(value = sum(value), variable=sprintf("%s|Transport|LDV|%s", category, technology)),
            by = c("category", "year", "region", "technology")],
       vint[grepl("|Truck|", variable, fixed = TRUE),
+             .(value = sum(value), variable=sprintf("%s|Transport|Truck|%s", category, technology)),
+           by = c("category", "year", "region", "technology")],
+      vint[grepl("|Truck|", variable, fixed = TRUE),
              .(value = sum(value), variable=sprintf("%s|Transport|Truck", category)),
              by = c("category", "year", "region")]), fill = TRUE)
 
