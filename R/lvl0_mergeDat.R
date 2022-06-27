@@ -348,9 +348,9 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                         "subsector_L3", "sector", "vehicle_type")]
   Truck_i = rbind(
     Truck_i,
-    GCAM_ti[(
+    GCAM_ti[
       !(iso %in% eu_iso) &
-      subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      (subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
       technology %in% c("Liquids", "NG")],
     GCAM_ti[(
       iso %in% eu_iso &
@@ -428,6 +428,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   demEU[, tech_output := MJ/  ## in MJ
           conv_pkm_MJ*    ## in km
           1e-6][, c("MJ", "conv_pkm_MJ") := NULL] ## in million km
+
+  demPassRoadEU <- EU_data$demand_pkm_EU
+  ## road passenger data from TRACCS
+  demEU[demPassRoadEU, tech_output := pkm, on=c("vehicle_type", "technology", "iso", "year")][, pkm := NULL]
 
   dem = rbind(demBunk,
               demRail,
