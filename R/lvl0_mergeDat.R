@@ -25,7 +25,7 @@
 
 lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
-                         SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE){
+                         SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
   k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- weight <- NULL
   pkm_MJ_missing <- val <- markup <- UCD_technology <- valUCD <- gdpcap <- NULL
@@ -294,13 +294,13 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                         xdata = unique(years),
                         xcol = "year",
                         ycol = "conv_pkm_MJ",
-                        idxcols = c("technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "sector_fuel", "iso"),
+                        idxcols = c("technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "iso"),
                         extrapolate = TRUE)
 
   ## rescale the energy intensity according to the single countries for ICEs
   LDV_PSI_i_rescale = merge(LDV_PSI_i[technology %in% c("Liquids", "NG") &iso %in% unique(EU_data$energy_intensity_EU$iso) &
-                                        vehicle_type %in% c("Large Car and SUV", "Compact Car", "Subcompact Car","Midsize Car"), c("vehicle_type", "year", "technology", "iso",  "conv_pkm_MJ", "sector_fuel")],
-                            EU_data$energy_intensity_EU[year %in% c(2005, 2010) & vehicle_type %in% c("Large Car and SUV", "Compact Car", "Subcompact Car","Midsize Car")], by = c("vehicle_type", "year", "technology", "iso", "sector_fuel"), all = T)
+                                        vehicle_type %in% c("Large Car and SUV", "Compact Car", "Subcompact Car","Midsize Car"), c("vehicle_type", "year", "technology", "iso",  "conv_pkm_MJ")],
+                            EU_data$energy_intensity_EU[year %in% c(2005, 2010) & vehicle_type %in% c("Large Car and SUV", "Compact Car", "Subcompact Car","Midsize Car")], by = c("vehicle_type", "year", "technology", "iso"), all = T)
 
   LDV_PSI_i_rescale[, ratio := conv_pkm_MJ/conv_pkm_MJ[year == 2010], by = c("iso", "technology", "vehicle_type")]
   LDV_PSI_i_rescale[year > 1990 & year <= 2010, conv_pkm_MJ := MJ_km]
@@ -313,7 +313,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   int_GCAM = GCAM_data[["conv_pkm_mj"]][!(subsector_L1=="trn_pass_road_LDV_4W" &
                                             technology %in% c("BEV", "FCEV", "Hybrid Electric")) &
-                                          !(iso %in% eu_iso)]
+                                          !(iso %in% eu_iso)][, sector_fuel := NULL]
   int_GCAM = rbind(int_GCAM,
                    int_GCAM[year==2100][, year := 2110],
                    int_GCAM[year==2100][, year := 2130],
@@ -323,8 +323,6 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                     LDV_PSI_i_rescale,
                     LDV_PSI_i[!iso %in% eu_iso & technology %in% c("BEV", "FCEV", "Hybrid Electric")],
                     int_GCAM)
-
-  LDV_PSI_i[, sector_fuel := NULL]
 
   Truck_PSI_i = merge(PSI_int$Truck_PSI_int, LF[year %in% unique(PSI_int$Truck_PSI_int$year)], by = c("year", "vehicle_type", "technology"))
 
@@ -343,7 +341,6 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
     ycol = "conv_pkm_MJ",
     idxcols = c("iso", "technology", "vehicle_type", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
     extrapolate = TRUE)
-  Truck_i[, sector_fuel := NULL]
 
   GCAM_ti <- GCAM_data[["conv_pkm_mj"]][, c(
                         "conv_pkm_MJ", "iso", "year", "technology",
@@ -351,9 +348,9 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
                         "subsector_L3", "sector", "vehicle_type")]
   Truck_i = rbind(
     Truck_i,
-    GCAM_ti[(
+    GCAM_ti[
       !(iso %in% eu_iso) &
-      subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
+      (subsector_L3 == "trn_freight_road"|subsector_L2 == "Bus") &
       technology %in% c("Liquids", "NG")],
     GCAM_ti[(
       iso %in% eu_iso &
@@ -432,6 +429,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   demEU[, tech_output := MJ/  ## in MJ
           conv_pkm_MJ*    ## in km
           1e-6][, c("MJ", "conv_pkm_MJ") := NULL] ## in million km
+
+  demPassRoadEU <- EU_data$demand_pkm_EU
+  ## road passenger data from TRACCS
+  demEU[demPassRoadEU, tech_output := pkm, on=c("vehicle_type", "technology", "iso", "year")][, pkm := NULL]
 
   dem = rbind(demBunk,
               demRail,
