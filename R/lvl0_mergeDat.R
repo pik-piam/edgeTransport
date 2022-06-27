@@ -391,8 +391,9 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year >= 2030,
         conv_pkm_MJ := .SD[year == 2030]$conv_pkm_MJ, by = c("vehicle_type")]
 
+    ## the intensity deviation is likely coming from a deviation in LF and size shares
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "Liquids",
-        conv_pkm_MJ := conv_pkm_MJ * 7.28/6.25]
+        conv_pkm_MJ := conv_pkm_MJ * 1.4/1.6]
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "BEV",
         conv_pkm_MJ := conv_pkm_MJ * 2.94/2.3]
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "FCEV",
@@ -510,6 +511,12 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   dem[iso == "IND" & subsector_L2 == "Bus", tech_output := tech_output/2]
   dem[iso %in% REMIND2ISO_MAPPING[region == "OAS", iso] & subsector_L2 == "Bus", tech_output := tech_output/5]
   dem[iso %in% REMIND2ISO_MAPPING[region == "NEU", iso] & subsector_L2 == "Bus", tech_output := tech_output/2]
+
+  ## Adjust GER Truck size shares according to KBA data (calculated from stocks via AM and LF)
+  dem[iso == "DEU" & vehicle_type == "Truck (3.5 t)", tech_output := tech_output * 2]
+  dem[iso == "DEU" & vehicle_type == "Truck (7.5 t)", tech_output := tech_output * 0.25]
+  dem[iso == "DEU" & vehicle_type == "Truck (18 t)", tech_output := tech_output * 0.65]
+  dem[iso == "DEU" & vehicle_type == "Truck (40 t)", tech_output := tech_output * 1.4]
 
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
