@@ -29,6 +29,7 @@ params:
   figWidth: 14 
   figHeight: 8
   warning: no
+subparagraph: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -39,31 +40,6 @@ knitr::opts_chunk$set(
   warning = params$warning,
   fig.width = params$figWidth, 
   fig.height = params$figHeight)
-```
-
-
-```{r fix interactive plot size}
-# Hack to use the same fig.width and fig.height as described in previous chunk 
-# for chunks in RStudio Notebook mode.
-if (interactive()) {
-  insertExprAtStartOfFun <- function(fun, funName, env, expr) {
-    body(env[[funName]]) <- call("{", expr, body(fun))
-  }
-  fn <- ".rs.setNotebookGraphicsOption"
-  envToolsRstudio <- as.environment("tools:rstudio")
-  if (!exists(".old.rs.setNotebookGraphicsOption")) 
-    old.rs.setNotebookGraphicsOption <- envToolsRstudio[[fn]]
-  insertExprAtStartOfFun(
-    old.rs.setNotebookGraphicsOption,
-    fn,
-    envToolsRstudio,
-    rlang::expr({
-      width <- !!knitr::opts_chunk$get()$fig.width
-      height <- !!knitr::opts_chunk$get()$fig.height
-      units <- "in"
-    })
-  )
-}
 ```
 
 
