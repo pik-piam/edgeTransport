@@ -519,6 +519,10 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   dem[iso == "DEU" & vehicle_type == "Truck (18 t)", tech_output := tech_output * 0.65]
   dem[iso == "DEU" & vehicle_type == "Truck (40 t)", tech_output := tech_output * 1.4]
 
+  ## Total 2010 Freight demands, from ViZ 2010
+  ## (the shares are roughly OK)
+  dem[iso == "DEU" & sector == "trn_freight", tech_output := tech_output * 620 / 587]
+
   return(list(costs = costs, int = int, LF = LF, AM = AM, dem = dem))
 
 
