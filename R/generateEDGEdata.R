@@ -282,7 +282,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
-      tech_scen = tech_scen,
       ptab4W = preftab4W,
       totveh = totveh)
 
