@@ -159,11 +159,11 @@ SDP,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1
 SDP,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SDP,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SDP,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SDP,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SDP,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SDP,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SDP,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SDP,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SDP,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SDP,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
@@ -1580,11 +1580,11 @@ SDP_EI,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,
 SDP_EI,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SDP_EI,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_EI,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,5.337e-01,4.803e-01,4.803e-01,4.803e-01
-SDP_EI,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SDP_EI,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SDP_EI,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SDP_EI,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SDP_EI,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_EI,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_EI,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SDP_EI,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SDP_EI,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SDP_EI,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SDP_EI,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP_EI,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP_EI,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
@@ -3001,11 +3001,11 @@ SDP_MC,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,
 SDP_MC,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SDP_MC,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP_MC,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SDP_MC,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SDP_MC,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SDP_MC,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SDP_MC,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_MC,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_MC,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SDP_MC,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SDP_MC,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SDP_MC,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SDP_MC,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,8.000e-02,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,8.000e-02,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,8.000e-02,1.000e+00,1.000e+00,1.000e+00
@@ -4422,11 +4422,11 @@ SDP_RC,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,
 SDP_RC,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SDP_RC,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_RC,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP_RC,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SDP_RC,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SDP_RC,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SDP_RC,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SDP_RC,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_RC,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SDP_RC,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SDP_RC,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SDP_RC,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SDP_RC,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SDP_RC,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP_RC,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SDP_RC,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
@@ -5843,11 +5843,11 @@ SSP1,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS
 SSP1,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SSP1,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP1,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,8.005e-01,9.606e-01,1.000e+00,1.000e+00
-SSP1,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SSP1,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SSP1,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SSP1,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SSP1,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP1,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP1,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SSP1,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SSP1,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SSP1,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SSP1,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SSP1,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
 SSP1,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,4.000e-02,5.000e-01,9.000e-01,9.000e-01
@@ -7264,11 +7264,11 @@ SSP2,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS
 SSP2,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SSP2,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,5.337e-01,4.803e-01,4.803e-01,4.803e-01
-SSP2,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SSP2,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SSP2,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SSP2,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SSP2,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP2,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP2,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SSP2,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SSP2,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SSP2,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SSP2,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
 SSP2,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
 SSP2,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
@@ -8685,11 +8685,11 @@ SSP2EU,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,
 SSP2EU,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SSP2EU,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2EU,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,5.337e-01,4.803e-01,4.803e-01,4.803e-01
-SSP2EU,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SSP2EU,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SSP2EU,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.127e-01,2.127e-01,2.127e-01,2.127e-01,2.127e-01
-SSP2EU,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.934e-01,4.934e-01,4.934e-01,4.934e-01,4.934e-01
-SSP2EU,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP2EU,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP2EU,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SSP2EU,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SSP2EU,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SSP2EU,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SSP2EU,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
 SSP2EU,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
 SSP2EU,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,2.000e-02,2.500e-01,4.500e-01,4.500e-01
@@ -10106,11 +10106,11 @@ SSP5,DEU,,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS
 SSP5,DEU,,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,6.630e-03,6.630e-03,6.630e-03,6.630e-03,6.630e-03
 SSP5,DEU,,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP5,DEU,,Subcompact Car,trn_pass_road_LDV_4W,trn_pass_road_LDV,trn_pass_road,trn_pass,VS1,linear,5.337e-01,2.965e-01,2.668e-01,2.825e-01,2.825e-01
-SSP5,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.427e-01,4.427e-01,4.427e-01,4.427e-01,4.427e-01
-SSP5,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.345e-02,8.345e-02,8.345e-02,8.345e-02,8.345e-02
-SSP5,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.064e-01,1.064e-01,1.064e-01,1.064e-01,1.064e-01
-SSP5,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.467e-01,2.467e-01,2.467e-01,2.467e-01,2.467e-01
-SSP5,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP5,DEU,,Truck (0-3.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
+SSP5,DEU,,Truck (18t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,1.873e-01,1.873e-01,1.873e-01,1.873e-01,1.873e-01
+SSP5,DEU,,Truck (26t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,2.570e-01,2.570e-01,2.570e-01,2.570e-01,2.570e-01
+SSP5,DEU,,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,8.568e-01,8.568e-01,8.568e-01,8.568e-01,8.568e-01
+SSP5,DEU,,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,VS1,linear,4.959e-01,4.959e-01,4.959e-01,4.959e-01,4.959e-01
 SSP5,DEU,BEV,Moped,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,1.400e-02,1.000e-01,1.350e-01,1.350e-01
 SSP5,DEU,BEV,Motorcycle (50-250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,1.400e-02,1.000e-01,1.350e-01,1.350e-01
 SSP5,DEU,BEV,Motorcycle (>250cc),trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,trn_pass,FV,linear,0.000e+00,1.400e-02,1.000e-01,1.350e-01,1.350e-01
