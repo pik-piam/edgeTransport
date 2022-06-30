@@ -470,9 +470,14 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   int <- int[!(iso == "DEU" & vehicle_type %in% c("Van", "Mini Car"))]
 
   LF = merge(LF, unique(dem[!vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
+
   LF[, loadFactor := ifelse(is.na(loadFactor), mean(loadFactor, na.rm = TRUE), loadFactor), by = c("year", "vehicle_type")]
-  LF[year > 2100, loadFactor := rep(LF[year == 2100]$loadFactor, 3)]
-  if(nrow(LF[is.na(loadFactor) | loadFactor == 0]) > 0){
+  LF <- LF[year <= 2100]
+  LF <- rbind(LF,
+              LF[year==2100][, year := 2110],
+              LF[year==2100][, year := 2130],
+              LF[year==2100][, year := 2150])
+  if(nrow(LF[is.na(loadFactor) | loadFactor == 0]) > 0) {
     stop("Zero load factor provided.")
   }
 
