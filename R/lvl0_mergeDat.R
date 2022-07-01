@@ -26,10 +26,11 @@
 lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh, smartlifestyle,
                          SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
-  vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <- subsector_L3 <- `.` <- NULL
-  k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <- vehicle_type <- iso <- univocal_name <- technology <- weight <- NULL
-  pkm_MJ_missing <- val <- markup <- UCD_technology <- valUCD <- gdpcap <- NULL
-  subsector_L1 <- vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
+  vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <-
+    subsector_L3 <- `.` <- k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <-
+      vehicle_type <- iso <- univocal_name <- technology <- weight <- pkm <- sector <-
+        pkm_MJ_missing <- val <- markup <- UCD_technology <- valUCD <- gdpcap <- subsector_L1 <-
+          vkm.veh <- tot_purchasecost <- aveval <- incentive_val <- unit <- demldv <- NULL
   logit_cat = copy(GCAM_data[["logit_category"]])
   logit_cat = rbind(logit_cat,
                     logit_cat[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV"][, technology := "Hybrid Electric"])
