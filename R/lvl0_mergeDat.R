@@ -512,6 +512,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   dem[iso == "IND" & subsector_L2 == "Bus", tech_output := tech_output/2]
   dem[iso %in% REMIND2ISO_MAPPING[region == "OAS", iso] & subsector_L2 == "Bus", tech_output := tech_output/5]
   dem[iso %in% REMIND2ISO_MAPPING[region == "NEU", iso] & subsector_L2 == "Bus", tech_output := tech_output/2]
+  dem[iso %in% REMIND2ISO_MAPPING[region == "MEA", iso] & subsector_L2 == "Bus", tech_output := tech_output/2]
 
   ## Adjust GER Truck size shares according to KBA data (calculated from stocks via AM and LF)
   dem[iso == "DEU" & vehicle_type == "Truck (3.5 t)", tech_output := tech_output * 2]
