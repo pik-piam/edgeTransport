@@ -15,19 +15,19 @@ output:
     toc_float: yes
     toc_depth: 6
     number_sections: yes
-geometry: "a4paper,landscape,left=0.5cm,right=0.5cm,top=0.5cm,bottom=0.5cm,footnotesep=0.0cm,footskip=0.1cm"
+geometry: "a4paper,landscape,left = 0.5cm,right = 0.5cm,top = 0.5cm,bottom = 0.5cm,footnotesep=0.0cm,footskip = 0.1cm"
 params:
-  mifScen: !r c("C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix1_2022-06-20_18.21.42/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix1_2022-06-17_18.19.28/EDGE-T_SA.mif")
-  mifScenNames: null
+  mifScen: !r c("C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.40.50/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.43.01/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.45.21/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.47.33/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.49.44/EDGE-T_SA.mif", "C:/Users/johannah/Documents/EDGE-Transport/Output/SSP2-Mix3_2022-07-02_16.51.58/EDGE-T_SA.mif")
+  mifScenNames: !r c("Initial", "HighElectricityPrice", "HighGasandLiquidsPrice","HighPrice", "LowPrice", "LowElectricityPrice")
   mifHist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical_21.mif"
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
   yearsBarPlot: !r c(2010, 2030, 2050, 2100)
-  reg: !r c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World")
+  reg: !r c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR")
   modelsHistExclude: !r c()
-  sections: !r c("01_energy_demand","02_energy_services","03_energy_intensity","csEDGET_04_stock_and_sales", "05_costs_and_shareweight_trends")
+  sections: !r c("01_energy_demand","02_energy_services","03_energy_intensity", "04_stock_and_sales", "05_Emissions", "06_costs_and_shareweight_trends")
   userSectionPath: null
-  mainReg: "World"
+  mainReg: "EUR"
   figWidth: 15 
   figHeight: 10
   warning: no
