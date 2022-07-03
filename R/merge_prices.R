@@ -16,15 +16,14 @@
 merge_prices <- function(gdx, REMINDmapping, REMINDyears,
                          intensity_data,
                          nonfuel_costs,
-                         module="edge_esm") {
+                         module="edge_esm", FE_Pricetab = NULL) {
     sector_fuel <- ttot <- value <- fuel_price <- fuel_price_pkm <- EJ_Mpkm_final <- NULL
     non_fuel_price <- technology <- GDP_cap <- region <- `.` <- weight <- POP_val <- NULL
     GDP <- `elect_td_trn` <- time <- `Liquids-Electricity` <- `refined liquids enduse` <- NULL
     vehicle_type <- subsector_L3 <- subsector_L2 <- subsector_L1 <- sector <- tot_price <- NULL
-    ## report prices from REMIND gdx in 2005$/MJ
+    ## report prices from REMIND gdx in 2005$/GJ
 
     tdptwyr2dpgj <- 31.71  #TerraDollar per TWyear to Dollar per GJ
-
     ## load entries from the gdx, values below 2020 do not make sense
     pfe <- readGDX(gdx, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch=TRUE]
     startyear <- getYears(pfe, as.integer=TRUE)[1]
@@ -40,8 +39,24 @@ merge_prices <- function(gdx, REMINDmapping, REMINDyears,
       , c("sector", "emiMkt", "ttot") := NULL
     ]
     pfe <- approx_dt(pfe, c(1990, seq(2005, startyear - 5, 5), unique(pfe$year)),
-                     xcol="year", ycol="value", idxcols=c("all_regi", "all_enty"), extrapolate=TRUE)
+                     xcol = "year", ycol = "value", idxcols = c("all_regi", "all_enty"), extrapolate = TRUE)
     setnames(pfe, "all_regi", "region")
+
+    if (!is.null(FE_Pricetab)){
+      FE_Pricetab <- approx_dt(FE_Pricetab, c(seq(1990, 2060, by = 5),
+                                              seq(2070, 2110, by = 10),
+                                              2130, 2150),
+                xcol = "year", ycol = "value", idxcols = c("region", "all_enty"), extrapolate = TRUE)
+
+      pfe <- merge(pfe, FE_Pricetab, by = c("region", "year", "all_enty"), all = TRUE)
+      pfe[, value := ifelse(region %in% unique(FE_Pricetab$region), value.y, value.x)]
+
+      pfe[, value.y := NULL][, value.x := NULL]
+      print("FE prices from gdx file were partially overwritten by externally supplied FE prices")
+
+    }
+
+
     varmap <- fread(text="
 all_enty,sector_fuel
 fedie,refined liquids enduse

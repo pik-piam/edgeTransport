@@ -34,7 +34,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
-                             ssp_demreg.path = NULL, regional_demreg.path = NULL){
+                             ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -202,7 +202,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
     nonfuel_costs = REMINDdat$NFcost,
-    module = "edge_esm")
+    module = "edge_esm",
+    FE_Pricetab = FEPricetab)
 
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
