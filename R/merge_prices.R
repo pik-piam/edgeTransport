@@ -4,8 +4,9 @@
 #' @param REMINDmapping mapping of REMIND regions to ISO3 country codes
 #' @param REMINDyears range of REMIND timesteps
 #' @param intensity_data logit level intensity data
-#' @param nonfuel_costs logti level non-fuel costs
+#' @param nonfuel_costs logit level non-fuel costs
 #' @param module GDX input is based on old "complex" module or new "edge_esm" module
+#' @param FE_Pricetab ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.
 #' @import data.table
 #' @importFrom rmndt disaggregate_dt magpie2dt
 #' @importFrom gdx readGDX
