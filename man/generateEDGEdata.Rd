@@ -19,7 +19,8 @@ generateEDGEdata(
   mitab4W.path = NULL,
   mitab.path = NULL,
   ssp_demreg.path = NULL,
-  regional_demreg.path = NULL
+  regional_demreg.path = NULL,
+  FEPricetab = NULL
 )
 
 calcgenerateEDGEdata(
@@ -67,6 +68,8 @@ calcgenerateEDGEdata(
 \item{ssp_demreg.path}{path to file with key factors for the demand regression depending on SSP/SDP scenarios.}
 
 \item{regional_demreg.path}{path to file with key factors for the demand regression depending on regions and SSP scenarios.}
+
+\item{FEPricetab}{ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.}
 }
 \value{
 generated EDGE-transport input data
