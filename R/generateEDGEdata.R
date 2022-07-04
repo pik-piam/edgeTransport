@@ -20,6 +20,7 @@
 #' @param ssp_demreg.path path to file with key factors for the demand regression depending on SSP/SDP scenarios.
 #' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
+#' @param FEPricetab ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -34,7 +35,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
-                             ssp_demreg.path = NULL, regional_demreg.path = NULL) {
+                             ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -202,7 +203,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     REMINDyears = years,
     intensity_data = IEAbal_comparison$merged_intensity,
     nonfuel_costs = REMINDdat$NFcost,
-    module = "edge_esm")
+    module = "edge_esm",
+    FE_Pricetab = FEPricetab)
 
   if(storeRDS)
     saveRDS(REMIND_prices, file = level1path("full_prices.RDS"))
