@@ -256,7 +256,6 @@ reportEDGETransport2 <- function(output_folder = ".",
   }
 
   reportingVehNum <- function(demand_vkm, annual_mileage){
-
     venum <- copy(demand_vkm)
     ## merge annual mileage
     anmil <- copy(annual_mileage)
@@ -314,6 +313,7 @@ reportEDGETransport2 <- function(output_folder = ".",
     vint <- vint[!is.na(demNew)]
     vint <- vint[, c("year", "region", "vehicle_type", "technology", "variable", "demNew", "demVintEachYear")]
     vint[, demand_F := demNew + sum(demVintEachYear), by=c("region", "year", "vehicle_type", "technology")]
+
     vint <- load_factor[vint, on=c("year", "region", "vehicle_type")]
     vint[, full_demand_vkm := demand_F/loadFactor]
     vint[, vintage_demand_vkm := demVintEachYear/loadFactor]
@@ -448,7 +448,7 @@ reportEDGETransport2 <- function(output_folder = ".",
     load_factor <- load_factor[, c("year", "region", "vehicle_type", "loadFactor", "technology")]
     demand_vkm <- merge(demand_km, load_factor, by = c("year", "region", "vehicle_type", "technology"))
     demand_vkm[, value := value / loadFactor] ## billion vkm
-    load_factor <- unique(loadFactor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
+    load_factor <- unique(load_factor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
   } else {
     demand_vkm <- merge(demand_km, load_factor, by = c("year", "region", "vehicle_type"))
     demand_vkm[, value := value / loadFactor] ## billion vkm
