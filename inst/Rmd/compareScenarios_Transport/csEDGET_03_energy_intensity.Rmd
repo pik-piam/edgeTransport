@@ -1,0 +1,54 @@
+# Energy Intensities
+## Passenger per pkm
+```{r}
+items <- c(
+          "EInt|Transport|Pass|w/o bunkers",
+          "EInt|Transport|Pass|Aviation|International",
+          "EInt|Transport|Pass|Rail",
+          "EInt|Transport|Pass|Aviation|Domestic",
+          "EInt|Transport|Pass|Road",
+          "EInt|Transport|Pass|Road|LDV",
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers",
+          "EInt|Transport|Pass|Road|LDV|Two Wheelers",
+          "EInt|Transport|Pass|Road|Bus"
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+## Freight per tkm
+```{r}
+items <- c(
+            "EInt|Transport|Freight|w/o bunkers",
+            "EInt|Transport|Freight|International Shipping",
+            "EInt|Transport|Freight|Navigation",
+            "EInt|Transport|Freight|Rail",
+            "EInt|Transport|Freight|Road"
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+## Passenger per vkm
+```{r}
+items <- c(
+          "EInt|Transport|VKM|Pass|w/o bunkers",
+          "EInt|Transport|VKM|Pass|Aviation|International",
+          "EInt|Transport|VKM|Pass|Rail",
+          "EInt|Transport|VKM|Pass|Aviation|Domestic",
+          "EInt|Transport|VKM|Pass|Road",
+          "EInt|Transport|VKM|Pass|Road|LDV",
+          "EInt|Transport|VKM|Pass|Road|Bus"
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+## Freight per vkm
+```{r}
+items <- c(
+            "EInt|Transport|VKM|Freight|w/o bunkers",
+            "EInt|Transport|VKM|Freight|International Shipping",
+            "EInt|Transport|VKM|Freight|Navigation",
+            "EInt|Transport|VKM|Freight|Rail",
+            "EInt|Transport|VKM|Freight|Road"
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
