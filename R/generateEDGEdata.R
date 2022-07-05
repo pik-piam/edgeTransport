@@ -21,6 +21,7 @@
 #' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @param FEPricetab ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.
+#' @param int_improve.path path to file with key factors for intensity improvements for different mitigation ambition and SSP scenarios.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -35,7 +36,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
-                             ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL){
+                             ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL,
+                             int_improve.path = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -260,6 +262,14 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
 
+  #Optional Energy Intensity improvements depending on the tech Scen
+  if(!is.null(int_improve.path)){
+    ## select the right combination of techscen and SSP scen
+    int_improve <- fread(int_improve.path, header=T)[tech_scen == tech_scen & SSP_scen == SSP_scen]
+    if(nrow(int_impro) > 0){
+      IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improve)}
+  }
+
 
   #################################################
   ## LVL 2 scripts
@@ -373,12 +383,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     ## calculate vintages (new shares, prices, intensity)
     prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
+    browser()
     vintages = calcVint(shares = shares,
                         totdem_regr = dem_regr,
                         prices = prices,
                         mj_km_data = mj_km_data,
                         years = years)
-
+    browser()
     nas <- vintages[["shares"]]$FV_shares[is.na(share)]
     if(nrow(nas) > 0){
       print("NAs found in FV vintage shares.")
