@@ -6,6 +6,8 @@ output:
     toc: yes
     number_sections: yes
     toc_depth: 6
+    keep_tex: false
+    template: cs2_latex_template.tex
     includes: 
       in_header: cs_pdf_header_include.tex
   html_document:
@@ -13,21 +15,21 @@ output:
     toc_float: yes
     toc_depth: 6
     number_sections: yes
-geometry: "a4paper,landscape,left=0.5cm,right=0.5cm,top=1.5cm,bottom=0.5cm,footnotesep=0.0cm,footskip=0.1cm"
+geometry: "a4paper,landscape,left = 0.5cm,right = 0.5cm,top = 0.5cm,bottom = 0.5cm,footnotesep=0.0cm,footskip = 0.1cm"
 params:
-  mifScen: "C:/Users/johannah/Documents/Remind/C_SSP2-Base_bIT-rem-2/EDGE-T/EDGE-T.mif"
-  mifScenNames: null
-  mifHist: "C:/Users/johannah/Documents/EDGE-Transport/HistoricalData/historical_21.mif"
+  mifScen: !r c()
+  mifScenNames: !r c()
+  mifHist: ""
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
   yearsBarPlot: !r c(2010, 2030, 2050, 2100)
-  reg: !r c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","GLO")
+  reg: !r c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World")
   modelsHistExclude: !r c()
-  sections: !r c("01_energy_demand","02_energy_services","04_costs_and_shareweight_trends")
+  sections: !r c("01_energy_demand","02_energy_services","03_energy_intensity", "04_stock_and_sales", "05_Emissions", "06_costs_and_shareweight_trends")
   userSectionPath: null
-  mainReg: "GLO"
-  figWidth: 14 
-  figHeight: 8
+  mainReg: "World"
+  figWidth: 15 
+  figHeight: 10
   warning: no
 subparagraph: yes
 ---
@@ -44,107 +46,134 @@ knitr::opts_chunk$set(
 
 
 ```{r libraries, include=FALSE}
+# kableExtra must not be loaded before the call of library(kableExtra) below,
+# as its .onLoad() function must be called to tell knitr about add necessary
+# LaTeX libraries needed for tables.
+# If the following line is not included, successive calls to compareScenarios2()
+# may cause "Undefined control sequence" errors in LaTeX.
+try(unloadNamespace("kableExtra"), silent = TRUE)
+
 library(gridExtra)
 options(tidyverse.quiet = TRUE)
 library(tidyverse)
 library(kableExtra)
-library(quitte)
 library(devtools)
-library(edgeTrpLib)
-library(data.table)
-library(mrremind)
 library(mip)
-setConfig(forcecache = T) 
+library(quitte)
+library(edgeTransport)
+library(data.table)
+```
+
+```{r read scenario mifs}
+# Read *.mif-files as nested tibble.
+tibble(path = unname(params$mifScen)) %>%
+  rowid_to_column("fileid") %>%
+  mutate(data = map(
+    path,
+    read.quitte,
+    factors = TRUE,
+    # read.quitte() default NA-strings and Inf, -Inf
+    na.strings = c("UNDF", "NA", "N/A", "n_a", "Inf", "-Inf"))) %>%
+  unnest(data) %>%
+  nest(data = -c(fileid, path, scenario)) ->
+  dataScenNested
+# Add column character column "newScenarioName",
+# either with contents of params$mifScenNames or copy names from column scenario.
+if (is.null(params$mifScenNames)) {
+  dataScenNested %>%
+    mutate(newScenarioName = as.character(scenario)) ->
+    dataScenNested
+} else {
+  dataScenNested %>%
+    left_join(
+      tibble(
+        fileid = seq_along(params$mifScen),
+        newScenarioName = params$mifScenNames),
+      by = "fileid") ->
+    dataScenNested
+}
+# Check for duplicated scenario names.
+if (anyDuplicated(dataScenNested$newScenarioName)) {
+  warning("There are duplicated scenario names. They will be renamed.")
+  dataScenNested %>%
+    mutate(newScenarioName = make.unique(newScenarioName)) ->
+    dataScenNested
+}
+# Retrieve data for reference table to be shown at the beginning of the document.
+dataScenNested %>%
+  select(fileid, path, scenario, newScenarioName) ->
+  fileReference
+# Apply renaming of scenario, unnest, and select only relevant columns.
+dataScenNested %>%
+  mutate(scenario = factor(newScenarioName, levels = newScenarioName)) %>%
+  unnest(data) %>%
+  select(model, scenario, region, variable, unit, period, value) ->
+  dataScen
+```
+
+```{r define scenario colors}
+# Get colors of scenarios to be used, e.g., in the info sections.
+# They will coincide with the colors of the scenarios in line plots.
+scenarioColors <- plotstyle(fileReference$newScenarioName)
+lightenColor <- function(clr, by) {
+  colRGB <- colorRamp(c(clr, "white"))(by)
+  rgb(colRGB[1], colRGB[2], colRGB[3], maxColorValue = 255)
+}
+bkgndColors <- sapply(scenarioColors, lightenColor, by = 0.5)
 ```
 
 
-```{r read mifs}
-# Read *.mif-files.
-tibble(path = unname(params$mifScen)) %>% 
-  mutate(
-    newScenarioName = params$mifScenNames,
-    data = map(path, read.quitte, factors=FALSE)) %>% 
-  unnest(cols = data) ->
-  dataScen
-if ('newScenarioName' %in% colnames(dataScen)) {
-  dataScen %>% 
-    mutate(scenario = newScenarioName) ->
-    dataScen
-} 
-dataScen %>% 
-  select(model, scenario, region, variable, unit, period, value) ->
-  dataScen
-
-params$mifHist %>% 
-  read.quitte(factors=FALSE) ->
+```{r read historical mif}
+params$mifHist %>%
+  read.quitte(factors = TRUE) ->
   dataHist
 ```
 
 
 ```{r preprocess}
 # Filter years and NA.
-dataScen %>% 
+dataScen %>%
   filter(period %in% params$yearsScen) ->
   dataScen
-dataHist %>% 
-  filter(period %in% params$yearsHist, !(model %in% params$modelsHistExclude), !is.na(value)) ->
+dataHist %>%
+  filter(period %in% params$yearsHist, !(model %in% params$modelsHistExclude), !is.na(value)) %>%
+  droplevels() ->
   dataHist
-
 # Combine into one data frame and remove old.
 data <- bind_rows(dataScen, dataHist)
-rm(dataScen, dataHist)
-
+rm(dataScen, dataScenNested, dataHist)
 # In the variable names, replace |+|, |++|, |+++|, ... by |.
-data %>% 
-  mutate(variable = str_replace_all(variable, "\\|\\++\\|", "|")) ->
+data %>%
+  mutate(
+    varplus = as.character(variable),
+    variable = remind2::deletePlus(variable)) ->
   data
-
-# Filter regions -> shortcut does not work at the moment due to the fact YAML parameters cannot be edited (When more time, workaround will be found)
-# if (!is.null(params$reg)) {
-#   
-#   if (params$reg=="Reg12 + World"){
-#     params$reg= c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","GLO")
-#   }
-#   if (params$reg=="Reg21 + World"){
-#     params$reg= c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NES","NEN","ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","GLO")
-#   }
-#   if (params$reg=="EUR9 + EUR"){
-#     params$reg= c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR")
-#   }
-
-  data %>% 
+# Filter regions.
+if (!is.null(params$reg)) {
+  data %>%
     filter(region %in% params$reg) ->
     data
-
+}
 ```
 
 
 ```{r Corrections}
 # TODO: Should not be done in compareScenarios.
-
 # Change unit million US$2005/yr to billion US$2005/yr.
 # Relevant for ARIADNE historical EUR GDP|PPP.
 bind_rows(
-  data %>% filter(unit != "million US$2005/yr"),
-  data %>% 
-    filter(unit == "million US$2005/yr") %>% 
+  data %>% filter(!unit %in% c("million US$2005/yr")),
+  data %>%
+    filter(unit == "million US$2005/yr") %>%
     mutate(
       unit = "billion US$2005/yr",
       value = value / 1000)) ->
-  data
-# Change bn pkm/yr or bn tkm/yr to km/yr to bn km/yr .
-# Relevant for historical ETP data
-bind_rows(
-  data %>% filter(unit != "bn pkm/yr" & unit != "bn tkm/yr"),
-  data %>% 
-    filter(unit == "bn pkm/yr" | unit == "bn tkm/yr" ) %>% 
-    mutate(unit = "bn km/yr")) ->
   data
 ```
 
 
 ```{r reference models for historical}
-# Sometimes it is necessary to choose a single model for the historical data, 
+# Sometimes it is necessary to choose a single model for the historical data,
 # e.g., calculating per capita variables. These reference models are defined here.
 histRefModel <- c(
   "Population" = "WDI",
@@ -161,33 +190,34 @@ histRefModel <- c(
 pCapVariables <- tribble(
   ~variable, ~newUnit, ~conversionFactor,
   "GDP|PPP", "kUS$2005", 1e6,
-  "ES|Transport|Pass|w/o bunkers", "km/yr", 1e9,
-  "ES|Transport|Pass|Aviation|International", "km/yr", 1e9,
-  "ES|Transport|Pass|Aviation|Domestic", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|Bus", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|Non-Motorized|Walking", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|Non-Motorized|Cycling", "km/yr", 1e9,
-  "ES|Transport|Pass|Rail|non-HSR", "km/yr", 1e9,
-  "ES|Transport|Pass|Rail|HSR", "km/yr", 1e9,
+  "ES|Transport|Pass|w/o bunkers", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Aviation", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Aviation|International", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Aviation|Domestic", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|Bus", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|Non-Motorized|Walking", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|Non-Motorized|Cycling", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Rail|non-HSR", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Rail|HSR", "pkm/yr", 1e9,
   "ES|Transport|Freight|w/o bunkers", "tkm/yr", 1e9,
   "ES|Transport|Freight|International Shipping", "tkm/yr", 1e9,
   "ES|Transport|Freight|Road", "tkm/yr", 1e9,
   "ES|Transport|Freight|Navigation", "tkm/yr", 1e9,
   "ES|Transport|Freight|Rail", "tkm/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|Four Wheelers", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|Two Wheelers", "km/yr", 1e9,
-  "ES|Transport|Pass|non-LDV", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|BEV", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|FCEV", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|Gases", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|Hybrid Electric", "km/yr", 1e9,
-  "ES|Transport|Pass|Road|LDV|Liquids", "km/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Four Wheelers", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Two Wheelers", "pkm/yr", 1e9,
+  "ES|Transport|Pass|non-LDV", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|BEV", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|FCEV", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Gases", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Hybrid Electric", "pkm/yr", 1e9,
+  "ES|Transport|Pass|Road|LDV|Liquids", "pkm/yr", 1e9,
   "ES|Transport|Freight", "tkm/yr", 1e9,
-  "ES|Transport|Freight|Road|Electric", "km/yr", 1e9,
-  "ES|Transport|Freight|Road|FCEV", "km/yr", 1e9,
-  "ES|Transport|Freight|Road|Gases", "km/yr", 1e9,
-  "ES|Transport|Freight|Road|Liquids", "km/yr", 1e9)
+  "ES|Transport|Freight|Road|Electric", "pkm/yr", 1e9,
+  "ES|Transport|Freight|Road|FCEV", "pkm/yr", 1e9,
+  "ES|Transport|Freight|Road|Gases", "pkm/yr", 1e9,
+  "ES|Transport|Freight|Road|Liquids", "pkm/yr", 1e9)
 
 data %>% 
   filter(variable == "Population") %>%

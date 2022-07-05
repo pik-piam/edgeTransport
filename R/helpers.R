@@ -48,11 +48,12 @@ collectScens <- function(scen_folder, output_folder = NULL){
 #' @import data.table
 #' @importFrom grDevices pdf dev.off
 #' @importFrom graphics plot.new text
+#' @importFrom ggplot2 ggplot geom_line aes facet_wrap labs
 #' @export
 
 
 compareOutputs <- function(runs, pdf_path){
-  scen <- all_regi <- tall <- value <- i.value <- V1 <- NULL
+  scen <- all_regi <- tall <- value <- i.value <- V1 <- all_teEs <- NULL
   fe2es <- rbindlist(lapply(names(runs), function(scen){
     fread(file.path(runs[[scen]], "level_2/fe2es.cs4r"))[, scen := scen]
   }))
