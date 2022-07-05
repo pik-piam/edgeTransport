@@ -27,6 +27,7 @@ shares_intensity_and_demand <- function(logit_shares,
     S1S2_shares <- logit_shares[["S1S2_shares"]]
     VS1_shares <- logit_shares[["VS1_shares"]]
     FV_shares <- logit_shares[["FV_shares"]]
+
     ## create a normalized total demand OR loads absolute demand if given
     if (is.null(demand_input)) {
         demand=CJ(region=unique(S3S_shares$region),
@@ -61,20 +62,19 @@ shares_intensity_and_demand <- function(logit_shares,
     ## the reason is that we set technology = fuel, which can be used for all technologies except
     ## hybrid electric cars
     ## we therefore add a column `fuel` to the intensity tables
-    tech2fuel <- fread(text="technology,fuel
-BEV,Electricity
-FCEV,Hydrogen
-Hybrid Electric,Liquids")
+    tech2fuel <- data.table(
+      technology = c("BEV", "FCEV", "Hybrid Electric", "Electric"),
+      fuel       = c("Electricity", "Hydrogen", "Liquids", "Electricity"))
 
     demshare_liq <- 0.6
 
-    MJ_km_base <- tech2fuel[MJ_km_base, on="technology"]
+    MJ_km_base <- tech2fuel[MJ_km_base, on = "technology"]
     MJ_km_base[is.na(fuel), fuel := technology]
     MJ_km_base <- rbind(
         MJ_km_base, MJ_km_base[technology == "Hybrid Electric"][
                    , `:=`(fuel="Electricity", MJ_km=MJ_km*(1-demshare_liq))])
     MJ_km_base[technology == "Hybrid Electric" & fuel == "Liquids",
-            `:=`(MJ_km=MJ_km*demshare_liq)]
+            `:=`(MJ_km = MJ_km*demshare_liq)]
 
     ## Calculate demand in EJ
     ## merge the demand in pkm with the energy intensity

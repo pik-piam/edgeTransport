@@ -1599,3 +1599,387 @@ SSP2EU,HydrHype4,rich,S3,Passenger Rail,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,Walk,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,trn_freight_road,,,,0.5,2035,10
 SSP2EU,HydrHype4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Electric,2.5,2050,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Hydrogen,1,2050,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Bus,Electric,5,2030,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Rail,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Ship,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|heavy,Electric,17,2035,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|heavy,Hydrogen,5,2035,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|light,Electric,5,2035,15
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|light,Hydrogen,1.1,2035,5
+SSP2,ECEMF_HighEl_ModEff,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Aviation,Electric,1.5,2050,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Aviation,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Bus,Electric,6,2035,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Rail,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Ship,Electric,2,2050,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|heavy,Electric,20,2035,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|heavy,Hydrogen,10,2035,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|light,Electric,6,2035,15
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|light,Hydrogen,2,2035,5
+SSP2,ECEMF_HighEl_ModEff,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S2,,Bus,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
+SSP2,ECEMF_HighEl_ModEff,rich,S2,,Bus,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Cycle,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,HSR,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,Walk,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,ECEMF_HighEl_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Cycle,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,HSR,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,Walk,,,,1,2050,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,ECEMF_HighEl_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Aviation,Electric,2.5,2050,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Aviation,Hydrogen,1,2050,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Bus,Electric,5,2030,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Rail,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Ship,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|heavy,Electric,17,2035,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|heavy,Hydrogen,5,2035,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|light,Electric,5,2035,15
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|light,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_HighEff,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Aviation,Electric,1.5,2050,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Aviation,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Bus,Electric,6,2035,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Rail,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Ship,Electric,2,2050,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|heavy,Electric,20,2035,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|heavy,Hydrogen,10,2035,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|light,Electric,6,2035,15
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|light,Hydrogen,2,2035,5
+SSP2,Nav_HighEl_HighEff,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
+SSP2,Nav_HighEl_HighEff,rich,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Nav_HighEl_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighEl_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Nav_HighEl_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Aviation,Electric,2.5,2050,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Aviation,Hydrogen,1,2050,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Bus,Electric,5,2030,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Rail,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Ship,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|heavy,Electric,17,2035,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|heavy,Hydrogen,5,2035,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|light,Electric,5,2035,15
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|light,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_LifestCha,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Aviation,Electric,1.5,2050,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Aviation,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Bus,Electric,6,2035,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Bus,Hydrogen,1.1,2035,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,LDV|2W,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,LDV|2W,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Rail,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Rail,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Ship,Electric,2,2050,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Ship,Hydrogen,1.1,2050,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|heavy,Electric,20,2035,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|heavy,Hydrogen,10,2035,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|light,Electric,6,2035,15
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|light,Hydrogen,2,2035,5
+SSP2,Nav_HighEl_LifestCha,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2,Nav_HighEl_LifestCha,rich,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Nav_HighEl_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Nav_HighEl_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Bus,Electric,3,2060,15
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Bus,Hydrogen,150,2040,5
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|heavy,Hydrogen,70,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|light,Electric,4,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|light,Hydrogen,70,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Aviation,Hydrogen,3,2055,5
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Bus,Electric,3,2060,15
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Bus,Hydrogen,200,2035,5
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|heavy,Hydrogen,85,2035,5
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|light,Electric,4,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|light,Hydrogen,85,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S2,,Bus,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,S2,,Bus,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Cycle,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,HSR,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,Walk,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,ECEMF_HighH2_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Cycle,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,HSR,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,Walk,,,,1,2050,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,ECEMF_HighH2_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Bus,Electric,3,2060,15
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Bus,Hydrogen,150,2040,5
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|heavy,Hydrogen,70,2035,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|light,Electric,4,2035,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|light,Hydrogen,70,2035,10
+SSP2,Nav_HighH2_HighEff,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Aviation,Hydrogen,3,2055,5
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Bus,Electric,3,2060,15
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Bus,Hydrogen,200,2035,5
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|heavy,Hydrogen,85,2035,5
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|light,Electric,4,2035,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|light,Hydrogen,85,2035,10
+SSP2,Nav_HighH2_HighEff,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
+SSP2,Nav_HighH2_HighEff,rich,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Nav_HighH2_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighH2_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Nav_HighH2_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Aviation,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Bus,Electric,3,2060,15
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Bus,Hydrogen,150,2040,5
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Rail,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Ship,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|heavy,Hydrogen,70,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|light,Electric,4,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|light,Hydrogen,70,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Aviation,Hydrogen,3,2055,5
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Aviation,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Bus,Electric,3,2060,15
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Bus,Hydrogen,200,2035,5
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Bus,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,LDV|2W,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,LDV|2W,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,LDV|2W,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Rail,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Rail,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Rail,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Ship,Electric,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Ship,Hydrogen,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|heavy,Electric,3,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|heavy,Hydrogen,85,2035,5
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|heavy,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|light,Electric,4,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|light,Hydrogen,85,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,S2,,Bus,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Nav_HighH2_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Cycle,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,HSR,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,Walk,,,,1,2050,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Nav_HighH2_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10

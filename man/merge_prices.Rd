@@ -10,7 +10,8 @@ merge_prices(
   REMINDyears,
   intensity_data,
   nonfuel_costs,
-  module = "edge_esm"
+  module = "edge_esm",
+  FE_Pricetab = NULL
 )
 }
 \arguments{
@@ -22,9 +23,11 @@ merge_prices(
 
 \item{intensity_data}{logit level intensity data}
 
-\item{nonfuel_costs}{logti level non-fuel costs}
+\item{nonfuel_costs}{logit level non-fuel costs}
 
 \item{module}{GDX input is based on old "complex" module or new "edge_esm" module}
+
+\item{FE_Pricetab}{ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.}
 }
 \description{
 Merge REMIND-derived fuel prices with non-fuel costs.

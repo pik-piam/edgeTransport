@@ -1,4 +1,4 @@
-category_TRACCS;vehicle_type;EDGE_vehicle_type
+TRACCS_category;TRACCS_vehicle_type;vehicle_type
 Light Commercial Veh.;N1;Truck (0-3.5t)
 Heavy Duty Trucks;>3,5 t;Truck (7.5t)
 Heavy Duty Trucks;Rigid <=7,5 t;Truck (7.5t)
@@ -25,3 +25,4 @@ Passenger cars;Upper-Medium;Midsize Car
 Passenger cars;Executive;Large Car and SUV
 Buses;Urban;Bus_tmp_vehicletype
 Buses;Coaches;Bus_tmp_vehicletype
+Buses;NA;Bus_tmp_vehicletype
