@@ -145,7 +145,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   VStarget <- rbind(VStarget, tmps)
 
   VStarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by=c("region", "sector", "subsector_L1",
+           by = c("region", "sector", "subsector_L1",
                 "subsector_L2", "subsector_L3", "vehicle_type")]
   VStarget[sw < 0, sw := 0]
   VStarget[, c("techscen", "level", "approx") := NULL]
@@ -156,13 +156,13 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   S1target <- ptab[level == "S1S2"]
   S1target[, c("technology", "vehicle_type") := NULL]
   ## insert historical values
-  S1target[S1dt, sw := i.sw, on=c("region", "year", "sector", "subsector_L1",
+  S1target[S1dt, sw := i.sw, on = c("region", "year", "sector", "subsector_L1",
                                   "subsector_L2", "subsector_L3")]
   S1target[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
   tmps <- filldt(S1dt[grepl("_tmp_", subsector_L1)], 2010)[
-    , `:=`(sw=1, level="S1S2", techscen=unique(S1target$techscen), approx="linear")]
+    , `:=`(sw = 1, level = "S1S2", techscen = unique(S1target$techscen), approx = "linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## add missing placeholders (HSR and rail)
   tmps <- unique(
