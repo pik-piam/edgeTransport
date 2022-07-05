@@ -29,8 +29,6 @@ reportEDGETransport2 <- function(output_folder = ".",
                                  scenario_title = NULL, model_name = "EDGE-Transport",
                                  gdx = NULL) {
 
-
-  ## NULL Definitons for codeCheck compliance
   RegionCode <- `.` <- sector <- subsector_L3 <- region <- year <- fuel <- demNew <- totdem <-
     subsector_L2 <- subsector_L1 <- demand_F <- remind_rep <- aggr_veh <- technology <- ttot <-
       se_share <- fe_demand <- variable <- value <- loadFactor <- sharetech_new <- shareVS1 <-
@@ -38,7 +36,7 @@ reportEDGETransport2 <- function(output_folder = ".",
           se <- type <- ven <- vehicle_type <- vehicle_type <- capture.output <- demVintEachYear <-
             unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <- setNames <-
               full_demand_vkm <- vintage_demand_vkm <- stock_demand <- sales_demand <- full_demand_vkm <-
-                typ <- NULL
+                typ <- FE <- NULL
 
   #pkm or tkm is called km in the reporting. Vehicle km are called vkm
   yrs <- c(seq(2005, 2060, 5), seq(2070, 2100, 10))

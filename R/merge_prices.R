@@ -18,10 +18,10 @@ merge_prices <- function(gdx, REMINDmapping, REMINDyears,
                          intensity_data,
                          nonfuel_costs,
                          module="edge_esm", FE_Pricetab = NULL) {
-    sector_fuel <- ttot <- value <- fuel_price <- fuel_price_pkm <- EJ_Mpkm_final <- NULL
-    non_fuel_price <- technology <- GDP_cap <- region <- `.` <- weight <- POP_val <- NULL
-    GDP <- `elect_td_trn` <- time <- `Liquids-Electricity` <- `refined liquids enduse` <- NULL
-    vehicle_type <- subsector_L3 <- subsector_L2 <- subsector_L1 <- sector <- tot_price <- NULL
+  sector_fuel <- ttot <- value <- fuel_price <- fuel_price_pkm <- EJ_Mpkm_final <- non_fuel_price <-
+    technology <- GDP_cap <- region <- `.` <- weight <- POP_val <- GDP <- `elect_td_trn` <- time <-
+      `Liquids-Electricity` <- `refined liquids enduse` <- vehicle_type <- subsector_L3 <-
+        subsector_L2 <- subsector_L1 <- sector <- tot_price <- value.x <- value.y <- NULL
     ## report prices from REMIND gdx in 2005$/GJ
 
     tdptwyr2dpgj <- 31.71  #TerraDollar per TWyear to Dollar per GJ
