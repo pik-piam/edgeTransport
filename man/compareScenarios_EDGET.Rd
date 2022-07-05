@@ -59,6 +59,10 @@ choose Rmd as output format and obtain a copy of the *.Rmd-files.
     \code{NULL} or \code{character(n)}.
     Default: \code{NULL}.
     Regions to show. \code{NULL} means all.}
+  \item{\code{modelsHistExclude}}{
+    \code{character(n) or NULL}.
+    Default: \code{c()}.
+    Models in historical data to exclude.}
   \item{\code{sections}}{
     \code{character(n)}.
     Default: \code{"all"}.

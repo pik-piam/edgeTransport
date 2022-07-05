@@ -6,8 +6,6 @@
 \usage{
 reportEDGETransport2(
   output_folder = ".",
-  sub_folder = "EDGE-T/",
-  loadmif = TRUE,
   extendedReporting = FALSE,
   scenario_title = NULL,
   model_name = "EDGE-Transport",
@@ -16,10 +14,6 @@ reportEDGETransport2(
 }
 \arguments{
 \item{output_folder}{path to the output folder, default is current folder.}
-
-\item{sub_folder}{subfolder with EDGE-T output files (level_2 for standalone, EDGE-T for coupled runs)}
-
-\item{loadmif}{shall we try to load a REMIND MIF file from the output folder to append the variables?}
 
 \item{extendedReporting}{report a larger set of variables}
 
@@ -30,15 +24,13 @@ reportEDGETransport2(
 \item{gdx}{path to the GDX file used for the run.}
 }
 \description{
-Data is loaded from the EDGE-T subfolder in the output folder.
-The input files can be (re-) generated calling
+Data is loaded from the EDGE-T subfolder in the output folder or from the `level_2` folder
+in a standalone run.
+For a coupled run the EDGE-T output files can be (re-) generated calling
 `Rscript EDGETransport.R --reporting`
 from the output folder.
 }
 \details{
-*Warning* The function modifies the "REMIND_generic_<scenario>.mif" file by appending the
-additional reporting variables and replaces the "_withoutPlus" version.
-
 Region subsets are obtained from fulldata.gdx
 }
 \author{

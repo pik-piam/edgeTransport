@@ -9,3 +9,6 @@
 ^TAGS
 ^workflow$
 ^\.git$
+^.lintr$
+^tests/.lintr$
+^vignettes/.lintr$
