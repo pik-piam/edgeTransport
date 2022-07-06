@@ -1,16 +1,25 @@
-vehicle_type,FV_vehvar
-International Aviation_tmp_vehicletype,Aviation
-Domestic Aviation_tmp_vehicletype,Aviation
-Motorcycle (50-250cc),LDV|2W
-Moped,LDV|2W
-Motorcycle (>250cc),LDV|2W
-Bus_tmp_vehicletype,Bus
-Truck (0-3.5t),Truck|light
-Truck (18t),Truck|light
-Truck (26t),Truck|heavy
-Truck (7.5t),Truck|light
-Truck (40t),Truck|heavy
-Domestic Ship_tmp_vehicletype,Ship
-International Ship_tmp_vehicletype,Ship
-Freight Rail_tmp_vehicletype,Rail
-Passenger Rail_tmp_vehicletype,Rail
+vehicle_type;FV_vehvar
+International Aviation_tmp_vehicletype;Aviation
+Domestic Aviation_tmp_vehicletype;Aviation
+Motorcycle (50-250cc);LDV|2W
+Moped;LDV|2W
+Motorcycle (>250cc);LDV|2W
+Bus_tmp_vehicletype;Bus
+Truck (0-3.5t);Truck|light
+Truck (18t);Truck|light
+Truck (26t);Truck|heavy
+Truck (7.5t);Truck|light
+Truck (40t);Truck|heavy
+Domestic Ship_tmp_vehicletype;Ship
+International Ship_tmp_vehicletype;Ship
+Freight Rail_tmp_vehicletype;Rail
+Passenger Rail_tmp_vehicletype;Rail
+Subcompact Car;LDV|4W
+Compact Car;LDV|4W
+Mini Car;LDV|4W
+Subcompact Car;LDV|4W
+Large Car and SUV;LDV|4W
+Large Car;LDV|4W
+Light Truck and SUV;LDV|4W
+Midsize Car;LDV|4W
+Van;LDV|4W
