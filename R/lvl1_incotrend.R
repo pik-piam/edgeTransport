@@ -287,6 +287,7 @@ BEV,Electric
 NG,Liquids
 Hybrid Electric,Liquids")
     mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
+    mimap <- mimap[!FV_vehvar == "LDV|4W"]
     FVtarget <- mimap[FVtarget, on="vehicle_type"]
     FVtarget <- techmap[FVtarget, on="technology"]
     FVtarget[is.na(FV_techvar), FV_techvar := technology]
