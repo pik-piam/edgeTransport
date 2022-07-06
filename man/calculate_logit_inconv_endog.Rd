@@ -12,7 +12,6 @@ calculate_logit_inconv_endog(
   logit_params,
   intensity_data,
   price_nonmot,
-  tech_scen,
   ptab4W,
   totveh = NULL
 )
@@ -29,8 +28,6 @@ calculate_logit_inconv_endog(
 \item{intensity_data}{logit level intensity data}
 
 \item{price_nonmot}{price of non-motorized modes in the logit tree}
-
-\item{tech_scen}{technology scenario}
 
 \item{ptab4W}{inconvenience cost factors for LDVs}
 

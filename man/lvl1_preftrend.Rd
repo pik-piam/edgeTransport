@@ -6,7 +6,7 @@
 \usage{
 lvl1_preftrend(
   SWS,
-  preftab,
+  ptab,
   calibdem,
   incocost,
   years,
@@ -14,13 +14,13 @@ lvl1_preftrend(
   smartlifestyle,
   tech_scen,
   SSP_scen,
-  mitab.path = NULL
+  mitab
 )
 }
 \arguments{
 \item{SWS}{preference factors}
 
-\item{preftab}{mode and veh preferences table}
+\item{ptab}{mode and veh preferences table}
 
 \item{calibdem}{calibration demand}
 
@@ -36,7 +36,7 @@ lvl1_preftrend(
 
 \item{SSP_scen}{SSP or SDP scenario}
 
-\item{mitab.path}{mitigation pathways table path}
+\item{mitab}{mitigation pathways table}
 }
 \value{
 projected trend of preference factors

@@ -40,7 +40,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
-          SSPscen <- default <- techscen <- share <- demand_F <- NULL
+          SSPscen <- default <- techscen <- share <- demand_F <- tech_scenario <- SSP_scenario <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE){
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
@@ -234,28 +234,32 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   if(storeRDS)
     saveRDS(calibration_output, file = level1path("calibration_output.RDS"))
 
-
-  ## load inconvenience factor table for LDVs
-  if(is.null(mitab4W.path)){
-    mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
+  ## load baseline sw trend table (non-LDV)
+  if(is.null(preftab)) {
+    preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
+  ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
 
-  ## select the right combination of techscen and SSP scen
-  preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
-
+  ## load mitigatin trends sw table
+  if(is.null(mitab.path)) {
+      mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
+  }
+  mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
+    SSP_scenario == SSP_scen & tech_scenario == tech_scen]
 
   print("-- generating trends for inconvenience costs")
-  prefs <- lvl1_preftrend(SWS = calibration_output$list_SW,
-                          preftab = preftab,
-                          incocost = incocost,
-                          calibdem = REMINDdat$dem,
-                          years = years,
-                          GDP_POP_MER = mrr$GDP_POP_MER,
-                          smartlifestyle = smartlifestyle,
-                          tech_scen = tech_scen,
-                          SSP_scen = SSP_scen,
-                          mitab.path = mitab.path
-                          )
+  prefs <- lvl1_preftrend(
+    SWS = calibration_output$list_SW,
+    ptab = ptab,
+    incocost = incocost,
+    calibdem = REMINDdat$dem,
+    years = years,
+    GDP_POP_MER = mrr$GDP_POP_MER,
+    smartlifestyle = smartlifestyle,
+    tech_scen = tech_scen,
+    SSP_scen = SSP_scen,
+    mitab = mitab
+  )
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
@@ -274,6 +278,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   #in the country, receive a zero sw. The missing input data for that vehcile classes causing NAs in the line underneath
   #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
 
+  ## load inconvenience factor table for LDVs
+  if(is.null(mitab4W.path)) {
+    mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
+  }
+
+  preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
+
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
   for (i in seq(1,3,1)) {
@@ -284,7 +295,6 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       logit_params = VOT_lambdas$logit_output,
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
-      tech_scen = tech_scen,
       ptab4W = preftab4W,
       totveh = totveh)
 
