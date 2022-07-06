@@ -265,8 +265,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   #Optional Energy Intensity improvements depending on the tech Scen
   if(!is.null(int_improve.path)){
     ## select the right combination of techscen and SSP scen
-    int_improve <- fread(int_improve.path, header=T)[tech_scen == tech_scen & SSP_scen == SSP_scen]
-    if(nrow(int_impro) > 0){
+    int_improve <- fread(int_improve.path, header=T)[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
+    if(nrow(int_improve) > 0){
       IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improve)}
   }
 
@@ -309,6 +309,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
     mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
+
     prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
 
     ## regression demand calculation
@@ -383,13 +384,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     ## calculate vintages (new shares, prices, intensity)
     prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
-    browser()
+
     vintages = calcVint(shares = shares,
                         totdem_regr = dem_regr,
                         prices = prices,
                         mj_km_data = mj_km_data,
                         years = years)
-    browser()
+
     nas <- vintages[["shares"]]$FV_shares[is.na(share)]
     if(nrow(nas) > 0){
       print("NAs found in FV vintage shares.")
