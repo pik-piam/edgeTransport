@@ -2,7 +2,7 @@
 
 R package **edgeTransport**, version **0.17.0**
 
-[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)    [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
+[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)  [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
 
 ## Purpose and Functionality
 

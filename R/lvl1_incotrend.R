@@ -1,7 +1,7 @@
 #' Calculate a trend for share weights and inconvenience costs based on the EDGE scenario
 #'
 #' @param SWS preference factors
-#' @param preftab mode and veh preferences table
+#' @param ptab mode and veh preferences table
 #' @param calibdem calibration demand
 #' @param incocost inconvenience costs for 4wheelers
 #' @param years time steps
@@ -9,15 +9,15 @@
 #' @param smartlifestyle switch activating sustainable lifestyles
 #' @param tech_scen technology at the center of the policy packages
 #' @param SSP_scen SSP or SDP scenario
-#' @param mitab.path mitigation pathways table path
+#' @param mitab mitigation pathways table
 #'
 #' @importFrom zoo na.approx na.spline
 #' @return projected trend of preference factors
 #' @author Alois Dirnaichner, Marianna Rottoli
 
 
-lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
-                           smartlifestyle, tech_scen, SSP_scen, mitab.path=NULL){
+lvl1_preftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
+                           smartlifestyle, tech_scen, SSP_scen, mitab) {
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
@@ -36,12 +36,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
     }
     return(dt)
   }
-
-  ## load pref table
-  if(is.null(preftab)){
-    preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
-  }
-  ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
 
   ptab <- melt(ptab, value.name = "sw", variable.name = "year", id.vars = colnames(ptab)[1:9])
   ptab[, year := as.numeric(as.character(year))]
@@ -107,7 +101,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
 
   setnames(FVtarget, "sw", "value")
   FVtarget[, logit_type := "sw"]
-  FVtarget[, c("techscen", "level", "approx") := NULL]
+  FVtarget[, c("level", "approx") := NULL]
 
   ## merge with incocost, this should be moved elsewhere in the future
   FV_inco = FVdt[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year <= 2020]
@@ -132,7 +126,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
 
   ## merge placeholder
   tmps <- filldt(VSdt[grepl("_tmp_", vehicle_type)], 2010)[
-    , `:=`(sw=1, level="VS1", techscen=unique(VStarget$techscen), approx="linear")]
+    , `:=`(sw=1, level="VS1", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## add missing placeholders (HSR and rail)
   tmps <- unique(
@@ -148,7 +142,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
            by = c("region", "sector", "subsector_L1",
                 "subsector_L2", "subsector_L3", "vehicle_type")]
   VStarget[sw < 0, sw := 0]
-  VStarget[, c("techscen", "level", "approx") := NULL]
+  VStarget[, c("level", "approx") := NULL]
 
   ## merge L1 sws (4W vs 2W)
   S1dt <- SWS$S1S2_final_SW
@@ -162,7 +156,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
 
   ## merge placeholder
   tmps <- filldt(S1dt[grepl("_tmp_", subsector_L1)], 2010)[
-    , `:=`(sw = 1, level = "S1S2", techscen = unique(S1target$techscen), approx = "linear")]
+    , `:=`(sw=1, level="S1S2", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## add missing placeholders (HSR and rail)
   tmps <- unique(
@@ -178,7 +172,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
            by=c("region", "sector", "subsector_L1",
                 "subsector_L2", "subsector_L3")]
   S1target[sw < 0, sw := 0]
-  S1target[, c("techscen", "level", "approx") := NULL]
+  S1target[, c("level", "approx") := NULL]
 
   ## merge L2 sws
   S2dt <- SWS$S2S3_final_SW
@@ -192,7 +186,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
 
   ## merge placeholder
   tmps <- filldt(S2dt[grepl("_tmp_", subsector_L2)], 2010)[
-    , `:=`(sw=1, level="S2S3", techscen=unique(S2target$techscen), approx="linear")]
+    , `:=`(sw=1, level="S2S3", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   tmps <- unique(
     rbind(
@@ -207,7 +201,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
            by=c("region", "sector",
                 "subsector_L2", "subsector_L3")]
   S2target[sw < 0, sw := 0]
-  S2target[, c("techscen", "level", "approx") := NULL]
+  S2target[, c("level", "approx") := NULL]
 
   ## merge L3 sws
   S3dt <- SWS$S3S_final_SW
@@ -222,7 +216,7 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   S3target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "sector", "subsector_L3")]
   S3target[sw < 0, sw := 0]
-  S3target[, c("techscen", "level", "approx") := NULL]
+  S3target[, c("level", "approx") := NULL]
 
   ## normalization
   S3target[, sw := sw/max(sw),
@@ -272,11 +266,6 @@ lvl1_preftrend <- function(SWS, preftab, calibdem, incocost, years, GDP_POP_MER,
   ##    techvar=c("Liquids", "Electric", "Hydrogen"),
   ##    target=1, symmyr=2050, speed=10)
   ## fwrite(mitab, "edget-mitigation.csv")
-  if(is.null(mitab.path)){
-      mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
-    }
-  mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
-    SSP_scenario == SSP_scen & tech_scenario == tech_scen]
   if(nrow(mitab) > 0){
     ## treat a region as a rich region starting from:
     richcutoff <- 25000

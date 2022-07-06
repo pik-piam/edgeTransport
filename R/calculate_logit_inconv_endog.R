@@ -7,7 +7,6 @@
 #' @param logit_params contains logit exponents
 #' @param intensity_data logit level intensity data
 #' @param price_nonmot price of non-motorized modes in the logit tree
-#' @param tech_scen technology scenario
 #' @param ptab4W inconvenience cost factors for LDVs
 #' @param totveh total demand for LDVs by tecnology, in million veh
 #' @import data.table
@@ -19,7 +18,6 @@ calculate_logit_inconv_endog = function(prices,
                                         logit_params,
                                         intensity_data,
                                         price_nonmot,
-                                        tech_scen,
                                         ptab4W,
                                         totveh = NULL) {
 
@@ -112,7 +110,7 @@ calculate_logit_inconv_endog = function(prices,
 
 
 
-  F2Vcalc <- function(prices, pref_data, ptab4W, logit_params, value_time, mj_km_data, group_value, totveh, tech_scen) {
+  F2Vcalc <- function(prices, pref_data, ptab4W, logit_params, value_time, mj_km_data, group_value, totveh) {
     vehicles_number <- param <- value <- NULL
     final_prefFV <- pref_data[["FV_final_pref"]]
     final_prefVS1 <- pref_data[["VS1_final_pref"]]
@@ -174,11 +172,6 @@ calculate_logit_inconv_endog = function(prices,
     ## apply the same logit exponent to all the years
     df[, logit.exponent := as.double(logit.exponent)]
     df[, logit.exponent := ifelse(is.na(logit.exponent), mean(logit.exponent, na.rm = TRUE), logit.exponent), by = c("vehicle_type")]
-    if(tech_scen %in% c("ElecEra", "HydrHype")) {
-      ## logit exponent gets higher in time for LDVs and road freight, doubling by 2035
-      df[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "trn_pass_road_LDV_4W") & year >=2020, logit.exponent := ifelse(year <= 2035 & year >= 2020, logit.exponent[year==2020] + (2*logit.exponent[year==2020]-logit.exponent[year==2020]) * (year-2020)/(2035-2020), 2*logit.exponent[year==2020]),
-         by=c("region", "vehicle_type", "technology")]
-    }
 
     ## for 4W the value of V->S1 market shares is needed on a yearly basis
     final_prefVS1cp = final_prefVS1[subsector_L1 == "trn_pass_road_LDV_4W"]
@@ -473,7 +466,6 @@ calculate_logit_inconv_endog = function(prices,
                     value_time = value_time,
                     mj_km_data = mj_km_data,
                     group_value = "vehicle_type",
-                    tech_scen = tech_scen,
                     totveh = totveh)
   FV <- FV_all[["df"]]
   MJ_km_FV <- FV_all[["MJ_km"]]
