@@ -8,6 +8,7 @@
 #' @param intensity_data logit level intensity data
 #' @param price_nonmot price of non-motorized modes in the logit tree
 #' @param ptab4W inconvenience cost factors for LDVs
+#' @param logit_data_4W the output of the 4W logit calculation
 #' @import data.table
 #' @export
 
@@ -340,6 +341,10 @@ calculate_logit_4W = function(prices,
                               ptab4W,
                               totveh = NULL) {
 
+   `.` <- D <- EJ_Mpkm_final <- fuel_price_pkm <- index_yearly <- logit.exponent <- logit_type <-
+    non_fuel_price <- pchar <- pinco_tot <- pmod_av <- prange <- pref <- prisk <- region <- sector <-
+      share <- shareFS1 <- shareVS1 <- subsector_L1 <- subsector_L2 <- subsector_L3 <- sw <- tail <-
+        technology <- time_price <- tot_VOT_price <- tot_price <- vehicle_type <- weighted_sharessum <- NULL
   ## FV load technology prices and merge with value of time (~technology price for
   ## non-motorized)
   ## non-fuel prices
