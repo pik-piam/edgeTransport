@@ -139,14 +139,14 @@ SDP,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_su
 SDP,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,3.860e-02,4.798e-02,4.798e-02
 SDP,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,5.000e-02,5.000e-02,2.812e-01,2.812e-01
 SDP,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,1.491e-05,1.491e-05,1.491e-05,1.491e-05
-SDP,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SDP,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SDP,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SDP,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,5.600e-02,5.600e-02,5.600e-02,5.600e-02
 SDP,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,2.500e-04,6.250e-04,6.250e-04,6.250e-04
 SDP,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,7.500e-03,9.375e-03,9.375e-03,9.375e-03
 SDP,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SDP,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,3.682e-02,3.682e-02,3.682e-02,3.682e-02
 SDP,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,1.630e-01,2.445e-01,4.584e-01,4.584e-01
 SDP,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -1560,14 +1560,14 @@ SDP_EI,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp
 SDP_EI,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,1.727e-02,9.596e-03,9.596e-03
 SDP_EI,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SDP_EI,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,5.965e-05,5.965e-05,5.965e-05,5.965e-05
-SDP_EI,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SDP_EI,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SDP_EI,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SDP_EI,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,2.800e-02,2.800e-02,2.800e-02,2.800e-02
 SDP_EI,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,7.500e-04,1.875e-03,1.875e-03,1.875e-03
 SDP_EI,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_EI,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_EI,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,7.500e-03,7.500e-03,7.500e-03,7.500e-03
 SDP_EI,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP_EI,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SDP_EI,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_EI,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,7.363e-02,7.363e-02,7.363e-02,7.363e-02
 SDP_EI,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,8.149e-02,8.149e-02,1.528e-01,1.528e-01
 SDP_EI,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -2981,14 +2981,14 @@ SDP_MC,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp
 SDP_MC,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,3.860e-02,8.414e-02,8.414e-02
 SDP_MC,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SDP_MC,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,5.965e-06,5.965e-06,5.965e-06,5.965e-06
-SDP_MC,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SDP_MC,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SDP_MC,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SDP_MC,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,8.400e-02,1.680e-01,2.520e-01,2.520e-01
 SDP_MC,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,5.000e-04,1.250e-03,1.250e-03,1.250e-03
 SDP_MC,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,3.750e-03,3.750e-03,3.750e-03,3.750e-03
 SDP_MC,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SDP_MC,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SDP_MC,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_MC,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,1.473e-02,1.473e-02,1.473e-02,1.473e-02
 SDP_MC,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,1.630e-01,1.630e-01,3.056e-01,3.056e-01
 SDP_MC,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -4402,14 +4402,14 @@ SDP_RC,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp
 SDP_RC,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,2.591e-02,2.399e-02,2.399e-02
 SDP_RC,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.000e-02,5.000e-02,2.000e-01,2.000e-01
 SDP_RC,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,2.386e-06,2.386e-06,2.386e-06,2.386e-06
-SDP_RC,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SDP_RC,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SDP_RC,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SDP_RC,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,8.400e-02,1.120e-01,1.400e-01,1.400e-01
 SDP_RC,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,1.500e-04,3.750e-04,3.750e-04,3.750e-04
 SDP_RC,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_RC,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_RC,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,7.500e-04,2.250e-03,3.000e-03,3.000e-03
 SDP_RC,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,4.000e-01,1.000e+00,1.000e+00,1.000e+00
-SDP_RC,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SDP_RC,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SDP_RC,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,2.945e-03,2.945e-03,2.945e-03,2.945e-03
 SDP_RC,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,3.000e-01,4.889e-01,9.168e-01,9.168e-01
 SDP_RC,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -5823,14 +5823,14 @@ SSP1,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_s
 SSP1,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,3.860e-02,4.798e-02,4.798e-02
 SSP1,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SSP1,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,1.491e-05,1.491e-05,1.491e-05,1.491e-05
-SSP1,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SSP1,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SSP1,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SSP1,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,4.200e-02,4.200e-02,4.200e-02,4.200e-02
 SSP1,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,2.500e-04,6.250e-04,6.250e-04,6.250e-04
 SSP1,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP1,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP1,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,7.500e-03,7.500e-03,7.500e-03,7.500e-03
 SSP1,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SSP1,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SSP1,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP1,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,3.682e-02,3.682e-02,3.682e-02,3.682e-02
 SSP1,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,1.222e-01,1.222e-01,2.292e-01,2.292e-01
 SSP1,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -7244,14 +7244,14 @@ SSP2,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_s
 SSP2,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,3.860e-02,8.414e-02,8.414e-02
 SSP2,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SSP2,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,5.965e-05,5.965e-05,5.965e-05,5.965e-05
-SSP2,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SSP2,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SSP2,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SSP2,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,2.800e-02,2.800e-02,2.800e-02,2.800e-02
 SSP2,DEU,,,,,HSR,trn_pass,S3S,linear,1.875e-04,3.750e-04,6.250e-04,6.250e-04,6.250e-04
 SSP2,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,3.750e-03,3.750e-03,3.750e-03,3.750e-03,3.750e-03
 SSP2,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SSP2,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SSP2,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,7.363e-02,7.363e-02,7.363e-02,7.363e-02
 SSP2,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,8.149e-02,8.149e-02,1.528e-01,1.528e-01
 SSP2,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -8665,14 +8665,14 @@ SSP2EU,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp
 SSP2EU,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,3.860e-02,8.414e-02,8.414e-02
 SSP2EU,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SSP2EU,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,5.965e-05,5.965e-05,5.965e-05,5.965e-05
-SSP2EU,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SSP2EU,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SSP2EU,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,2.127e-03,2.127e-03,2.127e-03,2.127e-03,2.127e-03
+SSP2EU,DEU,,,,,Freight Rail,trn_freight,S3S,linear,2.800e-02,2.800e-02,2.800e-02,2.800e-02,2.800e-02
 SSP2EU,DEU,,,,,HSR,trn_pass,S3S,linear,1.875e-04,3.750e-04,6.250e-04,6.250e-04,6.250e-04
 SSP2EU,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2EU,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2EU,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,3.750e-03,3.750e-03,3.750e-03,3.750e-03,3.750e-03
 SSP2EU,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SSP2EU,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SSP2EU,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP2EU,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,7.363e-02,7.363e-02,7.363e-02,7.363e-02
 SSP2EU,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,8.149e-02,8.149e-02,1.528e-01,1.528e-01
 SSP2EU,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
@@ -10086,14 +10086,14 @@ SSP5,CHA,NG,Truck (40t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_s
 SSP5,CHA,NG,Truck (7.5t),trn_freight_road_tmp_subsector_L1,trn_freight_road_tmp_subsector_L2,trn_freight_road,trn_freight,FV,linear,3.008e-04,1.053e-02,2.573e-02,4.428e-02,4.428e-02
 SSP5,DEU,,,,,Cycle,trn_pass,S3S,linear,2.500e-02,2.500e-02,2.500e-02,1.875e-01,1.875e-01
 SSP5,DEU,,,,,Domestic Aviation,trn_pass,S3S,linear,5.965e-05,5.965e-05,5.965e-05,5.965e-05,5.965e-05
-SSP5,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,4.000e-03,4.000e-03,4.000e-03,4.000e-03,4.000e-03
-SSP5,DEU,,,,,Freight Rail,trn_freight,S3S,linear,3.200e-02,3.200e-02,3.200e-02,3.200e-02,3.200e-02
+SSP5,DEU,,,,,Domestic Ship,trn_freight,S3S,linear,8.181e-04,1.134e-03,1.134e-03,1.134e-03,1.134e-03
+SSP5,DEU,,,,,Freight Rail,trn_freight,S3S,linear,1.508e-02,1.307e-02,1.307e-02,1.307e-02,1.307e-02
 SSP5,DEU,,,,,HSR,trn_pass,S3S,linear,1.250e-04,2.500e-04,5.000e-04,3.125e-04,3.125e-04
 SSP5,DEU,,,,,International Aviation,trn_aviation_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP5,DEU,,,,,International Ship,trn_shipping_intl,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP5,DEU,,,,,Passenger Rail,trn_pass,S3S,linear,2.500e-03,3.750e-03,3.000e-03,2.625e-03,2.625e-03
 SSP5,DEU,,,,,Walk,trn_pass,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
-SSP5,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,9.400e-01,9.400e-01,9.400e-01,9.400e-01,9.400e-01
+SSP5,DEU,,,,,trn_freight_road,trn_freight,S3S,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
 SSP5,DEU,,,,,trn_pass_road,trn_pass,S3S,linear,7.363e-02,1.031e-01,1.104e-01,1.252e-01,1.252e-01
 SSP5,DEU,,,,Bus,trn_pass_road,trn_pass,S2S3,linear,8.149e-02,4.075e-02,4.075e-02,6.112e-02,6.112e-02
 SSP5,DEU,,,,trn_pass_road_LDV,trn_pass_road,trn_pass,S2S3,linear,1.000e+00,1.000e+00,1.000e+00,1.000e+00,1.000e+00
