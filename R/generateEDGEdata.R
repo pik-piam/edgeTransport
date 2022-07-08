@@ -298,7 +298,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
   for (i in seq(1,3,1)) {
-    logit_data <- calculate_logit_inconv_endog(
+
+    logit_data_4W <- calculate_logit_4W(
       prices = REMIND_prices,
       vot_data = REMINDdat$vt,
       pref_data = prefs,
@@ -308,7 +309,18 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       ptab4W = preftab4W,
       totveh = totveh)
 
-    if(storeRDS){
+    logit_data <- calculate_logit_inconv_endog(
+      prices = REMIND_prices,
+      vot_data = REMINDdat$vt,
+      pref_data = prefs,
+      logit_params = VOT_lambdas$logit_output,
+      intensity_data = IEAbal_comparison$merged_intensity,
+      price_nonmot = REMINDdat$pnm,
+      ptab4W = preftab4W,
+      logit_data_4W = logit_data_4W)
+
+    if(storeRDS) {
+      saveRDS(logit_data_4W, level1path("logit_data_4W.RDS"))
       saveRDS(logit_data[["share_list"]], file = level1path("share_newvehicles.RDS"))
       saveRDS(logit_data[["pref_data"]], file = level1path("pref_data.RDS"))
       saveRDS(logit_data[["prices_list"]], file = level1path("prices_list.RDS"))
