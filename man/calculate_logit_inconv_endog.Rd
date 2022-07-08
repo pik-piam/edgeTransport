@@ -12,9 +12,8 @@ calculate_logit_inconv_endog(
   logit_params,
   intensity_data,
   price_nonmot,
-  tech_scen,
   ptab4W,
-  totveh = NULL
+  logit_data_4W
 )
 }
 \arguments{
@@ -30,11 +29,9 @@ calculate_logit_inconv_endog(
 
 \item{price_nonmot}{price of non-motorized modes in the logit tree}
 
-\item{tech_scen}{technology scenario}
-
 \item{ptab4W}{inconvenience cost factors for LDVs}
 
-\item{totveh}{total demand for LDVs by tecnology, in million veh}
+\item{logit_data_4W}{the output of the 4W logit calculation}
 }
 \description{
 Evaluate logit tree shares from real prices and inconvenience costs.

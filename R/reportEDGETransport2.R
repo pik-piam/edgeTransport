@@ -132,8 +132,8 @@ reportEDGETransport2 <- function(output_folder = ".",
       setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feShareBunkersLiqBio[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Biomass", suffix)),
       setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feShareBunkersLiqSyn[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Hydrogen", suffix))
     )
-    #Convert back to data.table
-    tmp <- magpie2dt(tmp)
+    ## Convert back to data.table
+    tmp <- as.data.table(as.quitte(tmp))
     #Get rid of NAS
     tmp <- tmp[!is.na(variable)]
     tmp <- approx_dt(tmp, yrs, xcol = "period", ycol = "value",

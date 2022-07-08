@@ -472,6 +472,7 @@ lvl0_mergeDat = function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   int <- int[!(iso == "DEU" & vehicle_type %in% c("Van", "Mini Car"))]
 
   LF = merge(LF, unique(dem[!vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year")]), all.y = TRUE, by = c("iso", "vehicle_type", "technology", "subsector_L1", "subsector_L2", "subsector_L3", "sector",  "year"))
+
   LF[, loadFactor := ifelse(is.na(loadFactor), mean(loadFactor, na.rm = TRUE), loadFactor), by = c("year", "vehicle_type")]
   LF <- LF[year <= 2100]
   LF <- rbind(LF,
