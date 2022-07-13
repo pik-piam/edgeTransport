@@ -8,10 +8,16 @@
 #' @author Alois Dirnaichner
 #' @importFrom data.table fread
 #' @importFrom gdxdt writegdx.parameter
+#' @importFrom gdxrrw rgdx
 #' @export
 
 
 iterativeEDGETransport <- function(reporting=FALSE) {
+  `.` <- CountryCode <- EJ_Mpkm_final <- RegionCode <- V1 <- cfg <- check <- demNew <- demVintEachYear <-
+    demand_F <- full_demand_vkm <- iternum <- maxtech <- opt <- sector <- shareVS1 <- sharetech_new <-
+      subsector_L1 <- subsector_L3 <- sumvalue <- sw <- tot_price <- totdem <- value <-
+        vintage_demand_vkm <- NULL
+  
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
 
   data_folder <- "EDGE-T"
@@ -131,7 +137,7 @@ iterativeEDGETransport <- function(reporting=FALSE) {
   setkeyv(REMIND_prices, keys)
 
   pfile <- "EDGE_transport_prices.rds"
-  iter <- as.vector(gdxrrw::rgdx(gdx, list(name="o_iterationNumber"))$val)
+  iter <- as.vector(rgdx(gdx, list(name="o_iterationNumber"))$val)
 
   REMIND_prices[, iternum := iter]
 
