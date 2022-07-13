@@ -14,7 +14,7 @@
 
 iterativeEDGETransport <- function(reporting=FALSE) {
   `.` <- CountryCode <- EJ_Mpkm_final <- RegionCode <- V1 <- cfg <- check <- demNew <- demVintEachYear <-
-    demand_F <- full_demand_vkm <- iternum <- maxtech <- opt <- sector <- shareVS1 <- sharetech_new <-
+    demand_F <- full_demand_vkm <- iternum <- maxtech <- sector <- shareVS1 <- sharetech_new <-
       subsector_L1 <- subsector_L3 <- sumvalue <- sw <- tot_price <- totdem <- value <-
         vintage_demand_vkm <- NULL
   
@@ -221,13 +221,13 @@ iterativeEDGETransport <- function(reporting=FALSE) {
     MJ_km_base=mj_km_data,
     REMINDyears=REMINDyears,
     scenario=scenario,
-    demand_input = if (opt$reporting) ES_demand_all)
+    demand_input = if (reporting) ES_demand_all)
 
   demByTech <- shares_int_dem[["demand"]] ##in [-]
   intensity <- shares_int_dem[["demandI"]] ##in million pkm/EJ
-  norm_demand <- shares_int_dem[["demandF_plot_pkm"]] ## totla demand normalized to 1; if opt$reporting, in million km
+  norm_demand <- shares_int_dem[["demandF_plot_pkm"]] ## totla demand normalized to 1; if reporting, in million km
 
-  if (opt$reporting) {
+  if (reporting) {
     saveRDS(vintages, file = datapath("vintages.RDS"))
     saveRDS(shares, file = datapath("shares.RDS"))
     saveRDS(logit_data$EF_shares, file = datapath("EF_shares.RDS"))
@@ -287,7 +287,7 @@ iterativeEDGETransport <- function(reporting=FALSE) {
     intensity = intensity,
     loadFactor = loadFactor,
     EDGE2teESmap = EDGE2teESmap,
-    rep = opt$reporting)
+    rep = reporting)
 
   ## save number of vehicles for next iteration
   saveRDS(num_veh_stations$learntechdem, datapath("demand_learn.RDS"))  ## in million veh
