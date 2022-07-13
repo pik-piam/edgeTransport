@@ -12,7 +12,7 @@
 #' @export
 
 
-iterativeEDGETransport <- function(reporting=FALSE) {
+toolIterativeEDGETransport <- function(reporting=FALSE) {
   `.` <- CountryCode <- EJ_Mpkm_final <- RegionCode <- V1 <- cfg <- check <- demNew <- demVintEachYear <-
     demand_F <- full_demand_vkm <- iternum <- maxtech <- sector <- shareVS1 <- sharetech_new <-
       subsector_L1 <- subsector_L3 <- sumvalue <- sw <- tot_price <- totdem <- value <-
