@@ -54,11 +54,11 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   ## input data loading
   input_folder = paste0("./")
   if (length(list.files(path = data_folder, pattern = "RDS")) < 8) {
-    createRDS(input_folder, data_folder,
-              SSP_scenario = scenario,
-              EDGE_scenario = EDGE_scenario)
+    toolCreateRDS(input_folder, data_folder,
+                  SSP_scenario = scenario,
+                  EDGE_scenario = EDGE_scenario)
   }
-  inputdata <- loadInputData(data_folder)
+  inputdata <- toolLoadInputData(data_folder)
 
 
   vot_data = inputdata$vot_data
@@ -93,7 +93,9 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   average_prices = TRUE
 
   ## calculate the ES demand (in million km)
-  ES_demand_all = readREMINDdemand(gdx = gdx, REMINDmapping = REMIND2ISO_MAPPING, EDGE2teESmap = EDGE2teESmap, years = REMINDyears, scenario = scenario)
+  ES_demand_all = toolReadREMINDdemand(gdx = gdx, REMINDmapping = REMIND2ISO_MAPPING,
+                                       EDGE2teESmap = EDGE2teESmap, years = REMINDyears,
+                                       scenario = scenario)
 
   ## select from total demand only the passenger sm
   ES_demand = ES_demand_all[sector == "trn_pass",]
@@ -109,7 +111,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     ## calculate non fuel costs for technologies subjected to learning and merge the resulting values with the historical values
     nonfuel_costs = merge(nonfuel_costs, unique(int_dat[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
 
-    nonfuel_costs_list = applylearning(
+    nonfuel_costs_list = toolLearning(
       non_fuel_costs = nonfuel_costs, capcost4W = capcost4W,
       gdx =  gdx, EDGE2teESmap = EDGE2teESmap, demand_learntmp = demand_learntmp,
       ES_demandpr =  ES_demandpr, ES_demand =  ES_demand)
@@ -123,7 +125,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   }
 
   ## load price
-  REMIND_prices <- merge_prices(
+  REMIND_prices <- toolMergePrices(
     gdx = gdx,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = REMINDyears,
@@ -145,9 +147,11 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   saveRDS(REMIND_prices, datapath(paste0("REMINDprices", iter, ".RDS")))
 
 
-  if(average_prices){
+  if(average_prices) {
 
-    if(max(unique(REMIND_prices$iternum)) >= 20 & max(unique(REMIND_prices$iternum)) <= 30 & file.exists(datapath(pfile))){
+    if(max(unique(REMIND_prices$iternum)) >= 20 &
+       max(unique(REMIND_prices$iternum)) <= 30 &
+       file.exists(datapath(pfile))) {
       old_prices <- readRDS(datapath(pfile))
       all_prices <- rbind(old_prices, REMIND_prices)
       setkeyv(all_prices, keys)
@@ -155,7 +159,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
       REMIND_prices <- REMIND_prices[
         all_prices[iternum >= 20, mean(tot_price), by=keys], tot_price := V1]
       all_prices <- rbind(old_prices, REMIND_prices)
-    }else{
+    } else {
       all_prices <- REMIND_prices
     }
     saveRDS(all_prices, datapath(pfile))
@@ -173,7 +177,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     ## load previous iteration number of cars
     totveh = readRDS(datapath("demand_totalLDV.RDS"))
   }
-  logit_data_4W <- calculate_logit_4W(
+  logit_data_4W <- toolCalculateLogitIncost(
     prices= REMIND_prices[tot_price > 0],
     vot_data = vot_data,
     pref_data = pref_data,
@@ -183,7 +187,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     ptab4W = preftab4W,
     totveh = if (!is.null(totveh)) totveh)
 
-  logit_data <- calculate_logit_inconv_endog(
+  logit_data <- toolCalculateLogitSW(
     prices= REMIND_prices[tot_price > 0],
     vot_data = vot_data,
     pref_data = pref_data,
@@ -201,11 +205,11 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
 
   ## calculate vintages (new shares, prices, intensity)
-  vintages = calcVint(shares = shares,
-                      totdem_regr = ES_demand_all,
-                      prices = prices,
-                      mj_km_data = mj_km_data,
-                      years = REMINDyears)
+  vintages = toolCalcVint(shares = shares,
+                          totdem_regr = ES_demand_all,
+                          prices = prices,
+                          mj_km_data = mj_km_data,
+                          years = REMINDyears)
 
   shares$FV_shares = vintages[["shares"]]$FV_shares
   prices = vintages[["prices"]]
@@ -216,7 +220,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   EDGE2CESmap <- fread("mapping_CESnodes_EDGE.csv")
 
 
-  shares_int_dem <- shares_intensity_and_demand(
+  shares_int_dem <- toolSharesIntensityDemand(
     logit_shares=shares,
     MJ_km_base=mj_km_data,
     REMINDyears=REMINDyears,
@@ -279,7 +283,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     quit()
   }
 
-  num_veh_stations = calc_num_vehicles_stations(
+  num_veh_stations = toolVehicleStations(
     norm_dem = norm_demand[
       subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
       c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
@@ -298,7 +302,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
 
   ## use logit to calculate costs
-  budget <- calculate_capCosts(
+  budget <- toolCapCosts(
     base_price=prices$base,
     Fdemand_ES = shares_int_dem[["demandF_plot_pkm"]],
     stations = num_veh_stations$stations,
@@ -314,7 +318,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
                   2130, 2150)
 
   ## prepare the entries to be saved in the gdx files: intensity, shares, non_fuel_price. Final entries: intensity in [trillionkm/Twa], capcost in [2005USD/trillionpkm], shares in [-]
-  finalInputs <- prepare4REMIND(
+  finalInputs <- toolPrepare4REMIND(
     demByTech = demByTech,
     intensity = intensity,
     capCost = budget,
