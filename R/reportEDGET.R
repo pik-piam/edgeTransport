@@ -291,7 +291,7 @@ toolReportEDGET <- function(output_folder = ".",
     return(venum)
   }
 
-  vintageReport <- function(load_factor){
+  vintageReport <- function(load_factor) {
     ## this function should return the format originally provided by
     ## the vintages-snippet in the EDGE_transport.R script in REMIND
     ## full_demand_vkm: total demand per year and vehicle/technology
@@ -312,7 +312,6 @@ toolReportEDGET <- function(output_folder = ".",
     vint <- vint[!is.na(demNew)]
     vint <- vint[, c("year", "region", "vehicle_type", "technology", "variable", "demNew", "demVintEachYear")]
     vint[, demand_F := demNew + sum(demVintEachYear), by=c("region", "year", "vehicle_type", "technology")]
-
     vint <- load_factor[vint, on=c("year", "region", "vehicle_type")]
     vint[, full_demand_vkm := demand_F/loadFactor]
     vint[, vintage_demand_vkm := demVintEachYear/loadFactor]
@@ -331,7 +330,6 @@ toolReportEDGET <- function(output_folder = ".",
     vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
     vint[, sales_demand := full_demand_vkm - stock_demand]
     vint <- unique(vint[, c("construction_year", "vintage_demand_vkm", "full_demand_vkm") := NULL])
-
     annual_mileage_trucks <- fread(
       text = "vehicle_type,annual_mileage
               Truck (0-3.5t), 21500
@@ -447,7 +445,8 @@ toolReportEDGET <- function(output_folder = ".",
     load_factor <- load_factor[, c("year", "region", "vehicle_type", "loadFactor", "technology")]
     demand_vkm <- merge(demand_km, load_factor, by = c("year", "region", "vehicle_type", "technology"))
     demand_vkm[, value := value / loadFactor] ## billion vkm
-    load_factor <- unique(load_factor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
+    load_factor <- load_factor[year >= 1990, .(loadFactor=mean(loadFactor)),
+                               by=c("region", "year", "vehicle_type")]
   } else {
     demand_vkm <- merge(demand_km, load_factor, by = c("year", "region", "vehicle_type"))
     demand_vkm[, value := value / loadFactor] ## billion vkm
