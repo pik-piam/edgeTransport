@@ -378,7 +378,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   if(ariadne_adjustments){
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
-        conv_pkm_MJ := conv_pkm_MJ * 2.3/2.8]
+        conv_pkm_MJ := conv_pkm_MJ * 2.32/2.8]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV",
         conv_pkm_MJ := conv_pkm_MJ * 0.81/0.95]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "FCEV",

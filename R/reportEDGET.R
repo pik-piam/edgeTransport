@@ -327,9 +327,12 @@ toolReportEDGET <- function(output_folder = ".",
   reportStockAndSales <- function(annual_mileage, load_factor) {
     year_c <- construction_year <- Stock <- Sales <- vintage_demand_vkm <- fct <- category <- NULL
     vint <- vintageReport(load_factor)
-    vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
-    vint[, sales_demand := full_demand_vkm - stock_demand]
-    vint <- unique(vint[, c("construction_year", "vintage_demand_vkm", "full_demand_vkm") := NULL])
+    vint[, tot_vint_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
+    vint[, sales_demand := full_demand_vkm - tot_vint_demand]
+    ## stock demand is demand including vintages and sales
+    setnames(vint, "full_demand_vkm", "stock_demand")
+    vint <- unique(
+      vint[, c("construction_year", "vintage_demand_vkm", "tot_vint_demand") := NULL])
     annual_mileage_trucks <- fread(
       text = "vehicle_type,annual_mileage
               Truck (0-3.5t), 21500
