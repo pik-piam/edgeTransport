@@ -9,9 +9,9 @@
 #' @importFrom rmndt approx_dt
 #' @export
 
-prepare4REMIND <- function(demByTech, intensity, capCost,
+toolPrepare4REMIND <- function(demByTech, intensity, capCost,
                            EDGE2teESmap,
-                           REMINDtall){
+                           REMINDtall) {
     value <- NULL
 
     ## load conversion factor

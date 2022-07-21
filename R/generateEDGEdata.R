@@ -44,7 +44,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
           SSPscen <- default <- techscen <- share <- demand_F <- tech_scenario <- SSP_scenario <- NULL
 
-  if(is.null(output_folder) & storeRDS == TRUE){
+  if(is.null(output_folder) & storeRDS == TRUE) {
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
     storeRDS <- FALSE
   }
@@ -60,23 +60,23 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     dir.create(cache_folder)
   }
 
-  levelNpath <- function(fname, N){
+  levelNpath <- function(fname, N) {
     path <- file.path(output_folder, folder, paste0("level_", N))
-    if(!dir.exists(path)){
+    if(!dir.exists(path)) {
       dir.create(path, recursive = T)
     }
     return(file.path(path, fname))
   }
 
-  level0path <- function(fname){
+  level0path <- function(fname) {
     levelNpath(fname, 0)
   }
 
-  level1path <- function(fname){
+  level1path <- function(fname) {
     levelNpath(fname, 1)
   }
 
-  level2path <- function(fname){
+  level2path <- function(fname) {
     levelNpath(fname, 2)
   }
 
@@ -101,24 +101,24 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   #################################################
   print("-- Start of level 0 scripts")
 
-  mrr <- lvl0_mrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder)
+  mrr <- toolMrremind(SSP_scen, REMIND2ISO_MAPPING, cache_folder)
 
   ## function that loads raw data from the GCAM input files and
   ## modifies them, to make them compatible with EDGE setup
   ## disaggregated to ISO level
   ## demand in million pkm and tmk, EI in MJ/km
   print("-- load GCAM raw data")
-  GCAM_data <- lvl0_GCAMraw(input_folder, GCAM2ISO_MAPPING, mrr$GDP_country)
+  GCAM_data <- toolGCAMraw(input_folder, GCAM2ISO_MAPPING, mrr$GDP_country)
   ## add Hybrid Electric LF
   GCAM_data$load_factor = rbind(GCAM_data$load_factor,
                                 GCAM_data$load_factor[technology == "BEV"][, technology := "Hybrid Electric"])
   ## function that loads the TRACCS/Eurostat data for Europe. Final units for demand: millionkm (tkm and pkm)
   ## needed at this point to be used in the intensity calculation below
   print("-- load EU data")
-  if(!is.null(cache_folder) && file.exists(file.path(cache_folder, "load_EU_data.RDS"))){
+  if(!is.null(cache_folder) && file.exists(file.path(cache_folder, "load_EU_data.RDS"))) {
     EU_data <- readRDS(file.path(cache_folder, "load_EU_data.RDS"))
-  }else{
-    EU_data <- lvl0_loadEU(input_folder)
+  } else {
+    EU_data <- toolLoadEU(input_folder)
   }
   if(!is.null(cache_folder))
     saveRDS(EU_data, file = file.path(cache_folder, "load_EU_data.RDS"))
@@ -130,24 +130,24 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   ## function that loads UCD costs and annual mileage, results are on ISO level: costs in 2005USD/vkm (2005USD/vkm), annual mileage in vkt/veh/yr (vehicle km traveled per year)
   print("-- load UCD database")
-  UCD_output <- lvl0_loadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
+  UCD_output <- toolLoadUCD(input_folder = input_folder, fcr_veh = fcr_veh, years = years)
   ## function that loads PSI purchase costs, results are on an unspecified regional aggregation: costs in annualized 2005USD. Only years 2015 and 2040 are included.
   print("-- load PSI costs")
-  PSI_costs <- lvl0_PSI_costs(input_folder = input_folder, years = years, fcr_veh = fcr_veh)
+  PSI_costs <- toolPSICosts(input_folder = input_folder, years = years, fcr_veh = fcr_veh)
   ## function that loads CHN conventional trucks CAPEX and non/fuel OPEX, results on ISO level: costs in 2005USD/vkm
   print("-- load China truck costs")
-  CHN_trucks <- lvl0_CHNTrucksCosts(input_folder= input_folder, years = years)
+  CHN_trucks <- toolCHNTrucksCosts(input_folder= input_folder, years = years)
   ## function that loads PSI intensities
-  PSI_int = lvl0_PSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
+  PSI_int <- toolPSIint(GCAM_data = GCAM_data, input_folder, PSI_dir="PSI", years)
   ## function that loads alternative trucks/buses costs and h2 planes
-  altCosts <- lvl0_AltHDV(UCD_output = UCD_output)
+  altCosts <- toolAltHDV(UCD_output = UCD_output)
   ## function that merges costs, LF, energy intensity, annual mileage from the various sources.
   ## output units: costs in 2005$/pkm (or 2005$/tkm)
   ## LF in p/v (or t/v)
   ## energy intensity pkm/MJ
   ## Annual mileage in km/year. Every entry in the output is on ISO level
   print("-- merge costs, LF, annual mileage from the various sources")
-  merged_data <- lvl0_mergeDat(
+  merged_data <- toolMergeDat(
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_POP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
@@ -159,8 +159,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   ## function that calculates VOT for each level and logit exponents for each level.Final values: VOT in [2005$/pkm]
   print("-- load value-of-time and logit exponents")
-  VOT_lambdas=lvl0_VOTandExponents(GCAM_data, GDP_MER_country = mrr$GDP_MER_country,
-                                   POP_country = mrr$POP_country, input_folder = input_folder)
+  VOT_lambdas <- toolVOTandExponents(GCAM_data, GDP_MER_country = mrr$GDP_MER_country,
+                                     POP_country = mrr$POP_country, input_folder = input_folder)
   ## substitute lambda
   VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
   ## make freight less price sensitive
@@ -174,14 +174,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   ## produce regionalized versions, and ISO version of the tech_output and LF, as they are loaded on ISO level for EU. No conversion of units happening.
   print("-- generate REMIND level data")
-  REMINDdat <- lvl0_REMINDdat(merged_data = merged_data, VOT_lambdas = VOT_lambdas,
-                              GDP_country = mrr$GDP_country,
-                              REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
+  REMINDdat <- toolREMINDdat(merged_data = merged_data, VOT_lambdas = VOT_lambdas,
+                             GDP_country = mrr$GDP_country,
+                             REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
 
-
-
-  if(storeRDS){
+  if(storeRDS) {
     saveRDS(REMINDdat,
             file = level0path("REMINDdat.RDS"))
   }
@@ -191,15 +189,15 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   #################################################
   print("-- Start of level 1 scripts")
   print("-- Harmonizing energy intensities to match IEA final energy balances")
-  IEAbal_comparison <- lvl1_IEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = mrr$IEAbal)
+  IEAbal_comparison <- toolIEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = mrr$IEAbal)
   if(storeRDS)
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
-  if(is.null(gdxPath)){
+  if(is.null(gdxPath)) {
     gdxPath <- file.path(input_folder, "REMIND/fulldata_EU.gdx")
   }
-  REMIND_prices <- merge_prices(
+  REMIND_prices <- toolMergePrices(
     gdx = gdxPath,
     REMINDmapping = REMIND2ISO_MAPPING,
     REMINDyears = years,
@@ -214,18 +212,18 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
 
   ## function that calculates the inconvenience cost starting point between 1990 and 2020
-  incocost <- lvl0_incocost(annual_mileage = REMINDdat$AM,
-                            load_factor = REMINDdat$LF,
-                            fcr_veh = fcr_veh,
-                            REMINDp = REMIND_prices)
+  incocost <- toolIncocost(annual_mileage = REMINDdat$AM,
+                           load_factor = REMINDdat$LF,
+                           fcr_veh = fcr_veh,
+                           REMINDp = REMIND_prices)
 
-  if(storeRDS){
+  if(storeRDS) {
     saveRDS(incocost,
             file = level0path("incocost.RDS"))
   }
 
   print("-- EDGE calibration")
-  calibration_output <- lvl1_calibrateEDGEinconv(
+  calibration_output <- toolCalibrateEDGEinconv(
     prices = REMIND_prices,
     tech_output = REMINDdat$dem,
     logit_exp_data = VOT_lambdas$logit_output,
@@ -250,7 +248,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     SSP_scenario == SSP_scen & tech_scenario == tech_scen]
 
   print("-- generating trends for inconvenience costs")
-  prefs <- lvl1_preftrend(
+  prefs <- toolPreftrend(
     SWS = calibration_output$list_SW,
     ptab = ptab,
     incocost = incocost,
@@ -299,7 +297,8 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   ## multiple iterations of the logit calculation - set to 3
   for (i in seq(1,3,1)) {
 
-    logit_data_4W <- calculate_logit_4W(
+    ## 4W logit based on inconvenience cost formulation
+    logit_data_4W <- toolCalculateLogitIncost(
       prices = REMIND_prices,
       vot_data = REMINDdat$vt,
       pref_data = prefs,
@@ -309,7 +308,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       ptab4W = preftab4W,
       totveh = totveh)
 
-    logit_data <- calculate_logit_inconv_endog(
+    logit_data <- toolCalculateLogitSW(
       prices = REMIND_prices,
       vot_data = REMINDdat$vt,
       pref_data = prefs,
@@ -341,12 +340,12 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     if (NAVIGATEintl) {
       ## function that loads historical country-specific international aviation demand [billions RPK]
       print("-- prepare international aviation specific data")
-      IntAv_Prep <- lvl0_IntAvPreparation(input_folder= input_folder,
+      IntAv_Prep <- toolIntAvPreparation(input_folder= input_folder,
                                           GDP_country = mrr$GDP_country)
 
       ## Baseline demand regression run, for international aviation
       print("-- performing demand regression for Intl Av")
-      NAVIGATE_intl_dem_base <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
+      NAVIGATE_intl_dem_base <- toolDemandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
                                                            price_baseline = prices$S3S,
                                                            GDP_POP = mrr$GDP_POP,
                                                            REMIND_scenario = SSP_scen,
@@ -358,7 +357,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       ## regression demand calculation
       print("-- performing demand regression")
       ## demand in million km
-      NAVIGATE_intl_dem <- lvl2_demandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
+      NAVIGATE_intl_dem <- toolDemandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
                                                       price_baseline = prices$S3S,
                                                       GDP_POP = mrr$GDP_POP,
                                                       REMIND_scenario = SSP_scen,
@@ -370,7 +369,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
       dem_regr = NAVIGATE_intl_dem[["D_star"]]
 
-      if(storeRDS){
+      if(storeRDS) {
         saveRDS(NAVIGATE_intl_dem[["D_star"]], file = level2path("demand_regression.RDS"))
         saveRDS(NAVIGATE_intl_dem[["D_star_av"]], file = level2path("demand_regression_aviation.RDS"))
       }
@@ -378,7 +377,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     } else {
       ssp_demreg_tab <- NULL
-      if(is.null(ssp_demreg.path)){
+      if(is.null(ssp_demreg.path)) {
         print("No path to a file with scenario-specific tuning parameters for the regression provided. Using default file.")
         ssp_demreg.path <- system.file("extdata", "ssp_regression_factors.csv", package="edgeTransport")
       }
@@ -386,13 +385,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
 
       reg_demreg_tab <- NULL
-      if(is.null(regional_demreg.path)){
+      if(is.null(regional_demreg.path)) {
         print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
         regional_demreg.path <- system.file("extdata", "regional_regression_factors.csv", package="edgeTransport")
       }
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
       ## demand in million km
-      dem_regr = lvl2_demandReg(tech_output = REMINDdat$dem,
+      dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
                                 price_baseline = prices$S3S,
                                 GDP_POP = mrr$GDP_POP,
                                 smartlifestyle = smartlifestyle,
@@ -406,15 +405,14 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     ## calculate vintages (new shares, prices, intensity)
     prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
-
-    vintages = calcVint(shares = shares,
+    vintages = toolCalcVint(shares = shares,
                         totdem_regr = dem_regr,
                         prices = prices,
                         mj_km_data = mj_km_data,
                         years = years)
 
     nas <- vintages[["shares"]]$FV_shares[is.na(share)]
-    if(nrow(nas) > 0){
+    if(nrow(nas) > 0) {
       print("NAs found in FV vintage shares.")
       nas
       browser()
@@ -428,7 +426,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
       saveRDS(vintages, file = level2path("vintages.RDS"))
 
     print("-- aggregating shares, intensity and demand along REMIND tech dimensions")
-    shares_intensity_demand <- shares_intensity_and_demand(
+    shares_intensity_demand <- toolSharesIntensityDemand(
       logit_shares=shares,
       MJ_km_base=mj_km_data,
       REMINDyears=years,
@@ -439,13 +437,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     norm_demand <- shares_intensity_demand[["demandF_plot_pkm"]] ## in million km
 
     nas <- norm_demand[is.na(demand_F)]
-    if(nrow(nas) > 0){
+    if(nrow(nas) > 0) {
       print("NAs found in final demand output.")
       nas
       browser()
     }
 
-    num_veh_stations = calc_num_vehicles_stations(
+    num_veh_stations = toolVehicleStations(
       norm_dem = norm_demand[
         subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
         c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
@@ -462,7 +460,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
 
   print("-- Calculating budget coefficients")
-  budget <- calculate_capCosts(
+  budget <- toolCapCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
     stations = num_veh_stations$stations,
@@ -508,17 +506,16 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
 
-    report <- reportEDGETransport2(
-                  output_folder = file.path(output_folder, folder, "level_2"),
-                  extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
-                  model_name = "EDGE-Transport",
-                  gdx = gdxPath)
+    report <- toolReportEDGET(
+      output_folder = file.path(output_folder, folder, "level_2"),
+      extendedReporting = TRUE, scenario_title = paste0(tech_scen," ",SSP_scen),
+      model_name = "EDGE-Transport",
+      gdx = gdxPath)
 
     write.mif(report, file.path(output_folder, folder, "EDGE-T_SA.mif"))
 
-    if(plot.report){
+    if(plot.report) {
       ## ship and run the file in the output folder
-
       file.copy(system.file("Rmd", "report.Rmd", package = "edgeTransport"),
                 md_template, overwrite = T)
       render(md_template, output_format = "pdf_document")
@@ -528,7 +525,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   ## prepare the entries to be saved in the gdx files: intensity, shares, non_fuel_price. Final entries: intensity in [trillionkm/Twa], capcost in [trillion2005USD/trillionpkm], shares in [-]
   print("-- final preparation of input files")
-  finalInputs <- prepare4REMIND(
+  finalInputs <- toolPrepare4REMIND(
     demByTech = demByTech,
     intensity = intensity_remind,
     capCost = budget,
@@ -537,17 +534,17 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
 
   ## calculate absolute values of demand. Final entry: demand in [trillionpkm]
-  demand_traj <- lvl2_REMINDdemand(regrdemand = dem_regr,
-                                   EDGE2teESmap = EDGE2teESmap,
-                                   REMINDtall = REMINDtall,
-                                   SSP_scen = SSP_scen)
+  demand_traj <- toolREMINDdemand(regrdemand = dem_regr,
+                                  EDGE2teESmap = EDGE2teESmap,
+                                  REMINDtall = REMINDtall,
+                                  SSP_scen = SSP_scen)
 
   print("-- preparing complex module-friendly output files")
   ## final value: in billionspkm or billions tkm and EJ; shares are in [-]
-  complexValues <- lvl2_reportingEntries(ESdem = shares_intensity_demand$demandF_plot_pkm,
-                                         FEdem = shares_intensity_demand$demandF_plot_EJ,
-                                         gdp_country = mrr$GDP_country,
-                                         REMIND2ISO_MAPPING)
+  complexValues <- toolComplexCompat(ESdem = shares_intensity_demand$demandF_plot_pkm,
+                                     FEdem = shares_intensity_demand$demandF_plot_EJ,
+                                     gdp_country = mrr$GDP_country,
+                                     REMIND2ISO_MAPPING)
 
   print("-- generating CSV files to be transferred to mmremind")
   ## only the combinations (region, vehicle) present in the mix have to be included in costs
@@ -561,7 +558,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
 
   ## save the output csv files or create a list of objects
-  EDGETrData = lvl2_createoutput(
+  EDGETrData = toolCreateOutput(
     logit_params = VOT_lambdas$logit_output,
     pref_data = logit_data$pref_data,
     ptab4W = preftab4W,
@@ -584,14 +581,37 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   if (!is.null(EDGETrData)) {
     return(EDGETrData)
-  }else{
+  } else {
     return(file.path(output_folder, folder))
   }
 
 }
 
+#' Generate EDGE-Transport Input Data for the REMIND model, madrat interface.
+#'
+#' `calcgenerateEDGEdata()` is a wrapper for `generateEDGEdata()` to make use of
+#' madrat caching.
+#'
+#' @md
+#' @param input_folder folder hosting raw data
+#' @param output_folder folder hosting REMIND input files. If NULL, a list of magclass objects is returned (set this option in case of a REMIND preprocessing run)
+#' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T).
+#' @param SSP_scen SSP or SDP scenario
+#' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
+#' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
+#' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
+#' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
+#' @param preftab path to file with trends for share weights
+#' @param mitab4W.path path to file with key factors for 4W technologies for different mitigation ambition and SSP scenarios.
+#' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
+#' @param ssp_demreg.path path to file with key factors for the demand regression depending on SSP/SDP scenarios.
+#' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
+#' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
+#' @return generated EDGE-transport input data
+#' @author Alois Dirnaichner, Marianna Rottoli
 #' @export
 #' @rdname generateEDGEdata
+
 calcgenerateEDGEdata <- function(input_folder, output_folder,
                                  cache_folder = NULL, SSP_scen = "SSP2",
                                  tech_scen = "Mix", smartlifestyle = FALSE,
@@ -601,23 +621,9 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
                                  mitab4W.path = NULL, mitab.path = NULL,
                                  ssp_demreg.path = NULL,
                                  regional_demreg.path = NULL) {
-  "!# @monitor edgeTransport:::generateEDGEdata"
-  "!# @monitor edgeTransport:::compScenEDGET"
-  "!# @monitor edgeTransport:::lvl0_GCAMraw"
-  "!# @monitor edgeTransport:::lvl0_incocost"
-  "!# @monitor edgeTransport:::lvl0_loadEU"
-  "!# @monitor edgeTransport:::lvl0_loadUCD"
-  "!# @monitor edgeTransport:::lvl0_mrremind"
-  "!# @monitor edgeTransport:::lvl1_calibrateEDGEinconv"
-  "!# @monitor edgeTransport:::lvl1_IEAharmonization"
-  "!# @monitor edgeTransport:::lvl2_createoutput"
-  "!# @monitor edgeTransport:::lvl2_demandReg"
-  "!# @monitor edgeTransport:::lvl2_demandRegNAVIGATEIntl"
-  "!# @monitor edgeTransport:::lvl2_REMINDdemand"
-  "!# @monitor edgeTransport:::vl1_preftrend"
 
   return(list(
-    x = generateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
+    x = toolGenerateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
                          tech_scen, smartlifestyle, storeRDS,
                          gdxPath, preftab, plot.report,
                          mitab4W.path, mitab.path, ssp_demreg.path,

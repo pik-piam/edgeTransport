@@ -9,7 +9,7 @@
 #' @export
 
 
-readREMINDdemand= function(gdx, REMINDmapping,EDGE2teESmap, years, scenario){
+toolReadREMINDdemand <- function(gdx, REMINDmapping, EDGE2teESmap, years, scenario) {
   `.` <- region <- EDGE_top <- value <- demand <- NULL
 
   dem <- readGDX(gdx, c("vm_cesIO"),field = "l")

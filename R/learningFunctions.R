@@ -11,7 +11,7 @@
 #' @import data.table
 #' @export
 
-applylearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_learntmp, ES_demandpr, ES_demand){
+toolLearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_learntmp, ES_demandpr, ES_demand){
   `.` <- ratio <- demandpr <- vehicles_number <- cumul <- technology <- subsector_L1 <- non_fuel_price <- b <- initialyear <- NULL
   Capital_costs_purchase <- totalNE_cost <- price_component <- NULL
   ## find the estimated number of cars
@@ -88,9 +88,9 @@ applylearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_l
 
 
 
-calc_num_vehicles_stations <- function(norm_dem, intensity, ES_demand_all, loadFactor, EDGE2teESmap, rep){
-  demand_F <- demand <- annual_mileage <- region <- `.` <- vehicles_number <- vehicle_type <- demand_F <- technology <- statnum <- fracst <- NULL
-  cost_st_km <- cost <- en_int <- value <- teEs <- NULL
+toolVehicleStations <- function(norm_dem, intensity, ES_demand_all, loadFactor, EDGE2teESmap, rep) {
+  demand_F <- demand <- annual_mileage <- region <- `.` <- vehicles_number <- vehicle_type <-
+    demand_F <- technology <- statnum <- fracst <- cost_st_km <- cost <- en_int <- value <- teEs <- NULL
   if (!rep) {
     norm_dem = merge(norm_dem, ES_demand_all, by = c("region", "year", "sector"))
     ## scale the normalized demand
