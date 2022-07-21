@@ -146,8 +146,9 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   ## remove column not needed in REMIND from int_dat
   int_dat[, MJ_km := NULL]
 
-  ## remove redundant columns from load factor
-  loadFactor = unique(loadFactor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
+  ## remove technology column from load factor
+  load_factor <- load_factor[year >= 1990, .(loadFactor = mean(loadFactor)),
+                             by=c("region", "year", "vehicle_type")]
   ## add scenario column to load factor
   loadFactor <- addScenarioCols(loadFactor, 0)
 
