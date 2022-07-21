@@ -326,7 +326,7 @@ toolReportEDGET <- function(output_folder = ".",
 
   reportStockAndSales <- function(annual_mileage, load_factor) {
     year_c <- construction_year <- Stock <- Sales <- vintage_demand_vkm <- fct <- category <- NULL
-    browser()
+
     vint <- vintageReport(load_factor)
     vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
     vint[, sales_demand := full_demand_vkm - stock_demand]
