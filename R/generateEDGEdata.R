@@ -296,7 +296,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
-  for (i in seq(1,1,1)) {
+  for (i in seq(1,3,1)) {
 
     ## 4W logit based on inconvenience cost formulation
     logit_data_4W <- toolCalculateLogitIncost(
@@ -572,7 +572,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
     capCost = finalInputs$capCost,
     price_nonmot = REMINDdat$pnm,
     complexValues = complexValues,
-    loadFactor = REMINDdat$LF,
+    load_Factor = REMINDdat$LF,
     annual_mileage = REMINDdat$AM,
     demISO = merged_data$dem,
     SSP_scen = SSP_scen,
