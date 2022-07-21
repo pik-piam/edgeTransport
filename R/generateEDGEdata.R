@@ -37,7 +37,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
                              ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL,
-                             int_improve.path = NULL){
+                             int_improvetab = NULL){
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -264,12 +264,13 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
 
-  #Optional Energy Intensity improvements depending on the tech Scen
-  if(!is.null(int_improve.path)){
+  #Optional Energy Intensity improvements after 2020 depending on the tech Scen
+  if(is.null(int_improvetab)){
+    print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
     ## select the right combination of techscen and SSP scen
-    int_improve <- fread(int_improve.path, header=T)[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
-    if(nrow(int_improve) > 0){
-      IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improve)}
+    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
+    if(nrow(int_improvetab) > 0){
+      IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improvetab)}
   }
 
 
@@ -295,7 +296,7 @@ generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
-  for (i in seq(1,3,1)) {
+  for (i in seq(1,1,1)) {
 
     ## 4W logit based on inconvenience cost formulation
     logit_data_4W <- toolCalculateLogitIncost(
