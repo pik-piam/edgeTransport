@@ -6,6 +6,7 @@ adjust_intensity <- function(intensity, int_impro){
       initial + fct * (final - initial)
     }
 
+
     mimap <- system.file("extdata", "mitigation-techmap.csv", package = "edgeTransport")
     techmap <- fread(text="technology,FV_techvar
                              FCEV,Hydrogen
@@ -18,10 +19,21 @@ adjust_intensity <- function(intensity, int_impro){
       intensity_new[is.na(FV_techvar), FV_techvar := technology]
       int_impro <- int_impro[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL]
       intensity_new <- merge(intensity_new, int_impro, by = c("FV_vehvar", "FV_techvar"))
+
       #Apply efficiency improvements
-      intensity_new[year >= 2020, EJ_Mpkm_final := apply_logistic_trends(year, target, symmyr, speed) * EJ_Mpkm_final,
-        by = c("region", "vehicle_type", "technology")]
-      intensity_new[, c("FV_vehvar", "FV_techvar", "level", "target", "symmyr", "speed", "SSP_scenario", "tech_scenario") := NULL]
+      #Check whether logistic trend parameters or annual improvement rate supplied
+      if (nrow(intensity_new[is.na(annual_rate)]) > 0){
+        intensity_new[year >= 2020, EJ_Mpkm_final := apply_logistic_trends(year, target, symmyr, speed) * EJ_Mpkm_final,
+          by = c("region", "vehicle_type", "technology")]
+        intensity_new[, c("FV_vehvar", "FV_techvar", "level", "target", "symmyr", "speed", "SSP_scenario", "tech_scenario", "annual_rate") := NULL]
+      }else{
+        intensity_new[year >= 2020 & year <= 2050, EJ_Mpkm_final := EJ_Mpkm_final* ((100-annual_rate)/100)^(year-2020),
+                      by = c("region", "vehicle_type", "technology")]
+        #Keep the intensity from 2050 onward constant
+        intensity_new_after2050 <- rbindlist(lapply(unique(intensity_new[year > 2050]$year), function(x){intensity_new[year == 2050][, year := x]}))
+        intensity_new <- rbind(intensity_new[year <= 2050], intensity_new_after2050)
+        intensity_new[, c("FV_vehvar", "FV_techvar", "level", "target", "symmyr", "speed", "SSP_scenario", "tech_scenario", "annual_rate") := NULL]
+      }
 
       #Merge with unaffected intensity data
       intensity <- merge(intensity, intensity_new, by = c("region", "technology", "vehicle_type", "year", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "sector_fuel"), all = TRUE)
