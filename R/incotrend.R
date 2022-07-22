@@ -139,7 +139,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   VStarget <- rbind(VStarget, tmps)
 
   VStarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by=c("region", "sector", "subsector_L1",
+           by = c("region", "sector", "subsector_L1",
                 "subsector_L2", "subsector_L3", "vehicle_type")]
   VStarget[sw < 0, sw := 0]
   VStarget[, c("level", "approx") := NULL]
@@ -150,7 +150,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   S1target <- ptab[level == "S1S2"]
   S1target[, c("technology", "vehicle_type") := NULL]
   ## insert historical values
-  S1target[S1dt, sw := i.sw, on=c("region", "year", "sector", "subsector_L1",
+  S1target[S1dt, sw := i.sw, on = c("region", "year", "sector", "subsector_L1",
                                   "subsector_L2", "subsector_L3")]
   S1target[year <= 2010 & is.na(sw), sw := 0]
 
@@ -276,6 +276,7 @@ BEV,Electric
 NG,Liquids
 Hybrid Electric,Liquids")
     mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
+    mimap <- mimap[!FV_vehvar == "LDV|4W"]
     FVtarget <- mimap[FVtarget, on="vehicle_type"]
     FVtarget <- techmap[FVtarget, on="technology"]
     FVtarget[is.na(FV_techvar), FV_techvar := technology]

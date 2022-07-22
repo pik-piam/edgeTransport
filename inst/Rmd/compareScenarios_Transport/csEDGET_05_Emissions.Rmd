@@ -7,13 +7,12 @@ items <- c(
       "Emi|CO2|Transport|Pass|Aviation|International|Tailpipe",
       "Emi|CO2|Transport|Pass|Aviation|Domestic|Tailpipe",
       "Emi|CO2|Transport|Pass|Rail|Tailpipe",
-      "Emi|CO2|Transport|Pass|Rail|non-HSR|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|LDV|Four Wheelers|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|LDV|Two Wheelers|Tailpipe")
 
-showAreaAndBarPlots(data, items[2:7], tot, orderVars = "user")
-showAreaAndBarPlots(data, items[2:7], tot, fill = TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items[2:6], tot, orderVars = "user")
+showAreaAndBarPlots(data, items[2:6], tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
 walk(c(items,"Emi|CO2|Transport|Pass|Road|LDV|Tailpipe",
       "Emi|CO2|Transport|Pass|non-LDV|Tailpipe"), showLinePlots, data = data)
@@ -40,10 +39,10 @@ walk(items, showLinePlots, data = data)
 ```{r}
 tot <- "Emi|CO2|Transport|Freight|w/o bunkers|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Freight|International Shipping",
-      "Emi|CO2|Transport|Freight|Navigation",
-      "Emi|CO2|Transport|Freight|Rail",
-      "Emi|CO2|Transport|Freight|Road"
+      "Emi|CO2|Transport|Freight|International Shipping|Tailpipe",
+      "Emi|CO2|Transport|Freight|Navigation|Tailpipe",
+      "Emi|CO2|Transport|Freight|Rail|Tailpipe",
+      "Emi|CO2|Transport|Freight|Road|Tailpipe"
   )
 showAreaAndBarPlots(data, items[2:4], tot, orderVars = "user")
 showAreaAndBarPlots(data, items[2:4], tot_wobunk, fill = TRUE, orderVars = "user")
