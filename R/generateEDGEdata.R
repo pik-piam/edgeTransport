@@ -268,10 +268,10 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   if(is.null(int_improvetab)){
     print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
     ## select the right combination of techscen and SSP scen
-    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
-    if(nrow(int_improvetab) > 0){
+    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]}
+  if(nrow(int_improvetab) > 0){
       IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improvetab)}
-  }
+
 
 
   #################################################
