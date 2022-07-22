@@ -21,7 +21,7 @@
 #' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @param FEPricetab ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.
-#' @param int_improve.path path to file with key factors for intensity improvements for different mitigation ambition and SSP scenarios.
+#' @param int_improvetab tab with key factors for intensity improvements for different mitigation ambition and SSP scenarios.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -30,7 +30,7 @@
 #' @export
 
 
-generateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
+toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
                              SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
                              storeRDS = FALSE,
                              gdxPath = NULL,
