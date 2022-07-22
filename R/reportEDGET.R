@@ -19,7 +19,7 @@
 #' @importFrom data.table fread fwrite rbindlist copy CJ
 #' @importFrom remind2 toolRegionSubsets
 #' @importFrom quitte as.quitte aggregate_map
-#' @importFrom magclass as.magpie getItems getNames mselect dimSums
+#' @importFrom magclass as.magpie getItems getNames mselect dimSums setNames
 #' @importFrom rmndt approx_dt readMIF writeMIF
 #' @importFrom magrittr %>%
 #' @export
@@ -34,7 +34,7 @@ toolReportEDGET <- function(output_folder = ".",
       se_share <- fe_demand <- variable <- value <- loadFactor <- sharetech_new <- shareVS1 <-
         all_enty <- ef <- variable_agg <- aggr_mode <- det_veh <- model <- scenario <- period <-
           se <- type <- ven <- vehicle_type <- vehicle_type <- capture.output <- demVintEachYear <-
-            unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <- setNames <-
+            unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <-
               full_demand_vkm <- vintage_demand_vkm <- stock_demand <- sales_demand <- full_demand_vkm <-
                 typ <- FE <- NULL
 
@@ -326,6 +326,7 @@ toolReportEDGET <- function(output_folder = ".",
 
   reportStockAndSales <- function(annual_mileage, load_factor) {
     year_c <- construction_year <- Stock <- Sales <- vintage_demand_vkm <- fct <- category <- NULL
+
     vint <- vintageReport(load_factor)
     vint[, stock_demand := sum(vintage_demand_vkm), by=c("year", "region", "vehicle_type", "technology")]
     vint[, sales_demand := full_demand_vkm - stock_demand]

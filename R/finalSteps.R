@@ -42,7 +42,7 @@ toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
 #' @param intensity intensity at REMIND level
 #' @param capCost capital costs
 #' @param price_nonmot non motorized modes price
-#' @param loadFactor load factors
+#' @param load_Factor load factors
 #' @param annual_mileage annual mileage
 #' @param demISO ISO level demand in 2010 to be used as a weight in mrremind
 #' @param SSP_scen SSP scenario
@@ -54,7 +54,7 @@ toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
 
 toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data,
                              capcost4W, demByTech, int_dat, intensity, capCost,
-                             price_nonmot, complexValues, loadFactor, annual_mileage,
+                             price_nonmot, complexValues, load_Factor, annual_mileage,
                              demISO, SSP_scen, EDGE_scenario, level2path, output_folder) {
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", SSP_scen)
@@ -146,10 +146,11 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   ## remove column not needed in REMIND from int_dat
   int_dat[, MJ_km := NULL]
 
-  ## remove redundant columns from load factor
-  loadFactor = unique(loadFactor[year >= 1990, c("region", "year", "loadFactor", "vehicle_type")])
+  ## remove technology column from load factor
+  load_Factor <- load_Factor[year >= 1990, .(loadFactor = mean(loadFactor)),
+                             by=c("region", "year", "vehicle_type")]
   ## add scenario column to load factor
-  loadFactor <- addScenarioCols(loadFactor, 0)
+  load_Factor <- addScenarioCols(load_Factor, 0)
 
   ## add scenario column to annual mileage
   annual_mileage <- addScenarioCols(annual_mileage, 0)
@@ -203,7 +204,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
     print("Creating csv files for non-energy costs...")
     fwrite(NEC_data, file = level2path("UCD_NEC_iso.csv"))
     print("Creating csv files for load factor...")
-    fwrite(loadFactor, file = level2path("loadFactor.csv"))
+    fwrite(load_Factor, file = level2path("loadFactor.csv"))
     print("Creating csv files for annual mileage...")
     fwrite(annual_mileage, file = level2path("annual_mileage.csv"))
     print("Creating csv files for inconvenience cost factors...")
@@ -221,7 +222,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
                       price_nonmot = price_nonmot,
                       harmonized_intensities = int_dat,
                       UCD_NEC_iso = NEC_data,
-                      loadFactor = loadFactor,
+                      loadFactor = load_Factor,
                       annual_mileage = annual_mileage,
                       ptab4W = ptab4W)
 
