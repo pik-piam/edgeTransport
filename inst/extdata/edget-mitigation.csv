@@ -1,4 +1,4 @@
-﻿SSP_scenario,tech_scenario,regioncat,level,subsector_L3,subsector_L2,FV_vehvar,FV_techvar,target,symmyr,speed
+SSP_scenario,tech_scenario,regioncat,level,subsector_L3,subsector_L2,FV_vehvar,FV_techvar,target,symmyr,speed
 SSP2,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
