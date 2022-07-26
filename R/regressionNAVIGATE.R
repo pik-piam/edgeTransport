@@ -10,7 +10,6 @@
 #' @param COVID_dir folder where input data is about COVID
 #' @param Baseline_Run switch: is it a baseline or an intl aviation run
 #' @param REMIND_scenario SSP scenario
-#' @param smartlifestyle switch activating sustainable lifestyles
 #' @importFrom rmndt approx_dt
 #' @return transport demand projections
 #' @author Sebastian Franz
@@ -20,7 +19,7 @@
 
 
 
-toolDemandRegNAVIGATEIntl <- function(tech_output, price_baseline, GDP_POP, ICCT_data, RPK_cap_baseline, input_folder, COVID_dir="COVID", REMIND_scenario, smartlifestyle, Baseline_Run) {
+toolDemandRegNAVIGATEIntl <- function(tech_output, price_baseline, GDP_POP, ICCT_data, RPK_cap_baseline, input_folder, COVID_dir="COVID", REMIND_scenario, Baseline_Run) {
   
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
@@ -159,15 +158,6 @@ toolDemandRegNAVIGATEIntl <- function(tech_output, price_baseline, GDP_POP, ICCT
   price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_sm"), eps := 0.5]
   price_el[region %in% c("SSA", "CHA") & var %in% c("income_elasticity_pass_sm"), eps := 0.3]
   price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
-  
-  if (smartlifestyle) {
-    price_el[region =="REF" & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
-    price_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
-    price_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.4]
-    price_el[region %in% c("CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.2]
-    price_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
-    price_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
-  }
   
   price_el[region %in% c("IND", "OAS", "SSA", "MEA") & var %in% c("income_elasticity_pass_lo_L","income_elasticity_pass_lo_B"), eps := 0.25]
   
