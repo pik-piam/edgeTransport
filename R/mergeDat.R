@@ -378,13 +378,13 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   if(ariadne_adjustments){
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
-        conv_pkm_MJ := conv_pkm_MJ * 2.32/2.8]
+        conv_pkm_MJ := conv_pkm_MJ * 2.4/2.85]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV",
-        conv_pkm_MJ := conv_pkm_MJ * 0.81/0.95]
+        conv_pkm_MJ := conv_pkm_MJ * 0.77/0.94]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "FCEV",
         conv_pkm_MJ := conv_pkm_MJ * 1.41/1.75]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Hybrid Electric",
-        conv_pkm_MJ := conv_pkm_MJ * 1.55/1.3]
+        conv_pkm_MJ := conv_pkm_MJ * 1.86/1.3]
 
     ## liquids constant from 2030 on
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year >= 2030,
