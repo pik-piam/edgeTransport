@@ -385,8 +385,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
       demscen_factors <- NULL
       if (!is.null(demScen)) {
-        ## demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
-        demscen.path <- "~/git/edgeTransport/inst/extdata/demscen_factors.csv"
+        demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
         demscen_factors <- fread(demscen.path, header = TRUE)[demScen == demandScen]
       }
       ## demand in million km
