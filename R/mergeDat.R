@@ -49,14 +49,19 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   LF = rbind(LF_EU, GCAM_data$load_factor[!(iso %in% unique(LF_EU$iso) & vehicle_type %in% unique(LF_EU$vehicle_type))])
 
-  ## set target for LF for LDVs
-  target_LF = if(smartlifestyle) 0.2 else 0
-  target_year = if(smartlifestyle) 2060 else 2080
+  ## set default targets for LF for LDVs
+  target_LF = 0
+  target_year = 2080
 
   if(SSP_scen == "SDP_RC"){
     target_LF = 0.3
     target_year = 2060
+  } else if (SSP_scen == "SSP2" & Dem_Scen == "NAV_lowdem"){
+    target_LF = 0.4
+    target_year = 2050
   }
+
+
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
@@ -95,6 +100,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   AM = rbind(AM_EU, UCD_output$UCD_mileage[!(iso %in% unique(AM_EU$iso) & vehicle_type %in% unique(AM_EU$vehicle_type))])
   AM = merge(AM, logit_cat, by = "vehicle_type", allow.cartesian = T, all.x = TRUE)[, univocal_name:= NULL]
   AM = AM[year >= 1990]
+
   if(ariadne_adjustments){
     ## according to ViZ data from 2020 there has been a 10% reduction wrt 2010 values
     ## (from 14 kkm to 13.6 kkm per vehicle and year)
