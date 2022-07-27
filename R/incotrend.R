@@ -6,7 +6,6 @@
 #' @param incocost inconvenience costs for 4wheelers
 #' @param years time steps
 #' @param GDP_POP_MER GDP population on MER base
-#' @param smartlifestyle switch activating sustainable lifestyles
 #' @param tech_scen technology at the center of the policy packages
 #' @param SSP_scen SSP or SDP scenario
 #' @param mitab mitigation pathways table
@@ -17,7 +16,7 @@
 
 
 toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
-                           smartlifestyle, tech_scen, SSP_scen, mitab) {
+                           tech_scen, SSP_scen, mitab) {
   subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
