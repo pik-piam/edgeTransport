@@ -46,6 +46,7 @@ toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
 #' @param annual_mileage annual mileage
 #' @param demISO ISO level demand in 2010 to be used as a weight in mrremind
 #' @param SSP_scen SSP scenario
+#' @param DEM_scen Demand scenario, to which we will prepend gdp_ to be used in REMIND
 #' @param EDGE_scenario EDGE transport scenario specifier
 #' @param level2path directory where data will be saved
 #' @param complexValues values for complex module in REMIND
@@ -55,9 +56,10 @@ toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
 toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data,
                              capcost4W, demByTech, int_dat, intensity, capCost,
                              price_nonmot, complexValues, load_Factor, annual_mileage,
-                             demISO, SSP_scen, EDGE_scenario, level2path, output_folder) {
+                             demISO, SSP_scen, DEM_scen, EDGE_scenario, level2path, output_folder) {
   price_component <- MJ_km <- NULL
   gdp_scenario <- paste0("gdp_", SSP_scen)
+  dem_scenario <- paste0("gdp_", DEM_scen)
 
   addScenarioCols <- function(data, nc){
     ## Add scenario cols after column nc
@@ -69,12 +71,14 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
     if(nc == 0){
       as.data.table(cbind(
         GDP_scenario = gdp_scenario,
+        DEM_scenario = dem_scenario,
         EDGE_scenario = EDGE_scenario,
         data))
     }else{
       data = as.data.table(cbind(
         data[, 1:nc, with=F],
         GDP_scenario = gdp_scenario,
+        DEM_scenario = dem_scenario,
         EDGE_scenario = EDGE_scenario,
         data[, (nc + 1):ncol(data), with=F]))
     }
@@ -127,11 +131,18 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   pref_datatmp = pref_data["FV_final_pref"] ## this is not to be modified
   pref_data = pref_data[c("VS1_final_pref", "S1S2_final_pref", "S2S3_final_pref", "S3S_final_pref")]
   ## melt and rearrange all other levels
-  pref_data <- mapply(melt, pref_data, id.vars = list(c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "region", "sector", "subsector_L3", "subsector_L2", "GDP_scenario", "EDGE_scenario"),
-                                                      c("year", "region", "sector", "subsector_L3", "GDP_scenario", "EDGE_scenario")
-                                                      ))
+  pref_data <- mapply(
+    melt, pref_data,
+    id.vars = list(
+      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+        "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
+      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1",
+        "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
+      c("year", "region", "sector", "subsector_L3", "subsector_L2",
+        "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
+      c("year", "region", "sector", "subsector_L3",
+        "GDP_scenario", "DEM_scenario", "EDGE_scenario")
+    ))
   ## rename column in all datatables
   pref_data = lapply(pref_data, setnames, old = "variable", new = "logit_type")
   ## variable is a factor, change to character
@@ -155,7 +166,8 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   ## add scenario column to annual mileage
   annual_mileage <- addScenarioCols(annual_mileage, 0)
   ## select only the relevant columns
-  annual_mileage <- unique(annual_mileage[,c("GDP_scenario", "EDGE_scenario", "region", "year", "vkm.veh", "vehicle_type")])
+  annual_mileage <- unique(annual_mileage[, c(
+    "GDP_scenario", "DEM_scenario", "EDGE_scenario", "region", "year", "vkm.veh", "vehicle_type")])
   setnames(annual_mileage, old = "vkm.veh", new = "annual_mileage")
   if (!is.null(output_folder)) {
     dir.create(file.path(level2path("")), showWarnings = FALSE)
