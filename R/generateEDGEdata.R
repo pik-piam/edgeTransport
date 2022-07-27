@@ -553,7 +553,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
-
+  if (is.null(demScen)) {
+    demScen <- SSP_scen
+  }
 
   ## save the output csv files or create a list of objects
   EDGETrData = toolCreateOutput(
@@ -573,6 +575,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     annual_mileage = REMINDdat$AM,
     demISO = merged_data$dem,
     SSP_scen = SSP_scen,
+    DEM_scen = demScen,
     EDGE_scenario = tech_scen,
     level2path = level2path,
     output_folder = output_folder)
