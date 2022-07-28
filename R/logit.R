@@ -608,7 +608,7 @@ toolCalculateLogitIncost <- function(prices,
                by = c("vehicle_type", "year", "region")]
 
   ## merge with prices
-  tmp1 <- merge(tmp1[year %in% unique(df4W$year)], dfprices4W, all.x = TRUE,
+  tmp1 <- merge(tmp1[year %in% unique(dfprices4W$year)], dfprices4W, all.x = TRUE,
                 by = intersect(names(tmp1), names(dfprices4W)))
 
   ## values after 2100 are set to be equal to 2100
