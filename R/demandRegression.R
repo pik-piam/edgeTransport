@@ -152,8 +152,9 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
     if (nrow(mods) > 0) {
       D_star[year <= 2020, factor := 1]
       D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
-      D_star[, demand := factor * demand][, "factor" := NULL]
+      D_star[, demand := factor * demand]
     }
+    D_star[, "factor" := NULL]
   }
 
   return(D_star)
