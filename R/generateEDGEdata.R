@@ -11,7 +11,7 @@
 #' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T).
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
-#' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
+#' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
@@ -31,13 +31,13 @@
 
 
 toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
-                             SSP_scen = "SSP2", tech_scen = "Mix", smartlifestyle = FALSE,
+                             SSP_scen = "SSP2", tech_scen = "Mix", demScen = NULL,
                              storeRDS = FALSE,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
                              ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL,
-                             int_improvetab = NULL){
+                             int_improvetab = NULL) {
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
@@ -49,12 +49,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     storeRDS <- FALSE
   }
 
-
-
-  ## stopifnot(tech_scen %in% c("ConvCase", "Mix", "ElecEra", "HydrHype"))
-  EDGE_scenario <- if(smartlifestyle) paste0(tech_scen, "Wise") else tech_scen
-
-  folder <- paste0(SSP_scen, "-", EDGE_scenario, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+  folder <- paste0(SSP_scen, "-", tech_scen, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   if(!is.null(cache_folder) && !dir.exists(cache_folder)){
     dir.create(cache_folder)
@@ -92,9 +87,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   EDGE2teESmap = fread(system.file("extdata", "mapping_EDGE_REMIND_transport_categories.csv", package = "edgeTransport"))
   EDGE2CESmap = fread(system.file("extdata", "mapping_CESnodes_EDGE.csv", package = "edgeTransport"))
 
-  print(paste0("You selected the ", EDGE_scenario, " transport scenario."))
+  print(paste0("You selected the ", tech_scen, " transport scenario."))
   print(paste0("You selected the ", SSP_scen, " socio-economic scenario."))
-  print(paste0("You selected the option to include lifestyle changes to: ", smartlifestyle))
 
   #################################################
   ## LVL 0 scripts
@@ -151,7 +145,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_POP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
-    GCAM_data = GCAM_data, smartlifestyle = smartlifestyle, SSP_scen = SSP_scen, years = years,
+    GCAM_data = GCAM_data, SSP_scen = SSP_scen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
@@ -255,7 +249,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     calibdem = REMINDdat$dem,
     years = years,
     GDP_POP_MER = mrr$GDP_POP_MER,
-    smartlifestyle = smartlifestyle,
     tech_scen = tech_scen,
     SSP_scen = SSP_scen,
     mitab = mitab
@@ -350,7 +343,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                                                            price_baseline = prices$S3S,
                                                            GDP_POP = mrr$GDP_POP,
                                                            REMIND_scenario = SSP_scen,
-                                                           smartlifestyle = smartlifestyle,
                                                            ICCT_data = IntAv_Prep,
                                                            input_folder = input_folder,
                                                            Baseline_Run = TRUE)
@@ -362,7 +354,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                                                       price_baseline = prices$S3S,
                                                       GDP_POP = mrr$GDP_POP,
                                                       REMIND_scenario = SSP_scen,
-                                                      smartlifestyle = smartlifestyle,
                                                       ICCT_data = IntAv_Prep,
                                                       RPK_cap_baseline = NAVIGATE_intl_dem_base,
                                                       input_folder = input_folder,
@@ -391,14 +382,20 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
         regional_demreg.path <- system.file("extdata", "regional_regression_factors.csv", package="edgeTransport")
       }
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
+
+      demscen_factors <- NULL
+      if (!is.null(demScen)) {
+        demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
+        demscen_factors <- fread(demscen.path, header = TRUE)[demScen == demandScen]
+      }
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
-                                price_baseline = prices$S3S,
-                                GDP_POP = mrr$GDP_POP,
-                                smartlifestyle = smartlifestyle,
-                                SSP_scen = SSP_scen,
-                                ssp_factors = ssp_demreg_tab,
-                                regional_factors = reg_demreg_tab)
+                               price_baseline = prices$S3S,
+                               GDP_POP = mrr$GDP_POP,
+                               SSP_scen = SSP_scen,
+                               ssp_factors = ssp_demreg_tab,
+                               regional_factors = reg_demreg_tab,
+                               demscen_factors = demscen_factors)
       if(storeRDS)
         saveRDS(dem_regr, file = level2path("demand_regression.RDS"))
 
@@ -556,7 +553,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
-
+  if (is.null(demScen)) {
+    demScen <- SSP_scen
+  }
 
   ## save the output csv files or create a list of objects
   EDGETrData = toolCreateOutput(
@@ -576,7 +575,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     annual_mileage = REMINDdat$AM,
     demISO = merged_data$dem,
     SSP_scen = SSP_scen,
-    EDGE_scenario = EDGE_scenario,
+    DEM_scen = demScen,
+    EDGE_scenario = tech_scen,
     level2path = level2path,
     output_folder = output_folder)
 
@@ -599,7 +599,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 #' @param cache_folder folder hosting a "local" cache (this is not the mrremid cache, it is specific to EDGE-T).
 #' @param SSP_scen SSP or SDP scenario
 #' @param tech_scen EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)
-#' @param smartlifestyle If True, GDP demand regression provides lower overall demand levels.
+#' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression.
 #' @param storeRDS optional saving of intermediate RDS files, only possible if output folder is not NULL
 #' @param gdxPath optional path to a GDX file to load price signals from a REMIND run.
 #' @param preftab path to file with trends for share weights
@@ -615,7 +615,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
 calcgenerateEDGEdata <- function(input_folder, output_folder,
                                  cache_folder = NULL, SSP_scen = "SSP2",
-                                 tech_scen = "Mix", smartlifestyle = FALSE,
+                                 tech_scen = "Mix", demScen = NULL,
                                  storeRDS = FALSE,
                                  gdxPath = NULL,
                                  preftab = NULL, plot.report = FALSE,
@@ -625,7 +625,7 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
 
   return(list(
     x = toolGenerateEDGEdata(input_folder, output_folder, cache_folder,  SSP_scen,
-                         tech_scen, smartlifestyle, storeRDS,
+                         tech_scen, demScen, storeRDS,
                          gdxPath, preftab, plot.report,
                          mitab4W.path, mitab.path, ssp_demreg.path,
                          regional_demreg.path),

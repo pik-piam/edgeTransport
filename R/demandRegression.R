@@ -4,21 +4,24 @@
 #' @param tech_output historically calibrated demand
 #' @param price_baseline baseline prices
 #' @param GDP_POP GDP per capita
-#' @param smartlifestyle switch activating sustainable lifestyles
 #' @param ssp_factors table with SSP/SDP scenario factors to be added to the baseline elasticity trends
 #' @param regional_factors table with SSP/SDP and regionally specific factors to be added to the baseline elasticity trends
+#' @param demscen_factors table with reduction factors on the total demands,
+#'   example: demscen_factors <-
+#'   fread("demandScen,  region,sector,  year, factor
+#'          SSP2EU_lowEn,DEU,   trn_pass,2030, 0.5")
 #' @param SSP_scen REMIND SSP scenario
 #' @importFrom rmndt approx_dt
 #' @importFrom magrittr `%>%`
 #' @return transport demand projections
-#' @author Marianna Rottoli
+#' @author Marianna Rottoli, Alois Dirnaichner
 #'
 #' @importFrom data.table shift frank
 #' @export
 
 
-toolDemandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
-                           SSP_scen, ssp_factors, regional_factors=NULL) {
+toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
+                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors=NULL) {
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
@@ -35,25 +38,15 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
 
   facts <- ssp_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
 
-  income_el <- rbindlist(lapply(unique(facts$var), function(cat){
+  income_el <- rbindlist(lapply(unique(facts$var), function(cat) {
     appfun <- approxfun(
       x=facts[var == cat, gdp_cap],
       y=facts[var == cat, target], rule = 2)
     copy(gdp_pop)[, `:=`(var=cat, eps=appfun(GDP_cap))]
   }))
 
-  if (smartlifestyle) {
-    income_el[region =="REF" & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0]
-    income_el[region %in% c("OAS", "MEA", "LAM") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.1]
-    income_el[region %in% c("IND") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.4]
-    income_el[region %in% c("CHA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.2]
-    income_el[region %in% c("SSA") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.5]
-    income_el[region %in% c("EUR", "NEU", "USA", "CAZ", "JPN", "DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "NEN", "NES") & var %in% c("income_elasticity_pass_lo", "income_elasticity_pass_sm"), eps := 0.]
 
-  }
-
-
-  if(!is.null(regional_factors) && SSP_scen %in% unique(regional_factors$SSP_scenario)){
+  if(!is.null(regional_factors) && SSP_scen %in% unique(regional_factors$SSP_scenario)) {
     ## apply regional factors
     income_el <- regional_factors[SSP_scenario == SSP_scen][, SSP_scenario := NULL] %>%
       melt(id.vars = c("region", "var"), variable.name = "year", value.name = "region_factor") %>%
@@ -152,6 +145,17 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP, smartlifestyle,
   D_star = melt(D_star, id.vars = c("region", "year"),
                   measure.vars = c("trn_aviation_intl", "trn_freight", "trn_pass", "trn_shipping_intl"))
   D_star = D_star[,.(region, year, demand = value, sector = variable)]
+
+  if (!is.null(demscen_factors)) {
+    D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
+    mods <- D_star[!is.na(factor)]
+    if (nrow(mods) > 0) {
+      D_star[year <= 2020, factor := 1]
+      D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
+      D_star[, demand := factor * demand]
+    }
+    D_star[, "factor" := NULL]
+  }
 
   return(D_star)
 
