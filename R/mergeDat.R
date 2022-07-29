@@ -370,7 +370,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
               int_GCAM)
   ## ARIADNE intensity adjustments, source: DLR/HBEFA 4.2
 
-  if(ariadne_adjustments){
+  if (ariadne_adjustments) {
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids",
         conv_pkm_MJ := conv_pkm_MJ * 2.4/2.85]
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "BEV",
@@ -380,9 +380,27 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
     int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Hybrid Electric",
         conv_pkm_MJ := conv_pkm_MJ * 1.86/1.3]
 
-    ## liquids constant from 2030 on
-    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year >= 2030,
-        conv_pkm_MJ := .SD[year == 2030]$conv_pkm_MJ, by = c("vehicle_type")]
+    ## we apply all constant from 2020 and adjust for DLR improvements (PSI improvements
+    ## are calculated on sales only and are thus too ambitious)
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & year >= 2020,
+        conv_pkm_MJ := .SD[year == 2020]$conv_pkm_MJ, by = c("vehicle_type", "technology")]
+
+    improvements <- fread("technology,year,factor
+    Liquids,2030,0.94
+    Liquids,2045,0.89
+    BEV,2030,0.94
+    BEV,2045,0.86
+    FCEV,2030,0.83
+    FCEV,2045,0.75
+    ")
+
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W",
+        factor := improvements[.SD, factor, on=c("technology", "year")]]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W" & year <= 2020, factor := 1]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W",
+        factor := na.approx(factor, x=year, rule=2), by=c("iso", "vehicle_type", "technology")]
+    int[iso == "DEU" & subsector_L1 == "trn_pass_road_LDV_4W", conv_pkm_MJ := conv_pkm_MJ * factor]
+    int[, factor := NULL]
 
     ## the intensity deviation is likely coming from a deviation in LF and size shares
     int[iso == "DEU" & subsector_L3 == "trn_freight_road" & technology == "Liquids",
