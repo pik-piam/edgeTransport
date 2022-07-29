@@ -42,8 +42,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   load("config.Rdata")
   scenario <- cfg$gms$cm_GDPscen
   EDGE_scenario <- cfg$gms$cm_EDGEtr_scen
-  smartlifestyle <- grepl("Wise", EDGE_scenario)
-  tech_scen <- gsub("Wise", "", EDGE_scenario)
+  demScen <- cfg$gms$cm_demScen
 
   ## learning is OFF by default
   learning = FALSE
@@ -56,6 +55,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   if (length(list.files(path = data_folder, pattern = "RDS")) < 8) {
     toolCreateRDS(input_folder, data_folder,
                   SSP_scenario = scenario,
+                  DEM_scenario = demScen,
                   EDGE_scenario = EDGE_scenario)
   }
   inputdata <- toolLoadInputData(data_folder)
@@ -330,6 +330,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   ## add the columns of SSP scenario and EDGE scenario to the output parameters
   for (i in names(finalInputs)) {
     finalInputs[[i]]$SSP_scenario <- scenario
+    finalInputs[[i]]$DEM_scenario <- demScen
     finalInputs[[i]]$EDGE_scenario <- EDGE_scenario
   }
 
@@ -349,16 +350,16 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   ## CapCosts
   writegdx.parameter("p35_esCapCost.gdx", finalInputs$capCost, "p35_esCapCost",
-                     valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "EDGE_scenario", "all_teEs"))
+                     valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Intensities
   writegdx.parameter("p35_fe2es.gdx", finalInputs$intensity, "p35_fe2es",
-                     valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "EDGE_scenario", "all_teEs"))
+                     valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Shares: demand can represent the shares since it is normalized
   writegdx.parameter("p35_shFeCes.gdx", finalInputs$shFeCes, "p35_shFeCes",
                      valcol="value",
-                     uelcols = c("tall", "all_regi", "SSP_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
+                     uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
 
   print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
 
