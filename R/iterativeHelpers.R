@@ -4,11 +4,12 @@
 #' @param input_path the path to the folder containing the input (csv-) files
 #' @param data_path the path to the output folder
 #' @param SSP_scenario the SSP dimension, usually this refers to the GDP scenario in REMIND
+#' @param DEM_scenario the demand scenario.
 #' @param EDGE_scenario the EDGE-T scenario dimension
 #' @import data.table
 #' @export
 
-toolCreateRDS <- function(input_path, data_path, SSP_scenario, EDGE_scenario) {
+toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDGE_scenario) {
 
   SSPscen <- EDGEscen <- vehicle_type <- NULL
 
@@ -20,7 +21,8 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, EDGE_scenario) {
     tmp <- fread(
       paste0(input_path, pattern, ".cs4r"),
       col.names = names_dt, skip="gdp_"
-    )[SSPscen == SSP_scenario & EDGEscen == EDGE_scenario][, -c("SSPscen", "EDGEscen")]
+    )[SSPscen == SSP_scenario & DEMscen == DEM_scenario & EDGEscen == EDGE_scenario][
+      , -c("SSPscen", "DEMscen", "EDGEscen")]
     if (any(names(tmp) == 'vehicle_type')) {
       tmp[,vehicle_type := gsub("DOT", ".", vehicle_type)]
     }
@@ -46,48 +48,60 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, EDGE_scenario) {
   csv2RDS(pattern = "pref",
           filename = "pref",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "EDGEscen", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "logit_type", "entry", "value"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
+                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "technology", "logit_type", "entry", "value"))
 
   csv2RDS(pattern = "logit_exponent",
           filename = "logit_exp",
           input_path = input_path,
-          names_dt = c("SSPscen", "EDGEscen", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "entry", "logit.exponent"))
+          names_dt = c("SSPscen", "DEMscen", "EDGEscen", "sector", "subsector_L3",
+                       "subsector_L2", "subsector_L1", "vehicle_type", "entry", "logit.exponent"))
 
   csv2RDS(pattern = "value_time",
           filename = "VOT_iso",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "EDGEscen", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "entry", "time_price"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
+                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "entry", "time_price"))
 
   csv2RDS(pattern = "price_nonmot",
           filename = "price_nonmot",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "EDGEscen", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "entry", "tot_price"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
+                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "technology", "entry", "tot_price"))
 
   ## create RDS files for single dataframes
   csv2RDS(pattern = "harmonized_intensities",
           filename = "harmonized_intensities",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "EDGEscen", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "entry", "sector_fuel", "EJ_Mpkm_final"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
+                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "technology", "entry", "sector_fuel", "EJ_Mpkm_final"))
 
   csv2RDS(pattern = "UCD_NEC_iso",
           filename = "UCD_NEC_iso",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "EDGEscen", "vehicle_type", "technology", "price_component", "entry", "non_fuel_price"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+                       "technology", "price_component", "entry", "non_fuel_price"))
 
   csv2RDS(pattern = "loadFactor",
           filename = "loadFactor",
           input_path = input_path,
-          names_dt = c("year", "region","SSPscen", "EDGEscen", "vehicle_type", "entry", "loadFactor"))
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+                       "entry", "loadFactor"))
 
   csv2RDS(pattern = "annual_mileage",
           filename = "annual_mileage",
           input_path = input_path,
-          names_dt = c("year", "region","SSPscen", "EDGEscen", "vehicle_type", "entry", "annual_mileage"))
+          names_dt = c("year", "region","SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+                       "entry", "annual_mileage"))
 
   csv2RDS(pattern = "ptab4W",
           filename = "ptab4W",
           input_path = input_path,
-          names_dt = c("SSPscen", "EDGEscen", "param", "entry", "ptab4W"))
+          names_dt = c("SSPscen", "DEMscen", "EDGEscen", "param", "entry", "ptab4W"))
 
 }
 
