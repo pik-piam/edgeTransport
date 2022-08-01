@@ -2047,3 +2047,131 @@ SSP2;NAV_act;rich;S3;Passenger Rail;;;;1.6;2035;10
 SSP2;NAV_act;rich;S3;Walk;;;;1.7;2035;10
 SSP2;NAV_act;rich;S3;trn_freight_road;;;;0.9;2035;10
 SSP2;NAV_act;rich;S3;trn_pass_road;;;;0.7;2035;10
+SSP2;NAV_ele;poor;FV;;;Aviation;Electric;1;2045;10
+SSP2;NAV_ele;poor;FV;;;Aviation;Hydrogen;10;2045;10
+SSP2;NAV_ele;poor;FV;;;Aviation;Liquids;0.1;2045;10
+SSP2;NAV_ele;poor;FV;;;Bus;Electric;2;2030;10
+SSP2;NAV_ele;poor;FV;;;Bus;Hydrogen;50;2030;10
+SSP2;NAV_ele;poor;FV;;;Bus;Liquids;0.05;2030;10
+SSP2;NAV_ele;poor;FV;;;LDV|2W;Electric;4;2050;10
+SSP2;NAV_ele;poor;FV;;;LDV|2W;Hydrogen;1;2050;10
+SSP2;NAV_ele;poor;FV;;;LDV|2W;Liquids;0.05;2050;10
+SSP2;NAV_ele;poor;FV;;;Rail;Electric;2;2050;10
+SSP2;NAV_ele;poor;FV;;;Rail;Hydrogen;2;2050;10
+SSP2;NAV_ele;poor;FV;;;Rail;Liquids;0.5;2050;10
+SSP2;NAV_ele;poor;FV;;;Ship;Electric;1;2045;10
+SSP2;NAV_ele;poor;FV;;;Ship;Hydrogen;10;2045;10
+SSP2;NAV_ele;poor;FV;;;Ship;Liquids;0.1;2045;10
+SSP2;NAV_ele;poor;FV;;;Truck|heavy;Electric;1.5;2030;10
+SSP2;NAV_ele;poor;FV;;;Truck|heavy;Hydrogen;50;2030;10
+SSP2;NAV_ele;poor;FV;;;Truck|heavy;Liquids;0.05;2030;10
+SSP2;NAV_ele;poor;FV;;;Truck|light;Electric;1.5;2030;10
+SSP2;NAV_ele;poor;FV;;;Truck|light;Hydrogen;40;2030;10
+SSP2;NAV_ele;poor;FV;;;Truck|light;Liquids;0.05;2030;10
+SSP2;NAV_ele;rich;FV;;;Aviation;Electric;1;2045;10
+SSP2;NAV_ele;rich;FV;;;Aviation;Hydrogen;10;2045;10
+SSP2;NAV_ele;rich;FV;;;Aviation;Liquids;0.1;2045;10
+SSP2;NAV_ele;rich;FV;;;Bus;Electric;2;2030;10
+SSP2;NAV_ele;rich;FV;;;Bus;Hydrogen;40;2030;10
+SSP2;NAV_ele;rich;FV;;;Bus;Liquids;0.1;2030;10
+SSP2;NAV_ele;rich;FV;;;LDV|2W;Electric;4;2030;10
+SSP2;NAV_ele;rich;FV;;;LDV|2W;Hydrogen;1;2030;10
+SSP2;NAV_ele;rich;FV;;;LDV|2W;Liquids;0.05;2030;10
+SSP2;NAV_ele;rich;FV;;;Rail;Electric;2;2050;10
+SSP2;NAV_ele;rich;FV;;;Rail;Hydrogen;2;2050;10
+SSP2;NAV_ele;rich;FV;;;Rail;Liquids;0.5;2050;10
+SSP2;NAV_ele;rich;FV;;;Ship;Electric;1;2045;10
+SSP2;NAV_ele;rich;FV;;;Ship;Hydrogen;10;2045;10
+SSP2;NAV_ele;rich;FV;;;Ship;Liquids;0.1;2045;10
+SSP2;NAV_ele;rich;FV;;;Truck|heavy;Electric;2;2030;10
+SSP2;NAV_ele;rich;FV;;;Truck|heavy;Hydrogen;9;2030;10
+SSP2;NAV_ele;rich;FV;;;Truck|heavy;Liquids;0.05;2030;10
+SSP2;NAV_ele;rich;FV;;;Truck|light;Electric;2;2030;10
+SSP2;NAV_ele;rich;FV;;;Truck|light;Hydrogen;4;2030;10
+SSP2;NAV_ele;rich;FV;;;Truck|light;Liquids;0.05;2030;10
+SSP2;NAV_ele;poor;S2;;Bus;;;1;2035;10
+SSP2;NAV_ele;poor;S2;;trn_pass_road_LDV;;;1;2035;10
+SSP2;NAV_ele;rich;S2;;Bus;;;1;2035;10
+SSP2;NAV_ele;rich;S2;;trn_pass_road_LDV;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Cycle;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Domestic Aviation;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Domestic Ship;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Freight Rail;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;HSR;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Passenger Rail;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;Walk;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;trn_freight_road;;;;1;2035;10
+SSP2;NAV_ele;poor;S3;trn_pass_road;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Cycle;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Domestic Aviation;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Domestic Ship;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Freight Rail;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;HSR;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Passenger Rail;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;Walk;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;trn_freight_road;;;;1;2035;10
+SSP2;NAV_ele;rich;S3;trn_pass_road;;;;1;2035;10
+SSP2;NAV_all;poor;FV;;;Aviation;Electric;1;2045;10
+SSP2;NAV_all;poor;FV;;;Aviation;Hydrogen;10;2045;10
+SSP2;NAV_all;poor;FV;;;Aviation;Liquids;0.1;2045;10
+SSP2;NAV_all;poor;FV;;;Bus;Electric;2;2030;10
+SSP2;NAV_all;poor;FV;;;Bus;Hydrogen;50;2030;10
+SSP2;NAV_all;poor;FV;;;Bus;Liquids;0.05;2030;10
+SSP2;NAV_all;poor;FV;;;LDV|2W;Electric;4;2050;10
+SSP2;NAV_all;poor;FV;;;LDV|2W;Hydrogen;1;2050;10
+SSP2;NAV_all;poor;FV;;;LDV|2W;Liquids;0.05;2050;10
+SSP2;NAV_all;poor;FV;;;Rail;Electric;2;2050;10
+SSP2;NAV_all;poor;FV;;;Rail;Hydrogen;2;2050;10
+SSP2;NAV_all;poor;FV;;;Rail;Liquids;0.5;2050;10
+SSP2;NAV_all;poor;FV;;;Ship;Electric;1;2045;10
+SSP2;NAV_all;poor;FV;;;Ship;Hydrogen;10;2045;10
+SSP2;NAV_all;poor;FV;;;Ship;Liquids;0.1;2045;10
+SSP2;NAV_all;poor;FV;;;Truck|heavy;Electric;1.5;2030;10
+SSP2;NAV_all;poor;FV;;;Truck|heavy;Hydrogen;50;2030;10
+SSP2;NAV_all;poor;FV;;;Truck|heavy;Liquids;0.05;2030;10
+SSP2;NAV_all;poor;FV;;;Truck|light;Electric;1.5;2030;10
+SSP2;NAV_all;poor;FV;;;Truck|light;Hydrogen;40;2030;10
+SSP2;NAV_all;poor;FV;;;Truck|light;Liquids;0.05;2030;10
+SSP2;NAV_all;rich;FV;;;Aviation;Electric;1;2045;10
+SSP2;NAV_all;rich;FV;;;Aviation;Hydrogen;10;2045;10
+SSP2;NAV_all;rich;FV;;;Aviation;Liquids;0.1;2045;10
+SSP2;NAV_all;rich;FV;;;Bus;Electric;2;2030;10
+SSP2;NAV_all;rich;FV;;;Bus;Hydrogen;40;2030;10
+SSP2;NAV_all;rich;FV;;;Bus;Liquids;0.1;2030;10
+SSP2;NAV_all;rich;FV;;;LDV|2W;Electric;4;2030;10
+SSP2;NAV_all;rich;FV;;;LDV|2W;Hydrogen;1;2030;10
+SSP2;NAV_all;rich;FV;;;LDV|2W;Liquids;0.05;2030;10
+SSP2;NAV_all;rich;FV;;;Rail;Electric;2;2050;10
+SSP2;NAV_all;rich;FV;;;Rail;Hydrogen;2;2050;10
+SSP2;NAV_all;rich;FV;;;Rail;Liquids;0.5;2050;10
+SSP2;NAV_all;rich;FV;;;Ship;Electric;1;2045;10
+SSP2;NAV_all;rich;FV;;;Ship;Hydrogen;10;2045;10
+SSP2;NAV_all;rich;FV;;;Ship;Liquids;0.1;2045;10
+SSP2;NAV_all;rich;FV;;;Truck|heavy;Electric;2;2030;10
+SSP2;NAV_all;rich;FV;;;Truck|heavy;Hydrogen;9;2030;10
+SSP2;NAV_all;rich;FV;;;Truck|heavy;Liquids;0.05;2030;10
+SSP2;NAV_all;rich;FV;;;Truck|light;Electric;2;2030;10
+SSP2;NAV_all;rich;FV;;;Truck|light;Hydrogen;4;2030;10
+SSP2;NAV_all;rich;FV;;;Truck|light;Liquids;0.05;2030;10
+SSP2;NAV_all;poor;S2;;Bus;;;3;2035;10
+SSP2;NAV_all;poor;S2;;trn_pass_road_LDV;;;0.7;2035;10
+SSP2;NAV_all;rich;S2;;Bus;;;2;2035;10
+SSP2;NAV_all;rich;S2;;trn_pass_road_LDV;;;1;2035;10
+SSP2;NAV_all;poor;S3;Cycle;;;;1;2035;10
+SSP2;NAV_all;poor;S3;Domestic Aviation;;;;0.3;2035;10
+SSP2;NAV_all;poor;S3;Domestic Ship;;;;1;2035;10
+SSP2;NAV_all;poor;S3;Freight Rail;;;;1;2035;10
+SSP2;NAV_all;poor;S3;HSR;;;;2.8;2035;10
+SSP2;NAV_all;poor;S3;Passenger Rail;;;;1.5;2035;10
+SSP2;NAV_all;poor;S3;Walk;;;;1.2;2035;10
+SSP2;NAV_all;poor;S3;trn_freight_road;;;;0.9;2035;10
+SSP2;NAV_all;poor;S3;trn_pass_road;;;;0.4;2035;10
+SSP2;NAV_all;rich;S3;Cycle;;;;1.8;2035;10
+SSP2;NAV_all;rich;S3;Domestic Aviation;;;;0.3;2035;10
+SSP2;NAV_all;rich;S3;Domestic Ship;;;;1;2035;10
+SSP2;NAV_all;rich;S3;Freight Rail;;;;1;2035;10
+SSP2;NAV_all;rich;S3;HSR;;;;1.7;2035;10
+SSP2;NAV_all;rich;S3;Passenger Rail;;;;1.6;2035;10
+SSP2;NAV_all;rich;S3;Walk;;;;1.7;2035;10
+SSP2;NAV_all;rich;S3;trn_freight_road;;;;0.9;2035;10
+SSP2;NAV_all;rich;S3;trn_pass_road;;;;0.7;2035;10
