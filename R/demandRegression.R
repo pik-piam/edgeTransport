@@ -21,7 +21,7 @@
 
 
 toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
-                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors=NULL) {
+                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors=NULL){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
@@ -56,7 +56,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
       .[year >= 2010 & year <= 2100, region_factor := na.approx(region_factor, x=year),
         by=c("region", "var")] %>%
       .[year <= 2100 & is.na(region_factor), region_factor := 0]
-    
+
     income_el[year > 2100, region_factor := income_el[year == 2100, region_factor], by="year"]
 
     income_el[, eps := eps + region_factor]
@@ -73,7 +73,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                        income_el[var == "income_elasticity_pass_sm"][, `:=`(var=cat, eps=0)]
                      })))
 
-  
+
   full_el = dcast(full_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
 
   #calculate growth rates
@@ -135,7 +135,6 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
     D_star[is.na(trn_shipping_intl) & !is.na(tmp),trn_shipping_intl:=tmp]
     D_star[year>=2010,tmp:=shift(trn_aviation_intl)*D_star_p_lo,by=c("region")]
     D_star[is.na(trn_aviation_intl) & !is.na(tmp),trn_aviation_intl:=tmp]
-
     i=i+1
   }
 
@@ -146,15 +145,16 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                   measure.vars = c("trn_aviation_intl", "trn_freight", "trn_pass", "trn_shipping_intl"))
   D_star = D_star[,.(region, year, demand = value, sector = variable)]
 
-  if (!is.null(demscen_factors)) {
+  if (!is.null(demscen_factors)){
+    if (nrow(demscen_factors > 0)){
     D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
     mods <- D_star[!is.na(factor)]
-    if (nrow(mods) > 0) {
+    if (nrow(mods) > 0){
       D_star[year <= 2020, factor := 1]
       D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
       D_star[, demand := factor * demand]
     }
-    D_star[, "factor" := NULL]
+    D_star[, "factor" := NULL]}
   }
 
   return(D_star)
