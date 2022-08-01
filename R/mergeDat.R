@@ -18,13 +18,14 @@
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
 #' @param ariadne_adjustments adjust intensity levels according to the ARIADNE project.
 #'   Affects mainly DEU and EU countries.
+#' @param Dem_Scen Demand scenario, used to apply reduction factors on total demands from the regression.
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
 toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh,
-                         SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
+                         SSP_scen, Dem_Scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
 
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <-
     subsector_L3 <- `.` <- k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <-
@@ -61,7 +62,6 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   }
 
 
-
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= 2020 & year <= target_year,
@@ -71,7 +71,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
       subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= target_year,
       loadFactor := loadFactor * (1 + target_LF)]
-  }
+
 
   ## LF for electric and h2 trucks/buses assumed ot be the same as liquids
   LF = rbind(LF,
