@@ -21,7 +21,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
   SSP_scenario <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
-  vehvar <- target <- symmyr <- speed <- FV_techvar <- NULL
+  vehvar <- target <- symmyr <- speed <- FV_techvar <- FV_vehvar <- NULL
 
 
   ## function that fills missing years with NAs

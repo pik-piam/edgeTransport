@@ -30,7 +30,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
   index_price_f_sm <- index_price_f_lo <- index_GDP_f_sm <- index_GDPcap_p_lo <- index_GDP_f_lo <- NULL
   index_price_p_sm <- index_GDPcap_p_sm <- index_POP <- index_price_p_lo <- D_star_f_sm <- D_star_p_sm <- NULL
   D_star_p_lo <- D_star_f_lo <- D_star_f_sm <- value <- variable <- vrich <- vpoor <-NULL
-  SSP_factor <- SSP_scenario <- region_factor <- approxfun <- gdp_cap <- target <- tmp <- NULL
+  SSP_factor <- SSP_scenario <- region_factor <- approxfun <- gdp_cap <- target <- tmp <- demand <- NULL
 
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
   gdp_pop = copy(GDP_POP)

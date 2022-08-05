@@ -11,7 +11,7 @@
 
 toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDGE_scenario) {
 
-  SSPscen <- EDGEscen <- vehicle_type <- NULL
+  SSPscen <- EDGEscen <- vehicle_type <- DEMscen <- NULL
 
   print("Loading csv data from input folder and creating RDS files...")
   dir.create(file.path(data_path), showWarnings = FALSE)

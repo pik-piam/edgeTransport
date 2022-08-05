@@ -7,6 +7,10 @@
 
 
 toolAdjust_intensity <- function(intensity, intImproTab, years){
+
+  FV_techvar <- technology <- level <- start_year <- start_fade <- end_year <- end_fade <- annual_factor <- annual_improvement_rate <- factor <- EJ_Mpkm_final <-
+    EJ_Mpkm_final.y <- EJ_Mpkm_final.x <-  NULL
+
     #get rid of years that should not be in there
     intensity <- intensity[year %in% years]
     #get yearly resolution
