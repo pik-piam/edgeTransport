@@ -11,7 +11,7 @@ Depends:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr
 Date: 2022-07-13
 Config/testthat/edition: 3
@@ -32,7 +32,10 @@ Imports:
     remind2,
     rlang,
     yaml,
-    ymlthis
+    ymlthis,
+    luplot,
+    lusweave,
+    mip
 Suggests:
     testthat,
     knitr,

@@ -10,7 +10,7 @@ calcgenerateEDGEdata(
   cache_folder = NULL,
   SSP_scen = "SSP2",
   tech_scen = "Mix",
-  smartlifestyle = FALSE,
+  demScen = NULL,
   storeRDS = FALSE,
   gdxPath = NULL,
   preftab = NULL,
@@ -32,7 +32,7 @@ calcgenerateEDGEdata(
 
 \item{tech_scen}{EDGE-T technology scenario. Options are: ConvCase, ElecEra, HydrHype (working with SSP2 only!)}
 
-\item{smartlifestyle}{If True, GDP demand regression provides lower overall demand levels.}
+\item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression.}
 
 \item{storeRDS}{optional saving of intermediate RDS files, only possible if output folder is not NULL}
 

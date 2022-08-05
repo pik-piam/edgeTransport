@@ -22,12 +22,13 @@
 
 toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                            SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors=NULL) {
-  rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
-  index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
-  income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
-  index_price <- tot_price <- trn_freight <- price_elasticity_freight_sm <- trn_shipping_intl <- NULL
-  price_elasticity_freight_lo <- trn_pass <- price_elasticity_pass_sm <- trn_aviation_intl <- `.` <- NULL
-  index_price_f_sm <- index_price_f_lo <- index_GDP_f_sm <- index_GDPcap_p_lo <- index_GDP_f_lo <- NULL
+  rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- demand <-
+    index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <-
+      income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <-
+        index_price <- tot_price <- trn_freight <- price_elasticity_freight_sm <- trn_shipping_intl <-
+          price_elasticity_freight_lo <- trn_pass <- price_elasticity_pass_sm <- trn_aviation_intl <-
+            `.` <- index_price_f_sm <- index_price_f_lo <- index_GDP_f_sm <- index_GDPcap_p_lo <-
+              index_GDP_f_lo <- NULL
   index_price_p_sm <- index_GDPcap_p_sm <- index_POP <- index_price_p_lo <- D_star_f_sm <- D_star_p_sm <- NULL
   D_star_p_lo <- D_star_f_lo <- D_star_f_sm <- value <- variable <- vrich <- vpoor <-NULL
   SSP_factor <- SSP_scenario <- region_factor <- approxfun <- gdp_cap <- target <- tmp <- NULL
@@ -56,7 +57,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
       .[year >= 2010 & year <= 2100, region_factor := na.approx(region_factor, x=year),
         by=c("region", "var")] %>%
       .[year <= 2100 & is.na(region_factor), region_factor := 0]
-    
+
     income_el[year > 2100, region_factor := income_el[year == 2100, region_factor], by="year"]
 
     income_el[, eps := eps + region_factor]
@@ -73,7 +74,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                        income_el[var == "income_elasticity_pass_sm"][, `:=`(var=cat, eps=0)]
                      })))
 
-  
+
   full_el = dcast(full_el[,c("region","year","var","eps", "GDP_cap")], region + year + GDP_cap ~var, value.var = "eps")
 
   #calculate growth rates
