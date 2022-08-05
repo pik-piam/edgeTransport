@@ -13,9 +13,9 @@ items <- c(
   "FE|Transport|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Total w/o bunkers
@@ -28,7 +28,7 @@ items <- c(
   "FE|Transport|w/o bunkers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
@@ -43,9 +43,9 @@ items <- c(
   "FE|Transport|Pass|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger w/o bunkers
@@ -58,9 +58,9 @@ items <- c(
   "FE|Transport|Pass|w/o bunkers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger LDV Four Wheelers
@@ -73,9 +73,9 @@ items <- c(
   "FE|Transport|Pass|Road|LDV|Four Wheelers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger LDV Two Wheelers
@@ -85,9 +85,9 @@ items <- c(
   "FE|Transport|Pass|Road|LDV|Two Wheelers|Electricity",
   "FE|Transport|Pass|Road|LDV|Two Wheelers|Liquids")
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger Bus
@@ -100,9 +100,9 @@ items <- c(
   "FE|Transport|Pass|Road|Bus|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger Rail (non-HSR)
@@ -112,9 +112,9 @@ items <- c(
   "FE|Transport|Pass|Rail|non-HSR|Electricity",
   "FE|Transport|Pass|Rail|non-HSR|Liquids")
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Passenger Aviation
@@ -133,9 +133,9 @@ items <- c(
   "FE|Transport|Freight|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Freight w/o bunkers
@@ -148,9 +148,9 @@ items <- c(
   "FE|Transport|Freight|w/o bunkers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Freight Trucks
@@ -163,9 +163,9 @@ items <- c(
   "FE|Transport|Freight|Road|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Freight Rail 
@@ -175,9 +175,9 @@ items <- c(
   "FE|Transport|Freight|Rail|Electricity",
   "FE|Transport|Freight|Rail|Liquids")
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(items, showLinePlots, data=data)
+walk(items, showLinePlots, data = data)
 ```
 
 ### Freight Navigation
@@ -209,8 +209,8 @@ items <- c(
   )
 showAreaAndBarPlots(data, items, tot_wbunk,  orderVars = "user")
 showAreaAndBarPlots(data, items[2:7], tot_wobunk, orderVars = "user")
-showAreaAndBarPlots(data, items, tot_wbunk, fill=TRUE, orderVars = "user")
-showAreaAndBarPlots(data, items[2:7], tot_wobunk, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot_wbunk, fill = TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items[2:7], tot_wobunk, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot_wbunk)
 walk(c("FE|Transport|Pass|Aviation", items[1:5], "FE|Transport|Pass|Road|LDV", items[6:7]), showLinePlots, data = data)
 ```
