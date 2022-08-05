@@ -24,6 +24,7 @@ toolAdjust_intensity <- function(intensity, intImproTab, years){
                              idxcols = c("region", "vehicle_type", "technology", "sector_fuel"),
                              extrapolate = T)
     mimap <- system.file("extdata", "mitigation-techmap.csv", package = "edgeTransport")
+    #Treat NG as liquids for simplification: Both get the same mitigation factors
     techmap <- fread(text="technology,FV_techvar
                              FCEV,Hydrogen
                              BEV,Electric
