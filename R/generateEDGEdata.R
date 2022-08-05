@@ -31,7 +31,7 @@
 
 
 toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
-                             SSP_scen = "SSP2", tech_scen = "Mix1", demScen = NULL,
+                             SSP_scen = "SSP2", tech_scen = "Mix1", demScen = "default",
                              storeRDS = FALSE,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
@@ -145,7 +145,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_POP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
-    GCAM_data = GCAM_data, SSP_scen = SSP_scen, Dem_Scen = demScen, tech_scen = tech_scen, years = years,
+    GCAM_data = GCAM_data, SSP_scen = SSP_scen, Dem_Scen = demScen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
@@ -383,10 +383,10 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
 
       demscen_factors <- NULL
-      if (!is.null(demScen)) {
-        demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
-        demscen_factors <- fread(demscen.path, header = TRUE)[demandScen == demScen]
-      }
+
+      demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
+      demscen_factors <- fread(demscen.path, header = TRUE)[demandScen == demScen]
+
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
                                price_baseline = prices$S3S,
