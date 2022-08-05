@@ -21,7 +21,7 @@
 
 
 toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
-                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors=NULL){
+                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors= NULL){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
@@ -145,17 +145,21 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                   measure.vars = c("trn_aviation_intl", "trn_freight", "trn_pass", "trn_shipping_intl"))
   D_star = D_star[,.(region, year, demand = value, sector = variable)]
 
-  if (!is.null(demscen_factors)){
-    if (nrow(demscen_factors > 0)){
-    D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
-    mods <- D_star[!is.na(factor)]
+  #Apply factors for specific demand scenario on output of demand regression if given/otherwise use default values from demand regression
+  #Application: linear regression to given support points for the factors starting from 2020, constant factors after support points
+  D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
+  mods <- D_star[!is.na(factor)]
     if (nrow(mods) > 0){
+      print(paste0("You selected the ", unique(demscen_factors$demandScen), " demand scenario"))
       D_star[year <= 2020, factor := 1]
       D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
       D_star[, demand := factor * demand]
+    } else {
+      print(paste0("You selected the default demand scenario"))
     }
-    D_star[, "factor" := NULL]}
-  }
+  D_star[, "factor" := NULL]
+
+
 
   return(D_star)
 
