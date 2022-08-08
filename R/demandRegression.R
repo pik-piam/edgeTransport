@@ -21,7 +21,7 @@
 
 
 toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
-                           SSP_scen, ssp_factors, regional_factors=NULL, demscen_factors){
+                           SSP_scen, ssp_factors, demscen_factors, regional_factors=NULL){
   rich <- var <- eps <- GDP_cap <- region <- eps1 <- eps2 <- GDP_val <- POP_val <- NULL
   index_GDP <- income_elasticity_freight_sm <- income_elasticity_freight_lo <- index_GDPcap <- NULL
   income_elasticity_pass_sm <- income_elasticity_pass_lo <- price_elasticity_pass_lo <- sector <- NULL
