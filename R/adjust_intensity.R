@@ -6,7 +6,7 @@
 #' @return Adjusted energy intensities in EJ/pkm or EJ/tkm
 
 
-toolAdjust_intensity <- function(intensity, intImproTab, years){
+toolAdjustIntensity <- function(intensity, intImproTab, years){
 
   FV_techvar <- technology <- level <- start_year <- start_fade <- end_year <- end_fade <- annual_factor <- annual_improvement_rate <- factor <- EJ_Mpkm_final <-
     EJ_Mpkm_final.y <- EJ_Mpkm_final.x <-  NULL
