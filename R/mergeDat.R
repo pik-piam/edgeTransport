@@ -18,13 +18,14 @@
 #' @param REMIND2ISO_MAPPING REMIND regional mapping
 #' @param ariadne_adjustments adjust intensity levels according to the ARIADNE project.
 #'   Affects mainly DEU and EU countries.
+#' @param Dem_Scen Demand scenario, used to apply reduction factors on total demands from the regression.
 #' @param years time steps
 #' @return costs, intensity, LF, AM, demand
 #' @author Marianna Rottoli, Alois Dirnaichner
 
 toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_trucks, GCAM_data,
                          PSI_int, trsp_incent, fcr_veh, nper_amort_veh,
-                         SSP_scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
+                         SSP_scen, Dem_Scen, years, REMIND2ISO_MAPPING, ariadne_adjustments = TRUE) {
 
   vkm.veh <- value <- variable <- conv_pkm_MJ <- conv_vkm_MJ <- ratio <- MJ_km <- sector_fuel <-
     subsector_L3 <- `.` <- k <- subsector_L2 <- tech_output <- MJ <- region <- loadFactor <-
@@ -48,11 +49,24 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
   LF = rbind(LF_EU, GCAM_data$load_factor[!(iso %in% unique(LF_EU$iso) & vehicle_type %in% unique(LF_EU$vehicle_type))])
 
-  if (SSP_scen == "SDP_RC") {
+  ## set default targets for LF for LDVs
+  target_LF = 0
+  target_year = 2080
+
+  if(SSP_scen == "SDP_RC"){
     target_LF = 0.3
     target_year = 2060
-    LF[
-      subsector_L1 == "trn_pass_road_LDV_4W" &
+  }
+
+  if (!is.null(Dem_Scen)){
+    if (SSP_scen == "SSP2" & Dem_Scen == "SSP2EU_lowdem"){
+    target_LF = 0.4
+    target_year = 2050}
+  }
+
+
+  LF[
+    subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= 2020 & year <= target_year,
       loadFactor := loadFactor * (1 + target_LF*(year - 2020)/(target_year - 2020))]
 
@@ -60,7 +74,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
       subsector_L1 == "trn_pass_road_LDV_4W" &
       year >= target_year,
       loadFactor := loadFactor * (1 + target_LF)]
-  }
+
 
   ## LF for electric and h2 trucks/buses assumed ot be the same as liquids
   LF = rbind(LF,
@@ -89,6 +103,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
   AM = rbind(AM_EU, UCD_output$UCD_mileage[!(iso %in% unique(AM_EU$iso) & vehicle_type %in% unique(AM_EU$vehicle_type))])
   AM = merge(AM, logit_cat, by = "vehicle_type", allow.cartesian = T, all.x = TRUE)[, univocal_name:= NULL]
   AM = AM[year >= 1990]
+
   if(ariadne_adjustments){
     ## according to ViZ data from 2020 there has been a 10% reduction wrt 2010 values
     ## (from 14 kkm to 13.6 kkm per vehicle and year)

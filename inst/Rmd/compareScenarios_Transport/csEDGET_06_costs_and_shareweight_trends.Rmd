@@ -138,7 +138,7 @@ for (reg0 in CostReg) {
 
 ## Prices FV (exemplary)
 ### Compact Car Liquids
-```{r Shareweight trends}
+```{r}
 for (reg0 in CostReg) {
   plotdata <- data[grepl("Logit cost\\|F\\|Compact Car\\|(Liquids|BEV|Hybrid Electric|FCEV|NG)",variable)]
   plotdata <- plotdata[region==reg0][,region:=NULL]
@@ -156,7 +156,7 @@ for (reg0 in CostReg) {
 
 ```
 # Shareweight trends
-```{r Shareweight trends}
+```{r}
 
 
 for (reg0 in CostReg) {

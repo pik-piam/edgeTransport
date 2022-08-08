@@ -31,7 +31,7 @@
 
 
 toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
-                             SSP_scen = "SSP2", tech_scen = "Mix", demScen = NULL,
+                             SSP_scen = "SSP2", tech_scen = "Mix1", demScen = "default",
                              storeRDS = FALSE,
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
@@ -146,7 +146,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     UCD_output= UCD_output, PSI_costs = PSI_costs, altCosts = altCosts,
     PSI_int=PSI_int, CHN_trucks = CHN_trucks, EU_data = EU_data,
     trsp_incent = mrr$trsp_incent, GDP_MER = mrr$GDP_POP_MER_country, fcr_veh = fcr_veh, nper_amort_veh=nper_amort_veh,
-    GCAM_data = GCAM_data, SSP_scen = SSP_scen, years = years,
+    GCAM_data = GCAM_data, SSP_scen = SSP_scen, Dem_Scen = demScen, years = years,
     REMIND2ISO_MAPPING = REMIND2ISO_MAPPING)
 
   if(storeRDS)
@@ -187,6 +187,15 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   IEAbal_comparison <- toolIEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = mrr$IEAbal)
   if(storeRDS)
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
+
+  #Optional Energy Intensity improvements after 2020 depending on the tech Scen
+  if(is.null(int_improvetab)){
+    print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
+    ## select the right combination of techscen and SSP scen
+    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]}
+
+  if(nrow(int_improvetab) > 0){
+      IEAbal_comparison$merged_intensity <- toolAdjustIntensity(IEAbal_comparison$merged_intensity, int_improvetab, years)}
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
   if(is.null(gdxPath)) {
@@ -257,16 +266,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
   if(storeRDS)
     saveRDS(prefs, file = level1path("prefs.RDS"))
-
-  #Optional Energy Intensity improvements after 2020 depending on the tech Scen
-  if(is.null(int_improvetab)){
-    print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
-    ## select the right combination of techscen and SSP scen
-    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]}
-  if(nrow(int_improvetab) > 0){
-      IEAbal_comparison$merged_intensity <- adjust_intensity(IEAbal_comparison$merged_intensity, int_improvetab)}
-
-
 
   #################################################
   ## LVL 2 scripts
@@ -385,10 +384,10 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
 
       demscen_factors <- NULL
-      if (!is.null(demScen)) {
-        demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
-        demscen_factors <- fread(demscen.path, header = TRUE)[demScen == demandScen]
-      }
+
+      demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
+      demscen_factors <- fread(demscen.path, header = TRUE)[demandScen == demScen]
+
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
                                price_baseline = prices$S3S,
@@ -554,7 +553,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
-  if (is.null(demScen)) {
+  if (demScen == "default") {
     demScen <- SSP_scen
   }
 

@@ -31,7 +31,7 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
               index_GDP_f_lo <- NULL
   index_price_p_sm <- index_GDPcap_p_sm <- index_POP <- index_price_p_lo <- D_star_f_sm <- D_star_p_sm <- NULL
   D_star_p_lo <- D_star_f_lo <- D_star_f_sm <- value <- variable <- vrich <- vpoor <-NULL
-  SSP_factor <- SSP_scenario <- region_factor <- approxfun <- gdp_cap <- target <- tmp <- NULL
+  SSP_factor <- SSP_scenario <- region_factor <- approxfun <- gdp_cap <- target <- tmp <- demand <- NULL
 
   ## Create a dt with GDP, POP and GDP_cap with EDGE regions
   gdp_pop = copy(GDP_POP)
@@ -136,7 +136,6 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
     D_star[is.na(trn_shipping_intl) & !is.na(tmp),trn_shipping_intl:=tmp]
     D_star[year>=2010,tmp:=shift(trn_aviation_intl)*D_star_p_lo,by=c("region")]
     D_star[is.na(trn_aviation_intl) & !is.na(tmp),trn_aviation_intl:=tmp]
-
     i=i+1
   }
 
@@ -147,16 +146,21 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
                   measure.vars = c("trn_aviation_intl", "trn_freight", "trn_pass", "trn_shipping_intl"))
   D_star = D_star[,.(region, year, demand = value, sector = variable)]
 
-  if (!is.null(demscen_factors)) {
-    D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
-    mods <- D_star[!is.na(factor)]
-    if (nrow(mods) > 0) {
+  #Apply factors for specific demand scenario on output of demand regression if given/otherwise use default values from demand regression
+  #Application: linear regression to given support points for the factors starting from 2020, constant factors after support points
+  D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
+  mods <- D_star[!is.na(factor)]
+    if (nrow(mods) > 0){
+      print(paste0("You selected the ", unique(demscen_factors$demandScen), " demand scenario"))
       D_star[year <= 2020, factor := 1]
       D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
       D_star[, demand := factor * demand]
+    } else {
+      print(paste0("You selected the default demand scenario"))
     }
-    D_star[, "factor" := NULL]
-  }
+  D_star[, "factor" := NULL]
+
+
 
   return(D_star)
 
