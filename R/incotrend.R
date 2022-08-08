@@ -86,7 +86,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   FVtarget <- rbind(FVtarget, tmps)
   FVtarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "vehicle_type", "technology")]
-  FVtarget[sw < 0, sw := 0.0001]
+
   ## If all enties of a branch in the nested structure have zero sw, w/o the ifelse statement the following line would lead to NAs
   FVtarget[, sw := sw/max(sw),
            by = c("region", "year", "vehicle_type")]
