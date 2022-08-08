@@ -17,7 +17,7 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDG
   dir.create(file.path(data_path), showWarnings = FALSE)
 
   ## function that loads the csv input files and converts them into RDS local files
-  csv2RDS = function(pattern, filename, input_path, names_dt){
+  csv2RDS = function(pattern, filename, input_path, names_dt) {
     tmp <- fread(
       paste0(input_path, pattern, ".cs4r"),
       col.names = names_dt, skip="gdp_"

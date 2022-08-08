@@ -57,7 +57,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
                              capcost4W, demByTech, int_dat, intensity, capCost,
                              price_nonmot, complexValues, load_Factor, annual_mileage,
                              demISO, SSP_scen, DEM_scen, EDGE_scenario, level2path, output_folder) {
-  price_component <- MJ_km <- . <- loadFactor <- NULL
+  price_component <- MJ_km <- `.` <- loadFactor <- NULL
   gdp_scenario <- paste0("gdp_", SSP_scen)
   dem_scenario <- paste0("gdp_", DEM_scen)
 

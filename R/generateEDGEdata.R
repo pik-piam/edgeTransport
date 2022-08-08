@@ -42,7 +42,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
-          SSPscen <- default <- techscen <- share <- demand_F <- tech_scenario <- SSP_scenario <- demandScen <- NULL
+          SSPscen <- default <- techscen <- share <- demand_F <- tech_scenario <- SSP_scenario <-
+            demandScen <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE) {
     print("Warning: If storeRDS is set, output_folder has to be non-NULL. Setting storeRDS=FALSE")
