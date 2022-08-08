@@ -32,10 +32,7 @@ Imports:
     remind2,
     rlang,
     yaml,
-    ymlthis,
-    luplot,
-    lusweave,
-    mip
+    ymlthis
 Suggests:
     testthat,
     knitr,
