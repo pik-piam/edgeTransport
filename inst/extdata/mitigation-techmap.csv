@@ -14,6 +14,7 @@ Domestic Ship_tmp_vehicletype,Ship
 International Ship_tmp_vehicletype,Ship
 Freight Rail_tmp_vehicletype,Rail
 Passenger Rail_tmp_vehicletype,Rail
+HSR_tmp_vehicletype,Rail
 Compact Car,LDV|4W
 Mini Car,LDV|4W
 Subcompact Car,LDV|4W

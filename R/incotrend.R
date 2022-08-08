@@ -21,10 +21,10 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
   SSP_scenario <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
-  vehvar <- target <- symmyr <- speed <- FV_techvar <- NULL
+  vehvar <- target <- symmyr <- speed <- FV_techvar <- FV_vehvar <- NULL
 
 
-  ## function that extrapolate constant values
+  ## function that fills missing years with NAs
   filldt <- function(dt, proxy){
     yrs_toadd <- setdiff(years, unique(dt$year))
     for (yr in yrs_toadd) {
@@ -84,12 +84,10 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## merge placeholder
   FVtarget <- rbind(FVtarget, tmps)
-
   FVtarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "vehicle_type", "technology")]
-  FVtarget[sw < 0, sw := 0]
 
-  ## introduces NA for sw == 0
+  ## If all enties of a branch in the nested structure have zero sw, w/o the ifelse statement the following line would lead to NAs
   FVtarget[, sw := sw/max(sw),
            by = c("region", "year", "vehicle_type")]
   nas <- FVtarget[is.na(sw)]
@@ -226,7 +224,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
     browser()
   }
 
-
   S2target[, sw := sw/max(sw),
            by = c("region", "year", "subsector_L3")]
   nas <- S2target[is.na(sw)]
@@ -258,17 +255,11 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
     initial + fct * (final - initial)
   }
 
-  ## mitab <- CJ(SSP_scenario=c("SSP1", "SSP2", "SSP5", "SSP2EU", "SDP"),
-  ##    tech_scenario=c("Mix2", "Mix3", "Mix4"),
-  ##    regioncat=c("rich", "poor"),
-  ##    vehvar=c("Truck|heavy", "Truck|light", "Bus", "Aviation", "Ship", "LDV|2W", "Rail"),
-  ##    techvar=c("Liquids", "Electric", "Hydrogen"),
-  ##    target=1, symmyr=2050, speed=10)
-  ## fwrite(mitab, "edget-mitigation.csv")
   if(nrow(mitab) > 0){
     ## treat a region as a rich region starting from:
     richcutoff <- 25000
     mimap <- system.file("extdata", "mitigation-techmap.csv", package="edgeTransport")
+    #Treat NG as liquids for simplification: Both get the same mitigation factors
     techmap <- fread(text="technology,FV_techvar
 FCEV,Hydrogen
 BEV,Electric
@@ -282,9 +273,11 @@ Hybrid Electric,Liquids")
 
     richregions <- unique(unique(GDP_POP_MER[year == 2010 & GDP_cap > richcutoff, region]))
     FVtarget[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    #Allow for specific regions to be dealt with individually
+    FVtarget[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
 
     ## remove L2 and L3 from mitab to avoid a join on these sectors
-    FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on=c("FV_vehvar", "FV_techvar", "regioncat")]
+    FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on = c("FV_vehvar", "FV_techvar", "regioncat")]
 
     FVtarget[, value := ifelse(
                  is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
@@ -298,9 +291,10 @@ Hybrid Electric,Liquids")
       print(sprintf("NAs found in FV shareweight trends for %s scenario.", tech_scen))
       browser()
     }
-
     ## level S2: Bus vs LDV
     S2target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    #Allow for specific regions to be dealt with individually
+    S2target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors
     S2target <- mitab[level == "S2"][, subsector_L3 := NULL][
       S2target, on=c("subsector_L2", "regioncat")]
@@ -318,6 +312,8 @@ Hybrid Electric,Liquids")
 
     ## level S3: all other mode shares
     S3target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    #Allow for specific regions to be dealt with individually
+    S3target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors
     S3target <- mitab[level == "S3"][, subsector_L2 := NULL][
       S3target, on=c("subsector_L3", "regioncat")]
