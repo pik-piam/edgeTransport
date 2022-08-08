@@ -552,7 +552,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                     unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
                     by =c("region", "vehicle_type"))
 
-  if (is.null(demScen)) {
+  if (demScen == "default") {
     demScen <- SSP_scen
   }
 
