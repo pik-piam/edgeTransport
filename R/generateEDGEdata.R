@@ -194,7 +194,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]}
 
   if(nrow(int_improvetab) > 0){
-      IEAbal_comparison$merged_intensity <- toolAdjust_intensity(IEAbal_comparison$merged_intensity, int_improvetab, years)}
+      IEAbal_comparison$merged_intensity <- toolAdjustIntensity(IEAbal_comparison$merged_intensity, int_improvetab, years)}
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
   if(is.null(gdxPath)) {
