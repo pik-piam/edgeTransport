@@ -615,7 +615,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
 calcgenerateEDGEdata <- function(input_folder, output_folder,
                                  cache_folder = NULL, SSP_scen = "SSP2",
-                                 tech_scen = "Mix", demScen = NULL,
+                                 tech_scen = "Mix", demScen = "default",
                                  storeRDS = FALSE,
                                  gdxPath = NULL,
                                  preftab = NULL, plot.report = FALSE,
