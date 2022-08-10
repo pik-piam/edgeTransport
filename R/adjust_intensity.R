@@ -11,14 +11,12 @@ toolAdjustIntensity <- function(intensity, intImproTab, years){
   FV_techvar <- technology <- level <- start_year <- start_fade <- end_year <- end_fade <- annual_factor <- annual_improvement_rate <- factor <- EJ_Mpkm_final <-
     EJ_Mpkm_final.y <- EJ_Mpkm_final.x <-  NULL
 
-    #get rid of years that should not be in there
-    intensity <- intensity[year %in% years]
     #get yearly resolution
     intensity_yrl <- copy(intensity)
     intensity_yrl[, c("subsector_L1", "subsector_L2", "subsector_L3", "sector") := NULL]
     intensity_yrl <- intensity_yrl[year >= 2020]
     intensity_yrl <- approx_dt(intensity_yrl,
-                             xdata = c(2020:1:years[length(years)]),
+                             xdata = seq(2020,years[length(years)]),
                              xcol = "year",
                              ycol = "EJ_Mpkm_final",
                              idxcols = c("region", "vehicle_type", "technology", "sector_fuel"),
