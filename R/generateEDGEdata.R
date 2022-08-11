@@ -185,6 +185,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   print("-- Start of level 1 scripts")
   print("-- Harmonizing energy intensities to match IEA final energy balances")
   IEAbal_comparison <- toolIEAharmonization(int = REMINDdat$int, demKm = REMINDdat$dem, IEA = mrr$IEAbal)
+  IEAbal_comparison$merged_intensity <- IEAbal_comparison$merged_intensity[year %in% years]
   if(storeRDS)
     saveRDS(IEAbal_comparison$merged_intensity, file = level1path("harmonized_intensities.RDS"))
 
