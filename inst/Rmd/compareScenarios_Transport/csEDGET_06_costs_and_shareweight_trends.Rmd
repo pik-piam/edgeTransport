@@ -136,8 +136,27 @@ for (reg0 in CostReg) {
 
 ```
 
+## Prices FV (exemplary)
+### Compact Car Liquids
+```{r}
+for (reg0 in CostReg) {
+  plotdata <- data[grepl("Logit cost\\|F\\|Compact Car\\|(Liquids|BEV|Hybrid Electric|FCEV|NG)",variable)]
+  plotdata <- plotdata[region==reg0][,region:=NULL]
+  plotdata <- plotdata[, variable := gsub("Logit cost\\|F\\|Compact Car\\|", "",variable)][period %in% params$yearsBarPlot]  
+  setnames(plotdata, "scenario","region")
+  plotdata <- plotdata[, scenario := gsub("\\|pchar|\\|prange|\\|pref|\\|pmod_av|\\|prisk|\\|pinco_tot|\\|tot_VOT_price|\\|fuel_price_pkm|\\|non_fuel_price", "", variable)]
+  plotdata <- plotdata[, variable := gsub("BEV\\||Liquids\\||Hybrid Electric\\||FCEV\\||NG\\|", "", variable)]
+  plotdata[, variable := factor(variable, levels = c("pchar", "pmod_av", "prisk", "pref", "prange", "pinco_tot", "tot_VOT_price","fuel_price_pkm","non_fuel_price"))]
+  
+
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit FV [USD2005/pkm]", title = paste0("Compact Car Liquids ", reg0))
+  p2 <- p2 + theme_mip(size = 18)
+  print(p2)
+  cat("\n\n")}
+
+```
 # Shareweight trends
-```{r Shareweight trends}
+```{r}
 
 
 for (reg0 in CostReg) {
