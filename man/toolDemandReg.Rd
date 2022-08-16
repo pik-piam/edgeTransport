@@ -10,8 +10,8 @@ toolDemandReg(
   GDP_POP,
   SSP_scen,
   ssp_factors,
-  demscen_factors,
-  regional_factors = NULL
+  regional_factors = NULL,
+  demscen_factors = NULL
 )
 }
 \arguments{
@@ -25,12 +25,12 @@ toolDemandReg(
 
 \item{ssp_factors}{table with SSP/SDP scenario factors to be added to the baseline elasticity trends}
 
+\item{regional_factors}{table with SSP/SDP and regionally specific factors to be added to the baseline elasticity trends}
+
 \item{demscen_factors}{table with reduction factors on the total demands,
 example: demscen_factors <-
 fread("demandScen,  region,sector,  year, factor
        SSP2EU_lowEn,DEU,   trn_pass,2030, 0.5")}
-
-\item{regional_factors}{table with SSP/SDP and regionally specific factors to be added to the baseline elasticity trends}
 }
 \value{
 transport demand projections
