@@ -62,3 +62,4 @@ SSP2EU_lowdem,REF,trn_freight,2050,0.9
 SSP2EU_lowdem,SSA,trn_freight,2050,0.9
 SSP2EU_lowdem,UKI,trn_freight,2050,0.9
 SSP2EU_lowdem,USA,trn_freight,2050,0.9
+SSP2EU_ensec,DEU,trn_pass,2045,0.85
