@@ -169,7 +169,8 @@ toolReportEDGET <- function(output_folder = ".",
     prefix <- switch(mode,
                      "FE" = "FE|Transport|",
                      "ES" = "ES|Transport|",
-                     "VKM" = "ES|Transport|VKM|")
+                     "VKM" = "ES|Transport|VKM|",
+                     "CC" = "Capital Cost|Transport|")
 
     var <- c("Pass", "Freight")
 
@@ -183,7 +184,8 @@ toolReportEDGET <- function(output_folder = ".",
         unit <- switch(mode,
                    "FE" = "EJ/yr",
                    "ES" = if(var0 == "Pass"){"bn pkm/yr"}else{"bn tkm/yr"},
-                   "VKM" = "bn vkm/yr")
+                   "VKM" = "bn vkm/yr",
+                   "CC" = "bn US$2005")
 
         #Aggregate data
         datatable0 <- copy(datatable)
@@ -392,6 +394,25 @@ toolReportEDGET <- function(output_folder = ".",
     return(vint)
   }
 
+  loadCapCosts <- function(demand_pkm) {
+    ## demand_pkm: billion pkm
+    costs <- readRDS(datapath(fname="capCostPerTech.RDS"))
+    ## costs: unit $2005/pkm or tkm
+
+    merged <- demand_pkm[
+      costs, on=c("region", "year", "vehicle_type", "technology",
+                  "sector", "subsector_L1", "subsector_L2", "subsector_L3")]
+
+    merged[, value := value * non_fuel_price] # unit billion US$2005
+    merged <- merged[value > 0]
+
+    merged[, c("non_fuel_price", "tot_price",
+               "fuel_price_pkm", "tot_VOT_price", "sector_fuel") := NULL]
+
+    return(merged)
+  }
+
+
   reportTotals <- function(aggrname, datatable, varlist){
 
     vars <- varlist[[aggrname]]
@@ -462,6 +483,9 @@ toolReportEDGET <- function(output_folder = ".",
     mode = "FE"
   )
 
+  capCosts <- loadCapCosts(demand_km)
+  repCapCosts <- reporting(dt = capCosts, mode = "CC")
+
   liqsplit <- split_fe_liquids(repFE)
 
   repVKM <- reporting(
@@ -483,7 +507,8 @@ toolReportEDGET <- function(output_folder = ".",
       annual_mileage),
     reportingEmi(
       repFE = repFE,
-      gdx = gdx)
+      gdx = gdx),
+    repCapCosts
     )
 
   varsl <- list(
