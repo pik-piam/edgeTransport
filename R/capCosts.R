@@ -68,6 +68,8 @@ toolCapCosts <-function(base_price, Fdemand_ES, stations,
   ## CAPEX ~ 30%
   base_price[subsector_L3 %in% c("Domestic Ship", "International Ship"), non_fuel_price := non_fuel_price*0.3]
 
+  capCostPerTech <- copy(base_price)
+
   ## merge prices and demand
   ## TODO at the moment, Hybrid Electric veh cannot be included in this calculation because they have 2 fuels (elec, liq) and cannot be mapped to one
   ## fuel only. This has to be fixed.
@@ -103,5 +105,5 @@ toolCapCosts <-function(base_price, Fdemand_ES, stations,
   non_fuel_price[,variable:=NULL]
   non_fuel_price=non_fuel_price[order(region,year,teEs)]
 
-  return(non_fuel_price)
+  return(list(CESlevelCosts=non_fuel_price, capCostPerTech=capCostPerTech))
 }

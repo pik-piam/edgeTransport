@@ -478,7 +478,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
 
   print("-- Calculating budget coefficients")
-  budget <- toolCapCosts(
+  REMINDCapCost <- toolCapCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
     stations = num_veh_stations$stations,
@@ -486,6 +486,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = years,
     scenario = scenario)
+
 
   ## full REMIND time range for inputs
   REMINDtall <- c(seq(1900,1985,5),
@@ -496,6 +497,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   if (storeRDS) {
     #Copy gdx file to output folder
     file.copy(gdxPath, output_folder)
+    saveRDS(REMINDCapCost[["capCostPerTech"]], file = level2path("capCostPerTech.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
     saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
     saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))
@@ -546,7 +548,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   finalInputs <- toolPrepare4REMIND(
     demByTech = demByTech,
     intensity = intensity_remind,
-    capCost = budget,
+    capCost = REMINDCapCost[["CESlevelCosts"]],
     EDGE2teESmap = EDGE2teESmap,
     REMINDtall = REMINDtall)
 
