@@ -13,11 +13,11 @@
 #' @importFrom readxl read_xlsx
 #' @importFrom data.table as.data.table
 #' @importFrom magclass setComment
-readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energyIntensity", "railDemand")) {
+#' @importFrom stringr str_extract
+readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor", "annualMileage",
+                                   "roadVkmDemand", "roadTkmDemand", "roadPkmDemand", "railFeDemand")) {
   `.` <- iso <- period <- categoryTRACCS <- vehicleType <- technology <- value <- NULL
   subtype <- match.arg(subtype)
-
-  isomap <- as.data.table(toolGetMapping("regionmappingTRACCS.csv", type = "regional"))
 
   countries <- list.files(
     path = file.path("./TRACCS_ROAD_Final_EXCEL_2013-12-20"),
@@ -26,7 +26,27 @@ readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energ
   countries <- countries[!grepl("\\$", countries)] #deletes open files, which have a $ in the name
   switch(
     subtype,
-    "roadDemand" = {
+    "fuelEnDensity" = {
+      data <- rbindlist(lapply(
+        countries,
+        function(x) {
+          conv <- suppressMessages(data.table(read_excel(
+            path = file.path(
+              "TRACCS_ROAD_Final_EXCEL_2013-12-20",
+              paste0("Road Data ", x, "_Output.xlsx")),
+            sheet = "INFO","A32:B38")))
+          colnames(conv) <- c("technology", "cf")
+          conv[, cf := as.numeric(str_extract(cf, "\\d+\\.\\d+"))]
+          conv[, country_name := x]
+          return(conv)
+        }))
+
+      return(data[
+        , .(country_name, technology, cf)] %>%
+        as.magpie(spatial=1, temporal=0) %>%
+        setComment("unit: TJ/t"))
+    },
+    "roadFeDemand" = {
       data <- rbindlist(lapply(
         countries,
         function(x) {
@@ -44,9 +64,9 @@ readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energ
           return(output)
         }))
 
-      return(data[isomap, on = "country_name"][
-        , .(iso, period, categoryTRACCS, vehicleType, technology, value)] %>%
-        as.magpie() %>%
+      return(data[
+        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
         setComment("unit: t"))
     },
     "loadFactor" = {
@@ -86,12 +106,12 @@ readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energ
             return(output)
           })))
 
-      return(data[isomap, on = "country_name"][
-      , .(iso, period, categoryTRACCS, vehicleType, technology, value)] %>%
-      as.magpie() %>%
+      return(data[
+      , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+      as.magpie(spatial=1) %>%
       setComment("unit: person/ton per vehicle"))
     },
-    "mileage" = {
+    "annualMileage" = {
       data <- rbindlist(lapply(
         countries,
         function(x) {
@@ -109,37 +129,88 @@ readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energ
           return(output)
         }))
 
-      return(data[isomap, on = "country_name"][
-        , .(iso, period, categoryTRACCS, vehicleType, technology, value)] %>%
-        as.magpie() %>%
+      return(data[
+        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
         setComment("unit: km per vehicle and year"))
 
     },
-    "energyIntensity" = {
+    "roadVkmDemand" = {
       data <- rbindlist(lapply(
         countries,
         function(x) {
-          output <- suppressMessages(data.table(read_excel(
-            path = file.path(
-              "TRACCS_ROAD_Final_EXCEL_2013-12-20",
-              paste0("Road Data ", x, "_Output.xlsx")),
-            sheet = "Energy_intensity_MJ_km","A2:O75")))
-          output <- output[, c(1, 2, 3, 10, 11, 12, 13, 14, 15)]
-          colnames(output) <- c("categoryTRACCS", "vehicleType", "technology",
-                                2005:2010)
-          output <- output[!technology %in% c("All", "Total", "Other")]
+          output = suppressMessages(data.table(
+            read_excel(
+              path = file.path(
+                "TRACCS_ROAD_Final_EXCEL_2013-12-20",
+                paste0("Road Data ", x, "_Output.xlsx")),
+              sheet="Veh-Km","A2:I73")))
+          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+                             as.character(seq(2005,2010,1))))
+          output=output[!technology %in% c("Total", "All")]
           output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
-      return(data[isomap, on = "country_name"][
-        , .(iso, period, categoryTRACCS, vehicleType, technology, value)] %>%
-        as.magpie() %>%
-        setComment("unit: MJ/km"))
+      return(data[
+        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
+        setComment("unit: vkm"))
+
     },
-    "railDemand" = {
+    "roadTkmDemand" = {
+      data <- rbindlist(lapply(
+        countries,
+        function(x) {
+          output = suppressMessages(data.table(
+            read_excel(
+              path = file.path(
+                "TRACCS_ROAD_Final_EXCEL_2013-12-20",
+                paste0("Road Data ", x, "_Output.xlsx")),
+              sheet="Tonne-Km", "A2:I18")))
+          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+                             as.character(seq(2005,2010,1))))
+          output=output[!technology %in% c("Total", "All")]
+          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+                                     variable.name = "period")
+          output$country_name <- x
+          return(output)
+        }))
+
+      return(data[
+        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
+        setComment("unit: tkm"))
+
+    },
+    "roadPkmDemand" = {
+      data <- rbindlist(lapply(
+        countries,
+        function(x) {
+          output = suppressMessages(data.table(
+            read_excel(
+              path = file.path(
+                "TRACCS_ROAD_Final_EXCEL_2013-12-20",
+                paste0("Road Data ", x, "_Output.xlsx")),
+              sheet="Pass-Km", "A2:I51")))
+          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+                             as.character(seq(2005,2010,1))))
+          output=output[!technology %in% c("Total", "All")]
+          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+                                     variable.name = "period")
+          output$country_name <- x
+          return(output)
+        }))
+
+      return(data[
+        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
+        setComment("unit: pkm"))
+
+    },
+    "railFeDemand" = {
       data <- suppressMessages(data.table(read_excel(
         path = "TRACCS_RAIL_Final_EXCEL_2013-12-20/TRACCS_Rail_Final_Eval.xlsx",
         sheet = "eval_rail_energy", "A6:L124")))
@@ -150,9 +221,9 @@ readTRACCS <- function(subtype = c("roadDemand", "loadFactor", "mileage", "energ
                     "Countrytype_short", "RailTrafficType"),
         variable.name = "period")
       setnames(data, c("RailTraction", "Country"), c("technology", "country_name"))
-      return(data[isomap, on = "country_name"][!is.na(value)][
-      , .(iso, period, RailTrafficType, technology, value)] %>%
-        as.magpie() %>%
+      return(data[!is.na(value)][
+      , .(country_name, period, RailTrafficType, technology, value)] %>%
+        as.magpie(spatial=1) %>%
         setComment("unit(Electric): Mio kWh, unit(Diesel): t"))
     }
 
