@@ -35,14 +35,14 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
               "TRACCS_ROAD_Final_EXCEL_2013-12-20",
               paste0("Road Data ", x, "_Output.xlsx")),
             sheet = "INFO","A32:B38")))
-          colnames(conv) <- c("technology", "cf")
+          colnames(conv) <- c("TRACCS_technology", "cf")
           conv[, cf := as.numeric(str_extract(cf, "\\d+\\.\\d+"))]
           conv[, country_name := x]
           return(conv)
         }))
 
       return(data[
-        , .(country_name, technology, cf)] %>%
+        , .(country_name, TRACCS_technology, cf)] %>%
         as.magpie(spatial=1, temporal=0) %>%
         setComment("unit: TJ/t"))
     },
@@ -55,17 +55,17 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
               "TRACCS_ROAD_Final_EXCEL_2013-12-20",
               paste0("Road Data ", x, "_Output.xlsx")),
             sheet = "FCcalc","A2:I75")))
-          colnames(output) <- c("categoryTRACCS", "vehicleType", "technology",
+          colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                                 2005:2010)
-          output <- output[!technology %in% c("All", "Total")]
-          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+          output <- output[!TRACCS_technology %in% c("All", "Total")]
+          output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
       return(data[
-        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
         as.magpie(spatial=1) %>%
         setComment("unit: t"))
     },
@@ -79,10 +79,10 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
                 "TRACCS_ROAD_Final_EXCEL_2013-12-20",
                 paste0("Road Data ", x, "_Output.xlsx")),
               sheet = "Occupancy ratio","A2:I51")))
-            colnames(output) <- c("categoryTRACCS", "vehicleType", "technology",
+            colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                                   2005:2010)
-            output <- output[!technology %in% c("All", "Total")]
-            output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+            output <- output[!TRACCS_technology %in% c("All", "Total")]
+            output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                        variable.name = "period")
             output$country_name <- x
             return(output)
@@ -96,18 +96,18 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
                 paste0("Road Data ", x, "_Output.xlsx")),
               sheet = "Tonne-Km", "A3:AA18")))
             output <- output[, c(1:3, 22:27)]
-            colnames(output) <- c("categoryTRACCS", "vehicleType", "technology",
+            colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                                   2005:2010)
-            output <- output[!technology %in% c("All", "Total")]
+            output <- output[!TRACCS_technology %in% c("All", "Total")]
             output <- output[!is.na(get("2010"))]
-            output <- melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+            output <- melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                       variable.name = "period")
             output$country_name <- x
             return(output)
           })))
 
       return(data[
-      , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+      , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
       as.magpie(spatial=1) %>%
       setComment("unit: person/ton per vehicle"))
     },
@@ -120,19 +120,20 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
               "TRACCS_ROAD_Final_EXCEL_2013-12-20",
               paste0("Road Data ", x, "_Output.xlsx")),
             sheet="Mileage per Veh. (Km)","A2:I51")))
-          colnames(output) <- c("categoryTRACCS", "vehicleType", "technology",
+          colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                                 2005:2010)
-          output <- output[!technology %in% c("All", "Total")]
-          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+          output <- output[!TRACCS_technology %in% c("All", "Total")]
+          output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
-      return(data[
-        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit: km per vehicle and year"))
+      mpobj <- data[
+      , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
+        as.magpie(spatial=1)
+      getComment(mpobj) <- "unit: km per vehicle and year"
+      return(mpobj)
 
     },
     "roadVkmDemand" = {
@@ -145,17 +146,17 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
                 "TRACCS_ROAD_Final_EXCEL_2013-12-20",
                 paste0("Road Data ", x, "_Output.xlsx")),
               sheet="Veh-Km","A2:I73")))
-          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+          setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                              as.character(seq(2005,2010,1))))
-          output=output[!technology %in% c("Total", "All")]
-          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+          output=output[!TRACCS_technology %in% c("Total", "All")]
+          output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
       return(data[
-        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
         as.magpie(spatial=1) %>%
         setComment("unit: vkm"))
 
@@ -170,17 +171,17 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
                 "TRACCS_ROAD_Final_EXCEL_2013-12-20",
                 paste0("Road Data ", x, "_Output.xlsx")),
               sheet="Tonne-Km", "A2:I18")))
-          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+          setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                              as.character(seq(2005,2010,1))))
-          output=output[!technology %in% c("Total", "All")]
-          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+          output=output[!TRACCS_technology %in% c("Total", "All")]
+          output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
       return(data[
-        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
         as.magpie(spatial=1) %>%
         setComment("unit: tkm"))
 
@@ -195,17 +196,17 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
                 "TRACCS_ROAD_Final_EXCEL_2013-12-20",
                 paste0("Road Data ", x, "_Output.xlsx")),
               sheet="Pass-Km", "A2:I51")))
-          setnames(output, c("categoryTRACCS", "vehicleType", "technology",
+          setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                              as.character(seq(2005,2010,1))))
-          output=output[!technology %in% c("Total", "All")]
-          output <- data.table::melt(output, id.vars = c("categoryTRACCS", "vehicleType", "technology"),
+          output=output[!TRACCS_technology %in% c("Total", "All")]
+          output <- data.table::melt(output, id.vars = c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
                                      variable.name = "period")
           output$country_name <- x
           return(output)
         }))
 
       return(data[
-        , .(country_name, period, categoryTRACCS, vehicleType, technology, value)] %>%
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
         as.magpie(spatial=1) %>%
         setComment("unit: pkm"))
 
@@ -220,9 +221,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         id.vars = c("RailTraction", "Unit_short", "CountryID", "Country",
                     "Countrytype_short", "RailTrafficType"),
         variable.name = "period")
-      setnames(data, c("RailTraction", "Country"), c("technology", "country_name"))
+      setnames(data, c("RailTraction", "Country"), c("TRACCS_technology", "country_name"))
       return(data[!is.na(value)][
-      , .(country_name, period, RailTrafficType, technology, value)] %>%
+      , .(country_name, period, RailTrafficType, TRACCS_technology, value)] %>%
         as.magpie(spatial=1) %>%
         setComment("unit(Electric): Mio kWh, unit(Diesel): t"))
     }
