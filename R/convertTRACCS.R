@@ -13,7 +13,7 @@
 convertTRACCS <- function(x, subtype) {
   getItems(x, dim=1) <- toolCountry2isocode(getItems(x, dim=1))
   getSets(x)["d1.1"] <- "iso"
-  x <- toolCountryFill(x, fill = NA, countrylist = getISOlist(), verbosity = 2)
+  x <- toolCountryFill(x, fill = NA, verbosity = 2)
   return(x)
 }
 
