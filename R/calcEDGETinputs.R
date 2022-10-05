@@ -8,8 +8,8 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
     switch(
       subtype,
       "annualMileage" = {
-        am_TRACCS <- toolPrepareData(readSource("TRACCS", subtype="annualMileage"), "TRACCS")
-        am_UCD <- NULL
+        am_TRACCS <- toolPrepareTRACCS(readSource("TRACCS", subtype), subtype)
+        am_UCD <- toolPrepareUCD(readSource("UCD", subtype), subtype)
 
         ## merge
       }

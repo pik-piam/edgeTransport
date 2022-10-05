@@ -42,6 +42,7 @@ readUCD <- function(subtype = c(
     }
   )
   ret <- data.table::melt(ret, id.vars=colnames(ret)[1:7], variable.name="year")
+  setnames(ret, "size.class", "size_class")
   return(as.magpie(ret, spatial="UCD_region"))
 
 }
