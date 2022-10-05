@@ -16,21 +16,32 @@ toolPrepareTRACCS <- function(magpieobj, subtype, weight=NULL) {
   ## load mappings
   mapfile <- system.file("extdata", "mapping_TRACCS_roadvehicles.csv",
                          package = "edgeTransport", mustWork = TRUE)
-  mapping_TRACCS_roadf_categories = fread(mapfile, skip = 0)
+  mapping_TRACCS = fread(mapfile, skip = 0)
+  techmapfile <- system.file("extdata", "mapping_TRACCS_techs.csv",
+                         package = "edgeTransport", mustWork = TRUE)
+  techmap = fread(techmapfile, skip = 0)
 
   unit <- gsub("unit: ", "", getComment(magpieobj))
 
-  ## translate dt
+  weight <- readSource("TRACCS", subtype="roadVkmDemand")
+  weight <- magpie2dt(weight)
+  setnames(weight, "value", "vkm")
   dt <- magpie2dt(magpieobj)
   dt <- dt[TRACCS_technology != "Other"]
-  dt[TRACCS_technology %in% c("Gasoline", "Diesel", "Flexi-fuel", "B30"),
-     technology := "Liquids"]
-  dt[TRACCS_technology %in% c("CNG", "CNG/Biogas", "LPG"),
-     technology := "NG"]
-  dt <- data.table::merge(mapping_TRACCS_roadf_categories, dt)
-  dt[, c("TRACCS_category", "TRACCS_technology", "TRACCS_vehicle_type") := NULL]
 
-  dt <- dt[lstruct, on=c("vehicle_type", "technology")]
+  switch(
+    subtype,
+    "annualMileage" = {
+      wcols <- c("iso", "period", "TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology")
+      dt <- weight[dt, on=wcols]
+
+      dt <- techmap[dt, on="TRACCS_technology"]
+      dt <- mapping_TRACCS[dt, on=c("TRACCS_category", "TRACCS_vehicle_type")]
+
+      dt <- dt[,
+               .(value=mean(value)),
+               by=c("iso", "period", "vehicle_type", "technology")][!is.na(value) & value > 0]
+    })
 
   setnames(dt, "iso", "region")
   dt$unit <- unit
@@ -59,9 +70,10 @@ toolPrepareUCD <- function(magpieobj, subtype, weight=NULL) {
                              package = "edgeTransport", mustWork = TRUE)
   mapping_UCD = fread(mapfile, skip = 0)
 
-  dt <- magpie2dt(magpieobj)
-  weight=readSource("UCD", subtype="feDemand")
+  weight <- readSource("UCD", subtype="feDemand")
   weight <- magpie2dt(weight)
+
+  dt <- magpie2dt(magpieobj)
   setnames(weight, "value", "fe")
 
   switch(
@@ -75,9 +87,7 @@ toolPrepareUCD <- function(magpieobj, subtype, weight=NULL) {
 
       dt <- mapping_UCD[dt, on=c("UCD_sector", "mode", "size_class")]
       dt[, .(value=sum(value*fe)/sum(fe)), by=c("iso", "year", "vehicle_type", "unit")]
-      dt <- dt[lstruct, on="vehicle_type"]
     })
-
 
   setnames(dt, "iso", "region")
   return(as.quitte(dt))
