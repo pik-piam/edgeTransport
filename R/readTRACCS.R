@@ -42,9 +42,8 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       return(data[
-        , .(country_name, TRACCS_technology, cf)] %>%
-        as.magpie(spatial=1, temporal=0) %>%
-        setComment("unit: TJ/t"))
+        , .(country_name, TRACCS_technology, unit="TJ/t", cf)] %>%
+        as.magpie(spatial=1, temporal=0))
     },
     "roadFeDemand" = {
       data <- rbindlist(lapply(
@@ -65,9 +64,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       return(data[
-        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit: t"))
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+            TRACCS_technology, unit="t", value)] %>%
+        as.magpie(spatial=1))
     },
     "loadFactor" = {
       data <- rbind(
@@ -107,9 +106,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
           })))
 
       return(data[
-      , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
-      as.magpie(spatial=1) %>%
-      setComment("unit: person/ton per vehicle"))
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+          TRACCS_technology, unit="person/ton per vehicle", value)] %>%
+      as.magpie(spatial=1))
     },
     "annualMileage" = {
       data <- rbindlist(lapply(
@@ -130,9 +129,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       mpobj <- data[
-      , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+          TRACCS_technology, unit="km/veh", value)] %>%
         as.magpie(spatial=1)
-      getComment(mpobj) <- "unit: km per vehicle and year"
       return(mpobj)
 
     },
@@ -156,9 +155,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       return(data[
-        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit: vkm"))
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+          TRACCS_technology, unit="vkm", value)] %>%
+        as.magpie(spatial=1))
 
     },
     "roadTkmDemand" = {
@@ -181,9 +180,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       return(data[
-        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit: tkm"))
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+          TRACCS_technology, unit="tkm", value)] %>%
+        as.magpie(spatial=1))
 
     },
     "roadPkmDemand" = {
@@ -206,9 +205,9 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         }))
 
       return(data[
-        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type, TRACCS_technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit: pkm"))
+        , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
+          TRACCS_technology, unit="pkm", value)] %>%
+        as.magpie(spatial=1))
 
     },
     "railFeDemand" = {
@@ -223,9 +222,8 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
         variable.name = "period")
       setnames(data, c("RailTraction", "Country"), c("TRACCS_technology", "country_name"))
       return(data[!is.na(value)][
-      , .(country_name, period, RailTrafficType, TRACCS_technology, value)] %>%
-        as.magpie(spatial=1) %>%
-        setComment("unit(Electric): Mio kWh, unit(Diesel): t"))
+        , .(country_name, period, RailTrafficType, TRACCS_technology, unit="Mio kWh or t", value)] %>%
+        as.magpie(spatial=1))
     }
 
   )

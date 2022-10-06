@@ -10,7 +10,7 @@
 #' @importFrom rmndt magpie2dt
 #' @importFrom data.table fread
 
-toolPrepareTRACCS <- function(magpieobj, subtype, weight=NULL) {
+toolPrepareTRACCS <- function(magpieobj, subtype) {
   lstruct <- fread(system.file("extdata/logit_structure.csv", package="edgeTransport", mustWork=TRUE))
 
   ## load mappings
@@ -21,10 +21,8 @@ toolPrepareTRACCS <- function(magpieobj, subtype, weight=NULL) {
                          package = "edgeTransport", mustWork = TRUE)
   techmap = fread(techmapfile, skip = 0)
 
-  unit <- gsub("unit: ", "", getComment(magpieobj))
-
   weight <- readSource("TRACCS", subtype="roadVkmDemand")
-  weight <- magpie2dt(weight)
+  weight <- magpie2dt(weight)[, unit := NULL]
   setnames(weight, "value", "vkm")
   dt <- magpie2dt(magpieobj)
   dt <- dt[TRACCS_technology != "Other"]
@@ -38,13 +36,19 @@ toolPrepareTRACCS <- function(magpieobj, subtype, weight=NULL) {
       dt <- techmap[dt, on="TRACCS_technology"]
       dt <- mapping_TRACCS[dt, on=c("TRACCS_category", "TRACCS_vehicle_type")]
 
-      dt <- dt[,
-               .(value=mean(value)),
-               by=c("iso", "period", "vehicle_type", "technology")][!is.na(value) & value > 0]
+      dt <- unique(dt[,
+               .(unit, value=mean(value)),
+               by=c("iso", "period", "vehicle_type", "technology")][!is.na(value) & value > 0])
+      lstruct <- lstruct[vehicle_type %in% unique(dt$vehicle_type)]
+      full_table <- CJ(iso=dt$iso, period=dt$period, vehicle_type=dt$vehicle_type,
+                       technology=lstruct$technology, unit=dt$unit, unique=T)
+      dt <- dt[full_table, on=c("iso", "period", "vehicle_type", "technology", "unit")]
+      dt[, value := ifelse(is.na(value), .SD[technology == "Liquids", value], value),
+         by=c("iso", "period", "vehicle_type")]
+      dt <- dt[lstruct, on=c("vehicle_type", "technology")]
     })
 
   setnames(dt, "iso", "region")
-  dt$unit <- unit
   return(as.quitte(dt))
 
 }
@@ -62,7 +66,7 @@ toolPrepareTRACCS <- function(magpieobj, subtype, weight=NULL) {
 #' @importFrom rmndt magpie2dt
 #' @importFrom data.table fread
 
-toolPrepareUCD <- function(magpieobj, subtype, weight=NULL) {
+toolPrepareUCD <- function(magpieobj, subtype) {
   lstruct <- fread(system.file("extdata/logit_structure.csv", package="edgeTransport", mustWork=TRUE))
 
   ## mapping_UCD <- fread("~/git/edgeTransport/inst/extdata/mapping_UCD_categories.csv")
@@ -71,7 +75,7 @@ toolPrepareUCD <- function(magpieobj, subtype, weight=NULL) {
   mapping_UCD = fread(mapfile, skip = 0)
 
   weight <- readSource("UCD", subtype="feDemand")
-  weight <- magpie2dt(weight)
+  weight <- magpie2dt(weight)[, unit := NULL]
 
   dt <- magpie2dt(magpieobj)
   setnames(weight, "value", "fe")
@@ -86,7 +90,8 @@ toolPrepareUCD <- function(magpieobj, subtype, weight=NULL) {
       dt <- weight[dt, on=c(wcols, "UCD_technology", "UCD_fuel")]
 
       dt <- mapping_UCD[dt, on=c("UCD_sector", "mode", "size_class")]
-      dt[, .(value=sum(value*fe)/sum(fe)), by=c("iso", "year", "vehicle_type", "unit")]
+      dt <- dt[, .(unit, value=sum(value*fe)/sum(fe)), by=c("iso", "year", "vehicle_type")]
+      dt <- lstruct[dt, on="vehicle_type", allow.cartesian=T]
     })
 
   setnames(dt, "iso", "region")

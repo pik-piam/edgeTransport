@@ -35,11 +35,11 @@ Passenger,Motorcycle (50-250cc),LDV_2W,Motorcycle (50-250cc)
 Passenger,Mini Car,LDV_4W,Mini Car
 Passenger,Subcompact Car,LDV_4W,Subcompact Car
 Passenger,Compact Car,LDV_4W,Compact Car
-Passenger,Multipurpose Vehicle,LDV_4W,Multipurpose Vehicle
+Passenger,Multipurpose Vehicle,LDV_4W,Large Car and SUV
 Passenger,Motorcycle (>250cc),LDV_2W,Motorcycle (>250cc)
 Passenger,Midsize Car,LDV_4W,Midsize Car
 Passenger,Large Car,LDV_4W,Large Car
-Passenger,Light Truck and SUV,LDV_4W,Light Truck and SUV
+Passenger,Light Truck and SUV,LDV_4W,Large Car and SUV
 Passenger,Van,LDV_4W,Van
 Passenger,Large Car and SUV,LDV_4W,Large Car and SUV
 Passenger,Moped,LDV_2W,Moped
