@@ -483,9 +483,11 @@ toolReportEDGET <- function(output_folder = ".",
     mode = "FE"
   )
 
-  capCosts <- loadCapCosts(demand_km)
-  repCapCosts <- reporting(dt = capCosts, mode = "CC")
-
+  repCapCosts <- NULL
+  if(file.exists(datapath(fname="capCostPerTech.RDS"))) {
+    capCosts <- loadCapCosts(demand_km)
+    repCapCosts <- reporting(dt = capCosts, mode = "CC")
+  }
   liqsplit <- split_fe_liquids(repFE)
 
   repVKM <- reporting(
