@@ -19,6 +19,7 @@ toolGenerateEDGEdata(
   mitab.path = NULL,
   ssp_demreg.path = NULL,
   regional_demreg.path = NULL,
+  demscen.path = NULL,
   FEPricetab = NULL,
   int_improvetab = NULL
 )
@@ -52,9 +53,11 @@ toolGenerateEDGEdata(
 
 \item{regional_demreg.path}{path to file with key factors for the demand regression depending on regions and SSP scenarios.}
 
+\item{demscen.path}{path to file with demScen specific mulitiplikative factors for the demand, region and sector specific.}
+
 \item{FEPricetab}{ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.}
 
-\item{int_improvetab}{tab with key factors for intensity improvements for different mitigation ambition and SSP scenarios.}
+\item{int_improvetab}{table with key factors for intensity improvements for different mitigation ambition and SSP scenarios.}
 }
 \value{
 generated EDGE-transport input data

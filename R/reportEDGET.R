@@ -36,7 +36,7 @@ toolReportEDGET <- function(output_folder = ".",
           se <- type <- ven <- vehicle_type <- vehicle_type <- capture.output <- demVintEachYear <-
             unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <-
               full_demand_vkm <- vintage_demand_vkm <- stock_demand <- sales_demand <- full_demand_vkm <-
-                typ <- FE <- tot_vint_demand <- NULL
+                typ <- FE <- tot_vint_demand <- non_fuel_price <- NULL
 
   #pkm or tkm is called km in the reporting. Vehicle km are called vkm
   yrs <- c(seq(2005, 2060, 5), seq(2070, 2100, 10))

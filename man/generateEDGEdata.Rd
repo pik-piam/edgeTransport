@@ -10,7 +10,7 @@ calcgenerateEDGEdata(
   cache_folder = NULL,
   SSP_scen = "SSP2",
   tech_scen = "Mix",
-  demScen = NULL,
+  demScen = "default",
   storeRDS = FALSE,
   gdxPath = NULL,
   preftab = NULL,
