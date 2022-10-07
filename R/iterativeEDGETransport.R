@@ -302,7 +302,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
 
   ## use logit to calculate costs
-  budget <- toolCapCosts(
+  REMINDCapCost <- toolCapCosts(
     base_price=prices$base,
     Fdemand_ES = shares_int_dem[["demandF_plot_pkm"]],
     stations = num_veh_stations$stations,
@@ -310,6 +310,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = REMINDyears,
     scenario = scenario)
+  saveRDS(REMINDCapCost[["capCostPerTech"]], file = datapath("capCostPerTech.RDS"))
 
   ## full REMIND time range for inputs
   REMINDtall <- c(seq(1900,1985,5),
@@ -321,7 +322,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   finalInputs <- toolPrepare4REMIND(
     demByTech = demByTech,
     intensity = intensity,
-    capCost = budget,
+    capCost = REMINDCapCost[["CESlevelCosts"]],
     EDGE2teESmap = EDGE2teESmap,
     REMINDtall = REMINDtall)
 

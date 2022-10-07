@@ -19,9 +19,10 @@
 #' @param mitab.path path to file with key factors for share weight trends for different mitigation ambition and SSP scenarios.
 #' @param ssp_demreg.path path to file with key factors for the demand regression depending on SSP/SDP scenarios.
 #' @param regional_demreg.path path to file with key factors for the demand regression depending on regions and SSP scenarios.
+#' @param demscen.path path to file with demScen specific mulitiplikative factors for the demand, region and sector specific.
 #' @param plot.report write a report which is place in the level2 folder. Defaults to FALSE.
 #' @param FEPricetab ship an external csv that includes FE prices. The prices from the gdx file will be overwritten for affected regions.
-#' @param int_improvetab tab with key factors for intensity improvements for different mitigation ambition and SSP scenarios.
+#' @param int_improvetab table with key factors for intensity improvements for different mitigation ambition and SSP scenarios.
 #' @return generated EDGE-transport input data
 #' @author Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
@@ -36,7 +37,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                              gdxPath = NULL,
                              preftab = NULL, plot.report = FALSE,
                              mitab4W.path = NULL, mitab.path = NULL,
-                             ssp_demreg.path = NULL, regional_demreg.path = NULL, FEPricetab = NULL,
+                             ssp_demreg.path = NULL, regional_demreg.path = NULL,
+                             demscen.path = NULL, FEPricetab = NULL,
                              int_improvetab = NULL) {
   scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
     technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
@@ -50,7 +52,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     storeRDS <- FALSE
   }
 
-  folder <- paste0(SSP_scen, "-", tech_scen, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
+  folder <- paste0(SSP_scen, "-", tech_scen, "-", demScen, "_", format(Sys.time(), "%Y-%m-%d_%H.%M.%S"))
 
   if(!is.null(cache_folder) && !dir.exists(cache_folder)){
     dir.create(cache_folder)
@@ -76,6 +78,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     levelNpath(fname, 2)
   }
 
+  ## store configs to this folder
+  cfgpath <- file.path(output_folder, folder, "config")
+  if (!dir.exists(cfgpath)) {
+    dir.create(cfgpath, recursive = T)
+  }
 
   years <- c(1990,
              seq(2005, 2060, by = 5),
@@ -193,14 +200,21 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   if(is.null(int_improvetab)){
     print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
     ## select the right combination of techscen and SSP scen
-    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]}
+    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
+  }
 
   if(nrow(int_improvetab) > 0){
-      IEAbal_comparison$merged_intensity <- toolAdjustIntensity(IEAbal_comparison$merged_intensity, int_improvetab, years)}
+    fwrite(int_improvetab, file.path(cfgpath, "int_improvetab.csv"))
+    IEAbal_comparison$merged_intensity <- toolAdjustIntensity(IEAbal_comparison$merged_intensity, int_improvetab, years)
+  }
 
   print("-- Merge non-fuel prices with REMIND fuel prices")
   if(is.null(gdxPath)) {
     gdxPath <- file.path(input_folder, "REMIND/fulldata_EU.gdx")
+  }
+
+  if (!is.null(FEPricetab)) {
+    fwrite(FEPricetab, file.path(cfgpath, "FEPricetab.csv"))
   }
   REMIND_prices <- toolMergePrices(
     gdx = gdxPath,
@@ -244,6 +258,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
   ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
+  fwrite(ptab, file.path(cfgpath, "sw_trends.csv"))
+
 
   ## load mitigatin trends sw table
   if(is.null(mitab.path)) {
@@ -251,6 +267,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
   mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
     SSP_scenario == SSP_scen & tech_scenario == tech_scen]
+  fwrite(mitab, file.path(cfgpath, "edget-mitigation.csv"))
 
   print("-- generating trends for inconvenience costs")
   prefs <- toolPreftrend(
@@ -287,6 +304,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
 
   preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
+  fwrite(preftab4W, file.path(cfgpath, "inconv_factor.csv"))
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
@@ -369,25 +387,26 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
 
     } else {
-      ssp_demreg_tab <- NULL
       if(is.null(ssp_demreg.path)) {
         print("No path to a file with scenario-specific tuning parameters for the regression provided. Using default file.")
         ssp_demreg.path <- system.file("extdata", "ssp_regression_factors.csv", package="edgeTransport")
       }
       ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
+      fwrite(ssp_demreg_tab, file.path(cfgpath, "ssp_regression_factors.csv"))
 
-
-      reg_demreg_tab <- NULL
       if(is.null(regional_demreg.path)) {
         print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
         regional_demreg.path <- system.file("extdata", "regional_regression_factors.csv", package="edgeTransport")
       }
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
+      fwrite(reg_demreg_tab, file.path(cfgpath, "regional_regression_factors.csv"))
 
-      demscen_factors <- NULL
-
-      demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
+      if(is.null(demscen.path)) {
+        print("No path to a file with demand scenario factors for the regression provided. Using default file.")
+        demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
+     }
       demscen_factors <- fread(demscen.path, header = TRUE)[demandScen == demScen]
+      fwrite(demscen_factors, file.path(cfgpath, "demscen_factors.csv"))
 
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
@@ -459,7 +478,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
 
   print("-- Calculating budget coefficients")
-  budget <- toolCapCosts(
+  REMINDCapCost <- toolCapCosts(
     base_price=prices$base,
     Fdemand_ES = shares_intensity_demand$demandF_plot_EJ,
     stations = num_veh_stations$stations,
@@ -467,6 +486,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     EDGE2teESmap = EDGE2teESmap,
     REMINDyears = years,
     scenario = scenario)
+
 
   ## full REMIND time range for inputs
   REMINDtall <- c(seq(1900,1985,5),
@@ -477,6 +497,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   if (storeRDS) {
     #Copy gdx file to output folder
     file.copy(gdxPath, output_folder)
+    saveRDS(REMINDCapCost[["capCostPerTech"]], file = level2path("capCostPerTech.RDS"))
     saveRDS(shares, file = level2path("shares.RDS"))
     saveRDS(logit_data$annual_sales, file = level2path("annual_sales.RDS"))
     saveRDS(logit_data[["share_list"]], file = level2path("shares.RDS"))
@@ -527,7 +548,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   finalInputs <- toolPrepare4REMIND(
     demByTech = demByTech,
     intensity = intensity_remind,
-    capCost = budget,
+    capCost = REMINDCapCost[["CESlevelCosts"]],
     EDGE2teESmap = EDGE2teESmap,
     REMINDtall = REMINDtall)
 
