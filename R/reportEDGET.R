@@ -954,6 +954,12 @@ toolReportEDGET <- function(output_folder = ".",
   }
   #We should finally decide for which yrs the model runs and shows reasonable results
   toMIF <- toMIF[period %in% yrs]
+  toMIF <- rbind(
+    toMIF,
+    toMIF[period == 2100][, period := 2110],
+    toMIF[period == 2100][, period := 2130],
+    toMIF[period == 2100][, period := 2150]
+  )
 
   ## Make sure there are no duplicates!
   idx <- anyDuplicated(toMIF, by = c("region", "variable", "period"))
