@@ -14,9 +14,11 @@ toolAdjustData <- function(qobj, subtype) {
   dt <- as.data.table(qobj)
   switch(
     sourcetype,
-      "energyIntensity" = {
-      }
-    )
+    "annualMileage" = {
+
+
+    }
+  )
   return(as.quitte(dt))
-  
+
 }

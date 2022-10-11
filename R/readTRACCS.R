@@ -118,7 +118,7 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
             path = file.path(
               "TRACCS_ROAD_Final_EXCEL_2013-12-20",
               paste0("Road Data ", x, "_Output.xlsx")),
-            sheet="Mileage per Veh. (Km)","A2:I51")))
+            sheet="Mileage per Veh. (Km)","A2:I74")))
           colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
                                 2005:2010)
           output <- output[!TRACCS_technology %in% c("All", "Total")]

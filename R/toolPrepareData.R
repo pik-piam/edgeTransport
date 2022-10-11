@@ -37,8 +37,12 @@ toolPrepareTRACCS <- function(magpieobj, subtype) {
       dt <- mapping_TRACCS[dt, on=c("TRACCS_category", "TRACCS_vehicle_type")]
 
       dt <- unique(dt[,
-               .(unit, value=mean(value)),
-               by=c("iso", "period", "vehicle_type", "technology")][!is.na(value) & value > 0])
+               .(unit, value=sum(value*vkm)/sum(vkm)),
+               by=c("iso", "period", "vehicle_type", "technology")])
+      ## some small countries do not have 40t, we use mean mileage
+      dt[, value := ifelse(is.na(value), mean(value, na.rm=TRUE), value),
+         by=c("period", "vehicle_type", "technology")]
+
       lstruct <- lstruct[vehicle_type %in% unique(dt$vehicle_type)]
       full_table <- CJ(iso=dt$iso, period=dt$period, vehicle_type=dt$vehicle_type,
                        technology=lstruct$technology, unit=dt$unit, unique=T)
