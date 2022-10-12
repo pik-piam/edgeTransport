@@ -94,7 +94,7 @@ toolPrepareUCD <- function(magpieobj, subtype) {
       dt <- weight[dt, on=c(wcols, "UCD_technology", "UCD_fuel")]
 
       dt <- mapping_UCD[dt, on=c("UCD_sector", "mode", "size_class")]
-      dt <- dt[, .(unit, value=sum(value*fe)/sum(fe)), by=c("iso", "year", "vehicle_type")]
+      dt <- unique(dt[, .(unit, value=sum(value*fe)/sum(fe)), by=c("iso", "year", "vehicle_type")])
       dt <- lstruct[dt, on="vehicle_type", allow.cartesian=T]
     })
 

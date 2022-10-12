@@ -13,10 +13,8 @@ toolAdjustData <- function(qobj, subtype) {
   ## since the dis/aggregation of vehicle classes etc might be quite lengthy
   dt <- as.data.table(qobj)
   switch(
-    sourcetype,
+    subtype,
     "annualMileage" = {
-
-
     }
   )
   return(as.quitte(dt))

@@ -61,21 +61,43 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
 
       dt <- rbind(dt, planes, ships, use.names=TRUE)
 
-      ## check for missing data, has to happen on subtype level since it does not make sense
+      q <- as.quitte(dt)
+      if(adjustments) {
+        q <- toolAdjustData(q, subtype)
+      }
+
+      ## check for missing data by joining the logit structure and looking for NAs,
+      ## the join has to happen on subtype level since it does not make sense
       ## slash we do not have data for all categories. E.g., mileage for non-motorized modes or
       ## trains does not make sense
       am_check <- lstruct[!subsector_l3 %in% c("Walk", "Cycle", "HSR", "Passenger Rail", "Freight Rail")]
-      tst <- dt[am_check, on=colnames(am_check)][is.na(value)]
-      if(nrow(tst) > 0) {
-        print(sprintf("Missing elements in inputdata subtype %s.", subtype))
-        browser()
-      }
+      q <- q[am_check, on=colnames(am_check)]
+      ## note that the actual check is done for all subtypes at the end of the function
 
-      if(adjustments) {
-        q <- toolAdjustData(as.quitte(dt), subtype)
-      }
+      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
+      unit <- am_unit
+      description <- "Annual mileage data for LDV, trucks, trains and ships. Sources: TRACCS, UCD."
 
     }
   )
 
+  tst <- q[is.na(value)]
+  if(nrow(tst) > 0) {
+    print(sprintf("Missing elements in inputdata subtype %s.", subtype))
+    browser()
+  }
+
+  tst <- q[duplicated(q)]
+  if(nrow(tst) > 0) {
+    print(sprintf("Duplicated elements in inputdata subtype %s.", subtype))
+    browser()
+  }
+
+  return(list(
+    x           = as.magpie(as.quitte(as.data.frame(q))),
+    weight      = weight,
+    unit        = unit,
+    description = description
+  ))
 }
+
