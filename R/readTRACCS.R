@@ -181,7 +181,7 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
 
       return(data[
         , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
-          TRACCS_technology, unit="tkm", value)] %>%
+          TRACCS_technology, unit="million tkm", value)] %>%
         as.magpie(spatial=1))
 
     },
@@ -206,7 +206,7 @@ readTRACCS <- function(subtype = c("roadFeDemand", "fuelEnDensity", "loadFactor"
 
       return(data[
         , .(country_name, period, TRACCS_category, TRACCS_vehicle_type,
-          TRACCS_technology, unit="pkm", value)] %>%
+          TRACCS_technology, unit="million pkm", value)] %>%
         as.magpie(spatial=1))
 
     },

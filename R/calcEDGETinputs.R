@@ -78,6 +78,37 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
       unit <- am_unit
       description <- "Annual mileage data for LDV, trucks, trains and ships. Sources: TRACCS, UCD."
 
+    },
+
+    "esDemand" = {
+      fr_unit <- "million tkm"
+      pa_unit <- "million pkm"
+      ## the GCAM data is more-or-less complete, we use this as a starting point
+      es_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
+      es_GCAM[sector == "trn_freight", unit := fr_unit]
+      es_GCAM[sector == "trn_pass", unit := pa_unit]
+      es_GCAM[, c("model", "scenario", "variable") := NULL]
+
+      es_TRACCS <- rbind(
+        toolPrepareTRACCS(readSource("TRACCS", "roadTkmDemand"), "roadTkmDemand")[, unit := fr_unit],
+        toolPrepareTRACCS(readSource("TRACCS", "roadPkmDemand"), "roadPkmDemand")[, unit := pa_unit]
+      )[period %in% c(2005, 2010)]
+      es_TRACCS[, c("model", "scenario", "variable") := NULL]
+
+      es_GCAM[es_TRACCS, value := i.value, on=colnames(es_GCAM)[1:10]]
+
+      q <- as.quitte(es_GCAM)
+      if(adjustments) {
+        q <- toolAdjustData(q, subtype)
+      }
+
+      ## expand and check
+      q <- q[lstruct, on=c("vehicle_type", "technology")]
+
+      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
+      unit <- sprintf("%s or %s", pa_unit, fr_unit)
+      description <- "Energy service demand. Sources: TRACCS, GCAM."
+
     }
   )
 
@@ -94,7 +125,7 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
   }
 
   return(list(
-    x           = as.magpie(as.quitte(as.data.frame(q))),
+    x           = as.magpie(as.data.frame(q)),
     weight      = weight,
     unit        = unit,
     description = description
