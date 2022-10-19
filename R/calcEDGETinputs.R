@@ -103,11 +103,19 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
       }
 
       ## expand and check
-      q <- q[lstruct, on=c("vehicle_type", "technology")]
+      q <- q[lstruct, on=intersect(colnames(q), colnames(lstruct))]
 
       weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
       unit <- sprintf("%s or %s", pa_unit, fr_unit)
       description <- "Energy service demand. Sources: TRACCS, GCAM."
+
+    },
+
+    "loadFactor" = {
+      fr_unit <- "tkm/veh"
+      pa_unit <- "pkm/veh"
+      magpieobj <- readSource("GCAM", "loadFactor")
+      es_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
 
     }
   )
@@ -118,7 +126,9 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
     browser()
   }
 
-  tst <- q[duplicated(q)]
+  nonvalcols <- colnames(q)[colnames(q) != "value"]
+  tst <- q[, ..nonvalcols]
+  tst <- tst[duplicated(tst)]
   if(nrow(tst) > 0) {
     print(sprintf("Duplicated elements in inputdata subtype %s.", subtype))
     browser()
@@ -131,4 +141,3 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
     description = description
   ))
 }
-

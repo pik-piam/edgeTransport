@@ -13,7 +13,6 @@
 toolPrepareGCAM <- function(magpieobj, subtype) {
   lstruct <- fread(system.file("extdata/logit_structure.csv", package="edgeTransport", mustWork=TRUE))
   dt <- magpie2dt(magpieobj)[year <= 2010]
-
   mapfile <- system.file("extdata", "mapping_GCAM_categories.csv",
                          package = "edgeTransport", mustWork = TRUE)
   mapping_GCAM = fread(mapfile)
@@ -23,7 +22,7 @@ toolPrepareGCAM <- function(magpieobj, subtype) {
     "esDemand" = {
       dt <- mapping_GCAM[dt, on="subsector"]
       dt[is.na(vehicle_type), vehicle_type := subsector]
-      dt[, c("sector", "subsector") := NULL]
+      dt <- unique(dt[, .(value=sum(value)), by=c("iso", "year", "vehicle_type", "technology", "Units")])
       ## add full logit
       dt <- lstruct[dt, on=c("vehicle_type", "technology")]
       full <- rbind(
@@ -75,6 +74,9 @@ toolPrepareGCAM <- function(magpieobj, subtype) {
         print("Missing tkm/vkm data in GCAM prepare")
         browser()
       }
+    },
+    "loadFactor" = {
+      
     })
 
   setnames(dt, "iso", "region")
