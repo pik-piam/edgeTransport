@@ -80,7 +80,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
   ## store configs to this folder
   cfgpath <- file.path(output_folder, folder, "config")
-  if (!dir.exists(cfgpath)) {
+  if (!is.null(output_folder) && !dir.exists(cfgpath)) {
     dir.create(cfgpath, recursive = T)
   }
 
@@ -204,7 +204,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
 
   if(nrow(int_improvetab) > 0){
-    fwrite(int_improvetab, file.path(cfgpath, "int_improvetab.csv"))
+    if (!is.null(output_folder)) {
+      fwrite(int_improvetab, file.path(cfgpath, "int_improvetab.csv"))
+    }
     IEAbal_comparison$merged_intensity <- toolAdjustIntensity(IEAbal_comparison$merged_intensity, int_improvetab, years)
   }
 
@@ -213,7 +215,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     gdxPath <- file.path(input_folder, "REMIND/fulldata_EU.gdx")
   }
 
-  if (!is.null(FEPricetab)) {
+  if (!is.null(FEPricetab) && !is.null(output_folder)) {
     fwrite(FEPricetab, file.path(cfgpath, "FEPricetab.csv"))
   }
   REMIND_prices <- toolMergePrices(
@@ -258,7 +260,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
   ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
-  fwrite(ptab, file.path(cfgpath, "sw_trends.csv"))
+  if (!is.null(output_folder)) {
+    fwrite(ptab, file.path(cfgpath, "sw_trends.csv"))
+  }
 
 
   ## load mitigatin trends sw table
@@ -267,7 +271,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
   mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
     SSP_scenario == SSP_scen & tech_scenario == tech_scen]
-  fwrite(mitab, file.path(cfgpath, "edget-mitigation.csv"))
+  if (!is.null(output_folder)) {
+    fwrite(mitab, file.path(cfgpath, "edget-mitigation.csv"))
+  }
 
   print("-- generating trends for inconvenience costs")
   prefs <- toolPreftrend(
@@ -304,7 +310,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
 
   preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
-  fwrite(preftab4W, file.path(cfgpath, "inconv_factor.csv"))
+  if (!is.null(output_folder)) {
+    fwrite(preftab4W, file.path(cfgpath, "inconv_factor.csv"))
+  }
 
   totveh=NULL
   ## multiple iterations of the logit calculation - set to 3
@@ -392,21 +400,23 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
         ssp_demreg.path <- system.file("extdata", "ssp_regression_factors.csv", package="edgeTransport")
       }
       ssp_demreg_tab <- fread(ssp_demreg.path, header = TRUE)
-      fwrite(ssp_demreg_tab, file.path(cfgpath, "ssp_regression_factors.csv"))
 
       if(is.null(regional_demreg.path)) {
         print("No path to a file with region-specific tuning parameters for the regression provided. Using default file.")
         regional_demreg.path <- system.file("extdata", "regional_regression_factors.csv", package="edgeTransport")
       }
       reg_demreg_tab <- fread(regional_demreg.path, header = TRUE)
-      fwrite(reg_demreg_tab, file.path(cfgpath, "regional_regression_factors.csv"))
 
       if(is.null(demscen.path)) {
         print("No path to a file with demand scenario factors for the regression provided. Using default file.")
         demscen.path <- system.file("extdata", "demscen_factors.csv", package="edgeTransport")
-     }
+      }
       demscen_factors <- fread(demscen.path, header = TRUE)[demandScen == demScen]
-      fwrite(demscen_factors, file.path(cfgpath, "demscen_factors.csv"))
+      if (!is.null(output_folder)) {
+        fwrite(ssp_demreg_tab, file.path(cfgpath, "ssp_regression_factors.csv"))
+        fwrite(reg_demreg_tab, file.path(cfgpath, "regional_regression_factors.csv"))
+        fwrite(demscen_factors, file.path(cfgpath, "demscen_factors.csv"))
+      }
 
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
