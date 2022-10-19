@@ -1,0 +1,41 @@
+subsector,vehicle_type
+International Aviation,International Aviation_tmp_vehicletype
+Domestic Ship,Domestic Ship_tmp_vehicletype
+Truck (0-2t),Truck (0-3.5t)
+Truck (2-5t),Truck (0-3.5t)
+Truck (5-9t),Truck (7.5t)
+Truck (9-16t),Truck (7.5t)
+Cycle,Cycle_tmp_vehicletype
+Domestic Aviation,Domestic Aviation_tmp_vehicletype
+HSR,HSR_tmp_vehicletype
+Passenger Rail,Passenger Rail_tmp_vehicletype
+Walk,Walk_tmp_vehicletype
+Bus,Bus_tmp_vehicletype
+Three-Wheeler,Motorcycle (>250cc)
+Multipurpose Vehicle,Large Car and SUV
+International Ship,International Ship_tmp_vehicletype
+Truck (0-1t),Truck (0-3.5t)
+Truck (6-15t),Truck (7.5t)
+Truck (>15t),Truck (26t)
+Truck (1-6t),Truck (0-3.5t)
+Truck (6-30t),Truck (7.5t)
+Light Truck and SUV,Large Car and SUV
+Truck (0-4_5t),Truck (0-3.5t)
+Truck (4_5-15t),Truck (7.5t)
+Truck (0-3_5t),Truck (0-3.5t)
+Truck (16-32t),Truck (26t)
+Truck (3_5-16t),Truck (7.5t)
+Truck (>32t),Truck (40t)
+3W Rural,Truck (0-3.5t)
+Truck (0-6t),Truck (0-3.5t)
+Truck (6-14t),Truck (7.5t)
+Truck (>14t),Truck (18t)
+Heavy Bus,Bus_tmp_vehicletype
+Light Bus,Bus_tmp_vehicletype
+Scooter,Moped
+Truck,Truck (7.5t)
+Truck (0-2_7t),Truck (0-3.5t)
+Truck (2_7-4_5t),Truck (0-3.5t)
+Truck (4_5-12t),Truck (7.5t)
+Truck (>12t),Truck (18t)
+Freight Rail,Freight Rail_tmp_vehicletype
