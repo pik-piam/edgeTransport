@@ -114,8 +114,30 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
     "loadFactor" = {
       fr_unit <- "tkm/veh"
       pa_unit <- "pkm/veh"
-      magpieobj <- readSource("GCAM", "loadFactor")
-      es_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
+      lf_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
+      lf_GCAM[sector == "trn_freight", unit := fr_unit]
+      lf_GCAM[sector == "trn_pass", unit := pa_unit]
+      lf_GCAM[, c("model", "scenario", "variable") := NULL]
+
+      lf_TRACCS <- toolPrepareTRACCS(readSource("TRACCS", "loadFactor"), "loadFactor")
+      lf_TRACCS[sector == "trn_freight", unit := fr_unit]
+      lf_TRACCS[sector == "trn_pass", unit := pa_unit]
+      lf_TRACCS[, c("model", "scenario", "variable") := NULL]
+
+      lf_GCAM[lf_TRACCS, value := i.value, on=colnames(lf_GCAM)[1:10]]
+
+      q <- as.quitte(lf_GCAM)
+      if(adjustments) {
+        q <- toolAdjustData(q, subtype)
+      }
+
+      ## expand and check
+      lstruct <- lstruct[!subsector_l3 %in% c("Walk", "Cycle")]
+      q <- q[lstruct, on=intersect(colnames(q), colnames(lstruct))]
+
+      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
+      unit <- sprintf("%s or %s", pa_unit, fr_unit)
+      description <- "Load factor, also called occupancy ration for passenger vehicles. Sources: TRACCS, GCAM."
 
     }
   )

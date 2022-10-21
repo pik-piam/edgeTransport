@@ -76,7 +76,65 @@ toolPrepareGCAM <- function(magpieobj, subtype) {
       }
     },
     "loadFactor" = {
-      
+      ## weights only available for these years
+      dt <- dt[year %in% c(1990, 2005, 2010)]
+      weight <- readSource("GCAM", subtype="esDemand")
+      weight <- magpie2dt(weight)[, Units := NULL]
+      setnames(weight, "value", "esdem")
+
+      setnames(dt, c("tranSubsector", "stub_technology"), c("subsector", "technology"))
+      dt <- weight[dt, on=c("iso", "year", "subsector", "technology")]
+      ## using a very low demand leads to equal distribution if there is no demand
+      ## for all available technologies
+      dt[is.na(esdem) | esdem == 0, esdem := 1]
+
+      dt <- mapping_GCAM[dt, on="subsector"]
+      dt[is.na(vehicle_type), vehicle_type := subsector]
+
+      dt <- dt[, .(value=sum(value*esdem)/sum(esdem)),
+               by=c("iso", "year", "vehicle_type", "technology")]
+
+      dt <- dt[!technology %in% c("Coal", "Tech-Adv-Electric", "Adv-Electric",
+                                  "Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid")]
+
+      lstruct <- lstruct[!subsector_l3 %in% c("Walk", "Cycle")]
+      dt <- lstruct[dt, on=c("vehicle_type", "technology")]
+
+      dt <- rbind(
+        dt,
+        dt[vehicle_type == "International Aviation_tmp_vehicletype" & technology == "Liquids"][
+          , technology := "Hydrogen"],
+        dt[vehicle_type == "Domestic Aviation_tmp_vehicletype" & technology == "Liquids"][
+          , technology := "Hydrogen"],
+        dt[subsector_l1 == "trn_pass_road_LDV_4W" & technology == "Liquids"][
+          , technology := "Hybrid Electric"],
+        dt[vehicle_type == "Bus_tmp_vehicletype" & technology == "Liquids"][
+          , technology := "BEV"],
+        dt[vehicle_type == "Bus_tmp_vehicletype" & technology == "Liquids"][
+          , technology := "FCEV"],
+        dt[subsector_l3 == "trn_freight_road" & technology == "Liquids"][
+          , technology := "BEV"],
+        dt[subsector_l3 == "trn_freight_road" & technology == "Liquids"][
+          , technology := "FCEV"])
+
+      dt[, c("sector", "subsector_l3", "subsector_l2", "subsector_l1",
+             "univocal_name") := NULL]
+
+      dt <- dt[lstruct, on=c("vehicle_type", "technology")]
+
+      test <- dt[is.na(value)]
+      if(nrow(test) > 0){
+        print("Missing loadfactor data in GCAM prepare")
+        browser()
+      }
+
+      nc <- colnames(dt)[colnames(dt) != "value"]
+      test <- dt[, ..nc]
+      test <- test[duplicated(test)]
+      if(nrow(test) > 0){
+        print("Duplicates in loadfactor data in GCAM prepare")
+        browser()
+      }
     })
 
   setnames(dt, "iso", "region")
@@ -116,6 +174,7 @@ toolPrepareTRACCS <- function(magpieobj, subtype) {
 
   switch(
     subtype,
+    "loadFactor" = ,
     "annualMileage" = {
       wcols <- c("iso", "period", "TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology")
       dt <- weight[dt, on=wcols]
@@ -158,9 +217,17 @@ toolPrepareTRACCS <- function(magpieobj, subtype) {
     }
   )
 
+  nc <- colnames(dt)[colnames(dt) != "value"]
+  test <- dt[, ..nc]
+  test <- test[duplicated(test)]
+  if(nrow(test) > 0){
+    print("Duplicates in data in TRACCS prepare")
+    browser()
+  }
+
   test <- dt[is.na(value)]
   if(nrow(test) > 0) {
-    print("Missing tkm/vkm data in TRACCS prepare")
+    print("Missing data in TRACCS prepare")
     browser()
   }
 
