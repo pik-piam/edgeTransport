@@ -279,7 +279,7 @@ Hybrid Electric,Liquids")
     ## remove L2 and L3 from mitab to avoid a join on these sectors
     FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on = c("FV_vehvar", "FV_techvar", "regioncat")]
 
-    FVtarget[, value := ifelse(
+    FVtarget[year > 2020, value := ifelse(
                  is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
              by=c("region", "vehicle_type", "technology")]
     cname_to_remove <- colnames(mitab)[!grepl("subsector_", colnames(mitab))]
@@ -298,7 +298,7 @@ Hybrid Electric,Liquids")
     ## remove L3 from mitab to avoid a join on these sectors
     S2target <- mitab[level == "S2"][, subsector_L3 := NULL][
       S2target, on=c("subsector_L2", "regioncat")]
-    S2target[, sw := ifelse(
+    S2target[year > 2020, sw := ifelse(
                  is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
              by=c("region", "subsector_L2")]
     S2target[, (cname_to_remove) := NULL]
@@ -317,7 +317,7 @@ Hybrid Electric,Liquids")
     ## remove L3 from mitab to avoid a join on these sectors
     S3target <- mitab[level == "S3"][, subsector_L2 := NULL][
       S3target, on=c("subsector_L3", "regioncat")]
-    S3target[, sw := ifelse(
+    S3target[year > 2020, sw := ifelse(
                  is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
              by=c("region", "subsector_L3")]
     S3target[, (cname_to_remove) := NULL]
