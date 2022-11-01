@@ -18,7 +18,7 @@ toolMrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
     POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
     trsp_incent = readRDS(file.path(cache_folder, "trasp_incent.RDS"))
   }else{
-    IEAbal = madrat::calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)
+    calcOutput(type = "IO", aggregate = FALSE, regionmapping = "regionmapping_21_EU11.csv")
     GDP_country = {
       x <- calcOutput("GDP", aggregate = F)
       getSets(x)[1] <- "ISO3"
@@ -39,7 +39,7 @@ toolMrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
       saveRDS(RatioPPP2MER_country, file.path(cache_folder, "RatioPPP2MER_country.RDS"))
       saveRDS(POP_country, file.path(cache_folder, "POP_country.RDS"))
       saveRDS(trsp_incent, file.path(cache_folder, "trasp_incent.RDS"))
-    }    
+    }
   }
 
   ## rearrange the columns and create regional values
