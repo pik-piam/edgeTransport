@@ -18,8 +18,8 @@ toolMrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
     POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
     trsp_incent = readRDS(file.path(cache_folder, "trasp_incent.RDS"))
   }else{
-    IEAbal <- calcOutput(type = "IO", aggregate = FALSE, regionmapping = "regionmapping_21_EU11.csv")
-    GDP_country = {
+    IEAbal <- calcOutput(type = "IO", subtype = "IEA_output", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")    
+   GDP_country = {
       x <- calcOutput("GDP", aggregate = F)
       getSets(x)[1] <- "ISO3"
       getSets(x)[2] <- "Year"
