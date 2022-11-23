@@ -963,16 +963,7 @@ toolReportEDGET <- function(output_folder = ".",
     `FE|Transport|w/o bunkers|Liquids` = c("FE|Transport|Freight|w/o bunkers|Liquids","FE|Transport|Pass|w/o bunkers|Liquids"),
     `FE|Transport|w/o bunkers|Hydrogen` = c("FE|Transport|Freight|w/o bunkers|Hydrogen","FE|Transport|Pass|w/o bunkers|Hydrogen"),
     `FE|Transport|w/o bunkers|Gases` = c("FE|Transport|Freight|w/o bunkers|Gases","FE|Transport|Pass|w/o bunkers|Gases"),
-    `FE|Transport|w/o bunkers|Electricity` = c("FE|Transport|Freight|w/o bunkers|Electricity","FE|Transport|Pass|w/o bunkers|Electricity"),
-    c("Emi|CO2|Transport|Pass|Rail|non-HSR|Demand", "Emi|CO2|Transport|Freight|Rail|Demand"),
-    `Emi|CO2|Transport|Demand` = c("Emi|CO2|Transport|Pass|Rail|non-HSR|Demand", "Emi|CO2|Transport|Freight|Rail|Demand", "Emi|CO2|Transport|Freight|Road|Demand", "Emi|CO2|Transport|Pass|Road|LDV|Demand", "Emi|CO2|Transport|Pass|Road|Bus|Demand",
-                                   "Emi|CO2|Transport|Freight|International Shipping|Demand", "Emi|CO2|Transport|Freight|Navigation|Demand", "Emi|CO2|Transport|Pass|Aviation|Domestic|Demand", "Emi|CO2|Transport|Pass|Aviation|International|Demand"),
-    `FE|Transport|LDV|Gases` = c("FE|Transport|Pass|Road|LDV|Gases"),
-    `FE|Transport|LDV|Electricity` = c("FE|Transport|Pass|Road|LDV|Electricity"),
-    `FE|Transport|LDV|Hydrogen` = c("FE|Transport|Pass|Road|LDV|Hydrogen"),
-    `FE|Transport|non-LDV|Gases` = c("FE|Transport|Pass|non-LDV|Gases","FE|Transport|Freight|Road|Gases"),
-    `FE|Transport|non-LDV|Electricity` = c("FE|Transport|Pass|non-LDV|Electricity","FE|Transport|Freight|Road|Electricity","FE|Transport|Freight|Rail|Electricity"),
-    `FE|Transport|non-LDV|Hydrogen` = c("FE|Transport|Pass|non-LDV|Hydrogen","FE|Transport|Freight|Road|Hydrogen"))
+    `FE|Transport|w/o bunkers|Electricity` = c("FE|Transport|Freight|w/o bunkers|Electricity","FE|Transport|Pass|w/o bunkers|Electricity"))
 
   names <- names(varsl)
   totals <- sapply(names, reportTotals, datatable = toMIF, varlist = varsl, simplify = FALSE, USE.NAMES = TRUE)
