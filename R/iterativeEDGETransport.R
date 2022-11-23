@@ -280,7 +280,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
     fwrite(vint, vintfile, col.names=TRUE, append=TRUE)
 
-    quit()
+    return()
   }
 
   num_veh_stations = toolVehicleStations(
