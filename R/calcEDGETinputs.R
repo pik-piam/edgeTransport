@@ -80,7 +80,7 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
 
     },
 
-    "esDemand" = {
+    "histEsDemand" = {
       fr_unit <- "million tkm"
       pa_unit <- "million pkm"
       ## the GCAM data is more-or-less complete, we use this as a starting point

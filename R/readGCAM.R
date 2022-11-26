@@ -27,7 +27,7 @@ readGCAM <- function(subtype = c(
       setnames(dt, gsub(".", "_", colnames(dt), fixed=TRUE))
       mp <- as.magpie(as.data.frame(dt), temporal=5, spatial=1)
     },
-    "esDemand" = {
+    "histEsDemand" = {
       dt <- fread("tech_output.csv", skip = 1, sep=";", header = T) %>%
         melt(measure.vars=6:26, variable.name = "year")
       dt[, scenario := NULL]
@@ -43,7 +43,7 @@ readGCAM <- function(subtype = c(
       dt[, share_weight := NULL]
       mp <- as.magpie(dt, datacol=3)
     },
-    "valueOfTime" = {
+    "valueOfTimeMultiplier" = {
       dt = fread("A54.tranSubsector_VOTT.csv", skip = 1)[!grepl("#", supplysector)] %>%
         unique() %>%
         setnames(gsub(".", "_", colnames(.), fixed=TRUE))
