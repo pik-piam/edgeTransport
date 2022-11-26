@@ -15,6 +15,57 @@ items <- c(
 walk(items, showLinePlots, data = data, scales = "fixed")
 ```
 
+## Passenger per pkm technology level
+### Rail
+```{r}
+items <- c(
+          "EInt|Transport|Pass|Rail|HSR|Electric",
+          "EInt|Transport|Pass|Rail|non-HSR|Electric",
+          "EInt|Transport|Pass|Rail|non-HSR|Liquids")
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+### Bus
+```{r}
+items <- c(
+          "EInt|Transport|Pass|Road|Bus|Electric",
+          "EInt|Transport|Pass|Road|Bus|Hydrogen",
+          "EInt|Transport|Pass|Road|Bus|Gases",
+          "EInt|Transport|Pass|Road|Bus|Liquids")
+
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+### LDV 4-Wheeler
+```{r}
+items <- c(
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers|BEV",
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers|Hydrogen",
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers|Hybrid Electric",
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers|Liquids",   
+          "EInt|Transport|Pass|Road|LDV|Four Wheelers|Gases")
+
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+### LDV 2-Wheeler
+```{r}
+items <- c(
+          "EInt|Transport|Pass|Road|LDV|Two Wheelers|BEV",
+          "EInt|Transport|Pass|Road|LDV|Two Wheelers|Liquids")
+
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+### Domestic Aviation
+```{r}
+items <- c(
+          "EInt|Transport|Pass|Aviation|Domestic|Hydrogen",
+          "EInt|Transport|Pass|Aviation|Domestic|Liquids")
+
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
 ## Freight per tkm
 ```{r}
 items <- c(
@@ -23,6 +74,27 @@ items <- c(
             "EInt|Transport|Freight|Navigation",
             "EInt|Transport|Freight|Rail",
             "EInt|Transport|Freight|Road"
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+## Freight per tkm technology level
+#Rail
+```{r}
+items <- c(
+  "EInt|Transport|Freight|Rail|Electric",
+  "EInt|Transport|Freight|Rail|Liquids",
+  )
+walk(items, showLinePlots, data = data, scales = "fixed")
+```
+
+#Trucks
+```{r}
+items <- c(
+  "EInt|Transport|Freight|Road|Truck|Electric",
+  "EInt|Transport|Freight|Road|Truck|FCEV",
+  "EInt|Transport|Freight|Road|Truck|Gases",
+  "EInt|Transport|Freight|Road|Truck|Liquids"
   )
 walk(items, showLinePlots, data = data, scales = "fixed")
 ```

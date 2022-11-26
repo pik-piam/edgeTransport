@@ -538,6 +538,9 @@ toolReportEDGET <- function(output_folder = ".",
     `FE|Transport|non-LDV|Electricity` = c("FE|Transport|Pass|non-LDV|Electricity","FE|Transport|Freight|Road|Electricity","FE|Transport|Freight|Rail|Electricity"),
     `FE|Transport|non-LDV|Hydrogen` = c("FE|Transport|Pass|non-LDV|Hydrogen","FE|Transport|Freight|Road|Hydrogen"))
 
+
+
+
   names <- names(varsl)
   totals <- sapply(names, reportTotals, datatable = toMIF, varlist = varsl, simplify = FALSE, USE.NAMES = TRUE)
 
@@ -560,10 +563,15 @@ toolReportEDGET <- function(output_folder = ".",
 
     reportInt <- function(var, datatable){
      #Energy Intensity MJ/pkm or MJ/tkm
-     repFE <- datatable[variable == paste0("FE|Transport|", var)]
+
+     repFE <- datatable[grepl(paste0("FE\\|Transport\\|", var), variable)]
      repFE[, variable := NULL][, unit := NULL]
      setnames(repFE, "value", "FE")
-     repES <- datatable[variable == paste0("ES|Transport|", var)]
+
+
+     repES <- datatable[grepl(paste0("ES\\|Transport\\|", var), variable)]
+     varname <- unique(repES$variable)
+     varname <- gsub("ES", "EInt", varname)
      repES[, variable := NULL][, unit := NULL]
 
      #check if variable is found
@@ -572,7 +580,8 @@ toolReportEDGET <- function(output_folder = ".",
      }
 
      repInt <- merge(repFE, repES, by = c("region", "period", "scenario", "model"))
-     repInt[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|", var)]
+     repInt[, value := FE/value][, FE := NULL][, variable := gsub("EInt", "EInt|VKM|", varname)]
+
      #FE in EJ to MJ + ES ib bn pkm to pkm 1e12/1e9
      repInt[, value := value*1e3]
      if (sub("\\|.*", "", var) == "Pass"){
@@ -581,7 +590,7 @@ toolReportEDGET <- function(output_folder = ".",
       repInt[, unit := "MJ/tkm"]}
 
      #Energy Intensity MJ/vkm
-     repVKM <- datatable[variable == paste0("ES|Transport|VKM|", var)]
+     repVKM <- datatable[grepl(paste0("ES\\|Transport\\|VKM\\|", var), variable)]
      repVKM[, variable := NULL][, unit := NULL]
 
      #check if variable is found
@@ -590,7 +599,7 @@ toolReportEDGET <- function(output_folder = ".",
      }
 
      repIntVKM <- merge(repFE, repVKM, by = c("region", "period", "scenario", "model"))
-     repIntVKM[, value := FE/value][, FE := NULL][, variable := paste0("EInt|Transport|VKM|", var)]
+     repIntVKM[, value := FE/value][, FE := NULL][, variable := varname]
      #FE in EJ to MJ + ES ib bn vkm to vkm 1e12/1e9
      repIntVKM[, value := value*1e3][, unit := "MJ/vkm"]
      return(rbind(repInt, repIntVKM))
@@ -801,20 +810,42 @@ toolReportEDGET <- function(output_folder = ".",
     # UE[, value:= value*UE_efficiency][, variable := gsub("FE","UE", variable)]
 
     # toMIF <- rbind(toMIF, UE)
-    varslist <- list("Pass|w/o bunkers",
-                     "Pass|Aviation|International",
-                     "Pass|Rail",
-                     "Pass|Aviation|Domestic",
-                     "Pass|Road",
-                     "Pass|Road|LDV",
-                     "Pass|Road|LDV|Two Wheelers",
-                     "Pass|Road|LDV|Four Wheelers",
-                     "Pass|Road|Bus",
-                     "Freight|w/o bunkers",
-                     "Freight|International Shipping",
-                     "Freight|Navigation",
-                     "Freight|Rail",
-                     "Freight|Road")
+    varslist <- list("Pass\\|w/o bunkers$",
+                     "Pass\\|Aviation\\|International$",
+                     "Pass\\|Rail$",
+                     "Pass\\|Rail\\|HSR\\|(Electricity|Electric)",
+                     "Pass\\|Rail\\|non-HSR\\|(Electricity|Electric)",
+                     "Pass\\|Rail\\|non-HSR\\|Liquids",
+                     "Pass\\|Aviation\\|Domestic$",
+                     "Pass\\|Aviation\\|Domestic\\|(Hydrogen|FCEV)",
+                     "Pass\\|Aviation\\|Domestic\\|Liquids",
+                     "Pass\\|Road$",
+                     "Pass\\|Road\\|LDV$",
+                     "Pass\\|Road\\|LDV\\|Two Wheelers$",
+                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|(Electricity|Electric)",
+                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|Liquids",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers$",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|(Electricity|Electric)",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|(Hydrogen|FCEV)",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Gases",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Liquids",
+                     "Pass\\|Road\\|Bus$",
+                     "Pass\\|Road\\|Bus\\|(Electricity|Electric)",
+                     "Pass\\|Road\\|Bus\\|(Hydrogen|FCEV)",
+                     "Pass\\|Road\\|Bus\\|Gases",
+                     "Pass\\|Road\\|Bus\\|Liquids",
+                     "Freight\\|w/o bunkers$",
+                     "Freight\\|International Shipping$",
+                     "Freight\\|Navigation$",
+                     "Freight\\|Rail$",
+                     "Freight\\|Rail\\|(Electricity|Electric)",
+                     "Freight\\|Rail\\|Liquids",
+                     "Freight\\|Road$",
+                     "Freight\\|Road\\|(Electricity|Electric)",
+                     "Freight\\|Road\\|(Hydrogen|FCEV)",
+                     "Freight\\|Road\\|Gases",
+                     "Freight\\|Road\\|Liquids"
+                     )
 
     EInt <- sapply(varslist, reportInt, datatable = toMIF, simplify = FALSE, USE.NAMES = TRUE)
     EInt <- rbindlist(EInt, use.names = TRUE)
