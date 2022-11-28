@@ -2,7 +2,7 @@
 
 R package **edgeTransport**, version **0.22.5**
 
-[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)  [![R build status](https://github.com/johannah-pik/edgeTransport/workflows/check/badge.svg)](https://github.com/johannah-pik/edgeTransport/actions) [![codecov](https://codecov.io/gh/johannah-pik/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/johannah-pik/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
+[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)  [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/ui#builds)
 
 ## Purpose and Functionality
 
@@ -46,15 +46,16 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M (2022). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.22.5.
+Dirnaichner A, Rottoli M, Hoppe J (2022). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 0.22.5, <URL: https://github.com/pik-piam/edgeTransport>.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Manual{,
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
-  author = {Alois Dirnaichner and Marianna Rottoli},
+  author = {Alois Dirnaichner and Marianna Rottoli and Johanna Hoppe},
   year = {2022},
   note = {R package version 0.22.5},
+  url = {https://github.com/pik-piam/edgeTransport},
 }
 ```

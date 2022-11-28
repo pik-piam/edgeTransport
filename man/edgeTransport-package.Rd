@@ -8,12 +8,20 @@
 \description{
 EDGE-T is a fork of the GCAM transport module https://jgcri.github.io/gcam-doc/energy.html#transportation with a high level of detail in its representation of technological and modal options. It is a partial equilibrium model with a nested multinomial logit structure and relies on the modified logit formulation. Most of the sources are not publicly available. PIK-internal users can find the sources in the distributed file system in the folder `/p/projects/rd3mod/inputdata/sources/EDGE-Transport-Standalone`.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/pik-piam/edgeTransport}
+}
+
+}
 \author{
 \strong{Maintainer}: Alois Dirnaichner \email{dirnaichner@pik-potsdam.de}
 
 Authors:
 \itemize{
   \item Marianna Rottoli \email{rottoli@pik-potsdam.de}
+  \item Johanna Hoppe
 }
 
 }
