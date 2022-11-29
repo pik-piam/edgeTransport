@@ -12,16 +12,27 @@
 
 toolPrepareGCAM <- function(magpieobj, subtype) {
   lstruct <- fread(system.file("extdata/logit_structure.csv", package="edgeTransport", mustWork=TRUE))
-  dt <- magpie2dt(magpieobj)[year %in% c(1990, 2005, 2010)]
+  dt <- magpie2dt(magpieobj)
   mapfile <- system.file("extdata", "mapping_GCAM_categories.csv",
                          package = "edgeTransport", mustWork = TRUE)
   mapping_GCAM = fread(mapfile)
   switch(
     subtype,
     "histEsDemand" = {
+      browser()
+      #use only historical demand
+      dt <- dt[year %in% c(1990, 2005, 2010)]
+      #map
       dt <- mapping_GCAM[dt, on = c(GCAMsector = "sector", GCAMsubsector = "subsector", GCAMtechnology = "technology")]
       dt <- dt[!is.na(sector)]
-    },
+      #aggregate
+      dt <- dt[, .(value = sum(value)), by = c("sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType", "technology", "univocalName", "iso", "year", "Units")]
+      #convert to quitte
+      setnames(dt, c("Units", "year"), c("unit", "period"))
+      #rename units
+      dt[, unit := gsub("million pass-km", "million pkm", unit)]
+      dt[, unit := gsub("million ton-km", "million tkm", unit)]
+      },
     "loadFactor" = {
       browser()
       weight <- readSource("GCAM", subtype = "histEsDemand")
@@ -29,17 +40,75 @@ toolPrepareGCAM <- function(magpieobj, subtype) {
       setnames(weight, "value", "esdem")
 
       setnames(dt, c("tranSubsector", "stub_technology"), c("subsector", "technology"))
-      dt <- weight[dt, on=c("iso", "year", "subsector", "technology")]
-      ## using a very low demand leads to equal distribution if there is no demand
-      ## for all available technologies
+      dt <- weight[dt, on = c("iso", "year", "subsector", "technology")]
+      # some technologies have zero or no demand for certain countries
+      #-> set to 1 so that they are equally considered
       dt[is.na(esdem) | esdem == 0, esdem := 1]
 
       dt <- mapping_GCAM[dt, on = c(GCAMsector = "sector", GCAMsubsector = "subsector", GCAMtechnology = "technology")]
       dt <- dt[!is.na(sector)]
 
-      dt <- dt[, .(value=sum(value*esdem)/sum(esdem)),
-               by=c("iso", "year", "sector", "subsector_l3", "subsector_l2", "subsector_l1", "vehicle_type", "technology")]
-    }
+      dt <- dt[, .(value = sum(value*esdem)/sum(esdem)),
+               by=c("iso", "year", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType", "technology")]
+      dt[sector %in% c("trn_pass", "trn_aviation_intl"), unit := "p/veh"]
+      dt[sector %in% c("trn_freight", "trn_shipping_intl"), unit := "t/veh"]
+    },
+
+    "feVkmIntensity" = {
+      weight <- readSource("GCAM", subtype = "histEsDemand")
+      weight <- magpie2dt(weight)[, Units := NULL]
+      setnames(weight, "value", "esdem")
+
+      setnames(dt, c("tranSubsector", "stub_technology"), c("subsector", "technology"))
+      dt <- weight[dt, on = c("iso", "year", "subsector", "technology")]
+      # some technologies have zero or no demand for certain countries
+      #-> set to 1 so that they are equally considered
+      dt[is.na(esdem) | esdem == 0, esdem := 1]
+
+      dt <- mapping_GCAM[dt, on = c(GCAMsector = "sector", GCAMsubsector = "subsector", GCAMtechnology = "technology")]
+      dt <- dt[!is.na(sector)]
+
+      dt <- dt[, .(value = sum(value*esdem)/sum(esdem)),
+               by = c("iso", "year", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType", "technology")]
+
+      #unit conversion from Mbtu/vehkm to MJ/vehkm
+      CONV_BTU_to_MJ <- 1.055e-3
+      dt[, value := value*CONV_BTU_to_MJ][, unit := "MJ/vehkm"]
+      },
+
+    "speedMotorized" = {
+      weight <- readSource("GCAM", subtype = "histEsDemand")
+      weight <- magpie2dt(weight)[, Units := NULL]
+      #Speed is not differentiated between different technologies -> aggregate weights (ES demand) to VehicleType level
+      weight <- weight[, .(value = sum(value)),
+               by = c("iso", "year", "sector", "subsector")]
+      setnames(weight, "value", "esdem")
+      setnames(dt, c("supplysector", "tranSubsector"), c("sector", "subsector"))
+      dt <- weight[dt, on = c("iso", "year", "sector", "subsector")]
+      # some technologies have zero or no demand for certain countries
+      #-> set to 1 so that they are equally considered
+      dt[is.na(esdem) | esdem == 0, esdem := 1]
+
+      #Neglect technology level in GCAM/EDGET mapping
+      mapping_GCAM[, c("GCAMtechnology", "technology") := NULL]
+      mapping_GCAM <- unique(mapping_GCAM)
+      browser()
+      dt <- mapping_GCAM[dt, on = c(GCAMsubsector = "subsector")]
+      dt <- dt[!is.na(sector)]
+
+      dt <- dt[, .(value = sum(value*esdem)/sum(esdem)),
+               by=c("iso", "year", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType")]
+      dt[, unit := "km/h"]
+      },
+
+    "speedNonMotorized" = {
+
+    },
+
+    "valueOfTimeMultiplier" = {
+
+    },
+
   )
 
   setnames(dt, "iso", "region")
