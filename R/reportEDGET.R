@@ -637,7 +637,7 @@ toolReportEDGET <- function(output_folder = ".",
             length(all_subsectors), 1)]))
 
       prefData_inco[, value := tot_price * (sw^(1 / logit.exponent) - 1)]
-      browser()
+
       #Set Inconveniencecost to zero for shareweights where ES demand is anyway zero
       prefData_inco <- prefData_inco[is.infinite(prefData_inco$value), value := 0]
       prefData_inco <- prefData_inco[, c("region", "period", "unit", all_subsectors[
