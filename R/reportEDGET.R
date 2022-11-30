@@ -575,12 +575,12 @@ toolReportEDGET <- function(output_folder = ".",
      repES[, variable := NULL][, unit := NULL]
 
      #check if variable is found
-     if (!(length(repFE)>0 && length(repES) > 0)){
+     if (!(nrow(repFE)>0 && nrow(repES) > 0)){
        print(paste0("Variable not found to calculate (p/t)km Energy Intensity ", var))
      }
 
      repInt <- merge(repFE, repES, by = c("region", "period", "scenario", "model"))
-     repInt[, value := FE/value][, FE := NULL][, variable := gsub("EInt", "EInt|VKM|", varname)]
+     repInt[, value := FE/value][, FE := NULL][, variable := varname]
 
      #FE in EJ to MJ + ES ib bn pkm to pkm 1e12/1e9
      repInt[, value := value*1e3]
@@ -594,12 +594,12 @@ toolReportEDGET <- function(output_folder = ".",
      repVKM[, variable := NULL][, unit := NULL]
 
      #check if variable is found
-     if (!(length(repFE)>0 && length(repVKM) > 0)){
+     if (!(nrow(repFE)>0 && nrow(repVKM) > 0)){
        print(paste0("Variable not found to calculate VKM Energy Intensity ", var))
      }
 
      repIntVKM <- merge(repFE, repVKM, by = c("region", "period", "scenario", "model"))
-     repIntVKM[, value := FE/value][, FE := NULL][, variable := varname]
+     repIntVKM[, value := FE/value][, FE := NULL][, variable := gsub("EInt", "EInt|VKM", varname)]
      #FE in EJ to MJ + ES ib bn vkm to vkm 1e12/1e9
      repIntVKM[, value := value*1e3][, unit := "MJ/vkm"]
      return(rbind(repInt, repIntVKM))
@@ -637,7 +637,7 @@ toolReportEDGET <- function(output_folder = ".",
             length(all_subsectors), 1)]))
 
       prefData_inco[, value := tot_price * (sw^(1 / logit.exponent) - 1)]
-
+      browser()
       #Set Inconveniencecost to zero for shareweights where ES demand is anyway zero
       prefData_inco <- prefData_inco[is.infinite(prefData_inco$value), value := 0]
       prefData_inco <- prefData_inco[, c("region", "period", "unit", all_subsectors[
@@ -810,41 +810,41 @@ toolReportEDGET <- function(output_folder = ".",
     # UE[, value:= value*UE_efficiency][, variable := gsub("FE","UE", variable)]
 
     # toMIF <- rbind(toMIF, UE)
-    varslist <- list("Pass\\|w/o bunkers$",
+    varslist <- list("Freight\\|Rail$",
+                     "Freight\\|Rail\\|(Electricity|Electric)$",
+                     "Freight\\|Rail\\|Liquids$",
+                     "Pass\\|w/o bunkers$",
                      "Pass\\|Aviation\\|International$",
                      "Pass\\|Rail$",
-                     "Pass\\|Rail\\|HSR\\|(Electricity|Electric)",
-                     "Pass\\|Rail\\|non-HSR\\|(Electricity|Electric)",
-                     "Pass\\|Rail\\|non-HSR\\|Liquids",
+                     "Pass\\|Rail\\|HSR\\|(Electricity|Electric)$",
+                     "Pass\\|Rail\\|non-HSR\\|(Electricity|Electric)$",
+                     "Pass\\|Rail\\|non-HSR\\|Liquids$",
                      "Pass\\|Aviation\\|Domestic$",
-                     "Pass\\|Aviation\\|Domestic\\|(Hydrogen|FCEV)",
-                     "Pass\\|Aviation\\|Domestic\\|Liquids",
+                     "Pass\\|Aviation\\|Domestic\\|(Hydrogen|FCEV)$",
+                     "Pass\\|Aviation\\|Domestic\\|Liquids$",
                      "Pass\\|Road$",
                      "Pass\\|Road\\|LDV$",
                      "Pass\\|Road\\|LDV\\|Two Wheelers$",
-                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|(Electricity|Electric)",
-                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|Liquids",
+                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|(Electricity|BEV)$",
+                     "Pass\\|Road\\|LDV\\|Two Wheelers\\|Liquids$",
                      "Pass\\|Road\\|LDV\\|Four Wheelers$",
-                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|(Electricity|Electric)",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|(Electricity|BEV)",
                      "Pass\\|Road\\|LDV\\|Four Wheelers\\|(Hydrogen|FCEV)",
-                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Gases",
-                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Liquids",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Gases$",
+                     "Pass\\|Road\\|LDV\\|Four Wheelers\\|Liquids$",
                      "Pass\\|Road\\|Bus$",
-                     "Pass\\|Road\\|Bus\\|(Electricity|Electric)",
-                     "Pass\\|Road\\|Bus\\|(Hydrogen|FCEV)",
-                     "Pass\\|Road\\|Bus\\|Gases",
-                     "Pass\\|Road\\|Bus\\|Liquids",
+                     "Pass\\|Road\\|Bus\\|(Electricity|Electric)$",
+                     "Pass\\|Road\\|Bus\\|(Hydrogen|FCEV)$",
+                     "Pass\\|Road\\|Bus\\|Gases$",
+                     "Pass\\|Road\\|Bus\\|Liquids$",
                      "Freight\\|w/o bunkers$",
                      "Freight\\|International Shipping$",
                      "Freight\\|Navigation$",
-                     "Freight\\|Rail$",
-                     "Freight\\|Rail\\|(Electricity|Electric)",
-                     "Freight\\|Rail\\|Liquids",
                      "Freight\\|Road$",
-                     "Freight\\|Road\\|(Electricity|Electric)",
-                     "Freight\\|Road\\|(Hydrogen|FCEV)",
-                     "Freight\\|Road\\|Gases",
-                     "Freight\\|Road\\|Liquids"
+                     "Freight\\|Road\\|(Electricity|Electric)$",
+                     "Freight\\|Road\\|(Hydrogen|FCEV)$",
+                     "Freight\\|Road\\|Gases$",
+                     "Freight\\|Road\\|Liquids$"
                      )
 
     EInt <- sapply(varslist, reportInt, datatable = toMIF, simplify = FALSE, USE.NAMES = TRUE)
@@ -1004,7 +1004,7 @@ toolReportEDGET <- function(output_folder = ".",
   )
 
   ## Make sure there are no duplicates!
-  idx <- anyDuplicated(toMIF, by = c("region", "variable", "period"))
+  idx <- toMIF[duplicated(toMIF[, c("region", "variable", "period")])]
   if(idx){
     warning(paste0("Duplicates found in EDGE-T reporting output:",
                    capture.output(toMIF[idx]), collapse="\n"))
