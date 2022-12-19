@@ -14,6 +14,7 @@ correctGCAM <- function(x, subtype) {
   switch(
     subtype,
     "histEsDemand" = {
+      browser()
       dt <- magpie2dt(x)
       ## HSR data decreases significantly in 2005 and falls to zero in 2010 -> that is not right and needs to be corrected
       #linear interpolation from first value in 1990 to value in 2015

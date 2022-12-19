@@ -3,63 +3,63 @@
 #' @param subtype one of the parameters required for EDGE-T
 #' @param adjustments adjust historical data (boolean, defaults to TRUE)
 
-calcEDGETinputs <- function(subtype, adjustments = TRUE) {
-  lstruct <- fread(system.file("extdata/logit_structure.csv", package="edgeTransport", mustWork=TRUE))
+calcEdgeTransportSAinputs <- function(subtype, adjustments = TRUE) {
+  lstruct <- fread(system.file("extdata/logit_structure.csv", package = "edgeTransport", mustWork = TRUE))
 
   switch(
     subtype,
     "annualMileage" = {
-      am_unit <- "vkm/yr"
-      ## in the prepare function we prepare the mileage for all vehicle_types that
+      amUnit <- "vkm/yr"
+      ## in the prepare function we prepare the mileage for all vehicleTypes that
       ## are found in the data and extend the data to the other technologies
-      ## i.e., FCEVs, BEVs. We fill some gaps and map the vehicle_types.
-      ## we do not yet: 1) extend data to other regions or 2) to other vehicle_types
-      am_TRACCS <- toolPrepareTRACCS(readSource("TRACCS", subtype), subtype)
-      am_UCD <- toolPrepareUCD(readSource("UCD", subtype), subtype)
+      ## i.e., FCEVs, BEVs. We fill some gaps and map the vehicleTypes.
+      ## we do not yet: 1) extend data to other regions or 2) to other vehicleTypes
+      amTRACCS <- toolPrepareTRACCS(readSource("TRACCS", subtype), subtype)
+      amUCD <- toolPrepareUCD(readSource("UCD", subtype), subtype)
 
-      am_TRACCS[, c("model", "scenario", "variable") := NULL]
-      am_UCD[, c("model", "scenario", "variable") := NULL]
+      amTRACCS[, c("model", "scenario", "variable") := NULL]
+      amUCD[, c("model", "scenario", "variable") := NULL]
 
-      am_UCD[, unit := am_unit]
-      am_TRACCS[, unit := am_unit]
+      amUCD[, unit := amUnit]
+      amTRACCS[, unit := amUnit]
 
       ## use same periods in both sources
-      am_TRACCS <- am_TRACCS[period %in% c(2005, 2010)]
-      am_UCD <- rbind(am_UCD[period == 2005], am_UCD[period == 2005][, period := 2010])
+      amTRACCS <- amTRACCS[period %in% c(2005, 2010)]
+      amUCD <- rbind(amUCD[period == 2005], amUCD[period == 2005][, period := 2010])
 
       ## trucks mileage and buses only from TRACCS, this has to be applied to UCD
-      tm <- am_TRACCS[subsector_l2 %in% c("Bus" ,"trn_freight_road_tmp_subsector_L2")]
+      tm <- amTRACCS[subsectorL2 %in% c("Bus" ,"trn_freight_road_tmp_subsector_L2")]
       ## use mean values for non-TRACCS countries
-      tm <- tm[, .(value = mean(value)), by=c("period", "vehicle_type")]
+      tm <- tm[, .(value = mean(value)), by = c("period", "vehicleType")]
 
-      nonTRACCS_tm <- CJ(region=am_UCD$region, period=tm$period, unique=TRUE)
-      nonTRACCS_tm <- nonTRACCS_tm[tm, on="period", allow.cartesian=TRUE]
-      nonTRACCS_tm <- lstruct[nonTRACCS_tm, on="vehicle_type", allow.cartesian=TRUE]
-      nonTRACCS_tm[, unit := unique(am_UCD$unit)]
+      nonTRACCStm <- CJ(region = amUCD$region, period = tm$period, unique = TRUE)
+      nonTRACCStm <- nonTRACCStm[tm, on = "period", allow.cartesian = TRUE]
+      nonTRACCStm <- lstruct[nonTRACCStm, on = "vehicle_type", allow.cartesian = TRUE]
+      nonTRACCStm[, unit := unique(amUCD$unit)]
 
-      dt <- rbind(am_UCD, nonTRACCS_tm, use.names=TRUE, fill=TRUE)
+      dt <- rbind(amUCD, nonTRACCStm, use.names = TRUE, fill = TRUE)
 
       ## update-join - prefer TRACCS values wherever we have them
       ## dt[, traccs_value := am_TRACCS[.SD, on=colnames(dt)[1:10], x.value]]
-      dt[am_TRACCS, value := i.value, on=colnames(dt)[1:10]]
+      dt[amTRACCS, value := i.value, on = colnames(dt)[1:10]]
 
-      plane_types <- unique(lstruct[grepl("Aviation", vehicle_type), vehicle_type])
+      planeTypes <- unique(lstruct[grepl("Aviation", vehicleType), vehicleType])
       ## for planes we assume 3000 working hours per year at 750 km/h ~ 2e6 km/yr
       ## https://eu.usatoday.com/story/travel/columnist/cox/2012/11/19/ask-the-captain-how-far-does-a-jet-fly-during-its-lifetime/1712269/
-      planes <- CJ(region=dt$region, period=dt$period, vehicle_type=plane_types, value=2e6,
-                   unit=am_unit, unique=TRUE)
-      planes <- lstruct[planes, on="vehicle_type", allow.cartesian=TRUE]
+      planes <- CJ(region = dt$region, period = dt$period, vehicleType = planeTypes, value = 2e6,
+                   unit = am_unit, unique = TRUE)
+      planes <- lstruct[planes, on = "vehicle_type", allow.cartesian = TRUE]
 
-      ship_types <- unique(lstruct[grepl("Ship", vehicle_type), vehicle_type])
+      shipTypes <- unique(lstruct[grepl("Ship", vehicleType), vehicleType])
       ## for international ships we assume 300.000 km/yr
       ## https://www.ioscm.com/blog/industry-facts-101-the-shipping-industry-is-enormous/
-      ships <- CJ(region=dt$region, period=dt$period, vehicle_type=ship_types, value=3e5,
-                  unit=am_unit, unique=TRUE)
+      ships <- CJ(region = dt$region, period = dt$period, vehicleType = shipTypes, value = 3e5,
+                  unit = amUnit, unique = TRUE)
       ## domestic ships one third
-      ships[vehicle_type == "Domestic Ship_tmp_vehicletype", value := 1e5]
-      ships <- lstruct[ships, on="vehicle_type", allow.cartesian=TRUE]
+      ships[vehicleType == "Domestic Ship_tmp_vehicletype", value := 1e5]
+      ships <- lstruct[ships, on = "vehicleType", allow.cartesian = TRUE]
 
-      dt <- rbind(dt, planes, ships, use.names=TRUE)
+      dt <- rbind(dt, planes, ships, use.names = TRUE)
 
       q <- as.quitte(dt)
       if(adjustments) {
@@ -70,73 +70,73 @@ calcEDGETinputs <- function(subtype, adjustments = TRUE) {
       ## the join has to happen on subtype level since it does not make sense
       ## slash we do not have data for all categories. E.g., mileage for non-motorized modes or
       ## trains does not make sense
-      am_check <- lstruct[!subsector_l3 %in% c("Walk", "Cycle", "HSR", "Passenger Rail", "Freight Rail")]
-      q <- q[am_check, on=colnames(am_check)]
+      amCheck <- lstruct[!subsectorL3 %in% c("Walk", "Cycle", "HSR", "Passenger Rail", "Freight Rail")]
+      q <- q[amCheck, on = colnames(amCheck)]
       ## note that the actual check is done for all subtypes at the end of the function
 
-      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
-      unit <- am_unit
+      weight <- calcOutput("GDP", aggregate = FALSE)[, unique(q$period), "gdp_SSP2"]
+      unit <- amUnit
       description <- "Annual mileage data for LDV, trucks, trains and ships. Sources: TRACCS, UCD."
 
     },
 
     "histEsDemand" = {
-      fr_unit <- "million tkm"
-      pa_unit <- "million pkm"
+      frUnit <- "million tkm"
+      paUnit <- "million pkm"
       ## the GCAM data is more-or-less complete, we use this as a starting point
-      es_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
-      es_GCAM[sector == "trn_freight", unit := fr_unit]
-      es_GCAM[sector == "trn_pass", unit := pa_unit]
-      es_GCAM[, c("model", "scenario", "variable") := NULL]
+      esGCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
+      esGCAM[sector == "trn_freight", unit := frUnit]
+      esGCAM[sector == "trn_pass", unit := paUnit]
+      esGCAM[, c("model", "scenario", "variable") := NULL]
 
-      es_TRACCS <- rbind(
-        toolPrepareTRACCS(readSource("TRACCS", "roadTkmDemand"), "roadTkmDemand")[, unit := fr_unit],
-        toolPrepareTRACCS(readSource("TRACCS", "roadPkmDemand"), "roadPkmDemand")[, unit := pa_unit]
+      esTRACCS <- rbind(
+        toolPrepareTRACCS(readSource("TRACCS", "roadTkmDemand"), "roadTkmDemand")[, unit := frUnit],
+        toolPrepareTRACCS(readSource("TRACCS", "roadPkmDemand"), "roadPkmDemand")[, unit := paUnit]
       )[period %in% c(2005, 2010)]
-      es_TRACCS[, c("model", "scenario", "variable") := NULL]
+      esTRACCS[, c("model", "scenario", "variable") := NULL]
 
-      es_GCAM[es_TRACCS, value := i.value, on=colnames(es_GCAM)[1:10]]
+      esGCAM[esTRACCS, value := i.value, on = colnames(es_GCAM)[1:10]]
 
-      q <- as.quitte(es_GCAM)
+      q <- as.quitte(esGCAM)
       if(adjustments) {
         q <- toolAdjustData(q, subtype)
       }
 
       ## expand and check
-      q <- q[lstruct, on=intersect(colnames(q), colnames(lstruct))]
+      q <- q[lstruct, on = intersect(colnames(q), colnames(lstruct))]
 
-      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
-      unit <- sprintf("%s or %s", pa_unit, fr_unit)
+      weight <- calcOutput("GDP", aggregate = FALSE)[, unique(q$period), "gdp_SSP2"]
+      unit <- sprintf("%s or %s", paUnit, frUnit)
       description <- "Energy service demand. Sources: TRACCS, GCAM."
 
     },
 
     "loadFactor" = {
-      fr_unit <- "tkm/veh"
-      pa_unit <- "pkm/veh"
-      lf_GCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
-      lf_GCAM[sector == "trn_freight", unit := fr_unit]
-      lf_GCAM[sector == "trn_pass", unit := pa_unit]
-      lf_GCAM[, c("model", "scenario", "variable") := NULL]
+      frUnit <- "tkm/veh"
+      paUnit <- "pkm/veh"
+      lfGCAM <- toolPrepareGCAM(readSource("GCAM", subtype), subtype)
+      lfGCAM[sector == "trn_freight", unit := frUnit]
+      lfGCAM[sector == "trn_pass", unit := paUnit]
+      lfGCAM[, c("model", "scenario", "variable") := NULL]
 
-      lf_TRACCS <- toolPrepareTRACCS(readSource("TRACCS", "loadFactor"), "loadFactor")
-      lf_TRACCS[sector == "trn_freight", unit := fr_unit]
-      lf_TRACCS[sector == "trn_pass", unit := pa_unit]
-      lf_TRACCS[, c("model", "scenario", "variable") := NULL]
+      lfTRACCS <- toolPrepareTRACCS(readSource("TRACCS", "loadFactor"), "loadFactor")
+      lfTRACCS[sector == "trn_freight", unit := frUnit]
+      lfTRACCS[sector == "trn_pass", unit := paUnit]
+      lfTRACCS[, c("model", "scenario", "variable") := NULL]
 
-      lf_GCAM[lf_TRACCS, value := i.value, on=colnames(lf_GCAM)[1:10]]
+      lfGCAM[lfTRACCS, value := i.value, on = colnames(lfGCAM)[1:10]]
 
-      q <- as.quitte(lf_GCAM)
+      q <- as.quitte(lfGCAM)
       if(adjustments) {
         q <- toolAdjustData(q, subtype)
       }
 
       ## expand and check
-      lstruct <- lstruct[!subsector_l3 %in% c("Walk", "Cycle")]
-      q <- q[lstruct, on=intersect(colnames(q), colnames(lstruct))]
+      lstruct <- lstruct[!subsectorL3 %in% c("Walk", "Cycle")]
+      q <- q[lstruct, on = intersect(colnames(q), colnames(lstruct))]
 
-      weight <- calcOutput("GDP", aggregate = F)[, unique(q$period), "gdp_SSP2"]
-      unit <- sprintf("%s or %s", pa_unit, fr_unit)
+      weight <- calcOutput("GDP", aggregate = FALSE)[, unique(q$period), "gdp_SSP2"]
+      unit <- sprintf("%s or %s", pa_unit, frUnit)
       description <- "Load factor, also called occupancy ration for passenger vehicles. Sources: TRACCS, GCAM."
 
     }
