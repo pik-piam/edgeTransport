@@ -33,6 +33,21 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
+### Road
+```{r}
+tot <- "FE|Transport|Road"
+items <- c(
+  "FE|Transport|Road|Electricity",
+  "FE|Transport|Road|Liquids",
+  "FE|Transport|Road|Hydrogen",
+  "FE|Transport|Road|Gases"
+  )
+showAreaAndBarPlots(data, items, tot, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
+showLinePlots(data, tot)
+walk(items, showLinePlots, data = data)
+```
+
 ### Passenger
 ```{r}
 tot <- "FE|Transport|Pass"
