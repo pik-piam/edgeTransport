@@ -18,7 +18,7 @@ output:
 geometry: "a4paper,landscape,left = 0.5cm,right = 0.5cm,top = 0.5cm,bottom = 0.5cm,footnotesep=0.0cm,footskip = 0.1cm"
 params:
   mifScen: !r c("")
-  mifScenNames: !r c()
+  mifScenNames: !r c("")
   mifHist: ""
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
