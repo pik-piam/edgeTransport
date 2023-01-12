@@ -98,42 +98,25 @@ toolIEAharmonization <- function(int, demKm, IEA) {
     ## calculate intensity factor
     tech_output_iea[, EJ_Mpkm_ave_adjusted := value/Mpkm_tot]
     ## calculate the ratio between the new and the old energy intensity
-    tech_output_iea[, factor_intensity := EJ_Mpkm_ave_adjusted/EJ_Mpkm_ave]
+    tech_output_iea[, factor_intensity := EJ_Mpkm_ave_adjusted/EJ_Mpkm_ave][, year := NULL]
 
     ## redistribute the energy intensity to the broader category they belong to, in
     ## the energy intensity dt
     tech_output <- merge(tech_output, tech_output_iea, all = FALSE,
-                             by = c("year", "region", "te", "isbunk"))
-
-    ## multiply the energy intensities of the sub categories by the corresponding factor
-    tech_output[, EJ_Mpkm_adjusted := EJ_Mpkm * factor_intensity]
-
-    ## check: calculate EJ with rescaled intensity and compare to IEA
-    tech_output[, EJ_tot_adjusted := sum(tech_output*EJ_Mpkm_adjusted), by=c("year", "region", "te", "isbunk")]
-    all.equal(tech_output$value, tech_output$EJ_tot_adjusted)
+                             by = c("region", "te", "isbunk"))
 
     ## remove all the columns that I don't need, including years (so to have it for all years)
-    tech_output=tech_output[,c("region","technology","vehicle_type","EJ_Mpkm_adjusted")]
+    tech_output=tech_output[, c("region","technology","vehicle_type", "factor_intensity")]
 
     ## harmonize data
     merged_intensity <- tech_output[vehicle_intensity, on=c("region", "technology", "vehicle_type")]
-
+    merged_intensity[, EJ_Mpkm_final := EJ_Mpkm * factor_intensity]
     ## if there is no harmonization data, lets use the existing one
-    merged_intensity[is.na(EJ_Mpkm_adjusted), EJ_Mpkm_adjusted := EJ_Mpkm]
+    merged_intensity[is.na(EJ_Mpkm_final), EJ_Mpkm_final := EJ_Mpkm]
 
-    ## phase-in time span
-    delta <- 15
-
-    ## lambda vectors (where to use adjusted values)
-    merged_intensity[, lambda := 1]
-    merged_intensity[year >= 2005,
-                     lambda := ifelse(year <= 2005 + delta,
-                     (2005 + delta - year)/delta, 0)]
-
-    merged_intensity[, EJ_Mpkm_final := EJ_Mpkm * (1-lambda) + EJ_Mpkm_adjusted * lambda]
 
     ## delete columns not useful anymore
-    merged_intensity[,c("EJ_Mpkm", "lambda", "EJ_Mpkm_adjusted")]=NULL
+    merged_intensity[, c("EJ_Mpkm", "factor_intensity")] = NULL
     ## cut energy intensity to 3 for NG LDVs
     merged_intensity[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "NG", EJ_Mpkm_final := min(EJ_Mpkm_final, 3.2e-06), by = c("region", "year", "vehicle_type")]
 
