@@ -158,6 +158,7 @@ toolReportEDGET <- function(output_folder = ".",
     } else {
       datatable[, remind_rep := technology]
     }
+
     datatable[remind_rep == "NG", remind_rep := "Gases"]
 
     datatable[!is.na(aggr_mode) & !is.na(remind_rep), aggr_mode_tech := paste0(aggr_mode, "|", remind_rep)]
@@ -418,13 +419,18 @@ toolReportEDGET <- function(output_folder = ".",
     vars <- varlist[[aggrname]]
     if (length(unique(datatable[variable %in% vars]$variable)) < length(vars)){
       browser()
-      print(paste0("Missing variables to aggregate data to ", aggrname))}
-
-    datatable <- datatable[variable %in% vars,
-                           .(variable = aggrname,
-                             value = sum(value)),
-                           by = c("model", "scenario", "region", "period", "unit")]
-
+      print(paste0("Missing variables to aggregate data to ", aggrname))
+      }
+    else if (length(unique(datatable[variable %in% vars]$variable)) > length(vars)) {
+      browser()
+      print(paste0('duplicates from: ', aggrname, 'not summed up'))
+      }
+    else {
+      datatable <- datatable[variable %in% vars,
+                                 .(variable = aggrname,
+                                   value = sum(value)),
+                                 by = c("model", "scenario", "region", "period", "unit")]
+      }
     return(datatable)
   }
 
@@ -519,10 +525,7 @@ toolReportEDGET <- function(output_folder = ".",
     `ES|Transport|VKM|Pass|Road` = c("ES|Transport|VKM|Pass|Road|LDV", "ES|Transport|VKM|Pass|Road|Bus"),
     `ES|Transport|VKM||Road` = c("ES|Transport|VKM|Freight|Road", "ES|Transport|VKM|Pass|Road|LDV", "ES|Transport|VKM|Pass|Road|Bus"),
     `ES|Transport|VKM|Rail` = c("ES|Transport|VKM|Pass|Rail|HSR", "ES|Transport|VKM|Pass|Rail|non-HSR", "ES|Transport|VKM|Freight|Rail" ),
-    `FE|Transport|Pass|Road` = c("FE|Transport|Pass|Road|LDV", "FE|Transport|Pass|Road|Bus"),
-    `FE|Transport|Pass|Aviation` = c("FE|Transport|Pass|Aviation|International", "FE|Transport|Pass|Aviation|Domestic"),
-    `FE|Transport|Road` = c("FE|Transport|Freight|Road", "FE|Transport|Pass|Road|LDV", "FE|Transport|Pass|Road|Bus"),
-    `FE|Transport|Rail` = c("FE|Transport|Pass|Rail|HSR", "FE|Transport|Pass|Rail|non-HSR", "FE|Transport|Freight|Rail"),
+
     `Emi|CO2|Transport|Pass|Road|Tailpipe` = c("Emi|CO2|Transport|Pass|Road|LDV|Tailpipe", "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe"),
     `Emi|CO2|Transport|Pass|Road|Demand` = c("Emi|CO2|Transport|Pass|Road|LDV|Demand", "Emi|CO2|Transport|Pass|Road|Bus|Demand"),
     `Emi|CO2|Transport|Road|Tailpipe` = c("Emi|CO2|Transport|Freight|Road|Tailpipe", "Emi|CO2|Transport|Pass|Road|LDV|Tailpipe", "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe"),
@@ -531,14 +534,41 @@ toolReportEDGET <- function(output_folder = ".",
     `Emi|CO2|Transport|Rail|Demand` = c("Emi|CO2|Transport|Pass|Rail|non-HSR|Demand", "Emi|CO2|Transport|Freight|Rail|Demand"),
     `Emi|CO2|Transport|Demand` = c("Emi|CO2|Transport|Pass|Rail|non-HSR|Demand", "Emi|CO2|Transport|Freight|Rail|Demand", "Emi|CO2|Transport|Freight|Road|Demand", "Emi|CO2|Transport|Pass|Road|LDV|Demand", "Emi|CO2|Transport|Pass|Road|Bus|Demand",
                                    "Emi|CO2|Transport|Freight|International Shipping|Demand", "Emi|CO2|Transport|Freight|Navigation|Demand", "Emi|CO2|Transport|Pass|Aviation|Domestic|Demand", "Emi|CO2|Transport|Pass|Aviation|International|Demand"),
+    `FE|Transport|Pass|Road` = c("FE|Transport|Pass|Road|LDV", "FE|Transport|Pass|Road|Bus"),
+    `FE|Transport|Pass|Road|Electricity` = c("FE|Transport|Pass|Road|LDV|Electricity", "FE|Transport|Pass|Road|Bus|Electricity"),
+    `FE|Transport|Pass|Road|Liquids` = c("FE|Transport|Pass|Road|LDV|Liquids", "FE|Transport|Pass|Road|Bus|Liquids"),
+    `FE|Transport|Pass|Road|Hydrogen` = c("FE|Transport|Pass|Road|LDV|Hydrogen", "FE|Transport|Pass|Road|Bus|Hydrogen"),
+    `FE|Transport|Pass|Road|Gases` = c("FE|Transport|Pass|Road|LDV|Gases", "FE|Transport|Pass|Road|Bus|Gases"),
+
+    `FE|Transport|Pass|Aviation` = c("FE|Transport|Pass|Aviation|International", "FE|Transport|Pass|Aviation|Domestic"),
+    `FE|Transport|Rail` = c("FE|Transport|Pass|Rail|HSR", "FE|Transport|Pass|Rail|non-HSR", "FE|Transport|Freight|Rail"),
     `FE|Transport|LDV|Gases` = c("FE|Transport|Pass|Road|LDV|Gases"),
     `FE|Transport|LDV|Electricity` = c("FE|Transport|Pass|Road|LDV|Electricity"),
     `FE|Transport|LDV|Hydrogen` = c("FE|Transport|Pass|Road|LDV|Hydrogen"),
     `FE|Transport|non-LDV|Gases` = c("FE|Transport|Pass|non-LDV|Gases","FE|Transport|Freight|Road|Gases"),
     `FE|Transport|non-LDV|Electricity` = c("FE|Transport|Pass|non-LDV|Electricity","FE|Transport|Freight|Road|Electricity","FE|Transport|Freight|Rail|Electricity"),
-    `FE|Transport|non-LDV|Hydrogen` = c("FE|Transport|Pass|non-LDV|Hydrogen","FE|Transport|Freight|Road|Hydrogen"))
+    `FE|Transport|non-LDV|Hydrogen` = c("FE|Transport|Pass|non-LDV|Hydrogen","FE|Transport|Freight|Road|Hydrogen")
+    )
 
   names <- names(varsl)
+
+  totals <- sapply(names, reportTotals, datatable = toMIF, varlist = varsl, simplify = FALSE, USE.NAMES = TRUE)
+
+  totals <- rbindlist(totals, use.names = TRUE)
+  toMIF <- rbind(toMIF, totals)
+
+  #append second aggregation level using the variables appended in the 4 lines before
+  varsl <- list(`ES|Transport|Road` = c("ES|Transport|Pass|Road", "ES|Transport|Freight|Road"),
+  `Emi|CO2|Transport|Road|Tailpipe` = c("Emi|CO2|Transport|Pass|Road|Tailpipe", "Emi|CO2|Transport|Freight|Road|Tailpipe"),
+  `Emi|CO2|Transport|Road|Demand` = c("Emi|CO2|Transport|Pass|Road|Demand", "Emi|CO2|Transport|Freight|Road|Demand"),
+  `FE|Transport|Road` = c("FE|Transport|Pass|Road", "FE|Transport|Freight|Road"),
+  `FE|Transport|Road|Electricity` = c("FE|Transport|Pass|Road|Electricity", "FE|Transport|Freight|Road|Electricity"),
+  `FE|Transport|Road|Liquids` = c("FE|Transport|Pass|Road|Liquids", "FE|Transport|Freight|Road|Liquids"),
+  `FE|Transport|Road|Hydrogen` = c("FE|Transport|Pass|Road|Hydrogen", "FE|Transport|Freight|Road|Hydrogen"),
+  `FE|Transport|Road|Gases` = c("FE|Transport|Pass|Road|Gases", "FE|Transport|Freight|Road|Gases")
+  )
+  names <- names(varsl)
+
   totals <- sapply(names, reportTotals, datatable = toMIF, varlist = varsl, simplify = FALSE, USE.NAMES = TRUE)
 
   totals <- rbindlist(totals, use.names = TRUE)
