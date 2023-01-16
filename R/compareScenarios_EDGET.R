@@ -107,11 +107,11 @@ compareScenarios_EDGET <- function(
   if (identical(tolower(outputFormat), "rmd")) {
     return(.compareScenarios2Rmd(yamlParams, outputDir, outputFile))
   }
-  # copy the template from the package to the outputDir because rmarkdown writes to the folder
+  # copy the template directory from the package to the outputDir because rmarkdown writes to the folder
   # containing the template.
-  templateInOutputDir <- file.path(outputDir, "csEDGET_main.Rmd")
-  file.copy(system.file("Rmd/compareScenarios_Transport/csEDGET_main.Rmd", package = "edgeTransport"),
-            templateInOutputDir)
+  templateInOutputDir <- file.path(outputDir, "compareScenarios_Transport", "csEDGET_main.Rmd")
+  file.copy(system.file("Rmd/compareScenarios_Transport/", package = "edgeTransport"),
+            outputDir, recursive = TRUE)
   render(
     templateInOutputDir,
     intermediates_dir = outputDir,
@@ -120,7 +120,7 @@ compareScenarios_EDGET <- function(
     output_format = outputFormat,
     params = yamlParams,
     envir = new.env())
-  file.remove(templateInOutputDir)
+  unlink(file.path(outputDir, "compareScenarios_Transport"), recursive = TRUE)
 }
 
 # Copies the CompareScenarios2-Rmds to the specified location and modifies
