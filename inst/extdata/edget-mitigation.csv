@@ -1780,7 +1780,7 @@ SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,HSR,,,,1,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Cycle,,,,2,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
@@ -1789,7 +1789,7 @@ SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,HSR,,,,1,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
@@ -1972,7 +1972,7 @@ SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,HSR,,,,1,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Cycle,,,,2,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
@@ -1981,7 +1981,7 @@ SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,HSR,,,,1,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,Mix4_ensec,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,Mix4_ensec,poor,FV,,,Aviation,Hydrogen,1,2050,10
