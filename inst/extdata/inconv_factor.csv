@@ -607,4 +607,11 @@ SSP2EU,NAV_all,startYeICE,2020
 SSP2EU,NAV_all,targetYeICE,2027
 SSP2EU,NAV_all,targetValICE,0.1
 SSP2EU,NAV_all,ratioPHEV,0.3
-
+SSP2EU,NAV_lce,startYeBEV,2025
+SSP2EU,NAV_lce,startValBEV,0.5
+SSP2EU,NAV_lce,targetYeBEV,2035
+SSP2EU,NAV_lce,targetValBEV,0
+SSP2EU,NAV_lce,startYeICE,2020
+SSP2EU,NAV_lce,targetYeICE,2027
+SSP2EU,NAV_lce,targetValICE,0
+SSP2EU,NAV_lce,ratioPHEV,0.5
