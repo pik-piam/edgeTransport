@@ -981,27 +981,21 @@ toolReportEDGET <- function(output_folder = ".",
 
     totals <- rbindlist(totals, use.names = TRUE)
     toMIF <- rbind(toMIF, totals)
-  }
 
   ##################
-
-  browser()
-
+  #Note that we do only have efficiencies for Electric, Liquids and Hydrogen.Thus, useful energy e.g. from aviation cannot be estimated realistically
   # Mapping efficiencies for useful energy
   Mapp_UE <- data.table(
     technology = c("Electric", "Liquids", "Hydrogen"),
     UE_efficiency = c(0.64, 0.23, 0.25))
 
-
   #Calculate useful energy
-  UE <- toMIF[grepl("FE" & ("Electric"|"Liquids"|"Hydrogen"), variable)]
-  UE[, technology := gsub(!("Electric"|"Liquids"|"Hydrogen"),"", variable)]
-  UE <- merge(UE, Mapp_UE)
-  UE[, value:= value*UE_efficiency][, variable := gsub("UE","UE", variable)]
+  UE <- toMIF[grepl("FE", variable) & grepl("Electric|Liquids|Hydrogen", variable)]
+  UE[, technology := gsub(".*(Electric|Liquids|Hydrogen)","\\1", variable)]
+  UE <- merge(UE, Mapp_UE, technology)
+  UE[, value:= value*UE_efficiency][, c("variable", "technology", "UE_efficiency"):= list(gsub("FE","UE", variable), NULL, NULL)]
 
-  # toMIF <- rbind(toMIF, UE)
-
-
+  toMIF  <- rbind(toMIF, UE)
 
   varsl <- list(
 
@@ -1020,10 +1014,10 @@ toolReportEDGET <- function(output_folder = ".",
 
   totals <- rbindlist(totals, use.names = TRUE)
   toMIF <- rbind(toMIF, totals)
-}
 
 #################
 
+  }
 
   #We should finally decide for which yrs the model runs and shows reasonable results
   toMIF <- toMIF[period %in% yrs]

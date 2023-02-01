@@ -3,7 +3,8 @@
 #' Run this script to prepare the input data for EDGE in EDGE-friendly units and regional aggregation
 #'
 #' `calcgenerateEDGEdata()` is a wrapper for `generateEDGEdata()` to make use of
-#' madrat caching.
+#' madrat caching
+#' .
 #'
 #' @md
 #' @param input_folder folder hosting raw data
@@ -28,7 +29,7 @@
 #' @import data.table
 #' @importFrom rmarkdown render
 #' @importFrom quitte write.mif
-#' @export
+#' @export~
 
 
 toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
@@ -303,6 +304,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   #What was the purpose of this line? In the new preftab table, all vehicle classes are included to unify the structure. Vehicle classes that are not available
   #in the country, receive a zero sw. The missing input data for that vehcile classes causing NAs in the line underneath
   #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+
 
   ## load inconvenience factor table for LDVs
   if(is.null(mitab4W.path)) {
@@ -666,3 +668,4 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
     description = NA))
 
 }
+

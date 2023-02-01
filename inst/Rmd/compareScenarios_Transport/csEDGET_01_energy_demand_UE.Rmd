@@ -8,7 +8,6 @@
 items <- c(
   "UE|Transport|w/o bunkers|Electricity",
   "UE|Transport|w/o bunkers|Hydrogen",
-  "UE|Transport|w/o bunkers|Gases",
   "UE|Transport|w/o bunkers|Liquids"
   )
 
@@ -20,8 +19,7 @@ walk(items, showLinePlots, data = data)
 items <- c(
   "UE|Transport|Road|Electricity",
   "UE|Transport|Road|Liquids",
-  "UE|Transport|Road|Hydrogen",
-  "UE|Transport|Road|Gases"
+  "UE|Transport|Road|Hydrogen"
   )
 
 walk(items, showLinePlots, data = data)
@@ -32,7 +30,6 @@ walk(items, showLinePlots, data = data)
 items <- c(
   "UE|Transport|Pass|Electricity",
   "UE|Transport|Pass|Hydrogen",
-  "UE|Transport|Pass|Gases",
   "UE|Transport|Pass|Liquids"
   )
 
@@ -44,7 +41,6 @@ walk(items, showLinePlots, data = data)
 items <- c(
   "UE|Transport|Pass|w/o bunkers|Electricity",
   "UE|Transport|Pass|w/o bunkers|Hydrogen",
-  "UE|Transport|Pass|w/o bunkers|Gases",
   "UE|Transport|Pass|w/o bunkers|Liquids"
   )
 walk(items, showLinePlots, data = data)
@@ -56,8 +52,6 @@ walk(items, showLinePlots, data = data)
 ### Passenger
 ```{r}
 items <- c(
-  # "UE|Transport|Pass|Aviation|International",
-  # "UE|Transport|Pass|Aviation|Domestic",
     "UE|Transport|Pass|Rail|HSR",
     "UE|Transport|Pass|Rail|non-HSR",
     "UE|Transport|Pass|Road|Bus",
