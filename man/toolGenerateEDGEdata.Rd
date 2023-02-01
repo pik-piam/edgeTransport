@@ -67,7 +67,8 @@ Run this script to prepare the input data for EDGE in EDGE-friendly units and re
 }
 \details{
 \code{calcgenerateEDGEdata()} is a wrapper for \code{generateEDGEdata()} to make use of
-madrat caching.
+madrat caching
+.
 }
 \author{
 Alois Dirnaichner, Marianna Rottoli

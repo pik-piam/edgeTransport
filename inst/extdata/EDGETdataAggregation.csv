@@ -1,4 +1,4 @@
-sector;subsector_L3;subsector_L2;subsector_L1;vehicle_type;technology;aggr_mode;aggr_LDV;aggr_veh;nonmot;aggr_nonmot;det_veh;aggr_bunkers
+z;subsector_L3;subsector_L2;subsector_L1;vehicle_type;technology;aggr_mode;aggr_LDV;aggr_veh;nonmot;aggr_nonmot;det_veh;aggr_bunkers
 Freight;Domestic Ship;Domestic Ship_tmp_subsector_L2;Domestic Ship_tmp_subsector_L1;Domestic Ship_tmp_vehicletype;Liquids;NA;NA;Freight|Navigation;NA;NA;NA;Freight|w/o bunkers
 Freight;Freight Rail;Freight Rail_tmp_subsector_L2;Freight Rail_tmp_subsector_L1;Freight Rail_tmp_vehicletype;Electric;NA;NA;Freight|Rail;NA;NA;NA;Freight|w/o bunkers
 Freight;Freight Rail;Freight Rail_tmp_subsector_L2;Freight Rail_tmp_subsector_L1;Freight Rail_tmp_vehicletype;Liquids;NA;NA;Freight|Rail;NA;NA;NA;Freight|w/o bunkers

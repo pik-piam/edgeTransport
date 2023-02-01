@@ -36,7 +36,7 @@ toolReportEDGET <- function(output_folder = ".",
           se <- type <- ven <- vehicle_type <- vehicle_type <- capture.output <- demVintEachYear <-
             unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <-
               full_demand_vkm <- vintage_demand_vkm <- stock_demand <- sales_demand <- full_demand_vkm <-
-                typ <- FE <- tot_vint_demand <- non_fuel_price <- UE_efficiencies <- NULL
+                typ <- FE <- tot_vint_demand <- non_fuel_price <- UE_efficiency <- NULL
 
   #pkm or tkm is called km in the reporting. Vehicle km are called vkm
   yrs <- c(seq(2005, 2060, 5), seq(2070, 2100, 10))
@@ -1014,9 +1014,6 @@ toolReportEDGET <- function(output_folder = ".",
 
   totals <- rbindlist(totals, use.names = TRUE)
   toMIF <- rbind(toMIF, totals)
-
-#################
-
   }
 
   #We should finally decide for which yrs the model runs and shows reasonable results
