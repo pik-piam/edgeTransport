@@ -19,7 +19,7 @@ walk(items, showLinePlots, data = data)
 items <- c(
   "UE|Transport|Road|Electricity",
   "UE|Transport|Road|Liquids",
-  "UE|Transport|Road|Hydrogen"
+  "UE|Transport|Road|Hydrogen",
   )
 
 walk(items, showLinePlots, data = data)
