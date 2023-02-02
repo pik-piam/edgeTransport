@@ -29,7 +29,7 @@
 #' @import data.table
 #' @importFrom rmarkdown render
 #' @importFrom quitte write.mif
-#' @export~
+#' @export
 
 
 toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NULL,
