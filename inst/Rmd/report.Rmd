@@ -1792,7 +1792,7 @@ plotCost(costs = techcost, vt = "Passenger Rail_tmp_vehicletype")
 ```
 # ES validation for selected categories and regions
 
-## Passenger transport in DEU 2018
+## Passenger transport in DEU 2018 - Verkehr-in-Zahlen
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -1826,4 +1826,52 @@ ViZ,LDV, 913.3
 }
 
 es_deu_verkehrinzahlen(demandkm)
+```
+
+## Vehicle numbers in the EU - ACEA
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+vn_eu_acea <- function(demand_km, loadFactor, annual_mileage){
+
+  all_eu <- c(EU_regions, NEU_regions)
+
+  ## vkm
+  demand_vkm <- merge(demand_km, loadFactor,
+                      by=colnames(demand_km)[2:ncol(demand_km)])
+  demand_vkm[, demandVKM := demand_F/loadFactor]
+  nas <- demand_vkm[is.na(demandVKM)]
+  if(length(nas)){
+    warning(sprintf("Missing demand for %s", unique(nas$vehicle_type)))
+  }
+  demand_vkm <- demand_vkm[!is.na(demandVKM)]
+
+  ## mileage
+  demand_vkm <- merge(demand_vkm, annual_mileage,
+                      by=colnames(demand_km)[2:ncol(demand_km)])
+  no_mileage <- demand_vkm[is.na(vkm.veh) | vkm.veh == 0]  
+  if(length(no_mileage)){
+    warning(sprintf("Missing demand for %s", unique(no_mileage$vehicle_type)))
+  }
+  demand_vkm[, veh_num := demandVKM/vkm.veh]
+  
+  aceadt <- rbindlist(list(
+    fread("acea_cars.csv")[, group:="cars"],
+    fread("acea_lcm.csv")[, group:="lcv"],
+    fread("acea_trucks.csv")[, group:="trucks"]
+  ))
+
+  mapping_TRACCS_iso= fread(
+    system.file(
+      "extdata", "mapping_countries_EU.csv", package="edgeTransport"), skip=0)
+  aceadt <- merge(aceadt, mapping_TRACCS_iso, by.x="country", by.y="country_name")
+
+  demand_eu <- demand_vkm[region %in% aceadt$iso]
+
+  ## apply ACEA classification
+  demand_eu[subsector_L2 == "trn_pass_road_LDV", group := "cars"]
+  demand_eu[subsector_L3 == "trn_freight_road" & vehicle_type == "Truck (0-3.5t)", group := "lcv"]
+  demand_eu[subsector_L3 == "trn_freight_road" & vehicle_type != "Truck (0-3.5t)", group := "trucks"]
+
+
+}
 ```

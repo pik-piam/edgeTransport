@@ -532,6 +532,9 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     saveRDS(mrr$GDP, file = level2path("GDP.RDS"))
 
     saveRDS(IEAbal_comparison$IEA_dt2plot, file = level2path("IEAcomp.RDS"))
+    ## copy ACEA data for comparison
+    acea_files <- list.files(file.path(input_folder, "ACEA"), pattern="*.csv", full.names=T)
+    file.copy(acea_files, level2path(""), overwrite = T)
     md_template = level2path("report.Rmd")
 
     saveRDS(VOT_lambdas, file = level2path("logit_exp.RDS"))
