@@ -4,7 +4,6 @@
 #'
 #' `calcgenerateEDGEdata()` is a wrapper for `generateEDGEdata()` to make use of
 #' madrat caching
-#' .
 #'
 #' @md
 #' @param input_folder folder hosting raw data
