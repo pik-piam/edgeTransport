@@ -304,6 +304,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   #in the country, receive a zero sw. The missing input data for that vehcile classes causing NAs in the line underneath
   #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
 
+
   ## load inconvenience factor table for LDVs
   if(is.null(mitab4W.path)) {
     mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
@@ -666,3 +667,4 @@ calcgenerateEDGEdata <- function(input_folder, output_folder,
     description = NA))
 
 }
+

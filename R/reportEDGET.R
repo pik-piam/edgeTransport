@@ -36,7 +36,7 @@ toolReportEDGET <- function(output_folder = ".",
           se <- type <- ven <- vehicle_type <- vehicle_type <- capture.output <- demVintEachYear <-
             unit <- tot_VOT_price <- tot_price <- logit_type <- weight <- liqsplit <-
               full_demand_vkm <- vintage_demand_vkm <- stock_demand <- sales_demand <- full_demand_vkm <-
-                typ <- FE <- tot_vint_demand <- non_fuel_price <- NULL
+                typ <- FE <- tot_vint_demand <- non_fuel_price <- UE_efficiency <- NULL
 
   #pkm or tkm is called km in the reporting. Vehicle km are called vkm
   yrs <- c(seq(2005, 2060, 5), seq(2070, 2100, 10))
@@ -585,6 +585,11 @@ toolReportEDGET <- function(output_folder = ".",
       aggregate_map(toMIF[region %in% unique(RegAggregation$region)], RegAggregation, by = "region"))
   }
 
+  #ES pkm are used as weights for data aggregation
+  weight_pkm <- copy(demand_km)
+  setnames(weight_pkm, c("value", "year"), c("weight", "period"))
+
+
 
   if (extendedReporting) {
 
@@ -816,21 +821,6 @@ toolReportEDGET <- function(output_folder = ".",
       return(data)
     }
 
-    # Mapping efficiencies for useful energy
-    Mapp_UE <- data.table(
-      technology = c("FCEV", "BEV", "Electric", "Liquids", "Hydrogen"),
-      UE_efficiency = c(0.36, 0.64, 0.8, 0.23, 0.25))
-    #ES pkm are used as weights for data aggregation
-    weight_pkm <- copy(demand_km)
-    setnames(weight_pkm, c("value", "year"), c("weight", "period"))
-
-    # #Calculate useful energy
-    # UE <- toMIF[grepl("FE" & ("FCEV"|"BEV"|"Electric"|"Liquids"|"Hydrogen"), variable)]
-    # UE[, technology := gsub(!("FCEV"|"BEV"|"Electric"|"Liquids"|"Hydrogen"),"", variable)]
-    # UE <- merge(UE, Mapp_UE)
-    # UE[, value:= value*UE_efficiency][, variable := gsub("FE","UE", variable)]
-
-    # toMIF <- rbind(toMIF, UE)
     varslist <- list("Pass|w/o bunkers",
                      "Pass|Aviation|International",
                      "Pass|Rail",
@@ -991,6 +981,39 @@ toolReportEDGET <- function(output_folder = ".",
 
     totals <- rbindlist(totals, use.names = TRUE)
     toMIF <- rbind(toMIF, totals)
+
+  ##################
+  #Note that we do only have efficiencies for Electric, Liquids and Hydrogen.Thus, useful energy e.g. from aviation cannot be estimated realistically
+  # Mapping efficiencies for useful energy
+  Mapp_UE <- data.table(
+    technology = c("Electric", "Liquids", "Hydrogen"),
+    UE_efficiency = c(0.64, 0.23, 0.25))
+
+  #Calculate useful energy
+  UE <- toMIF[grepl("FE", variable) & grepl("Electric|Liquids|Hydrogen", variable)]
+  UE[, technology := gsub(".*(Electric|Liquids|Hydrogen)","\\1", variable)]
+  UE <- merge(UE, Mapp_UE, technology)
+  UE[, value:= value*UE_efficiency][, c("variable", "technology", "UE_efficiency"):= list(gsub("FE","UE", variable), NULL, NULL)]
+
+  toMIF  <- rbind(toMIF, UE)
+
+  varsl <- list(
+
+    `UE|Transport|Pass|Liquids` = c("UE|Transport|Pass|Road|LDV|Liquids", "UE|Transport|Pass|Road|Bus|Liquids", "UE|Transport|Pass|Rail|non-HSR|Liquids","UE|Transport|Pass|Aviation|International|Liquids", "UE|Transport|Pass|Aviation|Domestic|Liquids"),
+    `UE|Transport|Pass|Hydrogen` = c("UE|Transport|Pass|Road|LDV|Hydrogen", "UE|Transport|Pass|Road|Bus|Hydrogen", "UE|Transport|Pass|Aviation|Domestic|Hydrogen"),
+    `UE|Transport|Pass|Gases` = c("UE|Transport|Pass|Road|LDV|Gases", "UE|Transport|Pass|Road|Bus|Gases"),
+    `UE|Transport|Pass|Electricity` = c("UE|Transport|Pass|Road|LDV|Electricity", "UE|Transport|Pass|Road|Bus|Electricity","UE|Transport|Pass|Rail|HSR|Electricity", "UE|Transport|Pass|Rail|non-HSR|Electricity"),
+
+    `UE|Transport|w/o bunkers|Liquids` = c("UE|Transport|Freight|w/o bunkers|Liquids","UE|Transport|Pass|w/o bunkers|Liquids"),
+    `UE|Transport|w/o bunkers|Hydrogen` = c("UE|Transport|Freight|w/o bunkers|Hydrogen","UE|Transport|Pass|w/o bunkers|Hydrogen"),
+    `UE|Transport|w/o bunkers|Gases` = c("UE|Transport|Freight|w/o bunkers|Gases","UE|Transport|Pass|w/o bunkers|Gases"),
+    `UE|Transport|w/o bunkers|Electricity` = c("UE|Transport|Freight|w/o bunkers|Electricity","UE|Transport|Pass|w/o bunkers|Electricity"))
+
+  names <- names(varsl)
+  totals <- sapply(names, reportTotals, datatable = toMIF, varlist = varsl, simplify = FALSE, USE.NAMES = TRUE)
+
+  totals <- rbindlist(totals, use.names = TRUE)
+  toMIF <- rbind(toMIF, totals)
   }
 
   #We should finally decide for which yrs the model runs and shows reasonable results
