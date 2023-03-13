@@ -417,6 +417,9 @@ toolReportEDGET <- function(output_folder = ".",
   reportTotals <- function(aggrname, datatable, varlist){
 
     vars <- varlist[[aggrname]]
+    #access the first element in vars
+    
+
     if (length(unique(datatable[variable %in% vars]$variable)) < length(vars)){
       browser()
       print(paste0("Missing variables to aggregate data to ", aggrname))
@@ -990,10 +993,14 @@ toolReportEDGET <- function(output_folder = ".",
     UE_efficiency = c(0.64, 0.23, 0.25))
 
   #Calculate useful energy
-  UE <- toMIF[grepl("FE", variable) & grepl("Electric|Liquids|Hydrogen", variable)]
-  UE[, technology := gsub(".*(Electric|Liquids|Hydrogen)","\\1", variable)]
-  UE <- merge(UE, Mapp_UE, technology)
-  UE[, value:= value*UE_efficiency][, c("variable", "technology", "UE_efficiency"):= list(gsub("FE","UE", variable), NULL, NULL)]
+  UE <- toMIF[grepl("FE", variable) & grepl("Electric|Liquids|Hydrogen", variable)] #select only FE for electricity, liquids and hydrogen
+  
+  
+  #create new column named technology and assign values based on variables in UE.varialbe: if the variable contains "Electricity" then technology is "Electric", if the variable contains "Liquids" then technology is "Liquids", if the variable contains "Hydrogen" then technology is "Hydrogen"
+  UE[, technology := ifelse(grepl("Electricity", variable), "Electric", ifelse(grepl("Liquids", variable), "Liquids", ifelse(grepl("Hydrogen", variable), "Hydrogen", NA)))]
+  
+  UE <- merge(UE, Mapp_UE, technology) #merge with efficiencies
+  UE[, value:= value*UE_efficiency][, c("variable", "technology", "UE_efficiency"):= list(gsub("FE","UE", variable), NULL, NULL)] #calculate useful energy
 
   toMIF  <- rbind(toMIF, UE)
 
@@ -1001,12 +1008,10 @@ toolReportEDGET <- function(output_folder = ".",
 
     `UE|Transport|Pass|Liquids` = c("UE|Transport|Pass|Road|LDV|Liquids", "UE|Transport|Pass|Road|Bus|Liquids", "UE|Transport|Pass|Rail|non-HSR|Liquids","UE|Transport|Pass|Aviation|International|Liquids", "UE|Transport|Pass|Aviation|Domestic|Liquids"),
     `UE|Transport|Pass|Hydrogen` = c("UE|Transport|Pass|Road|LDV|Hydrogen", "UE|Transport|Pass|Road|Bus|Hydrogen", "UE|Transport|Pass|Aviation|Domestic|Hydrogen"),
-    `UE|Transport|Pass|Gases` = c("UE|Transport|Pass|Road|LDV|Gases", "UE|Transport|Pass|Road|Bus|Gases"),
     `UE|Transport|Pass|Electricity` = c("UE|Transport|Pass|Road|LDV|Electricity", "UE|Transport|Pass|Road|Bus|Electricity","UE|Transport|Pass|Rail|HSR|Electricity", "UE|Transport|Pass|Rail|non-HSR|Electricity"),
 
     `UE|Transport|w/o bunkers|Liquids` = c("UE|Transport|Freight|w/o bunkers|Liquids","UE|Transport|Pass|w/o bunkers|Liquids"),
     `UE|Transport|w/o bunkers|Hydrogen` = c("UE|Transport|Freight|w/o bunkers|Hydrogen","UE|Transport|Pass|w/o bunkers|Hydrogen"),
-    `UE|Transport|w/o bunkers|Gases` = c("UE|Transport|Freight|w/o bunkers|Gases","UE|Transport|Pass|w/o bunkers|Gases"),
     `UE|Transport|w/o bunkers|Electricity` = c("UE|Transport|Freight|w/o bunkers|Electricity","UE|Transport|Pass|w/o bunkers|Electricity"))
 
   names <- names(varsl)
