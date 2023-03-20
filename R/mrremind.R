@@ -18,7 +18,7 @@ toolMrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
     POP_country = readRDS(file.path(cache_folder, "POP_country.RDS"))
     trsp_incent = readRDS(file.path(cache_folder, "trasp_incent.RDS"))
   }else{
-    IEAbal <- calcOutput(type = "IO", subtype = "IEA_output", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")    
+    IEAbal <- calcOutput(type = "IO", subtype = "IEA_output", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")
    GDP_country = {
       x <- calcOutput("GDP", aggregate = F)
       getSets(x)[1] <- "ISO3"
@@ -67,6 +67,7 @@ toolMrremind <- function(SSP_scen, REMIND2ISO_MAPPING, cache_folder){
   POP = merge(POP_country, REMIND2ISO_MAPPING, by.x = "iso2c", by.y = "iso")
   POP = POP[,.(value = sum(value)), by = c("region", "year")]
   setnames(POP_country, old = c("iso2c", "variable"), new = c("iso", "POP"),skip_absent=TRUE)
+  POP <- POP[year %in% unique(GDP_country$year)]
 
   GDP_POP=merge(GDP,POP[,.(region,year,POP_val=value)],all = TRUE,by=c("region","year"))
   GDP_POP[,GDP_cap:=weight/POP_val]
