@@ -17,9 +17,9 @@ output:
     number_sections: yes
 geometry: "a4paper,landscape,left = 0.5cm,right = 0.5cm,top = 0.5cm,bottom = 0.5cm,footnotesep=0.0cm,footskip = 0.1cm"
 params:
-  mifScen: !r c()
+  mifScen: !r c("C:/Users/jaruschm/Documents/local_EDGE_T/Output/Test_harmonization/SSP2EU-Mix4-SSP2EU_2023-03-23_18.01.07/EDGE-T_SA.mif")
   mifScenNames: !r c()
-  mifHist: ""
+  mifHist: "C:/Users/jaruschm/Documents/local_EDGE_T/historical_21.mif"
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
   yearsBarPlot: !r c(2010, 2030, 2050, 2100)
@@ -213,7 +213,7 @@ pCapVariables <- tribble(
   "ES|Transport|Pass|Road|LDV|Gases", "pkm/yr", 1e9,
   "ES|Transport|Pass|Road|LDV|Hybrid Electric", "pkm/yr", 1e9,
   "ES|Transport|Pass|Road|LDV|Liquids", "pkm/yr", 1e9,
-  "ES|Transport|Freight", "tkm/yr", 1e9,
+  "ES|Transport edge|Freight", "tkm/yr", 1e9,
   "ES|Transport|Freight|Road|Electric", "pkm/yr", 1e9,
   "ES|Transport|Freight|Road|FCEV", "pkm/yr", 1e9,
   "ES|Transport|Freight|Road|Gases", "pkm/yr", 1e9,
@@ -303,7 +303,7 @@ source("cs2_plot_functions.R", local=TRUE)
 ```{r sectionPaths, include=FALSE}
 if (length(params$sections) == 1 && params$sections == "all") {
   dir() %>% 
-    str_subset("^csEDGET_[0-9]{2}.+\\.Rmd$") %>% 
+    str_subset("^csEDGET_[0-9]{2}.+//.Rmd$") %>% 
     sort() ->
     sectionPaths
 } else {

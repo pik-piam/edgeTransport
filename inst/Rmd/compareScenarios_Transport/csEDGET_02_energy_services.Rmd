@@ -1,7 +1,7 @@
 # Energy Services
 ## Passenger
 ```{r}
-tot_wbunk <- "ES|Transport|Pass"
+tot_wbunk <- "ES|Transport edge|Pass"
 tot_wobunk <- "ES|Transport|Pass|w/o bunkers"
 items <- c(
     "ES|Transport|Pass|Aviation|International",
@@ -104,7 +104,7 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 
 ## Freight
 ```{r}
-tot_wbunk <- "ES|Transport|Freight"
+tot_wbunk <- "ES|Transport edge|Freight"
 tot_wobunk <- "ES|Transport|Freight|w/o bunkers"
 items <- c(
       "ES|Transport|Freight|International Shipping",
