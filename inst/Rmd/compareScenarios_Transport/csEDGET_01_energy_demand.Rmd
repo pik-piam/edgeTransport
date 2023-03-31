@@ -20,7 +20,7 @@ walk(items, showLinePlots, data = data)
 
 ### Total w/o bunkers
 ```{r}
-tot <- "FE|Transport|w/o bunkers"
+tot <- "FE|Transport edge|w/o bunkers"
 items <- c(
   "FE|Transport edge|w/o bunkers|Electricity",
   "FE|Transport edge|w/o bunkers|Hydrogen",
@@ -35,7 +35,7 @@ walk(items, showLinePlots, data = data)
 
 ### Road
 ```{r}
-tot <- "FE|Transport edge|Road"
+tot <- "FE|Transport|Road"
 items <- c(
   "FE|Transport|Road|Electricity",
   "FE|Transport|Road|Liquids",
@@ -50,7 +50,7 @@ walk(items, showLinePlots, data = data)
 
 ### Passenger
 ```{r}
-tot <- "FE|Transport|Pass"
+tot <- "FE|Transport edge|Pass"
 items <- c(
   "FE|Transport edge|Pass|Electricity",
   "FE|Transport edge|Pass|Hydrogen",

@@ -43,7 +43,7 @@ Where:
 
 `JRC_IDEES_Trsp` use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="Transport")`
 
-`JRC_IDEES_MarBunk` use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="maritimeBunkers")`
+`JRC_IDEES_MarBunk` use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="maritimebunkers")`
 
 `trsp_incent` use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: `readSource("TransportSubsidies", convert=T)`
 

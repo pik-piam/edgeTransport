@@ -57,8 +57,8 @@ cols <- c("NG" = "#d11141",
           "DOMESNAV" = "#ff4040",
           "Shipping" = "#ff4040",
           "Dom. Shipping" = "#ff4040",
-          "Non Bunkers" = "#9acd32",
-          "Bunkers" = "#87cefa",
+          "Non bunkers" = "#9acd32",
+          "bunkers" = "#87cefa",
           "Truck" = "#ff7f50",
           "Trucks (<3.5t)" = "#ff7f50",
           "Trucks (3.5t-16)" = "#8b0000",
@@ -95,7 +95,7 @@ mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 annual_mileage <- readRDS(datapath(fname = "annual_mileage.RDS"))
 annual_sale <- readRDS(datapath(fname = "annual_sales.RDS"))
-bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
+bunk_EU <- readRDS(datapath(fname = "Eurostatbunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 techcost <- readRDS(datapath_level0(fname = "REMINDdat.RDS"))[["NFcost"]]
 ## Load population to calculate per capita values
@@ -122,7 +122,7 @@ theme_plot = theme_minimal()+
 
 
 JRC_IDEES_Trsp = readSource("JRC_IDEES", subtype="Transport")
-JRC_IDEES_MarBunk = readSource("JRC_IDEES", subtype="MBunkers")
+JRC_IDEES_MarBunk = readSource("JRC_IDEES", subtype="Mbunkers")
 REMIND2ISO_MAPPING = fread(system.file("extdata", "regionmapping_21_EU11.csv", package = "edgeTransport"))[, .(iso = CountryCode,region = RegionCode)]
 
 ## filter only non-NA countries from IDEES and transform in data table
@@ -139,7 +139,7 @@ JRC_IDEES[, EJ:= value*  ##in ktoe
               4.1868E-8]  ## in EJ
 useful_var = c(
   ## international shipping
-  "Maritime Bunkers|Energy Consumption|Total energy consumption.ktoe",
+  "Maritime bunkers|Energy Consumption|Total energy consumption.ktoe",
   ## international aviation
   "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Extra-EU.ktoe",
   "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Intra-EU.ktoe",
@@ -164,7 +164,7 @@ JRC_IDEES = JRC_IDEES[variable.unit %in% useful_var]
 
 mapping_JRC_IDEE = data.table(variable.unit = c(
     ## international shipping
-    "Maritime Bunkers|Energy Consumption|Total energy consumption.ktoe",
+    "Maritime bunkers|Energy Consumption|Total energy consumption.ktoe",
     ## international aviation
     "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Extra-EU.ktoe",
     "Transport|Aviation|Energy Consumption|Total energy consumption|Passenger transport|International - Intra-EU.ktoe",
@@ -519,12 +519,12 @@ demandBunkNoBunkplotf = function(demandEJ, POP){
   ## EDGE results
   demandBnB <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
 
-  demandBnB[, aggr_mode := ifelse(subsector_L3 %in% c("International Aviation", "International Shipping"), "Bunkers", "Non Bunkers")]
+  demandBnB[, aggr_mode := ifelse(subsector_L3 %in% c("International Aviation", "International Shipping"), "bunkers", "Non bunkers")]
   demandBnB = demandBnB[,.(demand_EJ, region, year, aggr_mode)]
 
-  demandBnB[, aggr_mode := factor(aggr_mode, levels = c("Non Bunkers", "Bunkers"))]
+  demandBnB[, aggr_mode := factor(aggr_mode, levels = c("Non bunkers", "bunkers"))]
 
-  legend_ord <- c("Non Bunkers", "Bunkers")
+  legend_ord <- c("Non bunkers", "bunkers")
   demandBnB = demandBnB[,.(demand_EJ = sum(demand_EJ)), by = .(region, year, aggr_mode)]
 
   demandBnBglob = demandBnB[,.(demand_EJ = sum(demand_EJ)), by = .(year, aggr_mode)][, region:= "World"]
@@ -1152,7 +1152,7 @@ plots$p9c3
 
 ```
 
-# Bunkers in EU (EDGE-T VS IEA)
+# bunkers in EU (EDGE-T VS IEA)
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 bunk_EUplotf = function(bunk_EU, IEA){
