@@ -13,3 +13,4 @@
 ^tests/.lintr$
 ^vignettes/.lintr$
 ^Makefile$
+^.*CITATION.cff$

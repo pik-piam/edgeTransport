@@ -5,12 +5,12 @@
 
 ### Total
 ```{r}
-tot <- "FE|Transport"
+tot <- "FE|Transport edge"
 items <- c(
-  "FE|Transport|Electricity",
-  "FE|Transport|Hydrogen",
-  "FE|Transport|Gases",
-  "FE|Transport|Liquids"
+  "FE|Transport edge|Electricity",
+  "FE|Transport edge|Hydrogen",
+  "FE|Transport edge|Gases",
+  "FE|Transport edge|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -20,12 +20,12 @@ walk(items, showLinePlots, data = data)
 
 ### Total w/o bunkers
 ```{r}
-tot <- "FE|Transport|w/o bunkers"
+tot <- "FE|Transport edge|w/o bunkers"
 items <- c(
-  "FE|Transport|w/o bunkers|Electricity",
-  "FE|Transport|w/o bunkers|Hydrogen",
-  "FE|Transport|w/o bunkers|Gases",
-  "FE|Transport|w/o bunkers|Liquids"
+  "FE|Transport edge|w/o bunkers|Electricity",
+  "FE|Transport edge|w/o bunkers|Hydrogen",
+  "FE|Transport edge|w/o bunkers|Gases",
+  "FE|Transport edge|w/o bunkers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -50,12 +50,12 @@ walk(items, showLinePlots, data = data)
 
 ### Passenger
 ```{r}
-tot <- "FE|Transport|Pass"
+tot <- "FE|Transport edge|Pass"
 items <- c(
-  "FE|Transport|Pass|Electricity",
-  "FE|Transport|Pass|Hydrogen",
-  "FE|Transport|Pass|Gases",
-  "FE|Transport|Pass|Liquids"
+  "FE|Transport edge|Pass|Electricity",
+  "FE|Transport edge|Pass|Hydrogen",
+  "FE|Transport edge|Pass|Gases",
+  "FE|Transport edge|Pass|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -155,12 +155,12 @@ showLinePlots(data, tot)
 
 ### Freight
 ```{r}
-tot <- "FE|Transport|Freight"
+tot <- "FE|Transport edge|Freight"
 items <- c(
-  "FE|Transport|Freight|Electricity",
-  "FE|Transport|Freight|Hydrogen",
-  "FE|Transport|Freight|Gases",
-  "FE|Transport|Freight|Liquids"
+  "FE|Transport edge|Freight|Electricity",
+  "FE|Transport edge|Freight|Hydrogen",
+  "FE|Transport edge|Freight|Gases",
+  "FE|Transport edge|Freight|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -345,7 +345,7 @@ walk(items, showLinePlots, data = data)
 
 ### Passenger
 ```{r}
-tot_wbunk <- "FE|Transport|Pass"
+tot_wbunk <- "FE|Transport edge|Pass"
 tot_wobunk <- "FE|Transport|Pass|w/o bunkers"
 items <- c(
     "FE|Transport|Pass|Aviation|International",
@@ -366,7 +366,7 @@ walk(c("FE|Transport|Pass|Aviation", items[1:5], "FE|Transport|Pass|Road|LDV", i
 
 ### Freight
 ```{r}
-tot_wbunk <- "FE|Transport|Freight"
+tot_wbunk <- "FE|Transport|Freight edge"
 tot_wobunk <- "FE|Transport|Freight|w/o bunkers"
 items <- c(
       "FE|Transport|Freight|International Shipping",
