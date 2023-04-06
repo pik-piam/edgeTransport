@@ -19,7 +19,7 @@ toolComplexCompat <- function(ESdem, FEdem, gdp_country, REMIND2ISO_MAPPING) {
 
     ## Split results according to categories
     dt[, category := ifelse(grepl("Bus|trn_pass_road_bus|LDV|Passenger Rail", subsector_L2) | grepl("Cycle_tmp_technology|Walk_tmp_technology", technology), "Pass", NA)]
-    dt[, category := ifelse(sector %in% c("trn_aviation_intl","trn_shipping_intl"), "bunkers", category)]
+    dt[, category := ifelse(sector %in% c("trn_aviation_intl","trn_shipping_intl"), "Bunkers", category)]
     dt[, category := ifelse(is.na(category), "Freight", category)]
 
     ## Split results according to powertrain

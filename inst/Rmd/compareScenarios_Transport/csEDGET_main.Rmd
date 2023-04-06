@@ -17,9 +17,9 @@ output:
     number_sections: yes
 geometry: "a4paper,landscape,left = 0.5cm,right = 0.5cm,top = 0.5cm,bottom = 0.5cm,footnotesep=0.0cm,footskip = 0.1cm"
 params:
-  mifScen: "C:/Users/jaruschm/Documents/local_EDGE_T/Output/Test_harmonization/SSP2EU-Mix4-SSP2EU_2023-03-24_16.45.53/EDGE-T_SA.mif"
+  mifScen: ""
   mifScenNames: !r c()
-  mifHist: "C:/Users/jaruschm/Documents/local_EDGE_T/historical_21.mif"
+  mifHist: ""
   yearsScen: !r c(seq(2005, 2060, 5), seq(2070, 2100, 10))
   yearsHist: !r c(seq(2010, 2020, 1), seq(2025, 2100, 5))
   yearsBarPlot: !r c(2010, 2030, 2050, 2100)

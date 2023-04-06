@@ -523,7 +523,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS"))
     dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
     dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
-    saveRDS(dem_bunk, file = level2path("Eurostatbunkers.RDS"))
+    saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
     EU_data$roadFE_eu=EU=merge(EU_data$roadFE_eu[year %in% c(1990, 2005, 2010)], REMIND2ISO_MAPPING,by="iso")
     EU_data$roadFE_eu=EU_data$roadFE_eu[,.(EJ=sum(MJ)*1e-12), by = c("year","region","vehicle_type")]
     saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS"))

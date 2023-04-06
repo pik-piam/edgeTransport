@@ -87,14 +87,14 @@ toolReportEDGET <- function(output_folder = ".",
     # calculate share for bunkers ----
 
     # liquids for bunkers
-    demFeSectorbunkers <- mselect(demFeSector,
+    demFeSectorBunkers <- mselect(demFeSector,
                                   all_enty = c("seliqfos", "seliqbio", "seliqsyn"),
                                   all_enty1 = "fedie", emi_sectors = "trans", all_emiMkt = "other"
     )
 
-    feSharebunkersLiqFos <- demFeSectorbunkers[,, "seliqfos.fedie"] / dimSums(demFeSectorbunkers, dim = 3, na.rm = T)
-    feSharebunkersLiqBio <- dimSums(mselect(demFeSectorbunkers, all_enty = c("seliqbio", "seliqsyn")), dim = 3, na.rm = T) * bioShareTrans / dimSums(demFeSectorbunkers, dim = 3, na.rm = T)
-    feSharebunkersLiqSyn <- dimSums(mselect(demFeSectorbunkers, all_enty = c("seliqbio", "seliqsyn")), dim = 3, na.rm = T) * synShareTrans / dimSums(demFeSectorbunkers, dim = 3, na.rm = T)
+    feShareBunkersLiqFos <- demFeSectorBunkers[,, "seliqfos.fedie"] / dimSums(demFeSectorBunkers, dim = 3, na.rm = T)
+    feShareBunkersLiqBio <- dimSums(mselect(demFeSectorBunkers, all_enty = c("seliqbio", "seliqsyn")), dim = 3, na.rm = T) * bioShareTrans / dimSums(demFeSectorBunkers, dim = 3, na.rm = T)
+    feShareBunkersLiqSyn <- dimSums(mselect(demFeSectorBunkers, all_enty = c("seliqbio", "seliqsyn")), dim = 3, na.rm = T) * synShareTrans / dimSums(demFeSectorBunkers, dim = 3, na.rm = T)
 
     # apply splits to data frame ----
     #magclass needs the following column order
@@ -125,12 +125,12 @@ toolReportEDGET <- function(output_folder = ".",
       setNames(m[, y, "FE|Transport|Freight|Navigation|Liquids"] * feShareNonLdvLiqFos[, y, ], paste0(prefix, "FE|Transport|Freight|Navigation|Liquids|Fossil", suffix)),
       setNames(m[, y, "FE|Transport|Freight|Navigation|Liquids"] * feShareNonLdvLiqBio[, y, ], paste0(prefix, "FE|Transport|Freight|Navigation|Liquids|Biomass", suffix)),
       setNames(m[, y, "FE|Transport|Freight|Navigation|Liquids"] * feShareNonLdvLiqSyn[, y, ], paste0(prefix, "FE|Transport|Freight|Navigation|Liquids|Hydrogen", suffix)),
-      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feSharebunkersLiqFos[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Fossil", suffix)),
-      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feSharebunkersLiqBio[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Biomass", suffix)),
-      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feSharebunkersLiqSyn[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Hydrogen", suffix)),
-      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feSharebunkersLiqFos[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Fossil", suffix)),
-      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feSharebunkersLiqBio[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Biomass", suffix)),
-      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feSharebunkersLiqSyn[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Hydrogen", suffix))
+      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feShareBunkersLiqFos[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Fossil", suffix)),
+      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feShareBunkersLiqBio[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Biomass", suffix)),
+      setNames(m[, y, "FE|Transport|Pass|Aviation|International|Liquids"] * feShareBunkersLiqSyn[, y, ], paste0(prefix, "FE|Transport|Pass|Aviation|International|Liquids|Hydrogen", suffix)),
+      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feShareBunkersLiqFos[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Fossil", suffix)),
+      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feShareBunkersLiqBio[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Biomass", suffix)),
+      setNames(m[, y, "FE|Transport|Freight|International Shipping|Liquids"] * feShareBunkersLiqSyn[, y, ], paste0(prefix, "FE|Transport|Freight|International Shipping|Liquids|Hydrogen", suffix))
     )
     ## Convert back to data.table
     tmp <- as.data.table(as.quitte(tmp))
