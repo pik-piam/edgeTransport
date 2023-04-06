@@ -95,7 +95,7 @@ mj_km_data <- readRDS(datapath(fname = "mj_km_data.RDS"))
 loadFactor <- readRDS(datapath(fname = "loadFactor.RDS"))
 annual_mileage <- readRDS(datapath(fname = "annual_mileage.RDS"))
 annual_sale <- readRDS(datapath(fname = "annual_sales.RDS"))
-bunk_EU <- readRDS(datapath(fname = "Eurostatbunkers.RDS"))
+bunk_EU <- readRDS(datapath(fname = "EurostatBunkers.RDS"))
 demEJ_TRACCS <- readRDS(datapath(fname = "TRACCS_FE.RDS"))
 techcost <- readRDS(datapath_level0(fname = "REMINDdat.RDS"))[["NFcost"]]
 ## Load population to calculate per capita values
