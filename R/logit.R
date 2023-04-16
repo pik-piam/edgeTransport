@@ -571,10 +571,51 @@ toolCalculateLogitIncost <- function(prices,
                                                      0.5*exp(1)^(weighted_sharessum[year == (t-1)]*bmodelav),
                                                      pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
+    if(tech_scen == "PhOP"){
+      ## phase-out of all light-duty vehicle ICEs
+      EUreg <- c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "EUR")
 
-    tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
-                                                     pmax(pinco_tot, floor),
-                                                     pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+      if (t<=2023) {
+        floorEU <- linIncrease(t, 2020, 0.0, 2023, 0.00625)
+      } else if(t<=2025 & t>2023){
+        floorEU <- linIncrease(t, 2023, 0.00625, 2025, 0.0125)
+      } else if(t>2025 & t<=2027){
+        floorEU <- linIncrease(t, 2025, 0.0125, 2027, 0.01875)
+      } else if(t>2027 & t<=2030) {
+        floorEU <- linIncrease(t, 2027, 0.01875, 2030, 0.0375)
+      } else if(t>2030 & t<=2032){
+        floorEU <- linIncrease(t, 2030, 0.0375, 2032, 0.0875)
+      } else if(t>2032 & t<=2034){
+        floorEU <- linIncrease(t, 2032, 0.0875, 2034, 0.2)
+      } else if (t== 2035){
+        floorEU <- 0.2375
+      } else {
+        floorEU <- 0.25
+      }
+
+      tmp[technology == "Liquids" & region %in% EUreg, pinco_tot := ifelse(year == t,
+                                                                           pmax(pinco_tot, floorEU),
+                                                                           pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+      tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
+                                                                             pmax(pinco_tot, floor),
+                                                                             pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+      tmp[technology == "NG" & region %in% EUreg, pref := ifelse(year == t,
+                                                                 pmax(pref, floorEU),
+                                                                 pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+      tmp[technology == "Hybrid Electric" & region %in% EUreg, pmod_av := ifelse(year == t,
+                                                                                 pmax(pmod_av, floorEU),
+                                                                                 pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+    } else {
+
+      tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
+                                                       pmax(pinco_tot, floor),
+                                                       pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+    }
 
 
     ## hybrid electric inconvenience cost cannot decrease below 50% of 2020 value

@@ -265,7 +265,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
 
 
-  ## load mitigatin trends sw table
+  ## load mitigation trends sw table
   if(is.null(mitab.path)) {
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
   }
