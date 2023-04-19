@@ -236,7 +236,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   incocost <- toolIncocost(annual_mileage = REMINDdat$AM,
                            load_factor = REMINDdat$LF,
                            fcr_veh = fcr_veh,
-                           REMINDp = REMIND_prices)
+                           REMINDp = REMIND_prices
+                           )
 
   if(storeRDS) {
     saveRDS(incocost,
@@ -265,7 +266,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   }
 
 
-  ## load mitigatin trends sw table
+  ## load mitigation trends sw table
   if(is.null(mitab.path)) {
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
   }
@@ -328,6 +329,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       intensity_data = IEAbal_comparison$merged_intensity,
       price_nonmot = REMINDdat$pnm,
       ptab4W = preftab4W,
+      tech_scen =  tech_scen,
       totveh = totveh)
 
     logit_data <- toolCalculateLogitSW(
