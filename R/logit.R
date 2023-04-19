@@ -329,6 +329,7 @@ toolCalculateLogitSW <- function(prices,
 #' @param price_nonmot price of non-motorized modes in the logit tree
 #' @param ptab4W inconvenience cost factors for LDVs
 #' @param totveh total demand for LDVs by tecnology, in million veh
+#' @param tech_scen technology scenario
 #' @import data.table
 #' @export
 
@@ -339,7 +340,8 @@ toolCalculateLogitIncost <- function(prices,
                               intensity_data,
                               price_nonmot,
                               ptab4W,
-                              totveh = NULL) {
+                              tech_scen,
+                              totveh = NULL ){
 
    `.` <- D <- EJ_Mpkm_final <- fuel_price_pkm <- index_yearly <- logit.exponent <- logit_type <-
     non_fuel_price <- pchar <- pinco_tot <- pmod_av <- prange <- pref <- prisk <- region <- sector <-
