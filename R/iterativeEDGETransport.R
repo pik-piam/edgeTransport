@@ -17,7 +17,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     demand_F <- full_demand_vkm <- iternum <- maxtech <- sector <- shareVS1 <- sharetech_new <-
       subsector_L1 <- subsector_L3 <- sumvalue <- sw <- tot_price <- totdem <- value <-
         vintage_demand_vkm <- NULL
-  
+
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
 
   data_folder <- "EDGE-T"
@@ -185,6 +185,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     intensity_data = int_dat,
     price_nonmot = price_nonmot,
     ptab4W = preftab4W,
+    tech_scen = EDGE_scenario,
     totveh = if (!is.null(totveh)) totveh)
 
   logit_data <- toolCalculateLogitSW(
