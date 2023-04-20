@@ -13,6 +13,7 @@ toolCalculateLogitIncost(
   intensity_data,
   price_nonmot,
   ptab4W,
+  tech_scen,
   totveh = NULL
 )
 }
@@ -30,6 +31,8 @@ toolCalculateLogitIncost(
 \item{price_nonmot}{price of non-motorized modes in the logit tree}
 
 \item{ptab4W}{inconvenience cost factors for LDVs}
+
+\item{tech_scen}{technology scenario}
 
 \item{totveh}{total demand for LDVs by tecnology, in million veh}
 }
