@@ -332,6 +332,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       tech_scen =  tech_scen,
       totveh = totveh)
 
+    prefs$FV_final_pref = logit_data_4W$pref_data$FV_final_pref
+
     logit_data <- toolCalculateLogitSW(
       prices = REMIND_prices,
       vot_data = REMINDdat$vt,
