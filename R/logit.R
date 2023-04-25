@@ -578,21 +578,21 @@ toolCalculateLogitIncost <- function(prices,
       EUreg <- c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "EUR")
 
       if (t<=2023) {
-        floorEU <- linIncrease(t, 2020, 0.0, 2023, 0.00625)
+        floorEU <- linIncrease(t, 2020, 0.0, 2023, 0.0125)
       } else if(t<=2025 & t>2023){
-        floorEU <- linIncrease(t, 2023, 0.00625, 2025, 0.0125)
+        floorEU <- linIncrease(t, 2023, 0.0125, 2025, 0.025)
       } else if(t>2025 & t<=2027){
-        floorEU <- linIncrease(t, 2025, 0.0125, 2027, 0.01875)
+        floorEU <- linIncrease(t, 2025, 0.025, 2027, 0.0375)
       } else if(t>2027 & t<=2030) {
-        floorEU <- linIncrease(t, 2027, 0.01875, 2030, 0.0375)
+        floorEU <- linIncrease(t, 2027, 0.0375, 2030, 0.075)
       } else if(t>2030 & t<=2032){
-        floorEU <- linIncrease(t, 2030, 0.0375, 2032, 0.0875)
+        floorEU <- linIncrease(t, 2030, 0.075, 2032, 0.175)
       } else if(t>2032 & t<=2034){
-        floorEU <- linIncrease(t, 2032, 0.0875, 2034, 0.2)
+        floorEU <- linIncrease(t, 2032, 0.175, 2034, 0.475)
       } else if (t== 2035){
-        floorEU <- 0.2375
+        floorEU <- 0.475
       } else {
-        floorEU <- 0.25
+        floorEU <- 0.5
       }
 
       tmp[technology == "Liquids" & region %in% EUreg, pinco_tot := ifelse(year == t,
