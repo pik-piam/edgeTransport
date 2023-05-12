@@ -1,0 +1,6226 @@
+region;univocalName;present
+ABW;Bus;1
+ABW;Compact Car;1
+ABW;Cycle;1
+ABW;Domestic Aviation;1
+ABW;Domestic Ship;1
+ABW;Freight Rail;1
+ABW;HSR;1
+ABW;International Aviation;1
+ABW;International Ship;1
+ABW;Large Car;0
+ABW;Large Car and SUV;1
+ABW;Midsize Car;1
+ABW;Mini Car;1
+ABW;Moped;1
+ABW;Motorcycle (50-250cc);1
+ABW;Motorcycle (>250cc);1
+ABW;Passenger Rail;1
+ABW;Subcompact Car;1
+ABW;Truck (0-3.5t);1
+ABW;Truck (18t);1
+ABW;Truck (26t);1
+ABW;Truck (40t);1
+ABW;Truck (7.5t);1
+ABW;Van;1
+ABW;Walk;1
+AFG;Bus;1
+AFG;Compact Car;1
+AFG;Cycle;1
+AFG;Domestic Aviation;1
+AFG;Domestic Ship;1
+AFG;Freight Rail;1
+AFG;HSR;1
+AFG;International Aviation;1
+AFG;International Ship;1
+AFG;Large Car;0
+AFG;Large Car and SUV;1
+AFG;Midsize Car;1
+AFG;Mini Car;1
+AFG;Moped;1
+AFG;Motorcycle (50-250cc);1
+AFG;Motorcycle (>250cc);1
+AFG;Passenger Rail;1
+AFG;Subcompact Car;1
+AFG;Truck (0-3.5t);1
+AFG;Truck (18t);1
+AFG;Truck (26t);1
+AFG;Truck (40t);1
+AFG;Truck (7.5t);1
+AFG;Van;1
+AFG;Walk;1
+AGO;Bus;1
+AGO;Compact Car;1
+AGO;Cycle;1
+AGO;Domestic Aviation;1
+AGO;Domestic Ship;1
+AGO;Freight Rail;1
+AGO;HSR;1
+AGO;International Aviation;1
+AGO;International Ship;1
+AGO;Large Car;0
+AGO;Large Car and SUV;1
+AGO;Midsize Car;1
+AGO;Mini Car;1
+AGO;Moped;0
+AGO;Motorcycle (50-250cc);1
+AGO;Motorcycle (>250cc);1
+AGO;Passenger Rail;1
+AGO;Subcompact Car;1
+AGO;Truck (0-3.5t);1
+AGO;Truck (18t);1
+AGO;Truck (26t);1
+AGO;Truck (40t);1
+AGO;Truck (7.5t);1
+AGO;Van;1
+AGO;Walk;1
+AIA;Bus;1
+AIA;Compact Car;1
+AIA;Cycle;1
+AIA;Domestic Aviation;1
+AIA;Domestic Ship;1
+AIA;Freight Rail;1
+AIA;HSR;1
+AIA;International Aviation;1
+AIA;International Ship;1
+AIA;Large Car;0
+AIA;Large Car and SUV;1
+AIA;Midsize Car;1
+AIA;Mini Car;1
+AIA;Moped;1
+AIA;Motorcycle (50-250cc);1
+AIA;Motorcycle (>250cc);1
+AIA;Passenger Rail;1
+AIA;Subcompact Car;1
+AIA;Truck (0-3.5t);1
+AIA;Truck (18t);1
+AIA;Truck (26t);1
+AIA;Truck (40t);1
+AIA;Truck (7.5t);1
+AIA;Van;1
+AIA;Walk;1
+ALA;Bus;1
+ALA;Compact Car;1
+ALA;Cycle;1
+ALA;Domestic Aviation;1
+ALA;Domestic Ship;1
+ALA;Freight Rail;1
+ALA;HSR;1
+ALA;International Aviation;1
+ALA;International Ship;1
+ALA;Large Car;0
+ALA;Large Car and SUV;1
+ALA;Midsize Car;1
+ALA;Mini Car;1
+ALA;Moped;1
+ALA;Motorcycle (50-250cc);1
+ALA;Motorcycle (>250cc);1
+ALA;Passenger Rail;1
+ALA;Subcompact Car;1
+ALA;Truck (0-3.5t);1
+ALA;Truck (18t);1
+ALA;Truck (26t);1
+ALA;Truck (40t);1
+ALA;Truck (7.5t);1
+ALA;Van;1
+ALA;Walk;1
+ALB;Bus;1
+ALB;Compact Car;1
+ALB;Cycle;1
+ALB;Domestic Aviation;1
+ALB;Domestic Ship;1
+ALB;Freight Rail;1
+ALB;HSR;1
+ALB;International Aviation;1
+ALB;International Ship;1
+ALB;Large Car;0
+ALB;Large Car and SUV;1
+ALB;Midsize Car;1
+ALB;Mini Car;1
+ALB;Moped;1
+ALB;Motorcycle (50-250cc);1
+ALB;Motorcycle (>250cc);1
+ALB;Passenger Rail;1
+ALB;Subcompact Car;1
+ALB;Truck (0-3.5t);1
+ALB;Truck (18t);1
+ALB;Truck (26t);1
+ALB;Truck (40t);1
+ALB;Truck (7.5t);1
+ALB;Van;1
+ALB;Walk;1
+AND;Bus;1
+AND;Compact Car;1
+AND;Cycle;1
+AND;Domestic Aviation;1
+AND;Domestic Ship;1
+AND;Freight Rail;1
+AND;HSR;1
+AND;International Aviation;1
+AND;International Ship;1
+AND;Large Car;0
+AND;Large Car and SUV;1
+AND;Midsize Car;1
+AND;Mini Car;1
+AND;Moped;1
+AND;Motorcycle (50-250cc);1
+AND;Motorcycle (>250cc);1
+AND;Passenger Rail;1
+AND;Subcompact Car;1
+AND;Truck (0-3.5t);1
+AND;Truck (18t);1
+AND;Truck (26t);1
+AND;Truck (40t);1
+AND;Truck (7.5t);1
+AND;Van;1
+AND;Walk;1
+ARE;Bus;1
+ARE;Compact Car;1
+ARE;Cycle;1
+ARE;Domestic Aviation;1
+ARE;Domestic Ship;0
+ARE;Freight Rail;0
+ARE;HSR;1
+ARE;International Aviation;1
+ARE;International Ship;1
+ARE;Large Car;0
+ARE;Large Car and SUV;1
+ARE;Midsize Car;1
+ARE;Mini Car;1
+ARE;Moped;0
+ARE;Motorcycle (50-250cc);1
+ARE;Motorcycle (>250cc);0
+ARE;Passenger Rail;1
+ARE;Subcompact Car;1
+ARE;Truck (0-3.5t);1
+ARE;Truck (18t);1
+ARE;Truck (26t);1
+ARE;Truck (40t);1
+ARE;Truck (7.5t);1
+ARE;Van;1
+ARE;Walk;1
+ARG;Bus;1
+ARG;Compact Car;1
+ARG;Cycle;1
+ARG;Domestic Aviation;1
+ARG;Domestic Ship;1
+ARG;Freight Rail;1
+ARG;HSR;1
+ARG;International Aviation;1
+ARG;International Ship;1
+ARG;Large Car;0
+ARG;Large Car and SUV;1
+ARG;Midsize Car;1
+ARG;Mini Car;1
+ARG;Moped;1
+ARG;Motorcycle (50-250cc);1
+ARG;Motorcycle (>250cc);1
+ARG;Passenger Rail;1
+ARG;Subcompact Car;1
+ARG;Truck (0-3.5t);1
+ARG;Truck (18t);1
+ARG;Truck (26t);1
+ARG;Truck (40t);1
+ARG;Truck (7.5t);1
+ARG;Van;1
+ARG;Walk;1
+ARM;Bus;1
+ARM;Compact Car;1
+ARM;Cycle;1
+ARM;Domestic Aviation;1
+ARM;Domestic Ship;1
+ARM;Freight Rail;1
+ARM;HSR;1
+ARM;International Aviation;1
+ARM;International Ship;1
+ARM;Large Car;0
+ARM;Large Car and SUV;1
+ARM;Midsize Car;1
+ARM;Mini Car;1
+ARM;Moped;1
+ARM;Motorcycle (50-250cc);1
+ARM;Motorcycle (>250cc);1
+ARM;Passenger Rail;1
+ARM;Subcompact Car;1
+ARM;Truck (0-3.5t);1
+ARM;Truck (18t);1
+ARM;Truck (26t);1
+ARM;Truck (40t);1
+ARM;Truck (7.5t);1
+ARM;Van;1
+ARM;Walk;1
+ASM;Bus;1
+ASM;Compact Car;1
+ASM;Cycle;1
+ASM;Domestic Aviation;1
+ASM;Domestic Ship;1
+ASM;Freight Rail;1
+ASM;HSR;1
+ASM;International Aviation;1
+ASM;International Ship;1
+ASM;Large Car;0
+ASM;Large Car and SUV;1
+ASM;Midsize Car;1
+ASM;Mini Car;1
+ASM;Moped;1
+ASM;Motorcycle (50-250cc);1
+ASM;Motorcycle (>250cc);1
+ASM;Passenger Rail;1
+ASM;Subcompact Car;1
+ASM;Truck (0-3.5t);1
+ASM;Truck (18t);1
+ASM;Truck (26t);1
+ASM;Truck (40t);1
+ASM;Truck (7.5t);1
+ASM;Van;1
+ASM;Walk;1
+ATA;Bus;1
+ATA;Compact Car;1
+ATA;Cycle;1
+ATA;Domestic Aviation;1
+ATA;Domestic Ship;1
+ATA;Freight Rail;1
+ATA;HSR;1
+ATA;International Aviation;1
+ATA;International Ship;1
+ATA;Large Car;0
+ATA;Large Car and SUV;1
+ATA;Midsize Car;1
+ATA;Mini Car;1
+ATA;Moped;1
+ATA;Motorcycle (50-250cc);1
+ATA;Motorcycle (>250cc);1
+ATA;Passenger Rail;1
+ATA;Subcompact Car;1
+ATA;Truck (0-3.5t);1
+ATA;Truck (18t);1
+ATA;Truck (26t);1
+ATA;Truck (40t);1
+ATA;Truck (7.5t);1
+ATA;Van;1
+ATA;Walk;1
+ATF;Bus;1
+ATF;Compact Car;1
+ATF;Cycle;1
+ATF;Domestic Aviation;1
+ATF;Domestic Ship;1
+ATF;Freight Rail;1
+ATF;HSR;1
+ATF;International Aviation;1
+ATF;International Ship;1
+ATF;Large Car;0
+ATF;Large Car and SUV;1
+ATF;Midsize Car;1
+ATF;Mini Car;1
+ATF;Moped;1
+ATF;Motorcycle (50-250cc);1
+ATF;Motorcycle (>250cc);1
+ATF;Passenger Rail;1
+ATF;Subcompact Car;1
+ATF;Truck (0-3.5t);1
+ATF;Truck (18t);1
+ATF;Truck (26t);1
+ATF;Truck (40t);1
+ATF;Truck (7.5t);1
+ATF;Van;1
+ATF;Walk;1
+ATG;Bus;1
+ATG;Compact Car;1
+ATG;Cycle;1
+ATG;Domestic Aviation;1
+ATG;Domestic Ship;1
+ATG;Freight Rail;1
+ATG;HSR;1
+ATG;International Aviation;1
+ATG;International Ship;1
+ATG;Large Car;0
+ATG;Large Car and SUV;1
+ATG;Midsize Car;1
+ATG;Mini Car;1
+ATG;Moped;1
+ATG;Motorcycle (50-250cc);1
+ATG;Motorcycle (>250cc);1
+ATG;Passenger Rail;1
+ATG;Subcompact Car;1
+ATG;Truck (0-3.5t);1
+ATG;Truck (18t);1
+ATG;Truck (26t);1
+ATG;Truck (40t);1
+ATG;Truck (7.5t);1
+ATG;Van;1
+ATG;Walk;1
+AUS;Bus;1
+AUS;Compact Car;1
+AUS;Cycle;1
+AUS;Domestic Aviation;1
+AUS;Domestic Ship;1
+AUS;Freight Rail;1
+AUS;HSR;1
+AUS;International Aviation;1
+AUS;International Ship;1
+AUS;Large Car;1
+AUS;Large Car and SUV;1
+AUS;Midsize Car;1
+AUS;Mini Car;1
+AUS;Moped;0
+AUS;Motorcycle (50-250cc);0
+AUS;Motorcycle (>250cc);1
+AUS;Passenger Rail;1
+AUS;Subcompact Car;1
+AUS;Truck (0-3.5t);1
+AUS;Truck (18t);1
+AUS;Truck (26t);1
+AUS;Truck (40t);1
+AUS;Truck (7.5t);1
+AUS;Van;1
+AUS;Walk;1
+AUT;Bus;1
+AUT;Compact Car;1
+AUT;Cycle;1
+AUT;Domestic Aviation;1
+AUT;Domestic Ship;1
+AUT;Freight Rail;1
+AUT;HSR;1
+AUT;International Aviation;1
+AUT;International Ship;1
+AUT;Large Car;0
+AUT;Large Car and SUV;1
+AUT;Midsize Car;1
+AUT;Mini Car;1
+AUT;Moped;1
+AUT;Motorcycle (50-250cc);1
+AUT;Motorcycle (>250cc);1
+AUT;Passenger Rail;1
+AUT;Subcompact Car;1
+AUT;Truck (0-3.5t);1
+AUT;Truck (18t);1
+AUT;Truck (26t);1
+AUT;Truck (40t);1
+AUT;Truck (7.5t);1
+AUT;Van;1
+AUT;Walk;1
+AZE;Bus;1
+AZE;Compact Car;1
+AZE;Cycle;1
+AZE;Domestic Aviation;1
+AZE;Domestic Ship;1
+AZE;Freight Rail;1
+AZE;HSR;1
+AZE;International Aviation;1
+AZE;International Ship;1
+AZE;Large Car;0
+AZE;Large Car and SUV;1
+AZE;Midsize Car;1
+AZE;Mini Car;1
+AZE;Moped;1
+AZE;Motorcycle (50-250cc);1
+AZE;Motorcycle (>250cc);1
+AZE;Passenger Rail;1
+AZE;Subcompact Car;1
+AZE;Truck (0-3.5t);1
+AZE;Truck (18t);1
+AZE;Truck (26t);1
+AZE;Truck (40t);1
+AZE;Truck (7.5t);1
+AZE;Van;1
+AZE;Walk;1
+BDI;Bus;1
+BDI;Compact Car;1
+BDI;Cycle;1
+BDI;Domestic Aviation;1
+BDI;Domestic Ship;1
+BDI;Freight Rail;1
+BDI;HSR;1
+BDI;International Aviation;1
+BDI;International Ship;1
+BDI;Large Car;0
+BDI;Large Car and SUV;1
+BDI;Midsize Car;1
+BDI;Mini Car;1
+BDI;Moped;0
+BDI;Motorcycle (50-250cc);1
+BDI;Motorcycle (>250cc);1
+BDI;Passenger Rail;1
+BDI;Subcompact Car;1
+BDI;Truck (0-3.5t);1
+BDI;Truck (18t);1
+BDI;Truck (26t);1
+BDI;Truck (40t);1
+BDI;Truck (7.5t);1
+BDI;Van;1
+BDI;Walk;1
+BEL;Bus;1
+BEL;Compact Car;1
+BEL;Cycle;1
+BEL;Domestic Aviation;1
+BEL;Domestic Ship;1
+BEL;Freight Rail;1
+BEL;HSR;1
+BEL;International Aviation;1
+BEL;International Ship;1
+BEL;Large Car;0
+BEL;Large Car and SUV;1
+BEL;Midsize Car;1
+BEL;Mini Car;1
+BEL;Moped;1
+BEL;Motorcycle (50-250cc);1
+BEL;Motorcycle (>250cc);1
+BEL;Passenger Rail;1
+BEL;Subcompact Car;1
+BEL;Truck (0-3.5t);1
+BEL;Truck (18t);1
+BEL;Truck (26t);1
+BEL;Truck (40t);1
+BEL;Truck (7.5t);1
+BEL;Van;1
+BEL;Walk;1
+BEN;Bus;1
+BEN;Compact Car;1
+BEN;Cycle;1
+BEN;Domestic Aviation;1
+BEN;Domestic Ship;1
+BEN;Freight Rail;1
+BEN;HSR;1
+BEN;International Aviation;1
+BEN;International Ship;1
+BEN;Large Car;0
+BEN;Large Car and SUV;1
+BEN;Midsize Car;1
+BEN;Mini Car;1
+BEN;Moped;0
+BEN;Motorcycle (50-250cc);1
+BEN;Motorcycle (>250cc);1
+BEN;Passenger Rail;1
+BEN;Subcompact Car;1
+BEN;Truck (0-3.5t);1
+BEN;Truck (18t);1
+BEN;Truck (26t);1
+BEN;Truck (40t);1
+BEN;Truck (7.5t);1
+BEN;Van;1
+BEN;Walk;1
+BES;Bus;1
+BES;Compact Car;1
+BES;Cycle;1
+BES;Domestic Aviation;1
+BES;Domestic Ship;1
+BES;Freight Rail;1
+BES;HSR;1
+BES;International Aviation;1
+BES;International Ship;1
+BES;Large Car;0
+BES;Large Car and SUV;1
+BES;Midsize Car;1
+BES;Mini Car;1
+BES;Moped;1
+BES;Motorcycle (50-250cc);1
+BES;Motorcycle (>250cc);1
+BES;Passenger Rail;1
+BES;Subcompact Car;1
+BES;Truck (0-3.5t);1
+BES;Truck (18t);1
+BES;Truck (26t);1
+BES;Truck (40t);1
+BES;Truck (7.5t);1
+BES;Van;1
+BES;Walk;1
+BFA;Bus;1
+BFA;Compact Car;1
+BFA;Cycle;1
+BFA;Domestic Aviation;1
+BFA;Domestic Ship;1
+BFA;Freight Rail;1
+BFA;HSR;1
+BFA;International Aviation;1
+BFA;International Ship;1
+BFA;Large Car;0
+BFA;Large Car and SUV;1
+BFA;Midsize Car;1
+BFA;Mini Car;1
+BFA;Moped;0
+BFA;Motorcycle (50-250cc);1
+BFA;Motorcycle (>250cc);1
+BFA;Passenger Rail;1
+BFA;Subcompact Car;1
+BFA;Truck (0-3.5t);1
+BFA;Truck (18t);1
+BFA;Truck (26t);1
+BFA;Truck (40t);1
+BFA;Truck (7.5t);1
+BFA;Van;1
+BFA;Walk;1
+BGD;Bus;1
+BGD;Compact Car;1
+BGD;Cycle;1
+BGD;Domestic Aviation;1
+BGD;Domestic Ship;1
+BGD;Freight Rail;1
+BGD;HSR;1
+BGD;International Aviation;1
+BGD;International Ship;1
+BGD;Large Car;0
+BGD;Large Car and SUV;1
+BGD;Midsize Car;1
+BGD;Mini Car;1
+BGD;Moped;1
+BGD;Motorcycle (50-250cc);1
+BGD;Motorcycle (>250cc);1
+BGD;Passenger Rail;1
+BGD;Subcompact Car;1
+BGD;Truck (0-3.5t);1
+BGD;Truck (18t);1
+BGD;Truck (26t);1
+BGD;Truck (40t);1
+BGD;Truck (7.5t);1
+BGD;Van;1
+BGD;Walk;1
+BGR;Bus;1
+BGR;Compact Car;1
+BGR;Cycle;1
+BGR;Domestic Aviation;1
+BGR;Domestic Ship;1
+BGR;Freight Rail;1
+BGR;HSR;1
+BGR;International Aviation;1
+BGR;International Ship;1
+BGR;Large Car;0
+BGR;Large Car and SUV;1
+BGR;Midsize Car;1
+BGR;Mini Car;1
+BGR;Moped;1
+BGR;Motorcycle (50-250cc);1
+BGR;Motorcycle (>250cc);1
+BGR;Passenger Rail;1
+BGR;Subcompact Car;1
+BGR;Truck (0-3.5t);1
+BGR;Truck (18t);1
+BGR;Truck (26t);1
+BGR;Truck (40t);1
+BGR;Truck (7.5t);1
+BGR;Van;1
+BGR;Walk;1
+BHR;Bus;1
+BHR;Compact Car;1
+BHR;Cycle;1
+BHR;Domestic Aviation;1
+BHR;Domestic Ship;0
+BHR;Freight Rail;0
+BHR;HSR;1
+BHR;International Aviation;1
+BHR;International Ship;1
+BHR;Large Car;0
+BHR;Large Car and SUV;1
+BHR;Midsize Car;1
+BHR;Mini Car;1
+BHR;Moped;0
+BHR;Motorcycle (50-250cc);1
+BHR;Motorcycle (>250cc);0
+BHR;Passenger Rail;1
+BHR;Subcompact Car;1
+BHR;Truck (0-3.5t);1
+BHR;Truck (18t);1
+BHR;Truck (26t);1
+BHR;Truck (40t);1
+BHR;Truck (7.5t);1
+BHR;Van;1
+BHR;Walk;1
+BHS;Bus;1
+BHS;Compact Car;1
+BHS;Cycle;1
+BHS;Domestic Aviation;1
+BHS;Domestic Ship;1
+BHS;Freight Rail;1
+BHS;HSR;1
+BHS;International Aviation;1
+BHS;International Ship;1
+BHS;Large Car;0
+BHS;Large Car and SUV;1
+BHS;Midsize Car;1
+BHS;Mini Car;1
+BHS;Moped;1
+BHS;Motorcycle (50-250cc);1
+BHS;Motorcycle (>250cc);1
+BHS;Passenger Rail;1
+BHS;Subcompact Car;1
+BHS;Truck (0-3.5t);1
+BHS;Truck (18t);1
+BHS;Truck (26t);1
+BHS;Truck (40t);1
+BHS;Truck (7.5t);1
+BHS;Van;1
+BHS;Walk;1
+BIH;Bus;1
+BIH;Compact Car;1
+BIH;Cycle;1
+BIH;Domestic Aviation;1
+BIH;Domestic Ship;1
+BIH;Freight Rail;1
+BIH;HSR;1
+BIH;International Aviation;1
+BIH;International Ship;1
+BIH;Large Car;0
+BIH;Large Car and SUV;1
+BIH;Midsize Car;1
+BIH;Mini Car;1
+BIH;Moped;1
+BIH;Motorcycle (50-250cc);1
+BIH;Motorcycle (>250cc);1
+BIH;Passenger Rail;1
+BIH;Subcompact Car;1
+BIH;Truck (0-3.5t);1
+BIH;Truck (18t);1
+BIH;Truck (26t);1
+BIH;Truck (40t);1
+BIH;Truck (7.5t);1
+BIH;Van;1
+BIH;Walk;1
+BLM;Bus;1
+BLM;Compact Car;1
+BLM;Cycle;1
+BLM;Domestic Aviation;1
+BLM;Domestic Ship;1
+BLM;Freight Rail;1
+BLM;HSR;1
+BLM;International Aviation;1
+BLM;International Ship;1
+BLM;Large Car;0
+BLM;Large Car and SUV;1
+BLM;Midsize Car;1
+BLM;Mini Car;1
+BLM;Moped;1
+BLM;Motorcycle (50-250cc);1
+BLM;Motorcycle (>250cc);1
+BLM;Passenger Rail;1
+BLM;Subcompact Car;1
+BLM;Truck (0-3.5t);1
+BLM;Truck (18t);1
+BLM;Truck (26t);1
+BLM;Truck (40t);1
+BLM;Truck (7.5t);1
+BLM;Van;1
+BLM;Walk;1
+BLR;Bus;1
+BLR;Compact Car;1
+BLR;Cycle;1
+BLR;Domestic Aviation;1
+BLR;Domestic Ship;1
+BLR;Freight Rail;1
+BLR;HSR;1
+BLR;International Aviation;1
+BLR;International Ship;1
+BLR;Large Car;0
+BLR;Large Car and SUV;1
+BLR;Midsize Car;1
+BLR;Mini Car;1
+BLR;Moped;1
+BLR;Motorcycle (50-250cc);1
+BLR;Motorcycle (>250cc);1
+BLR;Passenger Rail;1
+BLR;Subcompact Car;1
+BLR;Truck (0-3.5t);1
+BLR;Truck (18t);1
+BLR;Truck (26t);1
+BLR;Truck (40t);1
+BLR;Truck (7.5t);1
+BLR;Van;1
+BLR;Walk;1
+BLZ;Bus;1
+BLZ;Compact Car;1
+BLZ;Cycle;1
+BLZ;Domestic Aviation;1
+BLZ;Domestic Ship;1
+BLZ;Freight Rail;1
+BLZ;HSR;1
+BLZ;International Aviation;1
+BLZ;International Ship;1
+BLZ;Large Car;0
+BLZ;Large Car and SUV;1
+BLZ;Midsize Car;1
+BLZ;Mini Car;1
+BLZ;Moped;1
+BLZ;Motorcycle (50-250cc);1
+BLZ;Motorcycle (>250cc);1
+BLZ;Passenger Rail;1
+BLZ;Subcompact Car;1
+BLZ;Truck (0-3.5t);1
+BLZ;Truck (18t);1
+BLZ;Truck (26t);1
+BLZ;Truck (40t);1
+BLZ;Truck (7.5t);1
+BLZ;Van;1
+BLZ;Walk;1
+BMU;Bus;1
+BMU;Compact Car;1
+BMU;Cycle;1
+BMU;Domestic Aviation;1
+BMU;Domestic Ship;1
+BMU;Freight Rail;1
+BMU;HSR;1
+BMU;International Aviation;1
+BMU;International Ship;1
+BMU;Large Car;0
+BMU;Large Car and SUV;1
+BMU;Midsize Car;1
+BMU;Mini Car;1
+BMU;Moped;1
+BMU;Motorcycle (50-250cc);1
+BMU;Motorcycle (>250cc);1
+BMU;Passenger Rail;1
+BMU;Subcompact Car;1
+BMU;Truck (0-3.5t);1
+BMU;Truck (18t);1
+BMU;Truck (26t);1
+BMU;Truck (40t);1
+BMU;Truck (7.5t);1
+BMU;Van;1
+BMU;Walk;1
+BOL;Bus;1
+BOL;Compact Car;1
+BOL;Cycle;1
+BOL;Domestic Aviation;1
+BOL;Domestic Ship;1
+BOL;Freight Rail;1
+BOL;HSR;1
+BOL;International Aviation;1
+BOL;International Ship;1
+BOL;Large Car;0
+BOL;Large Car and SUV;1
+BOL;Midsize Car;1
+BOL;Mini Car;1
+BOL;Moped;1
+BOL;Motorcycle (50-250cc);1
+BOL;Motorcycle (>250cc);1
+BOL;Passenger Rail;1
+BOL;Subcompact Car;1
+BOL;Truck (0-3.5t);1
+BOL;Truck (18t);1
+BOL;Truck (26t);1
+BOL;Truck (40t);1
+BOL;Truck (7.5t);1
+BOL;Van;1
+BOL;Walk;1
+BRA;Bus;1
+BRA;Compact Car;1
+BRA;Cycle;1
+BRA;Domestic Aviation;1
+BRA;Domestic Ship;1
+BRA;Freight Rail;1
+BRA;HSR;1
+BRA;International Aviation;1
+BRA;International Ship;1
+BRA;Large Car;0
+BRA;Large Car and SUV;1
+BRA;Midsize Car;1
+BRA;Mini Car;1
+BRA;Moped;1
+BRA;Motorcycle (50-250cc);1
+BRA;Motorcycle (>250cc);1
+BRA;Passenger Rail;1
+BRA;Subcompact Car;1
+BRA;Truck (0-3.5t);1
+BRA;Truck (18t);1
+BRA;Truck (26t);1
+BRA;Truck (40t);1
+BRA;Truck (7.5t);1
+BRA;Van;1
+BRA;Walk;1
+BRB;Bus;1
+BRB;Compact Car;1
+BRB;Cycle;1
+BRB;Domestic Aviation;1
+BRB;Domestic Ship;1
+BRB;Freight Rail;1
+BRB;HSR;1
+BRB;International Aviation;1
+BRB;International Ship;1
+BRB;Large Car;0
+BRB;Large Car and SUV;1
+BRB;Midsize Car;1
+BRB;Mini Car;1
+BRB;Moped;1
+BRB;Motorcycle (50-250cc);1
+BRB;Motorcycle (>250cc);1
+BRB;Passenger Rail;1
+BRB;Subcompact Car;1
+BRB;Truck (0-3.5t);1
+BRB;Truck (18t);1
+BRB;Truck (26t);1
+BRB;Truck (40t);1
+BRB;Truck (7.5t);1
+BRB;Van;1
+BRB;Walk;1
+BRN;Bus;1
+BRN;Compact Car;1
+BRN;Cycle;1
+BRN;Domestic Aviation;1
+BRN;Domestic Ship;1
+BRN;Freight Rail;1
+BRN;HSR;1
+BRN;International Aviation;1
+BRN;International Ship;1
+BRN;Large Car;0
+BRN;Large Car and SUV;1
+BRN;Midsize Car;1
+BRN;Mini Car;1
+BRN;Moped;1
+BRN;Motorcycle (50-250cc);1
+BRN;Motorcycle (>250cc);1
+BRN;Passenger Rail;1
+BRN;Subcompact Car;1
+BRN;Truck (0-3.5t);1
+BRN;Truck (18t);1
+BRN;Truck (26t);1
+BRN;Truck (40t);1
+BRN;Truck (7.5t);1
+BRN;Van;1
+BRN;Walk;1
+BTN;Bus;1
+BTN;Compact Car;1
+BTN;Cycle;1
+BTN;Domestic Aviation;1
+BTN;Domestic Ship;1
+BTN;Freight Rail;1
+BTN;HSR;1
+BTN;International Aviation;1
+BTN;International Ship;1
+BTN;Large Car;0
+BTN;Large Car and SUV;1
+BTN;Midsize Car;1
+BTN;Mini Car;1
+BTN;Moped;1
+BTN;Motorcycle (50-250cc);1
+BTN;Motorcycle (>250cc);1
+BTN;Passenger Rail;1
+BTN;Subcompact Car;1
+BTN;Truck (0-3.5t);1
+BTN;Truck (18t);1
+BTN;Truck (26t);1
+BTN;Truck (40t);1
+BTN;Truck (7.5t);1
+BTN;Van;1
+BTN;Walk;1
+BVT;Bus;1
+BVT;Compact Car;1
+BVT;Cycle;1
+BVT;Domestic Aviation;1
+BVT;Domestic Ship;1
+BVT;Freight Rail;1
+BVT;HSR;1
+BVT;International Aviation;1
+BVT;International Ship;1
+BVT;Large Car;0
+BVT;Large Car and SUV;1
+BVT;Midsize Car;1
+BVT;Mini Car;1
+BVT;Moped;1
+BVT;Motorcycle (50-250cc);1
+BVT;Motorcycle (>250cc);1
+BVT;Passenger Rail;1
+BVT;Subcompact Car;1
+BVT;Truck (0-3.5t);1
+BVT;Truck (18t);1
+BVT;Truck (26t);1
+BVT;Truck (40t);1
+BVT;Truck (7.5t);1
+BVT;Van;1
+BVT;Walk;1
+BWA;Bus;1
+BWA;Compact Car;1
+BWA;Cycle;1
+BWA;Domestic Aviation;1
+BWA;Domestic Ship;1
+BWA;Freight Rail;1
+BWA;HSR;1
+BWA;International Aviation;1
+BWA;International Ship;1
+BWA;Large Car;0
+BWA;Large Car and SUV;1
+BWA;Midsize Car;1
+BWA;Mini Car;1
+BWA;Moped;0
+BWA;Motorcycle (50-250cc);1
+BWA;Motorcycle (>250cc);1
+BWA;Passenger Rail;1
+BWA;Subcompact Car;1
+BWA;Truck (0-3.5t);1
+BWA;Truck (18t);1
+BWA;Truck (26t);1
+BWA;Truck (40t);1
+BWA;Truck (7.5t);1
+BWA;Van;1
+BWA;Walk;1
+CAF;Bus;1
+CAF;Compact Car;1
+CAF;Cycle;1
+CAF;Domestic Aviation;1
+CAF;Domestic Ship;1
+CAF;Freight Rail;1
+CAF;HSR;1
+CAF;International Aviation;1
+CAF;International Ship;1
+CAF;Large Car;0
+CAF;Large Car and SUV;1
+CAF;Midsize Car;1
+CAF;Mini Car;1
+CAF;Moped;0
+CAF;Motorcycle (50-250cc);1
+CAF;Motorcycle (>250cc);1
+CAF;Passenger Rail;1
+CAF;Subcompact Car;1
+CAF;Truck (0-3.5t);1
+CAF;Truck (18t);1
+CAF;Truck (26t);1
+CAF;Truck (40t);1
+CAF;Truck (7.5t);1
+CAF;Van;1
+CAF;Walk;1
+CAN;Bus;1
+CAN;Compact Car;1
+CAN;Cycle;1
+CAN;Domestic Aviation;1
+CAN;Domestic Ship;1
+CAN;Freight Rail;1
+CAN;HSR;1
+CAN;International Aviation;1
+CAN;International Ship;1
+CAN;Large Car;0
+CAN;Large Car and SUV;1
+CAN;Midsize Car;1
+CAN;Mini Car;1
+CAN;Moped;0
+CAN;Motorcycle (50-250cc);0
+CAN;Motorcycle (>250cc);1
+CAN;Passenger Rail;1
+CAN;Subcompact Car;1
+CAN;Truck (0-3.5t);1
+CAN;Truck (18t);1
+CAN;Truck (26t);1
+CAN;Truck (40t);1
+CAN;Truck (7.5t);1
+CAN;Van;1
+CAN;Walk;1
+CCK;Bus;1
+CCK;Compact Car;1
+CCK;Cycle;1
+CCK;Domestic Aviation;1
+CCK;Domestic Ship;1
+CCK;Freight Rail;1
+CCK;HSR;1
+CCK;International Aviation;1
+CCK;International Ship;1
+CCK;Large Car;0
+CCK;Large Car and SUV;1
+CCK;Midsize Car;1
+CCK;Mini Car;1
+CCK;Moped;1
+CCK;Motorcycle (50-250cc);1
+CCK;Motorcycle (>250cc);1
+CCK;Passenger Rail;1
+CCK;Subcompact Car;1
+CCK;Truck (0-3.5t);1
+CCK;Truck (18t);1
+CCK;Truck (26t);1
+CCK;Truck (40t);1
+CCK;Truck (7.5t);1
+CCK;Van;1
+CCK;Walk;1
+CHE;Bus;1
+CHE;Compact Car;1
+CHE;Cycle;1
+CHE;Domestic Aviation;1
+CHE;Domestic Ship;1
+CHE;Freight Rail;1
+CHE;HSR;1
+CHE;International Aviation;1
+CHE;International Ship;1
+CHE;Large Car;0
+CHE;Large Car and SUV;1
+CHE;Midsize Car;1
+CHE;Mini Car;1
+CHE;Moped;1
+CHE;Motorcycle (50-250cc);1
+CHE;Motorcycle (>250cc);1
+CHE;Passenger Rail;1
+CHE;Subcompact Car;1
+CHE;Truck (0-3.5t);1
+CHE;Truck (18t);1
+CHE;Truck (26t);1
+CHE;Truck (40t);1
+CHE;Truck (7.5t);1
+CHE;Van;1
+CHE;Walk;1
+CHL;Bus;1
+CHL;Compact Car;1
+CHL;Cycle;1
+CHL;Domestic Aviation;1
+CHL;Domestic Ship;1
+CHL;Freight Rail;1
+CHL;HSR;1
+CHL;International Aviation;1
+CHL;International Ship;1
+CHL;Large Car;0
+CHL;Large Car and SUV;1
+CHL;Midsize Car;1
+CHL;Mini Car;1
+CHL;Moped;1
+CHL;Motorcycle (50-250cc);1
+CHL;Motorcycle (>250cc);1
+CHL;Passenger Rail;1
+CHL;Subcompact Car;1
+CHL;Truck (0-3.5t);1
+CHL;Truck (18t);1
+CHL;Truck (26t);1
+CHL;Truck (40t);1
+CHL;Truck (7.5t);1
+CHL;Van;1
+CHL;Walk;1
+CHN;Bus;1
+CHN;Compact Car;1
+CHN;Cycle;1
+CHN;Domestic Aviation;1
+CHN;Domestic Ship;1
+CHN;Freight Rail;1
+CHN;HSR;1
+CHN;International Aviation;1
+CHN;International Ship;1
+CHN;Large Car;0
+CHN;Large Car and SUV;1
+CHN;Midsize Car;1
+CHN;Mini Car;1
+CHN;Moped;1
+CHN;Motorcycle (50-250cc);1
+CHN;Motorcycle (>250cc);1
+CHN;Passenger Rail;1
+CHN;Subcompact Car;1
+CHN;Truck (0-3.5t);1
+CHN;Truck (18t);1
+CHN;Truck (26t);1
+CHN;Truck (40t);1
+CHN;Truck (7.5t);1
+CHN;Van;1
+CHN;Walk;1
+CIV;Bus;1
+CIV;Compact Car;1
+CIV;Cycle;1
+CIV;Domestic Aviation;1
+CIV;Domestic Ship;1
+CIV;Freight Rail;1
+CIV;HSR;1
+CIV;International Aviation;1
+CIV;International Ship;1
+CIV;Large Car;0
+CIV;Large Car and SUV;1
+CIV;Midsize Car;1
+CIV;Mini Car;1
+CIV;Moped;0
+CIV;Motorcycle (50-250cc);1
+CIV;Motorcycle (>250cc);1
+CIV;Passenger Rail;1
+CIV;Subcompact Car;1
+CIV;Truck (0-3.5t);1
+CIV;Truck (18t);1
+CIV;Truck (26t);1
+CIV;Truck (40t);1
+CIV;Truck (7.5t);1
+CIV;Van;1
+CIV;Walk;1
+CMR;Bus;1
+CMR;Compact Car;1
+CMR;Cycle;1
+CMR;Domestic Aviation;1
+CMR;Domestic Ship;1
+CMR;Freight Rail;1
+CMR;HSR;1
+CMR;International Aviation;1
+CMR;International Ship;1
+CMR;Large Car;0
+CMR;Large Car and SUV;1
+CMR;Midsize Car;1
+CMR;Mini Car;1
+CMR;Moped;0
+CMR;Motorcycle (50-250cc);1
+CMR;Motorcycle (>250cc);1
+CMR;Passenger Rail;1
+CMR;Subcompact Car;1
+CMR;Truck (0-3.5t);1
+CMR;Truck (18t);1
+CMR;Truck (26t);1
+CMR;Truck (40t);1
+CMR;Truck (7.5t);1
+CMR;Van;1
+CMR;Walk;1
+COD;Bus;1
+COD;Compact Car;1
+COD;Cycle;1
+COD;Domestic Aviation;1
+COD;Domestic Ship;1
+COD;Freight Rail;1
+COD;HSR;1
+COD;International Aviation;1
+COD;International Ship;1
+COD;Large Car;0
+COD;Large Car and SUV;1
+COD;Midsize Car;1
+COD;Mini Car;1
+COD;Moped;0
+COD;Motorcycle (50-250cc);1
+COD;Motorcycle (>250cc);1
+COD;Passenger Rail;1
+COD;Subcompact Car;1
+COD;Truck (0-3.5t);1
+COD;Truck (18t);1
+COD;Truck (26t);1
+COD;Truck (40t);1
+COD;Truck (7.5t);1
+COD;Van;1
+COD;Walk;1
+COG;Bus;1
+COG;Compact Car;1
+COG;Cycle;1
+COG;Domestic Aviation;1
+COG;Domestic Ship;1
+COG;Freight Rail;1
+COG;HSR;1
+COG;International Aviation;1
+COG;International Ship;1
+COG;Large Car;0
+COG;Large Car and SUV;1
+COG;Midsize Car;1
+COG;Mini Car;1
+COG;Moped;0
+COG;Motorcycle (50-250cc);1
+COG;Motorcycle (>250cc);1
+COG;Passenger Rail;1
+COG;Subcompact Car;1
+COG;Truck (0-3.5t);1
+COG;Truck (18t);1
+COG;Truck (26t);1
+COG;Truck (40t);1
+COG;Truck (7.5t);1
+COG;Van;1
+COG;Walk;1
+COK;Bus;1
+COK;Compact Car;1
+COK;Cycle;1
+COK;Domestic Aviation;1
+COK;Domestic Ship;1
+COK;Freight Rail;1
+COK;HSR;1
+COK;International Aviation;1
+COK;International Ship;1
+COK;Large Car;0
+COK;Large Car and SUV;1
+COK;Midsize Car;1
+COK;Mini Car;1
+COK;Moped;1
+COK;Motorcycle (50-250cc);1
+COK;Motorcycle (>250cc);1
+COK;Passenger Rail;1
+COK;Subcompact Car;1
+COK;Truck (0-3.5t);1
+COK;Truck (18t);1
+COK;Truck (26t);1
+COK;Truck (40t);1
+COK;Truck (7.5t);1
+COK;Van;1
+COK;Walk;1
+COL;Bus;1
+COL;Compact Car;1
+COL;Cycle;1
+COL;Domestic Aviation;1
+COL;Domestic Ship;1
+COL;Freight Rail;1
+COL;HSR;1
+COL;International Aviation;1
+COL;International Ship;1
+COL;Large Car;0
+COL;Large Car and SUV;1
+COL;Midsize Car;1
+COL;Mini Car;1
+COL;Moped;1
+COL;Motorcycle (50-250cc);1
+COL;Motorcycle (>250cc);1
+COL;Passenger Rail;1
+COL;Subcompact Car;1
+COL;Truck (0-3.5t);1
+COL;Truck (18t);1
+COL;Truck (26t);1
+COL;Truck (40t);1
+COL;Truck (7.5t);1
+COL;Van;1
+COL;Walk;1
+COM;Bus;1
+COM;Compact Car;1
+COM;Cycle;1
+COM;Domestic Aviation;1
+COM;Domestic Ship;1
+COM;Freight Rail;1
+COM;HSR;1
+COM;International Aviation;1
+COM;International Ship;1
+COM;Large Car;0
+COM;Large Car and SUV;1
+COM;Midsize Car;1
+COM;Mini Car;1
+COM;Moped;0
+COM;Motorcycle (50-250cc);1
+COM;Motorcycle (>250cc);1
+COM;Passenger Rail;1
+COM;Subcompact Car;1
+COM;Truck (0-3.5t);1
+COM;Truck (18t);1
+COM;Truck (26t);1
+COM;Truck (40t);1
+COM;Truck (7.5t);1
+COM;Van;1
+COM;Walk;1
+CPV;Bus;1
+CPV;Compact Car;1
+CPV;Cycle;1
+CPV;Domestic Aviation;1
+CPV;Domestic Ship;1
+CPV;Freight Rail;1
+CPV;HSR;1
+CPV;International Aviation;1
+CPV;International Ship;1
+CPV;Large Car;0
+CPV;Large Car and SUV;1
+CPV;Midsize Car;1
+CPV;Mini Car;1
+CPV;Moped;0
+CPV;Motorcycle (50-250cc);1
+CPV;Motorcycle (>250cc);1
+CPV;Passenger Rail;1
+CPV;Subcompact Car;1
+CPV;Truck (0-3.5t);1
+CPV;Truck (18t);1
+CPV;Truck (26t);1
+CPV;Truck (40t);1
+CPV;Truck (7.5t);1
+CPV;Van;1
+CPV;Walk;1
+CRI;Bus;1
+CRI;Compact Car;1
+CRI;Cycle;1
+CRI;Domestic Aviation;1
+CRI;Domestic Ship;1
+CRI;Freight Rail;1
+CRI;HSR;1
+CRI;International Aviation;1
+CRI;International Ship;1
+CRI;Large Car;0
+CRI;Large Car and SUV;1
+CRI;Midsize Car;1
+CRI;Mini Car;1
+CRI;Moped;1
+CRI;Motorcycle (50-250cc);1
+CRI;Motorcycle (>250cc);1
+CRI;Passenger Rail;1
+CRI;Subcompact Car;1
+CRI;Truck (0-3.5t);1
+CRI;Truck (18t);1
+CRI;Truck (26t);1
+CRI;Truck (40t);1
+CRI;Truck (7.5t);1
+CRI;Van;1
+CRI;Walk;1
+CUB;Bus;1
+CUB;Compact Car;1
+CUB;Cycle;1
+CUB;Domestic Aviation;1
+CUB;Domestic Ship;1
+CUB;Freight Rail;1
+CUB;HSR;1
+CUB;International Aviation;1
+CUB;International Ship;1
+CUB;Large Car;0
+CUB;Large Car and SUV;1
+CUB;Midsize Car;1
+CUB;Mini Car;1
+CUB;Moped;1
+CUB;Motorcycle (50-250cc);1
+CUB;Motorcycle (>250cc);1
+CUB;Passenger Rail;1
+CUB;Subcompact Car;1
+CUB;Truck (0-3.5t);1
+CUB;Truck (18t);1
+CUB;Truck (26t);1
+CUB;Truck (40t);1
+CUB;Truck (7.5t);1
+CUB;Van;1
+CUB;Walk;1
+CUW;Bus;1
+CUW;Compact Car;1
+CUW;Cycle;1
+CUW;Domestic Aviation;1
+CUW;Domestic Ship;1
+CUW;Freight Rail;1
+CUW;HSR;1
+CUW;International Aviation;1
+CUW;International Ship;1
+CUW;Large Car;0
+CUW;Large Car and SUV;1
+CUW;Midsize Car;1
+CUW;Mini Car;1
+CUW;Moped;1
+CUW;Motorcycle (50-250cc);1
+CUW;Motorcycle (>250cc);1
+CUW;Passenger Rail;1
+CUW;Subcompact Car;1
+CUW;Truck (0-3.5t);1
+CUW;Truck (18t);1
+CUW;Truck (26t);1
+CUW;Truck (40t);1
+CUW;Truck (7.5t);1
+CUW;Van;1
+CUW;Walk;1
+CXR;Bus;1
+CXR;Compact Car;1
+CXR;Cycle;1
+CXR;Domestic Aviation;1
+CXR;Domestic Ship;1
+CXR;Freight Rail;1
+CXR;HSR;1
+CXR;International Aviation;1
+CXR;International Ship;1
+CXR;Large Car;0
+CXR;Large Car and SUV;1
+CXR;Midsize Car;1
+CXR;Mini Car;1
+CXR;Moped;1
+CXR;Motorcycle (50-250cc);1
+CXR;Motorcycle (>250cc);1
+CXR;Passenger Rail;1
+CXR;Subcompact Car;1
+CXR;Truck (0-3.5t);1
+CXR;Truck (18t);1
+CXR;Truck (26t);1
+CXR;Truck (40t);1
+CXR;Truck (7.5t);1
+CXR;Van;1
+CXR;Walk;1
+CYM;Bus;1
+CYM;Compact Car;1
+CYM;Cycle;1
+CYM;Domestic Aviation;1
+CYM;Domestic Ship;1
+CYM;Freight Rail;1
+CYM;HSR;1
+CYM;International Aviation;1
+CYM;International Ship;1
+CYM;Large Car;0
+CYM;Large Car and SUV;1
+CYM;Midsize Car;1
+CYM;Mini Car;1
+CYM;Moped;1
+CYM;Motorcycle (50-250cc);1
+CYM;Motorcycle (>250cc);1
+CYM;Passenger Rail;1
+CYM;Subcompact Car;1
+CYM;Truck (0-3.5t);1
+CYM;Truck (18t);1
+CYM;Truck (26t);1
+CYM;Truck (40t);1
+CYM;Truck (7.5t);1
+CYM;Van;1
+CYM;Walk;1
+CYP;Bus;1
+CYP;Compact Car;1
+CYP;Cycle;1
+CYP;Domestic Aviation;1
+CYP;Domestic Ship;1
+CYP;Freight Rail;1
+CYP;HSR;1
+CYP;International Aviation;1
+CYP;International Ship;1
+CYP;Large Car;0
+CYP;Large Car and SUV;1
+CYP;Midsize Car;1
+CYP;Mini Car;1
+CYP;Moped;1
+CYP;Motorcycle (50-250cc);1
+CYP;Motorcycle (>250cc);1
+CYP;Passenger Rail;1
+CYP;Subcompact Car;1
+CYP;Truck (0-3.5t);1
+CYP;Truck (18t);1
+CYP;Truck (26t);1
+CYP;Truck (40t);1
+CYP;Truck (7.5t);1
+CYP;Van;1
+CYP;Walk;1
+CZE;Bus;1
+CZE;Compact Car;1
+CZE;Cycle;1
+CZE;Domestic Aviation;1
+CZE;Domestic Ship;1
+CZE;Freight Rail;1
+CZE;HSR;1
+CZE;International Aviation;1
+CZE;International Ship;1
+CZE;Large Car;0
+CZE;Large Car and SUV;1
+CZE;Midsize Car;1
+CZE;Mini Car;1
+CZE;Moped;1
+CZE;Motorcycle (50-250cc);1
+CZE;Motorcycle (>250cc);1
+CZE;Passenger Rail;1
+CZE;Subcompact Car;1
+CZE;Truck (0-3.5t);1
+CZE;Truck (18t);1
+CZE;Truck (26t);1
+CZE;Truck (40t);1
+CZE;Truck (7.5t);1
+CZE;Van;1
+CZE;Walk;1
+DEU;Bus;1
+DEU;Compact Car;1
+DEU;Cycle;1
+DEU;Domestic Aviation;1
+DEU;Domestic Ship;1
+DEU;Freight Rail;1
+DEU;HSR;1
+DEU;International Aviation;1
+DEU;International Ship;1
+DEU;Large Car;0
+DEU;Large Car and SUV;1
+DEU;Midsize Car;1
+DEU;Mini Car;1
+DEU;Moped;1
+DEU;Motorcycle (50-250cc);1
+DEU;Motorcycle (>250cc);1
+DEU;Passenger Rail;1
+DEU;Subcompact Car;1
+DEU;Truck (0-3.5t);1
+DEU;Truck (18t);1
+DEU;Truck (26t);1
+DEU;Truck (40t);1
+DEU;Truck (7.5t);1
+DEU;Van;1
+DEU;Walk;1
+DJI;Bus;1
+DJI;Compact Car;1
+DJI;Cycle;1
+DJI;Domestic Aviation;1
+DJI;Domestic Ship;1
+DJI;Freight Rail;1
+DJI;HSR;1
+DJI;International Aviation;1
+DJI;International Ship;1
+DJI;Large Car;0
+DJI;Large Car and SUV;1
+DJI;Midsize Car;1
+DJI;Mini Car;1
+DJI;Moped;0
+DJI;Motorcycle (50-250cc);1
+DJI;Motorcycle (>250cc);1
+DJI;Passenger Rail;1
+DJI;Subcompact Car;1
+DJI;Truck (0-3.5t);1
+DJI;Truck (18t);1
+DJI;Truck (26t);1
+DJI;Truck (40t);1
+DJI;Truck (7.5t);1
+DJI;Van;1
+DJI;Walk;1
+DMA;Bus;1
+DMA;Compact Car;1
+DMA;Cycle;1
+DMA;Domestic Aviation;1
+DMA;Domestic Ship;1
+DMA;Freight Rail;1
+DMA;HSR;1
+DMA;International Aviation;1
+DMA;International Ship;1
+DMA;Large Car;0
+DMA;Large Car and SUV;1
+DMA;Midsize Car;1
+DMA;Mini Car;1
+DMA;Moped;1
+DMA;Motorcycle (50-250cc);1
+DMA;Motorcycle (>250cc);1
+DMA;Passenger Rail;1
+DMA;Subcompact Car;1
+DMA;Truck (0-3.5t);1
+DMA;Truck (18t);1
+DMA;Truck (26t);1
+DMA;Truck (40t);1
+DMA;Truck (7.5t);1
+DMA;Van;1
+DMA;Walk;1
+DNK;Bus;1
+DNK;Compact Car;1
+DNK;Cycle;1
+DNK;Domestic Aviation;1
+DNK;Domestic Ship;1
+DNK;Freight Rail;1
+DNK;HSR;1
+DNK;International Aviation;1
+DNK;International Ship;1
+DNK;Large Car;0
+DNK;Large Car and SUV;1
+DNK;Midsize Car;1
+DNK;Mini Car;1
+DNK;Moped;1
+DNK;Motorcycle (50-250cc);1
+DNK;Motorcycle (>250cc);1
+DNK;Passenger Rail;1
+DNK;Subcompact Car;1
+DNK;Truck (0-3.5t);1
+DNK;Truck (18t);1
+DNK;Truck (26t);1
+DNK;Truck (40t);1
+DNK;Truck (7.5t);1
+DNK;Van;1
+DNK;Walk;1
+DOM;Bus;1
+DOM;Compact Car;1
+DOM;Cycle;1
+DOM;Domestic Aviation;1
+DOM;Domestic Ship;1
+DOM;Freight Rail;1
+DOM;HSR;1
+DOM;International Aviation;1
+DOM;International Ship;1
+DOM;Large Car;0
+DOM;Large Car and SUV;1
+DOM;Midsize Car;1
+DOM;Mini Car;1
+DOM;Moped;1
+DOM;Motorcycle (50-250cc);1
+DOM;Motorcycle (>250cc);1
+DOM;Passenger Rail;1
+DOM;Subcompact Car;1
+DOM;Truck (0-3.5t);1
+DOM;Truck (18t);1
+DOM;Truck (26t);1
+DOM;Truck (40t);1
+DOM;Truck (7.5t);1
+DOM;Van;1
+DOM;Walk;1
+DZA;Bus;1
+DZA;Compact Car;1
+DZA;Cycle;1
+DZA;Domestic Aviation;1
+DZA;Domestic Ship;1
+DZA;Freight Rail;1
+DZA;HSR;1
+DZA;International Aviation;1
+DZA;International Ship;1
+DZA;Large Car;0
+DZA;Large Car and SUV;1
+DZA;Midsize Car;1
+DZA;Mini Car;1
+DZA;Moped;0
+DZA;Motorcycle (50-250cc);1
+DZA;Motorcycle (>250cc);1
+DZA;Passenger Rail;1
+DZA;Subcompact Car;1
+DZA;Truck (0-3.5t);1
+DZA;Truck (18t);1
+DZA;Truck (26t);1
+DZA;Truck (40t);1
+DZA;Truck (7.5t);1
+DZA;Van;1
+DZA;Walk;1
+ECU;Bus;1
+ECU;Compact Car;1
+ECU;Cycle;1
+ECU;Domestic Aviation;1
+ECU;Domestic Ship;1
+ECU;Freight Rail;1
+ECU;HSR;1
+ECU;International Aviation;1
+ECU;International Ship;1
+ECU;Large Car;0
+ECU;Large Car and SUV;1
+ECU;Midsize Car;1
+ECU;Mini Car;1
+ECU;Moped;1
+ECU;Motorcycle (50-250cc);1
+ECU;Motorcycle (>250cc);1
+ECU;Passenger Rail;1
+ECU;Subcompact Car;1
+ECU;Truck (0-3.5t);1
+ECU;Truck (18t);1
+ECU;Truck (26t);1
+ECU;Truck (40t);1
+ECU;Truck (7.5t);1
+ECU;Van;1
+ECU;Walk;1
+EGY;Bus;1
+EGY;Compact Car;1
+EGY;Cycle;1
+EGY;Domestic Aviation;1
+EGY;Domestic Ship;1
+EGY;Freight Rail;1
+EGY;HSR;1
+EGY;International Aviation;1
+EGY;International Ship;1
+EGY;Large Car;0
+EGY;Large Car and SUV;1
+EGY;Midsize Car;1
+EGY;Mini Car;1
+EGY;Moped;0
+EGY;Motorcycle (50-250cc);1
+EGY;Motorcycle (>250cc);1
+EGY;Passenger Rail;1
+EGY;Subcompact Car;1
+EGY;Truck (0-3.5t);1
+EGY;Truck (18t);1
+EGY;Truck (26t);1
+EGY;Truck (40t);1
+EGY;Truck (7.5t);1
+EGY;Van;1
+EGY;Walk;1
+ERI;Bus;1
+ERI;Compact Car;1
+ERI;Cycle;1
+ERI;Domestic Aviation;1
+ERI;Domestic Ship;1
+ERI;Freight Rail;1
+ERI;HSR;1
+ERI;International Aviation;1
+ERI;International Ship;1
+ERI;Large Car;0
+ERI;Large Car and SUV;1
+ERI;Midsize Car;1
+ERI;Mini Car;1
+ERI;Moped;0
+ERI;Motorcycle (50-250cc);1
+ERI;Motorcycle (>250cc);1
+ERI;Passenger Rail;1
+ERI;Subcompact Car;1
+ERI;Truck (0-3.5t);1
+ERI;Truck (18t);1
+ERI;Truck (26t);1
+ERI;Truck (40t);1
+ERI;Truck (7.5t);1
+ERI;Van;1
+ERI;Walk;1
+ESH;Bus;1
+ESH;Compact Car;1
+ESH;Cycle;1
+ESH;Domestic Aviation;1
+ESH;Domestic Ship;1
+ESH;Freight Rail;1
+ESH;HSR;1
+ESH;International Aviation;1
+ESH;International Ship;1
+ESH;Large Car;0
+ESH;Large Car and SUV;1
+ESH;Midsize Car;1
+ESH;Mini Car;1
+ESH;Moped;0
+ESH;Motorcycle (50-250cc);1
+ESH;Motorcycle (>250cc);1
+ESH;Passenger Rail;1
+ESH;Subcompact Car;1
+ESH;Truck (0-3.5t);1
+ESH;Truck (18t);1
+ESH;Truck (26t);1
+ESH;Truck (40t);1
+ESH;Truck (7.5t);1
+ESH;Van;1
+ESH;Walk;1
+ESP;Bus;1
+ESP;Compact Car;1
+ESP;Cycle;1
+ESP;Domestic Aviation;1
+ESP;Domestic Ship;1
+ESP;Freight Rail;1
+ESP;HSR;1
+ESP;International Aviation;1
+ESP;International Ship;1
+ESP;Large Car;0
+ESP;Large Car and SUV;1
+ESP;Midsize Car;1
+ESP;Mini Car;1
+ESP;Moped;1
+ESP;Motorcycle (50-250cc);1
+ESP;Motorcycle (>250cc);1
+ESP;Passenger Rail;1
+ESP;Subcompact Car;1
+ESP;Truck (0-3.5t);1
+ESP;Truck (18t);1
+ESP;Truck (26t);1
+ESP;Truck (40t);1
+ESP;Truck (7.5t);1
+ESP;Van;1
+ESP;Walk;1
+EST;Bus;1
+EST;Compact Car;1
+EST;Cycle;1
+EST;Domestic Aviation;1
+EST;Domestic Ship;1
+EST;Freight Rail;1
+EST;HSR;1
+EST;International Aviation;1
+EST;International Ship;1
+EST;Large Car;0
+EST;Large Car and SUV;1
+EST;Midsize Car;1
+EST;Mini Car;1
+EST;Moped;1
+EST;Motorcycle (50-250cc);1
+EST;Motorcycle (>250cc);1
+EST;Passenger Rail;1
+EST;Subcompact Car;1
+EST;Truck (0-3.5t);1
+EST;Truck (18t);1
+EST;Truck (26t);1
+EST;Truck (40t);1
+EST;Truck (7.5t);1
+EST;Van;1
+EST;Walk;1
+ETH;Bus;1
+ETH;Compact Car;1
+ETH;Cycle;1
+ETH;Domestic Aviation;1
+ETH;Domestic Ship;1
+ETH;Freight Rail;1
+ETH;HSR;1
+ETH;International Aviation;1
+ETH;International Ship;1
+ETH;Large Car;0
+ETH;Large Car and SUV;1
+ETH;Midsize Car;1
+ETH;Mini Car;1
+ETH;Moped;0
+ETH;Motorcycle (50-250cc);1
+ETH;Motorcycle (>250cc);1
+ETH;Passenger Rail;1
+ETH;Subcompact Car;1
+ETH;Truck (0-3.5t);1
+ETH;Truck (18t);1
+ETH;Truck (26t);1
+ETH;Truck (40t);1
+ETH;Truck (7.5t);1
+ETH;Van;1
+ETH;Walk;1
+FIN;Bus;1
+FIN;Compact Car;1
+FIN;Cycle;1
+FIN;Domestic Aviation;1
+FIN;Domestic Ship;1
+FIN;Freight Rail;1
+FIN;HSR;1
+FIN;International Aviation;1
+FIN;International Ship;1
+FIN;Large Car;0
+FIN;Large Car and SUV;1
+FIN;Midsize Car;1
+FIN;Mini Car;1
+FIN;Moped;1
+FIN;Motorcycle (50-250cc);1
+FIN;Motorcycle (>250cc);1
+FIN;Passenger Rail;1
+FIN;Subcompact Car;1
+FIN;Truck (0-3.5t);1
+FIN;Truck (18t);1
+FIN;Truck (26t);1
+FIN;Truck (40t);1
+FIN;Truck (7.5t);1
+FIN;Van;1
+FIN;Walk;1
+FJI;Bus;1
+FJI;Compact Car;1
+FJI;Cycle;1
+FJI;Domestic Aviation;1
+FJI;Domestic Ship;1
+FJI;Freight Rail;1
+FJI;HSR;1
+FJI;International Aviation;1
+FJI;International Ship;1
+FJI;Large Car;0
+FJI;Large Car and SUV;1
+FJI;Midsize Car;1
+FJI;Mini Car;1
+FJI;Moped;1
+FJI;Motorcycle (50-250cc);1
+FJI;Motorcycle (>250cc);1
+FJI;Passenger Rail;1
+FJI;Subcompact Car;1
+FJI;Truck (0-3.5t);1
+FJI;Truck (18t);1
+FJI;Truck (26t);1
+FJI;Truck (40t);1
+FJI;Truck (7.5t);1
+FJI;Van;1
+FJI;Walk;1
+FLK;Bus;1
+FLK;Compact Car;1
+FLK;Cycle;1
+FLK;Domestic Aviation;1
+FLK;Domestic Ship;1
+FLK;Freight Rail;1
+FLK;HSR;1
+FLK;International Aviation;1
+FLK;International Ship;1
+FLK;Large Car;0
+FLK;Large Car and SUV;1
+FLK;Midsize Car;1
+FLK;Mini Car;1
+FLK;Moped;1
+FLK;Motorcycle (50-250cc);1
+FLK;Motorcycle (>250cc);1
+FLK;Passenger Rail;1
+FLK;Subcompact Car;1
+FLK;Truck (0-3.5t);1
+FLK;Truck (18t);1
+FLK;Truck (26t);1
+FLK;Truck (40t);1
+FLK;Truck (7.5t);1
+FLK;Van;1
+FLK;Walk;1
+FRA;Bus;1
+FRA;Compact Car;1
+FRA;Cycle;1
+FRA;Domestic Aviation;1
+FRA;Domestic Ship;1
+FRA;Freight Rail;1
+FRA;HSR;1
+FRA;International Aviation;1
+FRA;International Ship;1
+FRA;Large Car;0
+FRA;Large Car and SUV;1
+FRA;Midsize Car;1
+FRA;Mini Car;1
+FRA;Moped;1
+FRA;Motorcycle (50-250cc);1
+FRA;Motorcycle (>250cc);1
+FRA;Passenger Rail;1
+FRA;Subcompact Car;1
+FRA;Truck (0-3.5t);1
+FRA;Truck (18t);1
+FRA;Truck (26t);1
+FRA;Truck (40t);1
+FRA;Truck (7.5t);1
+FRA;Van;1
+FRA;Walk;1
+FRO;Bus;1
+FRO;Compact Car;1
+FRO;Cycle;1
+FRO;Domestic Aviation;1
+FRO;Domestic Ship;1
+FRO;Freight Rail;1
+FRO;HSR;1
+FRO;International Aviation;1
+FRO;International Ship;1
+FRO;Large Car;0
+FRO;Large Car and SUV;1
+FRO;Midsize Car;1
+FRO;Mini Car;1
+FRO;Moped;1
+FRO;Motorcycle (50-250cc);1
+FRO;Motorcycle (>250cc);1
+FRO;Passenger Rail;1
+FRO;Subcompact Car;1
+FRO;Truck (0-3.5t);1
+FRO;Truck (18t);1
+FRO;Truck (26t);1
+FRO;Truck (40t);1
+FRO;Truck (7.5t);1
+FRO;Van;1
+FRO;Walk;1
+FSM;Bus;1
+FSM;Compact Car;1
+FSM;Cycle;1
+FSM;Domestic Aviation;1
+FSM;Domestic Ship;1
+FSM;Freight Rail;1
+FSM;HSR;1
+FSM;International Aviation;1
+FSM;International Ship;1
+FSM;Large Car;0
+FSM;Large Car and SUV;1
+FSM;Midsize Car;1
+FSM;Mini Car;1
+FSM;Moped;1
+FSM;Motorcycle (50-250cc);1
+FSM;Motorcycle (>250cc);1
+FSM;Passenger Rail;1
+FSM;Subcompact Car;1
+FSM;Truck (0-3.5t);1
+FSM;Truck (18t);1
+FSM;Truck (26t);1
+FSM;Truck (40t);1
+FSM;Truck (7.5t);1
+FSM;Van;1
+FSM;Walk;1
+GAB;Bus;1
+GAB;Compact Car;1
+GAB;Cycle;1
+GAB;Domestic Aviation;1
+GAB;Domestic Ship;1
+GAB;Freight Rail;1
+GAB;HSR;1
+GAB;International Aviation;1
+GAB;International Ship;1
+GAB;Large Car;0
+GAB;Large Car and SUV;1
+GAB;Midsize Car;1
+GAB;Mini Car;1
+GAB;Moped;0
+GAB;Motorcycle (50-250cc);1
+GAB;Motorcycle (>250cc);1
+GAB;Passenger Rail;1
+GAB;Subcompact Car;1
+GAB;Truck (0-3.5t);1
+GAB;Truck (18t);1
+GAB;Truck (26t);1
+GAB;Truck (40t);1
+GAB;Truck (7.5t);1
+GAB;Van;1
+GAB;Walk;1
+GBR;Bus;1
+GBR;Compact Car;1
+GBR;Cycle;1
+GBR;Domestic Aviation;1
+GBR;Domestic Ship;1
+GBR;Freight Rail;1
+GBR;HSR;1
+GBR;International Aviation;1
+GBR;International Ship;1
+GBR;Large Car;0
+GBR;Large Car and SUV;1
+GBR;Midsize Car;1
+GBR;Mini Car;1
+GBR;Moped;1
+GBR;Motorcycle (50-250cc);1
+GBR;Motorcycle (>250cc);1
+GBR;Passenger Rail;1
+GBR;Subcompact Car;1
+GBR;Truck (0-3.5t);1
+GBR;Truck (18t);1
+GBR;Truck (26t);1
+GBR;Truck (40t);1
+GBR;Truck (7.5t);1
+GBR;Van;1
+GBR;Walk;1
+GEO;Bus;1
+GEO;Compact Car;1
+GEO;Cycle;1
+GEO;Domestic Aviation;1
+GEO;Domestic Ship;1
+GEO;Freight Rail;1
+GEO;HSR;1
+GEO;International Aviation;1
+GEO;International Ship;1
+GEO;Large Car;0
+GEO;Large Car and SUV;1
+GEO;Midsize Car;1
+GEO;Mini Car;1
+GEO;Moped;1
+GEO;Motorcycle (50-250cc);1
+GEO;Motorcycle (>250cc);1
+GEO;Passenger Rail;1
+GEO;Subcompact Car;1
+GEO;Truck (0-3.5t);1
+GEO;Truck (18t);1
+GEO;Truck (26t);1
+GEO;Truck (40t);1
+GEO;Truck (7.5t);1
+GEO;Van;1
+GEO;Walk;1
+GGY;Bus;1
+GGY;Compact Car;1
+GGY;Cycle;1
+GGY;Domestic Aviation;1
+GGY;Domestic Ship;1
+GGY;Freight Rail;1
+GGY;HSR;1
+GGY;International Aviation;1
+GGY;International Ship;1
+GGY;Large Car;0
+GGY;Large Car and SUV;1
+GGY;Midsize Car;1
+GGY;Mini Car;1
+GGY;Moped;1
+GGY;Motorcycle (50-250cc);1
+GGY;Motorcycle (>250cc);1
+GGY;Passenger Rail;1
+GGY;Subcompact Car;1
+GGY;Truck (0-3.5t);1
+GGY;Truck (18t);1
+GGY;Truck (26t);1
+GGY;Truck (40t);1
+GGY;Truck (7.5t);1
+GGY;Van;1
+GGY;Walk;1
+GHA;Bus;1
+GHA;Compact Car;1
+GHA;Cycle;1
+GHA;Domestic Aviation;1
+GHA;Domestic Ship;1
+GHA;Freight Rail;1
+GHA;HSR;1
+GHA;International Aviation;1
+GHA;International Ship;1
+GHA;Large Car;0
+GHA;Large Car and SUV;1
+GHA;Midsize Car;1
+GHA;Mini Car;1
+GHA;Moped;0
+GHA;Motorcycle (50-250cc);1
+GHA;Motorcycle (>250cc);1
+GHA;Passenger Rail;1
+GHA;Subcompact Car;1
+GHA;Truck (0-3.5t);1
+GHA;Truck (18t);1
+GHA;Truck (26t);1
+GHA;Truck (40t);1
+GHA;Truck (7.5t);1
+GHA;Van;1
+GHA;Walk;1
+GIB;Bus;1
+GIB;Compact Car;1
+GIB;Cycle;1
+GIB;Domestic Aviation;1
+GIB;Domestic Ship;1
+GIB;Freight Rail;1
+GIB;HSR;1
+GIB;International Aviation;1
+GIB;International Ship;1
+GIB;Large Car;0
+GIB;Large Car and SUV;1
+GIB;Midsize Car;1
+GIB;Mini Car;1
+GIB;Moped;1
+GIB;Motorcycle (50-250cc);1
+GIB;Motorcycle (>250cc);1
+GIB;Passenger Rail;1
+GIB;Subcompact Car;1
+GIB;Truck (0-3.5t);1
+GIB;Truck (18t);1
+GIB;Truck (26t);1
+GIB;Truck (40t);1
+GIB;Truck (7.5t);1
+GIB;Van;1
+GIB;Walk;1
+GIN;Bus;1
+GIN;Compact Car;1
+GIN;Cycle;1
+GIN;Domestic Aviation;1
+GIN;Domestic Ship;1
+GIN;Freight Rail;1
+GIN;HSR;1
+GIN;International Aviation;1
+GIN;International Ship;1
+GIN;Large Car;0
+GIN;Large Car and SUV;1
+GIN;Midsize Car;1
+GIN;Mini Car;1
+GIN;Moped;0
+GIN;Motorcycle (50-250cc);1
+GIN;Motorcycle (>250cc);1
+GIN;Passenger Rail;1
+GIN;Subcompact Car;1
+GIN;Truck (0-3.5t);1
+GIN;Truck (18t);1
+GIN;Truck (26t);1
+GIN;Truck (40t);1
+GIN;Truck (7.5t);1
+GIN;Van;1
+GIN;Walk;1
+GLP;Bus;1
+GLP;Compact Car;1
+GLP;Cycle;1
+GLP;Domestic Aviation;1
+GLP;Domestic Ship;1
+GLP;Freight Rail;1
+GLP;HSR;1
+GLP;International Aviation;1
+GLP;International Ship;1
+GLP;Large Car;0
+GLP;Large Car and SUV;1
+GLP;Midsize Car;1
+GLP;Mini Car;1
+GLP;Moped;1
+GLP;Motorcycle (50-250cc);1
+GLP;Motorcycle (>250cc);1
+GLP;Passenger Rail;1
+GLP;Subcompact Car;1
+GLP;Truck (0-3.5t);1
+GLP;Truck (18t);1
+GLP;Truck (26t);1
+GLP;Truck (40t);1
+GLP;Truck (7.5t);1
+GLP;Van;1
+GLP;Walk;1
+GMB;Bus;1
+GMB;Compact Car;1
+GMB;Cycle;1
+GMB;Domestic Aviation;1
+GMB;Domestic Ship;1
+GMB;Freight Rail;1
+GMB;HSR;1
+GMB;International Aviation;1
+GMB;International Ship;1
+GMB;Large Car;0
+GMB;Large Car and SUV;1
+GMB;Midsize Car;1
+GMB;Mini Car;1
+GMB;Moped;0
+GMB;Motorcycle (50-250cc);1
+GMB;Motorcycle (>250cc);1
+GMB;Passenger Rail;1
+GMB;Subcompact Car;1
+GMB;Truck (0-3.5t);1
+GMB;Truck (18t);1
+GMB;Truck (26t);1
+GMB;Truck (40t);1
+GMB;Truck (7.5t);1
+GMB;Van;1
+GMB;Walk;1
+GNB;Bus;1
+GNB;Compact Car;1
+GNB;Cycle;1
+GNB;Domestic Aviation;1
+GNB;Domestic Ship;1
+GNB;Freight Rail;1
+GNB;HSR;1
+GNB;International Aviation;1
+GNB;International Ship;1
+GNB;Large Car;0
+GNB;Large Car and SUV;1
+GNB;Midsize Car;1
+GNB;Mini Car;1
+GNB;Moped;0
+GNB;Motorcycle (50-250cc);1
+GNB;Motorcycle (>250cc);1
+GNB;Passenger Rail;1
+GNB;Subcompact Car;1
+GNB;Truck (0-3.5t);1
+GNB;Truck (18t);1
+GNB;Truck (26t);1
+GNB;Truck (40t);1
+GNB;Truck (7.5t);1
+GNB;Van;1
+GNB;Walk;1
+GNQ;Bus;1
+GNQ;Compact Car;1
+GNQ;Cycle;1
+GNQ;Domestic Aviation;1
+GNQ;Domestic Ship;1
+GNQ;Freight Rail;1
+GNQ;HSR;1
+GNQ;International Aviation;1
+GNQ;International Ship;1
+GNQ;Large Car;0
+GNQ;Large Car and SUV;1
+GNQ;Midsize Car;1
+GNQ;Mini Car;1
+GNQ;Moped;0
+GNQ;Motorcycle (50-250cc);1
+GNQ;Motorcycle (>250cc);1
+GNQ;Passenger Rail;1
+GNQ;Subcompact Car;1
+GNQ;Truck (0-3.5t);1
+GNQ;Truck (18t);1
+GNQ;Truck (26t);1
+GNQ;Truck (40t);1
+GNQ;Truck (7.5t);1
+GNQ;Van;1
+GNQ;Walk;1
+GRC;Bus;1
+GRC;Compact Car;1
+GRC;Cycle;1
+GRC;Domestic Aviation;1
+GRC;Domestic Ship;1
+GRC;Freight Rail;1
+GRC;HSR;1
+GRC;International Aviation;1
+GRC;International Ship;1
+GRC;Large Car;0
+GRC;Large Car and SUV;1
+GRC;Midsize Car;1
+GRC;Mini Car;1
+GRC;Moped;1
+GRC;Motorcycle (50-250cc);1
+GRC;Motorcycle (>250cc);1
+GRC;Passenger Rail;1
+GRC;Subcompact Car;1
+GRC;Truck (0-3.5t);1
+GRC;Truck (18t);1
+GRC;Truck (26t);1
+GRC;Truck (40t);1
+GRC;Truck (7.5t);1
+GRC;Van;1
+GRC;Walk;1
+GRD;Bus;1
+GRD;Compact Car;1
+GRD;Cycle;1
+GRD;Domestic Aviation;1
+GRD;Domestic Ship;1
+GRD;Freight Rail;1
+GRD;HSR;1
+GRD;International Aviation;1
+GRD;International Ship;1
+GRD;Large Car;0
+GRD;Large Car and SUV;1
+GRD;Midsize Car;1
+GRD;Mini Car;1
+GRD;Moped;1
+GRD;Motorcycle (50-250cc);1
+GRD;Motorcycle (>250cc);1
+GRD;Passenger Rail;1
+GRD;Subcompact Car;1
+GRD;Truck (0-3.5t);1
+GRD;Truck (18t);1
+GRD;Truck (26t);1
+GRD;Truck (40t);1
+GRD;Truck (7.5t);1
+GRD;Van;1
+GRD;Walk;1
+GRL;Bus;1
+GRL;Compact Car;1
+GRL;Cycle;1
+GRL;Domestic Aviation;1
+GRL;Domestic Ship;1
+GRL;Freight Rail;1
+GRL;HSR;1
+GRL;International Aviation;1
+GRL;International Ship;1
+GRL;Large Car;0
+GRL;Large Car and SUV;1
+GRL;Midsize Car;1
+GRL;Mini Car;1
+GRL;Moped;1
+GRL;Motorcycle (50-250cc);1
+GRL;Motorcycle (>250cc);1
+GRL;Passenger Rail;1
+GRL;Subcompact Car;1
+GRL;Truck (0-3.5t);1
+GRL;Truck (18t);1
+GRL;Truck (26t);1
+GRL;Truck (40t);1
+GRL;Truck (7.5t);1
+GRL;Van;1
+GRL;Walk;1
+GTM;Bus;1
+GTM;Compact Car;1
+GTM;Cycle;1
+GTM;Domestic Aviation;1
+GTM;Domestic Ship;1
+GTM;Freight Rail;1
+GTM;HSR;1
+GTM;International Aviation;1
+GTM;International Ship;1
+GTM;Large Car;0
+GTM;Large Car and SUV;1
+GTM;Midsize Car;1
+GTM;Mini Car;1
+GTM;Moped;1
+GTM;Motorcycle (50-250cc);1
+GTM;Motorcycle (>250cc);1
+GTM;Passenger Rail;1
+GTM;Subcompact Car;1
+GTM;Truck (0-3.5t);1
+GTM;Truck (18t);1
+GTM;Truck (26t);1
+GTM;Truck (40t);1
+GTM;Truck (7.5t);1
+GTM;Van;1
+GTM;Walk;1
+GUF;Bus;1
+GUF;Compact Car;1
+GUF;Cycle;1
+GUF;Domestic Aviation;1
+GUF;Domestic Ship;1
+GUF;Freight Rail;1
+GUF;HSR;1
+GUF;International Aviation;1
+GUF;International Ship;1
+GUF;Large Car;0
+GUF;Large Car and SUV;1
+GUF;Midsize Car;1
+GUF;Mini Car;1
+GUF;Moped;1
+GUF;Motorcycle (50-250cc);1
+GUF;Motorcycle (>250cc);1
+GUF;Passenger Rail;1
+GUF;Subcompact Car;1
+GUF;Truck (0-3.5t);1
+GUF;Truck (18t);1
+GUF;Truck (26t);1
+GUF;Truck (40t);1
+GUF;Truck (7.5t);1
+GUF;Van;1
+GUF;Walk;1
+GUM;Bus;1
+GUM;Compact Car;1
+GUM;Cycle;1
+GUM;Domestic Aviation;1
+GUM;Domestic Ship;1
+GUM;Freight Rail;1
+GUM;HSR;1
+GUM;International Aviation;1
+GUM;International Ship;1
+GUM;Large Car;0
+GUM;Large Car and SUV;1
+GUM;Midsize Car;1
+GUM;Mini Car;1
+GUM;Moped;1
+GUM;Motorcycle (50-250cc);1
+GUM;Motorcycle (>250cc);1
+GUM;Passenger Rail;1
+GUM;Subcompact Car;1
+GUM;Truck (0-3.5t);1
+GUM;Truck (18t);1
+GUM;Truck (26t);1
+GUM;Truck (40t);1
+GUM;Truck (7.5t);1
+GUM;Van;1
+GUM;Walk;1
+GUY;Bus;1
+GUY;Compact Car;1
+GUY;Cycle;1
+GUY;Domestic Aviation;1
+GUY;Domestic Ship;1
+GUY;Freight Rail;1
+GUY;HSR;1
+GUY;International Aviation;1
+GUY;International Ship;1
+GUY;Large Car;0
+GUY;Large Car and SUV;1
+GUY;Midsize Car;1
+GUY;Mini Car;1
+GUY;Moped;1
+GUY;Motorcycle (50-250cc);1
+GUY;Motorcycle (>250cc);1
+GUY;Passenger Rail;1
+GUY;Subcompact Car;1
+GUY;Truck (0-3.5t);1
+GUY;Truck (18t);1
+GUY;Truck (26t);1
+GUY;Truck (40t);1
+GUY;Truck (7.5t);1
+GUY;Van;1
+GUY;Walk;1
+HKG;Bus;1
+HKG;Compact Car;1
+HKG;Cycle;1
+HKG;Domestic Aviation;1
+HKG;Domestic Ship;1
+HKG;Freight Rail;1
+HKG;HSR;1
+HKG;International Aviation;1
+HKG;International Ship;1
+HKG;Large Car;0
+HKG;Large Car and SUV;1
+HKG;Midsize Car;1
+HKG;Mini Car;1
+HKG;Moped;1
+HKG;Motorcycle (50-250cc);1
+HKG;Motorcycle (>250cc);1
+HKG;Passenger Rail;1
+HKG;Subcompact Car;1
+HKG;Truck (0-3.5t);1
+HKG;Truck (18t);1
+HKG;Truck (26t);1
+HKG;Truck (40t);1
+HKG;Truck (7.5t);1
+HKG;Van;1
+HKG;Walk;1
+HMD;Bus;1
+HMD;Compact Car;1
+HMD;Cycle;1
+HMD;Domestic Aviation;1
+HMD;Domestic Ship;1
+HMD;Freight Rail;1
+HMD;HSR;1
+HMD;International Aviation;1
+HMD;International Ship;1
+HMD;Large Car;1
+HMD;Large Car and SUV;1
+HMD;Midsize Car;1
+HMD;Mini Car;1
+HMD;Moped;0
+HMD;Motorcycle (50-250cc);0
+HMD;Motorcycle (>250cc);1
+HMD;Passenger Rail;1
+HMD;Subcompact Car;1
+HMD;Truck (0-3.5t);1
+HMD;Truck (18t);1
+HMD;Truck (26t);1
+HMD;Truck (40t);1
+HMD;Truck (7.5t);1
+HMD;Van;1
+HMD;Walk;1
+HND;Bus;1
+HND;Compact Car;1
+HND;Cycle;1
+HND;Domestic Aviation;1
+HND;Domestic Ship;1
+HND;Freight Rail;1
+HND;HSR;1
+HND;International Aviation;1
+HND;International Ship;1
+HND;Large Car;0
+HND;Large Car and SUV;1
+HND;Midsize Car;1
+HND;Mini Car;1
+HND;Moped;1
+HND;Motorcycle (50-250cc);1
+HND;Motorcycle (>250cc);1
+HND;Passenger Rail;1
+HND;Subcompact Car;1
+HND;Truck (0-3.5t);1
+HND;Truck (18t);1
+HND;Truck (26t);1
+HND;Truck (40t);1
+HND;Truck (7.5t);1
+HND;Van;1
+HND;Walk;1
+HRV;Bus;1
+HRV;Compact Car;1
+HRV;Cycle;1
+HRV;Domestic Aviation;1
+HRV;Domestic Ship;1
+HRV;Freight Rail;1
+HRV;HSR;1
+HRV;International Aviation;1
+HRV;International Ship;1
+HRV;Large Car;0
+HRV;Large Car and SUV;1
+HRV;Midsize Car;1
+HRV;Mini Car;1
+HRV;Moped;1
+HRV;Motorcycle (50-250cc);1
+HRV;Motorcycle (>250cc);1
+HRV;Passenger Rail;1
+HRV;Subcompact Car;1
+HRV;Truck (0-3.5t);1
+HRV;Truck (18t);1
+HRV;Truck (26t);1
+HRV;Truck (40t);1
+HRV;Truck (7.5t);1
+HRV;Van;1
+HRV;Walk;1
+HTI;Bus;1
+HTI;Compact Car;1
+HTI;Cycle;1
+HTI;Domestic Aviation;1
+HTI;Domestic Ship;1
+HTI;Freight Rail;1
+HTI;HSR;1
+HTI;International Aviation;1
+HTI;International Ship;1
+HTI;Large Car;0
+HTI;Large Car and SUV;1
+HTI;Midsize Car;1
+HTI;Mini Car;1
+HTI;Moped;1
+HTI;Motorcycle (50-250cc);1
+HTI;Motorcycle (>250cc);1
+HTI;Passenger Rail;1
+HTI;Subcompact Car;1
+HTI;Truck (0-3.5t);1
+HTI;Truck (18t);1
+HTI;Truck (26t);1
+HTI;Truck (40t);1
+HTI;Truck (7.5t);1
+HTI;Van;1
+HTI;Walk;1
+HUN;Bus;1
+HUN;Compact Car;1
+HUN;Cycle;1
+HUN;Domestic Aviation;1
+HUN;Domestic Ship;1
+HUN;Freight Rail;1
+HUN;HSR;1
+HUN;International Aviation;1
+HUN;International Ship;1
+HUN;Large Car;0
+HUN;Large Car and SUV;1
+HUN;Midsize Car;1
+HUN;Mini Car;1
+HUN;Moped;1
+HUN;Motorcycle (50-250cc);1
+HUN;Motorcycle (>250cc);1
+HUN;Passenger Rail;1
+HUN;Subcompact Car;1
+HUN;Truck (0-3.5t);1
+HUN;Truck (18t);1
+HUN;Truck (26t);1
+HUN;Truck (40t);1
+HUN;Truck (7.5t);1
+HUN;Van;1
+HUN;Walk;1
+IDN;Bus;1
+IDN;Compact Car;1
+IDN;Cycle;1
+IDN;Domestic Aviation;1
+IDN;Domestic Ship;1
+IDN;Freight Rail;1
+IDN;HSR;1
+IDN;International Aviation;1
+IDN;International Ship;1
+IDN;Large Car;0
+IDN;Large Car and SUV;1
+IDN;Midsize Car;1
+IDN;Mini Car;1
+IDN;Moped;1
+IDN;Motorcycle (50-250cc);1
+IDN;Motorcycle (>250cc);1
+IDN;Passenger Rail;1
+IDN;Subcompact Car;1
+IDN;Truck (0-3.5t);1
+IDN;Truck (18t);1
+IDN;Truck (26t);1
+IDN;Truck (40t);1
+IDN;Truck (7.5t);1
+IDN;Van;1
+IDN;Walk;1
+IMN;Bus;1
+IMN;Compact Car;1
+IMN;Cycle;1
+IMN;Domestic Aviation;1
+IMN;Domestic Ship;1
+IMN;Freight Rail;1
+IMN;HSR;1
+IMN;International Aviation;1
+IMN;International Ship;1
+IMN;Large Car;0
+IMN;Large Car and SUV;1
+IMN;Midsize Car;1
+IMN;Mini Car;1
+IMN;Moped;1
+IMN;Motorcycle (50-250cc);1
+IMN;Motorcycle (>250cc);1
+IMN;Passenger Rail;1
+IMN;Subcompact Car;1
+IMN;Truck (0-3.5t);1
+IMN;Truck (18t);1
+IMN;Truck (26t);1
+IMN;Truck (40t);1
+IMN;Truck (7.5t);1
+IMN;Van;1
+IMN;Walk;1
+IND;Bus;1
+IND;Compact Car;1
+IND;Cycle;1
+IND;Domestic Aviation;1
+IND;Domestic Ship;1
+IND;Freight Rail;1
+IND;HSR;1
+IND;International Aviation;1
+IND;International Ship;1
+IND;Large Car;0
+IND;Large Car and SUV;1
+IND;Midsize Car;1
+IND;Mini Car;1
+IND;Moped;1
+IND;Motorcycle (50-250cc);1
+IND;Motorcycle (>250cc);1
+IND;Passenger Rail;1
+IND;Subcompact Car;1
+IND;Truck (0-3.5t);1
+IND;Truck (18t);1
+IND;Truck (26t);1
+IND;Truck (40t);1
+IND;Truck (7.5t);1
+IND;Van;1
+IND;Walk;1
+IOT;Bus;1
+IOT;Compact Car;1
+IOT;Cycle;1
+IOT;Domestic Aviation;1
+IOT;Domestic Ship;1
+IOT;Freight Rail;1
+IOT;HSR;1
+IOT;International Aviation;1
+IOT;International Ship;1
+IOT;Large Car;0
+IOT;Large Car and SUV;1
+IOT;Midsize Car;1
+IOT;Mini Car;1
+IOT;Moped;1
+IOT;Motorcycle (50-250cc);1
+IOT;Motorcycle (>250cc);1
+IOT;Passenger Rail;1
+IOT;Subcompact Car;1
+IOT;Truck (0-3.5t);1
+IOT;Truck (18t);1
+IOT;Truck (26t);1
+IOT;Truck (40t);1
+IOT;Truck (7.5t);1
+IOT;Van;1
+IOT;Walk;1
+IRL;Bus;1
+IRL;Compact Car;1
+IRL;Cycle;1
+IRL;Domestic Aviation;1
+IRL;Domestic Ship;1
+IRL;Freight Rail;1
+IRL;HSR;1
+IRL;International Aviation;1
+IRL;International Ship;1
+IRL;Large Car;0
+IRL;Large Car and SUV;1
+IRL;Midsize Car;1
+IRL;Mini Car;1
+IRL;Moped;1
+IRL;Motorcycle (50-250cc);1
+IRL;Motorcycle (>250cc);1
+IRL;Passenger Rail;1
+IRL;Subcompact Car;1
+IRL;Truck (0-3.5t);1
+IRL;Truck (18t);1
+IRL;Truck (26t);1
+IRL;Truck (40t);1
+IRL;Truck (7.5t);1
+IRL;Van;1
+IRL;Walk;1
+IRN;Bus;1
+IRN;Compact Car;1
+IRN;Cycle;1
+IRN;Domestic Aviation;1
+IRN;Domestic Ship;0
+IRN;Freight Rail;0
+IRN;HSR;1
+IRN;International Aviation;1
+IRN;International Ship;1
+IRN;Large Car;0
+IRN;Large Car and SUV;1
+IRN;Midsize Car;1
+IRN;Mini Car;1
+IRN;Moped;0
+IRN;Motorcycle (50-250cc);1
+IRN;Motorcycle (>250cc);0
+IRN;Passenger Rail;1
+IRN;Subcompact Car;1
+IRN;Truck (0-3.5t);1
+IRN;Truck (18t);1
+IRN;Truck (26t);1
+IRN;Truck (40t);1
+IRN;Truck (7.5t);1
+IRN;Van;1
+IRN;Walk;1
+IRQ;Bus;1
+IRQ;Compact Car;1
+IRQ;Cycle;1
+IRQ;Domestic Aviation;1
+IRQ;Domestic Ship;0
+IRQ;Freight Rail;0
+IRQ;HSR;1
+IRQ;International Aviation;1
+IRQ;International Ship;1
+IRQ;Large Car;0
+IRQ;Large Car and SUV;1
+IRQ;Midsize Car;1
+IRQ;Mini Car;1
+IRQ;Moped;0
+IRQ;Motorcycle (50-250cc);1
+IRQ;Motorcycle (>250cc);0
+IRQ;Passenger Rail;1
+IRQ;Subcompact Car;1
+IRQ;Truck (0-3.5t);1
+IRQ;Truck (18t);1
+IRQ;Truck (26t);1
+IRQ;Truck (40t);1
+IRQ;Truck (7.5t);1
+IRQ;Van;1
+IRQ;Walk;1
+ISL;Bus;1
+ISL;Compact Car;1
+ISL;Cycle;1
+ISL;Domestic Aviation;1
+ISL;Domestic Ship;1
+ISL;Freight Rail;1
+ISL;HSR;1
+ISL;International Aviation;1
+ISL;International Ship;1
+ISL;Large Car;0
+ISL;Large Car and SUV;1
+ISL;Midsize Car;1
+ISL;Mini Car;1
+ISL;Moped;1
+ISL;Motorcycle (50-250cc);1
+ISL;Motorcycle (>250cc);1
+ISL;Passenger Rail;1
+ISL;Subcompact Car;1
+ISL;Truck (0-3.5t);1
+ISL;Truck (18t);1
+ISL;Truck (26t);1
+ISL;Truck (40t);1
+ISL;Truck (7.5t);1
+ISL;Van;1
+ISL;Walk;1
+ISR;Bus;1
+ISR;Compact Car;1
+ISR;Cycle;1
+ISR;Domestic Aviation;1
+ISR;Domestic Ship;0
+ISR;Freight Rail;0
+ISR;HSR;1
+ISR;International Aviation;1
+ISR;International Ship;1
+ISR;Large Car;0
+ISR;Large Car and SUV;1
+ISR;Midsize Car;1
+ISR;Mini Car;1
+ISR;Moped;0
+ISR;Motorcycle (50-250cc);1
+ISR;Motorcycle (>250cc);0
+ISR;Passenger Rail;1
+ISR;Subcompact Car;1
+ISR;Truck (0-3.5t);1
+ISR;Truck (18t);1
+ISR;Truck (26t);1
+ISR;Truck (40t);1
+ISR;Truck (7.5t);1
+ISR;Van;1
+ISR;Walk;1
+ITA;Bus;1
+ITA;Compact Car;1
+ITA;Cycle;1
+ITA;Domestic Aviation;1
+ITA;Domestic Ship;1
+ITA;Freight Rail;1
+ITA;HSR;1
+ITA;International Aviation;1
+ITA;International Ship;1
+ITA;Large Car;0
+ITA;Large Car and SUV;1
+ITA;Midsize Car;1
+ITA;Mini Car;1
+ITA;Moped;1
+ITA;Motorcycle (50-250cc);1
+ITA;Motorcycle (>250cc);1
+ITA;Passenger Rail;1
+ITA;Subcompact Car;1
+ITA;Truck (0-3.5t);1
+ITA;Truck (18t);1
+ITA;Truck (26t);1
+ITA;Truck (40t);1
+ITA;Truck (7.5t);1
+ITA;Van;1
+ITA;Walk;1
+JAM;Bus;1
+JAM;Compact Car;1
+JAM;Cycle;1
+JAM;Domestic Aviation;1
+JAM;Domestic Ship;1
+JAM;Freight Rail;1
+JAM;HSR;1
+JAM;International Aviation;1
+JAM;International Ship;1
+JAM;Large Car;0
+JAM;Large Car and SUV;1
+JAM;Midsize Car;1
+JAM;Mini Car;1
+JAM;Moped;1
+JAM;Motorcycle (50-250cc);1
+JAM;Motorcycle (>250cc);1
+JAM;Passenger Rail;1
+JAM;Subcompact Car;1
+JAM;Truck (0-3.5t);1
+JAM;Truck (18t);1
+JAM;Truck (26t);1
+JAM;Truck (40t);1
+JAM;Truck (7.5t);1
+JAM;Van;1
+JAM;Walk;1
+JEY;Bus;1
+JEY;Compact Car;1
+JEY;Cycle;1
+JEY;Domestic Aviation;1
+JEY;Domestic Ship;1
+JEY;Freight Rail;1
+JEY;HSR;1
+JEY;International Aviation;1
+JEY;International Ship;1
+JEY;Large Car;0
+JEY;Large Car and SUV;1
+JEY;Midsize Car;1
+JEY;Mini Car;1
+JEY;Moped;1
+JEY;Motorcycle (50-250cc);1
+JEY;Motorcycle (>250cc);1
+JEY;Passenger Rail;1
+JEY;Subcompact Car;1
+JEY;Truck (0-3.5t);1
+JEY;Truck (18t);1
+JEY;Truck (26t);1
+JEY;Truck (40t);1
+JEY;Truck (7.5t);1
+JEY;Van;1
+JEY;Walk;1
+JOR;Bus;1
+JOR;Compact Car;1
+JOR;Cycle;1
+JOR;Domestic Aviation;1
+JOR;Domestic Ship;0
+JOR;Freight Rail;0
+JOR;HSR;1
+JOR;International Aviation;1
+JOR;International Ship;1
+JOR;Large Car;0
+JOR;Large Car and SUV;1
+JOR;Midsize Car;1
+JOR;Mini Car;1
+JOR;Moped;0
+JOR;Motorcycle (50-250cc);1
+JOR;Motorcycle (>250cc);0
+JOR;Passenger Rail;1
+JOR;Subcompact Car;1
+JOR;Truck (0-3.5t);1
+JOR;Truck (18t);1
+JOR;Truck (26t);1
+JOR;Truck (40t);1
+JOR;Truck (7.5t);1
+JOR;Van;1
+JOR;Walk;1
+JPN;Bus;1
+JPN;Compact Car;1
+JPN;Cycle;1
+JPN;Domestic Aviation;1
+JPN;Domestic Ship;1
+JPN;Freight Rail;1
+JPN;HSR;1
+JPN;International Aviation;1
+JPN;International Ship;1
+JPN;Large Car;0
+JPN;Large Car and SUV;1
+JPN;Midsize Car;1
+JPN;Mini Car;1
+JPN;Moped;1
+JPN;Motorcycle (50-250cc);1
+JPN;Motorcycle (>250cc);1
+JPN;Passenger Rail;1
+JPN;Subcompact Car;1
+JPN;Truck (0-3.5t);1
+JPN;Truck (18t);1
+JPN;Truck (26t);1
+JPN;Truck (40t);1
+JPN;Truck (7.5t);1
+JPN;Van;1
+JPN;Walk;1
+KAZ;Bus;1
+KAZ;Compact Car;1
+KAZ;Cycle;1
+KAZ;Domestic Aviation;1
+KAZ;Domestic Ship;1
+KAZ;Freight Rail;1
+KAZ;HSR;1
+KAZ;International Aviation;1
+KAZ;International Ship;1
+KAZ;Large Car;0
+KAZ;Large Car and SUV;1
+KAZ;Midsize Car;1
+KAZ;Mini Car;1
+KAZ;Moped;1
+KAZ;Motorcycle (50-250cc);1
+KAZ;Motorcycle (>250cc);1
+KAZ;Passenger Rail;1
+KAZ;Subcompact Car;1
+KAZ;Truck (0-3.5t);1
+KAZ;Truck (18t);1
+KAZ;Truck (26t);1
+KAZ;Truck (40t);1
+KAZ;Truck (7.5t);1
+KAZ;Van;1
+KAZ;Walk;1
+KEN;Bus;1
+KEN;Compact Car;1
+KEN;Cycle;1
+KEN;Domestic Aviation;1
+KEN;Domestic Ship;1
+KEN;Freight Rail;1
+KEN;HSR;1
+KEN;International Aviation;1
+KEN;International Ship;1
+KEN;Large Car;0
+KEN;Large Car and SUV;1
+KEN;Midsize Car;1
+KEN;Mini Car;1
+KEN;Moped;0
+KEN;Motorcycle (50-250cc);1
+KEN;Motorcycle (>250cc);1
+KEN;Passenger Rail;1
+KEN;Subcompact Car;1
+KEN;Truck (0-3.5t);1
+KEN;Truck (18t);1
+KEN;Truck (26t);1
+KEN;Truck (40t);1
+KEN;Truck (7.5t);1
+KEN;Van;1
+KEN;Walk;1
+KGZ;Bus;1
+KGZ;Compact Car;1
+KGZ;Cycle;1
+KGZ;Domestic Aviation;1
+KGZ;Domestic Ship;1
+KGZ;Freight Rail;1
+KGZ;HSR;1
+KGZ;International Aviation;1
+KGZ;International Ship;1
+KGZ;Large Car;0
+KGZ;Large Car and SUV;1
+KGZ;Midsize Car;1
+KGZ;Mini Car;1
+KGZ;Moped;1
+KGZ;Motorcycle (50-250cc);1
+KGZ;Motorcycle (>250cc);1
+KGZ;Passenger Rail;1
+KGZ;Subcompact Car;1
+KGZ;Truck (0-3.5t);1
+KGZ;Truck (18t);1
+KGZ;Truck (26t);1
+KGZ;Truck (40t);1
+KGZ;Truck (7.5t);1
+KGZ;Van;1
+KGZ;Walk;1
+KHM;Bus;1
+KHM;Compact Car;1
+KHM;Cycle;1
+KHM;Domestic Aviation;1
+KHM;Domestic Ship;1
+KHM;Freight Rail;1
+KHM;HSR;1
+KHM;International Aviation;1
+KHM;International Ship;1
+KHM;Large Car;0
+KHM;Large Car and SUV;1
+KHM;Midsize Car;1
+KHM;Mini Car;1
+KHM;Moped;1
+KHM;Motorcycle (50-250cc);1
+KHM;Motorcycle (>250cc);1
+KHM;Passenger Rail;1
+KHM;Subcompact Car;1
+KHM;Truck (0-3.5t);1
+KHM;Truck (18t);1
+KHM;Truck (26t);1
+KHM;Truck (40t);1
+KHM;Truck (7.5t);1
+KHM;Van;1
+KHM;Walk;1
+KIR;Bus;1
+KIR;Compact Car;1
+KIR;Cycle;1
+KIR;Domestic Aviation;1
+KIR;Domestic Ship;1
+KIR;Freight Rail;1
+KIR;HSR;1
+KIR;International Aviation;1
+KIR;International Ship;1
+KIR;Large Car;0
+KIR;Large Car and SUV;1
+KIR;Midsize Car;1
+KIR;Mini Car;1
+KIR;Moped;1
+KIR;Motorcycle (50-250cc);1
+KIR;Motorcycle (>250cc);1
+KIR;Passenger Rail;1
+KIR;Subcompact Car;1
+KIR;Truck (0-3.5t);1
+KIR;Truck (18t);1
+KIR;Truck (26t);1
+KIR;Truck (40t);1
+KIR;Truck (7.5t);1
+KIR;Van;1
+KIR;Walk;1
+KNA;Bus;1
+KNA;Compact Car;1
+KNA;Cycle;1
+KNA;Domestic Aviation;1
+KNA;Domestic Ship;1
+KNA;Freight Rail;1
+KNA;HSR;1
+KNA;International Aviation;1
+KNA;International Ship;1
+KNA;Large Car;0
+KNA;Large Car and SUV;1
+KNA;Midsize Car;1
+KNA;Mini Car;1
+KNA;Moped;1
+KNA;Motorcycle (50-250cc);1
+KNA;Motorcycle (>250cc);1
+KNA;Passenger Rail;1
+KNA;Subcompact Car;1
+KNA;Truck (0-3.5t);1
+KNA;Truck (18t);1
+KNA;Truck (26t);1
+KNA;Truck (40t);1
+KNA;Truck (7.5t);1
+KNA;Van;1
+KNA;Walk;1
+KOR;Bus;1
+KOR;Compact Car;1
+KOR;Cycle;1
+KOR;Domestic Aviation;1
+KOR;Domestic Ship;1
+KOR;Freight Rail;1
+KOR;HSR;1
+KOR;International Aviation;1
+KOR;International Ship;1
+KOR;Large Car;1
+KOR;Large Car and SUV;1
+KOR;Midsize Car;1
+KOR;Mini Car;1
+KOR;Moped;0
+KOR;Motorcycle (50-250cc);1
+KOR;Motorcycle (>250cc);0
+KOR;Passenger Rail;1
+KOR;Subcompact Car;1
+KOR;Truck (0-3.5t);1
+KOR;Truck (18t);1
+KOR;Truck (26t);1
+KOR;Truck (40t);1
+KOR;Truck (7.5t);1
+KOR;Van;1
+KOR;Walk;1
+KWT;Bus;1
+KWT;Compact Car;1
+KWT;Cycle;1
+KWT;Domestic Aviation;1
+KWT;Domestic Ship;0
+KWT;Freight Rail;0
+KWT;HSR;1
+KWT;International Aviation;1
+KWT;International Ship;1
+KWT;Large Car;0
+KWT;Large Car and SUV;1
+KWT;Midsize Car;1
+KWT;Mini Car;1
+KWT;Moped;0
+KWT;Motorcycle (50-250cc);1
+KWT;Motorcycle (>250cc);0
+KWT;Passenger Rail;1
+KWT;Subcompact Car;1
+KWT;Truck (0-3.5t);1
+KWT;Truck (18t);1
+KWT;Truck (26t);1
+KWT;Truck (40t);1
+KWT;Truck (7.5t);1
+KWT;Van;1
+KWT;Walk;1
+LAO;Bus;1
+LAO;Compact Car;1
+LAO;Cycle;1
+LAO;Domestic Aviation;1
+LAO;Domestic Ship;1
+LAO;Freight Rail;1
+LAO;HSR;1
+LAO;International Aviation;1
+LAO;International Ship;1
+LAO;Large Car;0
+LAO;Large Car and SUV;1
+LAO;Midsize Car;1
+LAO;Mini Car;1
+LAO;Moped;1
+LAO;Motorcycle (50-250cc);1
+LAO;Motorcycle (>250cc);1
+LAO;Passenger Rail;1
+LAO;Subcompact Car;1
+LAO;Truck (0-3.5t);1
+LAO;Truck (18t);1
+LAO;Truck (26t);1
+LAO;Truck (40t);1
+LAO;Truck (7.5t);1
+LAO;Van;1
+LAO;Walk;1
+LBN;Bus;1
+LBN;Compact Car;1
+LBN;Cycle;1
+LBN;Domestic Aviation;1
+LBN;Domestic Ship;0
+LBN;Freight Rail;0
+LBN;HSR;1
+LBN;International Aviation;1
+LBN;International Ship;1
+LBN;Large Car;0
+LBN;Large Car and SUV;1
+LBN;Midsize Car;1
+LBN;Mini Car;1
+LBN;Moped;0
+LBN;Motorcycle (50-250cc);1
+LBN;Motorcycle (>250cc);0
+LBN;Passenger Rail;1
+LBN;Subcompact Car;1
+LBN;Truck (0-3.5t);1
+LBN;Truck (18t);1
+LBN;Truck (26t);1
+LBN;Truck (40t);1
+LBN;Truck (7.5t);1
+LBN;Van;1
+LBN;Walk;1
+LBR;Bus;1
+LBR;Compact Car;1
+LBR;Cycle;1
+LBR;Domestic Aviation;1
+LBR;Domestic Ship;1
+LBR;Freight Rail;1
+LBR;HSR;1
+LBR;International Aviation;1
+LBR;International Ship;1
+LBR;Large Car;0
+LBR;Large Car and SUV;1
+LBR;Midsize Car;1
+LBR;Mini Car;1
+LBR;Moped;0
+LBR;Motorcycle (50-250cc);1
+LBR;Motorcycle (>250cc);1
+LBR;Passenger Rail;1
+LBR;Subcompact Car;1
+LBR;Truck (0-3.5t);1
+LBR;Truck (18t);1
+LBR;Truck (26t);1
+LBR;Truck (40t);1
+LBR;Truck (7.5t);1
+LBR;Van;1
+LBR;Walk;1
+LBY;Bus;1
+LBY;Compact Car;1
+LBY;Cycle;1
+LBY;Domestic Aviation;1
+LBY;Domestic Ship;1
+LBY;Freight Rail;1
+LBY;HSR;1
+LBY;International Aviation;1
+LBY;International Ship;1
+LBY;Large Car;0
+LBY;Large Car and SUV;1
+LBY;Midsize Car;1
+LBY;Mini Car;1
+LBY;Moped;0
+LBY;Motorcycle (50-250cc);1
+LBY;Motorcycle (>250cc);1
+LBY;Passenger Rail;1
+LBY;Subcompact Car;1
+LBY;Truck (0-3.5t);1
+LBY;Truck (18t);1
+LBY;Truck (26t);1
+LBY;Truck (40t);1
+LBY;Truck (7.5t);1
+LBY;Van;1
+LBY;Walk;1
+LCA;Bus;1
+LCA;Compact Car;1
+LCA;Cycle;1
+LCA;Domestic Aviation;1
+LCA;Domestic Ship;1
+LCA;Freight Rail;1
+LCA;HSR;1
+LCA;International Aviation;1
+LCA;International Ship;1
+LCA;Large Car;0
+LCA;Large Car and SUV;1
+LCA;Midsize Car;1
+LCA;Mini Car;1
+LCA;Moped;1
+LCA;Motorcycle (50-250cc);1
+LCA;Motorcycle (>250cc);1
+LCA;Passenger Rail;1
+LCA;Subcompact Car;1
+LCA;Truck (0-3.5t);1
+LCA;Truck (18t);1
+LCA;Truck (26t);1
+LCA;Truck (40t);1
+LCA;Truck (7.5t);1
+LCA;Van;1
+LCA;Walk;1
+LIE;Bus;1
+LIE;Compact Car;1
+LIE;Cycle;1
+LIE;Domestic Aviation;1
+LIE;Domestic Ship;1
+LIE;Freight Rail;1
+LIE;HSR;1
+LIE;International Aviation;1
+LIE;International Ship;1
+LIE;Large Car;0
+LIE;Large Car and SUV;1
+LIE;Midsize Car;1
+LIE;Mini Car;1
+LIE;Moped;1
+LIE;Motorcycle (50-250cc);1
+LIE;Motorcycle (>250cc);1
+LIE;Passenger Rail;1
+LIE;Subcompact Car;1
+LIE;Truck (0-3.5t);1
+LIE;Truck (18t);1
+LIE;Truck (26t);1
+LIE;Truck (40t);1
+LIE;Truck (7.5t);1
+LIE;Van;1
+LIE;Walk;1
+LKA;Bus;1
+LKA;Compact Car;1
+LKA;Cycle;1
+LKA;Domestic Aviation;1
+LKA;Domestic Ship;1
+LKA;Freight Rail;1
+LKA;HSR;1
+LKA;International Aviation;1
+LKA;International Ship;1
+LKA;Large Car;0
+LKA;Large Car and SUV;1
+LKA;Midsize Car;1
+LKA;Mini Car;1
+LKA;Moped;1
+LKA;Motorcycle (50-250cc);1
+LKA;Motorcycle (>250cc);1
+LKA;Passenger Rail;1
+LKA;Subcompact Car;1
+LKA;Truck (0-3.5t);1
+LKA;Truck (18t);1
+LKA;Truck (26t);1
+LKA;Truck (40t);1
+LKA;Truck (7.5t);1
+LKA;Van;1
+LKA;Walk;1
+LSO;Bus;1
+LSO;Compact Car;1
+LSO;Cycle;1
+LSO;Domestic Aviation;1
+LSO;Domestic Ship;1
+LSO;Freight Rail;1
+LSO;HSR;1
+LSO;International Aviation;1
+LSO;International Ship;1
+LSO;Large Car;0
+LSO;Large Car and SUV;1
+LSO;Midsize Car;1
+LSO;Mini Car;1
+LSO;Moped;0
+LSO;Motorcycle (50-250cc);1
+LSO;Motorcycle (>250cc);1
+LSO;Passenger Rail;1
+LSO;Subcompact Car;1
+LSO;Truck (0-3.5t);1
+LSO;Truck (18t);1
+LSO;Truck (26t);1
+LSO;Truck (40t);1
+LSO;Truck (7.5t);1
+LSO;Van;1
+LSO;Walk;1
+LTU;Bus;1
+LTU;Compact Car;1
+LTU;Cycle;1
+LTU;Domestic Aviation;1
+LTU;Domestic Ship;1
+LTU;Freight Rail;1
+LTU;HSR;1
+LTU;International Aviation;1
+LTU;International Ship;1
+LTU;Large Car;0
+LTU;Large Car and SUV;1
+LTU;Midsize Car;1
+LTU;Mini Car;1
+LTU;Moped;1
+LTU;Motorcycle (50-250cc);1
+LTU;Motorcycle (>250cc);1
+LTU;Passenger Rail;1
+LTU;Subcompact Car;1
+LTU;Truck (0-3.5t);1
+LTU;Truck (18t);1
+LTU;Truck (26t);1
+LTU;Truck (40t);1
+LTU;Truck (7.5t);1
+LTU;Van;1
+LTU;Walk;1
+LUX;Bus;1
+LUX;Compact Car;1
+LUX;Cycle;1
+LUX;Domestic Aviation;1
+LUX;Domestic Ship;1
+LUX;Freight Rail;1
+LUX;HSR;1
+LUX;International Aviation;1
+LUX;International Ship;1
+LUX;Large Car;0
+LUX;Large Car and SUV;1
+LUX;Midsize Car;1
+LUX;Mini Car;1
+LUX;Moped;1
+LUX;Motorcycle (50-250cc);1
+LUX;Motorcycle (>250cc);1
+LUX;Passenger Rail;1
+LUX;Subcompact Car;1
+LUX;Truck (0-3.5t);1
+LUX;Truck (18t);1
+LUX;Truck (26t);1
+LUX;Truck (40t);1
+LUX;Truck (7.5t);1
+LUX;Van;1
+LUX;Walk;1
+LVA;Bus;1
+LVA;Compact Car;1
+LVA;Cycle;1
+LVA;Domestic Aviation;1
+LVA;Domestic Ship;1
+LVA;Freight Rail;1
+LVA;HSR;1
+LVA;International Aviation;1
+LVA;International Ship;1
+LVA;Large Car;0
+LVA;Large Car and SUV;1
+LVA;Midsize Car;1
+LVA;Mini Car;1
+LVA;Moped;1
+LVA;Motorcycle (50-250cc);1
+LVA;Motorcycle (>250cc);1
+LVA;Passenger Rail;1
+LVA;Subcompact Car;1
+LVA;Truck (0-3.5t);1
+LVA;Truck (18t);1
+LVA;Truck (26t);1
+LVA;Truck (40t);1
+LVA;Truck (7.5t);1
+LVA;Van;1
+LVA;Walk;1
+MAC;Bus;1
+MAC;Compact Car;1
+MAC;Cycle;1
+MAC;Domestic Aviation;1
+MAC;Domestic Ship;1
+MAC;Freight Rail;1
+MAC;HSR;1
+MAC;International Aviation;1
+MAC;International Ship;1
+MAC;Large Car;0
+MAC;Large Car and SUV;1
+MAC;Midsize Car;1
+MAC;Mini Car;1
+MAC;Moped;1
+MAC;Motorcycle (50-250cc);1
+MAC;Motorcycle (>250cc);1
+MAC;Passenger Rail;1
+MAC;Subcompact Car;1
+MAC;Truck (0-3.5t);1
+MAC;Truck (18t);1
+MAC;Truck (26t);1
+MAC;Truck (40t);1
+MAC;Truck (7.5t);1
+MAC;Van;1
+MAC;Walk;1
+MAF;Bus;1
+MAF;Compact Car;1
+MAF;Cycle;1
+MAF;Domestic Aviation;1
+MAF;Domestic Ship;1
+MAF;Freight Rail;1
+MAF;HSR;1
+MAF;International Aviation;1
+MAF;International Ship;1
+MAF;Large Car;0
+MAF;Large Car and SUV;1
+MAF;Midsize Car;1
+MAF;Mini Car;1
+MAF;Moped;1
+MAF;Motorcycle (50-250cc);1
+MAF;Motorcycle (>250cc);1
+MAF;Passenger Rail;1
+MAF;Subcompact Car;1
+MAF;Truck (0-3.5t);1
+MAF;Truck (18t);1
+MAF;Truck (26t);1
+MAF;Truck (40t);1
+MAF;Truck (7.5t);1
+MAF;Van;1
+MAF;Walk;1
+MAR;Bus;1
+MAR;Compact Car;1
+MAR;Cycle;1
+MAR;Domestic Aviation;1
+MAR;Domestic Ship;1
+MAR;Freight Rail;1
+MAR;HSR;1
+MAR;International Aviation;1
+MAR;International Ship;1
+MAR;Large Car;0
+MAR;Large Car and SUV;1
+MAR;Midsize Car;1
+MAR;Mini Car;1
+MAR;Moped;0
+MAR;Motorcycle (50-250cc);1
+MAR;Motorcycle (>250cc);1
+MAR;Passenger Rail;1
+MAR;Subcompact Car;1
+MAR;Truck (0-3.5t);1
+MAR;Truck (18t);1
+MAR;Truck (26t);1
+MAR;Truck (40t);1
+MAR;Truck (7.5t);1
+MAR;Van;1
+MAR;Walk;1
+MCO;Bus;1
+MCO;Compact Car;1
+MCO;Cycle;1
+MCO;Domestic Aviation;1
+MCO;Domestic Ship;1
+MCO;Freight Rail;1
+MCO;HSR;1
+MCO;International Aviation;1
+MCO;International Ship;1
+MCO;Large Car;0
+MCO;Large Car and SUV;1
+MCO;Midsize Car;1
+MCO;Mini Car;1
+MCO;Moped;1
+MCO;Motorcycle (50-250cc);1
+MCO;Motorcycle (>250cc);1
+MCO;Passenger Rail;1
+MCO;Subcompact Car;1
+MCO;Truck (0-3.5t);1
+MCO;Truck (18t);1
+MCO;Truck (26t);1
+MCO;Truck (40t);1
+MCO;Truck (7.5t);1
+MCO;Van;1
+MCO;Walk;1
+MDA;Bus;1
+MDA;Compact Car;1
+MDA;Cycle;1
+MDA;Domestic Aviation;1
+MDA;Domestic Ship;1
+MDA;Freight Rail;1
+MDA;HSR;1
+MDA;International Aviation;1
+MDA;International Ship;1
+MDA;Large Car;0
+MDA;Large Car and SUV;1
+MDA;Midsize Car;1
+MDA;Mini Car;1
+MDA;Moped;1
+MDA;Motorcycle (50-250cc);1
+MDA;Motorcycle (>250cc);1
+MDA;Passenger Rail;1
+MDA;Subcompact Car;1
+MDA;Truck (0-3.5t);1
+MDA;Truck (18t);1
+MDA;Truck (26t);1
+MDA;Truck (40t);1
+MDA;Truck (7.5t);1
+MDA;Van;1
+MDA;Walk;1
+MDG;Bus;1
+MDG;Compact Car;1
+MDG;Cycle;1
+MDG;Domestic Aviation;1
+MDG;Domestic Ship;1
+MDG;Freight Rail;1
+MDG;HSR;1
+MDG;International Aviation;1
+MDG;International Ship;1
+MDG;Large Car;0
+MDG;Large Car and SUV;1
+MDG;Midsize Car;1
+MDG;Mini Car;1
+MDG;Moped;0
+MDG;Motorcycle (50-250cc);1
+MDG;Motorcycle (>250cc);1
+MDG;Passenger Rail;1
+MDG;Subcompact Car;1
+MDG;Truck (0-3.5t);1
+MDG;Truck (18t);1
+MDG;Truck (26t);1
+MDG;Truck (40t);1
+MDG;Truck (7.5t);1
+MDG;Van;1
+MDG;Walk;1
+MDV;Bus;1
+MDV;Compact Car;1
+MDV;Cycle;1
+MDV;Domestic Aviation;1
+MDV;Domestic Ship;1
+MDV;Freight Rail;1
+MDV;HSR;1
+MDV;International Aviation;1
+MDV;International Ship;1
+MDV;Large Car;0
+MDV;Large Car and SUV;1
+MDV;Midsize Car;1
+MDV;Mini Car;1
+MDV;Moped;1
+MDV;Motorcycle (50-250cc);1
+MDV;Motorcycle (>250cc);1
+MDV;Passenger Rail;1
+MDV;Subcompact Car;1
+MDV;Truck (0-3.5t);1
+MDV;Truck (18t);1
+MDV;Truck (26t);1
+MDV;Truck (40t);1
+MDV;Truck (7.5t);1
+MDV;Van;1
+MDV;Walk;1
+MEX;Bus;1
+MEX;Compact Car;1
+MEX;Cycle;1
+MEX;Domestic Aviation;1
+MEX;Domestic Ship;1
+MEX;Freight Rail;1
+MEX;HSR;1
+MEX;International Aviation;1
+MEX;International Ship;1
+MEX;Large Car;0
+MEX;Large Car and SUV;1
+MEX;Midsize Car;1
+MEX;Mini Car;1
+MEX;Moped;1
+MEX;Motorcycle (50-250cc);1
+MEX;Motorcycle (>250cc);1
+MEX;Passenger Rail;1
+MEX;Subcompact Car;1
+MEX;Truck (0-3.5t);1
+MEX;Truck (18t);1
+MEX;Truck (26t);1
+MEX;Truck (40t);1
+MEX;Truck (7.5t);1
+MEX;Van;1
+MEX;Walk;1
+MHL;Bus;1
+MHL;Compact Car;1
+MHL;Cycle;1
+MHL;Domestic Aviation;1
+MHL;Domestic Ship;1
+MHL;Freight Rail;1
+MHL;HSR;1
+MHL;International Aviation;1
+MHL;International Ship;1
+MHL;Large Car;0
+MHL;Large Car and SUV;1
+MHL;Midsize Car;1
+MHL;Mini Car;1
+MHL;Moped;1
+MHL;Motorcycle (50-250cc);1
+MHL;Motorcycle (>250cc);1
+MHL;Passenger Rail;1
+MHL;Subcompact Car;1
+MHL;Truck (0-3.5t);1
+MHL;Truck (18t);1
+MHL;Truck (26t);1
+MHL;Truck (40t);1
+MHL;Truck (7.5t);1
+MHL;Van;1
+MHL;Walk;1
+MKD;Bus;1
+MKD;Compact Car;1
+MKD;Cycle;1
+MKD;Domestic Aviation;1
+MKD;Domestic Ship;1
+MKD;Freight Rail;1
+MKD;HSR;1
+MKD;International Aviation;1
+MKD;International Ship;1
+MKD;Large Car;0
+MKD;Large Car and SUV;1
+MKD;Midsize Car;1
+MKD;Mini Car;1
+MKD;Moped;1
+MKD;Motorcycle (50-250cc);1
+MKD;Motorcycle (>250cc);1
+MKD;Passenger Rail;1
+MKD;Subcompact Car;1
+MKD;Truck (0-3.5t);1
+MKD;Truck (18t);1
+MKD;Truck (26t);1
+MKD;Truck (40t);1
+MKD;Truck (7.5t);1
+MKD;Van;1
+MKD;Walk;1
+MLI;Bus;1
+MLI;Compact Car;1
+MLI;Cycle;1
+MLI;Domestic Aviation;1
+MLI;Domestic Ship;1
+MLI;Freight Rail;1
+MLI;HSR;1
+MLI;International Aviation;1
+MLI;International Ship;1
+MLI;Large Car;0
+MLI;Large Car and SUV;1
+MLI;Midsize Car;1
+MLI;Mini Car;1
+MLI;Moped;0
+MLI;Motorcycle (50-250cc);1
+MLI;Motorcycle (>250cc);1
+MLI;Passenger Rail;1
+MLI;Subcompact Car;1
+MLI;Truck (0-3.5t);1
+MLI;Truck (18t);1
+MLI;Truck (26t);1
+MLI;Truck (40t);1
+MLI;Truck (7.5t);1
+MLI;Van;1
+MLI;Walk;1
+MLT;Bus;1
+MLT;Compact Car;1
+MLT;Cycle;1
+MLT;Domestic Aviation;1
+MLT;Domestic Ship;1
+MLT;Freight Rail;1
+MLT;HSR;1
+MLT;International Aviation;1
+MLT;International Ship;1
+MLT;Large Car;0
+MLT;Large Car and SUV;1
+MLT;Midsize Car;1
+MLT;Mini Car;1
+MLT;Moped;1
+MLT;Motorcycle (50-250cc);1
+MLT;Motorcycle (>250cc);1
+MLT;Passenger Rail;1
+MLT;Subcompact Car;1
+MLT;Truck (0-3.5t);1
+MLT;Truck (18t);1
+MLT;Truck (26t);1
+MLT;Truck (40t);1
+MLT;Truck (7.5t);1
+MLT;Van;1
+MLT;Walk;1
+MMR;Bus;1
+MMR;Compact Car;1
+MMR;Cycle;1
+MMR;Domestic Aviation;1
+MMR;Domestic Ship;1
+MMR;Freight Rail;1
+MMR;HSR;1
+MMR;International Aviation;1
+MMR;International Ship;1
+MMR;Large Car;0
+MMR;Large Car and SUV;1
+MMR;Midsize Car;1
+MMR;Mini Car;1
+MMR;Moped;1
+MMR;Motorcycle (50-250cc);1
+MMR;Motorcycle (>250cc);1
+MMR;Passenger Rail;1
+MMR;Subcompact Car;1
+MMR;Truck (0-3.5t);1
+MMR;Truck (18t);1
+MMR;Truck (26t);1
+MMR;Truck (40t);1
+MMR;Truck (7.5t);1
+MMR;Van;1
+MMR;Walk;1
+MNE;Bus;1
+MNE;Compact Car;1
+MNE;Cycle;1
+MNE;Domestic Aviation;1
+MNE;Domestic Ship;1
+MNE;Freight Rail;1
+MNE;HSR;1
+MNE;International Aviation;1
+MNE;International Ship;1
+MNE;Large Car;0
+MNE;Large Car and SUV;1
+MNE;Midsize Car;1
+MNE;Mini Car;1
+MNE;Moped;1
+MNE;Motorcycle (50-250cc);1
+MNE;Motorcycle (>250cc);1
+MNE;Passenger Rail;1
+MNE;Subcompact Car;1
+MNE;Truck (0-3.5t);1
+MNE;Truck (18t);1
+MNE;Truck (26t);1
+MNE;Truck (40t);1
+MNE;Truck (7.5t);1
+MNE;Van;1
+MNE;Walk;1
+MNG;Bus;1
+MNG;Compact Car;1
+MNG;Cycle;1
+MNG;Domestic Aviation;1
+MNG;Domestic Ship;1
+MNG;Freight Rail;1
+MNG;HSR;1
+MNG;International Aviation;1
+MNG;International Ship;1
+MNG;Large Car;0
+MNG;Large Car and SUV;1
+MNG;Midsize Car;1
+MNG;Mini Car;1
+MNG;Moped;1
+MNG;Motorcycle (50-250cc);1
+MNG;Motorcycle (>250cc);1
+MNG;Passenger Rail;1
+MNG;Subcompact Car;1
+MNG;Truck (0-3.5t);1
+MNG;Truck (18t);1
+MNG;Truck (26t);1
+MNG;Truck (40t);1
+MNG;Truck (7.5t);1
+MNG;Van;1
+MNG;Walk;1
+MNP;Bus;1
+MNP;Compact Car;1
+MNP;Cycle;1
+MNP;Domestic Aviation;1
+MNP;Domestic Ship;1
+MNP;Freight Rail;1
+MNP;HSR;1
+MNP;International Aviation;1
+MNP;International Ship;1
+MNP;Large Car;0
+MNP;Large Car and SUV;1
+MNP;Midsize Car;1
+MNP;Mini Car;1
+MNP;Moped;1
+MNP;Motorcycle (50-250cc);1
+MNP;Motorcycle (>250cc);1
+MNP;Passenger Rail;1
+MNP;Subcompact Car;1
+MNP;Truck (0-3.5t);1
+MNP;Truck (18t);1
+MNP;Truck (26t);1
+MNP;Truck (40t);1
+MNP;Truck (7.5t);1
+MNP;Van;1
+MNP;Walk;1
+MOZ;Bus;1
+MOZ;Compact Car;1
+MOZ;Cycle;1
+MOZ;Domestic Aviation;1
+MOZ;Domestic Ship;1
+MOZ;Freight Rail;1
+MOZ;HSR;1
+MOZ;International Aviation;1
+MOZ;International Ship;1
+MOZ;Large Car;0
+MOZ;Large Car and SUV;1
+MOZ;Midsize Car;1
+MOZ;Mini Car;1
+MOZ;Moped;0
+MOZ;Motorcycle (50-250cc);1
+MOZ;Motorcycle (>250cc);1
+MOZ;Passenger Rail;1
+MOZ;Subcompact Car;1
+MOZ;Truck (0-3.5t);1
+MOZ;Truck (18t);1
+MOZ;Truck (26t);1
+MOZ;Truck (40t);1
+MOZ;Truck (7.5t);1
+MOZ;Van;1
+MOZ;Walk;1
+MRT;Bus;1
+MRT;Compact Car;1
+MRT;Cycle;1
+MRT;Domestic Aviation;1
+MRT;Domestic Ship;1
+MRT;Freight Rail;1
+MRT;HSR;1
+MRT;International Aviation;1
+MRT;International Ship;1
+MRT;Large Car;0
+MRT;Large Car and SUV;1
+MRT;Midsize Car;1
+MRT;Mini Car;1
+MRT;Moped;0
+MRT;Motorcycle (50-250cc);1
+MRT;Motorcycle (>250cc);1
+MRT;Passenger Rail;1
+MRT;Subcompact Car;1
+MRT;Truck (0-3.5t);1
+MRT;Truck (18t);1
+MRT;Truck (26t);1
+MRT;Truck (40t);1
+MRT;Truck (7.5t);1
+MRT;Van;1
+MRT;Walk;1
+MSR;Bus;1
+MSR;Compact Car;1
+MSR;Cycle;1
+MSR;Domestic Aviation;1
+MSR;Domestic Ship;1
+MSR;Freight Rail;1
+MSR;HSR;1
+MSR;International Aviation;1
+MSR;International Ship;1
+MSR;Large Car;0
+MSR;Large Car and SUV;1
+MSR;Midsize Car;1
+MSR;Mini Car;1
+MSR;Moped;1
+MSR;Motorcycle (50-250cc);1
+MSR;Motorcycle (>250cc);1
+MSR;Passenger Rail;1
+MSR;Subcompact Car;1
+MSR;Truck (0-3.5t);1
+MSR;Truck (18t);1
+MSR;Truck (26t);1
+MSR;Truck (40t);1
+MSR;Truck (7.5t);1
+MSR;Van;1
+MSR;Walk;1
+MTQ;Bus;1
+MTQ;Compact Car;1
+MTQ;Cycle;1
+MTQ;Domestic Aviation;1
+MTQ;Domestic Ship;1
+MTQ;Freight Rail;1
+MTQ;HSR;1
+MTQ;International Aviation;1
+MTQ;International Ship;1
+MTQ;Large Car;0
+MTQ;Large Car and SUV;1
+MTQ;Midsize Car;1
+MTQ;Mini Car;1
+MTQ;Moped;1
+MTQ;Motorcycle (50-250cc);1
+MTQ;Motorcycle (>250cc);1
+MTQ;Passenger Rail;1
+MTQ;Subcompact Car;1
+MTQ;Truck (0-3.5t);1
+MTQ;Truck (18t);1
+MTQ;Truck (26t);1
+MTQ;Truck (40t);1
+MTQ;Truck (7.5t);1
+MTQ;Van;1
+MTQ;Walk;1
+MUS;Bus;1
+MUS;Compact Car;1
+MUS;Cycle;1
+MUS;Domestic Aviation;1
+MUS;Domestic Ship;1
+MUS;Freight Rail;1
+MUS;HSR;1
+MUS;International Aviation;1
+MUS;International Ship;1
+MUS;Large Car;0
+MUS;Large Car and SUV;1
+MUS;Midsize Car;1
+MUS;Mini Car;1
+MUS;Moped;0
+MUS;Motorcycle (50-250cc);1
+MUS;Motorcycle (>250cc);1
+MUS;Passenger Rail;1
+MUS;Subcompact Car;1
+MUS;Truck (0-3.5t);1
+MUS;Truck (18t);1
+MUS;Truck (26t);1
+MUS;Truck (40t);1
+MUS;Truck (7.5t);1
+MUS;Van;1
+MUS;Walk;1
+MWI;Bus;1
+MWI;Compact Car;1
+MWI;Cycle;1
+MWI;Domestic Aviation;1
+MWI;Domestic Ship;1
+MWI;Freight Rail;1
+MWI;HSR;1
+MWI;International Aviation;1
+MWI;International Ship;1
+MWI;Large Car;0
+MWI;Large Car and SUV;1
+MWI;Midsize Car;1
+MWI;Mini Car;1
+MWI;Moped;0
+MWI;Motorcycle (50-250cc);1
+MWI;Motorcycle (>250cc);1
+MWI;Passenger Rail;1
+MWI;Subcompact Car;1
+MWI;Truck (0-3.5t);1
+MWI;Truck (18t);1
+MWI;Truck (26t);1
+MWI;Truck (40t);1
+MWI;Truck (7.5t);1
+MWI;Van;1
+MWI;Walk;1
+MYS;Bus;1
+MYS;Compact Car;1
+MYS;Cycle;1
+MYS;Domestic Aviation;1
+MYS;Domestic Ship;1
+MYS;Freight Rail;1
+MYS;HSR;1
+MYS;International Aviation;1
+MYS;International Ship;1
+MYS;Large Car;0
+MYS;Large Car and SUV;1
+MYS;Midsize Car;1
+MYS;Mini Car;1
+MYS;Moped;1
+MYS;Motorcycle (50-250cc);1
+MYS;Motorcycle (>250cc);1
+MYS;Passenger Rail;1
+MYS;Subcompact Car;1
+MYS;Truck (0-3.5t);1
+MYS;Truck (18t);1
+MYS;Truck (26t);1
+MYS;Truck (40t);1
+MYS;Truck (7.5t);1
+MYS;Van;1
+MYS;Walk;1
+MYT;Bus;1
+MYT;Compact Car;1
+MYT;Cycle;1
+MYT;Domestic Aviation;1
+MYT;Domestic Ship;1
+MYT;Freight Rail;1
+MYT;HSR;1
+MYT;International Aviation;1
+MYT;International Ship;1
+MYT;Large Car;0
+MYT;Large Car and SUV;1
+MYT;Midsize Car;1
+MYT;Mini Car;1
+MYT;Moped;1
+MYT;Motorcycle (50-250cc);1
+MYT;Motorcycle (>250cc);1
+MYT;Passenger Rail;1
+MYT;Subcompact Car;1
+MYT;Truck (0-3.5t);1
+MYT;Truck (18t);1
+MYT;Truck (26t);1
+MYT;Truck (40t);1
+MYT;Truck (7.5t);1
+MYT;Van;1
+MYT;Walk;1
+NAM;Bus;1
+NAM;Compact Car;1
+NAM;Cycle;1
+NAM;Domestic Aviation;1
+NAM;Domestic Ship;1
+NAM;Freight Rail;1
+NAM;HSR;1
+NAM;International Aviation;1
+NAM;International Ship;1
+NAM;Large Car;0
+NAM;Large Car and SUV;1
+NAM;Midsize Car;1
+NAM;Mini Car;1
+NAM;Moped;0
+NAM;Motorcycle (50-250cc);1
+NAM;Motorcycle (>250cc);1
+NAM;Passenger Rail;1
+NAM;Subcompact Car;1
+NAM;Truck (0-3.5t);1
+NAM;Truck (18t);1
+NAM;Truck (26t);1
+NAM;Truck (40t);1
+NAM;Truck (7.5t);1
+NAM;Van;1
+NAM;Walk;1
+NCL;Bus;1
+NCL;Compact Car;1
+NCL;Cycle;1
+NCL;Domestic Aviation;1
+NCL;Domestic Ship;1
+NCL;Freight Rail;1
+NCL;HSR;1
+NCL;International Aviation;1
+NCL;International Ship;1
+NCL;Large Car;0
+NCL;Large Car and SUV;1
+NCL;Midsize Car;1
+NCL;Mini Car;1
+NCL;Moped;1
+NCL;Motorcycle (50-250cc);1
+NCL;Motorcycle (>250cc);1
+NCL;Passenger Rail;1
+NCL;Subcompact Car;1
+NCL;Truck (0-3.5t);1
+NCL;Truck (18t);1
+NCL;Truck (26t);1
+NCL;Truck (40t);1
+NCL;Truck (7.5t);1
+NCL;Van;1
+NCL;Walk;1
+NER;Bus;1
+NER;Compact Car;1
+NER;Cycle;1
+NER;Domestic Aviation;1
+NER;Domestic Ship;1
+NER;Freight Rail;1
+NER;HSR;1
+NER;International Aviation;1
+NER;International Ship;1
+NER;Large Car;0
+NER;Large Car and SUV;1
+NER;Midsize Car;1
+NER;Mini Car;1
+NER;Moped;0
+NER;Motorcycle (50-250cc);1
+NER;Motorcycle (>250cc);1
+NER;Passenger Rail;1
+NER;Subcompact Car;1
+NER;Truck (0-3.5t);1
+NER;Truck (18t);1
+NER;Truck (26t);1
+NER;Truck (40t);1
+NER;Truck (7.5t);1
+NER;Van;1
+NER;Walk;1
+NFK;Bus;1
+NFK;Compact Car;1
+NFK;Cycle;1
+NFK;Domestic Aviation;1
+NFK;Domestic Ship;1
+NFK;Freight Rail;1
+NFK;HSR;1
+NFK;International Aviation;1
+NFK;International Ship;1
+NFK;Large Car;0
+NFK;Large Car and SUV;1
+NFK;Midsize Car;1
+NFK;Mini Car;1
+NFK;Moped;1
+NFK;Motorcycle (50-250cc);1
+NFK;Motorcycle (>250cc);1
+NFK;Passenger Rail;1
+NFK;Subcompact Car;1
+NFK;Truck (0-3.5t);1
+NFK;Truck (18t);1
+NFK;Truck (26t);1
+NFK;Truck (40t);1
+NFK;Truck (7.5t);1
+NFK;Van;1
+NFK;Walk;1
+NGA;Bus;1
+NGA;Compact Car;1
+NGA;Cycle;1
+NGA;Domestic Aviation;1
+NGA;Domestic Ship;1
+NGA;Freight Rail;1
+NGA;HSR;1
+NGA;International Aviation;1
+NGA;International Ship;1
+NGA;Large Car;0
+NGA;Large Car and SUV;1
+NGA;Midsize Car;1
+NGA;Mini Car;1
+NGA;Moped;0
+NGA;Motorcycle (50-250cc);1
+NGA;Motorcycle (>250cc);1
+NGA;Passenger Rail;1
+NGA;Subcompact Car;1
+NGA;Truck (0-3.5t);1
+NGA;Truck (18t);1
+NGA;Truck (26t);1
+NGA;Truck (40t);1
+NGA;Truck (7.5t);1
+NGA;Van;1
+NGA;Walk;1
+NIC;Bus;1
+NIC;Compact Car;1
+NIC;Cycle;1
+NIC;Domestic Aviation;1
+NIC;Domestic Ship;1
+NIC;Freight Rail;1
+NIC;HSR;1
+NIC;International Aviation;1
+NIC;International Ship;1
+NIC;Large Car;0
+NIC;Large Car and SUV;1
+NIC;Midsize Car;1
+NIC;Mini Car;1
+NIC;Moped;1
+NIC;Motorcycle (50-250cc);1
+NIC;Motorcycle (>250cc);1
+NIC;Passenger Rail;1
+NIC;Subcompact Car;1
+NIC;Truck (0-3.5t);1
+NIC;Truck (18t);1
+NIC;Truck (26t);1
+NIC;Truck (40t);1
+NIC;Truck (7.5t);1
+NIC;Van;1
+NIC;Walk;1
+NIU;Bus;1
+NIU;Compact Car;1
+NIU;Cycle;1
+NIU;Domestic Aviation;1
+NIU;Domestic Ship;1
+NIU;Freight Rail;1
+NIU;HSR;1
+NIU;International Aviation;1
+NIU;International Ship;1
+NIU;Large Car;0
+NIU;Large Car and SUV;1
+NIU;Midsize Car;1
+NIU;Mini Car;1
+NIU;Moped;1
+NIU;Motorcycle (50-250cc);1
+NIU;Motorcycle (>250cc);1
+NIU;Passenger Rail;1
+NIU;Subcompact Car;1
+NIU;Truck (0-3.5t);1
+NIU;Truck (18t);1
+NIU;Truck (26t);1
+NIU;Truck (40t);1
+NIU;Truck (7.5t);1
+NIU;Van;1
+NIU;Walk;1
+NLD;Bus;1
+NLD;Compact Car;1
+NLD;Cycle;1
+NLD;Domestic Aviation;1
+NLD;Domestic Ship;1
+NLD;Freight Rail;1
+NLD;HSR;1
+NLD;International Aviation;1
+NLD;International Ship;1
+NLD;Large Car;0
+NLD;Large Car and SUV;1
+NLD;Midsize Car;1
+NLD;Mini Car;1
+NLD;Moped;1
+NLD;Motorcycle (50-250cc);1
+NLD;Motorcycle (>250cc);1
+NLD;Passenger Rail;1
+NLD;Subcompact Car;1
+NLD;Truck (0-3.5t);1
+NLD;Truck (18t);1
+NLD;Truck (26t);1
+NLD;Truck (40t);1
+NLD;Truck (7.5t);1
+NLD;Van;1
+NLD;Walk;1
+NOR;Bus;1
+NOR;Compact Car;1
+NOR;Cycle;1
+NOR;Domestic Aviation;1
+NOR;Domestic Ship;1
+NOR;Freight Rail;1
+NOR;HSR;1
+NOR;International Aviation;1
+NOR;International Ship;1
+NOR;Large Car;0
+NOR;Large Car and SUV;1
+NOR;Midsize Car;1
+NOR;Mini Car;1
+NOR;Moped;1
+NOR;Motorcycle (50-250cc);1
+NOR;Motorcycle (>250cc);1
+NOR;Passenger Rail;1
+NOR;Subcompact Car;1
+NOR;Truck (0-3.5t);1
+NOR;Truck (18t);1
+NOR;Truck (26t);1
+NOR;Truck (40t);1
+NOR;Truck (7.5t);1
+NOR;Van;1
+NOR;Walk;1
+NPL;Bus;1
+NPL;Compact Car;1
+NPL;Cycle;1
+NPL;Domestic Aviation;1
+NPL;Domestic Ship;1
+NPL;Freight Rail;1
+NPL;HSR;1
+NPL;International Aviation;1
+NPL;International Ship;1
+NPL;Large Car;0
+NPL;Large Car and SUV;1
+NPL;Midsize Car;1
+NPL;Mini Car;1
+NPL;Moped;1
+NPL;Motorcycle (50-250cc);1
+NPL;Motorcycle (>250cc);1
+NPL;Passenger Rail;1
+NPL;Subcompact Car;1
+NPL;Truck (0-3.5t);1
+NPL;Truck (18t);1
+NPL;Truck (26t);1
+NPL;Truck (40t);1
+NPL;Truck (7.5t);1
+NPL;Van;1
+NPL;Walk;1
+NRU;Bus;1
+NRU;Compact Car;1
+NRU;Cycle;1
+NRU;Domestic Aviation;1
+NRU;Domestic Ship;1
+NRU;Freight Rail;1
+NRU;HSR;1
+NRU;International Aviation;1
+NRU;International Ship;1
+NRU;Large Car;0
+NRU;Large Car and SUV;1
+NRU;Midsize Car;1
+NRU;Mini Car;1
+NRU;Moped;1
+NRU;Motorcycle (50-250cc);1
+NRU;Motorcycle (>250cc);1
+NRU;Passenger Rail;1
+NRU;Subcompact Car;1
+NRU;Truck (0-3.5t);1
+NRU;Truck (18t);1
+NRU;Truck (26t);1
+NRU;Truck (40t);1
+NRU;Truck (7.5t);1
+NRU;Van;1
+NRU;Walk;1
+NZL;Bus;1
+NZL;Compact Car;1
+NZL;Cycle;1
+NZL;Domestic Aviation;1
+NZL;Domestic Ship;1
+NZL;Freight Rail;1
+NZL;HSR;1
+NZL;International Aviation;1
+NZL;International Ship;1
+NZL;Large Car;1
+NZL;Large Car and SUV;1
+NZL;Midsize Car;1
+NZL;Mini Car;1
+NZL;Moped;0
+NZL;Motorcycle (50-250cc);0
+NZL;Motorcycle (>250cc);1
+NZL;Passenger Rail;1
+NZL;Subcompact Car;1
+NZL;Truck (0-3.5t);1
+NZL;Truck (18t);1
+NZL;Truck (26t);1
+NZL;Truck (40t);1
+NZL;Truck (7.5t);1
+NZL;Van;1
+NZL;Walk;1
+OMN;Bus;1
+OMN;Compact Car;1
+OMN;Cycle;1
+OMN;Domestic Aviation;1
+OMN;Domestic Ship;0
+OMN;Freight Rail;0
+OMN;HSR;1
+OMN;International Aviation;1
+OMN;International Ship;1
+OMN;Large Car;0
+OMN;Large Car and SUV;1
+OMN;Midsize Car;1
+OMN;Mini Car;1
+OMN;Moped;0
+OMN;Motorcycle (50-250cc);1
+OMN;Motorcycle (>250cc);0
+OMN;Passenger Rail;1
+OMN;Subcompact Car;1
+OMN;Truck (0-3.5t);1
+OMN;Truck (18t);1
+OMN;Truck (26t);1
+OMN;Truck (40t);1
+OMN;Truck (7.5t);1
+OMN;Van;1
+OMN;Walk;1
+PAK;Bus;1
+PAK;Compact Car;1
+PAK;Cycle;1
+PAK;Domestic Aviation;1
+PAK;Domestic Ship;0
+PAK;Freight Rail;1
+PAK;HSR;1
+PAK;International Aviation;1
+PAK;International Ship;1
+PAK;Large Car;0
+PAK;Large Car and SUV;1
+PAK;Midsize Car;1
+PAK;Mini Car;1
+PAK;Moped;1
+PAK;Motorcycle (50-250cc);1
+PAK;Motorcycle (>250cc);1
+PAK;Passenger Rail;1
+PAK;Subcompact Car;1
+PAK;Truck (0-3.5t);1
+PAK;Truck (18t);1
+PAK;Truck (26t);1
+PAK;Truck (40t);1
+PAK;Truck (7.5t);1
+PAK;Van;1
+PAK;Walk;1
+PAN;Bus;1
+PAN;Compact Car;1
+PAN;Cycle;1
+PAN;Domestic Aviation;1
+PAN;Domestic Ship;1
+PAN;Freight Rail;1
+PAN;HSR;1
+PAN;International Aviation;1
+PAN;International Ship;1
+PAN;Large Car;0
+PAN;Large Car and SUV;1
+PAN;Midsize Car;1
+PAN;Mini Car;1
+PAN;Moped;1
+PAN;Motorcycle (50-250cc);1
+PAN;Motorcycle (>250cc);1
+PAN;Passenger Rail;1
+PAN;Subcompact Car;1
+PAN;Truck (0-3.5t);1
+PAN;Truck (18t);1
+PAN;Truck (26t);1
+PAN;Truck (40t);1
+PAN;Truck (7.5t);1
+PAN;Van;1
+PAN;Walk;1
+PCN;Bus;1
+PCN;Compact Car;1
+PCN;Cycle;1
+PCN;Domestic Aviation;1
+PCN;Domestic Ship;1
+PCN;Freight Rail;1
+PCN;HSR;1
+PCN;International Aviation;1
+PCN;International Ship;1
+PCN;Large Car;0
+PCN;Large Car and SUV;1
+PCN;Midsize Car;1
+PCN;Mini Car;1
+PCN;Moped;1
+PCN;Motorcycle (50-250cc);1
+PCN;Motorcycle (>250cc);1
+PCN;Passenger Rail;1
+PCN;Subcompact Car;1
+PCN;Truck (0-3.5t);1
+PCN;Truck (18t);1
+PCN;Truck (26t);1
+PCN;Truck (40t);1
+PCN;Truck (7.5t);1
+PCN;Van;1
+PCN;Walk;1
+PER;Bus;1
+PER;Compact Car;1
+PER;Cycle;1
+PER;Domestic Aviation;1
+PER;Domestic Ship;1
+PER;Freight Rail;1
+PER;HSR;1
+PER;International Aviation;1
+PER;International Ship;1
+PER;Large Car;0
+PER;Large Car and SUV;1
+PER;Midsize Car;1
+PER;Mini Car;1
+PER;Moped;1
+PER;Motorcycle (50-250cc);1
+PER;Motorcycle (>250cc);1
+PER;Passenger Rail;1
+PER;Subcompact Car;1
+PER;Truck (0-3.5t);1
+PER;Truck (18t);1
+PER;Truck (26t);1
+PER;Truck (40t);1
+PER;Truck (7.5t);1
+PER;Van;1
+PER;Walk;1
+PHL;Bus;1
+PHL;Compact Car;1
+PHL;Cycle;1
+PHL;Domestic Aviation;1
+PHL;Domestic Ship;1
+PHL;Freight Rail;1
+PHL;HSR;1
+PHL;International Aviation;1
+PHL;International Ship;1
+PHL;Large Car;0
+PHL;Large Car and SUV;1
+PHL;Midsize Car;1
+PHL;Mini Car;1
+PHL;Moped;1
+PHL;Motorcycle (50-250cc);1
+PHL;Motorcycle (>250cc);1
+PHL;Passenger Rail;1
+PHL;Subcompact Car;1
+PHL;Truck (0-3.5t);1
+PHL;Truck (18t);1
+PHL;Truck (26t);1
+PHL;Truck (40t);1
+PHL;Truck (7.5t);1
+PHL;Van;1
+PHL;Walk;1
+PLW;Bus;1
+PLW;Compact Car;1
+PLW;Cycle;1
+PLW;Domestic Aviation;1
+PLW;Domestic Ship;1
+PLW;Freight Rail;1
+PLW;HSR;1
+PLW;International Aviation;1
+PLW;International Ship;1
+PLW;Large Car;0
+PLW;Large Car and SUV;1
+PLW;Midsize Car;1
+PLW;Mini Car;1
+PLW;Moped;1
+PLW;Motorcycle (50-250cc);1
+PLW;Motorcycle (>250cc);1
+PLW;Passenger Rail;1
+PLW;Subcompact Car;1
+PLW;Truck (0-3.5t);1
+PLW;Truck (18t);1
+PLW;Truck (26t);1
+PLW;Truck (40t);1
+PLW;Truck (7.5t);1
+PLW;Van;1
+PLW;Walk;1
+PNG;Bus;1
+PNG;Compact Car;1
+PNG;Cycle;1
+PNG;Domestic Aviation;1
+PNG;Domestic Ship;1
+PNG;Freight Rail;1
+PNG;HSR;1
+PNG;International Aviation;1
+PNG;International Ship;1
+PNG;Large Car;0
+PNG;Large Car and SUV;1
+PNG;Midsize Car;1
+PNG;Mini Car;1
+PNG;Moped;1
+PNG;Motorcycle (50-250cc);1
+PNG;Motorcycle (>250cc);1
+PNG;Passenger Rail;1
+PNG;Subcompact Car;1
+PNG;Truck (0-3.5t);1
+PNG;Truck (18t);1
+PNG;Truck (26t);1
+PNG;Truck (40t);1
+PNG;Truck (7.5t);1
+PNG;Van;1
+PNG;Walk;1
+POL;Bus;1
+POL;Compact Car;1
+POL;Cycle;1
+POL;Domestic Aviation;1
+POL;Domestic Ship;1
+POL;Freight Rail;1
+POL;HSR;1
+POL;International Aviation;1
+POL;International Ship;1
+POL;Large Car;0
+POL;Large Car and SUV;1
+POL;Midsize Car;1
+POL;Mini Car;1
+POL;Moped;1
+POL;Motorcycle (50-250cc);1
+POL;Motorcycle (>250cc);1
+POL;Passenger Rail;1
+POL;Subcompact Car;1
+POL;Truck (0-3.5t);1
+POL;Truck (18t);1
+POL;Truck (26t);1
+POL;Truck (40t);1
+POL;Truck (7.5t);1
+POL;Van;1
+POL;Walk;1
+PRI;Bus;1
+PRI;Compact Car;1
+PRI;Cycle;1
+PRI;Domestic Aviation;1
+PRI;Domestic Ship;1
+PRI;Freight Rail;1
+PRI;HSR;1
+PRI;International Aviation;1
+PRI;International Ship;1
+PRI;Large Car;1
+PRI;Large Car and SUV;1
+PRI;Midsize Car;1
+PRI;Mini Car;1
+PRI;Moped;0
+PRI;Motorcycle (50-250cc);0
+PRI;Motorcycle (>250cc);1
+PRI;Passenger Rail;1
+PRI;Subcompact Car;1
+PRI;Truck (0-3.5t);1
+PRI;Truck (18t);1
+PRI;Truck (26t);1
+PRI;Truck (40t);1
+PRI;Truck (7.5t);1
+PRI;Van;1
+PRI;Walk;1
+PRK;Bus;1
+PRK;Compact Car;1
+PRK;Cycle;1
+PRK;Domestic Aviation;1
+PRK;Domestic Ship;1
+PRK;Freight Rail;1
+PRK;HSR;1
+PRK;International Aviation;1
+PRK;International Ship;1
+PRK;Large Car;0
+PRK;Large Car and SUV;1
+PRK;Midsize Car;1
+PRK;Mini Car;1
+PRK;Moped;1
+PRK;Motorcycle (50-250cc);1
+PRK;Motorcycle (>250cc);1
+PRK;Passenger Rail;1
+PRK;Subcompact Car;1
+PRK;Truck (0-3.5t);1
+PRK;Truck (18t);1
+PRK;Truck (26t);1
+PRK;Truck (40t);1
+PRK;Truck (7.5t);1
+PRK;Van;1
+PRK;Walk;1
+PRT;Bus;1
+PRT;Compact Car;1
+PRT;Cycle;1
+PRT;Domestic Aviation;1
+PRT;Domestic Ship;1
+PRT;Freight Rail;1
+PRT;HSR;1
+PRT;International Aviation;1
+PRT;International Ship;1
+PRT;Large Car;0
+PRT;Large Car and SUV;1
+PRT;Midsize Car;1
+PRT;Mini Car;1
+PRT;Moped;1
+PRT;Motorcycle (50-250cc);1
+PRT;Motorcycle (>250cc);1
+PRT;Passenger Rail;1
+PRT;Subcompact Car;1
+PRT;Truck (0-3.5t);1
+PRT;Truck (18t);1
+PRT;Truck (26t);1
+PRT;Truck (40t);1
+PRT;Truck (7.5t);1
+PRT;Van;1
+PRT;Walk;1
+PRY;Bus;1
+PRY;Compact Car;1
+PRY;Cycle;1
+PRY;Domestic Aviation;1
+PRY;Domestic Ship;1
+PRY;Freight Rail;1
+PRY;HSR;1
+PRY;International Aviation;1
+PRY;International Ship;1
+PRY;Large Car;0
+PRY;Large Car and SUV;1
+PRY;Midsize Car;1
+PRY;Mini Car;1
+PRY;Moped;1
+PRY;Motorcycle (50-250cc);1
+PRY;Motorcycle (>250cc);1
+PRY;Passenger Rail;1
+PRY;Subcompact Car;1
+PRY;Truck (0-3.5t);1
+PRY;Truck (18t);1
+PRY;Truck (26t);1
+PRY;Truck (40t);1
+PRY;Truck (7.5t);1
+PRY;Van;1
+PRY;Walk;1
+PSE;Bus;1
+PSE;Compact Car;1
+PSE;Cycle;1
+PSE;Domestic Aviation;1
+PSE;Domestic Ship;0
+PSE;Freight Rail;0
+PSE;HSR;1
+PSE;International Aviation;1
+PSE;International Ship;1
+PSE;Large Car;0
+PSE;Large Car and SUV;1
+PSE;Midsize Car;1
+PSE;Mini Car;1
+PSE;Moped;0
+PSE;Motorcycle (50-250cc);1
+PSE;Motorcycle (>250cc);0
+PSE;Passenger Rail;1
+PSE;Subcompact Car;1
+PSE;Truck (0-3.5t);1
+PSE;Truck (18t);1
+PSE;Truck (26t);1
+PSE;Truck (40t);1
+PSE;Truck (7.5t);1
+PSE;Van;1
+PSE;Walk;1
+PYF;Bus;1
+PYF;Compact Car;1
+PYF;Cycle;1
+PYF;Domestic Aviation;1
+PYF;Domestic Ship;1
+PYF;Freight Rail;1
+PYF;HSR;1
+PYF;International Aviation;1
+PYF;International Ship;1
+PYF;Large Car;0
+PYF;Large Car and SUV;1
+PYF;Midsize Car;1
+PYF;Mini Car;1
+PYF;Moped;1
+PYF;Motorcycle (50-250cc);1
+PYF;Motorcycle (>250cc);1
+PYF;Passenger Rail;1
+PYF;Subcompact Car;1
+PYF;Truck (0-3.5t);1
+PYF;Truck (18t);1
+PYF;Truck (26t);1
+PYF;Truck (40t);1
+PYF;Truck (7.5t);1
+PYF;Van;1
+PYF;Walk;1
+QAT;Bus;1
+QAT;Compact Car;1
+QAT;Cycle;1
+QAT;Domestic Aviation;1
+QAT;Domestic Ship;0
+QAT;Freight Rail;0
+QAT;HSR;1
+QAT;International Aviation;1
+QAT;International Ship;1
+QAT;Large Car;0
+QAT;Large Car and SUV;1
+QAT;Midsize Car;1
+QAT;Mini Car;1
+QAT;Moped;0
+QAT;Motorcycle (50-250cc);1
+QAT;Motorcycle (>250cc);0
+QAT;Passenger Rail;1
+QAT;Subcompact Car;1
+QAT;Truck (0-3.5t);1
+QAT;Truck (18t);1
+QAT;Truck (26t);1
+QAT;Truck (40t);1
+QAT;Truck (7.5t);1
+QAT;Van;1
+QAT;Walk;1
+REU;Bus;1
+REU;Compact Car;1
+REU;Cycle;1
+REU;Domestic Aviation;1
+REU;Domestic Ship;1
+REU;Freight Rail;1
+REU;HSR;1
+REU;International Aviation;1
+REU;International Ship;1
+REU;Large Car;0
+REU;Large Car and SUV;1
+REU;Midsize Car;1
+REU;Mini Car;1
+REU;Moped;0
+REU;Motorcycle (50-250cc);1
+REU;Motorcycle (>250cc);1
+REU;Passenger Rail;1
+REU;Subcompact Car;1
+REU;Truck (0-3.5t);1
+REU;Truck (18t);1
+REU;Truck (26t);1
+REU;Truck (40t);1
+REU;Truck (7.5t);1
+REU;Van;1
+REU;Walk;1
+ROU;Bus;1
+ROU;Compact Car;1
+ROU;Cycle;1
+ROU;Domestic Aviation;1
+ROU;Domestic Ship;1
+ROU;Freight Rail;1
+ROU;HSR;1
+ROU;International Aviation;1
+ROU;International Ship;1
+ROU;Large Car;0
+ROU;Large Car and SUV;1
+ROU;Midsize Car;1
+ROU;Mini Car;1
+ROU;Moped;1
+ROU;Motorcycle (50-250cc);1
+ROU;Motorcycle (>250cc);1
+ROU;Passenger Rail;1
+ROU;Subcompact Car;1
+ROU;Truck (0-3.5t);1
+ROU;Truck (18t);1
+ROU;Truck (26t);1
+ROU;Truck (40t);1
+ROU;Truck (7.5t);1
+ROU;Van;1
+ROU;Walk;1
+RUS;Bus;1
+RUS;Compact Car;1
+RUS;Cycle;1
+RUS;Domestic Aviation;1
+RUS;Domestic Ship;1
+RUS;Freight Rail;1
+RUS;HSR;1
+RUS;International Aviation;1
+RUS;International Ship;1
+RUS;Large Car;0
+RUS;Large Car and SUV;1
+RUS;Midsize Car;1
+RUS;Mini Car;1
+RUS;Moped;1
+RUS;Motorcycle (50-250cc);1
+RUS;Motorcycle (>250cc);1
+RUS;Passenger Rail;1
+RUS;Subcompact Car;1
+RUS;Truck (0-3.5t);1
+RUS;Truck (18t);1
+RUS;Truck (26t);1
+RUS;Truck (40t);1
+RUS;Truck (7.5t);1
+RUS;Van;1
+RUS;Walk;1
+RWA;Bus;1
+RWA;Compact Car;1
+RWA;Cycle;1
+RWA;Domestic Aviation;1
+RWA;Domestic Ship;1
+RWA;Freight Rail;1
+RWA;HSR;1
+RWA;International Aviation;1
+RWA;International Ship;1
+RWA;Large Car;0
+RWA;Large Car and SUV;1
+RWA;Midsize Car;1
+RWA;Mini Car;1
+RWA;Moped;0
+RWA;Motorcycle (50-250cc);1
+RWA;Motorcycle (>250cc);1
+RWA;Passenger Rail;1
+RWA;Subcompact Car;1
+RWA;Truck (0-3.5t);1
+RWA;Truck (18t);1
+RWA;Truck (26t);1
+RWA;Truck (40t);1
+RWA;Truck (7.5t);1
+RWA;Van;1
+RWA;Walk;1
+SAU;Bus;1
+SAU;Compact Car;1
+SAU;Cycle;1
+SAU;Domestic Aviation;1
+SAU;Domestic Ship;0
+SAU;Freight Rail;0
+SAU;HSR;1
+SAU;International Aviation;1
+SAU;International Ship;1
+SAU;Large Car;0
+SAU;Large Car and SUV;1
+SAU;Midsize Car;1
+SAU;Mini Car;1
+SAU;Moped;0
+SAU;Motorcycle (50-250cc);1
+SAU;Motorcycle (>250cc);0
+SAU;Passenger Rail;1
+SAU;Subcompact Car;1
+SAU;Truck (0-3.5t);1
+SAU;Truck (18t);1
+SAU;Truck (26t);1
+SAU;Truck (40t);1
+SAU;Truck (7.5t);1
+SAU;Van;1
+SAU;Walk;1
+SDN;Bus;1
+SDN;Compact Car;1
+SDN;Cycle;1
+SDN;Domestic Aviation;1
+SDN;Domestic Ship;1
+SDN;Freight Rail;1
+SDN;HSR;1
+SDN;International Aviation;1
+SDN;International Ship;1
+SDN;Large Car;0
+SDN;Large Car and SUV;1
+SDN;Midsize Car;1
+SDN;Mini Car;1
+SDN;Moped;0
+SDN;Motorcycle (50-250cc);1
+SDN;Motorcycle (>250cc);1
+SDN;Passenger Rail;1
+SDN;Subcompact Car;1
+SDN;Truck (0-3.5t);1
+SDN;Truck (18t);1
+SDN;Truck (26t);1
+SDN;Truck (40t);1
+SDN;Truck (7.5t);1
+SDN;Van;1
+SDN;Walk;1
+SEN;Bus;1
+SEN;Compact Car;1
+SEN;Cycle;1
+SEN;Domestic Aviation;1
+SEN;Domestic Ship;1
+SEN;Freight Rail;1
+SEN;HSR;1
+SEN;International Aviation;1
+SEN;International Ship;1
+SEN;Large Car;0
+SEN;Large Car and SUV;1
+SEN;Midsize Car;1
+SEN;Mini Car;1
+SEN;Moped;0
+SEN;Motorcycle (50-250cc);1
+SEN;Motorcycle (>250cc);1
+SEN;Passenger Rail;1
+SEN;Subcompact Car;1
+SEN;Truck (0-3.5t);1
+SEN;Truck (18t);1
+SEN;Truck (26t);1
+SEN;Truck (40t);1
+SEN;Truck (7.5t);1
+SEN;Van;1
+SEN;Walk;1
+SGP;Bus;1
+SGP;Compact Car;1
+SGP;Cycle;1
+SGP;Domestic Aviation;1
+SGP;Domestic Ship;1
+SGP;Freight Rail;1
+SGP;HSR;1
+SGP;International Aviation;1
+SGP;International Ship;1
+SGP;Large Car;0
+SGP;Large Car and SUV;1
+SGP;Midsize Car;1
+SGP;Mini Car;1
+SGP;Moped;1
+SGP;Motorcycle (50-250cc);1
+SGP;Motorcycle (>250cc);1
+SGP;Passenger Rail;1
+SGP;Subcompact Car;1
+SGP;Truck (0-3.5t);1
+SGP;Truck (18t);1
+SGP;Truck (26t);1
+SGP;Truck (40t);1
+SGP;Truck (7.5t);1
+SGP;Van;1
+SGP;Walk;1
+SGS;Bus;1
+SGS;Compact Car;1
+SGS;Cycle;1
+SGS;Domestic Aviation;1
+SGS;Domestic Ship;1
+SGS;Freight Rail;1
+SGS;HSR;1
+SGS;International Aviation;1
+SGS;International Ship;1
+SGS;Large Car;0
+SGS;Large Car and SUV;1
+SGS;Midsize Car;1
+SGS;Mini Car;1
+SGS;Moped;1
+SGS;Motorcycle (50-250cc);1
+SGS;Motorcycle (>250cc);1
+SGS;Passenger Rail;1
+SGS;Subcompact Car;1
+SGS;Truck (0-3.5t);1
+SGS;Truck (18t);1
+SGS;Truck (26t);1
+SGS;Truck (40t);1
+SGS;Truck (7.5t);1
+SGS;Van;1
+SGS;Walk;1
+SHN;Bus;1
+SHN;Compact Car;1
+SHN;Cycle;1
+SHN;Domestic Aviation;1
+SHN;Domestic Ship;1
+SHN;Freight Rail;1
+SHN;HSR;1
+SHN;International Aviation;1
+SHN;International Ship;1
+SHN;Large Car;0
+SHN;Large Car and SUV;1
+SHN;Midsize Car;1
+SHN;Mini Car;1
+SHN;Moped;1
+SHN;Motorcycle (50-250cc);1
+SHN;Motorcycle (>250cc);1
+SHN;Passenger Rail;1
+SHN;Subcompact Car;1
+SHN;Truck (0-3.5t);1
+SHN;Truck (18t);1
+SHN;Truck (26t);1
+SHN;Truck (40t);1
+SHN;Truck (7.5t);1
+SHN;Van;1
+SHN;Walk;1
+SJM;Bus;1
+SJM;Compact Car;1
+SJM;Cycle;1
+SJM;Domestic Aviation;1
+SJM;Domestic Ship;1
+SJM;Freight Rail;1
+SJM;HSR;1
+SJM;International Aviation;1
+SJM;International Ship;1
+SJM;Large Car;0
+SJM;Large Car and SUV;1
+SJM;Midsize Car;1
+SJM;Mini Car;1
+SJM;Moped;1
+SJM;Motorcycle (50-250cc);1
+SJM;Motorcycle (>250cc);1
+SJM;Passenger Rail;1
+SJM;Subcompact Car;1
+SJM;Truck (0-3.5t);1
+SJM;Truck (18t);1
+SJM;Truck (26t);1
+SJM;Truck (40t);1
+SJM;Truck (7.5t);1
+SJM;Van;1
+SJM;Walk;1
+SLB;Bus;1
+SLB;Compact Car;1
+SLB;Cycle;1
+SLB;Domestic Aviation;1
+SLB;Domestic Ship;1
+SLB;Freight Rail;1
+SLB;HSR;1
+SLB;International Aviation;1
+SLB;International Ship;1
+SLB;Large Car;0
+SLB;Large Car and SUV;1
+SLB;Midsize Car;1
+SLB;Mini Car;1
+SLB;Moped;1
+SLB;Motorcycle (50-250cc);1
+SLB;Motorcycle (>250cc);1
+SLB;Passenger Rail;1
+SLB;Subcompact Car;1
+SLB;Truck (0-3.5t);1
+SLB;Truck (18t);1
+SLB;Truck (26t);1
+SLB;Truck (40t);1
+SLB;Truck (7.5t);1
+SLB;Van;1
+SLB;Walk;1
+SLE;Bus;1
+SLE;Compact Car;1
+SLE;Cycle;1
+SLE;Domestic Aviation;1
+SLE;Domestic Ship;1
+SLE;Freight Rail;1
+SLE;HSR;1
+SLE;International Aviation;1
+SLE;International Ship;1
+SLE;Large Car;0
+SLE;Large Car and SUV;1
+SLE;Midsize Car;1
+SLE;Mini Car;1
+SLE;Moped;0
+SLE;Motorcycle (50-250cc);1
+SLE;Motorcycle (>250cc);1
+SLE;Passenger Rail;1
+SLE;Subcompact Car;1
+SLE;Truck (0-3.5t);1
+SLE;Truck (18t);1
+SLE;Truck (26t);1
+SLE;Truck (40t);1
+SLE;Truck (7.5t);1
+SLE;Van;1
+SLE;Walk;1
+SLV;Bus;1
+SLV;Compact Car;1
+SLV;Cycle;1
+SLV;Domestic Aviation;1
+SLV;Domestic Ship;1
+SLV;Freight Rail;1
+SLV;HSR;1
+SLV;International Aviation;1
+SLV;International Ship;1
+SLV;Large Car;0
+SLV;Large Car and SUV;1
+SLV;Midsize Car;1
+SLV;Mini Car;1
+SLV;Moped;1
+SLV;Motorcycle (50-250cc);1
+SLV;Motorcycle (>250cc);1
+SLV;Passenger Rail;1
+SLV;Subcompact Car;1
+SLV;Truck (0-3.5t);1
+SLV;Truck (18t);1
+SLV;Truck (26t);1
+SLV;Truck (40t);1
+SLV;Truck (7.5t);1
+SLV;Van;1
+SLV;Walk;1
+SMR;Bus;1
+SMR;Compact Car;1
+SMR;Cycle;1
+SMR;Domestic Aviation;1
+SMR;Domestic Ship;1
+SMR;Freight Rail;1
+SMR;HSR;1
+SMR;International Aviation;1
+SMR;International Ship;1
+SMR;Large Car;0
+SMR;Large Car and SUV;1
+SMR;Midsize Car;1
+SMR;Mini Car;1
+SMR;Moped;1
+SMR;Motorcycle (50-250cc);1
+SMR;Motorcycle (>250cc);1
+SMR;Passenger Rail;1
+SMR;Subcompact Car;1
+SMR;Truck (0-3.5t);1
+SMR;Truck (18t);1
+SMR;Truck (26t);1
+SMR;Truck (40t);1
+SMR;Truck (7.5t);1
+SMR;Van;1
+SMR;Walk;1
+SOM;Bus;1
+SOM;Compact Car;1
+SOM;Cycle;1
+SOM;Domestic Aviation;1
+SOM;Domestic Ship;1
+SOM;Freight Rail;1
+SOM;HSR;1
+SOM;International Aviation;1
+SOM;International Ship;1
+SOM;Large Car;0
+SOM;Large Car and SUV;1
+SOM;Midsize Car;1
+SOM;Mini Car;1
+SOM;Moped;0
+SOM;Motorcycle (50-250cc);1
+SOM;Motorcycle (>250cc);1
+SOM;Passenger Rail;1
+SOM;Subcompact Car;1
+SOM;Truck (0-3.5t);1
+SOM;Truck (18t);1
+SOM;Truck (26t);1
+SOM;Truck (40t);1
+SOM;Truck (7.5t);1
+SOM;Van;1
+SOM;Walk;1
+SPM;Bus;1
+SPM;Compact Car;1
+SPM;Cycle;1
+SPM;Domestic Aviation;1
+SPM;Domestic Ship;1
+SPM;Freight Rail;1
+SPM;HSR;1
+SPM;International Aviation;1
+SPM;International Ship;1
+SPM;Large Car;0
+SPM;Large Car and SUV;1
+SPM;Midsize Car;1
+SPM;Mini Car;1
+SPM;Moped;1
+SPM;Motorcycle (50-250cc);1
+SPM;Motorcycle (>250cc);1
+SPM;Passenger Rail;1
+SPM;Subcompact Car;1
+SPM;Truck (0-3.5t);1
+SPM;Truck (18t);1
+SPM;Truck (26t);1
+SPM;Truck (40t);1
+SPM;Truck (7.5t);1
+SPM;Van;1
+SPM;Walk;1
+SRB;Bus;1
+SRB;Compact Car;1
+SRB;Cycle;1
+SRB;Domestic Aviation;1
+SRB;Domestic Ship;1
+SRB;Freight Rail;1
+SRB;HSR;1
+SRB;International Aviation;1
+SRB;International Ship;1
+SRB;Large Car;0
+SRB;Large Car and SUV;1
+SRB;Midsize Car;1
+SRB;Mini Car;1
+SRB;Moped;1
+SRB;Motorcycle (50-250cc);1
+SRB;Motorcycle (>250cc);1
+SRB;Passenger Rail;1
+SRB;Subcompact Car;1
+SRB;Truck (0-3.5t);1
+SRB;Truck (18t);1
+SRB;Truck (26t);1
+SRB;Truck (40t);1
+SRB;Truck (7.5t);1
+SRB;Van;1
+SRB;Walk;1
+SSD;Bus;1
+SSD;Compact Car;1
+SSD;Cycle;1
+SSD;Domestic Aviation;1
+SSD;Domestic Ship;1
+SSD;Freight Rail;1
+SSD;HSR;1
+SSD;International Aviation;1
+SSD;International Ship;1
+SSD;Large Car;0
+SSD;Large Car and SUV;1
+SSD;Midsize Car;1
+SSD;Mini Car;1
+SSD;Moped;0
+SSD;Motorcycle (50-250cc);1
+SSD;Motorcycle (>250cc);1
+SSD;Passenger Rail;1
+SSD;Subcompact Car;1
+SSD;Truck (0-3.5t);1
+SSD;Truck (18t);1
+SSD;Truck (26t);1
+SSD;Truck (40t);1
+SSD;Truck (7.5t);1
+SSD;Van;1
+SSD;Walk;1
+STP;Bus;1
+STP;Compact Car;1
+STP;Cycle;1
+STP;Domestic Aviation;1
+STP;Domestic Ship;1
+STP;Freight Rail;1
+STP;HSR;1
+STP;International Aviation;1
+STP;International Ship;1
+STP;Large Car;0
+STP;Large Car and SUV;1
+STP;Midsize Car;1
+STP;Mini Car;1
+STP;Moped;0
+STP;Motorcycle (50-250cc);1
+STP;Motorcycle (>250cc);1
+STP;Passenger Rail;1
+STP;Subcompact Car;1
+STP;Truck (0-3.5t);1
+STP;Truck (18t);1
+STP;Truck (26t);1
+STP;Truck (40t);1
+STP;Truck (7.5t);1
+STP;Van;1
+STP;Walk;1
+SUR;Bus;1
+SUR;Compact Car;1
+SUR;Cycle;1
+SUR;Domestic Aviation;1
+SUR;Domestic Ship;1
+SUR;Freight Rail;1
+SUR;HSR;1
+SUR;International Aviation;1
+SUR;International Ship;1
+SUR;Large Car;0
+SUR;Large Car and SUV;1
+SUR;Midsize Car;1
+SUR;Mini Car;1
+SUR;Moped;1
+SUR;Motorcycle (50-250cc);1
+SUR;Motorcycle (>250cc);1
+SUR;Passenger Rail;1
+SUR;Subcompact Car;1
+SUR;Truck (0-3.5t);1
+SUR;Truck (18t);1
+SUR;Truck (26t);1
+SUR;Truck (40t);1
+SUR;Truck (7.5t);1
+SUR;Van;1
+SUR;Walk;1
+SVK;Bus;1
+SVK;Compact Car;1
+SVK;Cycle;1
+SVK;Domestic Aviation;1
+SVK;Domestic Ship;1
+SVK;Freight Rail;1
+SVK;HSR;1
+SVK;International Aviation;1
+SVK;International Ship;1
+SVK;Large Car;0
+SVK;Large Car and SUV;1
+SVK;Midsize Car;1
+SVK;Mini Car;1
+SVK;Moped;1
+SVK;Motorcycle (50-250cc);1
+SVK;Motorcycle (>250cc);1
+SVK;Passenger Rail;1
+SVK;Subcompact Car;1
+SVK;Truck (0-3.5t);1
+SVK;Truck (18t);1
+SVK;Truck (26t);1
+SVK;Truck (40t);1
+SVK;Truck (7.5t);1
+SVK;Van;1
+SVK;Walk;1
+SVN;Bus;1
+SVN;Compact Car;1
+SVN;Cycle;1
+SVN;Domestic Aviation;1
+SVN;Domestic Ship;1
+SVN;Freight Rail;1
+SVN;HSR;1
+SVN;International Aviation;1
+SVN;International Ship;1
+SVN;Large Car;0
+SVN;Large Car and SUV;1
+SVN;Midsize Car;1
+SVN;Mini Car;1
+SVN;Moped;1
+SVN;Motorcycle (50-250cc);1
+SVN;Motorcycle (>250cc);1
+SVN;Passenger Rail;1
+SVN;Subcompact Car;1
+SVN;Truck (0-3.5t);1
+SVN;Truck (18t);1
+SVN;Truck (26t);1
+SVN;Truck (40t);1
+SVN;Truck (7.5t);1
+SVN;Van;1
+SVN;Walk;1
+SWE;Bus;1
+SWE;Compact Car;1
+SWE;Cycle;1
+SWE;Domestic Aviation;1
+SWE;Domestic Ship;1
+SWE;Freight Rail;1
+SWE;HSR;1
+SWE;International Aviation;1
+SWE;International Ship;1
+SWE;Large Car;0
+SWE;Large Car and SUV;1
+SWE;Midsize Car;1
+SWE;Mini Car;1
+SWE;Moped;1
+SWE;Motorcycle (50-250cc);1
+SWE;Motorcycle (>250cc);1
+SWE;Passenger Rail;1
+SWE;Subcompact Car;1
+SWE;Truck (0-3.5t);1
+SWE;Truck (18t);1
+SWE;Truck (26t);1
+SWE;Truck (40t);1
+SWE;Truck (7.5t);1
+SWE;Van;1
+SWE;Walk;1
+SWZ;Bus;1
+SWZ;Compact Car;1
+SWZ;Cycle;1
+SWZ;Domestic Aviation;1
+SWZ;Domestic Ship;1
+SWZ;Freight Rail;1
+SWZ;HSR;1
+SWZ;International Aviation;1
+SWZ;International Ship;1
+SWZ;Large Car;0
+SWZ;Large Car and SUV;1
+SWZ;Midsize Car;1
+SWZ;Mini Car;1
+SWZ;Moped;0
+SWZ;Motorcycle (50-250cc);1
+SWZ;Motorcycle (>250cc);1
+SWZ;Passenger Rail;1
+SWZ;Subcompact Car;1
+SWZ;Truck (0-3.5t);1
+SWZ;Truck (18t);1
+SWZ;Truck (26t);1
+SWZ;Truck (40t);1
+SWZ;Truck (7.5t);1
+SWZ;Van;1
+SWZ;Walk;1
+SXM;Bus;1
+SXM;Compact Car;1
+SXM;Cycle;1
+SXM;Domestic Aviation;1
+SXM;Domestic Ship;1
+SXM;Freight Rail;1
+SXM;HSR;1
+SXM;International Aviation;1
+SXM;International Ship;1
+SXM;Large Car;0
+SXM;Large Car and SUV;1
+SXM;Midsize Car;1
+SXM;Mini Car;1
+SXM;Moped;1
+SXM;Motorcycle (50-250cc);1
+SXM;Motorcycle (>250cc);1
+SXM;Passenger Rail;1
+SXM;Subcompact Car;1
+SXM;Truck (0-3.5t);1
+SXM;Truck (18t);1
+SXM;Truck (26t);1
+SXM;Truck (40t);1
+SXM;Truck (7.5t);1
+SXM;Van;1
+SXM;Walk;1
+SYC;Bus;1
+SYC;Compact Car;1
+SYC;Cycle;1
+SYC;Domestic Aviation;1
+SYC;Domestic Ship;1
+SYC;Freight Rail;1
+SYC;HSR;1
+SYC;International Aviation;1
+SYC;International Ship;1
+SYC;Large Car;0
+SYC;Large Car and SUV;1
+SYC;Midsize Car;1
+SYC;Mini Car;1
+SYC;Moped;1
+SYC;Motorcycle (50-250cc);1
+SYC;Motorcycle (>250cc);1
+SYC;Passenger Rail;1
+SYC;Subcompact Car;1
+SYC;Truck (0-3.5t);1
+SYC;Truck (18t);1
+SYC;Truck (26t);1
+SYC;Truck (40t);1
+SYC;Truck (7.5t);1
+SYC;Van;1
+SYC;Walk;1
+SYR;Bus;1
+SYR;Compact Car;1
+SYR;Cycle;1
+SYR;Domestic Aviation;1
+SYR;Domestic Ship;0
+SYR;Freight Rail;0
+SYR;HSR;1
+SYR;International Aviation;1
+SYR;International Ship;1
+SYR;Large Car;0
+SYR;Large Car and SUV;1
+SYR;Midsize Car;1
+SYR;Mini Car;1
+SYR;Moped;0
+SYR;Motorcycle (50-250cc);1
+SYR;Motorcycle (>250cc);0
+SYR;Passenger Rail;1
+SYR;Subcompact Car;1
+SYR;Truck (0-3.5t);1
+SYR;Truck (18t);1
+SYR;Truck (26t);1
+SYR;Truck (40t);1
+SYR;Truck (7.5t);1
+SYR;Van;1
+SYR;Walk;1
+TCA;Bus;1
+TCA;Compact Car;1
+TCA;Cycle;1
+TCA;Domestic Aviation;1
+TCA;Domestic Ship;1
+TCA;Freight Rail;1
+TCA;HSR;1
+TCA;International Aviation;1
+TCA;International Ship;1
+TCA;Large Car;0
+TCA;Large Car and SUV;1
+TCA;Midsize Car;1
+TCA;Mini Car;1
+TCA;Moped;1
+TCA;Motorcycle (50-250cc);1
+TCA;Motorcycle (>250cc);1
+TCA;Passenger Rail;1
+TCA;Subcompact Car;1
+TCA;Truck (0-3.5t);1
+TCA;Truck (18t);1
+TCA;Truck (26t);1
+TCA;Truck (40t);1
+TCA;Truck (7.5t);1
+TCA;Van;1
+TCA;Walk;1
+TCD;Bus;1
+TCD;Compact Car;1
+TCD;Cycle;1
+TCD;Domestic Aviation;1
+TCD;Domestic Ship;1
+TCD;Freight Rail;1
+TCD;HSR;1
+TCD;International Aviation;1
+TCD;International Ship;1
+TCD;Large Car;0
+TCD;Large Car and SUV;1
+TCD;Midsize Car;1
+TCD;Mini Car;1
+TCD;Moped;0
+TCD;Motorcycle (50-250cc);1
+TCD;Motorcycle (>250cc);1
+TCD;Passenger Rail;1
+TCD;Subcompact Car;1
+TCD;Truck (0-3.5t);1
+TCD;Truck (18t);1
+TCD;Truck (26t);1
+TCD;Truck (40t);1
+TCD;Truck (7.5t);1
+TCD;Van;1
+TCD;Walk;1
+TGO;Bus;1
+TGO;Compact Car;1
+TGO;Cycle;1
+TGO;Domestic Aviation;1
+TGO;Domestic Ship;1
+TGO;Freight Rail;1
+TGO;HSR;1
+TGO;International Aviation;1
+TGO;International Ship;1
+TGO;Large Car;0
+TGO;Large Car and SUV;1
+TGO;Midsize Car;1
+TGO;Mini Car;1
+TGO;Moped;0
+TGO;Motorcycle (50-250cc);1
+TGO;Motorcycle (>250cc);1
+TGO;Passenger Rail;1
+TGO;Subcompact Car;1
+TGO;Truck (0-3.5t);1
+TGO;Truck (18t);1
+TGO;Truck (26t);1
+TGO;Truck (40t);1
+TGO;Truck (7.5t);1
+TGO;Van;1
+TGO;Walk;1
+THA;Bus;1
+THA;Compact Car;1
+THA;Cycle;1
+THA;Domestic Aviation;1
+THA;Domestic Ship;1
+THA;Freight Rail;1
+THA;HSR;1
+THA;International Aviation;1
+THA;International Ship;1
+THA;Large Car;0
+THA;Large Car and SUV;1
+THA;Midsize Car;1
+THA;Mini Car;1
+THA;Moped;1
+THA;Motorcycle (50-250cc);1
+THA;Motorcycle (>250cc);1
+THA;Passenger Rail;1
+THA;Subcompact Car;1
+THA;Truck (0-3.5t);1
+THA;Truck (18t);1
+THA;Truck (26t);1
+THA;Truck (40t);1
+THA;Truck (7.5t);1
+THA;Van;1
+THA;Walk;1
+TJK;Bus;1
+TJK;Compact Car;1
+TJK;Cycle;1
+TJK;Domestic Aviation;1
+TJK;Domestic Ship;1
+TJK;Freight Rail;1
+TJK;HSR;1
+TJK;International Aviation;1
+TJK;International Ship;1
+TJK;Large Car;0
+TJK;Large Car and SUV;1
+TJK;Midsize Car;1
+TJK;Mini Car;1
+TJK;Moped;1
+TJK;Motorcycle (50-250cc);1
+TJK;Motorcycle (>250cc);1
+TJK;Passenger Rail;1
+TJK;Subcompact Car;1
+TJK;Truck (0-3.5t);1
+TJK;Truck (18t);1
+TJK;Truck (26t);1
+TJK;Truck (40t);1
+TJK;Truck (7.5t);1
+TJK;Van;1
+TJK;Walk;1
+TKL;Bus;1
+TKL;Compact Car;1
+TKL;Cycle;1
+TKL;Domestic Aviation;1
+TKL;Domestic Ship;1
+TKL;Freight Rail;1
+TKL;HSR;1
+TKL;International Aviation;1
+TKL;International Ship;1
+TKL;Large Car;0
+TKL;Large Car and SUV;1
+TKL;Midsize Car;1
+TKL;Mini Car;1
+TKL;Moped;1
+TKL;Motorcycle (50-250cc);1
+TKL;Motorcycle (>250cc);1
+TKL;Passenger Rail;1
+TKL;Subcompact Car;1
+TKL;Truck (0-3.5t);1
+TKL;Truck (18t);1
+TKL;Truck (26t);1
+TKL;Truck (40t);1
+TKL;Truck (7.5t);1
+TKL;Van;1
+TKL;Walk;1
+TKM;Bus;1
+TKM;Compact Car;1
+TKM;Cycle;1
+TKM;Domestic Aviation;1
+TKM;Domestic Ship;1
+TKM;Freight Rail;1
+TKM;HSR;1
+TKM;International Aviation;1
+TKM;International Ship;1
+TKM;Large Car;0
+TKM;Large Car and SUV;1
+TKM;Midsize Car;1
+TKM;Mini Car;1
+TKM;Moped;1
+TKM;Motorcycle (50-250cc);1
+TKM;Motorcycle (>250cc);1
+TKM;Passenger Rail;1
+TKM;Subcompact Car;1
+TKM;Truck (0-3.5t);1
+TKM;Truck (18t);1
+TKM;Truck (26t);1
+TKM;Truck (40t);1
+TKM;Truck (7.5t);1
+TKM;Van;1
+TKM;Walk;1
+TLS;Bus;1
+TLS;Compact Car;1
+TLS;Cycle;1
+TLS;Domestic Aviation;1
+TLS;Domestic Ship;1
+TLS;Freight Rail;1
+TLS;HSR;1
+TLS;International Aviation;1
+TLS;International Ship;1
+TLS;Large Car;0
+TLS;Large Car and SUV;1
+TLS;Midsize Car;1
+TLS;Mini Car;1
+TLS;Moped;1
+TLS;Motorcycle (50-250cc);1
+TLS;Motorcycle (>250cc);1
+TLS;Passenger Rail;1
+TLS;Subcompact Car;1
+TLS;Truck (0-3.5t);1
+TLS;Truck (18t);1
+TLS;Truck (26t);1
+TLS;Truck (40t);1
+TLS;Truck (7.5t);1
+TLS;Van;1
+TLS;Walk;1
+TON;Bus;1
+TON;Compact Car;1
+TON;Cycle;1
+TON;Domestic Aviation;1
+TON;Domestic Ship;1
+TON;Freight Rail;1
+TON;HSR;1
+TON;International Aviation;1
+TON;International Ship;1
+TON;Large Car;0
+TON;Large Car and SUV;1
+TON;Midsize Car;1
+TON;Mini Car;1
+TON;Moped;1
+TON;Motorcycle (50-250cc);1
+TON;Motorcycle (>250cc);1
+TON;Passenger Rail;1
+TON;Subcompact Car;1
+TON;Truck (0-3.5t);1
+TON;Truck (18t);1
+TON;Truck (26t);1
+TON;Truck (40t);1
+TON;Truck (7.5t);1
+TON;Van;1
+TON;Walk;1
+TTO;Bus;1
+TTO;Compact Car;1
+TTO;Cycle;1
+TTO;Domestic Aviation;1
+TTO;Domestic Ship;1
+TTO;Freight Rail;1
+TTO;HSR;1
+TTO;International Aviation;1
+TTO;International Ship;1
+TTO;Large Car;0
+TTO;Large Car and SUV;1
+TTO;Midsize Car;1
+TTO;Mini Car;1
+TTO;Moped;1
+TTO;Motorcycle (50-250cc);1
+TTO;Motorcycle (>250cc);1
+TTO;Passenger Rail;1
+TTO;Subcompact Car;1
+TTO;Truck (0-3.5t);1
+TTO;Truck (18t);1
+TTO;Truck (26t);1
+TTO;Truck (40t);1
+TTO;Truck (7.5t);1
+TTO;Van;1
+TTO;Walk;1
+TUN;Bus;1
+TUN;Compact Car;1
+TUN;Cycle;1
+TUN;Domestic Aviation;1
+TUN;Domestic Ship;1
+TUN;Freight Rail;1
+TUN;HSR;1
+TUN;International Aviation;1
+TUN;International Ship;1
+TUN;Large Car;0
+TUN;Large Car and SUV;1
+TUN;Midsize Car;1
+TUN;Mini Car;1
+TUN;Moped;0
+TUN;Motorcycle (50-250cc);1
+TUN;Motorcycle (>250cc);1
+TUN;Passenger Rail;1
+TUN;Subcompact Car;1
+TUN;Truck (0-3.5t);1
+TUN;Truck (18t);1
+TUN;Truck (26t);1
+TUN;Truck (40t);1
+TUN;Truck (7.5t);1
+TUN;Van;1
+TUN;Walk;1
+TUR;Bus;1
+TUR;Compact Car;1
+TUR;Cycle;1
+TUR;Domestic Aviation;1
+TUR;Domestic Ship;1
+TUR;Freight Rail;1
+TUR;HSR;1
+TUR;International Aviation;1
+TUR;International Ship;1
+TUR;Large Car;0
+TUR;Large Car and SUV;1
+TUR;Midsize Car;1
+TUR;Mini Car;1
+TUR;Moped;1
+TUR;Motorcycle (50-250cc);1
+TUR;Motorcycle (>250cc);1
+TUR;Passenger Rail;1
+TUR;Subcompact Car;1
+TUR;Truck (0-3.5t);1
+TUR;Truck (18t);1
+TUR;Truck (26t);1
+TUR;Truck (40t);1
+TUR;Truck (7.5t);1
+TUR;Van;1
+TUR;Walk;1
+TUV;Bus;1
+TUV;Compact Car;1
+TUV;Cycle;1
+TUV;Domestic Aviation;1
+TUV;Domestic Ship;1
+TUV;Freight Rail;1
+TUV;HSR;1
+TUV;International Aviation;1
+TUV;International Ship;1
+TUV;Large Car;0
+TUV;Large Car and SUV;1
+TUV;Midsize Car;1
+TUV;Mini Car;1
+TUV;Moped;1
+TUV;Motorcycle (50-250cc);1
+TUV;Motorcycle (>250cc);1
+TUV;Passenger Rail;1
+TUV;Subcompact Car;1
+TUV;Truck (0-3.5t);1
+TUV;Truck (18t);1
+TUV;Truck (26t);1
+TUV;Truck (40t);1
+TUV;Truck (7.5t);1
+TUV;Van;1
+TUV;Walk;1
+TWN;Bus;1
+TWN;Compact Car;1
+TWN;Cycle;1
+TWN;Domestic Aviation;1
+TWN;Domestic Ship;1
+TWN;Freight Rail;1
+TWN;HSR;1
+TWN;International Aviation;1
+TWN;International Ship;1
+TWN;Large Car;0
+TWN;Large Car and SUV;1
+TWN;Midsize Car;1
+TWN;Mini Car;1
+TWN;Moped;1
+TWN;Motorcycle (50-250cc);1
+TWN;Motorcycle (>250cc);1
+TWN;Passenger Rail;1
+TWN;Subcompact Car;1
+TWN;Truck (0-3.5t);1
+TWN;Truck (18t);1
+TWN;Truck (26t);1
+TWN;Truck (40t);1
+TWN;Truck (7.5t);1
+TWN;Van;1
+TWN;Walk;1
+TZA;Bus;1
+TZA;Compact Car;1
+TZA;Cycle;1
+TZA;Domestic Aviation;1
+TZA;Domestic Ship;1
+TZA;Freight Rail;1
+TZA;HSR;1
+TZA;International Aviation;1
+TZA;International Ship;1
+TZA;Large Car;0
+TZA;Large Car and SUV;1
+TZA;Midsize Car;1
+TZA;Mini Car;1
+TZA;Moped;0
+TZA;Motorcycle (50-250cc);1
+TZA;Motorcycle (>250cc);1
+TZA;Passenger Rail;1
+TZA;Subcompact Car;1
+TZA;Truck (0-3.5t);1
+TZA;Truck (18t);1
+TZA;Truck (26t);1
+TZA;Truck (40t);1
+TZA;Truck (7.5t);1
+TZA;Van;1
+TZA;Walk;1
+UGA;Bus;1
+UGA;Compact Car;1
+UGA;Cycle;1
+UGA;Domestic Aviation;1
+UGA;Domestic Ship;1
+UGA;Freight Rail;1
+UGA;HSR;1
+UGA;International Aviation;1
+UGA;International Ship;1
+UGA;Large Car;0
+UGA;Large Car and SUV;1
+UGA;Midsize Car;1
+UGA;Mini Car;1
+UGA;Moped;0
+UGA;Motorcycle (50-250cc);1
+UGA;Motorcycle (>250cc);1
+UGA;Passenger Rail;1
+UGA;Subcompact Car;1
+UGA;Truck (0-3.5t);1
+UGA;Truck (18t);1
+UGA;Truck (26t);1
+UGA;Truck (40t);1
+UGA;Truck (7.5t);1
+UGA;Van;1
+UGA;Walk;1
+UKR;Bus;1
+UKR;Compact Car;1
+UKR;Cycle;1
+UKR;Domestic Aviation;1
+UKR;Domestic Ship;1
+UKR;Freight Rail;1
+UKR;HSR;1
+UKR;International Aviation;1
+UKR;International Ship;1
+UKR;Large Car;0
+UKR;Large Car and SUV;1
+UKR;Midsize Car;1
+UKR;Mini Car;1
+UKR;Moped;1
+UKR;Motorcycle (50-250cc);1
+UKR;Motorcycle (>250cc);1
+UKR;Passenger Rail;1
+UKR;Subcompact Car;1
+UKR;Truck (0-3.5t);1
+UKR;Truck (18t);1
+UKR;Truck (26t);1
+UKR;Truck (40t);1
+UKR;Truck (7.5t);1
+UKR;Van;1
+UKR;Walk;1
+UMI;Bus;1
+UMI;Compact Car;1
+UMI;Cycle;1
+UMI;Domestic Aviation;1
+UMI;Domestic Ship;1
+UMI;Freight Rail;1
+UMI;HSR;1
+UMI;International Aviation;1
+UMI;International Ship;1
+UMI;Large Car;1
+UMI;Large Car and SUV;1
+UMI;Midsize Car;1
+UMI;Mini Car;1
+UMI;Moped;0
+UMI;Motorcycle (50-250cc);0
+UMI;Motorcycle (>250cc);1
+UMI;Passenger Rail;1
+UMI;Subcompact Car;1
+UMI;Truck (0-3.5t);1
+UMI;Truck (18t);1
+UMI;Truck (26t);1
+UMI;Truck (40t);1
+UMI;Truck (7.5t);1
+UMI;Van;1
+UMI;Walk;1
+URY;Bus;1
+URY;Compact Car;1
+URY;Cycle;1
+URY;Domestic Aviation;1
+URY;Domestic Ship;1
+URY;Freight Rail;1
+URY;HSR;1
+URY;International Aviation;1
+URY;International Ship;1
+URY;Large Car;0
+URY;Large Car and SUV;1
+URY;Midsize Car;1
+URY;Mini Car;1
+URY;Moped;1
+URY;Motorcycle (50-250cc);1
+URY;Motorcycle (>250cc);1
+URY;Passenger Rail;1
+URY;Subcompact Car;1
+URY;Truck (0-3.5t);1
+URY;Truck (18t);1
+URY;Truck (26t);1
+URY;Truck (40t);1
+URY;Truck (7.5t);1
+URY;Van;1
+URY;Walk;1
+USA;Bus;1
+USA;Compact Car;1
+USA;Cycle;1
+USA;Domestic Aviation;1
+USA;Domestic Ship;1
+USA;Freight Rail;1
+USA;HSR;1
+USA;International Aviation;1
+USA;International Ship;1
+USA;Large Car;1
+USA;Large Car and SUV;1
+USA;Midsize Car;1
+USA;Mini Car;1
+USA;Moped;0
+USA;Motorcycle (50-250cc);0
+USA;Motorcycle (>250cc);1
+USA;Passenger Rail;1
+USA;Subcompact Car;1
+USA;Truck (0-3.5t);1
+USA;Truck (18t);1
+USA;Truck (26t);1
+USA;Truck (40t);1
+USA;Truck (7.5t);1
+USA;Van;1
+USA;Walk;1
+UZB;Bus;1
+UZB;Compact Car;1
+UZB;Cycle;1
+UZB;Domestic Aviation;1
+UZB;Domestic Ship;1
+UZB;Freight Rail;1
+UZB;HSR;1
+UZB;International Aviation;1
+UZB;International Ship;1
+UZB;Large Car;0
+UZB;Large Car and SUV;1
+UZB;Midsize Car;1
+UZB;Mini Car;1
+UZB;Moped;1
+UZB;Motorcycle (50-250cc);1
+UZB;Motorcycle (>250cc);1
+UZB;Passenger Rail;1
+UZB;Subcompact Car;1
+UZB;Truck (0-3.5t);1
+UZB;Truck (18t);1
+UZB;Truck (26t);1
+UZB;Truck (40t);1
+UZB;Truck (7.5t);1
+UZB;Van;1
+UZB;Walk;1
+VAT;Bus;1
+VAT;Compact Car;1
+VAT;Cycle;1
+VAT;Domestic Aviation;1
+VAT;Domestic Ship;1
+VAT;Freight Rail;1
+VAT;HSR;1
+VAT;International Aviation;1
+VAT;International Ship;1
+VAT;Large Car;0
+VAT;Large Car and SUV;1
+VAT;Midsize Car;1
+VAT;Mini Car;1
+VAT;Moped;1
+VAT;Motorcycle (50-250cc);1
+VAT;Motorcycle (>250cc);1
+VAT;Passenger Rail;1
+VAT;Subcompact Car;1
+VAT;Truck (0-3.5t);1
+VAT;Truck (18t);1
+VAT;Truck (26t);1
+VAT;Truck (40t);1
+VAT;Truck (7.5t);1
+VAT;Van;1
+VAT;Walk;1
+VCT;Bus;1
+VCT;Compact Car;1
+VCT;Cycle;1
+VCT;Domestic Aviation;1
+VCT;Domestic Ship;1
+VCT;Freight Rail;1
+VCT;HSR;1
+VCT;International Aviation;1
+VCT;International Ship;1
+VCT;Large Car;0
+VCT;Large Car and SUV;1
+VCT;Midsize Car;1
+VCT;Mini Car;1
+VCT;Moped;1
+VCT;Motorcycle (50-250cc);1
+VCT;Motorcycle (>250cc);1
+VCT;Passenger Rail;1
+VCT;Subcompact Car;1
+VCT;Truck (0-3.5t);1
+VCT;Truck (18t);1
+VCT;Truck (26t);1
+VCT;Truck (40t);1
+VCT;Truck (7.5t);1
+VCT;Van;1
+VCT;Walk;1
+VEN;Bus;1
+VEN;Compact Car;1
+VEN;Cycle;1
+VEN;Domestic Aviation;1
+VEN;Domestic Ship;1
+VEN;Freight Rail;1
+VEN;HSR;1
+VEN;International Aviation;1
+VEN;International Ship;1
+VEN;Large Car;0
+VEN;Large Car and SUV;1
+VEN;Midsize Car;1
+VEN;Mini Car;1
+VEN;Moped;1
+VEN;Motorcycle (50-250cc);1
+VEN;Motorcycle (>250cc);1
+VEN;Passenger Rail;1
+VEN;Subcompact Car;1
+VEN;Truck (0-3.5t);1
+VEN;Truck (18t);1
+VEN;Truck (26t);1
+VEN;Truck (40t);1
+VEN;Truck (7.5t);1
+VEN;Van;1
+VEN;Walk;1
+VGB;Bus;1
+VGB;Compact Car;1
+VGB;Cycle;1
+VGB;Domestic Aviation;1
+VGB;Domestic Ship;1
+VGB;Freight Rail;1
+VGB;HSR;1
+VGB;International Aviation;1
+VGB;International Ship;1
+VGB;Large Car;0
+VGB;Large Car and SUV;1
+VGB;Midsize Car;1
+VGB;Mini Car;1
+VGB;Moped;1
+VGB;Motorcycle (50-250cc);1
+VGB;Motorcycle (>250cc);1
+VGB;Passenger Rail;1
+VGB;Subcompact Car;1
+VGB;Truck (0-3.5t);1
+VGB;Truck (18t);1
+VGB;Truck (26t);1
+VGB;Truck (40t);1
+VGB;Truck (7.5t);1
+VGB;Van;1
+VGB;Walk;1
+VIR;Bus;1
+VIR;Compact Car;1
+VIR;Cycle;1
+VIR;Domestic Aviation;1
+VIR;Domestic Ship;1
+VIR;Freight Rail;1
+VIR;HSR;1
+VIR;International Aviation;1
+VIR;International Ship;1
+VIR;Large Car;1
+VIR;Large Car and SUV;1
+VIR;Midsize Car;1
+VIR;Mini Car;1
+VIR;Moped;0
+VIR;Motorcycle (50-250cc);0
+VIR;Motorcycle (>250cc);1
+VIR;Passenger Rail;1
+VIR;Subcompact Car;1
+VIR;Truck (0-3.5t);1
+VIR;Truck (18t);1
+VIR;Truck (26t);1
+VIR;Truck (40t);1
+VIR;Truck (7.5t);1
+VIR;Van;1
+VIR;Walk;1
+VNM;Bus;1
+VNM;Compact Car;1
+VNM;Cycle;1
+VNM;Domestic Aviation;1
+VNM;Domestic Ship;1
+VNM;Freight Rail;1
+VNM;HSR;1
+VNM;International Aviation;1
+VNM;International Ship;1
+VNM;Large Car;0
+VNM;Large Car and SUV;1
+VNM;Midsize Car;1
+VNM;Mini Car;1
+VNM;Moped;1
+VNM;Motorcycle (50-250cc);1
+VNM;Motorcycle (>250cc);1
+VNM;Passenger Rail;1
+VNM;Subcompact Car;1
+VNM;Truck (0-3.5t);1
+VNM;Truck (18t);1
+VNM;Truck (26t);1
+VNM;Truck (40t);1
+VNM;Truck (7.5t);1
+VNM;Van;1
+VNM;Walk;1
+VUT;Bus;1
+VUT;Compact Car;1
+VUT;Cycle;1
+VUT;Domestic Aviation;1
+VUT;Domestic Ship;1
+VUT;Freight Rail;1
+VUT;HSR;1
+VUT;International Aviation;1
+VUT;International Ship;1
+VUT;Large Car;0
+VUT;Large Car and SUV;1
+VUT;Midsize Car;1
+VUT;Mini Car;1
+VUT;Moped;1
+VUT;Motorcycle (50-250cc);1
+VUT;Motorcycle (>250cc);1
+VUT;Passenger Rail;1
+VUT;Subcompact Car;1
+VUT;Truck (0-3.5t);1
+VUT;Truck (18t);1
+VUT;Truck (26t);1
+VUT;Truck (40t);1
+VUT;Truck (7.5t);1
+VUT;Van;1
+VUT;Walk;1
+WLF;Bus;1
+WLF;Compact Car;1
+WLF;Cycle;1
+WLF;Domestic Aviation;1
+WLF;Domestic Ship;1
+WLF;Freight Rail;1
+WLF;HSR;1
+WLF;International Aviation;1
+WLF;International Ship;1
+WLF;Large Car;0
+WLF;Large Car and SUV;1
+WLF;Midsize Car;1
+WLF;Mini Car;1
+WLF;Moped;1
+WLF;Motorcycle (50-250cc);1
+WLF;Motorcycle (>250cc);1
+WLF;Passenger Rail;1
+WLF;Subcompact Car;1
+WLF;Truck (0-3.5t);1
+WLF;Truck (18t);1
+WLF;Truck (26t);1
+WLF;Truck (40t);1
+WLF;Truck (7.5t);1
+WLF;Van;1
+WLF;Walk;1
+WSM;Bus;1
+WSM;Compact Car;1
+WSM;Cycle;1
+WSM;Domestic Aviation;1
+WSM;Domestic Ship;1
+WSM;Freight Rail;1
+WSM;HSR;1
+WSM;International Aviation;1
+WSM;International Ship;1
+WSM;Large Car;0
+WSM;Large Car and SUV;1
+WSM;Midsize Car;1
+WSM;Mini Car;1
+WSM;Moped;1
+WSM;Motorcycle (50-250cc);1
+WSM;Motorcycle (>250cc);1
+WSM;Passenger Rail;1
+WSM;Subcompact Car;1
+WSM;Truck (0-3.5t);1
+WSM;Truck (18t);1
+WSM;Truck (26t);1
+WSM;Truck (40t);1
+WSM;Truck (7.5t);1
+WSM;Van;1
+WSM;Walk;1
+YEM;Bus;1
+YEM;Compact Car;1
+YEM;Cycle;1
+YEM;Domestic Aviation;1
+YEM;Domestic Ship;0
+YEM;Freight Rail;0
+YEM;HSR;1
+YEM;International Aviation;1
+YEM;International Ship;1
+YEM;Large Car;0
+YEM;Large Car and SUV;1
+YEM;Midsize Car;1
+YEM;Mini Car;1
+YEM;Moped;0
+YEM;Motorcycle (50-250cc);1
+YEM;Motorcycle (>250cc);0
+YEM;Passenger Rail;1
+YEM;Subcompact Car;1
+YEM;Truck (0-3.5t);1
+YEM;Truck (18t);1
+YEM;Truck (26t);1
+YEM;Truck (40t);1
+YEM;Truck (7.5t);1
+YEM;Van;1
+YEM;Walk;1
+ZAF;Bus;1
+ZAF;Compact Car;1
+ZAF;Cycle;1
+ZAF;Domestic Aviation;1
+ZAF;Domestic Ship;0
+ZAF;Freight Rail;1
+ZAF;HSR;1
+ZAF;International Aviation;1
+ZAF;International Ship;1
+ZAF;Large Car;0
+ZAF;Large Car and SUV;1
+ZAF;Midsize Car;1
+ZAF;Mini Car;1
+ZAF;Moped;0
+ZAF;Motorcycle (50-250cc);1
+ZAF;Motorcycle (>250cc);1
+ZAF;Passenger Rail;1
+ZAF;Subcompact Car;1
+ZAF;Truck (0-3.5t);1
+ZAF;Truck (18t);1
+ZAF;Truck (26t);1
+ZAF;Truck (40t);1
+ZAF;Truck (7.5t);1
+ZAF;Van;1
+ZAF;Walk;1
+ZMB;Bus;1
+ZMB;Compact Car;1
+ZMB;Cycle;1
+ZMB;Domestic Aviation;1
+ZMB;Domestic Ship;1
+ZMB;Freight Rail;1
+ZMB;HSR;1
+ZMB;International Aviation;1
+ZMB;International Ship;1
+ZMB;Large Car;0
+ZMB;Large Car and SUV;1
+ZMB;Midsize Car;1
+ZMB;Mini Car;1
+ZMB;Moped;0
+ZMB;Motorcycle (50-250cc);1
+ZMB;Motorcycle (>250cc);1
+ZMB;Passenger Rail;1
+ZMB;Subcompact Car;1
+ZMB;Truck (0-3.5t);1
+ZMB;Truck (18t);1
+ZMB;Truck (26t);1
+ZMB;Truck (40t);1
+ZMB;Truck (7.5t);1
+ZMB;Van;1
+ZMB;Walk;1
+ZWE;Bus;1
+ZWE;Compact Car;1
+ZWE;Cycle;1
+ZWE;Domestic Aviation;1
+ZWE;Domestic Ship;1
+ZWE;Freight Rail;1
+ZWE;HSR;1
+ZWE;International Aviation;1
+ZWE;International Ship;1
+ZWE;Large Car;0
+ZWE;Large Car and SUV;1
+ZWE;Midsize Car;1
+ZWE;Mini Car;1
+ZWE;Moped;0
+ZWE;Motorcycle (50-250cc);1
+ZWE;Motorcycle (>250cc);1
+ZWE;Passenger Rail;1
+ZWE;Subcompact Car;1
+ZWE;Truck (0-3.5t);1
+ZWE;Truck (18t);1
+ZWE;Truck (26t);1
+ZWE;Truck (40t);1
+ZWE;Truck (7.5t);1
+ZWE;Van;1
+ZWE;Walk;1
