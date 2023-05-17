@@ -72,7 +72,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
     LF[
       subsector_L1 == "trn_pass_road_LDV_4W" &
-      year >= target_year,
+      year > target_year,
       loadFactor := loadFactor * (1 + target_LF)]
 
 
