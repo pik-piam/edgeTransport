@@ -179,7 +179,7 @@ ARE;Compact Car;1
 ARE;Cycle;1
 ARE;Domestic Aviation;1
 ARE;Domestic Ship;0
-ARE;Freight Rail;0
+ARE;Freight Rail;1
 ARE;HSR;1
 ARE;International Aviation;1
 ARE;International Ship;1
@@ -604,7 +604,7 @@ BHR;Compact Car;1
 BHR;Cycle;1
 BHR;Domestic Aviation;1
 BHR;Domestic Ship;0
-BHR;Freight Rail;0
+BHR;Freight Rail;1
 BHR;HSR;1
 BHR;International Aviation;1
 BHR;International Ship;1
@@ -2679,7 +2679,7 @@ IRN;Compact Car;1
 IRN;Cycle;1
 IRN;Domestic Aviation;1
 IRN;Domestic Ship;0
-IRN;Freight Rail;0
+IRN;Freight Rail;1
 IRN;HSR;1
 IRN;International Aviation;1
 IRN;International Ship;1
@@ -2704,7 +2704,7 @@ IRQ;Compact Car;1
 IRQ;Cycle;1
 IRQ;Domestic Aviation;1
 IRQ;Domestic Ship;0
-IRQ;Freight Rail;0
+IRQ;Freight Rail;1
 IRQ;HSR;1
 IRQ;International Aviation;1
 IRQ;International Ship;1
@@ -2754,7 +2754,7 @@ ISR;Compact Car;1
 ISR;Cycle;1
 ISR;Domestic Aviation;1
 ISR;Domestic Ship;0
-ISR;Freight Rail;0
+ISR;Freight Rail;1
 ISR;HSR;1
 ISR;International Aviation;1
 ISR;International Ship;1
@@ -2854,7 +2854,7 @@ JOR;Compact Car;1
 JOR;Cycle;1
 JOR;Domestic Aviation;1
 JOR;Domestic Ship;0
-JOR;Freight Rail;0
+JOR;Freight Rail;1
 JOR;HSR;1
 JOR;International Aviation;1
 JOR;International Ship;1
@@ -3079,7 +3079,7 @@ KWT;Compact Car;1
 KWT;Cycle;1
 KWT;Domestic Aviation;1
 KWT;Domestic Ship;0
-KWT;Freight Rail;0
+KWT;Freight Rail;1
 KWT;HSR;1
 KWT;International Aviation;1
 KWT;International Ship;1
@@ -3129,7 +3129,7 @@ LBN;Compact Car;1
 LBN;Cycle;1
 LBN;Domestic Aviation;1
 LBN;Domestic Ship;0
-LBN;Freight Rail;0
+LBN;Freight Rail;1
 LBN;HSR;1
 LBN;International Aviation;1
 LBN;International Ship;1
@@ -4279,7 +4279,7 @@ OMN;Compact Car;1
 OMN;Cycle;1
 OMN;Domestic Aviation;1
 OMN;Domestic Ship;0
-OMN;Freight Rail;0
+OMN;Freight Rail;1
 OMN;HSR;1
 OMN;International Aviation;1
 OMN;International Ship;1
@@ -4604,7 +4604,7 @@ PSE;Compact Car;1
 PSE;Cycle;1
 PSE;Domestic Aviation;1
 PSE;Domestic Ship;0
-PSE;Freight Rail;0
+PSE;Freight Rail;1
 PSE;HSR;1
 PSE;International Aviation;1
 PSE;International Ship;1
@@ -4654,7 +4654,7 @@ QAT;Compact Car;1
 QAT;Cycle;1
 QAT;Domestic Aviation;1
 QAT;Domestic Ship;0
-QAT;Freight Rail;0
+QAT;Freight Rail;1
 QAT;HSR;1
 QAT;International Aviation;1
 QAT;International Ship;1
@@ -4779,7 +4779,7 @@ SAU;Compact Car;1
 SAU;Cycle;1
 SAU;Domestic Aviation;1
 SAU;Domestic Ship;0
-SAU;Freight Rail;0
+SAU;Freight Rail;1
 SAU;HSR;1
 SAU;International Aviation;1
 SAU;International Ship;1
@@ -5354,7 +5354,7 @@ SYR;Compact Car;1
 SYR;Cycle;1
 SYR;Domestic Aviation;1
 SYR;Domestic Ship;0
-SYR;Freight Rail;0
+SYR;Freight Rail;1
 SYR;HSR;1
 SYR;International Aviation;1
 SYR;International Ship;1
@@ -6129,7 +6129,7 @@ YEM;Compact Car;1
 YEM;Cycle;1
 YEM;Domestic Aviation;1
 YEM;Domestic Ship;0
-YEM;Freight Rail;0
+YEM;Freight Rail;1
 YEM;HSR;1
 YEM;International Aviation;1
 YEM;International Ship;1
