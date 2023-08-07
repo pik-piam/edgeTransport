@@ -20,59 +20,102 @@
 
 toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMif = TRUE, generateREMINDinputData = TRUE){
 
-# Input data ----------------------------------------------------------------------
 
+#################################################
+## Load data
+#################################################
+
+### Input data  ------------------------------------------------
+## from mrTransport
  # Energy Service demand
- # Energy Efficiency
+ # Energy Intensity after IEA harmonization
  # Load Factor
- # CAPEX and non-fuel OPEX
+ # CAPEX
+ # non-fuel OPEX
  # Annual Mileage
  # Speed of modes
+## from mrcommons
+ # GDP
+ # POP
+## from REMIND
+ # Fuel Prices
+ # (demand)
 
- # Calculation of value of time
- # IEA Harmonization: Adjust energy efficiency to meet IEA energy balances in 2010
-
- # Check
- # Store
-
-# Transport Policy scenario specific parameters & levers --------------------------
+### Package data  ----------------------------------------------------------
+## model parameters
+ # Regional regression factors
+ # Exponents discrete choice model
+## scenario specific levers
  # Baseline preference trends
  # Transport policy scenario preference factors
- ## Function to adjust preference trends (Applying factors)
  # Startparameter inconvenience costs
- # Transport policy scenario inconvenience floor costs
- # logit exponents
  # SSP/SDP specific regression factors
- # Regional regression factors
+ # DemScen factors
 
-# Transport Policyscenario specific adjustments of input data ---------------------
+ # QUESTION: ARE THESE SCENARIO SPECIFIC INPUTS LOADED FROM THE PACKAGE or should they rather be moved to the input data?
+ # Transport subsidies
+ # Interest rate
+ # Vehicle lifetime
+ # (Resale Value)
 
+
+#-> Store loaded input data
+
+
+#################################################
+## Calculate data
+#################################################
+
+# SSP/SDP specific parameters -----------------------------------------------------
+ # Calculation of value of time (based on GDP)
+ # Calculation of 2nd hand vehicle prices (based on GDP)
+
+# Transport Policyscenario specific adjustments ---------------------
  # Load Factor
  # Energy efficiency
+ # Calculate preference trends (Applying factors)
+ # Calculate inconvenience costs -> Kann das noch in eine csv ins package?
+#-> Store adjusted input data and model parameters
 
+
+#################################################
+## Calibration module
+#################################################
+# Calibrate historical shareweights/inconvenience cost -----------------------------
  # Check
  # Store
 
+#------------------------------------------------------
+#Start of iterative section
+#------------------------------------------------------
 
-# Calibration module: Calibrate historical shareweights/inconvenience cost --------
-
- # Check
- # Store
-
-## Start of iterative section
-# Cost module: Calculate cost components and provide endogenous updates -----------
+#################################################
+## Cost module
+#################################################
+# Provide endogenous updates to cost components -----------
   #Input: All cost components, Start values inconveneience costs, fleet data
   #Output: TCO + i.a. inconvenience/VOT costs for all levels of the decision tree
+
+
+#################################################
+## Discrete choice module
+#################################################
 
 # Discrete Choice module: Transport mode, vehicle and technology choice -----------
   #Input: TCO + i.a. inconvenience/VOT costs, preference trends, logit exponents
   #Output: Shares for all levels of the decision tree
 
-# Demand regression module: Calculate future energy service demand ----------------
+#################################################
+## Demand regression module
+#################################################
+# Calculate future energy service demand ----------------
   #Input: SDP/SSP + regional regression factors, historical energy service demand
   #Output: Energy Service demand for top nodes of decision tree
 
-# Vehicle stock module: Calculate vehicle stock for cars, trucks and busses -------
+#################################################
+## Vehicle stock module
+#################################################
+# Calculate vehicle stock for cars, trucks and busses -------
   #Input: (Sales) shares for all levels of the decision tree, Energy Service demand for top nodes of decision tree
   #Ouput: Fleet data, adjusted energy intensity for the fleet (in comparison to sales energy efficiency)
 
@@ -84,6 +127,9 @@ toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolde
 # Reporting ---------------------------------------------------------------
 # report MIF
 # write MIF
+
+#report REMIND calibration data
+#return REMIND calibration data
 
 #report REMIND input data
 #return REMIND input data
