@@ -1,6 +1,6 @@
-#' Edge Transport Stand Alone
+#' Energy Demand Generator (EDGE)- Transport Model
 #'
-#' Stand alone version of the EDGE Transport model. It includes the transport specific input data preparation,
+#' The Edge Transport Model includes the transport specific input data preparation,
 #' a choice model to determine transport mode and technology shares, a demand regression and a fleet tracking for cars, busses and trucks
 #'
 #' @param SSPscen SSP or SDP scenario
@@ -18,7 +18,7 @@
 #' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMif = TRUE, generateREMINDinputData = TRUE){
+toolEdgeTransport <- function(SSPscen, techScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMif = TRUE, generateREMINDinputData = TRUE){
 
 
 #################################################
@@ -26,17 +26,12 @@ toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolde
 #################################################
 
 ### Input data  ------------------------------------------------
-## from mrTransport
- # Energy Service demand
- # Energy Intensity after IEA harmonization
- # Load Factor
- # CAPEX
- # non-fuel OPEX
- # Annual Mileage
- # Speed of modes
+## from mrtransport
+
 ## from mrcommons
  # GDP
  # POP
+
 ## from REMIND
  # Fuel Prices
  # (demand)
@@ -100,7 +95,6 @@ toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolde
 #################################################
 ## Discrete choice module
 #################################################
-
 # Discrete Choice module: Transport mode, vehicle and technology choice -----------
   #Input: TCO + i.a. inconvenience/VOT costs, preference trends, logit exponents
   #Output: Shares for all levels of the decision tree
