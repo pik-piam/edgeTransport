@@ -4,7 +4,7 @@
 #' a choice model to determine transport mode and technology shares, a demand regression and a fleet tracking for cars, busses and trucks
 #'
 #' @param SSPscen SSP or SDP scenario
-#' @param TransportPolScen EDGE-T transport policy scenario
+#' @param transportPolScen EDGE-T transport policy scenario
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
@@ -18,7 +18,7 @@
 #' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransport <- function(SSPscen, techScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMif = TRUE, generateREMINDinputData = TRUE){
+toolEdgeTransport <- function(SSPscen, transportPolScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMIF = TRUE, generateREMINDinputData = TRUE){
 
 
 #################################################
