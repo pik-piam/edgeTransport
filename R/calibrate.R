@@ -10,7 +10,7 @@
 
 
 toolCalibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_data, price_nonmot){
-  share <- tot_VOT_price <- fuel_price_pkm <- non_fuel_price <- logit.exponent <- region <- vehicle_type <- technology <- sw <- `.` <- subsector_L1 <- subsector_L2 <- subsector_L3 <- sector <- V1 <- V2 <- time_price <- tot_price <- NULL
+  share <- tot_VOT_price <- fuel_price_pkm <- non_fuel_price <- logit.exponent <- region <- vehicleType <- technology <- sw <- `.` <- subsectorL3 <- subsectorL2 <- subsectorL1 <- sector <- V1 <- V2 <- time_price <- tot_price <- NULL
   ##==== functions ====
 
   ##function that determines the shares of the alternatives in the nodes
@@ -82,132 +82,132 @@ toolCalibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_dat
   ## historical values of the demand, fuel level
   calibr_demand=tech_output
   logit_exponent_FV=logit_exp_data[["logit_exponent_FV"]]
-  logit_exponent_VS1=logit_exp_data[["logit_exponent_VS1"]]
-  logit_exponent_S1S2=logit_exp_data[["logit_exponent_S1S2"]]
-  logit_exponent_S2S3=logit_exp_data[["logit_exponent_S2S3"]]
-  logit_exponent_S3S=logit_exp_data[["logit_exponent_S3S"]]
+  logit_exponent_VS3=logit_exp_data[["logit_exponent_VS3"]]
+  logit_exponent_S3S2=logit_exp_data[["logit_exponent_S3S2"]]
+  logit_exponent_S2S1=logit_exp_data[["logit_exponent_S2S1"]]
+  logit_exponent_S1S=logit_exp_data[["logit_exponent_S1S"]]
 
   value_time_FV=vot_data[["value_time_FV"]]
-  value_time_VS1=vot_data[["value_time_VS1"]]
-  value_time_S1S2=vot_data[["value_time_S1S2"]]
-  value_time_S2S3=vot_data[["value_time_S2S3"]]
-  value_time_S3S=vot_data[["value_time_S3S"]]
+  value_time_VS3=vot_data[["value_time_VS3"]]
+  value_time_S3S2=vot_data[["value_time_S3S2"]]
+  value_time_S2S1=vot_data[["value_time_S2S1"]]
+  value_time_S1S=vot_data[["value_time_S1S"]]
   base_SW=calibr_demand[tech_output>0,]
-  base_SW=base_SW[,share:=tech_output/sum(tech_output),by=c("region","year","vehicle_type")]
-  base_SW=merge(base_SW,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsector_L1", "vehicle_type", "subsector_L2", "subsector_L3"))
+  base_SW=base_SW[,share:=tech_output/sum(tech_output),by=c("region","year","vehicleType")]
+  base_SW=merge(base_SW,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsectorL3", "vehicleType", "subsectorL2", "subsectorL1"))
 
   price_FV = prices[year <= 2010]
-  price_FV= merge(price_FV, price_nonmot,all=TRUE, by=c("tot_price","region","year","technology","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector"))
+  price_FV= merge(price_FV, price_nonmot,all=TRUE, by=c("tot_price","region","year","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
 
   price_FV[,tot_VOT_price := 0]
   #Cycling and Walking have no fuel and non fuel prices, 0 instead of NA is given
   price_FV[is.na(fuel_price_pkm), fuel_price_pkm := 0]
   price_FV[is.na(non_fuel_price), non_fuel_price := 0]
 
-  dups <- duplicated(price_FV, by=c("region", "technology", "vehicle_type","year"))
+  dups <- duplicated(price_FV, by=c("region", "technology", "vehicleType","year"))
 
   if(any(dups)){
     warning("Duplicated techs found in supplied demand.")
     print(price_FV[dups])
-    price_FV <- unique(price_FV, by=c("region", "technology", "vehicle_type","year"))
+    price_FV <- unique(price_FV, by=c("region", "technology", "vehicleType","year"))
   }
 
-  FV_SW=merge(price_FV,base_SW,all=FALSE,by=c("region","year","technology","vehicle_type","subsector_L1","subsector_L2","subsector_L3","sector"))
+  FV_SW=merge(price_FV,base_SW,all=FALSE,by=c("region","year","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
   FV_SW=FV_SW[!is.na(tech_output),] ## minor adjusments, TODO check if needed/why needed!
   ## needs rando lambdas for the sectors that are not explicitly calculated
   FV_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicle_type")
+  FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicleType")
 
   ## merge value of time and assign 0 to the entries that don't have it
-  FV_SW=merge(FV_SW,value_time_FV,all.x=TRUE,by=c("region", "year", "vehicle_type","subsector_L1"))
+  FV_SW=merge(FV_SW,value_time_FV,all.x=TRUE,by=c("region", "year", "vehicleType","subsectorL3"))
   FV_SW[,time_price:=ifelse(is.na(time_price),0,time_price)]
   FV_SW[,tot_price:=tot_price+time_price]
 
   ## reshape, save and store the sw at this level
-  FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,logit.exponent)]
+  FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,sw,logit.exponent)]
 
   ## calculate price of one level up
-  FV_SW=FV_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector)]
+  FV_SW=FV_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector)]
 
   ## now we go from V to SubS VSubS
-  VS1_SW=merge(FV_SW,logit_exponent_VS1,all.x=TRUE,by = c("subsector_L1", "subsector_L2", "subsector_L3", "sector"))
+  VS3_SW=merge(FV_SW,logit_exponent_VS3,all.x=TRUE,by = c("subsectorL3", "subsectorL2", "subsectorL1", "sector"))
   ## needs random lambdas for the sectors that are not explicitly calculated
-  VS1_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  VS3_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
   ## calculate shares at this level
-  VS1_SW[,share:=tech_output/sum(tech_output),by=c("region","year","subsector_L1")]
+  VS3_SW[,share:=tech_output/sum(tech_output),by=c("region","year","subsectorL3")]
 
 
   ## merge value of time and assign 0 to the entries that don't have it
-  VS1_SW=merge(VS1_SW,value_time_VS1,all.x=TRUE,by=c("region", "year", "vehicle_type", "subsector_L1"))
-  VS1_SW[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  VS1_SW[,tot_price:=tot_price+time_price]
-  VS1_SW[,time_price:=NULL]
+  VS3_SW=merge(VS3_SW,value_time_VS3,all.x=TRUE,by=c("region", "year", "vehicleType", "subsectorL3"))
+  VS3_SW[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  VS3_SW[,tot_price:=tot_price+time_price]
+  VS3_SW[,time_price:=NULL]
 
   ## optimize
-  VS1_SW=sw_calc(df_sw = VS1_SW, exp_prices = c(7,1,2,6,5,3),grouping_value = "subsector_L1")
+  VS3_SW=sw_calc(df_sw = VS3_SW, exp_prices = c(7,1,2,6,5,3),grouping_value = "subsectorL3")
 
   ## reshape, save and store the sw at this level
-  VS1_final_SW=VS1_SW[,.(region,year,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,sw,tot_price,logit.exponent)]
+  VS3_final_SW=VS3_SW[,.(region,year,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,sw,tot_price,logit.exponent)]
 
 
-  VS1_SW=VS1_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsector_L1,subsector_L2,subsector_L3,sector)]
+  VS3_SW=VS3_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL3,subsectorL2,subsectorL1,sector)]
 
   ## rename the database, now it's going from V to S1
-  S1S2_sw=merge(VS1_SW,logit_exponent_S1S2,all.x=TRUE)
-  S1S2_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsector_L3","subsector_L2")]
+  S3S2_sw=merge(VS3_SW,logit_exponent_S3S2,all.x=TRUE)
+  S3S2_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsectorL1","subsectorL2")]
 
   ## needs rando lambdas for the sectors that are not explicitly calculated
-  S1S2_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  S3S2_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
 
-  S1S2_sw=merge(S1S2_sw,value_time_S1S2,all.x = TRUE,by = c("region", "year", "subsector_L1","subsector_L2"))
-  S1S2_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S1S2_sw[,tot_price:=tot_price+time_price]
-  S1S2_sw[,time_price:=NULL]
-  S1S2_sw=sw_calc(S1S2_sw,exp_prices = c(1,0.5,2,3,1,4),grouping_value = "subsector_L2")
+  S3S2_sw=merge(S3S2_sw,value_time_S3S2,all.x = TRUE,by = c("region", "year", "subsectorL3","subsectorL2"))
+  S3S2_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S3S2_sw[,tot_price:=tot_price+time_price]
+  S3S2_sw[,time_price:=NULL]
+  S3S2_sw=sw_calc(S3S2_sw,exp_prices = c(1,0.5,2,3,1,4),grouping_value = "subsectorL2")
 
   ## reshape, save and store the sw at this level
-  S1S2_final_SW=S1S2_sw[,.(region,year,subsector_L1,subsector_L2,subsector_L3,sector,sw,tot_price,logit.exponent)]
+  S3S2_final_SW=S3S2_sw[,.(region,year,subsectorL3,subsectorL2,subsectorL1,sector,sw,tot_price,logit.exponent)]
 
-  S1S2_sw=S1S2_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsector_L2,subsector_L3,sector)]
+  S3S2_sw=S3S2_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL2,subsectorL1,sector)]
 
   ## rename the database, now it's going from S2 to S3
-  S2S3_sw=merge(S1S2_sw,logit_exponent_S2S3,all.x=TRUE)
-  S2S3_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsector_L3")]
+  S2S1_sw=merge(S3S2_sw,logit_exponent_S2S1,all.x=TRUE)
+  S2S1_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsectorL1")]
 
   ## needs rando lambdas for the sectors that are not explicitly calculated
-  S2S3_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  S2S1_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
 
-  S2S3_sw=merge(S2S3_sw,value_time_S2S3,all.x = TRUE,by = c("region", "year", "subsector_L2","subsector_L3"))
-  S2S3_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S2S3_sw[,tot_price:=tot_price+time_price]
-  S2S3_sw[,time_price:=NULL]
-  S2S3_sw=sw_calc(df_sw = S2S3_sw, exp_prices = c(2,3,4,2,1), grouping_value = "subsector_L3")
+  S2S1_sw=merge(S2S1_sw,value_time_S2S1,all.x = TRUE,by = c("region", "year", "subsectorL2","subsectorL1"))
+  S2S1_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S2S1_sw[,tot_price:=tot_price+time_price]
+  S2S1_sw[,time_price:=NULL]
+  S2S1_sw=sw_calc(df_sw = S2S1_sw, exp_prices = c(2,3,4,2,1), grouping_value = "subsectorL1")
 
   ## reshape, save and store the sw at this level
-  S2S3_final_SW=S2S3_sw[,.(region,year,subsector_L2,subsector_L3,sector,sw, tot_price, logit.exponent)]
+  S2S1_final_SW=S2S1_sw[,.(region,year,subsectorL2,subsectorL1,sector,sw, tot_price, logit.exponent)]
 
 
-  S2S3_sw=S2S3_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsector_L3,sector)]
+  S2S1_sw=S2S1_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL1,sector)]
 
   ## rename the database, now it's going from S2 to S3
-  S3S_sw=merge(S2S3_sw,logit_exponent_S3S,all.x=TRUE)
-  S3S_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector")]
+  S1S_sw=merge(S2S1_sw,logit_exponent_S1S,all.x=TRUE)
+  S1S_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector")]
 
-  S3S_sw=merge(S3S_sw,value_time_S3S,all.x = TRUE,by = c("region", "year", "sector","subsector_L3"))
-  S3S_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S3S_sw[,tot_price:=tot_price+time_price]
-  S3S_sw[,time_price:=NULL]
+  S1S_sw=merge(S1S_sw,value_time_S1S,all.x = TRUE,by = c("region", "year", "sector","subsectorL1"))
+  S1S_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S1S_sw[,tot_price:=tot_price+time_price]
+  S1S_sw[,time_price:=NULL]
 
-  S3S_sw=sw_calc(df_sw = S3S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
+  S1S_sw=sw_calc(df_sw = S1S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
 
   ## reshape, save and store the sw at this level
-  S3S_final_SW=S3S_sw[,.(region,year,subsector_L3,sector,sw,tot_price,logit.exponent)]
+  S1S_final_SW=S1S_sw[,.(region,year,subsectorL1,sector,sw,tot_price,logit.exponent)]
 
-  return(list(list_SW = list(S2S3_final_SW=S2S3_final_SW,
-                                 S3S_final_SW=S3S_final_SW,
-                                 S1S2_final_SW=S1S2_final_SW,
-                                 VS1_final_SW=VS1_final_SW,
+  return(list(list_SW = list(S2S1_final_SW=S2S1_final_SW,
+                                 S1S_final_SW=S1S_final_SW,
+                                 S3S2_final_SW=S3S2_final_SW,
+                                 VS3_final_SW=VS3_final_SW,
                                  FV_final_SW=FV_final_SW)))
 }

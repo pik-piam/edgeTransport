@@ -40,11 +40,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
                              ssp_demreg.path = NULL, regional_demreg.path = NULL,
                              demscen.path = NULL, FEPricetab = NULL,
                              int_improvetab = NULL) {
-  scenario <- scenario_name <- vehicle_type <- type <- `.` <- CountryCode <- RegionCode <-
-    technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsector_L1 <- loadFactor <-
+  scenario <- scenario_name <- vehicleType <- type <- `.` <- CountryCode <- RegionCode <-
+    technology <- non_fuel_price <- tot_price <- fuel_price_pkm <- subsectorL3 <- loadFactor <-
       ratio <- Year <- value <- DP_cap <- region <- weight <- MJ <- variable.unit <-
         EJ <- grouping_value <- sector <- variable <- region <- logit.exponent <- EDGETscen <-
-          SSPscen <- default <- techscen <- share <- demand_F <- tech_scenario <- SSP_scenario <-
+          SSPscen <- default <- transportPolScen <- share <- demand_F <- tech_scenario <- SSPscen <-
             demandScen <- NULL
 
   if(is.null(output_folder) & storeRDS == TRUE) {
@@ -166,7 +166,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   ## substitute lambda
   VOT_lambdas$logit_output$logit_exponent_FV[, logit.exponent := ifelse(logit.exponent==-8,-4,logit.exponent)]
   ## make freight less price sensitive
-  VOT_lambdas$logit_output$logit_exponent_S3S[sector == "trn_freight", logit.exponent := -1]
+  VOT_lambdas$logit_output$logit_exponent_S1S[sector == "trn_freight", logit.exponent := -1]
 
 
   if(storeRDS){
@@ -199,8 +199,8 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   #Optional Energy Intensity improvements after 2020 depending on the tech Scen
   if(is.null(int_improvetab)){
     print("No path to a file with scenario-specific energy intensity improvements provided. Using default file.")
-    ## select the right combination of techscen and SSP scen
-    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSP_scenario == SSP_scen]
+    ## select the right combination of transportPolScen and SSP scen
+    int_improvetab <- fread(system.file("extdata", "Intensity_improvements.csv", package = "edgeTransport"))[tech_scenario == tech_scen & SSPscen == SSP_scen]
   }
 
   if(nrow(int_improvetab) > 0){
@@ -260,7 +260,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   if(is.null(preftab)) {
     preftab <- system.file("extdata", "sw_trends.csv", package = "edgeTransport")
   }
-  ptab <- fread(preftab, header=T)[SSP_scenario == SSP_scen][, SSP_scenario := NULL]
+  ptab <- fread(preftab, header=T)[SSPscen == SSP_scen][, SSPscen := NULL]
   if (!is.null(output_folder)) {
     fwrite(ptab, file.path(cfgpath, "sw_trends.csv"))
   }
@@ -271,7 +271,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       mitab.path <- system.file("extdata", "edget-mitigation.csv", package="edgeTransport")
   }
   mitab <- fread(mitab.path, header = TRUE, check.names = TRUE)[
-    SSP_scenario == SSP_scen & tech_scenario == tech_scen]
+    SSPscen == SSP_scen & tech_scenario == tech_scen]
   if (!is.null(output_folder)) {
     fwrite(mitab, file.path(cfgpath, "edget-mitigation.csv"))
   }
@@ -299,11 +299,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   ## LOGIT calculation
   print("-- LOGIT calculation: three iterations to provide endogenous update of inconvenience costs")
   ## filter out prices and intensities that are related to not used vehicles-technologies in a certain region
-  REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+  REMIND_prices = merge(REMIND_prices, unique(prefs$FV_final_pref[, c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
 
   #What was the purpose of this line? In the new preftab table, all vehicle classes are included to unify the structure. Vehicle classes that are not available
   #in the country, receive a zero sw. The missing input data for that vehcile classes causing NAs in the line underneath
-  #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+  #IEAbal_comparison$merged_intensity = merge(IEAbal_comparison$merged_intensity, unique(prefs$FV_final_pref[!(vehicleType %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype")) , c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
 
 
   ## load inconvenience factor table for LDVs
@@ -311,7 +311,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     mitab4W.path <- system.file("extdata", "inconv_factor.csv", package = "edgeTransport")
   }
 
-  preftab4W <- fread(mitab4W.path, header=T)[techscen == tech_scen & SSPscen == SSP_scen]
+  preftab4W <- fread(mitab4W.path, header=T)[transportPolScen == tech_scen & SSPscen == SSP_scen]
   if (!is.null(output_folder)) {
     fwrite(preftab4W, file.path(cfgpath, "inconv_factor.csv"))
   }
@@ -373,7 +373,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       ## Baseline demand regression run, for international aviation
       print("-- performing demand regression for Intl Av")
       NAVIGATE_intl_dem_base <- toolDemandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
-                                                           price_baseline = prices$S3S,
+                                                           price_baseline = prices$S1S,
                                                            GDP_POP = mrr$GDP_POP,
                                                            REMIND_scenario = SSP_scen,
                                                            ICCT_data = IntAv_Prep,
@@ -384,7 +384,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
       print("-- performing demand regression")
       ## demand in million km
       NAVIGATE_intl_dem <- toolDemandRegNAVIGATEIntl(tech_output = REMINDdat$dem,
-                                                      price_baseline = prices$S3S,
+                                                      price_baseline = prices$S1S,
                                                       GDP_POP = mrr$GDP_POP,
                                                       REMIND_scenario = SSP_scen,
                                                       ICCT_data = IntAv_Prep,
@@ -426,7 +426,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
       ## demand in million km
       dem_regr = toolDemandReg(tech_output = REMINDdat$dem,
-                               price_baseline = prices$S3S,
+                               price_baseline = prices$S1S,
                                GDP_POP = mrr$GDP_POP,
                                SSP_scen = SSP_scen,
                                ssp_factors = ssp_demreg_tab,
@@ -438,7 +438,7 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     }
 
     ## calculate vintages (new shares, prices, intensity)
-    prices$base=prices$base[,c("region", "technology", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
+    prices$base=prices$base[,c("region", "technology", "year", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector", "non_fuel_price", "tot_price", "fuel_price_pkm",  "tot_VOT_price", "sector_fuel")]
     vintages = toolCalcVint(shares = shares,
                         totdem_regr = dem_regr,
                         prices = prices,
@@ -479,11 +479,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
 
     num_veh_stations = toolVehicleStations(
       norm_dem = norm_demand[
-        subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
-        c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
+        subsectorL3 == "trn_pass_road_LDV_4W", ## only 4wheelers
+        c("region", "year", "sector", "vehicleType", "technology", "demand_F") ],
       ES_demand_all = dem_regr,
       intensity = intensity_remind,
-      loadFactor = unique(REMINDdat$LF[,c("region", "year", "vehicle_type", "loadFactor")]),
+      loadFactor = unique(REMINDdat$LF[,c("region", "year", "vehicleType", "loadFactor")]),
       EDGE2teESmap = EDGE2teESmap,
       rep = TRUE)
 
@@ -526,11 +526,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     saveRDS(logit_data$pref_data, file = level2path("pref_output.RDS"))
     saveRDS(REMINDdat$LF, file = level2path("loadFactor.RDS"))
     saveRDS(REMINDdat$AM, file = level2path("annual_mileage.RDS"))
-    dem_bunk = merge(EU_data$dem_eurostat[vehicle_type %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
-    dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicle_type")]
+    dem_bunk = merge(EU_data$dem_eurostat[vehicleType %in% c("International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")], REMIND2ISO_MAPPING, by = "iso")
+    dem_bunk = dem_bunk[,.(MJ = sum(MJ)), by = c("region", "year", "vehicleType")]
     saveRDS(dem_bunk, file = level2path("EurostatBunkers.RDS"))
     EU_data$roadFE_eu=EU=merge(EU_data$roadFE_eu[year %in% c(1990, 2005, 2010)], REMIND2ISO_MAPPING,by="iso")
-    EU_data$roadFE_eu=EU_data$roadFE_eu[,.(EJ=sum(MJ)*1e-12), by = c("year","region","vehicle_type")]
+    EU_data$roadFE_eu=EU_data$roadFE_eu[,.(EJ=sum(MJ)*1e-12), by = c("year","region","vehicleType")]
     saveRDS(EU_data$roadFE_eu, file = level2path("TRACCS_FE.RDS"))
 
     ## do these two files *really* have to be provided by edgeTransport?
@@ -585,11 +585,11 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
   print("-- generating CSV files to be transferred to mmremind")
   ## only the combinations (region, vehicle) present in the mix have to be included in costs
   NEC_data = merge(REMINDdat$NFcost,
-                   unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
-                   by =c("region", "vehicle_type"))
+                   unique(calibration_output$list_SW$VS3_final_SW[,c("region", "vehicleType")]),
+                   by =c("region", "vehicleType"))
   capcost4W = merge(REMINDdat$costs[variable == "Capital costs (purchase)"],
-                    unique(calibration_output$list_SW$VS1_final_SW[,c("region", "vehicle_type")]),
-                    by =c("region", "vehicle_type"))
+                    unique(calibration_output$list_SW$VS3_final_SW[,c("region", "vehicleType")]),
+                    by =c("region", "vehicleType"))
 
   if (demScen == "default") {
     demScen <- SSP_scen

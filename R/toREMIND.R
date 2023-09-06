@@ -11,7 +11,7 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   LF = aggregate_dt(data = LF,
                     mapping = REMIND2ISO_MAPPING,
                     valuecol = "loadFactor",
-                    datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+                    datacols = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1"),
                     weights = gdp)
 
   ## AM
@@ -19,7 +19,7 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   AM = aggregate_dt(data = AM,
                     mapping = REMIND2ISO_MAPPING,
                     valuecol = "vkm.veh",
-                    datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+                    datacols = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1"),
                     weights = gdp)
 
   ## intensity
@@ -27,7 +27,7 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   int = aggregate_dt(data = int,
                     mapping = REMIND2ISO_MAPPING,
                     valuecol = "conv_pkm_MJ",
-                    datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+                    datacols = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1"),
                     weights = gdp)
   int[, sector_fuel := "refined liquids enduse"]
   int[technology == "FCEV", sector_fuel := "H2 enduse"]
@@ -42,7 +42,7 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   costs = aggregate_dt(data = costs,
                      mapping = REMIND2ISO_MAPPING,
                      valuecol = "value",
-                     datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "var"),
+                     datacols = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "var"),
                      weights = gdp[year%in%unique(costs$year)])
   setnames(costs, old = "var", new = "variable")
 
@@ -51,41 +51,41 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   dem = aggregate_dt(data = dem,
                        mapping = REMIND2ISO_MAPPING,
                        valuecol = "tech_output",
-                       datacols = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3"),
+                       datacols = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1"),
                        weights = NULL)
 
 
-  NFcost = costs[,.(non_fuel_price = sum(value)), by = c("vehicle_type", "technology", "sector", "subsector_L1", "subsector_L2", "subsector_L3", "year", "region")]
+  NFcost = costs[,.(non_fuel_price = sum(value)), by = c("vehicleType", "technology", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "year", "region")]
 
   ## VOT
   vt_FV = copy(VOT_lambdas$VOT_output$value_time_FV)
   vt_FV = aggregate_dt(data = vt_FV,
                        mapping = REMIND2ISO_MAPPING,
                        valuecol = "time_price",
-                       datacols = c("vehicle_type", "subsector_L1", "year"),
+                       datacols = c("vehicleType", "subsectorL3", "year"),
                        weights = gdp)
 
-  vt_VS1 = copy(VOT_lambdas$VOT_output$value_time_VS1)
-  setnames(vt_VS1, old = "iso", new = "region")
+  vt_VS3 = copy(VOT_lambdas$VOT_output$value_time_VS3)
+  setnames(vt_VS3, old = "iso", new = "region")
 
-  vt_S1S2 = copy(VOT_lambdas$VOT_output$value_time_S1S2)
-  setnames(vt_S1S2, old = "iso", new = "region")
+  vt_S3S2 = copy(VOT_lambdas$VOT_output$value_time_S3S2)
+  setnames(vt_S3S2, old = "iso", new = "region")
 
-  vt_S2S3 = copy(VOT_lambdas$VOT_output$value_time_S2S3)
-  vt_S2S3 = aggregate_dt(data = vt_S2S3,
+  vt_S2S1 = copy(VOT_lambdas$VOT_output$value_time_S2S1)
+  vt_S2S1 = aggregate_dt(data = vt_S2S1,
                        mapping = REMIND2ISO_MAPPING,
                        valuecol = "time_price",
-                       datacols = c("subsector_L2", "subsector_L3", "year"),
+                       datacols = c("subsectorL2", "subsectorL1", "year"),
                        weights = gdp)
 
-  vt_S3S = copy(VOT_lambdas$VOT_output$value_time_S3S)
-  vt_S3S = aggregate_dt(data = vt_S3S,
+  vt_S1S = copy(VOT_lambdas$VOT_output$value_time_S1S)
+  vt_S1S = aggregate_dt(data = vt_S1S,
                          mapping = REMIND2ISO_MAPPING,
                          valuecol = "time_price",
-                         datacols = c("sector", "subsector_L3", "year"),
+                         datacols = c("sector", "subsectorL1", "year"),
                          weights = gdp)
 
-  vt = list(value_time_FV = vt_FV, value_time_VS1 = vt_VS1, value_time_S1S2 = vt_S1S2, value_time_S2S3 = vt_S2S3, value_time_S3S = vt_S3S)
+  vt = list(value_time_FV = vt_FV, value_time_VS3 = vt_VS3, value_time_S3S2 = vt_S3S2, value_time_S2S1 = vt_S2S1, value_time_S1S = vt_S1S)
 
   ## price non-motorized
 
@@ -93,7 +93,7 @@ toolREMINDdat <- function(merged_data, VOT_lambdas, REMIND2ISO_MAPPING, GDP_coun
   pnm = aggregate_dt(data = pnm,
                         mapping = REMIND2ISO_MAPPING,
                         valuecol = "tot_price",
-                        datacols = c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "year"),
+                        datacols = c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "year"),
                         weights = gdp)
 
 

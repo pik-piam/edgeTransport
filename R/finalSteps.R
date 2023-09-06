@@ -10,7 +10,7 @@
 
 toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
     `.` <- demand <- region <- all_in <- all_GDPscen <- value <- NULL
-    gdp_ssp_scenario <- paste0("gdp_", SSP_scen)
+    gdp_SSPscen <- paste0("gdp_", SSP_scen)
     regrdemand=merge(regrdemand, unique(EDGE2teESmap[,c("EDGE_top","all_in")]),
                      by.x="sector",by.y="EDGE_top",all.x=TRUE)
     regrdemand=regrdemand[,.(value=demand,region,year,all_in)]
@@ -19,7 +19,7 @@ toolREMINDdemand <- function(regrdemand, EDGE2teESmap, REMINDtall, SSP_scen) {
                            idxcols = c("region", "all_in"),
                            extrapolate=T)
     ## add SSP dimension
-    regrdemand[,all_GDPscen:=gdp_ssp_scenario]
+    regrdemand[,all_GDPscen:=gdp_SSPscen]
     ## convert into trillionpkm
     regrdemand[,value:=value   ## in [millionpkm]
                *1e-6]          ## in [trillionpkm]
@@ -111,7 +111,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   complexValues$shLDV <- addScenarioCols(complexValues$shLDV, 0)
   demISO <- addScenarioCols(demISO, 0)
 
-  ptab4W[, c("SSPscen", "techscen") := NULL]
+  ptab4W[, c("SSPscen", "transportPolScen") := NULL]
   ptab4W <- addScenarioCols(ptab4W, 0)
 
   ## for the data used in REMIND directly, we put the scens after time and region
@@ -120,27 +120,27 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   intensity <- addScenarioCols(intensity, 2)
 
   ## NEC costs are merged with Capital Costs for 4W and the number of columns is reduced
-  NEC_data[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1") := NULL]
+  NEC_data[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3") := NULL]
   NEC_data[, price_component := "totalNE_cost"]
 
-  capcost4W[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1") := NULL]
+  capcost4W[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3") := NULL]
   setnames(capcost4W, old = c("variable", "value"), new = c("price_component", "non_fuel_price"))
   NEC_data = rbind(NEC_data, capcost4W)
 
   ## all the preference dfs have to be with the same structure as FV_pref
   pref_datatmp = pref_data["FV_final_pref"] ## this is not to be modified
-  pref_data = pref_data[c("VS1_final_pref", "S1S2_final_pref", "S2S3_final_pref", "S3S_final_pref")]
+  pref_data = pref_data[c("VS3_final_pref", "S3S2_final_pref", "S2S1_final_pref", "S1S_final_pref")]
   ## melt and rearrange all other levels
   pref_data <- mapply(
     melt, pref_data,
     id.vars = list(
-      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+      c("year", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
         "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
-      c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1",
+      c("year", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3",
         "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
-      c("year", "region", "sector", "subsector_L3", "subsector_L2",
+      c("year", "region", "sector", "subsectorL1", "subsectorL2",
         "GDP_scenario", "DEM_scenario", "EDGE_scenario"),
-      c("year", "region", "sector", "subsector_L3",
+      c("year", "region", "sector", "subsectorL1",
         "GDP_scenario", "DEM_scenario", "EDGE_scenario")
     ))
   ## rename column in all datatables
@@ -159,7 +159,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
 
   ## remove technology column from load factor
   load_Factor <- load_Factor[year >= 1990, .(loadFactor = mean(loadFactor)),
-                             by=c("region", "year", "vehicle_type")]
+                             by=c("region", "year", "vehicleType")]
   ## add scenario column to load factor
   load_Factor <- addScenarioCols(load_Factor, 0)
 
@@ -167,7 +167,7 @@ toolCreateOutput <- function(logit_params, pref_data, ptab4W, vot_data, NEC_data
   annual_mileage <- addScenarioCols(annual_mileage, 0)
   ## select only the relevant columns
   annual_mileage <- unique(annual_mileage[, c(
-    "GDP_scenario", "DEM_scenario", "EDGE_scenario", "region", "year", "vkm.veh", "vehicle_type")])
+    "GDP_scenario", "DEM_scenario", "EDGE_scenario", "region", "year", "vkm.veh", "vehicleType")])
   setnames(annual_mileage, old = "vkm.veh", new = "annual_mileage")
   if (!is.null(output_folder)) {
     dir.create(file.path(level2path("")), showWarnings = FALSE)

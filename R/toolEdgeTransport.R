@@ -18,7 +18,7 @@
 #' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransport <- function(SSPscen, transportPolScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMIF = TRUE, generateREMINDinputData = TRUE){
+toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMIF = TRUE, generateREMINDinputData = TRUE){
 
 
 #################################################
@@ -27,35 +27,20 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen, gdxPath, outpu
 
 ### Input data  ------------------------------------------------
 ## from mrtransport
+mrtransportData <- toolLoadmrtransportData()
 
 ## from mrcommons
- # GDP
- # POP
+mrcommonsData <- toolLoadmrcommonsData(SSPscen)
+
+## from mrremind
+mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
 
 ## from REMIND
- # Fuel Prices
- # (demand)
+REMINDdata$fuelPrices <- toolLoadREMINDfuelPrices(gdxPath)
+REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath)
 
 ### Package data  ----------------------------------------------------------
-## model parameters
- # Regional regression factors
- # Exponents discrete choice model
-## scenario specific levers
- # Baseline preference trends
- # Transport policy scenario preference factors
- # Startparameter inconvenience costs
- # SSP/SDP specific regression factors
- # DemScen factors
-
- # QUESTION: ARE THESE SCENARIO SPECIFIC INPUTS LOADED FROM THE PACKAGE or should they rather be moved to the input data?
- # Transport subsidies
- # Interest rate
- # Vehicle lifetime
- # (Resale Value)
-
-
-#-> Store loaded input data
-
+packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
 
 #################################################
 ## Calculate data

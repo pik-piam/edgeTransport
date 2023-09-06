@@ -14,10 +14,10 @@
 
 
 toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
-    countries <- tech_output <- technologies <- `.` <- region <- EDGE_vehicle_type <- MJ <-
+    countries <- tech_output <- technologies <- `.` <- region <- EDGE_vehicleType <- MJ <-
       mtoe <- km_million <- country_name <- technology <- tkm_million <- MJ_km <- load_factor <-
         million_tkm <- Liquids <- Electric <- pkm_million <- ktkm <- pkm <- name <-
-          code_airplane_characteristics <- sector_fuel <- vehicle_type <- TRACCS_category <-
+          code_airplane_characteristics <- sector_fuel <- vehicleType <- TRACCS_category <-
             EJ <- RailTraction <- RailTrafficType <- Unit_short <- convert <- value <- annual_mileage <-
               NULL
   TRACCS_technology <- vkm <- tkm <- NULL
@@ -37,7 +37,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
   ## data preparation function
   prepare_data <- function(dt) {
-    dt <- melt(dt, id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicle_type",
+    dt <- melt(dt, id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicleType",
                                "TRACCS_technology"),
                measure.vars = c("2005", "2006", "2007", "2008", "2009", "2010"),
                variable.name = "year")
@@ -49,7 +49,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
     dt[TRACCS_technology %in% c("CNG", "CNG/Biogas", "LPG"),
        technology := "NG"]
     dt <- merge(mapping_TRACCS_roadf_categories, dt)
-    dt[, c("TRACCS_category", "TRACCS_technology", "TRACCS_vehicle_type") := NULL]
+    dt[, c("TRACCS_category", "TRACCS_technology", "TRACCS_vehicleType") := NULL]
     return(dt)
   }
 
@@ -69,7 +69,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
           EU_folder,
           paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ", x, "_Output.xlsx")),
         sheet="FCcalc","A2:I75")))
-      colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+      colnames(output) <- c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                          as.character(seq(2005,2010,1)))
       output = output[!TRACCS_technology %in% c("All", "Total", "Other")]
       output$country_name <- x
@@ -78,7 +78,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
   roadFE_eu <- prepare_data(roadFE_eu)
   ## different liquid and gas techs have to be summed
-  roadFE_eu <- roadFE_eu[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicle_type")]
+  roadFE_eu <- roadFE_eu[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicleType")]
   roadFE_eu[, convert := ifelse(technology == "Liquids", 0.043, 0.048)]
   roadFE_eu[, MJ := value* ## in t
                 convert*   ## in TJ
@@ -95,7 +95,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
             EU_folder,
             paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
           sheet="Occupancy ratio","A2:I51")))
-        colnames(output) <- c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+        colnames(output) <- c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                            as.character(seq(2005,2010,1)))
 
         ## only care about LF on vehicle type level
@@ -118,7 +118,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
           EU_folder,
           paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
         sheet="Mileage per Veh. (Km)","A2:I51")))
-      colnames(output)=c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+      colnames(output)=c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                          as.character(seq(2005,2010,1)))
       ## we only keep the average annual mileage accross technologies
       output <- output[(TRACCS_category == "Passenger cars" & TRACCS_technology == "All") |
@@ -142,7 +142,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
               EU_folder,
               paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
             sheet="Veh-Km","A2:I73")))
-        setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+        setnames(output, c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                            as.character(seq(2005,2010,1))))
         output=output[!TRACCS_technology %in% c("Total", "Other", "All")]
         output$country_name <- x
@@ -150,7 +150,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
       }))
 
   demand_vkm <- prepare_data(demand_vkm_raw)
-  demand_vkm <- demand_vkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicle_type")]
+  demand_vkm <- demand_vkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicleType")]
   setnames(demand_vkm, "value", "vkm")
 
   ## demand tkm
@@ -164,7 +164,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
               EU_folder,
               paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
             sheet="Tonne-Km","A2:I18")))
-        setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+        setnames(output, c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                            as.character(seq(2005,2010,1))))
         output=output[!TRACCS_technology %in% c("Total", "Other", "All")]
         output$country_name <- x
@@ -172,14 +172,14 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
       }))
 
   demand_tkm <- prepare_data(demand_tkm)
-  demand_tkm <- demand_tkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicle_type")]
+  demand_tkm <- demand_tkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicleType")]
   setnames(demand_tkm, "value", "tkm")
 
   ## load factor for trucks from vkm and tkm
   ## we derive this from total demands as this is less
   ## ambivalent with the different size classes (how to weight different load factors?)
-  LF_trucks <- demand_vkm[demand_tkm, on=c("year", "iso", "vehicle_type", "technology")]
-  LF_trucks <- LF_trucks[, .(loadFactor=sum(tkm)/sum(vkm)), by=c("year", "iso", "vehicle_type")]
+  LF_trucks <- demand_vkm[demand_tkm, on=c("year", "iso", "vehicleType", "technology")]
+  LF_trucks <- LF_trucks[, .(loadFactor=sum(tkm)/sum(vkm)), by=c("year", "iso", "vehicleType")]
 
   LF_countries_EU <- rbind(LF_countries_EU, LF_trucks, use.names=TRUE)
 
@@ -194,7 +194,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
               EU_folder,
               paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
             sheet="Pass-Km","A2:I51")))
-        setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+        setnames(output, c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                            as.character(seq(2005,2010,1))))
         output=output[!TRACCS_technology %in% c("Total", "Other", "All")]
         output$country_name <- x
@@ -202,7 +202,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
       }))
 
   demand_pkm <- prepare_data(demand_pkm)
-  demand_pkm <- demand_pkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicle_type")]
+  demand_pkm <- demand_pkm[, .(value=sum(value)), by=c("year", "iso", "technology", "vehicleType")]
   setnames(demand_pkm, "value", "pkm")
 
   ## road passenger and road freight: load energy intensity
@@ -217,7 +217,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
               paste0("TRACCS_ROAD_Final_EXCEL_2013-12-20/Road Data ",x,"_Output.xlsx")),
             sheet="FC_EFs","A2:TB73")))
         output <- output[, c(1, 2, 3, 372, 402, 432, 462, 492, 522)]
-        setnames(output, c("TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology",
+        setnames(output, c("TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology",
                            as.character(seq(2005, 2010, 1))))
         output <- output[!TRACCS_technology %in% c("Other", "All", "Total")]
         output$country_name <- x
@@ -227,19 +227,19 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
   ## use raw data to merge and aggregate technologies using vkm data as weight
   energy_intensity_raw <- melt(
     energy_intensity_raw,
-    id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
+    id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology"),
     measure.vars = c("2005", "2006", "2007", "2008", "2009", "2010"),
     variable.name = "year", value.name = "MJ_km")
 
   demand_vkm_raw <- melt(
     demand_vkm_raw,
-    id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicle_type", "TRACCS_technology"),
+    id.vars = c("country_name", "TRACCS_category", "TRACCS_vehicleType", "TRACCS_technology"),
     measure.vars = c("2005", "2006", "2007", "2008", "2009", "2010"),
     variable.name = "year", value.name = "vkm")
 
   energy_intensity_EU <- energy_intensity_raw[
     demand_vkm_raw, on=c("country_name", "year", "TRACCS_category",
-                         "TRACCS_vehicle_type", "TRACCS_technology")][vkm > 0]
+                         "TRACCS_vehicleType", "TRACCS_technology")][vkm > 0]
   energy_intensity_EU[TRACCS_technology %in% c("Gasoline", "Diesel", "Flexi-fuel", "B30"),
                       technology := "Liquids"]
   energy_intensity_EU[TRACCS_technology %in% c("CNG", "CNG/Biogas", "LPG"), technology := "NG"]
@@ -247,7 +247,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
   energy_intensity_EU <- energy_intensity_EU[
     , .(MJ_km = sum(vkm*MJ_km)/sum(vkm)),
-    by=c("country_name", "year", "vehicle_type", "technology")]
+    by=c("country_name", "year", "vehicleType", "technology")]
 
   energy_intensity_EU <- energy_intensity_EU[,country_name:=ifelse(country_name=="FYROM","Macedonia, the former Yugoslav Republic of",country_name)]#fix  FYROM name
   ## #include the sector fuel
@@ -280,10 +280,10 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
   ]
 
   setnames(rail_eu,old=c("variable", "Country"),new=c("year", "country_name"))
-  rail_eu[, vehicle_type := character()]
-  rail_eu[RailTrafficType == "Goods", vehicle_type := "Freight Rail_tmp_vehicletype"]
-  rail_eu[RailTrafficType == "Passenger", vehicle_type := "Passenger Rail_tmp_vehicletype"]
-  rail_eu=rail_eu[,.(MJ=sum(MJ)),by=c("year","country_name", "technology", "vehicle_type")]
+  rail_eu[, vehicleType := character()]
+  rail_eu[RailTrafficType == "Goods", vehicleType := "Freight Rail_tmp_vehicletype"]
+  rail_eu[RailTrafficType == "Passenger", vehicleType := "Passenger Rail_tmp_vehicletype"]
+  rail_eu=rail_eu[,.(MJ=sum(MJ)),by=c("year","country_name", "technology", "vehicleType")]
   rail_eu=merge(rail_eu,mapping_TRACCS_iso,by="country_name")[,-c("country_name")]
   rail_eu[, year := as.numeric(as.character(year))]
 
@@ -307,7 +307,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
   ## merge with regional mapping for EUROSTAT
   dem_bunkers = merge(dem_bunkers, map_eurostat)[, c("country_name","mtoe") := NULL]
-  dem_bunkers[, vehicle_type := ifelse(name == "International maritime bunkers", "International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")][, name := NULL]
+  dem_bunkers[, vehicleType := ifelse(name == "International maritime bunkers", "International Ship_tmp_vehicletype", "International Aviation_tmp_vehicletype")][, name := NULL]
   setnames(dem_bunkers, old ="variable", new = "year")
   dem_bunkers[, year := as.numeric(as.character(year))]
   dem_bunkers[, technology := "Liquids"]
@@ -329,7 +329,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
   ## merge with regional mapping for EUROSTAT
   dem_dom = merge(dem_dom, map_eurostat)[, c("country_name","mtoe") := NULL]
-  dem_dom[, vehicle_type := ifelse(name == "Domestic aviation", "Domestic Aviation_tmp_vehicletype", "Domestic Ship_tmp_vehicletype")][, name := NULL]
+  dem_dom[, vehicleType := ifelse(name == "Domestic aviation", "Domestic Aviation_tmp_vehicletype", "Domestic Ship_tmp_vehicletype")][, name := NULL]
   setnames(dem_dom, old ="variable", new = "year")
   dem_dom[, year := as.numeric(as.character(year))]
   dem_dom[, technology := "Liquids"]
@@ -337,7 +337,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
   ## extend road to 1990
   roadFE_eu = approx_dt(roadFE_eu, c(1990,unique(roadFE_eu$year)),
                         xcol = "year", ycol = "MJ",
-                        idxcols = c("iso", "vehicle_type", "technology"),
+                        idxcols = c("iso", "vehicleType", "technology"),
                         extrapolate=T)
 
   ## extend rail to 1990
@@ -374,7 +374,7 @@ toolLoadEU <- function(input_folder, EU_dir = "EU_data") {
 
 
 toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
-  subsector_L1 <- vehicle_type <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicle_type_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
+  subsectorL3 <- vehicleType <- size.class <- UCD_region <- scenario <- `.` <- technology <- vehicleType_PSI <- tot_purchase_euro2017 <- y2040 <- y2015 <- y2100 <- variable <- region <- EDGE_category <- value <- Xyear <- UCD_region <- size.class <- mileage <- UCD_technology <- Capital_costs_purchase <- non_fuel_cost <- non_fuel_OPEX <- Operating_subsidy <- Operating_costs_tolls <- Capital_costs_total <- Capital_costs_other <- Capital_costs_infrastructure <- CAPEX_and_non_fuel_OPEX <- CAPEX <- Operating_costs_maintenance <- Operating_costs_registration_and_insurance <- NULL
   UCD_sector <- vkm.veh <- unit <- NULL
   ## load database UCD transportation
   UCD2iso=fread(file.path(input_folder, UCD_dir, "mapping_UCDdb_ISO.csv"))
@@ -411,13 +411,13 @@ toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
   UCD_cost[size.class %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), size.class := "Truck (26t)"]
   UCD_cost[size.class %in% c("Truck (>32t)"), size.class := "Truck (40t)"]
   UCD_cost=UCD_cost[,.(value = mean(value)), by = c("region", "UCD_technology", "UCD_sector", "mode", "size.class", "variable", "unit", "year")]
-  UCD_cost[, vehicle_type := size.class]
-  UCD_cost[mode == "Rail", vehicle_type := paste0(UCD_sector, " ", mode, "_tmp_vehicletype")]
-  UCD_cost[mode == "Air International", vehicle_type := paste0("International Aviation", "_tmp_vehicletype")]
-  UCD_cost[mode == "Air Domestic", vehicle_type := paste0("Domestic Aviation", "_tmp_vehicletype")]
-  UCD_cost[mode == "Ship International", vehicle_type := paste0("International Ship", "_tmp_vehicletype")]
-  UCD_cost[mode == "Ship Domestic", vehicle_type := paste0("Domestic Ship", "_tmp_vehicletype")]
-  UCD_cost[mode %in% c("Bus", "HSR"), vehicle_type := paste0(mode, "_tmp_vehicletype")]
+  UCD_cost[, vehicleType := size.class]
+  UCD_cost[mode == "Rail", vehicleType := paste0(UCD_sector, " ", mode, "_tmp_vehicletype")]
+  UCD_cost[mode == "Air International", vehicleType := paste0("International Aviation", "_tmp_vehicletype")]
+  UCD_cost[mode == "Air Domestic", vehicleType := paste0("Domestic Aviation", "_tmp_vehicletype")]
+  UCD_cost[mode == "Ship International", vehicleType := paste0("International Ship", "_tmp_vehicletype")]
+  UCD_cost[mode == "Ship Domestic", vehicleType := paste0("Domestic Ship", "_tmp_vehicletype")]
+  UCD_cost[mode %in% c("Bus", "HSR"), vehicleType := paste0(mode, "_tmp_vehicletype")]
   UCD_cost[,c("UCD_sector", "mode", "size.class") := NULL]
 
   UCD_cost = approx_dt(UCD_cost,
@@ -425,14 +425,14 @@ toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
                        xcol = "year",
                        ycol = "value",
                        extrapolate = TRUE,
-                       idxcols = c("region", "UCD_technology", "vehicle_type","variable", "unit"))
+                       idxcols = c("region", "UCD_technology", "vehicleType","variable", "unit"))
   setnames(UCD2iso, old="UCD_region", new="region")
 
   UCD_cost = disaggregate_dt(UCD_cost,
                              UCD2iso,
                              valuecol = "value",
                              weights = NULL,
-                             datacols = c("UCD_technology", "vehicle_type", "variable", "year", "unit"))
+                             datacols = c("UCD_technology", "vehicleType", "variable", "year", "unit"))
 
   setnames(UCD_vkm_veh, old="UCD_region", new="region")
   UCD_vkm_veh[region =="Australia_NZ", region := "Australia NZ"]
@@ -445,12 +445,12 @@ toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
   UCD_vkm_veh[size.class %in% c("Truck (>32t)"), size.class := "Truck (40t)"]
   UCD_vkm_veh=UCD_vkm_veh[,.(vkm.veh = mean(vkm.veh)), by = c("region", "UCD_sector", "mode", "size.class", "year")]
 
-  UCD_vkm_veh[, vehicle_type := size.class]
-  UCD_vkm_veh[mode == "Rail", vehicle_type := paste0(mode, UCD_sector, "_tmp_vehicletype")]
-  UCD_vkm_veh[mode == "Air International", vehicle_type := paste0("International Aviation", "_tmp_vehicletype")]
-  UCD_vkm_veh[mode == "Air Domestic", vehicle_type := paste0("Domestic Aviation", "_tmp_vehicletype")]
-  UCD_vkm_veh[mode == "Ship International", vehicle_type := paste0("International Ship", "_tmp_vehicletype")]
-  UCD_vkm_veh[mode %in% c("Bus", "HSR"), vehicle_type := paste0(mode, "_tmp_vehicletype")]
+  UCD_vkm_veh[, vehicleType := size.class]
+  UCD_vkm_veh[mode == "Rail", vehicleType := paste0(mode, UCD_sector, "_tmp_vehicletype")]
+  UCD_vkm_veh[mode == "Air International", vehicleType := paste0("International Aviation", "_tmp_vehicletype")]
+  UCD_vkm_veh[mode == "Air Domestic", vehicleType := paste0("Domestic Aviation", "_tmp_vehicletype")]
+  UCD_vkm_veh[mode == "Ship International", vehicleType := paste0("International Ship", "_tmp_vehicletype")]
+  UCD_vkm_veh[mode %in% c("Bus", "HSR"), vehicleType := paste0(mode, "_tmp_vehicletype")]
   UCD_vkm_veh[,c("UCD_sector", "mode", "size.class") := NULL]
 
   UCD_vkm_veh = approx_dt(UCD_vkm_veh,
@@ -458,13 +458,13 @@ toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
                        xcol = "year",
                        ycol = "vkm.veh",
                        extrapolate = TRUE,
-                       idxcols = c("region", "vehicle_type"))
+                       idxcols = c("region", "vehicleType"))
 
   UCD_vkm_veh = disaggregate_dt(UCD_vkm_veh,
                                 UCD2iso,
                                 valuecol = "vkm.veh",
                                 weights = NULL,
-                                datacols = c("vehicle_type","year"))
+                                datacols = c("vehicleType","year"))
 
   return(list(UCD_cost = UCD_cost, UCD_mileage = UCD_vkm_veh))
 
@@ -483,7 +483,7 @@ toolLoadUCD <- function(input_folder, fcr_veh, years, UCD_dir="UCD") {
 
 
 toolPSICosts <- function(input_folder, years, fcr_veh) {
-  `.` <- scenario <- technology <- vehicle_type_PSI <- vehicle_type_PSI <- tot_purchase_euro2017 <- tot_purchasecost <- vehicle_type <- NULL
+  `.` <- scenario <- technology <- vehicleType_PSI <- vehicleType_PSI <- tot_purchase_euro2017 <- tot_purchasecost <- vehicleType <- NULL
 
   ##load costs from PSI
   PSI_folder <- file.path(input_folder, "PSI")
@@ -491,9 +491,9 @@ toolPSICosts <- function(input_folder, years, fcr_veh) {
                                   sheet="Vehicle","A1:X191"))
 
   ## select relevant columns and only the "current" values->2015 and the Baseline ones->2040 in a baseline scenario
-  psi_costs = psi_costs[scenario %in% c("current","Baseline"),c("scenario", "technology", "vehicle_type_PSI", "Total1_(Euro)")]
+  psi_costs = psi_costs[scenario %in% c("current","Baseline"),c("scenario", "technology", "vehicleType_PSI", "Total1_(Euro)")]
   ## rename columns
-  colnames(psi_costs)=c("scenario", "technology", "vehicle_type_PSI", "tot_purchase_euro2017")
+  colnames(psi_costs)=c("scenario", "technology", "vehicleType_PSI", "tot_purchase_euro2017")
   ## substitute the "scenario" with the year it stands for
   psi_costs[,scenario:=ifelse(scenario=="current", 2015, 2040)]
 
@@ -503,7 +503,7 @@ toolPSICosts <- function(input_folder, years, fcr_veh) {
   psi_costs[scenario == 2040 & technology %in% c("FCEV"), tot_purchase_euro2017 := 0.9*tot_purchase_euro2017]
 
   psi_costs=psi_costs[,.(year=scenario, ## rename col scenario with year
-                         technology,vehicle_type_PSI,
+                         technology,vehicleType_PSI,
                          tot_purchasecost=tot_purchase_euro2017   ## in 2017euro
                          *1.14                                                ## in 2017USD
                          *0.78                                                ## in 2005USD
@@ -513,9 +513,9 @@ toolPSICosts <- function(input_folder, years, fcr_veh) {
   ##load mapping that matches PSI vehicle types with EDGE types
   mapping <- fread(file.path(PSI_folder, "mapping_PSI_EDGE.csv"), na.strings=c("","NA"))
   ##filter out the NA cells in the mapping-> PSI has more alternatives than EDGE
-  mapping=mapping[!is.na(vehicle_type),]
+  mapping=mapping[!is.na(vehicleType),]
   ## merge mapping and PSI database
-  psi_costs=merge(psi_costs,mapping,all=FALSE,by="vehicle_type_PSI")[,-"vehicle_type_PSI"]
+  psi_costs=merge(psi_costs,mapping,all=FALSE,by="vehicleType_PSI")[,-"vehicleType_PSI"]
   psi_costs = psi_costs[!(technology %in% c("PHEV-c", "PHEV-e"))] ## PSI reports separately the electric and ICE running modes of a plug-in hybrid
   psi_costs[technology =="HEV-p", technology := "PHEV"]
 
@@ -524,7 +524,7 @@ toolPSICosts <- function(input_folder, years, fcr_veh) {
   psi_costs[, technology:=ifelse(grepl("PHEV",technology),"Hybrid Electric",technology)]
 
   ## average on the EDGE category
-  psi_costs=psi_costs[,.(tot_purchasecost=mean(tot_purchasecost)),by=c("technology","vehicle_type","year")]
+  psi_costs=psi_costs[,.(tot_purchasecost=mean(tot_purchasecost)),by=c("technology","vehicleType","year")]
 
   return(psi_costs = psi_costs)
 
@@ -545,7 +545,7 @@ toolPSICosts <- function(input_folder, years, fcr_veh) {
 
 ## function that loads and applies CAPEX costs for CHA conventional trucks. Final values in 2005USD/vkm
 toolCHNTrucksCosts <- function(input_folder, years) {
-  `.` <- value <- region <- vehicle_type <- NULL
+  `.` <- value <- region <- vehicleType <- NULL
   ## load costs from CHA Trucks source file
   CHA_folder <- file.path(input_folder, "CHA_data")
   costs=data.table(fread(file.path(CHA_folder,"CHA_trucks.csv"), header = T))
@@ -553,23 +553,23 @@ toolCHNTrucksCosts <- function(input_folder, years) {
                id.vars = c("region", "sector", "mode", "size.class", "technology", "fuel", "variable", "unit"),
                measure.vars = c("2005", "2020", "2035", "2050", "2065", "2080", "2095"))
   costs[, region := "CHN"]
-  setnames(costs, old = c("region", "variable.1", "size.class"), new = c("iso", "year", "vehicle_type"))
-  costs = costs[,c("iso", "year", "technology", "variable", "vehicle_type", "value")]
+  setnames(costs, old = c("region", "variable.1", "size.class"), new = c("iso", "year", "vehicleType"))
+  costs = costs[,c("iso", "year", "technology", "variable", "vehicleType", "value")]
 
   ## attribute right veh types
-  costs[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
-  costs[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  costs[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
-  costs[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
-  costs[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
-  costs=costs[,.(value = mean(value)), by = c("iso", "year", "technology", "variable", "vehicle_type")]
+  costs[vehicleType %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicleType := "Truck (0-3.5t)"]
+  costs[vehicleType %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicleType := "Truck (7.5t)"]
+  costs[vehicleType %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicleType := "Truck (18t)"]
+  costs[vehicleType %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicleType := "Truck (26t)"]
+  costs[vehicleType %in% c("Truck (>32t)"), vehicleType := "Truck (40t)"]
+  costs=costs[,.(value = mean(value)), by = c("iso", "year", "technology", "variable", "vehicleType")]
   costs[, year := as.numeric(as.character(year))]
 
   costs = approx_dt(costs,
                     xdata = years,
                     xcol = "year",
                     ycol = "value",
-                    idxcols = c("technology", "vehicle_type", "variable", "iso"),
+                    idxcols = c("technology", "vehicleType", "variable", "iso"),
                     extrapolate = TRUE)
 
   return(CHN_costs = costs)
@@ -590,7 +590,7 @@ toolCHNTrucksCosts <- function(input_folder, years) {
 
 ## function that loads and applies CAPEX costs for CHA conventional trucks. Final values in 2005USD/vkm
 toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
-  vehicle_type <- technology <- powertrain <- `.` <- kJ.per.vkm <- conv_vkm_MJ <- ttw_energy <- NULL
+  vehicleType <- technology <- powertrain <- `.` <- kJ.per.vkm <- conv_vkm_MJ <- ttw_energy <- NULL
   psi_file <- function(fname){
     file.path(input_folder, PSI_dir, fname)
   }
@@ -601,13 +601,13 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
   ## alternative trucks intensity
   LDV_PSI_int = data.table(read.csv(psi_file("ttw-efficiencies.csv")))
   ## rename entries according to the rest of the databases
-  setnames(LDV_PSI_int, old = c("size"), new = c("vehicle_type_PSI"))
+  setnames(LDV_PSI_int, old = c("size"), new = c("vehicleType_PSI"))
   ##load mapping that matches PSI vehicle types with EDGE types
   mapping=fread(psi_file("mapping_PSI_EDGE.csv"), na.strings=c("","NA"))
   ##filter out the NA cells in the mapping-> PSI has more alternatives than EDGE
-  mapping=mapping[!is.na(vehicle_type),]
+  mapping=mapping[!is.na(vehicleType),]
   ## merge mapping and PSI database
-  LDV_PSI_int=merge(LDV_PSI_int,mapping,all=FALSE,by="vehicle_type_PSI")[,-"vehicle_type_PSI"]
+  LDV_PSI_int=merge(LDV_PSI_int,mapping,all=FALSE,by="vehicleType_PSI")[,-"vehicleType_PSI"]
 
   LDV_PSI_int[,technology:=ifelse(powertrain=="ICEV-g","NG",NA)]
   LDV_PSI_int[,technology:=ifelse(powertrain %in% c("ICEV-p","ICEV-d"),"Liquids",technology)]
@@ -617,7 +617,7 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
   ## remove mild/full hybrids
   LDV_PSI_int = LDV_PSI_int[!powertrain %in% c("HEV-d", "HEV-p")]
   ## average on the EDGE category
-  LDV_PSI_int = LDV_PSI_int[, .(kJ.per.vkm=mean(kJ.per.vkm)), by = c("technology", "vehicle_type", "year")]
+  LDV_PSI_int = LDV_PSI_int[, .(kJ.per.vkm=mean(kJ.per.vkm)), by = c("technology", "vehicleType", "year")]
 
   LDV_PSI_int[, conv_vkm_MJ := kJ.per.vkm*  ## kj/vkm
                 1e-3] ## MJ/vkm]
@@ -628,18 +628,18 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
                           xdata = years,
                           xcol = "year",
                           ycol = "conv_vkm_MJ",
-                          idxcols = c("technology", "vehicle_type"),
+                          idxcols = c("technology", "vehicleType"),
                           extrapolate = TRUE)
 
   ## add logit_category for Hybrid Electric
   logit_category = rbind(logit_category, logit_category[technology == "BEV"][, technology := "Hybrid Electric"])
 
   ##merge with logit_category
-  LDV_PSI_int=merge(logit_category,LDV_PSI_int,by=c("technology","vehicle_type"))[,-"univocal_name"]
+  LDV_PSI_int=merge(logit_category,LDV_PSI_int,by=c("technology","vehicleType"))[,-"univocal_name"]
   ## add missing 4Ws
   LDV_PSI_int = rbind(LDV_PSI_int,
-                      LDV_PSI_int[vehicle_type == "Large Car and SUV"][, vehicle_type := "Large Car"],
-                      LDV_PSI_int[vehicle_type == "Large Car and SUV"][, vehicle_type := "Light Truck and SUV"]
+                      LDV_PSI_int[vehicleType == "Large Car and SUV"][, vehicleType := "Large Car"],
+                      LDV_PSI_int[vehicleType == "Large Car and SUV"][, vehicleType := "Light Truck and SUV"]
   )
 
 
@@ -648,16 +648,16 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
   ## use only Electric and FCEV trucks
   Truck_PSI_int = Truck_PSI_int[powertrain %in% c("BEV", "FCEV"),]
   ## rename entries according to the rest of the databases
-  setnames(Truck_PSI_int, old = c("powertrain", "size"), new = c("technology", "vehicle_type"))
+  setnames(Truck_PSI_int, old = c("powertrain", "size"), new = c("technology", "vehicleType"))
 
   Truck_PSI_int[technology == "BEV", technology := "Electric"]
-  Truck_PSI_int[vehicle_type == "3.5t", vehicle_type := "Truck (0-3.5t)"]
-  Truck_PSI_int[vehicle_type != "Truck (0-3.5t)", vehicle_type := paste0("Truck (", vehicle_type, ")")]
+  Truck_PSI_int[vehicleType == "3.5t", vehicleType := "Truck (0-3.5t)"]
+  Truck_PSI_int[vehicleType != "Truck (0-3.5t)", vehicleType := paste0("Truck (", vehicleType, ")")]
   Truck_PSI_int[, conv_vkm_MJ := ttw_energy*  ## kj/km
                   1e-3] ## MJ/km]
   Truck_PSI_int[, c("X", "unit", "ttw_energy") := NULL]
   ## Buses are assumed to be as 18 tons truck
-  Bus_PSI_int = Truck_PSI_int[vehicle_type == "Truck (18t)"][, vehicle_type := "Bus_tmp_vehicletype"]
+  Bus_PSI_int = Truck_PSI_int[vehicleType == "Truck (18t)"][, vehicleType := "Bus_tmp_vehicletype"]
   Truck_PSI_int = rbind(Truck_PSI_int, Bus_PSI_int)
 
   ## approx to the whole time range
@@ -665,7 +665,7 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
                             xdata = years,
                             xcol = "year",
                             ycol = "conv_vkm_MJ",
-                            idxcols = c("technology", "vehicle_type"),
+                            idxcols = c("technology", "vehicleType"),
                             extrapolate = TRUE)
 
 
@@ -676,63 +676,63 @@ toolPSIint=function(GCAM_data, input_folder, PSI_dir="PSI", years){
 
 
 toolAltHDV <- function(UCD_output) {
-  vehicle_type <- UCD_technology <- variable <- value <- NULL
+  vehicleType <- UCD_technology <- variable <- value <- NULL
   costs = copy(UCD_output$UCD_cost)
-  trucks = unique(costs[grepl("Truck", vehicle_type) & !grepl("Light", vehicle_type), vehicle_type])
-  buses = unique(costs[grepl("Bus", vehicle_type), vehicle_type])
+  trucks = unique(costs[grepl("Truck", vehicleType) & !grepl("Light", vehicleType), vehicleType])
+  buses = unique(costs[grepl("Bus", vehicleType), vehicleType])
 
-  electric = costs[vehicle_type %in% c(trucks, buses) & UCD_technology == "Liquids" & variable == "CAPEX and non-fuel OPEX"][, "UCD_technology" := "Electric"]
-  hydrogen = costs[vehicle_type %in% c(trucks, buses) & UCD_technology == "Liquids" & variable == "CAPEX and non-fuel OPEX"][, "UCD_technology" := "FCEV"]
+  electric = costs[vehicleType %in% c(trucks, buses) & UCD_technology == "Liquids" & variable == "CAPEX and non-fuel OPEX"][, "UCD_technology" := "Electric"]
+  hydrogen = costs[vehicleType %in% c(trucks, buses) & UCD_technology == "Liquids" & variable == "CAPEX and non-fuel OPEX"][, "UCD_technology" := "FCEV"]
   altcost = rbind(electric, hydrogen)
 
   yeartarget_early = 2035  ## target year for electric trucks and electric and hydrogen buses
   yeartarget_late = 2150  ## target year for FCEV trucks
 
   ## cost of electric truck is 60% more than a as conventional truck today
-  altcost[vehicle_type %in% trucks & year <= 2020 & UCD_technology == "Electric", value := 1.6*value, by = c("iso", "year", "vehicle_type")]
+  altcost[vehicleType %in% trucks & year <= 2020 & UCD_technology == "Electric", value := 1.6*value, by = c("iso", "year", "vehicleType")]
   ## cost of a FCEV truck is 80% more than a as conventional truck today
-  altcost[vehicle_type %in% trucks & year <= 2020 & UCD_technology == "FCEV", value := 1.8*value, by = c("iso", "year", "vehicle_type")]
+  altcost[vehicleType %in% trucks & year <= 2020 & UCD_technology == "FCEV", value := 1.8*value, by = c("iso", "year", "vehicleType")]
 
   ## for electric and FCEV trucks, in between 2020 and the target year, the cost follows a linear trend
-  altcost[vehicle_type %in% trucks & year <= yeartarget_early & year >= 2020 & UCD_technology %in% c("Electric"),
+  altcost[vehicleType %in% trucks & year <= yeartarget_early & year >= 2020 & UCD_technology %in% c("Electric"),
           value := (value[year == 2020] - value[year == yeartarget_early])*(1 - (year - 2020)/(yeartarget_early - 2020)) + value[year == yeartarget_early],
-          by = c("iso", "UCD_technology", "vehicle_type")]
+          by = c("iso", "UCD_technology", "vehicleType")]
 
-  altcost[vehicle_type %in% trucks & year <= yeartarget_late & year >= 2020 & UCD_technology %in% c("FCEV"),
+  altcost[vehicleType %in% trucks & year <= yeartarget_late & year >= 2020 & UCD_technology %in% c("FCEV"),
           value := (value[year == 2020] - value[year == yeartarget_late])*(1 - (year - 2020)/(yeartarget_late - 2020)) + value[year == yeartarget_late],
-          by = c("iso", "UCD_technology", "vehicle_type")]
+          by = c("iso", "UCD_technology", "vehicleType")]
 
   ## cost of electric and H2 buses is 40% more of a conventional bus today
-  altcost[vehicle_type %in% buses & year <= 2020, value := 1.4*value, by = c("iso", "year", "vehicle_type")]
+  altcost[vehicleType %in% buses & year <= 2020, value := 1.4*value, by = c("iso", "year", "vehicleType")]
 
   ## for electric and FCEV buses, in between 2020 and target year the cost follows a linear trend
-  altcost[vehicle_type %in% buses & UCD_technology == "Electric" & year <= yeartarget_early & year >= 2020,
+  altcost[vehicleType %in% buses & UCD_technology == "Electric" & year <= yeartarget_early & year >= 2020,
           value := (value[year == 2020]-value[year == yeartarget_early])*(1 - (year - 2020)/(yeartarget_early - 2020)) + value[year == yeartarget_early],
-          by = c("iso", "UCD_technology", "vehicle_type")]
+          by = c("iso", "UCD_technology", "vehicleType")]
 
   ## for electric and FCEV buses, in between 2020 and target year the cost follows a linear trend
-  altcost[vehicle_type %in% buses & UCD_technology == "FCEV" & year <= yeartarget_late & year >= 2020,
+  altcost[vehicleType %in% buses & UCD_technology == "FCEV" & year <= yeartarget_late & year >= 2020,
           value := (value[year == 2020]-value[year == yeartarget_late])*(1 - (year - 2020)/(yeartarget_late - 2020)) + value[year == yeartarget_late],
-          by = c("iso", "UCD_technology", "vehicle_type")]
+          by = c("iso", "UCD_technology", "vehicleType")]
 
   ## assumed same other costs components to be equal to ICE trucks/buses
-  tmp = rbind(costs[vehicle_type %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "Electric"],
-              costs[vehicle_type %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "FCEV"])
+  tmp = rbind(costs[vehicleType %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "Electric"],
+              costs[vehicleType %in% c(trucks, buses) & variable != "CAPEX and non-fuel OPEX" & UCD_technology == "Liquids"][, "UCD_technology" := "FCEV"])
 
 
   ## add hydrogen airplanes
-  h2air = costs[vehicle_type == "Domestic Aviation_tmp_vehicletype" & UCD_technology == "Liquids"][, UCD_technology := "Hydrogen"]
+  h2air = costs[vehicleType == "Domestic Aviation_tmp_vehicletype" & UCD_technology == "Liquids"][, UCD_technology := "Hydrogen"]
   ## CAPEX of hydrogen airplanes is assumed today 5 times more expensive than a conventional airplane (i.e. not present in the market)
-  h2air[vehicle_type %in% "Domestic Aviation_tmp_vehicletype" & year <= 2020,
+  h2air[vehicleType %in% "Domestic Aviation_tmp_vehicletype" & year <= 2020,
         value := 5*value]
   ## following https://www.fch.europa.eu/sites/default/files/FCH%20Docs/20200507_Hydrogen%20Powered%20Aviation%20report_FINAL%20web%20%28ID%208706035%29.pdf
   ## maintenance costs are 50% higher than than a liquids fuelled airplane
-  h2air[vehicle_type =="Domestic Aviation_tmp_vehicletype" & year >= 2020 & variable == "non-fuel OPEX",
+  h2air[vehicleType =="Domestic Aviation_tmp_vehicletype" & year >= 2020 & variable == "non-fuel OPEX",
           value := 1.5*value]
   ## for hydrogen airplanes, in between 2020 and 2040 the cost follows a linear trend, and reaches a value 30% higher than a liquids fuelled airplane
-  h2air[vehicle_type =="Domestic Aviation_tmp_vehicletype" & year >= 2020 & variable == "CAPEX",
+  h2air[vehicleType =="Domestic Aviation_tmp_vehicletype" & year >= 2020 & variable == "CAPEX",
           value := ifelse(year <= 2040, value[year==2020] + (1.3*value[year == 2100]-value[year==2020]) * (year-2020) / (2100-2020), 1.3*value[year == 2100]),
-          by = c("iso", "UCD_technology", "vehicle_type")]
+          by = c("iso", "UCD_technology", "vehicleType")]
 
   costs = rbind(altcost, tmp, h2air)
 

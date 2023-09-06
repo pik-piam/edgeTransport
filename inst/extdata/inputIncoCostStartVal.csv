@@ -1,0 +1,27 @@
+﻿region;incoCostType;sector;technology;unit;1990;2005;2010;2020
+GLO;modelAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
+GLO;modelAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
+GLO;modelAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
+GLO;modelAvailability;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
+GLO;modelAvailability;trn_pass;ICE;US$2005/veh;100000;100000;100000;100000
+GLO;riskAversion;trn_pass;BEV;US$2005/veh;100000;100000;100000;3800
+GLO;riskAversion;trn_pass;FCEV;US$2005/veh;100000;100000;100000;3800
+GLO;riskAversion;trn_pass;NG;US$2005/veh;100000;100000;100000;3800
+GLO;riskAversion;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;3800
+GLO;rangeAnxiety;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
+GLO;stationsAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
+GLO;stationsAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
+GLO;stationsAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
+EUR;modelAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
+EUR;modelAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
+EUR;modelAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;69300
+EUR;modelAvailability;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
+EUR;modelAvailability;trn_pass;ICE;US$2005/veh;100000;100000;100000;100000
+EUR;riskAversion;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
+EUR;riskAversion;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
+EUR;riskAversion;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
+EUR;riskAversion;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
+EUR;rangeAnxiety;trn_pass;BEV;US$2005/veh;100000;100000;100000;65000
+EUR;stationsAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;1000
+EUR;stationsAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
+EUR;stationsAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000

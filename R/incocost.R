@@ -6,7 +6,7 @@
 #' @param REMINDp REMIND prices
 
 toolIncocost <- function(annual_mileage, load_factor, fcr_veh, REMINDp) {
-  subsector_L1 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- vkm.veh <- `.` <-
+  subsectorL3 <- prange <- pref <- pchar <- value <- loadFactor <- technology <- vkm.veh <- `.` <-
     meanp <- non_fuel_price <- pmod_av_startv <- prange_startv <- prisk <- region <- resc <-
       tot_price <- NULL
 
@@ -22,8 +22,8 @@ toolIncocost <- function(annual_mileage, load_factor, fcr_veh, REMINDp) {
   prefuelNG = prefuelNG*fcr_veh ## disc$/veh
   prangeBEV = prangeBEV*fcr_veh ## disc$/veh
 
-  pinco = merge(annual_mileage, load_factor, by = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type"))[year <= 2020]
-  pinco = pinco[subsector_L1 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV", "Hybrid Electric","NG")]
+  pinco = merge(annual_mileage, load_factor, by = c("region", "year", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType"))[year <= 2020]
+  pinco = pinco[subsectorL3 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV", "Hybrid Electric","NG")]
 
 
   ## infrastructure lack contains range anxiety and refueling availability, and is 0 in the case of Hybrids
@@ -39,7 +39,7 @@ toolIncocost <- function(annual_mileage, load_factor, fcr_veh, REMINDp) {
                       cost_comp = c("pmod_av_startv", "prange_startv", "pmod_av_startv", "pmod_av_startv", "pmod_av_startv", "prisk", "prisk", "prisk", "prisk", "pchar", "pchar"),
                       value = c(10000, 65000, 69300, 69300, 69300, 3800, 3800, 3800, 3800, 1000, 1000))
   ## find the average price wrt
-  REMINDp = REMINDp[subsector_L1 == "trn_pass_road_LDV_4W" & !is.na(tot_price) & year==2020]
+  REMINDp = REMINDp[subsectorL3 == "trn_pass_road_LDV_4W" & !is.na(tot_price) & year==2020]
   REMINDp = REMINDp[,.(meanp = mean(non_fuel_price)), by = c("region", "technology")]
 
   ## use DEU as a comparison (all EU regions will not be overwritten anyways)
@@ -51,16 +51,16 @@ toolIncocost <- function(annual_mileage, load_factor, fcr_veh, REMINDp) {
 
   pinco = merge(pinco, allreg, by = c("region", "technology"))
 
-  pinco[year >= 2010 & technology == "BEV", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "Hybrid Electric", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "NG", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "FCEV", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
-  pinco[year >= 2010 & technology == "BEV", prange := (prange[year==2010]-prange_startv*fcr_veh)/(2010-2020)*(year-2010)+prange[year==2010], by = c("region", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type")]
+  pinco[year >= 2010 & technology == "BEV", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType")]
+  pinco[year >= 2010 & technology == "Hybrid Electric", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType")]
+  pinco[year >= 2010 & technology == "NG", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType")]
+  pinco[year >= 2010 & technology == "FCEV", pmod_av := (pmod_av[year==2010]-pmod_av_startv*fcr_veh)/(2010-2020)*(year-2010)+pmod_av[year==2010], by = c("region", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType")]
+  pinco[year >= 2010 & technology == "BEV", prange := (prange[year==2010]-prange_startv*fcr_veh)/(2010-2020)*(year-2010)+prange[year==2010], by = c("region", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType")]
   pinco[, prisk := fcr_veh*prisk]
   pinco[, pchar := fcr_veh*pchar]
 
   pinco[, c("prange_startv", "pmod_av_startv") := NULL]
-  pinco = melt(pinco, id.vars = c("region", "year", "technology", "sector", "subsector_L3", "subsector_L2", "subsector_L1","vehicle_type", "vkm.veh", "loadFactor"))
+  pinco = melt(pinco, id.vars = c("region", "year", "technology", "sector", "subsectorL1", "subsectorL2", "subsectorL3","vehicleType", "vkm.veh", "loadFactor"))
   setnames(pinco, old = "variable", new = "logit_type")
   pinco[, value:= value/(vkm.veh*loadFactor)]
   pinco[, c("vkm.veh", "loadFactor"):= NULL]

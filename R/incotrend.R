@@ -17,10 +17,10 @@
 
 toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
                            tech_scen, SSP_scen, mitab) {
-  subsector_L1 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
-  logit_type <- `.` <- region <- vehicle_type <- subsector_L2 <- subsector_L3 <- NULL
+  subsectorL3 <- gdp_pop <- technology <- tot_price <- sw <- logit.exponent <- NULL
+  logit_type <- `.` <- region <- vehicleType <- subsectorL2 <- subsectorL1 <- NULL
   sector <- V1 <- tech_output <- V2 <- GDP_cap <- value <- convsymmBEVlongDist <- NULL
-  SSP_scenario <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
+  SSPscen <- level <- i.sw <- approx <- tech_scenario <- techvar <- regioncat <- NULL
   vehvar <- target <- symmyr <- speed <- FV_techvar <- FV_vehvar <- NULL
 
 
@@ -46,50 +46,50 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   ## random fixings for missing demand data
   FVdt <- rbindlist(list(
     FVdt,
-    FVdt[region == "CHA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
-      , vehicle_type := "Motorcycle (>250cc)"],
-    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
-      , vehicle_type := "Motorcycle (>250cc)"],
-    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Truck (18t)"][
-      , vehicle_type := "Truck (26t)"],
-    FVdt[region == "IND" & year <= 2010 & vehicle_type == "Truck (18t)"][
-      , vehicle_type := "Truck (40t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
-      , vehicle_type := "Truck (18t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
-      , vehicle_type := "Truck (26t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicle_type == "Truck (7.5t)"][
-      , vehicle_type := "Truck (40t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Truck (18t)"][
-      , vehicle_type := "Truck (26t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Truck (18t)"][
-      , vehicle_type := "Truck (40t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
-      , vehicle_type := "Motorcycle (>250cc)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicle_type == "Motorcycle (50-250cc)"][
-      , vehicle_type := "Moped"],
-    FVdt[region == "USA" & year <= 2010 & vehicle_type == "Motorcycle (>250cc)"][
-      , vehicle_type := "Motorcycle (50-250cc)"],
-    FVdt[region == "USA" & year <= 2010 & vehicle_type == "Motorcycle (>250cc)"][
-      , vehicle_type := "Moped"]
+    FVdt[region == "CHA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
+      , vehicleType := "Motorcycle (>250cc)"],
+    FVdt[region == "IND" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
+      , vehicleType := "Motorcycle (>250cc)"],
+    FVdt[region == "IND" & year <= 2010 & vehicleType == "Truck (18t)"][
+      , vehicleType := "Truck (26t)"],
+    FVdt[region == "IND" & year <= 2010 & vehicleType == "Truck (18t)"][
+      , vehicleType := "Truck (40t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
+      , vehicleType := "Truck (18t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
+      , vehicleType := "Truck (26t)"],
+    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
+      , vehicleType := "Truck (40t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Truck (18t)"][
+      , vehicleType := "Truck (26t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Truck (18t)"][
+      , vehicleType := "Truck (40t)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
+      , vehicleType := "Motorcycle (>250cc)"],
+    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
+      , vehicleType := "Moped"],
+    FVdt[region == "USA" & year <= 2010 & vehicleType == "Motorcycle (>250cc)"][
+      , vehicleType := "Motorcycle (50-250cc)"],
+    FVdt[region == "USA" & year <= 2010 & vehicleType == "Motorcycle (>250cc)"][
+      , vehicleType := "Moped"]
   ))
 
   FVtarget <- ptab[level == "FV"]
   ## insert historical values
-  FVtarget[FVdt, sw := i.sw, on = c("region", "year", "vehicle_type", "technology")]
+  FVtarget[FVdt, sw := i.sw, on = c("region", "year", "vehicleType", "technology")]
   FVtarget[year <= 2010 & is.na(sw), sw := 0]
-  FVtarget[subsector_L3 == "HSR", sw := 1]
+  FVtarget[subsectorL1 == "HSR", sw := 1]
   tmps <- filldt(FVdt[grepl("_tmp_", technology)], 2010)[
     , `:=`(sw=1, level="FV", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## merge placeholder
   FVtarget <- rbind(FVtarget, tmps)
   FVtarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by=c("region", "vehicle_type", "technology")]
+           by=c("region", "vehicleType", "technology")]
 
   ## If all enties of a branch in the nested structure have zero sw, w/o the ifelse statement the following line would lead to NAs
   FVtarget[, sw := sw/max(sw),
-           by = c("region", "year", "vehicle_type")]
+           by = c("region", "year", "vehicleType")]
   nas <- FVtarget[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
@@ -101,29 +101,29 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   FVtarget[, c("level", "approx") := NULL]
 
   ## merge with incocost, this should be moved elsewhere in the future
-  FV_inco = FVdt[subsector_L1 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year <= 2020]
+  FV_inco = FVdt[subsectorL3 == "trn_pass_road_LDV_4W" & technology == "Liquids" & year <= 2020]
   FV_inco[, value := tot_price*(sw^(1/logit.exponent)-1)]
   FV_inco[, logit_type := "pinco_tot"]
-  FV_inco = FV_inco[,.(region,year,technology,vehicle_type,subsector_L1,subsector_L2,subsector_L3,sector,logit_type, value)]
+  FV_inco = FV_inco[,.(region,year,technology,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,logit_type, value)]
   ## add also values for 2015 and 2020 for Liquids, as the other technologies have them
   FV_inco = rbind(FV_inco, FV_inco[year == 2010][, year := 2015], FV_inco[year == 2010][, year := 2020])
   ## merge to the "normally calculated" pinco, and create the output at this level
-  incocost = merge(incocost, unique(FV_inco[,c("region", "vehicle_type")]), all = FALSE)
+  incocost = merge(incocost, unique(FV_inco[,c("region", "vehicleType")]), all = FALSE)
   FVtarget = rbind(FVtarget, FV_inco, incocost)
 
   ## merge size prefs
-  VSdt <- SWS$VS1_final_SW
+  VSdt <- SWS$VS3_final_SW
 
-  VStarget <- ptab[level == "VS1"]
+  VStarget <- ptab[level == "VS3"]
   VStarget[, technology := NULL]
   ## insert historical values
-  VStarget[VSdt, sw := i.sw, on=c("region", "year", "sector", "subsector_L1",
-                                  "subsector_L2", "subsector_L3", "vehicle_type")]
+  VStarget[VSdt, sw := i.sw, on=c("region", "year", "sector", "subsectorL3",
+                                  "subsectorL2", "subsectorL1", "vehicleType")]
   VStarget[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(VSdt[grepl("_tmp_", vehicle_type)], 2010)[
-    , `:=`(sw=1, level="VS1", approx="linear")]
+  tmps <- filldt(VSdt[grepl("_tmp_", vehicleType)], 2010)[
+    , `:=`(sw=1, level="VS3", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## add missing placeholders (HSR and rail)
   tmps <- unique(
@@ -136,24 +136,24 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   VStarget <- rbind(VStarget, tmps)
 
   VStarget[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by = c("region", "sector", "subsector_L1",
-                "subsector_L2", "subsector_L3", "vehicle_type")]
+           by = c("region", "sector", "subsectorL3",
+                "subsectorL2", "subsectorL1", "vehicleType")]
   VStarget[sw < 0, sw := 0]
   VStarget[, c("level", "approx") := NULL]
 
   ## merge L1 sws (4W vs 2W)
-  S1dt <- SWS$S1S2_final_SW
+  S1dt <- SWS$S3S2_final_SW
 
-  S1target <- ptab[level == "S1S2"]
-  S1target[, c("technology", "vehicle_type") := NULL]
+  S1target <- ptab[level == "S3S2"]
+  S1target[, c("technology", "vehicleType") := NULL]
   ## insert historical values
-  S1target[S1dt, sw := i.sw, on = c("region", "year", "sector", "subsector_L1",
-                                  "subsector_L2", "subsector_L3")]
+  S1target[S1dt, sw := i.sw, on = c("region", "year", "sector", "subsectorL3",
+                                  "subsectorL2", "subsectorL1")]
   S1target[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(S1dt[grepl("_tmp_", subsector_L1)], 2010)[
-    , `:=`(sw=1, level="S1S2", approx="linear")]
+  tmps <- filldt(S1dt[grepl("_tmp_", subsectorL3)], 2010)[
+    , `:=`(sw=1, level="S3S2", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   ## add missing placeholders (HSR and rail)
   tmps <- unique(
@@ -166,24 +166,24 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   S1target <- rbind(S1target, tmps)
 
   S1target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by=c("region", "sector", "subsector_L1",
-                "subsector_L2", "subsector_L3")]
+           by=c("region", "sector", "subsectorL3",
+                "subsectorL2", "subsectorL1")]
   S1target[sw < 0, sw := 0]
   S1target[, c("level", "approx") := NULL]
 
   ## merge L2 sws
-  S2dt <- SWS$S2S3_final_SW
+  S2dt <- SWS$S2S1_final_SW
 
-  S2target <- ptab[level == "S2S3"]
-  S2target[, c("technology", "vehicle_type", "subsector_L1") := NULL]
+  S2target <- ptab[level == "S2S1"]
+  S2target[, c("technology", "vehicleType", "subsectorL3") := NULL]
   ## insert historical values
   S2target[S2dt, sw := i.sw, on=c("region", "year", "sector",
-                                  "subsector_L2", "subsector_L3")]
+                                  "subsectorL2", "subsectorL1")]
   S2target[year <= 2010 & is.na(sw), sw := 0]
 
   ## merge placeholder
-  tmps <- filldt(S2dt[grepl("_tmp_", subsector_L2)], 2010)[
-    , `:=`(sw=1, level="S2S3", approx="linear")]
+  tmps <- filldt(S2dt[grepl("_tmp_", subsectorL2)], 2010)[
+    , `:=`(sw=1, level="S2S1", approx="linear")]
   tmps[, c("logit.exponent", "tot_price") := NULL]
   tmps <- unique(
     rbind(
@@ -196,22 +196,22 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
 
   S2target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
            by=c("region", "sector",
-                "subsector_L2", "subsector_L3")]
+                "subsectorL2", "subsectorL1")]
   S2target[sw < 0, sw := 0]
   S2target[, c("level", "approx") := NULL]
 
   ## merge L3 sws
-  S3dt <- SWS$S3S_final_SW
+  S3dt <- SWS$S1S_final_SW
 
-  S3target <- ptab[level == "S3S"]
-  S3target[, c("technology", "vehicle_type", "subsector_L1", "subsector_L2") := NULL]
+  S3target <- ptab[level == "S1S"]
+  S3target[, c("technology", "vehicleType", "subsectorL3", "subsectorL2") := NULL]
   ## insert historical values
-  S3target[S3dt, sw := i.sw, on=c("region", "year", "sector", "subsector_L3")]
+  S3target[S3dt, sw := i.sw, on=c("region", "year", "sector", "subsectorL1")]
   S3target[year <= 2010 & is.na(sw), sw := 0]
 
   ## no placeholder on S3
   S3target[, sw := ifelse(approx == "spline", na.spline(sw, x = year), na.approx(sw, x = year)),
-           by=c("region", "sector", "subsector_L3")]
+           by=c("region", "sector", "subsectorL1")]
   S3target[sw < 0, sw := 0]
   S3target[, c("level", "approx") := NULL]
 
@@ -225,7 +225,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   }
 
   S2target[, sw := sw/max(sw),
-           by = c("region", "year", "subsector_L3")]
+           by = c("region", "year", "subsectorL1")]
   nas <- S2target[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
@@ -233,7 +233,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   }
 
   S1target[, sw := sw/max(sw),
-           by = c("region", "year", "subsector_L2")]
+           by = c("region", "year", "subsectorL2")]
   nas <- S1target[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
@@ -241,7 +241,7 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   }
 
   VStarget[, sw := sw/max(sw),
-           by = c("region", "year", "subsector_L1")]
+           by = c("region", "year", "subsectorL3")]
   nas <- VStarget[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
@@ -267,7 +267,7 @@ NG,Liquids
 Hybrid Electric,Liquids")
     mimap <- fread(system.file("extdata", "mitigation-techmap.csv", package="edgeTransport"))
     mimap <- mimap[!FV_vehvar == "LDV|4W"]
-    FVtarget <- mimap[FVtarget, on="vehicle_type"]
+    FVtarget <- mimap[FVtarget, on="vehicleType"]
     FVtarget <- techmap[FVtarget, on="technology"]
     FVtarget[is.na(FV_techvar), FV_techvar := technology]
 
@@ -277,17 +277,17 @@ Hybrid Electric,Liquids")
     FVtarget[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
 
     ## remove L2 and L3 from mitab to avoid a join on these sectors
-    FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on = c("FV_vehvar", "FV_techvar", "regioncat")]
+    FVtarget <- mitab[level == "FV"][, c("subsectorL2", "subsectorL1") := NULL][FVtarget, on = c("FV_vehvar", "FV_techvar", "regioncat")]
 
     if(tech_scen== "PhOP"){
-      FVtarget_all = FVtarget[!(technology %in% c("Liquids","NG") & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & region %in% c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI"))]
+      FVtarget_all = FVtarget[!(technology %in% c("Liquids","NG") & subsectorL3 %in% c("trn_freight_road_tmp_subsectorL3", "Bus_tmp_subsectorL3") & region %in% c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI"))]
 
       FVtarget_all[, value := ifelse(
         is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
-        by=c("region", "vehicle_type", "technology")]
+        by=c("region", "vehicleType", "technology")]
 
       ## ICE trucks and buses
-      FVtarget_tb = FVtarget[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology %in% c("Liquids", "NG") & region %in% c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")]
+      FVtarget_tb = FVtarget[subsectorL3 %in% c("trn_freight_road_tmp_subsectorL3", "Bus_tmp_subsectorL3") & technology %in% c("Liquids", "NG") & region %in% c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI")]
       FVtarget_tb[, value := ifelse(year==2020,0.9*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2025,0.6*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2030,0.3*value[year==2015],value),by = c("region","technology")]
@@ -300,7 +300,7 @@ Hybrid Electric,Liquids")
 
       FVtarget[, value := ifelse(
         is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
-        by=c("region", "vehicle_type", "technology")]
+        by=c("region", "vehicleType", "technology")]
 
     }
 
@@ -308,7 +308,7 @@ Hybrid Electric,Liquids")
     cname_to_remove <- colnames(mitab)[!grepl("subsector_", colnames(mitab))]
     FVtarget[, (cname_to_remove) := NULL]
     FVtarget[logit_type == "sw", value := value/max(value),
-             by = c("region", "year", "vehicle_type")]
+             by = c("region", "year", "vehicleType")]
     nas <- FVtarget[logit_type != "pchar" & is.na(value)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in FV shareweight trends for %s scenario.", tech_scen))
@@ -319,14 +319,14 @@ Hybrid Electric,Liquids")
     #Allow for specific regions to be dealt with individually
     S2target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors
-    S2target <- mitab[level == "S2"][, subsector_L3 := NULL][
-      S2target, on=c("subsector_L2", "regioncat")]
+    S2target <- mitab[level == "S2"][, subsectorL1 := NULL][
+      S2target, on=c("subsectorL2", "regioncat")]
     S2target[year > 2020, sw := ifelse(
                  is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
-             by=c("region", "subsector_L2")]
+             by=c("region", "subsectorL2")]
     S2target[, (cname_to_remove) := NULL]
     S2target[, sw := sw/max(sw),
-             by = c("region", "year", "subsector_L3")]
+             by = c("region", "year", "subsectorL1")]
     nas <- S2target[is.na(sw)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in S2 shareweight trends for %s scenario.", tech_scen))
@@ -338,11 +338,11 @@ Hybrid Electric,Liquids")
     #Allow for specific regions to be dealt with individually
     S3target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors
-    S3target <- mitab[level == "S3"][, subsector_L2 := NULL][
-      S3target, on=c("subsector_L3", "regioncat")]
+    S3target <- mitab[level == "S3"][, subsectorL2 := NULL][
+      S3target, on=c("subsectorL1", "regioncat")]
     S3target[year > 2020, sw := ifelse(
                  is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
-             by=c("region", "subsector_L3")]
+             by=c("region", "subsectorL1")]
     S3target[, (cname_to_remove) := NULL]
     S3target[, sw := sw/max(sw),
              by = c("region", "year", "sector")]
@@ -361,10 +361,10 @@ Hybrid Electric,Liquids")
 
   ## The values of SWS have to be normalized again
   return(list(
-    S3S_final_pref=S3target,
-    S2S3_final_pref=S2target,
-    S1S2_final_pref=S1target,
-    VS1_final_pref=VStarget,
+    S1S_final_pref=S3target,
+    S2S1_final_pref=S2target,
+    S3S2_final_pref=S1target,
+    VS3_final_pref=VStarget,
     FV_final_pref=FVtarget
   ))
 }

@@ -1,4 +1,4 @@
-SSP_scenario,tech_scenario,level,FV_vehvar,FV_techvar,annual_improvement_rate ,start_year,end_year
+SSPscen,tech_scenario,level,FV_vehvar,FV_techvar,annual_improvement_rate ,start_year,end_year
 SSP2EU,ECEMF_HighEl_HighEff,FV,Aviation,Electric,1,2020,2050
 SSP2EU,ECEMF_HighEl_HighEff,FV,Aviation,Hydrogen,1,2020,2050
 SSP2EU,ECEMF_HighEl_HighEff,FV,Aviation,Liquids,0.8,2020,2050

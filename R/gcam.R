@@ -10,8 +10,8 @@
 
 
 toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = "GCAM"){
-  coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- sector <- subsector_L1 <- NULL
-  conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- vehicle_type <- NULL
+  coefficient <- `.` <- region <- supplysector <- tranSubsector <- minicam.energy.input <- stub.technology <- maxspeed <- sector <- subsectorL3 <- NULL
+  conv_pkm_MJ <- MJvkm <- loadFactor <- subsector <- technology <- addTimeValue <- time.value.multiplier <- vehicleType <- NULL
   GCAM_folder = file.path(input_folder, GCAM_dir)
 
   ## names of some regions show underscores that have to be substituted with blank spaces
@@ -74,17 +74,17 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
                                       vehfrom = "Large Car and SUV",
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
-                                      col2use = "vehicle_type")
+                                      col2use = "vehicleType")
   ## remove double category of buses and remove three wheelers
-  vehicle_intensity = vehicle_intensity[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
+  vehicle_intensity = vehicle_intensity[!vehicleType %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
   ## remove the Adv categories, Hybrid Liquids and LA_BEV
   vehicle_intensity = vehicle_intensity[!technology %in% c("Tech-Adv-Electric", "Adv-Electric", "Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid")]
-  vehicle_intensity[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
-  vehicle_intensity[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  vehicle_intensity[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicle_type := "Truck (18t)"]
-  vehicle_intensity[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
-  vehicle_intensity[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
-  vehicle_intensity=vehicle_intensity[,.(MJvkm = mean(MJvkm)), by = c("sector_fuel","region", "year", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2","subsector_L1")]
+  vehicle_intensity[vehicleType %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicleType := "Truck (0-3.5t)"]
+  vehicle_intensity[vehicleType %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicleType := "Truck (7.5t)"]
+  vehicle_intensity[vehicleType %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)"), vehicleType := "Truck (18t)"]
+  vehicle_intensity[vehicleType %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicleType := "Truck (26t)"]
+  vehicle_intensity[vehicleType %in% c("Truck (>32t)"), vehicleType := "Truck (40t)"]
+  vehicle_intensity=vehicle_intensity[,.(MJvkm = mean(MJvkm)), by = c("sector_fuel","region", "year", "vehicleType", "technology", "sector", "subsectorL1", "subsectorL2","subsectorL3")]
 
   #load factor
   load_factor = read.csv(file.path(GCAM_folder, "L254.StubTranTechLoadFactor.csv"), skip=4, header = T,stringsAsFactors = FALSE)
@@ -102,17 +102,17 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
                                       vehfrom = "Large Car and SUV",
                                       vehto = "Midsize Car",
                                       reg = c("EU-15","European Free Trade Association","Europe Non EU"),
-                                      col2use = "vehicle_type")
+                                      col2use = "vehicleType")
   ## remove double category of buses and remove three wheelers; substitute
-  load_factor = load_factor[!vehicle_type %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
+  load_factor = load_factor[!vehicleType %in% c("Heavy Bus", "Light Bus", "Three-Wheeler_tmp_vehicletype", "Truck")]
   ## add load factor for trucks
-  load_factor[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
-  load_factor[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  load_factor[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicle_type := "Truck (18t)"]
-  load_factor[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
-  load_factor[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
+  load_factor[vehicleType %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicleType := "Truck (0-3.5t)"]
+  load_factor[vehicleType %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicleType := "Truck (7.5t)"]
+  load_factor[vehicleType %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicleType := "Truck (18t)"]
+  load_factor[vehicleType %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicleType := "Truck (26t)"]
+  load_factor[vehicleType %in% c("Truck (>32t)"), vehicleType := "Truck (40t)"]
 
-  load_factor=load_factor[,.(loadFactor = mean(loadFactor)), by = c("region", "year", "vehicle_type", "technology", "sector", "subsector_L3", "subsector_L2","subsector_L1")]
+  load_factor=load_factor[,.(loadFactor = mean(loadFactor)), by = c("region", "year", "vehicleType", "technology", "sector", "subsectorL1", "subsectorL2","subsectorL3")]
 
   #calculate MJ/km conversion factor
   conv_pkm_mj = merge(vehicle_intensity,load_factor, all = TRUE)
@@ -139,36 +139,36 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
 
   tech_output = distribute_logit(tech_output,colname = "subsector",extracol = "supplysector")
   ## merge 2wheelers and 3 wheelers and different categories of buses; remove NG motorbikes and merge BEV and LA-BEV
-  tech_output[vehicle_type %in% c("Heavy Bus", "Light Bus"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Bus_tmp_vehicletype", "Bus_tmp_subsector_L1", "Bus", "trn_pass_road", "trn_pass")]
-  tech_output[vehicle_type %in% c("Three-Wheeler_tmp_vehicletype", "Scooter"), c("vehicle_type","subsector_L1", "subsector_L2", "subsector_L3", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W", "trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
-  tech_output[vehicle_type == "Multipurpose Vehicle", vehicle_type := "Subcompact Car"]
+  tech_output[vehicleType %in% c("Heavy Bus", "Light Bus"), c("vehicleType","subsectorL3", "subsectorL2", "subsectorL1", "sector") := list("Bus_tmp_vehicletype", "Bus_tmp_subsectorL3", "Bus", "trn_pass_road", "trn_pass")]
+  tech_output[vehicleType %in% c("Three-Wheeler_tmp_vehicletype", "Scooter"), c("vehicleType","subsectorL3", "subsectorL2", "subsectorL1", "sector") := list("Motorcycle (50-250cc)", "trn_pass_road_LDV_2W", "trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
+  tech_output[vehicleType == "Multipurpose Vehicle", vehicleType := "Subcompact Car"]
   tech_output[technology == "LA-BEV", technology := "BEV"]
   tech_output[technology %in% c("Tech-Adv-Electric", "Adv-Electric"), technology := "Electric"]
   tech_output[technology %in% c("Hybrid Liquids", "Tech-Adv-Liquid", "Adv-Liquid"), technology := "Liquids"]
-  tech_output = tech_output[technology == "NG" & subsector_L1 == "trn_pass_road_LDV_2W", technology := "Liquids"]
+  tech_output = tech_output[technology == "NG" & subsectorL3 == "trn_pass_road_LDV_2W", technology := "Liquids"]
 
   ## merge the truck categories
-  tech_output[vehicle_type %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicle_type := "Truck (0-3.5t)"]
-  tech_output[vehicle_type %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicle_type := "Truck (7.5t)"]
-  tech_output[vehicle_type %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicle_type := "Truck (18t)"]
-  tech_output[vehicle_type %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicle_type := "Truck (26t)"]
-  tech_output[vehicle_type %in% c("Truck (>32t)"), vehicle_type := "Truck (40t)"]
-  tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type","technology","year")]
+  tech_output[vehicleType %in% c("3W Rural", "Truck (0-1t)", "Truck (0-3.5t)", "Truck (0-4.5t)", "Truck (0-2t)", "Truck (0-6t)", "Truck (2-5t)", "Truck (0-2.7t)", "Truck (2.7-4.5t)"), vehicleType := "Truck (0-3.5t)"]
+  tech_output[vehicleType %in% c("Truck (4.5-12t)", "Truck (6-14t)", "Truck (5-9t)", "Truck (6-15t)", "Truck (4.5-15t)", "Truck (1-6t)"), vehicleType := "Truck (7.5t)"]
+  tech_output[vehicleType %in% c("Truck (>12t)", "Truck (6-30t)", "Truck (9-16t)","Truck (>14t)", "Truck"), vehicleType := "Truck (18t)"]
+  tech_output[vehicleType %in% c("Truck (>15t)", "Truck (3.5-16t)", "Truck (16-32t)"), vehicleType := "Truck (26t)"]
+  tech_output[vehicleType %in% c("Truck (>32t)"), vehicleType := "Truck (40t)"]
+  tech_output = tech_output[,.(tech_output = sum(tech_output)), by = c("region","sector","subsectorL1", "subsectorL2", "subsectorL3", "vehicleType","technology","year")]
 
   ## the category "truck > 14t" in China does most likely contain also heavy trucks
   ## otherwise there are none
   tech_output <- rbindlist(list(
     tech_output,
-    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
-                `:=`(tech_output=tech_output/4, vehicle_type="Truck (26t)")],
-    tech_output[region == "China" & vehicle_type == "Truck (18t)"][,
-                `:=`(tech_output=tech_output/4, vehicle_type="Truck (40t)")],
-    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
-                `:=`(tech_output=tech_output/3, vehicle_type="Truck (26t)")],
-    tech_output[region == "USA" & vehicle_type == "Truck (18t)"][,
-                `:=`(tech_output=tech_output/3, vehicle_type="Truck (40t)")]))
-  tech_output[region == "China" & vehicle_type == "Truck (18t)", tech_output := tech_output/2]
-  tech_output[region == "USA" & vehicle_type == "Truck (18t)", tech_output := tech_output/3]
+    tech_output[region == "China" & vehicleType == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicleType="Truck (26t)")],
+    tech_output[region == "China" & vehicleType == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/4, vehicleType="Truck (40t)")],
+    tech_output[region == "USA" & vehicleType == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicleType="Truck (26t)")],
+    tech_output[region == "USA" & vehicleType == "Truck (18t)"][,
+                `:=`(tech_output=tech_output/3, vehicleType="Truck (40t)")]))
+  tech_output[region == "China" & vehicleType == "Truck (18t)", tech_output := tech_output/2]
+  tech_output[region == "USA" & vehicleType == "Truck (18t)", tech_output := tech_output/3]
 
   tech_output = rename_region(tech_output)
 
@@ -208,7 +208,7 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
   speed[supplysector == "trn_pass_road_LDV_2W" & speed != 1, speed := speed * 0.75]
 
   ## rename category following EDGE-T structure
-  speed[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsector_L1"]
+  speed[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsectorL3"]
   ## VOT
   vott_all = fread(file.path(GCAM_folder, "A54.tranSubsector_VOTT.csv"), skip = 1)
   vott_all[supplysector == "trn_pass_road_LDV_4W", addTimeValue := 1]
@@ -224,14 +224,14 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
   vott_all = vott_all[,.(time.value.multiplier=time.value.multiplier/PPP_MER,region,tranSubsector,supplysector)] #rescale the time value multiplier so that it is in PPP basis and not MER
   vott_all = rename_region(vott_all)
   ## rename category following EDGE-T structure
-  vott_all[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsector_L1"]
+  vott_all[supplysector == "trn_pass_road_bus", supplysector := "trn_pass_road_bus_tmp_subsectorL3"]
 
   ## to ISO
   tech_output_iso = disaggregate_dt(
     tech_output, GCAM2ISO_MAPPING,
     fewcol = "region", manycol = "iso", valuecol = "tech_output",
-    datacols=c("sector", "subsector_L1", "subsector_L2",
-               "subsector_L3", "vehicle_type", "technology"),
+    datacols=c("sector", "subsectorL3", "subsectorL2",
+               "subsectorL1", "vehicleType", "technology"),
     weights = GDP_country, weightcol = "weight"
   )
 
@@ -270,8 +270,8 @@ toolGCAMraw <- function(input_folder, GCAM2ISO_MAPPING, GDP_country, GCAM_dir = 
 toolVOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_folder,
                                 logitexp_dir="GCAM_logit_exponents") {
   value <- `.` <- time_price <- GDP_cap <- time.value.multiplier <- tranSubsector <- supplysector <-
-    weight <- subsector_L1 <- subsector_L2 <- speed <- iso <- subsector_L3 <- technology <-
-      vehicle_type <- NULL
+    weight <- subsectorL3 <- subsectorL2 <- speed <- iso <- subsectorL1 <- technology <-
+      vehicleType <- NULL
   exp_folder = function(fname) {
     file.path(input_folder, logitexp_dir, fname)
   }
@@ -281,10 +281,10 @@ toolVOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_f
   GDP_POP_cap = GDP_POP[,GDP_cap := weight/value]
 
   logit_exponent_FV = fread(exp_folder("FV_logitexponent.csv"))
-  logit_exponent_VS1 = fread(exp_folder("VS1_logitexponent.csv"))
-  logit_exponent_S1S2 = fread(exp_folder("S1S2_logitexponent.csv"))
-  logit_exponent_S2S3 = fread(exp_folder("S2S3_logitexponent.csv"))
-  logit_exponent_S3S = fread(exp_folder("S3S_logitexponent.csv"))
+  logit_exponent_VS3 = fread(exp_folder("VS3_logitexponent.csv"))
+  logit_exponent_S3S2 = fread(exp_folder("S3S2_logitexponent.csv"))
+  logit_exponent_S2S1 = fread(exp_folder("S2S1_logitexponent.csv"))
+  logit_exponent_S1S = fread(exp_folder("S1S_logitexponent.csv"))
 
   ## load VOT factors, speed and load factor
   vott_all = copy(GCAM_data[["vott_all"]])
@@ -306,47 +306,47 @@ toolVOTandExponents <- function(GCAM_data, GDP_MER_country, POP_country, input_f
   ## FV
 
   value_of_time_LDV = value_of_time[supplysector %in% c("trn_pass_road_LDV_2W", "trn_pass_road_LDV_4W"),
-                                    .(vehicle_type = tranSubsector, subsector_L1 = supplysector, iso, year, time_price)]
+                                    .(vehicleType = tranSubsector, subsectorL3 = supplysector, iso, year, time_price)]
 
   value_time_FV = value_of_time_LDV[!is.na(time_price),]
 
-  ## VS1
+  ## VS3
 
-  value_time_VS1 = data.table(subsector_L1 = character(), vehicle_type = character(), iso = character(), year = numeric(), time_price = numeric())
+  value_time_VS3 = data.table(subsectorL3 = character(), vehicleType = character(), iso = character(), year = numeric(), time_price = numeric())
 
-  ## S1S2
+  ## S3S2
 
-  value_time_S1S2 = data.table(subsector_L2 = character(), subsector_L1 = character(), iso = character(), year = numeric(), time_price = numeric())
+  value_time_S3S2 = data.table(subsectorL2 = character(), subsectorL3 = character(), iso = character(), year = numeric(), time_price = numeric())
 
-  ## S2S3
+  ## S2S1
 
-  value_time_S2S3 = value_of_time[tranSubsector == "Bus",
-                                 .(subsector_L3 = supplysector, subsector_L2 = tranSubsector, iso, year, time_price)]
+  value_time_S2S1 = value_of_time[tranSubsector == "Bus",
+                                 .(subsectorL1 = supplysector, subsectorL2 = tranSubsector, iso, year, time_price)]
 
-  ## S3S
+  ## S1S
 
-  value_time_S3S = value_of_time[tranSubsector %in% c("International Aviation", "Passenger Rail", "Domestic Aviation", "HSR"),
-                                 .(sector=supplysector, subsector_L3 = tranSubsector, iso, year, time_price)]
+  value_time_S1S = value_of_time[tranSubsector %in% c("International Aviation", "Passenger Rail", "Domestic Aviation", "HSR"),
+                                 .(sector=supplysector, subsectorL1 = tranSubsector, iso, year, time_price)]
 
   price_nonmot = value_of_time[tranSubsector %in% c("Cycle", "Walk"),
-                              .(sector = supplysector, subsector_L3 = tranSubsector, iso, year, tot_price = time_price)]
+                              .(sector = supplysector, subsectorL1 = tranSubsector, iso, year, tot_price = time_price)]
 
-  price_nonmot[, subsector_L2 := paste0(subsector_L3, "_tmp_subsector_L2")]
-  price_nonmot[, subsector_L1 := paste0(subsector_L3, "_tmp_subsector_L1")]
-  price_nonmot[, vehicle_type := paste0(subsector_L3, "_tmp_vehicletype")]
-  price_nonmot[, technology := paste0(subsector_L3, "_tmp_technology")]
+  price_nonmot[, subsectorL2 := paste0(subsectorL1, "_tmp_subsectorL2")]
+  price_nonmot[, subsectorL3 := paste0(subsectorL1, "_tmp_subsectorL3")]
+  price_nonmot[, vehicleType := paste0(subsectorL1, "_tmp_vehicletype")]
+  price_nonmot[, technology := paste0(subsectorL1, "_tmp_technology")]
 
   VOT_output = list(value_time_FV = value_time_FV,
-                    value_time_VS1 = value_time_VS1,
-                    value_time_S1S2 = value_time_S1S2,
-                    value_time_S2S3 = value_time_S2S3,
-                    value_time_S3S = value_time_S3S)
+                    value_time_VS3 = value_time_VS3,
+                    value_time_S3S2 = value_time_S3S2,
+                    value_time_S2S1 = value_time_S2S1,
+                    value_time_S1S = value_time_S1S)
 
   logit_output = list(logit_exponent_FV = logit_exponent_FV,
-                      logit_exponent_VS1 = logit_exponent_VS1,
-                      logit_exponent_S1S2 = logit_exponent_S1S2,
-                      logit_exponent_S2S3 = logit_exponent_S2S3,
-                      logit_exponent_S3S = logit_exponent_S3S)
+                      logit_exponent_VS3 = logit_exponent_VS3,
+                      logit_exponent_S3S2 = logit_exponent_S3S2,
+                      logit_exponent_S2S1 = logit_exponent_S2S1,
+                      logit_exponent_S1S = logit_exponent_S1S)
 
   result = list(VOT_output = VOT_output,
                 logit_output = logit_output,

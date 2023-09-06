@@ -54,4 +54,17 @@ toolLoadmrtransportData <- function() {
                                                regionmapping = "regionmapping_21_EU11.csv", subtype = "valueOfTimeMultiplier")
   valueOfTimeMultiplier <- magpie2dt(speedOfModesMagpieobj)
 
+  return(
+    list(histESdemand = histESdemand,
+         loadFactor = loadFactor,
+         CAPEXtrackedFleet = CAPEXtrackedFleet,
+         nonFuelOPEXtrackedFleet,
+         CAPEXother = CAPEXother,
+         nonFuelOPEXother = nonFuelOPEXother,
+         annualMileage = annualMileage,
+         speedOfModesother = speedOfModesother,
+         valueOfTimeMultiplier = valueOfTimeMultiplier
+         )
+  )
+
 }

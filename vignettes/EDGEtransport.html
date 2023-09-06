@@ -58,12 +58,12 @@
 <h2>Usage</h2>
 <p>The package can be installed from github…</p>
 <p>Data can be generated as follows:</p>
-<p><code>generateEDGEdata(input_folder, output_folder, SSP_scen = &quot;SSP2&quot;, techscen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)</code></p>
+<p><code>generateEDGEdata(input_folder, output_folder, SSP_scen = &quot;SSP2&quot;, transportPolScen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)</code></p>
 <p>Where:</p>
 <p><code>input_folder</code> character string containing the path to the input data folder</p>
 <p><code>output_folder</code> character string containing the path where output data are saved</p>
 <p><code>SSP_scen</code> character string containing the selected SSP scenario. Options are: <code>SDP</code>, <code>SSP1</code>, <code>SSP2</code>, <code>SSP2-Ariadne</code>, <code>SSP2_LowEn</code>, <code>SSP5</code>. By default, <code>SSP2</code> is selected</p>
-<p><code>techscen</code> character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP “coherent” technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.</p>
+<p><code>transportPolScen</code> character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP “coherent” technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.</p>
 <p><code>IEAbal</code> use mrremind generated data: in case of a REMIND preprocessing run, load population. Product of: <code>calcOutput(&quot;IO&quot;, subtype = &quot;IEA_output&quot;, aggregate = TRUE)</code></p>
 <p><code>GDP_country</code> use mrremind generated data: in case of a REMIND preprocessing run, load GDP. Product of: <code>calcOutput(&quot;GDPppp&quot;, aggregate =F)</code></p>
 <p><code>RatioPPP2MER_country use</code> mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP. Product of: <code>calcOutput(&quot;RatioPPP2MER&quot;, aggregate =F)</code></p>

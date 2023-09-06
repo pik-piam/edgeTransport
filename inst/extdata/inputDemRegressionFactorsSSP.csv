@@ -1,4 +1,4 @@
-SSP_scenario,var,gdp_cap,target
+SSPscen,var,gdp_cap,target
 SSP1,income_elasticity_pass_sm,10000,0.8
 SSP1,income_elasticity_pass_sm,20000,0.75
 SSP1,income_elasticity_pass_sm,30000,0.5

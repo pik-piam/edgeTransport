@@ -3,15 +3,15 @@
 #'
 #' @param input_path the path to the folder containing the input (csv-) files
 #' @param data_path the path to the output folder
-#' @param SSP_scenario the SSP dimension, usually this refers to the GDP scenario in REMIND
+#' @param SSPscen the SSP dimension, usually this refers to the GDP scenario in REMIND
 #' @param DEM_scenario the demand scenario.
 #' @param EDGE_scenario the EDGE-T scenario dimension
 #' @import data.table
 #' @export
 
-toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDGE_scenario) {
+toolCreateRDS <- function(input_path, data_path, SSPscen, DEM_scenario, EDGE_scenario) {
 
-  SSPscen <- EDGEscen <- vehicle_type <- DEMscen <- NULL
+  SSPscen <- EDGEscen <- vehicleType <- DEMscen <- NULL
 
   print("Loading csv data from input folder and creating RDS files...")
   dir.create(file.path(data_path), showWarnings = FALSE)
@@ -21,10 +21,10 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDG
     tmp <- fread(
       paste0(input_path, pattern, ".cs4r"),
       col.names = names_dt, skip="gdp_"
-    )[SSPscen == SSP_scenario & DEMscen == DEM_scenario & EDGEscen == EDGE_scenario][
+    )[SSPscen == SSPscen & DEMscen == DEM_scenario & EDGEscen == EDGE_scenario][
       , -c("SSPscen", "DEMscen", "EDGEscen")]
-    if (any(names(tmp) == 'vehicle_type')) {
-      tmp[,vehicle_type := gsub("DOT", ".", vehicle_type)]
+    if (any(names(tmp) == 'vehicleType')) {
+      tmp[,vehicleType := gsub("DOT", ".", vehicleType)]
     }
 
     tmp_list <- split(tmp,tmp$entry)
@@ -49,27 +49,27 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDG
           filename = "pref",
           input_path = input_path,
           names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
-                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
                        "technology", "logit_type", "entry", "value"))
 
   csv2RDS(pattern = "logit_exponent",
           filename = "logit_exp",
           input_path = input_path,
-          names_dt = c("SSPscen", "DEMscen", "EDGEscen", "sector", "subsector_L3",
-                       "subsector_L2", "subsector_L1", "vehicle_type", "entry", "logit.exponent"))
+          names_dt = c("SSPscen", "DEMscen", "EDGEscen", "sector", "subsectorL1",
+                       "subsectorL2", "subsectorL3", "vehicleType", "entry", "logit.exponent"))
 
   csv2RDS(pattern = "value_time",
           filename = "VOT_iso",
           input_path = input_path,
           names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
-                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
                        "entry", "time_price"))
 
   csv2RDS(pattern = "price_nonmot",
           filename = "price_nonmot",
           input_path = input_path,
           names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
-                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
                        "technology", "entry", "tot_price"))
 
   ## create RDS files for single dataframes
@@ -77,25 +77,25 @@ toolCreateRDS <- function(input_path, data_path, SSP_scenario, DEM_scenario, EDG
           filename = "harmonized_intensities",
           input_path = input_path,
           names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "sector",
-                       "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type",
+                       "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
                        "technology", "entry", "sector_fuel", "EJ_Mpkm_final"))
 
   csv2RDS(pattern = "UCD_NEC_iso",
           filename = "UCD_NEC_iso",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicleType",
                        "technology", "price_component", "entry", "non_fuel_price"))
 
   csv2RDS(pattern = "loadFactor",
           filename = "loadFactor",
           input_path = input_path,
-          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+          names_dt = c("year", "region", "SSPscen", "DEMscen", "EDGEscen", "vehicleType",
                        "entry", "loadFactor"))
 
   csv2RDS(pattern = "annual_mileage",
           filename = "annual_mileage",
           input_path = input_path,
-          names_dt = c("year", "region","SSPscen", "DEMscen", "EDGEscen", "vehicle_type",
+          names_dt = c("year", "region","SSPscen", "DEMscen", "EDGEscen", "vehicleType",
                        "entry", "annual_mileage"))
 
   csv2RDS(pattern = "ptab4W",
@@ -128,27 +128,27 @@ toolLoadInputData <- function(data_path) {
   loadFactor <- readRDS(datapathForFile("loadFactor.RDS"))
   ptab4W <- readRDS(datapathForFile("ptab4W.RDS"))
 
-  ## FIXME: hotfix to make the (empty) vot_data$value_time_VS1 and vot_data$value_time_S1S2 with the right column types. Probably there is another way to do that, did not look for it.
-  vot_data$value_time_VS1$region = as.character(vot_data$value_time_VS1$region)
-  vot_data$value_time_VS1$subsector_L1 = as.character(vot_data$value_time_VS1$subsector_L1)
-  vot_data$value_time_VS1$vehicle_type = as.character(vot_data$value_time_VS1$vehicle_type)
-  vot_data$value_time_VS1$year = as.numeric(vot_data$value_time_VS1$year)
-  vot_data$value_time_VS1$time_price = as.numeric(vot_data$value_time_VS1$time_price)
+  ## FIXME: hotfix to make the (empty) vot_data$value_time_VS3 and vot_data$value_time_S3S2 with the right column types. Probably there is another way to do that, did not look for it.
+  vot_data$value_time_VS3$region = as.character(vot_data$value_time_VS3$region)
+  vot_data$value_time_VS3$subsectorL3 = as.character(vot_data$value_time_VS3$subsectorL3)
+  vot_data$value_time_VS3$vehicleType = as.character(vot_data$value_time_VS3$vehicleType)
+  vot_data$value_time_VS3$year = as.numeric(vot_data$value_time_VS3$year)
+  vot_data$value_time_VS3$time_price = as.numeric(vot_data$value_time_VS3$time_price)
 
-  vot_data$value_time_S1S2$region = as.character(vot_data$value_time_S1S2$region)
-  vot_data$value_time_S1S2$subsector_L1 = as.character(vot_data$value_time_S1S2$subsector_L1)
-  vot_data$value_time_S1S2$subsector_L2 = as.character(vot_data$value_time_S1S2$subsector_L2)
-  vot_data$value_time_S1S2$year = as.numeric(vot_data$value_time_S1S2$year)
-  vot_data$value_time_S1S2$time_price = as.numeric(vot_data$value_time_S1S2$time_price)
+  vot_data$value_time_S3S2$region = as.character(vot_data$value_time_S3S2$region)
+  vot_data$value_time_S3S2$subsectorL3 = as.character(vot_data$value_time_S3S2$subsectorL3)
+  vot_data$value_time_S3S2$subsectorL2 = as.character(vot_data$value_time_S3S2$subsectorL2)
+  vot_data$value_time_S3S2$year = as.numeric(vot_data$value_time_S3S2$year)
+  vot_data$value_time_S3S2$time_price = as.numeric(vot_data$value_time_S3S2$time_price)
 
   ## change structure of preferences
-  pref_data$VS1_final_pref = dcast(pref_data$VS1_final_pref, region + year + vehicle_type + subsector_L1 + subsector_L2 + subsector_L3 + sector ~ logit_type, value.var = "value")
-  pref_data$S1S2_final_pref = dcast(pref_data$S1S2_final_pref, region + year + subsector_L1 + subsector_L2 + subsector_L3 + sector ~ logit_type, value.var = "value")
-  pref_data$S2S3_final_pref = dcast(pref_data$S2S3_final_pref, region + year + subsector_L2 + subsector_L3 + sector ~ logit_type, value.var = "value")
-  pref_data$S3S_final_pref = dcast(pref_data$S3S_final_pref, region + year + subsector_L3 + sector ~ logit_type, value.var = "value")
+  pref_data$VS3_final_pref = dcast(pref_data$VS3_final_pref, region + year + vehicleType + subsectorL3 + subsectorL2 + subsectorL1 + sector ~ logit_type, value.var = "value")
+  pref_data$S3S2_final_pref = dcast(pref_data$S3S2_final_pref, region + year + subsectorL3 + subsectorL2 + subsectorL1 + sector ~ logit_type, value.var = "value")
+  pref_data$S2S1_final_pref = dcast(pref_data$S2S1_final_pref, region + year + subsectorL2 + subsectorL1 + sector ~ logit_type, value.var = "value")
+  pref_data$S1S_final_pref = dcast(pref_data$S1S_final_pref, region + year + subsectorL1 + sector ~ logit_type, value.var = "value")
 
   ## refill structure of non fuel prices and split between purchase and total costs
-  UCD_costs = merge(UCD_costs, unique(pref_data$FV_final_pref[, c("region", "year", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector")]), by = c("region", "year", "vehicle_type"))
+  UCD_costs = merge(UCD_costs, unique(pref_data$FV_final_pref[, c("region", "year", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector")]), by = c("region", "year", "vehicleType"))
   nonfuel_costs = UCD_costs[price_component == "totalNE_cost"][, price_component := NULL]
   capcost4W = UCD_costs[price_component == "Capital_costs_purchase"]
 

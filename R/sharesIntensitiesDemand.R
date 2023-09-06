@@ -17,46 +17,46 @@ toolSharesIntensityDemand <- function(logit_shares,
                                       demand_input=NULL) {
 
     ## variable masks for code checking facility
-    `.` <- share <- region <- sector <- subsector_L3 <- subsector_L2 <- subsector_L1 <- NULL
-    demand_L2 <- demand_L1 <- demand_L3 <- vehicle_type <- demand_V <- demand_EJ <- demand_F <- NULL
+    `.` <- share <- region <- sector <- subsectorL1 <- subsectorL2 <- subsectorL3 <- NULL
+    demand_L2 <- demand_L1 <- demand_L3 <- vehicleType <- demand_V <- demand_EJ <- demand_F <- NULL
     technology <- MJ_km <- demand_EJel <- demand_EJliq <- MJ_kmel <- MJ_kmliq <- NULL
     variable <- CES_node <- Value_demand <- value <- CES_parent <- fuel <- NULL
     ## load the shares at each level
-    S3S_shares <- logit_shares[["S3S_shares"]]
-    S2S3_shares <- logit_shares[["S2S3_shares"]]
-    S1S2_shares <- logit_shares[["S1S2_shares"]]
-    VS1_shares <- logit_shares[["VS1_shares"]]
+    S1S_shares <- logit_shares[["S1S_shares"]]
+    S2S1_shares <- logit_shares[["S2S1_shares"]]
+    S3S2_shares <- logit_shares[["S3S2_shares"]]
+    VS3_shares <- logit_shares[["VS3_shares"]]
     FV_shares <- logit_shares[["FV_shares"]]
 
     ## create a normalized total demand OR loads absolute demand if given
     if (is.null(demand_input)) {
-        demand=CJ(region=unique(S3S_shares$region),
-                  sector=unique(S3S_shares$sector),
-                  year=unique(S3S_shares$year))
+        demand=CJ(region=unique(S1S_shares$region),
+                  sector=unique(S1S_shares$sector),
+                  year=unique(S1S_shares$year))
         demand[,demand:=1]
     }else {
         demand=demand_input
     }
     ## calculate demand in million pkm for each level
     #S->S3
-    demand = merge(demand, S3S_shares, all.y = TRUE, by = c("region", "year", "sector"))
-    demand = demand[,.(demand_L3 = demand*share, region, year, sector, subsector_L3)]
+    demand = merge(demand, S1S_shares, all.y = TRUE, by = c("region", "year", "sector"))
+    demand = demand[,.(demand_L3 = demand*share, region, year, sector, subsectorL1)]
     #S3->S2
-    demand = merge(demand, S2S3_shares, all=TRUE, by = c("region", "year", "sector", "subsector_L3"))
-    demand = demand[,.(demand_L2 = demand_L3*share, region, sector, year, subsector_L3, subsector_L2)]
+    demand = merge(demand, S2S1_shares, all=TRUE, by = c("region", "year", "sector", "subsectorL1"))
+    demand = demand[,.(demand_L2 = demand_L3*share, region, sector, year, subsectorL1, subsectorL2)]
     #S2->S1
-    demand = merge(demand, S1S2_shares, all=TRUE, by = c("region", "year", "sector", "subsector_L3", "subsector_L2"))
-    demand = demand[,.(demand_L1 = demand_L2*share, region, sector, year, subsector_L3, subsector_L2, subsector_L1)]
+    demand = merge(demand, S3S2_shares, all=TRUE, by = c("region", "year", "sector", "subsectorL1", "subsectorL2"))
+    demand = demand[,.(demand_L1 = demand_L2*share, region, sector, year, subsectorL1, subsectorL2, subsectorL3)]
     #S1->V
-    demand = merge(demand, VS1_shares, all=TRUE, by = c("region", "year", "subsector_L1"))
-    demand = demand[,.(demand_V = demand_L1*share, region, sector, year, subsector_L3, subsector_L2, subsector_L1, vehicle_type)]
+    demand = merge(demand, VS3_shares, all=TRUE, by = c("region", "year", "subsectorL3"))
+    demand = demand[,.(demand_V = demand_L1*share, region, sector, year, subsectorL1, subsectorL2, subsectorL3, vehicleType)]
     #V->F
-    demand = merge(demand, FV_shares, all=TRUE, by = c("region", "year", "subsector_L1", "vehicle_type"))
-    demand = demand[,.(demand_F = demand_V*share, region, sector, year, subsector_L3, subsector_L2, subsector_L1, vehicle_type, technology)]
+    demand = merge(demand, FV_shares, all=TRUE, by = c("region", "year", "subsectorL3", "vehicleType"))
+    demand = demand[,.(demand_F = demand_V*share, region, sector, year, subsectorL1, subsectorL2, subsectorL3, vehicleType, technology)]
 
 
     ## put aside the non motorized modes
-    demandNM = demand[subsector_L3 %in% c("Cycle", "Walk")]
+    demandNM = demand[subsectorL1 %in% c("Cycle", "Walk")]
 
     ## treat hybrid electric vehicles. These vehicles are listed in ES demand tables but not in FE
     ## the reason is that we set technology = fuel, which can be used for all technologies except
@@ -78,16 +78,16 @@ toolSharesIntensityDemand <- function(logit_shares,
 
     ## Calculate demand in EJ
     ## merge the demand in pkm with the energy intensity
-    demandF = merge(demand, MJ_km_base, all=FALSE, by = c("region", "sector", "year", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology"))
+    demandF = merge(demand, MJ_km_base, all=FALSE, by = c("region", "sector", "year", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
 
     ## for the demand output we add non-motorized modes
     demandF_plot_pkm <- copy(unique(rbind(
         demandF, demandNM, use.names=T, fill=T)[, c("demand_F", "year","region", "sector",
-                                                    "subsector_L3", "subsector_L2","subsector_L1",
-                                                    "vehicle_type", "technology")]))
+                                                    "subsectorL1", "subsectorL2","subsectorL3",
+                                                    "vehicleType", "technology")]))
     demandF_plot_mjkm <- copy(demandF[, c("MJ_km", "year","region", "sector",
-                                    "subsector_L3", "subsector_L2","subsector_L1",
-                                    "vehicle_type", "technology", "fuel")])
+                                    "subsectorL1", "subsectorL2","subsectorL3",
+                                    "vehicleType", "technology", "fuel")])
 
     demandF[, demand_EJ:=demand_F # in Mpkm or Mtkm
             * 1e6 # in pkm or tkm
@@ -96,13 +96,13 @@ toolSharesIntensityDemand <- function(logit_shares,
             ]
 
     demandF_plot_EJ <- copy(demandF[, c("demand_EJ", "year","region", "sector",
-                                        "subsector_L3", "subsector_L2","subsector_L1",
-                                        "vehicle_type", "technology", "fuel")])
+                                        "subsectorL1", "subsectorL2","subsectorL3",
+                                        "vehicleType", "technology", "fuel")])
 
     EDGE2CESmap <- fread(system.file("extdata", "mapping_EDGECES.csv", package = "edgeTransport"))
     ## first I need to merge with a mapping that represents how the entries match to the CES
     demandF <- merge(demandF, EDGE2CESmap, all=TRUE,
-                    by = c("sector", "subsector_L2", "fuel"))
+                    by = c("sector", "subsectorL2", "fuel"))
     ## calculate both shares and average energy intensity
     demandF = demandF[,.(region, year, Value_demand = demand_EJ, demand_F, CES_node, sector)]
 

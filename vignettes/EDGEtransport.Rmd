@@ -20,7 +20,7 @@ The package can be installed from github...
 Data can be generated as follows:
 
 `
-generateEDGEdata(input_folder, output_folder, SSP_scen = "SSP2", techscen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)
+generateEDGEdata(input_folder, output_folder, SSP_scen = "SSP2", transportPolScen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)
 `
 
 Where:
@@ -31,7 +31,7 @@ Where:
 
 `SSP_scen` character string containing the selected SSP scenario. Options are: `SDP`, `SSP1`, `SSP2`, `SSP2-Ariadne`, `SSP2_LowEn`, `SSP5`. By default, `SSP2` is selected
 
-`techscen` character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP "coherent" technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.
+`transportPolScen` character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP "coherent" technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.
 
 `IEAbal` use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: `calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)`
 

@@ -20,8 +20,8 @@ toolMergePrices <- function(gdx, REMINDmapping, REMINDyears,
                          module="edge_esm", FE_Pricetab = NULL) {
   sector_fuel <- ttot <- value <- fuel_price <- fuel_price_pkm <- EJ_Mpkm_final <- non_fuel_price <-
     technology <- GDP_cap <- region <- `.` <- weight <- POP_val <- GDP <- `elect_td_trn` <- time <-
-      `Liquids-Electricity` <- `refined liquids enduse` <- vehicle_type <- subsector_L3 <-
-        subsector_L2 <- subsector_L1 <- sector <- tot_price <- value.x <- value.y <- NULL
+      `Liquids-Electricity` <- `refined liquids enduse` <- vehicleType <- subsectorL1 <-
+        subsectorL2 <- subsectorL3 <- sector <- tot_price <- value.x <- value.y <- NULL
     ## report prices from REMIND gdx in 2005$/GJ
 
     tdptwyr2dpgj <- 31.71  #TerraDollar per TWyear to Dollar per GJ
@@ -97,8 +97,8 @@ feh2t,H2 enduse
     ## merge the non energy prices, they are $/pkm
     tech_cost <- merge(tech_cost, nonfuel_costs,
                         by = c("region", "year", "technology",
-                               "vehicle_type", "subsector_L1",
-                               "subsector_L2", "subsector_L3","sector"),
+                               "vehicleType", "subsectorL3",
+                               "subsectorL2", "subsectorL1","sector"),
                         all.x = TRUE)
 
     ## calculate the total price

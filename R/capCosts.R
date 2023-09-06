@@ -17,56 +17,56 @@ toolCapCosts <-function(base_price, Fdemand_ES, stations,
                               REMINDyears,
                               scenario) {
 
-  teEs <- region <- variable <- value <- demand_EJ <- `.` <- subsector_L3 <- vehicle_type <- NULL
+  teEs <- region <- variable <- value <- demand_EJ <- `.` <- subsectorL1 <- vehicleType <- NULL
   vehicles_number <- annual_mileage <- load_factor <- demand <- technology <- cost_st_km <- NULL
-  subsector_L2 <- NULL
+  subsectorL2 <- NULL
 
   ## the non fuel price is to be calculated only for motorized entries
-  Fdemand_ES=Fdemand_ES[!subsector_L3 %in% c("Walk","Cycle"),]
-  base_price=base_price[!subsector_L3 %in% c("Walk","Cycle"),]
+  Fdemand_ES=Fdemand_ES[!subsectorL1 %in% c("Walk","Cycle"),]
+  base_price=base_price[!subsectorL1 %in% c("Walk","Cycle"),]
 
   ## remove O&M costs
   ## cars (from the UCD data)
   ## CAPEX share for liquids is approx. 40%
-  base_price[subsector_L2 == "trn_pass_road_LDV" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.4]
+  base_price[subsectorL2 == "trn_pass_road_LDV" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.4]
   ## CAPEX for el. cars is 70%
-  base_price[subsector_L2 == "trn_pass_road_LDV" & technology %in% c("BEV", "FCEV", "Hybrid Electric"), non_fuel_price := non_fuel_price*0.7]
+  base_price[subsectorL2 == "trn_pass_road_LDV" & technology %in% c("BEV", "FCEV", "Hybrid Electric"), non_fuel_price := non_fuel_price*0.7]
 
   ## trucks
   ## https://theicct.org/sites/default/files/publications/TCO-BETs-Europe-white-paper-v4-nov21.pdf
   ## p. 11: retail price = 150k for diesel, 500 - 200k for BEV
   ## p. 22: TCO 550 for diesel, TCO = 850 - 500k for BEV
   ## CAPEX share diesel = 27%, 60-40% for BEV -> 50%
-  base_price[subsector_L3 == "trn_freight_road" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.3]
-  base_price[subsector_L3 == "trn_freight_road" & technology %in% c("Electric", "FCEV"), non_fuel_price := non_fuel_price*0.5]
+  base_price[subsectorL1 == "trn_freight_road" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.3]
+  base_price[subsectorL1 == "trn_freight_road" & technology %in% c("Electric", "FCEV"), non_fuel_price := non_fuel_price*0.5]
 
   ## trains
   ## https://www.unescap.org/sites/default/files/1.%20Part%20A.%20Point%20to%20point%20railway%20traffic%20costing%20model.pdf
   ## O&M 80% for low traffic lines
   ## 50% for high traffic lines
   ## -> 60% O&M -> CAPEX share = 40%
-  base_price[subsector_L3 %in% c("Freight Rail", "Passenger Rail", "HSR"), non_fuel_price := non_fuel_price*0.4]
+  base_price[subsectorL1 %in% c("Freight Rail", "Passenger Rail", "HSR"), non_fuel_price := non_fuel_price*0.4]
 
   ## busses
   ## https://mdpi-res.com/d_attachment/wevj/wevj-11-00056/article_deploy/wevj-11-00056.pdf?version=1597829235
   ## for electric busses: veh + batt. = 25% of TCO
-  base_price[subsector_L2 == "Bus" & technology %in% c("Electric", "FCEV"), non_fuel_price := non_fuel_price*0.25]
+  base_price[subsectorL2 == "Bus" & technology %in% c("Electric", "FCEV"), non_fuel_price := non_fuel_price*0.25]
   ## -> diesel busses: 15% of TCO
-  base_price[subsector_L2 == "Bus" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.15]
+  base_price[subsectorL2 == "Bus" & technology %in% c("Liquids", "NG"), non_fuel_price := non_fuel_price*0.15]
 
   ## planes
   ## domestic (from UCD data)
   ## CAPEX share is approx 40%
-  base_price[subsector_L3 == "Domestic Aviation", non_fuel_price := non_fuel_price*0.4]
+  base_price[subsectorL1 == "Domestic Aviation", non_fuel_price := non_fuel_price*0.4]
 
   ## intl. (from UCD data)
   ## capex share is 50%
-  base_price[subsector_L3 == "International Aviation", non_fuel_price := non_fuel_price*0.5]
+  base_price[subsectorL1 == "International Aviation", non_fuel_price := non_fuel_price*0.5]
 
   ## ships
   ## CCS ships doi:10.1016/j.egypro.2014.11.285
   ## CAPEX ~ 30%
-  base_price[subsector_L3 %in% c("Domestic Ship", "International Ship"), non_fuel_price := non_fuel_price*0.3]
+  base_price[subsectorL1 %in% c("Domestic Ship", "International Ship"), non_fuel_price := non_fuel_price*0.3]
 
   capCostPerTech <- copy(base_price)
 

@@ -219,9 +219,9 @@ JRC_IDEES=JRC_IDEES[,.(value = sum(EJ)), by = .(region, year, flow)]
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 plotinconv = function(inco_tech, vt, reggroup){
-  cols2use=as.character(unique(inco_tech[subsector_L1 == "trn_pass_road_LDV_4W",logit_type]))
+  cols2use=as.character(unique(inco_tech[subsectorL3 == "trn_pass_road_LDV_4W",logit_type]))
   p=ggplot()+
-    geom_bar(data = inco_tech[subsector_L1 == "trn_pass_road_LDV_4W" & vehicle_type == vt & year<=maxyear & year>=2010 & region %in% reggroup], aes(x = as.character(year), y = value, group = logit_type, fill = logit_type), position = position_stack(), stat = "identity")+
+    geom_bar(data = inco_tech[subsectorL3 == "trn_pass_road_LDV_4W" & vehicleType == vt & year<=maxyear & year>=2010 & region %in% reggroup], aes(x = as.character(year), y = value, group = logit_type, fill = logit_type), position = position_stack(), stat = "identity")+
     facet_grid(region~technology, scales = "free")+
     theme_minimal()+
     expand_limits(y = c(0,0.8))+
@@ -250,28 +250,28 @@ plots
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 demandEJplotf = function(demandEJ, POP){
   ## EDGE results
-  demandEJ <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandEJ <- demandEJ[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
   ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
-  demandEJ[, aggr_mode := ifelse(subsector_L2 == "trn_pass_road_LDV", "LDV", NA)]
-  demandEJ[, aggr_mode := ifelse(subsector_L3 %in% c("Passenger Rail", "HSR", "International Aviation", "Domestic Aviation"), "Pass non LDV", aggr_mode)]
-  demandEJ[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "Bus"), "Pass non LDV", aggr_mode)]
+  demandEJ[, aggr_mode := ifelse(subsectorL2 == "trn_pass_road_LDV", "LDV", NA)]
+  demandEJ[, aggr_mode := ifelse(subsectorL1 %in% c("Passenger Rail", "HSR", "International Aviation", "Domestic Aviation"), "Pass non LDV", aggr_mode)]
+  demandEJ[, aggr_mode := ifelse(subsectorL2 %in% c("trn_pass_road_bus", "Bus"), "Pass non LDV", aggr_mode)]
   demandEJ[, aggr_mode := ifelse(is.na(aggr_mode), "Freight", aggr_mode)]
-  demandEJ[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|3W Rural", vehicle_type), "Large Cars", NA)]
-  demandEJ[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
-  demandEJ[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
-  demandEJ[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
-  demandEJ[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV", "Truck", veh)]
-  demandEJ[, veh := ifelse(grepl("Freight Rail_tmp_vehicletype", vehicle_type), "Freight Rail", veh)]
-  demandEJ[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "International Ship", "International Shipping", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "Domestic Aviation", subsector_L3, veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "International Aviation", subsector_L3, veh)]
-  demandEJ[, veh := ifelse(is.na(veh), vehicle_type, veh)]
+  demandEJ[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|3W Rural", vehicleType), "Large Cars", NA)]
+  demandEJ[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicleType), "Small Cars", veh)]
+  demandEJ[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicleType), "Motorbikes", veh)]
+  demandEJ[, veh := ifelse(grepl("bus|Bus", vehicleType), "Bus", veh)]
+  demandEJ[, veh := ifelse(grepl("Truck", vehicleType) & vehicleType != "Light Truck and SUV", "Truck", veh)]
+  demandEJ[, veh := ifelse(grepl("Freight Rail_tmp_vehicletype", vehicleType), "Freight Rail", veh)]
+  demandEJ[, veh := ifelse(grepl("Passenger Rail|HSR", vehicleType), "Passenger Rail", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "International Ship", "International Shipping", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "Domestic Aviation", subsectorL1, veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "International Aviation", subsectorL1, veh)]
+  demandEJ[, veh := ifelse(is.na(veh), vehicleType, veh)]
   demandEJ = demandEJ[,.(demand_EJ, region, year, aggr_mode, veh)]
 
-  demandEJ[, vehicle_type_plot := factor(veh, levels = c("LDV","Freight Rail", "Truck","Domestic Shipping", "International Shipping",
+  demandEJ[, vehicleType_plot := factor(veh, levels = c("LDV","Freight Rail", "Truck","Domestic Shipping", "International Shipping",
                                                          "Motorbikes", "Small Cars", "Large Cars", "Van",
                                                          "Domestic Aviation", "International Aviation", "Bus", "Passenger Rail",
                                                          "Freight", "Freight (Inland)", "Pass non LDV", "Pass non LDV (Domestic)"))]
@@ -280,18 +280,18 @@ demandEJplotf = function(demandEJ, POP){
                   "Motorbikes", "Small Cars", "Large Cars", "Van",
                   "International Aviation", "Domestic Aviation","Bus", "Passenger Rail",
                   "Freight", "LDV", "Pass non LDV", "Freight (Inland)", "Pass non LDV (Domestic)")
-  demandEJ = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(region, year, vehicle_type_plot, aggr_mode)]
+  demandEJ = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(region, year, vehicleType_plot, aggr_mode)]
 
-  demandEJglob = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "World"]
+  demandEJglob = demandEJ[,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicleType_plot, aggr_mode)][, region:= "World"]
 
-  demandEJEU = demandEJ[region %in% EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "EUR"]
+  demandEJEU = demandEJ[region %in% EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicleType_plot, aggr_mode)][, region:= "EUR"]
 
-  demandEJNEU = demandEJ[region %in% non_EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "NEU"]
+  demandEJNEU = demandEJ[region %in% non_EU_regions,.(demand_EJ = sum(demand_EJ)), by = .(year, vehicleType_plot, aggr_mode)][, region:= "NEU"]
 
   demandEJ = rbind(demandEJglob,demandEJ,demandEJEU,demandEJNEU)
   ## calculate per capita demand
   demandEJcap = merge(demandEJ , POP, all.x = TRUE, by =c("year", "region"))
-  demandEJcapglob = demandEJcap[,.(demand_EJ = sum(demand_EJ), value = sum(value)), by = .(year, vehicle_type_plot, aggr_mode)][, region:= "World"]
+  demandEJcapglob = demandEJcap[,.(demand_EJ = sum(demand_EJ), value = sum(value)), by = .(year, vehicleType_plot, aggr_mode)][, region:= "World"]
 
   demandEJcap = rbind(demandEJcap, demandEJcapglob)
 
@@ -302,9 +302,9 @@ demandEJplotf = function(demandEJ, POP){
                 value*          ## in million km
                 1e-6]          ## in people/millionpeople=GJ/person
 
-  cols2use=as.character(unique(demandEJ[aggr_mode %in% c("LDV", "Pass non LDV"),vehicle_type_plot]))
+  cols2use=as.character(unique(demandEJ[aggr_mode %in% c("LDV", "Pass non LDV"),vehicleType_plot]))
   ppass=ggplot()+
-    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("LDV", "Pass non LDV") & region %in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("LDV", "Pass non LDV") & region %in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Passenger final Energy demand [EJ]")+
     theme_minimal()+
@@ -318,7 +318,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
   ppass1=ggplot()+
-    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("LDV", "Pass non LDV") & !region %in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("LDV", "Pass non LDV") & !region %in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Passenger final Energy demand [EJ]")+
     theme_minimal()+
@@ -331,9 +331,9 @@ demandEJplotf = function(demandEJ, POP){
           legend.title = element_text(size =9),
           strip.text = element_text(size=9))
 
-  cols2use=as.character(unique(demandEJ[aggr_mode %in% c("Freight"),vehicle_type_plot]))
+  cols2use=as.character(unique(demandEJ[aggr_mode %in% c("Freight"),vehicleType_plot]))
   pfreight=ggplot()+
-    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight")&region%in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight")&region%in% EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Freight final Energy demand [EJ]")+
     theme_minimal()+
@@ -347,7 +347,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
     pfreight1=ggplot()+
-    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight") & !region%in%EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJ[year > 2005 & year <= maxyear  & aggr_mode %in% c("Freight") & !region%in%EU_regions], aes(x=year, y=demand_EJ, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Freight final Energy demand [EJ]")+
     theme_minimal()+
@@ -361,9 +361,9 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
 
-  cols2use=as.character(unique(demandEJcap[, vehicle_type_plot]))
+  cols2use=as.character(unique(demandEJcap[, vehicleType_plot]))
   pcap1=ggplot()+
-    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Final Energy demand [GJ/cap]")+
     theme_minimal()+
@@ -377,7 +377,7 @@ demandEJplotf = function(demandEJ, POP){
           strip.text = element_text(size=9))
 
     pcap2=ggplot()+
-    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% non_EU_regions], aes(x=year, y=cap_dem, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color = "black", position= position_stack())+
+    geom_area(data = demandEJcap[year > 2005 & year <= maxyear  & region %in% non_EU_regions], aes(x=year, y=cap_dem, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color = "black", position= position_stack())+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Final Energy demand [GJ/cap]")+
     theme_minimal()+
@@ -406,61 +406,61 @@ demEJ
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 ratioENplotf = function(demandEJ, demandkm){
   ## EDGE results
-  demandEJ <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandEJ <- demandEJ[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
   ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
-  demandEJ[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|3W Rural|Subcompact|Compact|Mini", vehicle_type), "LDV", NA)]
-  demandEJ[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "LDV", veh)]
-  demandEJ[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
-  demandEJ[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV", "Truck", veh)]
-  demandEJ[, veh := ifelse(grepl("Freight Rail_tmp_vehicletype", vehicle_type), "Freight Rail", veh)]
-  demandEJ[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "International Ship", "International Shipping", veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "Domestic Aviation", subsector_L3, veh)]
-  demandEJ[, veh := ifelse(subsector_L3 == "International Aviation", subsector_L3, veh)]
-  demandEJ[, veh := ifelse(is.na(veh), vehicle_type, veh)]
+  demandEJ[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|3W Rural|Subcompact|Compact|Mini", vehicleType), "LDV", NA)]
+  demandEJ[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicleType), "LDV", veh)]
+  demandEJ[, veh := ifelse(grepl("bus|Bus", vehicleType), "Bus", veh)]
+  demandEJ[, veh := ifelse(grepl("Truck", vehicleType) & vehicleType != "Light Truck and SUV", "Truck", veh)]
+  demandEJ[, veh := ifelse(grepl("Freight Rail_tmp_vehicletype", vehicleType), "Freight Rail", veh)]
+  demandEJ[, veh := ifelse(grepl("Passenger Rail|HSR", vehicleType), "Passenger Rail", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "International Ship", "International Shipping", veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "Domestic Aviation", subsectorL1, veh)]
+  demandEJ[, veh := ifelse(subsectorL1 == "International Aviation", subsectorL1, veh)]
+  demandEJ[, veh := ifelse(is.na(veh), vehicleType, veh)]
   demandEJ = demandEJ[,.(demand_EJ, region, year, veh)]
   demandEJ= demandEJ[,.(demand_EJ = sum(demand_EJ)), by = c("region", "year", "veh")]
 
-  demandEJ[, vehicle_type_plot := factor(veh, levels = c("LDV","Freight Rail", "Truck","Domestic Shipping", "International Shipping",
+  demandEJ[, vehicleType_plot := factor(veh, levels = c("LDV","Freight Rail", "Truck","Domestic Shipping", "International Shipping",
                                                          "Motorbikes", "Small Cars", "Large Cars", "Van",
                                                          "Domestic Aviation", "International Aviation", "Bus", "Passenger Rail",
                                                          "Freight", "Freight (Inland)", "Pass non LDV", "Pass non LDV (Domestic)"))]
 
 
-  demandkm<- demandkm[,c("sector","subsector_L3","subsector_L2",
-                         "subsector_L1","vehicle_type","technology", "region","year","demand_F")]
+  demandkm<- demandkm[,c("sector","subsectorL1","subsectorL2",
+                         "subsectorL3","vehicleType","technology", "region","year","demand_F")]
   demandkm[,demand_F:=demand_F   ## in millionkm
            *1e-6                      ## in trillion km
            ]
   ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
-  demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
-  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV|Subcompact|Compact|Mini", vehicle_type), "LDV", veh)]
-  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "LDV", veh)]
-  demandkm[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Aviation", "Domestic Aviation", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "International Aviation", "International Aviation", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "International Ship", "International Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Truck", vehicleType) & vehicleType != "Light Truck and SUV" | vehicleType == "3W Rural", "Truck", NA)]
+  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV|Subcompact|Compact|Mini", vehicleType), "LDV", veh)]
+  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicleType), "LDV", veh)]
+  demandkm[, veh := ifelse(grepl("bus|Bus", vehicleType), "Bus", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Aviation", "Domestic Aviation", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "International Aviation", "International Aviation", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "International Ship", "International Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Freight Rail", vehicleType), "Freight Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicleType), "Passenger Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Ship", vehicleType), "Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsectorL1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year","veh")]
-  setnames(demandkm, old = "veh", new = "vehicle_type")
-  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type")]
+  setnames(demandkm, old = "veh", new = "vehicleType")
+  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "vehicleType")]
 
-  demandkm[, vehicle_type_plot := factor(vehicle_type, levels = c("LDV","Truck",
+  demandkm[, vehicleType_plot := factor(vehicleType, levels = c("LDV","Truck",
                                                                   "Freight Rail",
                                                                   "Motorbikes", "Small Cars", "Large Cars", "Van",
                                                                   "Domestic Aviation", "International Aviation","Bus", "Passenger Rail",
                                                                   "Freight", "Non motorized", "Shipping"))]
 
 
-  demandkm[, mode := ifelse(vehicle_type %in% c("Freight", "Freight Rail", "Truck", "Shipping"),"freight", "pass")]
+  demandkm[, mode := ifelse(vehicleType %in% c("Freight", "Freight Rail", "Truck", "Shipping"),"freight", "pass")]
 
-  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type_plot")]
+  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicleType_plot")]
 
 
   legend_ord <- c("Freight Rail", "Truck", "International Shipping","Domestic Shipping",
@@ -469,16 +469,16 @@ ratioENplotf = function(demandEJ, demandkm){
                   "Freight", "LDV", "Pass non LDV", "Freight (Inland)", "Pass non LDV (Domestic)")
 
   ## calculate the ratio
-  demandEN = merge(demandEJ , demandkm, all.x = TRUE, by =c("year", "region","vehicle_type_plot"))
+  demandEN = merge(demandEJ , demandkm, all.x = TRUE, by =c("year", "region","vehicleType_plot"))
   demandEN[, ENint := demand_EJ*        ## in EJ
                       277777777777.78  ## in kWh
                       /(demand_F*      ## in trillionkm
                         1e12)]          ## in pkm or tkm
-demandEN = demandEN[vehicle_type_plot %in% c("LDV", "Bus", "Passenger Rail")]
-  cols2use = as.character(unique(demandEN[,vehicle_type_plot]))
+demandEN = demandEN[vehicleType_plot %in% c("LDV", "Bus", "Passenger Rail")]
+  cols2use = as.character(unique(demandEN[,vehicleType_plot]))
 
   ppass=ggplot()+
-    geom_line(data = demandEN[year > 2005 & year <= maxyear &  region %in% EU_regions], aes(x=year, y=ENint, group = vehicle_type_plot, color = vehicle_type_plot))+
+    geom_line(data = demandEN[year > 2005 & year <= maxyear &  region %in% EU_regions], aes(x=year, y=ENint, group = vehicleType_plot, color = vehicleType_plot))+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Passenger energy intensity [kwh/pkm]")+
     theme_minimal()+
@@ -492,7 +492,7 @@ demandEN = demandEN[vehicle_type_plot %in% c("LDV", "Bus", "Passenger Rail")]
           strip.text = element_text(size=9))
 
   ppass1=ggplot()+
-    geom_line(data = demandEN[year > 2005 & year <= maxyear & !region %in% EU_regions], aes(x=year, y=ENint, group = vehicle_type_plot, color = vehicle_type_plot))+
+    geom_line(data = demandEN[year > 2005 & year <= maxyear & !region %in% EU_regions], aes(x=year, y=ENint, group = vehicleType_plot, color = vehicleType_plot))+
     facet_wrap(~region, nrow = 4, scales = "free")+
     labs(x = "", y = "Passenger energy intensity [kwh/pkm]")+
     theme_minimal()+
@@ -517,9 +517,9 @@ ratioENplotf(demand_ej, demand_km)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 demandBunkNoBunkplotf = function(demandEJ, POP){
   ## EDGE results
-  demandBnB <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandBnB <- demandEJ[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
-  demandBnB[, aggr_mode := ifelse(subsector_L3 %in% c("International Aviation", "International Shipping"), "bunkers", "Non bunkers")]
+  demandBnB[, aggr_mode := ifelse(subsectorL1 %in% c("International Aviation", "International Shipping"), "bunkers", "Non bunkers")]
   demandBnB = demandBnB[,.(demand_EJ, region, year, aggr_mode)]
 
   demandBnB[, aggr_mode := factor(aggr_mode, levels = c("Non bunkers", "bunkers"))]
@@ -582,8 +582,8 @@ demEJ
 ## demand EJ for LDV, divided by fuel type
 
 demandEJLDVplotf <- function(demandEJ){
-  demandEJ = demandEJ[subsector_L1 == "trn_pass_road_LDV_4W",]
-  demandEJ <- demandEJ[, c("sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandEJ = demandEJ[subsectorL3 == "trn_pass_road_LDV_4W",]
+  demandEJ <- demandEJ[, c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
   demandEJ[technology == "Hybrid Liquids", technology := "Liquids"]
   demandEJ[technology == "FCEV", technology := "Hydrogen"]
@@ -626,8 +626,8 @@ demandEJLDVplotf(demand_ej)
 ## demand EJ for trucks, divided by fuel type
 
 demandEJTruckplotf <- function(demandEJ){
-  demandEJ = demandEJ[subsector_L3 == "trn_freight_road",]
-  demandEJ <- demandEJ[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandEJ = demandEJ[subsectorL1 == "trn_freight_road",]
+  demandEJ <- demandEJ[, c("sector", "subsectorL1", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
   demandEJ[technology == "Hybrid Liquids", technology := "Liquids"]
   demandEJ[technology == "FCEV", technology := "Hydrogen"]
@@ -671,8 +671,8 @@ demandEJTruckplotf(demand_ej)
 ## demand EJ for trucks, divided by fuel type
 
 demandEJBusplotf <- function(demandEJ){
-  demandEJ = demandEJ[subsector_L2 == "Bus",]
-  demandEJ <- demandEJ[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_EJ")]
+  demandEJ = demandEJ[subsectorL2 == "Bus",]
+  demandEJ <- demandEJ[, c("sector", "subsectorL1", "vehicleType", "technology", "region", "year", "demand_EJ")]
 
   demandEJ[technology == "Hybrid Liquids", technology := "Liquids"]
   demandEJ[technology == "FCEV", technology := "Hydrogen"]
@@ -717,8 +717,8 @@ demandEJBusplotf(demand_ej)
 ## demand EJ for trucks, divided by fuel type
 
 demandkmTruckplotf <- function(demandkm){
-  demandkm = demandkm[subsector_L3 == "trn_freight_road",]
-  demandkm <- demandkm[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_F")]
+  demandkm = demandkm[subsectorL1 == "trn_freight_road",]
+  demandkm <- demandkm[, c("sector", "subsectorL1", "vehicleType", "technology", "region", "year", "demand_F")]
 
   demandkm[technology == "Hybrid Liquids", technology := "Liquids"]
   demandkm[technology == "FCEV", technology := "Hydrogen"]
@@ -763,8 +763,8 @@ demandkmTruckplotf(demand_km)
 ## demand EJ for trucks, divided by fuel type
 
 demandkmBusplotf <- function(demandkm){
-  demandkm = demandkm[vehicle_type == "Bus_tmp_vehicletype",]
-  demandkm <- demandkm[, c("sector", "subsector_L3", "vehicle_type", "technology", "region", "year", "demand_F")]
+  demandkm = demandkm[vehicleType == "Bus_tmp_vehicletype",]
+  demandkm <- demandkm[, c("sector", "subsectorL1", "vehicleType", "technology", "region", "year", "demand_F")]
 
   demandkm[technology == "Hybrid Liquids", technology := "Liquids"]
   demandkm[technology == "FCEV", technology := "Hydrogen"]
@@ -814,15 +814,15 @@ demandkmBusplotf(demand_km)
 demandEJ_IEAcomp <- function(demandEJ, IEA, demEJ_TRACCS, JRC_IDEES){
   demandEJ[, flow := ifelse(sector == "trn_aviation_intl", "AVBUNK", NA)]
   demandEJ[, flow := ifelse(sector == "trn_shipping_intl", "MARBUNK", flow)]
-  demandEJ[, flow := ifelse(grepl("LDV", subsector_L2), "ROAD LDV", flow)]
-  demandEJ[, flow := ifelse(grepl("Bus|freight_road", subsector_L2), "ROAD HDV", flow)]
-  demandEJ[, flow := ifelse(grepl("Rail|HSR", subsector_L3), "RAIL", flow)]
-  demandEJ[, flow := ifelse(grepl("Domestic Aviation", subsector_L3), "DOMESAIR", flow)]
-  demandEJ[, flow := ifelse(grepl("Domestic Ship", subsector_L3), "DOMESNAV", flow)]
+  demandEJ[, flow := ifelse(grepl("LDV", subsectorL2), "ROAD LDV", flow)]
+  demandEJ[, flow := ifelse(grepl("Bus|freight_road", subsectorL2), "ROAD HDV", flow)]
+  demandEJ[, flow := ifelse(grepl("Rail|HSR", subsectorL1), "RAIL", flow)]
+  demandEJ[, flow := ifelse(grepl("Domestic Aviation", subsectorL1), "DOMESAIR", flow)]
+  demandEJ[, flow := ifelse(grepl("Domestic Ship", subsectorL1), "DOMESNAV", flow)]
   demandEJ = demandEJ[,.(value = sum(demand_EJ)), by = c("region", "year", "flow")]
 
-  demEJ_TRACCS[, flow := ifelse(vehicle_type %in% c("Large Car and SUV","Compact Car",  "Subcompact Car", "Midsize Car"), "ROAD LDV", NA)]
-  demEJ_TRACCS[, flow := ifelse(!vehicle_type %in% c("Large Car and SUV","Compact Car",  "Subcompact Car", "Midsize Car"), "ROAD HDV", flow)]
+  demEJ_TRACCS[, flow := ifelse(vehicleType %in% c("Large Car and SUV","Compact Car",  "Subcompact Car", "Midsize Car"), "ROAD LDV", NA)]
+  demEJ_TRACCS[, flow := ifelse(!vehicleType %in% c("Large Car and SUV","Compact Car",  "Subcompact Car", "Midsize Car"), "ROAD HDV", flow)]
   demEJ_TRACCS = demEJ_TRACCS[,.(value = sum(EJ)), by = c("region", "year", "flow")]
 
   demEJ_TRACCS[, model := "TRACCS"]
@@ -1156,8 +1156,8 @@ plots$p9c3
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 bunk_EUplotf = function(bunk_EU, IEA){
-  bunk_EU[, flow := ifelse(vehicle_type == "International Aviation_tmp_vehicletype", "AVBUNK", NA)]
-  bunk_EU[, flow := ifelse(vehicle_type == "International Ship_tmp_vehicletype", "MARBUNK", flow)]
+  bunk_EU[, flow := ifelse(vehicleType == "International Aviation_tmp_vehicletype", "AVBUNK", NA)]
+  bunk_EU[, flow := ifelse(vehicleType == "International Ship_tmp_vehicletype", "MARBUNK", flow)]
   bunk_EU[, model := "EDGE-T"]
   bunk_EU[, value := MJ *    ## in MJ
                      1e-12]   ## in EJ
@@ -1188,10 +1188,10 @@ bunk_EUplotf(bunk_EU, IEA)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 shareAltTechplotf = function(demandkm){
   ## REMIND-EDGE results
-  demandkm<- demandkm[,c("subsector_L1","technology", "year","demand_F")]
-  demandkm = demandkm[subsector_L1 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsector_L1") & year >= 2005]
+  demandkm<- demandkm[,c("subsectorL3","technology", "year","demand_F")]
+  demandkm = demandkm[subsectorL3 %in% c("trn_pass_road_LDV_4W", "trn_freight_road_tmp_subsectorL3") & year >= 2005]
   demandkm[, aggr_mode := "LDV"]
-  demandkm[subsector_L1 == "trn_freight_road_tmp_subsector_L1", aggr_mode := "Truck"]
+  demandkm[subsectorL3 == "trn_freight_road_tmp_subsectorL3", aggr_mode := "Truck"]
   demandkm[, technology := ifelse(technology %in% c("BEV", "Electric", "FCEV", "Hybrid Electric"), "Alternative", "Conventional")]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("year", "aggr_mode", "technology")]
 
@@ -1225,51 +1225,51 @@ shareAltTechplotf(demand_km)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 demandkmplotf = function(demandkm, POP){
   ## REMIND-EDGE results
-  demandkm<- demandkm[,c("sector","subsector_L3","subsector_L2",
-                         "subsector_L1","vehicle_type","technology", "region","year","demand_F")]
+  demandkm<- demandkm[,c("sector","subsectorL1","subsectorL2",
+                         "subsectorL3","vehicleType","technology", "region","year","demand_F")]
   demandkm[,demand_F:=demand_F   ## in millionkm
            *1e-6                      ## in trillion km
            ]
   ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
-  demandkm[, aggr_mode := ifelse(subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
+  demandkm[, aggr_mode := ifelse(subsectorL3 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_freight", "trn_shipping_intl"), "Freight", aggr_mode)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_aviation_intl"), "Pass. non LDV", aggr_mode)]
-  demandkm[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "HSR_tmp_subsector_L2", "Passenger Rail_tmp_subsector_L2", "Cycle_tmp_subsector_L2", "Walk_tmp_subsector_L2", "Domestic Aviation_tmp_subsector_L2", "Bus") | subsector_L1 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
+  demandkm[, aggr_mode := ifelse(subsectorL2 %in% c("trn_pass_road_bus", "HSR_tmp_subsectorL2", "Passenger Rail_tmp_subsectorL2", "Cycle_tmp_subsectorL2", "Walk_tmp_subsectorL2", "Domestic Aviation_tmp_subsectorL2", "Bus") | subsectorL3 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
 
-  demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
-  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicle_type), "Large Cars", veh)]
-  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
-  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
-  demandkm[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Aviation", "Domestic Aviation", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "International Aviation", "International Aviation", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "International Ship", "International Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Truck", vehicleType) & vehicleType != "Light Truck and SUV" | vehicleType == "3W Rural", "Truck", NA)]
+  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicleType), "Large Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicleType), "Small Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicleType), "Motorbikes", veh)]
+  demandkm[, veh := ifelse(grepl("bus|Bus", vehicleType), "Bus", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Aviation", "Domestic Aviation", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "International Aviation", "International Aviation", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "International Ship", "International Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Freight Rail", vehicleType), "Freight Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicleType), "Passenger Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Ship", vehicleType), "Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsectorL1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "veh")]
-  setnames(demandkm, old = "veh", new = "vehicle_type")
+  setnames(demandkm, old = "veh", new = "vehicleType")
 
-  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "vehicle_type")]
+  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "vehicleType")]
 
-  demandkm[, vehicle_type_plot := factor(vehicle_type, levels = c("LDV","Truck",
+  demandkm[, vehicleType_plot := factor(vehicleType, levels = c("LDV","Truck",
                                                                   "Freight Rail",
                                                                   "Motorbikes", "Small Cars", "Large Cars", "Van",
                                                                   "Domestic Aviation", "International Aviation","Bus", "Passenger Rail",
                                                                   "Freight", "Non motorized", "Shipping"))]
 
 
-  demandkm[, mode := ifelse(vehicle_type %in% c("Freight", "Freight Rail", "Truck", "Shipping"),"freight", "pass")]
+  demandkm[, mode := ifelse(vehicleType %in% c("Freight", "Freight Rail", "Truck", "Shipping"),"freight", "pass")]
 
-  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type_plot", "aggr_mode", "mode")]
-  demandkmglob = demandkm[,.(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicleType_plot", "aggr_mode", "mode")]
+  demandkmglob = demandkm[,.(demand_F = sum(demand_F)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region:= "World"]
 
 
-   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region := "EUR"]
+   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region := "EUR"]
 
-  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by =.(year, vehicle_type_plot, aggr_mode, mode)][, region := "NEU"]
+  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by =.(year, vehicleType_plot, aggr_mode, mode)][, region := "NEU"]
 
   demandkm = rbind(demandkm, demandkmEUR, demandkmnonEUR, demandkmglob)
 
@@ -1278,7 +1278,7 @@ demandkmplotf = function(demandkm, POP){
   POP = POP[, .(pop = sum(value)), by = c("region", "year")]
   demandkmcap = merge(demandkm[region!="World"], POP, all.x = TRUE, by =c("year", "region"))
 
-  demandkmcapglob = demandkmcap[,.(demand_F = sum(demand_F), pop = sum(pop)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+  demandkmcapglob = demandkmcap[,.(demand_F = sum(demand_F), pop = sum(pop)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region:= "World"]
 
   demandkmcap = rbind(demandkmcap, demandkmcapglob)
   ## calculate per capita values
@@ -1290,10 +1290,10 @@ demandkmplotf = function(demandkm, POP){
 
   demandkm = demandkm[order(aggr_mode)]
 
-  cols2use = unique(as.character(demandkm[mode =="pass", vehicle_type_plot]))
+  cols2use = unique(as.character(demandkm[mode =="pass", vehicleType_plot]))
 
   ptot_pass = ggplot()+
-    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -1301,17 +1301,17 @@ demandkmplotf = function(demandkm, POP){
     theme_plot
 
     ptot_pass2 = ggplot()+
-    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
 
-  cols2use = unique(as.character(demandkm[mode =="freight", vehicle_type_plot]))
+  cols2use = unique(as.character(demandkm[mode =="freight", vehicleType_plot]))
 
   ptot_freight = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -1319,17 +1319,17 @@ demandkmplotf = function(demandkm, POP){
     theme_plot
 
     ptot_freight1 = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
 
 
-    cols2use = unique(as.character(demandkm[mode =="freight", vehicle_type_plot]))
+    cols2use = unique(as.character(demandkm[mode =="freight", vehicleType_plot]))
 
   pcap_freight1 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1337,17 +1337,17 @@ demandkmplotf = function(demandkm, POP){
     theme_plot
 
     pcap_freight2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
     scale_x_continuous(breaks = c(2020,2030,2050, maxyear))+
     theme_plot
 
-    cols2use = unique(as.character(demandkm[mode =="pass", vehicle_type_plot]))
+    cols2use = unique(as.character(demandkm[mode =="pass", vehicleType_plot]))
 
   pcap_pass = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1355,7 +1355,7 @@ demandkmplotf = function(demandkm, POP){
     theme_plot
 
   pcap_pass2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1377,51 +1377,51 @@ demandkmplotf(demand_km, POP)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 demandkm_nobunk_plotf = function(demandkm, POP){
   ## REMIND-EDGE results
-  demandkm<- demandkm[,c("sector","subsector_L3","subsector_L2",
-                         "subsector_L1","vehicle_type","technology", "region","year","demand_F")]
+  demandkm<- demandkm[,c("sector","subsectorL1","subsectorL2",
+                         "subsectorL3","vehicleType","technology", "region","year","demand_F")]
   demandkm[,demand_F:=demand_F   ## in millionkm
            *1e-6                      ## in trillion km
            ]
 
   demandkm = demandkm[!sector %in% c("trn_shipping_intl", "trn_aviation_intl")]
   ## attribute aggregated mode and vehicle names for plotting purposes, and aggregate
-  demandkm[, aggr_mode := ifelse(subsector_L1 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
+  demandkm[, aggr_mode := ifelse(subsectorL3 %in% c("Three-Wheeler", "trn_pass_road_LDV_4W"), "LDV", NA)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_freight", "trn_shipping_intl"), "Freight", aggr_mode)]
   demandkm[, aggr_mode := ifelse(sector %in% c("trn_aviation_intl"), "Pass. non LDV", aggr_mode)]
-  demandkm[, aggr_mode := ifelse(subsector_L2 %in% c("trn_pass_road_bus", "HSR_tmp_subsector_L2", "Passenger Rail_tmp_subsector_L2", "Cycle_tmp_subsector_L2", "Walk_tmp_subsector_L2", "Domestic Aviation_tmp_subsector_L2", "Bus") | subsector_L1 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
+  demandkm[, aggr_mode := ifelse(subsectorL2 %in% c("trn_pass_road_bus", "HSR_tmp_subsectorL2", "Passenger Rail_tmp_subsectorL2", "Cycle_tmp_subsectorL2", "Walk_tmp_subsectorL2", "Domestic Aviation_tmp_subsectorL2", "Bus") | subsectorL3 %in% c("trn_pass_road_LDV_2W"), "Pass. non LDV", aggr_mode)]
 
-  demandkm[, veh := ifelse(grepl("Truck", vehicle_type) & vehicle_type != "Light Truck and SUV" | vehicle_type == "3W Rural", "Truck", NA)]
-  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicle_type), "Large Cars", veh)]
-  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicle_type), "Small Cars", veh)]
-  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicle_type), "Motorbikes", veh)]
-  demandkm[, veh := ifelse(grepl("bus|Bus", vehicle_type), "Bus", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Aviation", "Domestic Aviation", veh)]
-  demandkm[, veh := ifelse(subsector_L3 == "Domestic Ship", "Domestic Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Freight Rail", vehicle_type), "Freight Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicle_type), "Passenger Rail", veh)]
-  demandkm[, veh := ifelse(grepl("Ship", vehicle_type), "Dom. Shipping", veh)]
-  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsector_L3), "Non motorized", veh)]
+  demandkm[, veh := ifelse(grepl("Truck", vehicleType) & vehicleType != "Light Truck and SUV" | vehicleType == "3W Rural", "Truck", NA)]
+  demandkm[, veh := ifelse(grepl("Large|SUV|Midsize|Multipurpose Vehicle|Van|Light Truck and SUV", vehicleType), "Large Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Subcompact|Compact|Mini", vehicleType), "Small Cars", veh)]
+  demandkm[, veh := ifelse(grepl("Motorcycle|Moped|Scooter", vehicleType), "Motorbikes", veh)]
+  demandkm[, veh := ifelse(grepl("bus|Bus", vehicleType), "Bus", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Aviation", "Domestic Aviation", veh)]
+  demandkm[, veh := ifelse(subsectorL1 == "Domestic Ship", "Domestic Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Freight Rail", vehicleType), "Freight Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Passenger Rail|HSR", vehicleType), "Passenger Rail", veh)]
+  demandkm[, veh := ifelse(grepl("Ship", vehicleType), "Dom. Shipping", veh)]
+  demandkm[, veh := ifelse(grepl("Cycle|Walk", subsectorL1), "Non motorized", veh)]
   demandkm = demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "veh")]
-  setnames(demandkm, old = "veh", new = "vehicle_type")
+  setnames(demandkm, old = "veh", new = "vehicleType")
 
-  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "vehicle_type")]
+  demandkm= demandkm[,.(demand_F = sum(demand_F)), by = c("region", "year", "aggr_mode", "vehicleType")]
 
-  demandkm[, vehicle_type_plot := factor(vehicle_type, levels = c("LDV","Truck",
+  demandkm[, vehicleType_plot := factor(vehicleType, levels = c("LDV","Truck",
                                                                   "Freight Rail",
                                                                   "Motorbikes", "Small Cars", "Large Cars", "Van",
                                                                   "Domestic Aviation", "Bus", "Passenger Rail",
                                                                   "Freight", "Non motorized", "Dom. Shipping"))]
 
 
-  demandkm[, mode := ifelse(vehicle_type %in% c("Freight", "Freight Rail", "Truck", "Dom. Shipping"),"freight", "pass")]
+  demandkm[, mode := ifelse(vehicleType %in% c("Freight", "Freight Rail", "Truck", "Dom. Shipping"),"freight", "pass")]
 
-  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicle_type_plot", "aggr_mode", "mode")]
-  demandkmglob = demandkm[,.(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+  demandkm= demandkm[, .(demand_F = sum(demand_F)), by = c("region", "year", "vehicleType_plot", "aggr_mode", "mode")]
+  demandkmglob = demandkm[,.(demand_F = sum(demand_F)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region:= "World"]
 
 
-   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region := "EUR"]
+   demandkmEUR = demandkm[region %in% EU_regions, .(demand_F = sum(demand_F)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region := "EUR"]
 
-  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by =.(year, vehicle_type_plot, aggr_mode, mode)][, region := "NEU"]
+  demandkmnonEUR = demandkm[region %in% non_EU_regions, .(demand_F = sum(demand_F)), by =.(year, vehicleType_plot, aggr_mode, mode)][, region := "NEU"]
 
   demandkm = rbind(demandkm, demandkmEUR, demandkmnonEUR, demandkmglob)
 
@@ -1430,7 +1430,7 @@ demandkm_nobunk_plotf = function(demandkm, POP){
   POP = POP[, .(pop = sum(value)), by = c("region", "year")]
   demandkmcap = merge(demandkm[region!="World"], POP, all.x = TRUE, by =c("year", "region"))
 
-  demandkmcapglob = demandkmcap[,.(demand_F = sum(demand_F), pop = sum(pop)), by = .(year, vehicle_type_plot, aggr_mode, mode)][, region:= "World"]
+  demandkmcapglob = demandkmcap[,.(demand_F = sum(demand_F), pop = sum(pop)), by = .(year, vehicleType_plot, aggr_mode, mode)][, region:= "World"]
 
   demandkmcap = rbind(demandkmcap, demandkmcapglob)
   ## calculate per capita values
@@ -1442,10 +1442,10 @@ demandkm_nobunk_plotf = function(demandkm, POP){
 
   demandkm = demandkm[order(aggr_mode)]
 
-  cols2use = unique(as.character(demandkm[mode =="pass", vehicle_type_plot]))
+  cols2use = unique(as.character(demandkm[mode =="pass", vehicleType_plot]))
 
   ptot_pass = ggplot()+
-    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -1453,16 +1453,16 @@ demandkm_nobunk_plotf = function(demandkm, POP){
     theme_plot
 
   ptot_pass2 = ggplot()+
-    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="pass"& year > 1980 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion pkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
 
-  cols2use = unique(as.character(demandkm[mode =="freight", vehicle_type_plot]))
+  cols2use = unique(as.character(demandkm[mode =="freight", vehicleType_plot]))
   ptot_freight = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     theme_minimal()+
@@ -1470,14 +1470,14 @@ demandkm_nobunk_plotf = function(demandkm, POP){
     theme_plot
 
     ptot_freight1 = ggplot()+
-    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicle_type_plot,aggr_mode), fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkm[mode =="freight"& year > 2005 & year <= maxyear  & !region %in% EU_regions], aes(x=year, y=demand_F, group = interaction(vehicleType_plot,aggr_mode), fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [trillion tkm]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual(values = cols[match(cols2use, names(cols))])+
     theme_plot
 
   pcap_freight1 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(EU_regions, NEU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1485,16 +1485,16 @@ demandkm_nobunk_plotf = function(demandkm, POP){
     theme_plot
 
     pcap_freight2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "freight" & year >= 2005  & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [ktkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
     scale_x_continuous(breaks = c(2020,2030,2050, maxyear))+
     theme_plot
 
-  cols2use = unique(as.character(demandkm[mode =="pass", vehicle_type_plot]))
+  cols2use = unique(as.character(demandkm[mode =="pass", vehicleType_plot]))
   pcap_pass = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1502,7 +1502,7 @@ demandkm_nobunk_plotf = function(demandkm, POP){
     theme_plot
 
   pcap_pass2 = ggplot()+
-    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicle_type_plot, fill = vehicle_type_plot), color="black",position= position_stack())+
+    geom_area(data = demandkmcap[mode == "pass" & year >= 2005 & year <= maxyear & region %in% c(non_EU_regions)], aes(x=year, y=cap_dem/1000, group = vehicleType_plot, fill = vehicleType_plot), color="black",position= position_stack())+
     labs(x = "", y = "Energy Services demand [kpkm/cap]")+
     facet_wrap(~region, nrow = 4, scales = "free")+
     scale_fill_manual("Vehicle Type", values = cols[match(cols2use, names(cols))])+
@@ -1524,26 +1524,26 @@ demandkm_nobunk_plotf(demand_km, POP)
 # LDVs vintages
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-plotVintLDV = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage){
+plotVintLDV = function(vintcomp, newcomp, sharesVS3, loadFactor, annual_mileage){
   # browser()
-  vintcomp = vintcomp[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
-  newcomp = newcomp[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
-  allfleet = merge(newcomp, vintcomp, all =TRUE, by = c("region", "sector", "subsector_L1", "vehicle_type", "technology",  "year"))
+  vintcomp = vintcomp[,.(totdem, region, subsectorL3, year, technology,vehicleType, sector, sharetech_vint)]
+  newcomp = newcomp[,.(region, subsectorL3, year, technology,vehicleType, sector, sharetech_new)]
+  allfleet = merge(newcomp, vintcomp, all =TRUE, by = c("region", "sector", "subsectorL3", "vehicleType", "technology",  "year"))
   allfleet = allfleet[sector=="trn_pass"]
-  allfleet = merge(allfleet, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
-  allfleet[,vintdem:=totdem*sharetech_vint*shareVS1]
-  allfleet[,newdem:=totdem*sharetech_new*shareVS1]
-  allfleet=melt(allfleet, id.vars = c("region", "sector", "subsector_L1", "vehicle_type", "technology",
+  allfleet = merge(allfleet, sharesVS3[,.(shareVS3 = share, region, year, vehicleType, subsectorL3)], all.x=TRUE, by = c("region", "year", "vehicleType", "subsectorL3"))
+  allfleet[,vintdem:=totdem*sharetech_vint*shareVS3]
+  allfleet[,newdem:=totdem*sharetech_new*shareVS3]
+  allfleet=melt(allfleet, id.vars = c("region", "sector", "subsectorL3", "vehicleType", "technology",
                                       "year"), measure.vars = c("vintdem", "newdem"))
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
-  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
-  allfleet = merge(allfleet, annual_mileage, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
+  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsectorL3", "vehicleType", "technology"))
+  allfleet = merge(allfleet, annual_mileage, by = c("region", "year", "sector", "subsectorL3", "vehicleType", "technology"))
 
-   fleetcomp =allfleet[,.(value = sum(value/loadFactor/vkm.veh)), by = c("region", "year", "vehicle_type")]
+   fleetcomp =allfleet[,.(value = sum(value/loadFactor/vkm.veh)), by = c("region", "year", "vehicleType")]
   pfleetcomp = ggplot()+
   geom_line(data = fleetcomp[year < maxyear & region %in% EU_regions],
-  aes(x=as.character(year),y=value, group=vehicle_type,
-  color = vehicle_type))+
+  aes(x=as.character(year),y=value, group=vehicleType,
+  color = vehicleType))+
   facet_wrap(~region, scales = "free")+
   labs(y = "Fleet by vehicle type [million Veh]", x="")+
   theme_plot
@@ -1595,46 +1595,46 @@ plotVintLDV = function(vintcomp, newcomp, sharesVS1, loadFactor, annual_mileage)
 
   return(list(p1,p2, pfleetcomp))
   }
-p = plotVintLDV(vintcomp[subsector_L1 == "trn_pass_road_LDV_4W"], newcomp[subsector_L1 == "trn_pass_road_LDV_4W"], sharesVS1 = shares$VS1_shares, loadFactor, annual_mileage)
+p = plotVintLDV(vintcomp[subsectorL3 == "trn_pass_road_LDV_4W"], newcomp[subsectorL3 == "trn_pass_road_LDV_4W"], sharesVS3 = shares$VS3_shares, loadFactor, annual_mileage)
 p
 ```
 
 # Trucks and buses vintages
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
+plotVintTruckBus = function(vintcomp, newcomp, sharesVS3, loadFactor){
   vint = copy(vintcomp)
   new = copy(newcomp)
-  vint = vint[,.(totdem, region, subsector_L1, year, technology,vehicle_type, sector, sharetech_vint)]
-  new = new[,.(region, subsector_L1, year, technology,vehicle_type, sector, sharetech_new)]
-  allfleet = merge(new, vint, all =TRUE, by = c("region", "sector", "subsector_L1", "vehicle_type", "technology",  "year"))
-  allfleet = allfleet[subsector_L1%in%c("trn_freight_road_tmp_subsector_L1","Bus_tmp_subsector_L1")]
-  allfleet = merge(allfleet, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
-  allfleet[,vintdem:=totdem*sharetech_vint*shareVS1]
-  allfleet[,newdem:=totdem*sharetech_new*shareVS1]
-  allfleet=melt(allfleet, id.vars = c("region", "sector", "subsector_L1", "vehicle_type", "technology",
+  vint = vint[,.(totdem, region, subsectorL3, year, technology,vehicleType, sector, sharetech_vint)]
+  new = new[,.(region, subsectorL3, year, technology,vehicleType, sector, sharetech_new)]
+  allfleet = merge(new, vint, all =TRUE, by = c("region", "sector", "subsectorL3", "vehicleType", "technology",  "year"))
+  allfleet = allfleet[subsectorL3%in%c("trn_freight_road_tmp_subsectorL3","Bus_tmp_subsectorL3")]
+  allfleet = merge(allfleet, sharesVS3[,.(shareVS3 = share, region, year, vehicleType, subsectorL3)], all.x=TRUE, by = c("region", "year", "vehicleType", "subsectorL3"))
+  allfleet[,vintdem:=totdem*sharetech_vint*shareVS3]
+  allfleet[,newdem:=totdem*sharetech_new*shareVS3]
+  allfleet=melt(allfleet, id.vars = c("region", "sector", "subsectorL3", "vehicleType", "technology",
                                       "year"), measure.vars = c("vintdem", "newdem"))
   allfleet[,alpha:=ifelse(variable == "vintdem", 0, 1)]
-  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsector_L1", "vehicle_type", "technology"))
-  fleetcomp =allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "year", "vehicle_type")]
+  allfleet = merge(allfleet, loadFactor, by = c("region", "year", "sector", "subsectorL3", "vehicleType", "technology"))
+  fleetcomp =allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "year", "vehicleType")]
   pfleetcomp = ggplot()+
   geom_line(data = fleetcomp[year < maxyear & region %in% EU_regions],
-  aes(x=as.character(year),y=value, group=vehicle_type,
-  color = vehicle_type))+
+  aes(x=as.character(year),y=value, group=vehicleType,
+  color = vehicleType))+
   facet_wrap(~region, scales = "free")+
   labs(y = "Fleet by vehicle type [million Veh]", x="")+
   theme_plot
-  allfleet = allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "technology", "variable", "year", "subsector_L1")]
-  allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year", "subsector_L1")]
+  allfleet = allfleet[,.(value = sum(value/loadFactor/50000)), by = c("region", "technology", "variable", "year", "subsectorL3")]
+  allfleet = allfleet[,.(value = sum(value)), by = c("region", "technology", "variable", "year", "subsectorL3")]
   allfleet[,alphaval := ifelse(variable =="vintdem", 1,0)]
-  allfleet_glob = allfleet[,.(value = sum(value)), by = c("technology", "variable", "year", "alphaval", "subsector_L1")][, region:= "World"]
+  allfleet_glob = allfleet[,.(value = sum(value)), by = c("technology", "variable", "year", "alphaval", "subsectorL3")][, region:= "World"]
   allfleet = rbind(allfleet, allfleet_glob)
   cols2use = unique(as.character(allfleet[,technology]))
   p1_truck = ggplot()+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsectorL3 == "trn_freight_road_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsectorL3 == "trn_freight_road_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
   guides(fill = guide_legend(reverse=TRUE))+
@@ -1647,10 +1647,10 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
   labs(y = "Truck fleet [million Veh]", x="")+
     theme_plot
     p2_truck = ggplot()+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsectorL3 == "trn_freight_road_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "trn_freight_road_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsectorL3 == "trn_freight_road_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
   guides(fill = guide_legend(reverse=TRUE))+
@@ -1663,10 +1663,10 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
   labs(y = "Truck fleet [million Veh]", x="")+
   theme_plot
   p1_bus = ggplot()+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsector_L1 == "Bus_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions & subsectorL3 == "Bus_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsector_L1 == "Bus_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% EU_regions& subsectorL3 == "Bus_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
   guides(fill = guide_legend(reverse=TRUE))+
@@ -1679,10 +1679,10 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
   labs(y = "Bus fleet [million Veh]", x="")+
     theme_plot
   p2_bus = ggplot()+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "Bus_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsectorL3 == "Bus_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology), alpha = 0.5, position="stack", stat = "identity", width = 0.5)+
-  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsector_L1 == "Bus_tmp_subsector_L1"],
+  geom_bar(data = allfleet[year %in% c(2015, 2030, 2050, maxyear) & region %in% c(NEU_regions, non_EU_regions)& subsectorL3 == "Bus_tmp_subsectorL3"],
   aes(x=as.character(year),y=value, group=interaction(variable, technology),
   fill = technology, alpha = factor(alphaval)), position="stack", stat = "identity", width = 0.5, color = "black", size = 0.05)+
   guides(fill = guide_legend(reverse=TRUE))+
@@ -1696,25 +1696,25 @@ plotVintTruckBus = function(vintcomp, newcomp, sharesVS1, loadFactor){
   theme_plot
   return(list(p1_truck,p2_truck,p1_bus,p2_bus, pfleetcomp))
 }
-p = plotVintTruckBus(vintcomp, newcomp, sharesVS1 = shares$VS1_shares, loadFactor)
+p = plotVintTruckBus(vintcomp, newcomp, sharesVS3 = shares$VS3_shares, loadFactor)
 p
 ```
 
 # Sales LDVs
 
 ```{r, echo=FALSE, warning=FALSE}
-SalesFun = function(shares_LDV, newcomp, sharesVS1){
+SalesFun = function(shares_LDV, newcomp, sharesVS3){
   # browser()
   ## I need the total demand for each region to get the average composition in the region (sales are on a country level)
-  ## First I calculate the total demand for new sales using the shares on FV level (in newcomp) and on VS1 level
-  newcomp = merge(newcomp, sharesVS1[,.(shareVS1 = share, region, year, vehicle_type, subsector_L1)], all.x=TRUE, by = c("region", "year", "vehicle_type", "subsector_L1"))
-  newcomp[, newdem := totdem*sharetech_new*shareVS1]
-  newcomp = newcomp[,.(value = sum(newdem)), by = c("region", "year", "subsector_L1")]
+  ## First I calculate the total demand for new sales using the shares on FV level (in newcomp) and on VS3 level
+  newcomp = merge(newcomp, sharesVS3[,.(shareVS3 = share, region, year, vehicleType, subsectorL3)], all.x=TRUE, by = c("region", "year", "vehicleType", "subsectorL3"))
+  newcomp[, newdem := totdem*sharetech_new*shareVS3]
+  newcomp = newcomp[,.(value = sum(newdem)), by = c("region", "year", "subsectorL3")]
   ## I have to interpolate in time the sales nto to loose the sales composition annual values
   newcomp=approx_dt(dt=newcomp, unique(shares_LDV$year),
                     xcol= "year",
                     ycol = "value",
-                    idxcols=c("region","subsector_L1"),
+                    idxcols=c("region","subsectorL3"),
                     extrapolate=T)
   setnames(newcomp, new = "newdem", old = "value")
   ## I calculate the sales composition (disrespective to the vehicle type)
@@ -1738,7 +1738,7 @@ SalesFun = function(shares_LDV, newcomp, sharesVS1){
     labs(x = "", y = "[%]", title = "Market share of new LDV sales")
   return(plot)
 }
-SalesFun(annual_sale, newcomp[subsector_L1=="trn_pass_road_LDV_4W"], shares$VS1_shares[subsector_L1=="trn_pass_road_LDV_4W"])
+SalesFun(annual_sale, newcomp[subsectorL3=="trn_pass_road_LDV_4W"], shares$VS3_shares[subsectorL3=="trn_pass_road_LDV_4W"])
 ```
 
 
@@ -1747,9 +1747,9 @@ SalesFun(annual_sale, newcomp[subsector_L1=="trn_pass_road_LDV_4W"], shares$VS1_
 ```{r, echo=FALSE, warning=FALSE}
 
 plotEnInt = function(mj_km, vt){
-  cols2use = unique(as.character(mj_km[subsector_L1 == "trn_pass_road_LDV_4W" & vehicle_type == vt,technology]))
+  cols2use = unique(as.character(mj_km[subsectorL3 == "trn_pass_road_LDV_4W" & vehicleType == vt,technology]))
   p=ggplot()+
-    geom_line(data = mj_km[subsector_L1 == "trn_pass_road_LDV_4W" & vehicle_type == vt & year<=maxyear & year>=2010], aes(x = as.character(year), y = MJ_km, group = technology, color = technology), size = 1)+
+    geom_line(data = mj_km[subsectorL3 == "trn_pass_road_LDV_4W" & vehicleType == vt & year<=maxyear & year>=2010], aes(x = as.character(year), y = MJ_km, group = technology, color = technology), size = 1)+
     facet_wrap(~region, nrow = 3, scales = "free")+
     expand_limits(y = c(0,0.8))+
     scale_x_discrete(breaks = c(2015,2050,maxyear))+
@@ -1771,9 +1771,9 @@ plotEnInt(mj_km = mj_km_data, vt = "Subcompact Car")
 ```{r, echo=FALSE, warning=FALSE}
 
 plotCost = function(costs, vt){
-  cols2use = unique(as.character(costs[vehicle_type == vt,technology]))
+  cols2use = unique(as.character(costs[vehicleType == vt,technology]))
   p=ggplot()+
-    geom_line(data = costs[vehicle_type == vt & year<=maxyear & year>=2010], aes(x = as.character(year), y = non_fuel_price, group = technology, color = technology), size = 1)+
+    geom_line(data = costs[vehicleType == vt & year<=maxyear & year>=2010], aes(x = as.character(year), y = non_fuel_price, group = technology, color = technology), size = 1)+
     facet_wrap(~region, nrow = 3, scales = "free")+
     expand_limits(y = c(0,0.5))+
     scale_x_discrete(breaks = c(2015,2050,maxyear))+
@@ -1800,13 +1800,13 @@ es_deu_verkehrinzahlen <- function(demandkm){
   demand_deu <- demand_km[region == "DEU" & sector == "trn_pass"]
   demand_deu <- rmndt::approx_dt(demand_deu, c(2015, 2018, 2020), "year", "demand_F",
                                  idxcols=colnames(demand_deu)[3:9])[year == 2018]
-  toplot <- demand_deu[, .(model="EDGE-T", demand=1e-3*sum(demand_F)), by=c("subsector_L2")] # millions -> billions
-  toplot[, subsector_L2 := gsub("_tmp_subsector_L2", "", subsector_L2)]
-  toplot[, subsector_L2 := gsub("trn_pass_road_", "", subsector_L2)]
+  toplot <- demand_deu[, .(model="EDGE-T", demand=1e-3*sum(demand_F)), by=c("subsectorL2")] # millions -> billions
+  toplot[, subsectorL2 := gsub("_tmp_subsectorL2", "", subsectorL2)]
+  toplot[, subsectorL2 := gsub("trn_pass_road_", "", subsectorL2)]
 
   ## Verkehr-in-Zahlen 2020, https://www.bmvi.de/SharedDocs/DE/Artikel/G/verkehr-in-zahlen.html, p224-225
   vkiz <- fread(text="
-model,subsector_L2,demand
+model,subsectorL2,demand
 ViZ,Cycle, 39.8
 ViZ,Domestic Aviation, 70.4
 ViZ,Passenger Rail, 98.2
@@ -1819,7 +1819,7 @@ ViZ,LDV, 913.3
 
   p <- ggplot(toplot, aes(x=model, y=demand)) +
     geom_bar(stat="identity", fill="blue") +
-    facet_wrap(~subsector_L2, scales="free_y") +
+    facet_wrap(~subsectorL2, scales="free_y") +
     labs(y="Transport Demand 2018 [billion pkm]") +
     theme_plot
   return(p)

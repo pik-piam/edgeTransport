@@ -1,4 +1,4 @@
-SSPscen,techscen,param,value
+SSPscen,transportPolScen,param,value
 SDP,ConvCase,startYeBEV,2025
 SDP,ConvCase,startValBEV,0.5
 SDP,ConvCase,targetYeBEV,2035

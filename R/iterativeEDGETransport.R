@@ -14,8 +14,8 @@
 
 toolIterativeEDGETransport <- function(reporting=FALSE) {
   `.` <- CountryCode <- EJ_Mpkm_final <- RegionCode <- V1 <- cfg <- check <- demNew <- demVintEachYear <-
-    demand_F <- full_demand_vkm <- iternum <- maxtech <- sector <- shareVS1 <- sharetech_new <-
-      subsector_L1 <- subsector_L3 <- sumvalue <- sw <- tot_price <- totdem <- value <-
+    demand_F <- full_demand_vkm <- iternum <- maxtech <- sector <- shareVS3 <- sharetech_new <-
+      subsectorL3 <- subsectorL1 <- sumvalue <- sw <- tot_price <- totdem <- value <-
         vintage_demand_vkm <- NULL
 
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
@@ -54,7 +54,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
   input_folder = paste0("./")
   if (length(list.files(path = data_folder, pattern = "RDS")) < 8) {
     toolCreateRDS(input_folder, data_folder,
-                  SSP_scenario = scenario,
+                  SSPscen = scenario,
                   DEM_scenario = demScen,
                   EDGE_scenario = EDGE_scenario)
   }
@@ -75,19 +75,19 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   ## mrremind produces all combinations of iso-vehicle types and attributes a 0. These ghost entries have to be cleared.
   int_dat = int_dat[EJ_Mpkm_final>0]
-  prefdata_nonmot = pref_data$FV_final_pref[subsector_L3 %in% c("Walk", "Cycle")]
-  pref_data$FV_final_pref = merge(pref_data$FV_final_pref, unique(int_dat[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
-  pref_data$FV_final_pref[, check := sum(value), by = c("vehicle_type", "region")]
+  prefdata_nonmot = pref_data$FV_final_pref[subsectorL1 %in% c("Walk", "Cycle")]
+  pref_data$FV_final_pref = merge(pref_data$FV_final_pref, unique(int_dat[, c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
+  pref_data$FV_final_pref[, check := sum(value), by = c("vehicleType", "region")]
   pref_data$FV_final_pref = pref_data$FV_final_pref[check>0]
   pref_data$FV_final_pref[, check := NULL]
   pref_data$FV_final_pref = rbind(prefdata_nonmot, pref_data$FV_final_pref)
 
-  prefdata_nonmotV = pref_data$VS1_final_pref[subsector_L3 %in% c("Walk", "Cycle")]
-  pref_data$VS1_final_pref = merge(pref_data$VS1_final_pref, unique(int_dat[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
-  pref_data$VS1_final_pref[, check := sum(sw), by = c("vehicle_type", "region")]
-  pref_data$VS1_final_pref = pref_data$VS1_final_pref[check>0]
-  pref_data$VS1_final_pref[, check := NULL]
-  pref_data$VS1_final_pref = rbind(prefdata_nonmotV, pref_data$VS1_final_pref)
+  prefdata_nonmotV = pref_data$VS3_final_pref[subsectorL1 %in% c("Walk", "Cycle")]
+  pref_data$VS3_final_pref = merge(pref_data$VS3_final_pref, unique(int_dat[, c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
+  pref_data$VS3_final_pref[, check := sum(sw), by = c("vehicleType", "region")]
+  pref_data$VS3_final_pref = pref_data$VS3_final_pref[check>0]
+  pref_data$VS3_final_pref[, check := NULL]
+  pref_data$VS3_final_pref = rbind(prefdata_nonmotV, pref_data$VS3_final_pref)
 
   ## optional average of prices
   average_prices = TRUE
@@ -109,7 +109,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     ## load previus iteration number of stations
     stations = readRDS(datapath("stations.RDS"))
     ## calculate non fuel costs for technologies subjected to learning and merge the resulting values with the historical values
-    nonfuel_costs = merge(nonfuel_costs, unique(int_dat[, c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+    nonfuel_costs = merge(nonfuel_costs, unique(int_dat[, c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
 
     nonfuel_costs_list = toolLearning(
       non_fuel_costs = nonfuel_costs, capcost4W = capcost4W,
@@ -135,7 +135,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   ## save prices
   ## read last iteration count
-  keys <- c("region", "year", "technology", "vehicle_type")
+  keys <- c("region", "year", "technology", "vehicleType")
   setkeyv(REMIND_prices, keys)
 
   pfile <- "EDGE_transport_prices.rds"
@@ -199,7 +199,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     logit_data_4W = logit_data_4W)
 
   shares <- logit_data[["share_list"]] ## shares of alternatives for each level of the logit function
-  ## shares$VS1_shares=shares$VS1_shares[,-c("sector","subsector_L2","subsector_L3")]
+  ## shares$VS3_shares=shares$VS3_shares[,-c("sector","subsectorL2","subsectorL1")]
 
   mj_km_data <- logit_data[["mj_km_data"]] ## energy intensity at a technology level
   prices <- logit_data[["prices_list"]] ## prices at each level of the logit function, 1990USD/pkm
@@ -251,21 +251,21 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
     ## this can be deleted.
     vint <- vintages[["vintcomp_startyear"]]
     newd <- vintages[["newcomp"]]
-    sharesVS1 <- shares[["VS1_shares"]]
-    setnames(sharesVS1, "share", "shareVS1")
+    sharesVS3 <- shares[["VS3_shares"]]
+    setnames(sharesVS3, "share", "shareVS3")
 
-    newd <- sharesVS1[newd, on=c("region", "year", "subsector_L1", "vehicle_type")]
-    newd[, demNew := totdem * sharetech_new * shareVS1]
+    newd <- sharesVS3[newd, on=c("region", "year", "subsectorL3", "vehicleType")]
+    newd[, demNew := totdem * sharetech_new * shareVS3]
 
-    ## newd <- loadFactor[newd, on=c("year", "region", "vehicle_type")]
+    ## newd <- loadFactor[newd, on=c("year", "region", "vehicleType")]
     ## newd[, demNew := demNew/loadFactor]
 
-    vint <- newd[vint, on=c("region", "subsector_L1", "vehicle_type", "technology", "year", "sector")]
+    vint <- newd[vint, on=c("region", "subsectorL3", "vehicleType", "technology", "year", "sector")]
     vint <- vint[!is.na(demNew)]
-    vint <- vint[, c("year", "region", "vehicle_type", "technology", "variable", "demNew", "demVintEachYear")]
-    vint[, demand_F := demNew + sum(demVintEachYear), by=c("region", "year", "vehicle_type", "technology")]
+    vint <- vint[, c("year", "region", "vehicleType", "technology", "variable", "demNew", "demVintEachYear")]
+    vint[, demand_F := demNew + sum(demVintEachYear), by=c("region", "year", "vehicleType", "technology")]
 
-    vint <- loadFactor[vint, on=c("year", "region", "vehicle_type")]
+    vint <- loadFactor[vint, on=c("year", "region", "vehicleType")]
 
     vint[, full_demand_vkm := demand_F/loadFactor]
     vint[, vintage_demand_vkm := demVintEachYear/loadFactor]
@@ -275,7 +275,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
     vintfile <- "vintcomp.csv"
     cat("# LDV Fleet vintages.", file=vintfile, sep="\n")
-    cat("# full_demand_vkm is the full demand for a given year, region, vehicle_type and technology.", file=vintfile, sep="\n", append=TRUE)
+    cat("# full_demand_vkm is the full demand for a given year, region, vehicleType and technology.", file=vintfile, sep="\n", append=TRUE)
     cat("# New sales for the current year can be calculated by full_demand_vkm - sum(vintage_demand_vkm).", file=vintfile, sep="\n", append=TRUE)
     cat("# Units: million vkms.", file=vintfile, sep="\n", append=TRUE)
 
@@ -286,8 +286,8 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   num_veh_stations = toolVehicleStations(
     norm_dem = norm_demand[
-      subsector_L1 == "trn_pass_road_LDV_4W", ## only 4wheelers
-      c("region", "year", "sector", "vehicle_type", "technology", "demand_F") ],
+      subsectorL3 == "trn_pass_road_LDV_4W", ## only 4wheelers
+      c("region", "year", "sector", "vehicleType", "technology", "demand_F") ],
     ES_demand_all = ES_demand_all,
     intensity = intensity,
     loadFactor = loadFactor,
@@ -331,7 +331,7 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   ## add the columns of SSP scenario and EDGE scenario to the output parameters
   for (i in names(finalInputs)) {
-    finalInputs[[i]]$SSP_scenario <- scenario
+    finalInputs[[i]]$SSPscen <- scenario
     finalInputs[[i]]$DEM_scenario <- demScen
     finalInputs[[i]]$EDGE_scenario <- EDGE_scenario
   }
@@ -352,16 +352,16 @@ toolIterativeEDGETransport <- function(reporting=FALSE) {
 
   ## CapCosts
   writegdx.parameter("p35_esCapCost.gdx", finalInputs$capCost, "p35_esCapCost",
-                     valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                     valcol="value", uelcols=c("tall", "all_regi", "SSPscen", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Intensities
   writegdx.parameter("p35_fe2es.gdx", finalInputs$intensity, "p35_fe2es",
-                     valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                     valcol="value", uelcols = c("tall", "all_regi", "SSPscen", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Shares: demand can represent the shares since it is normalized
   writegdx.parameter("p35_shFeCes.gdx", finalInputs$shFeCes, "p35_shFeCes",
                      valcol="value",
-                     uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
+                     uelcols = c("tall", "all_regi", "SSPscen", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
 
   print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
 

@@ -12,7 +12,7 @@
 #' @export
 
 toolLearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_learntmp, ES_demandpr, ES_demand){
-  `.` <- ratio <- demandpr <- vehicles_number <- cumul <- technology <- subsector_L1 <- non_fuel_price <- b <- initialyear <- NULL
+  `.` <- ratio <- demandpr <- vehicles_number <- cumul <- technology <- subsectorL3 <- non_fuel_price <- b <- initialyear <- NULL
   Capital_costs_purchase <- totalNE_cost <- price_component <- NULL
   ## find the estimated number of cars
   demand = merge(ES_demand, ES_demandpr)
@@ -41,16 +41,16 @@ toolLearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_le
   demand[, b := NULL]
   demand[, factor := ifelse(is.infinite(factor), 1, factor)] ## factor is 1 if there is no increase in cumulated demand (->no decrease in costs)
   ## only BEV car costs are affected
-  capcost4W = capcost4W[technology %in% c("BEV", "FCEV") & subsector_L1 == "trn_pass_road_LDV_4W",]
-  capcost4W = merge(capcost4W, unique(non_fuel_costs[subsector_L1 == "trn_pass_road_LDV_4W", c("region", "vehicle_type")]), by = c("region", "vehicle_type"), all.y = TRUE)
+  capcost4W = capcost4W[technology %in% c("BEV", "FCEV") & subsectorL3 == "trn_pass_road_LDV_4W",]
+  capcost4W = merge(capcost4W, unique(non_fuel_costs[subsectorL3 == "trn_pass_road_LDV_4W", c("region", "vehicleType")]), by = c("region", "vehicleType"), all.y = TRUE)
   ## substract purchase price to the non fuel price to obtain the non fuel price not affected by learning
-  nonfuel_costslearn = rbind(non_fuel_costs[subsector_L1 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV") & year >= 2020][, price_component := "totalNE_cost"], capcost4W[year >= 2020])
-  nonfuel_costslearn = dcast(nonfuel_costslearn, region + year + technology + vehicle_type + subsector_L1 + subsector_L2 + subsector_L3 + sector + type ~ price_component, value.var = "non_fuel_price")
+  nonfuel_costslearn = rbind(non_fuel_costs[subsectorL3 == "trn_pass_road_LDV_4W" & technology %in% c("BEV", "FCEV") & year >= 2020][, price_component := "totalNE_cost"], capcost4W[year >= 2020])
+  nonfuel_costslearn = dcast(nonfuel_costslearn, region + year + technology + vehicleType + subsectorL3 + subsectorL2 + subsectorL1 + sector + type ~ price_component, value.var = "non_fuel_price")
   nonfuel_costslearn[, non_fuel_price := totalNE_cost - Capital_costs_purchase]
   nonfuel_costslearn[, c("Capital_costs_purchase", "price_component", "totalNE_cost") := list(NULL, "remainingprice", NULL)]
 
   ## capcost for 4wheelers of 2020 is to be applied to all time steps
-  capcost4W[year >= 2020, non_fuel_price := non_fuel_price[year == 2020], by = c("region", "vehicle_type", "technology")]
+  capcost4W[year >= 2020, non_fuel_price := non_fuel_price[year == 2020], by = c("region", "vehicleType", "technology")]
 
   capcost4W = merge(demand, capcost4W, all.x = TRUE, by = c("year", "technology"))
   ## powertrain represents ~20% of the total purchase price
@@ -63,12 +63,12 @@ toolLearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_le
   capcost4W[,c("factor", "cumul", "vehicles_number", "initialcap", "initialyear"):= NULL]
   ## merge with other components of non fuel price and calculate total non fuel price
   nonfuel_costslearn = rbind(nonfuel_costslearn, capcost4W)
-  nonfuel_costslearn = nonfuel_costslearn[,.(non_fuel_price = sum(non_fuel_price)), by = c("region", "year", "type", "technology", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector")]
+  nonfuel_costslearn = nonfuel_costslearn[,.(non_fuel_price = sum(non_fuel_price)), by = c("region", "year", "type", "technology", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector")]
 
   ## technologies subjected to learning
   techlearn = c("BEV", "FCEV")
   ## integrate non fuel costs from the input data  with the updated values from learning
-  nonfuel_costs = nonfuel_costs[!(technology %in% techlearn & subsector_L1 =="trn_pass_road_LDV_4W" & year >=2020),]
+  nonfuel_costs = nonfuel_costs[!(technology %in% techlearn & subsectorL3 =="trn_pass_road_LDV_4W" & year >=2020),]
   nonfuel_costs = rbind(nonfuel_costs, nonfuel_costslearn[technology %in% techlearn])
 
   nonfuel_costs = list(capcost4W = capcost4W, nonfuel_costs = nonfuel_costs)
@@ -89,7 +89,7 @@ toolLearning <- function(non_fuel_costs, capcost4W, gdx, EDGE2teESmap, demand_le
 
 
 toolVehicleStations <- function(norm_dem, intensity, ES_demand_all, loadFactor, EDGE2teESmap, rep) {
-  demand_F <- demand <- annual_mileage <- region <- `.` <- vehicles_number <- vehicle_type <-
+  demand_F <- demand <- annual_mileage <- region <- `.` <- vehicles_number <- vehicleType <-
     demand_F <- technology <- statnum <- fracst <- cost_st_km <- cost <- en_int <- value <- teEs <- NULL
   if (!rep) {
     norm_dem = merge(norm_dem, ES_demand_all, by = c("region", "year", "sector"))
@@ -97,7 +97,7 @@ toolVehicleStations <- function(norm_dem, intensity, ES_demand_all, loadFactor, 
     norm_dem[, demand_F := demand_F*   ## normalized to 1
                            demand]     ## in million km (total passenger demand)
   }
-  LDVdem = merge(norm_dem, loadFactor, all.x = TRUE, by = c("region", "year", "vehicle_type"))
+  LDVdem = merge(norm_dem, loadFactor, all.x = TRUE, by = c("region", "year", "vehicleType"))
 
   LDVdem[, annual_mileage := 13000]
 
@@ -105,11 +105,11 @@ toolVehicleStations <- function(norm_dem, intensity, ES_demand_all, loadFactor, 
                               /loadFactor          ## in millionvkm
                               /annual_mileage]     ## in million veh
 
-  LDVdem = LDVdem[, .(region, year, vehicles_number, technology, vehicle_type, demand_F)]
+  LDVdem = LDVdem[, .(region, year, vehicles_number, technology, vehicleType, demand_F)]
 
   alltechdem = LDVdem[,.(vehicles_number = sum(vehicles_number)), by = c("region", "year")]
 
-  learntechdem = LDVdem[technology %in% c("BEV", "FCEV"),][, .(region, year, vehicles_number, vehicle_type, technology)]
+  learntechdem = LDVdem[technology %in% c("BEV", "FCEV"),][, .(region, year, vehicles_number, vehicleType, technology)]
 
   ## calculate the cost of refueling/recharging infrastructure
   intensity = merge(intensity, EDGE2teESmap, all.x=TRUE, by = "CES_node")

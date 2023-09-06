@@ -21,11 +21,11 @@ toolCalculateLogitSW <- function(prices,
                                         ptab4W,
                                         logit_data_4W) {
 
-  tot_price <- non_fuel_price <- subsector_L3 <- logit.exponent <- share <- sw <- time_price <- NULL
-  tot_VOT_price <- `.` <- fuel_price_pkm <- subsector_L1 <- D <- index_yearly <- pinco <- NULL
-  shareVS1 <- sw <- region <- vehicle_type <- shareFS1 <- weighted_sharessum <- NULL
+  tot_price <- non_fuel_price <- subsectorL1 <- logit.exponent <- share <- sw <- time_price <- NULL
+  tot_VOT_price <- `.` <- fuel_price_pkm <- subsectorL3 <- D <- index_yearly <- pinco <- NULL
+  shareVS3 <- sw <- region <- vehicleType <- shareFS1 <- weighted_sharessum <- NULL
   technology <- cluster <- combined_shareEL <- combined_shareLiq <- tail <- NULL
-  sector <- subsector_L2 <- MJ_km <- EJ_Mpkm_final <- type <- dpp_nfp <- fuel_price <- value_time <- NULL
+  sector <- subsectorL2 <- MJ_km <- EJ_Mpkm_final <- type <- dpp_nfp <- fuel_price <- value_time <- NULL
   logit_type <- pchar <- pinco_tot <- pmod_av <- prange <- pref <- prisk <- NULL
 
   ## X2Xcalc is used to traverse the logit tree, calculating shares and intensities
@@ -34,8 +34,8 @@ toolCalculateLogitSW <- function(prices,
     logit_exponent <- logit_params[[paste0("logit_exponent_", level_next)]]
 
     ## data contains all the prices in the beginning
-    all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
-                        "subsector_L3", "sector")
+    all_subsectors <- c("technology", "vehicleType", "subsectorL3", "subsectorL2",
+                        "subsectorL1", "sector")
     ## takes the right files using the names as inputs
     value_time <- vot_data[[paste0("value_time_", level_next)]]
     ## joins the df containing the prices with the df containing the logit exponents
@@ -47,7 +47,7 @@ toolCalculateLogitSW <- function(prices,
     ## delete entries have tot_price NA (e.g. 1900 BEV)
     df <- df[ !(is.na(tot_price))]
     ## entries that are not present in the mix have non_fuel_price == 0, but also Walk and Cycle: delete all the not-present in the mix options
-    df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsector_L3 %in% c("Walk", "Cycle"))]
+    df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsectorL1 %in% c("Walk", "Cycle"))]
 
     ## needs random lambdas for the sectors that are not explicitly calculated
     df <- df[ is.na(logit.exponent), logit.exponent := -10]
@@ -113,17 +113,17 @@ toolCalculateLogitSW <- function(prices,
                       mj_km_data, group_value) {
     vehicles_number <- param <- value <- NULL
     final_prefFV <- pref_data[["FV_final_pref"]]
-    final_prefVS1 <- pref_data[["VS1_final_pref"]]
+    final_prefVS3 <- pref_data[["VS3_final_pref"]]
     logit_exponentFV <- logit_params[["logit_exponent_FV"]]
-    logit_exponentVS1 <- logit_params[["logit_exponent_VS1"]]
+    logit_exponentVS3 <- logit_params[["logit_exponent_VS3"]]
     ## create single datatable for F->V with columns separated for inconvenience and sw
-    final_prefFV = dcast(final_prefFV, region + year + technology + vehicle_type +
-                                       subsector_L1 + subsector_L2 + subsector_L3 + sector ~
+    final_prefFV = dcast(final_prefFV, region + year + technology + vehicleType +
+                                       subsectorL3 + subsectorL2 + subsectorL1 + sector ~
                                          logit_type, value.var = "value")
 
     ## data contains all the prices in the beginning
-    all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
-                        "subsector_L3", "sector")
+    all_subsectors <- c("technology", "vehicleType", "subsectorL3", "subsectorL2",
+                        "subsectorL1", "sector")
     ## takes the right files using the names as inputs
     value_time <- vot_data[[paste0("value_time_FV")]]
     ## joins the df containing the prices with the df containing the logit exponents
@@ -135,22 +135,22 @@ toolCalculateLogitSW <- function(prices,
     ## delete entries have tot_price NA (e.g. 1900 BEV)
     df <- df[ !(is.na(tot_price))]
     ## entries that are not present in the mix have non_fuel_price == 0, but also Walk and Cycle: delete all the not-present in the mix options
-    df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsector_L3 %in% c("Walk", "Cycle"))]
+    df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsectorL1 %in% c("Walk", "Cycle"))]
     ## needs random lambdas for the sectors that are not explicitly calculated
     df <- df[ is.na(logit.exponent), logit.exponent := -10]
 
     ## all modes other then 4W calculated with exogenous sws
-    dfother = df[(subsector_L1 != "trn_pass_road_LDV_4W"), c("region", "year", "subsector_L2", "subsector_L3", "sector", "subsector_L1", "vehicle_type", "technology", "tot_price", "logit.exponent", "sw", "tot_VOT_price", "fuel_price_pkm", "non_fuel_price")]
+    dfother = df[(subsectorL3 != "trn_pass_road_LDV_4W"), c("region", "year", "subsectorL2", "subsectorL1", "sector", "subsectorL3", "vehicleType", "technology", "tot_price", "logit.exponent", "sw", "tot_VOT_price", "fuel_price_pkm", "non_fuel_price")]
 
     ##HOTfix: Truck size classes are not all included in the input data -> they need to be added manually
     ##ATTENTION: This should be changed in the refactoring process
-    dfother[grepl("^Truck", vehicle_type), logit.exponent := -4]
+    dfother[grepl("^Truck", vehicleType), logit.exponent := -4]
 
     ## for all entries other than 4wheelers, shares based on SW are calculated
     dfother[, share := sw*tot_price^logit.exponent/(sum(sw*tot_price^logit.exponent)),
             by = c(group_value, "year", "region")]
     ## 4W and all other entries are merged
-    df <- dfother[, .(region, year, share, technology, vehicle_type, subsector_L1, subsector_L2, subsector_L3, sector, fuel_price_pkm, non_fuel_price, tot_price)]
+    df <- dfother[, .(region, year, share, technology, vehicleType, subsectorL3, subsectorL2, subsectorL1, sector, fuel_price_pkm, non_fuel_price, tot_price)]
 
     ## merge energy intensity
     MJ_km <- merge(df, mj_km_data, by=intersect(names(df),names(mj_km_data)),all = FALSE)
@@ -205,8 +205,8 @@ toolCalculateLogitSW <- function(prices,
   ## non-fuel prices
   base <- merge(prices[!is.na(tot_price)], price_nonmot, all = TRUE,
                 by = c("tot_price","region","year",
-                       "technology","vehicle_type",
-                       "subsector_L1","subsector_L2","subsector_L3","sector"))
+                       "technology","vehicleType",
+                       "subsectorL3","subsectorL2","subsectorL1","sector"))
 
   base[,tot_VOT_price := 0]
   #Cycling and Walking have no fuel and non fuel prices, 0 instead of NA is given
@@ -227,7 +227,7 @@ toolCalculateLogitSW <- function(prices,
                     logit_params = logit_params,
                     value_time = value_time,
                     mj_km_data = mj_km_data,
-                    group_value = "vehicle_type")
+                    group_value = "vehicleType")
 
   FV <- rbind(FV_non4W[["df"]], logit_data_4W[["df"]], use.names=T)
   MJ_km_FV <- rbind(FV_non4W[["MJ_km"]], logit_data_4W[["MJ_km"]], use.names=T)
@@ -239,73 +239,73 @@ toolCalculateLogitSW <- function(prices,
     nas
     browser()
   }
-  # VS1
-  VS1_all <- X2Xcalc(prices = FV,
+  # VS3
+  VS3_all <- X2Xcalc(prices = FV,
                      pref_data = pref_data,
                      logit_params = logit_params,
                      value_time = value_time,
                      mj_km_data = MJ_km_FV,
                      level_base = "FV",
-                     level_next = "VS1",
-                     group_value = "subsector_L1")
+                     level_next = "VS3",
+                     group_value = "subsectorL3")
 
-  VS1 <- VS1_all[["df"]]
-  MJ_km_VS1 <- VS1_all[["MJ_km"]]
-  VS1_shares <- VS1_all[["df_shares"]]
-  VS1_shares=VS1_shares[,-c("sector","subsector_L2","subsector_L3")]
+  VS3 <- VS3_all[["df"]]
+  MJ_km_VS3 <- VS3_all[["MJ_km"]]
+  VS3_shares <- VS3_all[["df_shares"]]
+  VS3_shares=VS3_shares[,-c("sector","subsectorL2","subsectorL1")]
 
-  # S1S2
-  S1S2_all <- X2Xcalc(prices = VS1,
+  # S3S2
+  S3S2_all <- X2Xcalc(prices = VS3,
                       pref_data = pref_data,
                       logit_params = logit_params,
                       value_time = value_time,
-                      mj_km_data = MJ_km_VS1,
-                      level_base = "VS1",
-                      level_next = "S1S2",
-                      group_value = "subsector_L2")
-  S1S2 <- S1S2_all[["df"]]
-  MJ_km_S1S2 <- S1S2_all[["MJ_km"]]
-  S1S2_shares <- S1S2_all[["df_shares"]]
+                      mj_km_data = MJ_km_VS3,
+                      level_base = "VS3",
+                      level_next = "S3S2",
+                      group_value = "subsectorL2")
+  S3S2 <- S3S2_all[["df"]]
+  MJ_km_S3S2 <- S3S2_all[["MJ_km"]]
+  S3S2_shares <- S3S2_all[["df_shares"]]
 
 
-  # S2S3
-  S2S3_all <- X2Xcalc(prices = S1S2,
+  # S2S1
+  S2S1_all <- X2Xcalc(prices = S3S2,
                       pref_data = pref_data,
                       logit_params = logit_params,
                       value_time = value_time,
-                      mj_km_data = MJ_km_S1S2,
-                      level_base = "S1S2",
-                      level_next = "S2S3",
-                      group_value = "subsector_L3")
+                      mj_km_data = MJ_km_S3S2,
+                      level_base = "S3S2",
+                      level_next = "S2S1",
+                      group_value = "subsectorL1")
 
-  S2S3 <- S2S3_all[["df"]]
-  MJ_km_S2S3 <- S2S3_all[["MJ_km"]]
-  S2S3_shares <- S2S3_all[["df_shares"]]
+  S2S1 <- S2S1_all[["df"]]
+  MJ_km_S2S1 <- S2S1_all[["MJ_km"]]
+  S2S1_shares <- S2S1_all[["df_shares"]]
 
-  # S3S
-  S3S_all <- X2Xcalc(prices = S2S3,
+  # S1S
+  S1S_all <- X2Xcalc(prices = S2S1,
                      pref_data = pref_data,
                      logit_params = logit_params,
                      value_time = value_time,
-                     mj_km_data = MJ_km_S2S3,
-                     level_base = "S2S3",
-                     level_next = "S3S",
+                     mj_km_data = MJ_km_S2S1,
+                     level_base = "S2S1",
+                     level_next = "S1S",
                      group_value = "sector")
 
-  S3S <- S3S_all[["df"]]
-  MJ_km_S3S <- S3S_all[["MJ_km"]]
-  S3S_shares <- S3S_all[["df_shares"]]
+  S1S <- S1S_all[["df"]]
+  MJ_km_S1S <- S1S_all[["MJ_km"]]
+  S1S_shares <- S1S_all[["df_shares"]]
 
-  share_list=list(S3S_shares=S3S_shares,
-                  S2S3_shares=S2S3_shares,
-                  S1S2_shares=S1S2_shares,
-                  VS1_shares=VS1_shares,
+  share_list=list(S1S_shares=S1S_shares,
+                  S2S1_shares=S2S1_shares,
+                  S3S2_shares=S3S2_shares,
+                  VS3_shares=VS3_shares,
                   FV_shares=FV_shares)
 
-  prices_list=list(S3S=S3S,
-                   S2S3=S2S3,
-                   S1S2=S1S2,
-                   VS1=VS1,
+  prices_list=list(S1S=S1S,
+                   S2S1=S2S1,
+                   S3S2=S3S2,
+                   VS3=VS3,
                    FV=FV,
                    base=base)
 
@@ -345,15 +345,15 @@ toolCalculateLogitIncost <- function(prices,
 
    `.` <- D <- EJ_Mpkm_final <- fuel_price_pkm <- index_yearly <- logit.exponent <- logit_type <-
     non_fuel_price <- pchar <- pinco_tot <- pmod_av <- prange <- pref <- prisk <- region <- sector <-
-      share <- shareFS1 <- shareVS1 <- subsector_L1 <- subsector_L2 <- subsector_L3 <- sw <- tail <-
-        technology <- time_price <- tot_VOT_price <- tot_price <- vehicle_type <- weighted_sharessum <- NULL
+      share <- shareFS1 <- shareVS3 <- subsectorL3 <- subsectorL2 <- subsectorL1 <- sw <- tail <-
+        technology <- time_price <- tot_VOT_price <- tot_price <- vehicleType <- weighted_sharessum <- NULL
   ## FV load technology prices and merge with value of time (~technology price for
   ## non-motorized)
   ## non-fuel prices
   prices <- merge(prices[!is.na(tot_price)], price_nonmot, all = TRUE,
                 by = c("tot_price","region","year",
-                       "technology","vehicle_type",
-                       "subsector_L1","subsector_L2","subsector_L3","sector"))
+                       "technology","vehicleType",
+                       "subsectorL3","subsectorL2","subsectorL1","sector"))
 
   prices[,tot_VOT_price := 0]
   #Cycling and Walking have no fuel and non fuel prices, 0 instead of NA is given
@@ -369,11 +369,11 @@ toolCalculateLogitIncost <- function(prices,
 
   vehicles_number <- param <- value <- NULL
   final_prefFV <- pref_data[["FV_final_pref"]]
-  final_prefVS1 <- pref_data[["VS1_final_pref"]]
+  final_prefVS3 <- pref_data[["VS3_final_pref"]]
   logit_exponentFV <- logit_params[["logit_exponent_FV"]]
-  logit_exponentVS1 <- logit_params[["logit_exponent_VS1"]]
+  logit_exponentVS3 <- logit_params[["logit_exponent_VS3"]]
   ## create single datatable for F->V with columns separated for inconvenience and sw
-  final_prefFV = dcast(final_prefFV, region + year + technology + vehicle_type + subsector_L1 + subsector_L2 + subsector_L3 + sector ~ logit_type, value.var = "value")
+  final_prefFV = dcast(final_prefFV, region + year + technology + vehicleType + subsectorL3 + subsectorL2 + subsectorL1 + sector ~ logit_type, value.var = "value")
   ## liquids don't have pref, prange, pchar, pmod_av, prisk. Other techs don't have the generic pinco_tot
   final_prefFV[, pinco_tot := ifelse(is.na(pinco_tot), 0, pinco_tot)]
   final_prefFV[, prange := ifelse(is.na(prange), 0, prange)]
@@ -385,8 +385,8 @@ toolCalculateLogitIncost <- function(prices,
   intensity_data = intensity_data[EJ_Mpkm_final>0]
 
   ## data contains all the prices in the beginning
-  all_subsectors <- c("technology", "vehicle_type", "subsector_L1", "subsector_L2",
-                      "subsector_L3", "sector")
+  all_subsectors <- c("technology", "vehicleType", "subsectorL3", "subsectorL2",
+                      "subsectorL1", "sector")
   ## takes the right files using the names as inputs
   value_time <- vot_data[["value_time_FV"]]
   ## joins the df containing the prices with the df containing the logit exponents
@@ -398,7 +398,7 @@ toolCalculateLogitIncost <- function(prices,
   ## delete entries have tot_price NA (e.g. 1900 BEV)
   df <- df[ !(is.na(tot_price))]
   ## entries that are not present in the mix have non_fuel_price == 0, but also Walk and Cycle: delete all the not-present in the mix options
-  df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsector_L3 %in% c("Walk", "Cycle"))]
+  df <- df[(non_fuel_price>0)|(non_fuel_price==0 & subsectorL1 %in% c("Walk", "Cycle"))]
   ## needs random lambdas for the sectors that are not explicitly calculated
   df <- df[ is.na(logit.exponent), logit.exponent := -10]
 
@@ -406,35 +406,35 @@ toolCalculateLogitIncost <- function(prices,
   ## define the years on which the inconvenience price will be calculated on the basis of the previous time steps sales
   futyears_all = seq(2020, 2101, 1)
   ## all modes other then 4W calculated with exogenous sws
-  dfhistorical4W = df[(subsector_L1 == "trn_pass_road_LDV_4W" & year < 2020), c("region", "year", "subsector_L2", "subsector_L3", "sector", "subsector_L1", "vehicle_type", "technology", "tot_price", "logit.exponent", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar", "tot_VOT_price", "fuel_price_pkm", "non_fuel_price")]
+  dfhistorical4W = df[(subsectorL3 == "trn_pass_road_LDV_4W" & year < 2020), c("region", "year", "subsectorL2", "subsectorL1", "sector", "subsectorL3", "vehicleType", "technology", "tot_price", "logit.exponent", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar", "tot_VOT_price", "fuel_price_pkm", "non_fuel_price")]
 
   ## 4W are calculated separately
-  df4W = df[subsector_L1 == "trn_pass_road_LDV_4W", c("region", "year", "subsector_L1", "vehicle_type", "technology", "tot_price", "logit.exponent")]
+  df4W = df[subsectorL3 == "trn_pass_road_LDV_4W", c("region", "year", "subsectorL3", "vehicleType", "technology", "tot_price", "logit.exponent")]
 
   ## extrapolate for all years
   df4W = approx_dt(dt = df4W, xdata = futyears_all,
                    xcol = "year", ycol = "tot_price",
-                   idxcols = c("region",  "subsector_L1", "vehicle_type", "technology"),
+                   idxcols = c("region",  "subsectorL3", "vehicleType", "technology"),
                    extrapolate=T)
 
   ## other price components for 4W are useful later but will not be carried on in the yearly calculation
-  dfprices4W = prices[subsector_L1 == "trn_pass_road_LDV_4W",  c("region", "year", "subsector_L1", "vehicle_type", "technology", "fuel_price_pkm", "non_fuel_price")]
+  dfprices4W = prices[subsectorL3 == "trn_pass_road_LDV_4W",  c("region", "year", "subsectorL3", "vehicleType", "technology", "fuel_price_pkm", "non_fuel_price")]
 
   ## starting value for inconvenience cost of 2020 for 4W is needed as a starting point for the iterative calculations
-  dfpinco2020 = df[subsector_L1 == "trn_pass_road_LDV_4W" & year == 2020, c("region", "subsector_L1", "vehicle_type", "technology", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar")]
+  dfpinco2020 = df[subsectorL3 == "trn_pass_road_LDV_4W" & year == 2020, c("region", "subsectorL3", "vehicleType", "technology", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar")]
 
   ## merge the yearly values and the starting inconvenience cost
-  df = merge(df4W, dfpinco2020, all = TRUE, by = c("region", "subsector_L1", "vehicle_type", "technology"))
+  df = merge(df4W, dfpinco2020, all = TRUE, by = c("region", "subsectorL3", "vehicleType", "technology"))
   ## apply the same logit exponent to all the years
   df[, logit.exponent := as.double(logit.exponent)]
-  df[, logit.exponent := ifelse(is.na(logit.exponent), mean(logit.exponent, na.rm = TRUE), logit.exponent), by = c("vehicle_type")]
+  df[, logit.exponent := ifelse(is.na(logit.exponent), mean(logit.exponent, na.rm = TRUE), logit.exponent), by = c("vehicleType")]
 
   ## for 4W the value of V->S1 market shares is needed on a yearly basis
-  final_prefVS1cp = final_prefVS1[subsector_L1 == "trn_pass_road_LDV_4W"]
+  final_prefVS3cp = final_prefVS3[subsectorL3 == "trn_pass_road_LDV_4W"]
 
-  final_prefVS1cp = approx_dt(dt = final_prefVS1cp, xdata = futyears_all,
+  final_prefVS3cp = approx_dt(dt = final_prefVS3cp, xdata = futyears_all,
                               xcol = "year", ycol = "sw",
-                              idxcols = c("region", "vehicle_type", "subsector_L1", "subsector_L2", "subsector_L3", "sector"),
+                              idxcols = c("region", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector"),
                               extrapolate=T)
 
   ## initialize values needed for the for loop
@@ -471,27 +471,27 @@ toolCalculateLogitIncost <- function(prices,
       tmp <- df[year %in% c(2020, 2021),]
     }
     tmp <- tmp[year == (t-1), share := (tot_price + pinco_tot + prange + pref + pmod_av + prisk  + pchar)^logit.exponent/(sum((tot_price + pinco_tot + prange + pref + pmod_av + prisk + pchar)^logit.exponent)),
-               by = c("vehicle_type", "year", "region")]
+               by = c("vehicleType", "year", "region")]
     tmp2 <- tmp[year == (t-1)]
     tmp2 <- tmp2[,.(tot_price=sum(share*tot_price)),
-                 by = c("region","year","vehicle_type","subsector_L1")]
+                 by = c("region","year","vehicleType","subsectorL3")]
 
     ## calculate the average share FS1 (the vehicle type is not important)
-    tmp2 <- merge(tmp2, final_prefVS1cp, by=intersect( names(tmp2),names(final_prefVS1cp)), all.y=TRUE)
-    tmp2 <- merge(tmp2, logit_exponentVS1,
-                  by=intersect(names(tmp2), names(logit_exponentVS1)), all.x = TRUE)
-    tmp2 <- tmp2[, shareVS1 := sw*tot_price^logit.exponent/sum(sw*tot_price^logit.exponent),
-                 by = c("subsector_L1", "year", "region")]
-    tmp2 <- tmp2[,.(subsector_L1, year, region, vehicle_type, shareVS1)]
+    tmp2 <- merge(tmp2, final_prefVS3cp, by=intersect( names(tmp2),names(final_prefVS3cp)), all.y=TRUE)
+    tmp2 <- merge(tmp2, logit_exponentVS3,
+                  by=intersect(names(tmp2), names(logit_exponentVS3)), all.x = TRUE)
+    tmp2 <- tmp2[, shareVS3 := sw*tot_price^logit.exponent/sum(sw*tot_price^logit.exponent),
+                 by = c("subsectorL3", "year", "region")]
+    tmp2 <- tmp2[,.(subsectorL3, year, region, vehicleType, shareVS3)]
 
     ## market share is calculated on the basis of the values in t-1
-    tmp2 <- merge(tmp2, tmp[year %in% (t-1),], by = c("region", "year", "vehicle_type", "subsector_L1"))
+    tmp2 <- merge(tmp2, tmp[year %in% (t-1),], by = c("region", "year", "vehicleType", "subsectorL3"))
 
     ## calculate the share from fuel to S1 (FS1)
-    tmp2[, shareFS1 := share*shareVS1]
+    tmp2[, shareFS1 := share*shareVS3]
 
-    ## calculate the share of all fuels on the subsector_L1 (I don't care anymore about the vehicle_type)
-    tmp2 <- tmp2[,.(shareFS1=sum(shareFS1)),by=c("region", "technology", "subsector_L1","year")]
+    ## calculate the share of all fuels on the subsectorL3 (I don't care anymore about the vehicleType)
+    tmp2 <- tmp2[,.(shareFS1=sum(shareFS1)),by=c("region", "technology", "subsectorL3","year")]
 
     ## merge with previous years' values
     if (!is.null(tmp2past)) {
@@ -504,7 +504,7 @@ toolCalculateLogitIncost <- function(prices,
     tmp2past <- copy(tmp3)
 
     ## merge the FS1 shares to the FV shares
-    tmp <- merge(tmp,tmp3, by= c("technology", "year", "region", "subsector_L1"), all=TRUE)
+    tmp <- merge(tmp,tmp3, by= c("technology", "year", "region", "subsectorL3"), all=TRUE)
 
     ## find depreciation to attribute to each time step
     Ddt1 = copy(Ddt)
@@ -518,7 +518,7 @@ toolCalculateLogitIncost <- function(prices,
     tmp = merge(tmp, totveh, by = c("region", "year"))
 
     ## weighted share depends on the composition of the fleet, which is a weighted average of the previous years' composition
-    tmp[, weighted_sharessum := ifelse(year == (t-1), sum(shareFS1[year<t]*D[year<t]*vehicles_number[year<t])/sum(D[year<t]*vehicles_number[year<t]), 0), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+    tmp[, weighted_sharessum := ifelse(year == (t-1), sum(shareFS1[year<t]*D[year<t]*vehicles_number[year<t])/sum(D[year<t]*vehicles_number[year<t]), 0), by = c("region", "technology", "vehicleType", "subsectorL3")]
     tmp[, vehicles_number := NULL]
     ## for 2020, we assume the value was constant for all the previous years (hence the value for 2020 coincides with the share)
     if (t == 2021) {
@@ -536,17 +536,17 @@ toolCalculateLogitIncost <- function(prices,
     ## Hotfix: CHN has very low costs for NG, which leads to unstable NG behavior. Temporarily constrained to 2020 values
     tmp[technology == "NG", pref := ifelse(year == t,
                                            pmax(pref[year == 2020], pref[year == 2020]*exp(1)^(weighted_sharessum[year == (t-1)]*bfuelav)),
-                                           pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                           pref), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     ## range anxiety for BEVs
     tmp[, prange := ifelse(year == t,
                            prange[year == 2020]*exp(1)^(weighted_sharessum[year == (t-1)]*bfuelav),
-                           prange), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                           prange), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     ## Calculate trend of refuelling availability costs component
     tmp[, pref := ifelse(year == t,
                          pref[year == 2020]*exp(1)^(weighted_sharessum[year == (t-1)]*bfuelav),
-                         pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                         pref), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     ## the phase-in of BEVs should not be too abrupt
     linDecrease <- function(x, x0, y0, x1, y1) {
@@ -558,7 +558,7 @@ toolCalculateLogitIncost <- function(prices,
 
     tmp[technology == "BEV", prange :=ifelse(year == t,
                                              pmax(mult*prange[year == 2020], prange),
-                                             prange), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                             prange), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
 
     ## the policymaker bans ICEs increasingly more strictly
@@ -571,7 +571,7 @@ toolCalculateLogitIncost <- function(prices,
     ## inconvenience cost for liquids is allowed to increase
     tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
                                                      0.5*exp(1)^(weighted_sharessum[year == (t-1)]*bmodelav),
-                                                     pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                     pinco_tot), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     if(tech_scen == "PhOP" & t>= 2030){
       ## phase-out of all light-duty vehicle ICEs
@@ -589,25 +589,25 @@ toolCalculateLogitIncost <- function(prices,
 
       tmp[technology == "Liquids" & region %in% EUreg, pinco_tot := ifelse(year == t,
                                                                            pmax(pinco_tot, floorEU),
-                                                                           pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                                           pinco_tot), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
       tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
                                                                              pmax(pinco_tot, floor),
-                                                                             pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                                             pinco_tot), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
       tmp[technology == "NG" & region %in% EUreg, pref := ifelse(year == t,
                                                                  pmax(pref, floorEU),
-                                                                 pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                                 pref), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
       tmp[technology == "Hybrid Electric" & region %in% EUreg, pmod_av := ifelse(year == t,
                                                                                  pmax(pmod_av, floorEU),
-                                                                                 pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                                                 pmod_av), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     } else {
 
       tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
                                                        pmax(pinco_tot, floor),
-                                                       pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                       pinco_tot), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     }
 
@@ -616,11 +616,11 @@ toolCalculateLogitIncost <- function(prices,
     ratioPHEV = ptab4W[param == "ratioPHEV", value]
     tmp[technology %in% c("Hybrid Electric"), pmod_av := ifelse(year == t,
                                                                 pmax(pmod_av, ratioPHEV*pmod_av[year == 2020]),
-                                                                pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+                                                                pmod_av), by = c("region", "technology", "vehicleType", "subsectorL3")]
 
     ## annual sales, needed for reporting purposes
     if (t == 2101) {
-      annual_sales = tmp[year<=2100, c("region", "year", "technology", "shareFS1", "vehicle_type", "subsector_L1", "share")]
+      annual_sales = tmp[year<=2100, c("region", "year", "technology", "shareFS1", "vehicleType", "subsectorL3", "share")]
     }
 
     ## remove "temporary" columns
@@ -635,12 +635,12 @@ toolCalculateLogitIncost <- function(prices,
               difftime(Sys.time(), start, units="mins"),
               "Minutes"))
   ## tmp1 needs the same structure as dfhistorical4W to produce the complete trend in time of 4wheelers
-  tmp1[, c("subsector_L2", "subsector_L3", "sector") := list("trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
+  tmp1[, c("subsectorL2", "subsectorL1", "sector") := list("trn_pass_road_LDV", "trn_pass_road", "trn_pass")]
   tmp1[, share := NULL]
   ## merge tmp1 and historical 4W
-  tmp1 = rbind(tmp1, dfhistorical4W[, c("year", "technology", "region", "subsector_L1", "vehicle_type", "tot_price", "logit.exponent", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar", "subsector_L2", "subsector_L3", "sector")])
+  tmp1 = rbind(tmp1, dfhistorical4W[, c("year", "technology", "region", "subsectorL3", "vehicleType", "tot_price", "logit.exponent", "pinco_tot", "prange", "pref", "pmod_av", "prisk", "pchar", "subsectorL2", "subsectorL1", "sector")])
   tmp1 <- tmp1[, share := (tot_price+pinco_tot+prange+pref+pmod_av+prisk+pchar)^logit.exponent/(sum((tot_price+pinco_tot+prange+pref+pmod_av+prisk+pchar)^logit.exponent)),
-               by = c("vehicle_type", "year", "region")]
+               by = c("vehicleType", "year", "region")]
 
   ## merge with prices
   tmp1 <- merge(tmp1[year %in% unique(dfprices4W$year)], dfprices4W, all.x = TRUE,
@@ -652,22 +652,22 @@ toolCalculateLogitIncost <- function(prices,
               tmp1[year==2100][,year:=2130],
               tmp1[year==2100][,year:=2150])
   ## copy of tmp1 is needed to create the updated version of preferences trend
-  inconv = copy(df[,.(year, region, sector, subsector_L3, subsector_L2, subsector_L1, vehicle_type, technology, pinco_tot, prange, pref, pmod_av, prisk, pchar)])
+  inconv = copy(df[,.(year, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType, technology, pinco_tot, prange, pref, pmod_av, prisk, pchar)])
   ## inconv and final_prefFV need the same structure as pref_data[["FV_final_pref"]]
-  inconv = melt(inconv, id.vars = c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology"))
+  inconv = melt(inconv, id.vars = c("year", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
   setnames(inconv, old = "variable", new = "logit_type")
-  final_prefFV = melt(final_prefFV, id.vars = c("year", "region", "sector", "subsector_L3", "subsector_L2", "subsector_L1", "vehicle_type", "technology"))
+  final_prefFV = melt(final_prefFV, id.vars = c("year", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
   setnames(final_prefFV, old = "variable", new = "logit_type")
-  final_prefFV = rbind(final_prefFV[subsector_L1 != "trn_pass_road_LDV_4W" & logit_type == "sw"],
+  final_prefFV = rbind(final_prefFV[subsectorL3 != "trn_pass_road_LDV_4W" & logit_type == "sw"],
                        inconv[(technology == "Liquids" & logit_type == "pinco_tot")|
                               (technology == "BEV" & logit_type %in% c("prange", "prisk", "pchar", "pmod_av"))|
                               (technology == "FCEV" & logit_type %in% c("pref", "prisk", "pmod_av"))|
                               (technology == "NG" & logit_type %in% c("pref", "prisk", "pmod_av"))|
                               (technology == "Hybrid Electric" & logit_type %in% c("prisk", "pchar", "pmod_av"))|
                               (technology == "Hybrid Liquids" & logit_type %in% c("prisk", "pmod_av"))])
-  final_prefNonMot = final_prefFV[vehicle_type %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),]
-  final_prefFV = merge(final_prefFV, unique(intensity_data[, c("region", "vehicle_type")]),
-                       by = c("region", "vehicle_type"), all.y = TRUE)
+  final_prefNonMot = final_prefFV[vehicleType %in% c("Cycle_tmp_vehicletype", "Walk_tmp_vehicletype"),]
+  final_prefFV = merge(final_prefFV, unique(intensity_data[, c("region", "vehicleType")]),
+                       by = c("region", "vehicleType"), all.y = TRUE)
   final_prefFV = rbind(final_prefNonMot, final_prefFV)
   ## overwrite the preferences with the market based ones
   pref_data[["FV_final_pref"]] = final_prefFV
@@ -675,7 +675,7 @@ toolCalculateLogitIncost <- function(prices,
   ## merge energy intensity
   MJ_km <- merge(df, mj_km_data, by=intersect(names(df),names(mj_km_data)),all = FALSE)
   MJ_km <- MJ_km[, .(MJ_km = sum(share * MJ_km)),
-                 by = c("region", "year", "technology", "vehicle_type")]
+                 by = c("region", "year", "technology", "vehicleType")]
 
   ## get rid of the ( misleading afterwards) columns
   df <- df[
@@ -701,7 +701,7 @@ toolCalculateLogitIncost <- function(prices,
            non_fuel_price=sum(share*non_fuel_price)),
         by = c("region","year",
                all_subsectors[
-                 seq(match("vehicle_type",all_subsectors),
+                 seq(match("vehicleType",all_subsectors),
                      length(all_subsectors),1)])]
 
   return(list(df = df, MJ_km = MJ_km, df_shares = df_shares,
