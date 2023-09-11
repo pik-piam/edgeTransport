@@ -28,6 +28,8 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 ### Input data  ------------------------------------------------
 ## from mrtransport
 mrtransportData <- toolLoadmrtransportData()
+# choose years according to inputdata
+years <- unique(mrtransportData$energyIntensity$period)
 
 ## from mrcommons
 mrcommonsData <- toolLoadmrcommonsData(SSPscen)
@@ -36,8 +38,8 @@ mrcommonsData <- toolLoadmrcommonsData(SSPscen)
 mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
 
 ## from REMIND
-REMINDdata$fuelPrices <- toolLoadREMINDfuelPrices(gdxPath)
-REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath)
+REMINDdata$fuelPrices <- toolLoadREMINDfuelPrices(gdxPath, years)
+REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath, years)
 
 ### Package data  ----------------------------------------------------------
 packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
@@ -46,10 +48,6 @@ packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
 ## Calculate data
 #################################################
 
-# SSP/SDP specific parameters -----------------------------------------------------
- # Calculation of value of time (based on GDP)
- # Calculation of 2nd hand vehicle prices (based on GDP)
-
 # Transport Policyscenario specific adjustments ---------------------
  # Load Factor
  # Energy efficiency
@@ -57,6 +55,11 @@ packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
  # Calculate inconvenience costs -> Kann das noch in eine csv ins package?
 #-> Store adjusted input data and model parameters
 
+# SSP/SDP specific parameters -----------------------------------------------------
+# Calculation of value of time (based on GDP)
+# Calculation of 2nd hand vehicle prices (based on GDP)
+
+#initiate TCO
 
 #################################################
 ## Calibration module
