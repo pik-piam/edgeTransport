@@ -43,36 +43,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
 
   ## merge tech prefs
   FVdt <- SWS$FV_final_SW
-  ## random fixings for missing demand data
-  FVdt <- rbindlist(list(
-    FVdt,
-    FVdt[region == "CHA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
-      , vehicleType := "Motorcycle (>250cc)"],
-    FVdt[region == "IND" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
-      , vehicleType := "Motorcycle (>250cc)"],
-    FVdt[region == "IND" & year <= 2010 & vehicleType == "Truck (18t)"][
-      , vehicleType := "Truck (26t)"],
-    FVdt[region == "IND" & year <= 2010 & vehicleType == "Truck (18t)"][
-      , vehicleType := "Truck (40t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
-      , vehicleType := "Truck (18t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
-      , vehicleType := "Truck (26t)"],
-    FVdt[region == "JPN" & year <= 2010 & vehicleType == "Truck (7.5t)"][
-      , vehicleType := "Truck (40t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Truck (18t)"][
-      , vehicleType := "Truck (26t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Truck (18t)"][
-      , vehicleType := "Truck (40t)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
-      , vehicleType := "Motorcycle (>250cc)"],
-    FVdt[region == "MEA" & year <= 2010 & vehicleType == "Motorcycle (50-250cc)"][
-      , vehicleType := "Moped"],
-    FVdt[region == "USA" & year <= 2010 & vehicleType == "Motorcycle (>250cc)"][
-      , vehicleType := "Motorcycle (50-250cc)"],
-    FVdt[region == "USA" & year <= 2010 & vehicleType == "Motorcycle (>250cc)"][
-      , vehicleType := "Moped"]
-  ))
 
   FVtarget <- ptab[level == "FV"]
   ## insert historical values
@@ -272,7 +242,7 @@ Hybrid Electric,Liquids")
     FVtarget[is.na(FV_techvar), FV_techvar := technology]
 
     richregions <- unique(unique(GDP_POP_MER[year == 2010 & GDP_cap > richcutoff, region]))
-    FVtarget[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    FVtarget[, regioncat := ifelse(region %in% richregions, "above GDP cutoff", "below GDP cutoff")]
     #Allow for specific regions to be dealt with individually
     FVtarget[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
 
@@ -315,13 +285,13 @@ Hybrid Electric,Liquids")
       browser()
     }
     ## level S2: Bus vs LDV
-    S2target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    S2target[, regioncat := ifelse(region %in% richregions, "above GDP cutoff", "below GDP cutoff")]
     #Allow for specific regions to be dealt with individually
     S2target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors
     S2target <- mitab[level == "S2"][, subsectorL1 := NULL][
       S2target, on=c("subsectorL2", "regioncat")]
-    S2target[year > 2020, sw := ifelse(
+    S2target[year > 2020 & !is.na, sw := ifelse(
                  is.na(target), sw, apply_logistic_trends(year, target, symmyr, speed) * sw),
              by=c("region", "subsectorL2")]
     S2target[, (cname_to_remove) := NULL]
@@ -334,7 +304,7 @@ Hybrid Electric,Liquids")
     }
 
     ## level S3: all other mode shares
-    S3target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
+    S3target[, regioncat := ifelse(region %in% richregions, "above GDP cutoff", "below GDP cutoff")]
     #Allow for specific regions to be dealt with individually
     S3target[, regioncat := ifelse(region %in% unique(mitab$regioncat), region, regioncat)]
     ## remove L3 from mitab to avoid a join on these sectors

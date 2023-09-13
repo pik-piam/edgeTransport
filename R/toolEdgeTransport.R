@@ -30,9 +30,11 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 mrtransportData <- toolLoadmrtransportData()
 # choose years according to inputdata
 years <- unique(mrtransportData$energyIntensity$period)
+# set GDP cutoff to differentiate between regions
+GDPcutoff <- 25000 # [constant 2005 Int$MER]
 
 ## from mrcommons
-mrcommonsData <- toolLoadmrcommonsData(SSPscen)
+mrdriversData <- toolLoadmrcommonsData(SSPscen)
 
 ## from mrremind
 mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
@@ -49,17 +51,34 @@ packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
 #################################################
 
 # Transport Policyscenario specific adjustments ---------------------
- # Load Factor
- # Energy efficiency
- # Calculate preference trends (Applying factors)
- # Calculate inconvenience costs -> Kann das noch in eine csv ins package?
-#-> Store adjusted input data and model parameters
+# Load Factor
+scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(mrtransportData$loadFactor, demScen, SSPscen)
+# Energy intensity
+if (!is.null(packageData$policyParEnergyIntensity)) {
+  scenSpecEnIntensity <- toolApplyScenSpecEnInt(mrtransportData$energyIntensity, packageData$policyParEnergyIntensity,
+                                                packageData$mitigationTechMap, years)
+}
 
 # SSP/SDP specific parameters -----------------------------------------------------
 # Calculation of value of time (based on GDP)
+valueOfTimeCosts <- toolCalcValueOfTimeCosts(mrtransportData$valueOfTimeMultiplier, mrremindData$GDPmer)
 # Calculation of 2nd hand vehicle prices (based on GDP)
+secondHandVehiclePrices <- toolCalc2ndHandVehiclePrices(mrtransportData$CAPEXtrackedFleet)
 
-#initiate TCO
+
+# Calculate preference trends (Applying factors)
+scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePreftrends, packageData$policyParPrefTrends, packageData$mitigationTechMap,
+                                              mrdriversData$GDPpcMER, GDPcutoff)
+# Calculate inconvenience costs -> Kann das noch in eine csv ins package?
+initialIncoCostCurves <- toolApplyInitialIncoCostCurves()
+
+
+
+combinedCostperES <- toolCombineCosts()
+
+scenSpecInputdata <- list(
+
+)
 
 #################################################
 ## Calibration module

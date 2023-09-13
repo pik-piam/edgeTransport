@@ -191,7 +191,7 @@ toolDemandRegNAVIGATEIntl <- function(tech_output, price_baseline, GDP_POP, ICCT
     price_el_int_aviation_RPK = merge(price_el_int_aviation, RPK_cap_baseline, by = c("region", "year", "mode"),all.x = TRUE)
     price_el_int_aviation_RPK = price_el_int_aviation_RPK[!is.na(RPKCAP)]
     
-    price_el_int_aviation_RPK[, c("vrich", "rich", "vpoor", "norm", "variable", "GDP_cap", "GDP_val", "POP_val") := NULL]
+    price_el_int_aviation_RPK[, c("vrich", "above GDP cutoff", "vpoor", "norm", "variable", "GDP_cap", "GDP_val", "POP_val") := NULL]
     price_el_int_aviation_RPK=approx_dt(dt = price_el_int_aviation_RPK, ## database to interpolate
                                         xdata = seq(1965,2150,5), ## time steps on which to interpolate
                                         ycol = "RPKCAP", ## column containing the data to interpolate

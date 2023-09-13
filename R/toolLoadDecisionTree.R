@@ -6,23 +6,23 @@
 toolLoadDecisiontree <- function(regionAggregation = "iso") {
 
   # decisionTree.csv contains all possible branches of the decision tree
-  decisionTree <- fread(system.file("extdata/decisionTree.csv", package = "edgeTransport", mustWork = TRUE))
+  decisionTree <- fread(system.file("extdata/decisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   decisionTree[, spatial := "all"]
   # Not all countries feature the same branches of the decision tree - Some vehicleTypes and modes are not
   # available in certain countries
   # Here we create the full structure of the nested decision tree differentiated for all countries to make it testable
   regionMap <- system.file("extdata", "regionmappingISOto21to12.csv",
-                                 package = "mrtransport", mustWork = TRUE
+                                 package = "edgeTransport", mustWork = TRUE
   )
-  regionMap <- fread(regionMap, skip = 0)
-  ISOcountries <- regionMap[, c("countryCode")]
-  setnames(ISOcountries, "CountryCode", "region")
+  regionMap <- fread(regionMap, skip = 0, , header = TRUE)
+  setnames(regionMap, "countryCode", "region")
+  ISOcountries <- regionMap[, c("region")]
   ISOcountries[, spatial := "all"]
 
   completeDataSet <- merge.data.table(decisionTree, ISOcountries, by = "spatial", allow.cartesian = TRUE)
   completeDataSet[, spatial := NULL]
-  mapCountrySpecificVehicleTypes <- fread(system.file("extdata/mapCountrySpecificVehicleTypes.csv",
-                                                      package = "edgeTransport", mustWork = TRUE))
+  mapCountrySpecificVehicleTypes <- fread(system.file("extdata/helpersMapCountrySpecificVehicleTypes.csv",
+                                                      package = "edgeTransport", mustWork = TRUE), header = TRUE)
 
   completeDataSet <- merge.data.table(completeDataSet, mapCountrySpecificVehicleTypes,
                                       by = c("region", "univocalName"), all = TRUE)
@@ -46,7 +46,7 @@ toolLoadDecisiontree <- function(regionAggregation = "iso") {
   )
 
   setkey(completeDataSetAgg, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
-         technology, univocalName, period)
+         technology, univocalName)
 
   return(completeDataSetAgg)
   }
