@@ -58,12 +58,20 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
     target_year = 2060
   }
 
+#if or condition syntax
+
+
   if (!is.null(Dem_Scen)){
-    if (Dem_Scen == "SSP2EU_lowdem"){
+    if (Dem_Scen == "SSP2EU_lowdem" | Dem_Scen == "SSP2EU_demRedStrong") {
     target_LF = 0.4
     target_year = 2050}
   }
-
+    
+  if (!is.null(Dem_Scen)){
+      if (Dem_Scen == "SSP2EU_demRedWeak") {
+      target_LF = 0.2
+      target_year = 2050}
+    }
 
   LF[
     subsector_L1 == "trn_pass_road_LDV_4W" &
