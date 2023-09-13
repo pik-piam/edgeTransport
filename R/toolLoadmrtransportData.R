@@ -47,12 +47,12 @@ toolLoadmrtransportData <- function() {
   # Speed of modes [km/h]
   speedOfModesMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "speedOfModes")
-  speedOfModesother <- magpie2dt(speedOfModesMagpieobj)
+  speedOfModes <- magpie2dt(speedOfModesMagpieobj)
 
   # Value of Time multiplier [-]
   valueOfTimeMultiplierMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                                regionmapping = "regionmapping_21_EU11.csv", subtype = "valueOfTimeMultiplier")
-  valueOfTimeMultiplier <- magpie2dt(speedOfModesMagpieobj)
+  valueOfTimeMultiplier <- magpie2dt(valueOfTimeMultiplierMagpieobj)
 
   return(
     list(histESdemand = histESdemand,
@@ -62,7 +62,7 @@ toolLoadmrtransportData <- function() {
          CAPEXother = CAPEXother,
          nonFuelOPEXother = nonFuelOPEXother,
          annualMileage = annualMileage,
-         speedOfModesother = speedOfModesother,
+         speedOfModes = speedOfModesother,
          valueOfTimeMultiplier = valueOfTimeMultiplier
          )
   )

@@ -34,7 +34,7 @@ years <- unique(mrtransportData$energyIntensity$period)
 GDPcutoff <- 25000 # [constant 2005 Int$MER]
 
 ## from mrcommons
-mrdriversData <- toolLoadmrcommonsData(SSPscen)
+mrdriversData <- toolLoadmrcommonsData(SSPscen, years)
 
 ## from mrremind
 mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
