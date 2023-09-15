@@ -25,6 +25,6 @@ toolLoadmrremindData <- function(decisionTree, yrs) {
 
   # map on decision tree, apply only on 4 wheelers
   subsidies <- merge(decisionTree[subsectorL3 == "trn_pass_road_LDV_4W"], subsidies, by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  subsidies <- subsidies[!is.na(value)]
-  #Q: How to include phase out of the incentives?
+  subsidies <- subsidies[!is.na(value)][, variable := "Subsidy"][, unit := "US$2005/veh"]
+  #Q: How to include phase out of the incentives? Is that needed at all?
 }

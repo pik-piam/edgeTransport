@@ -3,11 +3,13 @@
 #' @import data.table
 
 
-toolCombineCosts <- function(mrtransportInput, annuity, fuelCosts){
+toolCombineCosts <- function(mrtransportInput, annuity, fuelCosts, subsidies){
   
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr
-    annualizedCapexTrackedFleet <- merge(mrtransportInput$CAPEXtrackedFleet, annuity, by = vehicleType, allow.cartesian = TRUE)
+    # Include subsidies on LDV 4 Wheelers
+    annualizedCapexTrackedFleet <- rbind(mrtransportInput$CAPEXtrackedFleet, subsidies)
+    annualizedCapexTrackedFleet <- merge(annualizedCapexTrackedFleet, annuity, by = vehicleType, allow.cartesian = TRUE)
     annualizedCapexTrackedFleet[, value := value * annuity][, unit := "US$2005/veh/yr"]
     # Combine with non Fuel OPEX
     APEXandNonFuelOPEXtrackedFleet <- rbind(annualizedCapexTrackedFleet, mrtransportInput$nonFuelOPEXtrackedFleet)

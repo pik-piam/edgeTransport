@@ -10,72 +10,73 @@
 
 
 toolCalibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_data, price_nonmot){
-  share <- tot_VOT_price <- fuel_price_pkm <- non_fuel_price <- logit.exponent <- region <- vehicleType <- technology <- sw <- `.` <- subsectorL3 <- subsectorL2 <- subsectorL1 <- sector <- V1 <- V2 <- time_price <- tot_price <- NULL
+  share <- tot_VOT_price <- fuel_price_pkm <- non_fuel_price <- lambda <- region <- vehicleType <- technology <- preference <- `.` <- subsectorL3 <- subsectorL2 <- subsectorL1 <- sector <- V1 <- V2 <- time_price <- totPrice <- NULL
   ##==== functions ====
 
   ##function that determines the shares of the alternatives in the nodes
-  opt_func <- function(x, pri, sha, lamb){
-    sha*sum(x*pri^lamb)/min(pri^lamb) - x*pri^lamb/min(pri^lamb)
+  optFunction <- function(x, pri, sha, lamb){
+    sha * sum(x * pri ^ lamb) / min(pri ^ lamb) - x * pri ^ lamb / min(pri ^ lamb)
   }
 
   jacobian <- function(x, pri, sha, lamb){
-    matrix(sha) %*% t(matrix(pri))/min(pri^lamb) - pri * diag(length(pri))/min(pri^lamb)
+    matrix(sha) %*% t(matrix(pri)) / min(pri ^ lamb) - pri * diag(length(pri)) / min(pri ^ lamb)
   }
 
-  ##applies opt_func, and to help the solver uses a factor as starting point
-  root_func <- function(prices, shares, lambda,factor){
-    multiroot(f = opt_func, start = factor, pri = prices, sha = shares, lamb=lambda, positive=T, jacfunc = jacobian)$root
+  ##applies optFunction, and to help the solver uses a factor as starting point
+  rootFunction <- function(prices, shares, lambda,factor){
+    multiroot(f = optFunction, start = factor, pri = prices, sha = shares, lamb=lambda, positive=T, jacfunc = jacobian)$root
   }
 
-  ##function that compares the shares you obtained with the calibrated sw and the theoretical shares, known
-  check_shares=function(df,grouping_value){
-    share_check <- sw <- tot_price <- logit.exponent <- share_diff <- share <- NULL
-    tmp=df[year<=2010,]
+  ##function that compares the shares you obtained with the calibrated preference and the theoretical shares, known
+  checkShares = function(df , groupingValue){
+    shareCheck <- preference <- totPrice <- lambda <- share_diff <- share <- NULL
+    tmp <- df[period <= 2010]
 
-    tmp[, share_check := sw*tot_price^logit.exponent/sum(sw*tot_price^logit.exponent),
-        by=c("region", "year",grouping_value)]
+    tmp[, shareCheck := preference * totPrice ^ lambda / sum(preference * totPrice ^ lambda),
+        by = c("region", "period", groupingValue)]
 
-    tmp[,share_diff:=(share_check-share)^2]
-    tmp = tmp[share_diff>1e-3]
-    return(tmp[share_diff == max(share_diff)][,c("region","year","share_check","share")])
+    tmp[,share_diff := (shareCheck - share) ^ 2]
+    tmp <- tmp[share_diff > 1e-3]
+    return(tmp[share_diff == max(share_diff)][, c("region","period","shareCheck", "share")])
   }
-  ## for loop that tries multiple initial points for the SW calibration.
-  ## The function stops when all the SW have been successfully calculated
-  ## Returns the dt with the calculated SW, already normalized
 
-  sw_calc=function(df_sw,grouping_value,exp_prices){
-    logit.exponent <- fac <- share <- tot_price <- tech_output <- sw <- NULL
-    for (exp_price in exp_prices) {                                         ## loops through all the initial points suggested
-      if(is.null(df_sw$sw)){df_sw[,sw:=NaN]}                                ## if this is the first iteration, an empty column is needed
+  ## for loop that tries multiple initial points for the preference calibration.
+  ## The function stops when all the preference have been successfully calculated
+  ## Returns the dt with the calculated preference, already normalized
 
-      for (lamb in unique(df_sw$logit.exponent)) {                          ## treats all the lambdas separately
-        df_sw[logit.exponent==lamb & is.nan(sw),                            ## only for the nodes that have the specific lambda AND SW that are still not calculated/did not work out the calculation
-              fac:=share/max(share)*(tot_price/max(tot_price))^exp_price,   ## provides a starting point
-              by=c("region", "year",grouping_value)]
+  calculatePreferences <- function(dfPreference, groupingValue, expectedPrices){
+    lambda <- fac <- share <- totPrice <- tech_output <- preference <- NULL
+    for (expectedPrice in expectedPrices) {                                         ## loops through all the initial points suggested
+      if(is.null(dfPreference$preference)){dfPreference[, preference := NaN]}                                ## if this is the first iteration, an empty column is needed
 
-        df_sw[logit.exponent==lamb  & is.nan(sw),
-                               sw:= root_func(tot_price, share, lamb,fac),                   ## apply the root function
-                               by=c("region", "year",grouping_value)]
+      for (lamb in unique(dfPreference$lambda)) {                          ## treats all the lambdas separately
+        dfPreference[lambda==lamb & is.nan(preference),                            ## only for the nodes that have the specific lambda AND preference that are still not calculated/did not work out the calculation
+              fac := share / max(share) * (totPrice / max(totPrice)) ^ expectedPrice,   ## provides a starting point
+              by = c("region", "period",groupingValue)]
+
+        dfPreference[lambda == lamb  & is.nan(preference),
+                               preference:= rootFunction(totPrice, share, lamb,fac),                   ## apply the root function
+                               by = c("region", "period",groupingValue)]
       }
 
-      df_sw[,
-            sw := sw/max(sw),                                               ## normalize SW. If the maximum is 0, this is going to give NaN, which is recognized from the loop as "still work in progress"
-            by=c("region", "year",grouping_value)]
+      dfPreference[,
+            preference := preference / max(preference),                                               ## normalize preference. If the maximum is 0, this is going to give NaN, which is recognized from the loop as "still work in progress"
+            by = c("region", "period",groupingValue)]
 
-      if (!any(is.nan(df_sw$sw)) & !is.null(df_sw$sw)) {                    ## needs to exit the loop if all the SW are calculated and there are no NaNs
+      if (!any(is.nan(dfPreference$preference)) & !is.null(dfPreference$preference)) {                    ## needs to exit the loop if all the preference are calculated and there are no NaNs
         break
       }
 
 
     }
 
-    if(any(is.na(df_sw$sw))){
-      print(paste0("There are NaNs in ", grouping_value, ", other initial values are needed")) ## error message that tells you that not all the SW are correctly calibrated
+    if(any(is.na(dfPreference$preference))){
+      print(paste0("There are NaNs in ", groupingValue, ", other initial values are needed")) ## error message that tells you that not all the preference are correctly calibrated
       stop()
-    } else {print(paste0("Max difference in shares for ",grouping_value,": "))
-            print(check_shares(df_sw,grouping_value))}## check maximum difference in expected shares
+    } else {print(paste0("Max difference in shares for ",groupingValue,": "))
+            print(checkShares(dfPreference,groupingValue))}## check maximum difference in expected shares
 
-    return(df_sw)
+    return(dfPreference)
 
   }
 
@@ -92,122 +93,122 @@ toolCalibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_dat
   value_time_S3S2=vot_data[["value_time_S3S2"]]
   value_time_S2S1=vot_data[["value_time_S2S1"]]
   value_time_S1S=vot_data[["value_time_S1S"]]
-  base_SW=calibr_demand[tech_output>0,]
-  base_SW=base_SW[,share:=tech_output/sum(tech_output),by=c("region","year","vehicleType")]
-  base_SW=merge(base_SW,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsectorL3", "vehicleType", "subsectorL2", "subsectorL1"))
+  base_preference=calibr_demand[tech_output>0,]
+  base_preference=base_preference[,share:=tech_output/sum(tech_output),by=c("region","period","vehicleType")]
+  base_preference=merge(base_preference,logit_exponent_FV,all.x=TRUE,by=c("sector", "subsectorL3", "vehicleType", "subsectorL2", "subsectorL1"))
 
-  price_FV = prices[year <= 2010]
-  price_FV= merge(price_FV, price_nonmot,all=TRUE, by=c("tot_price","region","year","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
+  price_FV = prices[period <= 2010]
+  price_FV= merge(price_FV, price_nonmot,all=TRUE, by=c("totPrice","region","period","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
 
   price_FV[,tot_VOT_price := 0]
   #Cycling and Walking have no fuel and non fuel prices, 0 instead of NA is given
   price_FV[is.na(fuel_price_pkm), fuel_price_pkm := 0]
   price_FV[is.na(non_fuel_price), non_fuel_price := 0]
 
-  dups <- duplicated(price_FV, by=c("region", "technology", "vehicleType","year"))
+  dups <- duplicated(price_FV, by=c("region", "technology", "vehicleType","period"))
 
   if(any(dups)){
     warning("Duplicated techs found in supplied demand.")
     print(price_FV[dups])
-    price_FV <- unique(price_FV, by=c("region", "technology", "vehicleType","year"))
+    price_FV <- unique(price_FV, by=c("region", "technology", "vehicleType","period"))
   }
 
-  FV_SW=merge(price_FV,base_SW,all=FALSE,by=c("region","year","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
-  FV_SW=FV_SW[!is.na(tech_output),] ## minor adjusments, TODO check if needed/why needed!
+  FV_preference=merge(price_FV,base_preference,all=FALSE,by=c("region","period","technology","vehicleType","subsectorL3","subsectorL2","subsectorL1","sector"))
+  FV_preference=FV_preference[!is.na(tech_output),] ## minor adjusments, TODO check if needed/why needed!
   ## needs rando lambdas for the sectors that are not explicitly calculated
-  FV_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  FV_preference[,lambda:=ifelse(is.na(lambda),-10,lambda)]
 
-  FV_SW=sw_calc( df_sw=FV_SW, exp_prices = c(2,1,3,4,5,6,7), grouping_value="vehicleType")
+  FV_preference=calculatePreferences( dfPreference=FV_preference, expectedPrices = c(2,1,3,4,5,6,7), groupingValue="vehicleType")
 
   ## merge value of time and assign 0 to the entries that don't have it
-  FV_SW=merge(FV_SW,value_time_FV,all.x=TRUE,by=c("region", "year", "vehicleType","subsectorL3"))
-  FV_SW[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  FV_SW[,tot_price:=tot_price+time_price]
+  FV_preference=merge(FV_preference,value_time_FV,all.x=TRUE,by=c("region", "period", "vehicleType","subsectorL3"))
+  FV_preference[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  FV_preference[,totPrice:=totPrice+time_price]
 
-  ## reshape, save and store the sw at this level
-  FV_final_SW=FV_SW[,.(region,year,technology,tot_price,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,sw,logit.exponent)]
+  ## reshape, save and store the preference at this level
+  FV_final_preference=FV_preference[,.(region,period,technology,totPrice,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,preference,lambda)]
 
   ## calculate price of one level up
-  FV_SW=FV_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector)]
+  FV_preference=FV_preference[,.(totPrice=sum(share*totPrice),tech_output=sum(tech_output)),by = .(region,period,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector)]
 
   ## now we go from V to SubS VSubS
-  VS3_SW=merge(FV_SW,logit_exponent_VS3,all.x=TRUE,by = c("subsectorL3", "subsectorL2", "subsectorL1", "sector"))
+  VS3_preference=merge(FV_preference,logit_exponent_VS3,all.x=TRUE,by = c("subsectorL3", "subsectorL2", "subsectorL1", "sector"))
   ## needs random lambdas for the sectors that are not explicitly calculated
-  VS3_SW[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  VS3_preference[,lambda:=ifelse(is.na(lambda),-10,lambda)]
   ## calculate shares at this level
-  VS3_SW[,share:=tech_output/sum(tech_output),by=c("region","year","subsectorL3")]
+  VS3_preference[,share:=tech_output/sum(tech_output),by=c("region","period","subsectorL3")]
 
 
   ## merge value of time and assign 0 to the entries that don't have it
-  VS3_SW=merge(VS3_SW,value_time_VS3,all.x=TRUE,by=c("region", "year", "vehicleType", "subsectorL3"))
-  VS3_SW[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  VS3_SW[,tot_price:=tot_price+time_price]
-  VS3_SW[,time_price:=NULL]
+  VS3_preference=merge(VS3_preference,value_time_VS3,all.x=TRUE,by=c("region", "period", "vehicleType", "subsectorL3"))
+  VS3_preference[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  VS3_preference[,totPrice:=totPrice+time_price]
+  VS3_preference[,time_price:=NULL]
 
   ## optimize
-  VS3_SW=sw_calc(df_sw = VS3_SW, exp_prices = c(7,1,2,6,5,3),grouping_value = "subsectorL3")
+  VS3_preference=calculatePreferences(dfPreference = VS3_preference, expectedPrices = c(7,1,2,6,5,3),groupingValue = "subsectorL3")
 
-  ## reshape, save and store the sw at this level
-  VS3_final_SW=VS3_SW[,.(region,year,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,sw,tot_price,logit.exponent)]
+  ## reshape, save and store the preference at this level
+  VS3_final_preference=VS3_preference[,.(region,period,vehicleType,subsectorL3,subsectorL2,subsectorL1,sector,preference,totPrice,lambda)]
 
 
-  VS3_SW=VS3_SW[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL3,subsectorL2,subsectorL1,sector)]
+  VS3_preference=VS3_preference[,.(totPrice=sum(share*totPrice),tech_output=sum(tech_output)),by = .(region,period,subsectorL3,subsectorL2,subsectorL1,sector)]
 
   ## rename the database, now it's going from V to S1
-  S3S2_sw=merge(VS3_SW,logit_exponent_S3S2,all.x=TRUE)
-  S3S2_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsectorL1","subsectorL2")]
+  S3S2_preference=merge(VS3_preference,logit_exponent_S3S2,all.x=TRUE)
+  S3S2_preference[,share:=tech_output/sum(tech_output),by=c("region","period","sector","subsectorL1","subsectorL2")]
 
   ## needs rando lambdas for the sectors that are not explicitly calculated
-  S3S2_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  S3S2_preference[,lambda:=ifelse(is.na(lambda),-10,lambda)]
 
 
-  S3S2_sw=merge(S3S2_sw,value_time_S3S2,all.x = TRUE,by = c("region", "year", "subsectorL3","subsectorL2"))
-  S3S2_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S3S2_sw[,tot_price:=tot_price+time_price]
-  S3S2_sw[,time_price:=NULL]
-  S3S2_sw=sw_calc(S3S2_sw,exp_prices = c(1,0.5,2,3,1,4),grouping_value = "subsectorL2")
+  S3S2_preference=merge(S3S2_preference,value_time_S3S2,all.x = TRUE,by = c("region", "period", "subsectorL3","subsectorL2"))
+  S3S2_preference[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S3S2_preference[,totPrice:=totPrice+time_price]
+  S3S2_preference[,time_price:=NULL]
+  S3S2_preference=calculatePreferences(S3S2_preference,expectedPrices = c(1,0.5,2,3,1,4),groupingValue = "subsectorL2")
 
-  ## reshape, save and store the sw at this level
-  S3S2_final_SW=S3S2_sw[,.(region,year,subsectorL3,subsectorL2,subsectorL1,sector,sw,tot_price,logit.exponent)]
+  ## reshape, save and store the preference at this level
+  S3S2_final_preference=S3S2_preference[,.(region,period,subsectorL3,subsectorL2,subsectorL1,sector,preference,totPrice,lambda)]
 
-  S3S2_sw=S3S2_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL2,subsectorL1,sector)]
+  S3S2_preference=S3S2_preference[,.(totPrice=sum(share*totPrice),tech_output=sum(tech_output)),by = .(region,period,subsectorL2,subsectorL1,sector)]
 
   ## rename the database, now it's going from S2 to S3
-  S2S1_sw=merge(S3S2_sw,logit_exponent_S2S1,all.x=TRUE)
-  S2S1_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector","subsectorL1")]
+  S2S1_preference=merge(S3S2_preference,logit_exponent_S2S1,all.x=TRUE)
+  S2S1_preference[,share:=tech_output/sum(tech_output),by=c("region","period","sector","subsectorL1")]
 
   ## needs rando lambdas for the sectors that are not explicitly calculated
-  S2S1_sw[,logit.exponent:=ifelse(is.na(logit.exponent),-10,logit.exponent)]
+  S2S1_preference[,lambda:=ifelse(is.na(lambda),-10,lambda)]
 
-  S2S1_sw=merge(S2S1_sw,value_time_S2S1,all.x = TRUE,by = c("region", "year", "subsectorL2","subsectorL1"))
-  S2S1_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S2S1_sw[,tot_price:=tot_price+time_price]
-  S2S1_sw[,time_price:=NULL]
-  S2S1_sw=sw_calc(df_sw = S2S1_sw, exp_prices = c(2,3,4,2,1), grouping_value = "subsectorL1")
+  S2S1_preference=merge(S2S1_preference,value_time_S2S1,all.x = TRUE,by = c("region", "period", "subsectorL2","subsectorL1"))
+  S2S1_preference[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S2S1_preference[,totPrice:=totPrice+time_price]
+  S2S1_preference[,time_price:=NULL]
+  S2S1_preference=calculatePreferences(dfPreference = S2S1_preference, expectedPrices = c(2,3,4,2,1), groupingValue = "subsectorL1")
 
-  ## reshape, save and store the sw at this level
-  S2S1_final_SW=S2S1_sw[,.(region,year,subsectorL2,subsectorL1,sector,sw, tot_price, logit.exponent)]
+  ## reshape, save and store the preference at this level
+  S2S1_final_preference=S2S1_preference[,.(region,period,subsectorL2,subsectorL1,sector,preference, totPrice, lambda)]
 
 
-  S2S1_sw=S2S1_sw[,.(tot_price=sum(share*tot_price),tech_output=sum(tech_output)),by = .(region,year,subsectorL1,sector)]
+  S2S1_preference=S2S1_preference[,.(totPrice=sum(share*totPrice),tech_output=sum(tech_output)),by = .(region,period,subsectorL1,sector)]
 
   ## rename the database, now it's going from S2 to S3
-  S1S_sw=merge(S2S1_sw,logit_exponent_S1S,all.x=TRUE)
-  S1S_sw[,share:=tech_output/sum(tech_output),by=c("region","year","sector")]
+  S1S_preference=merge(S2S1_preference,logit_exponent_S1S,all.x=TRUE)
+  S1S_preference[,share:=tech_output/sum(tech_output),by=c("region","period","sector")]
 
-  S1S_sw=merge(S1S_sw,value_time_S1S,all.x = TRUE,by = c("region", "year", "sector","subsectorL1"))
-  S1S_sw[,time_price:=ifelse(is.na(time_price),0,time_price)]
-  S1S_sw[,tot_price:=tot_price+time_price]
-  S1S_sw[,time_price:=NULL]
+  S1S_preference=merge(S1S_preference,value_time_S1S,all.x = TRUE,by = c("region", "period", "sector","subsectorL1"))
+  S1S_preference[,time_price:=ifelse(is.na(time_price),0,time_price)]
+  S1S_preference[,totPrice:=totPrice+time_price]
+  S1S_preference[,time_price:=NULL]
 
-  S1S_sw=sw_calc(df_sw = S1S_sw, exp_prices = c(1,2,5,3,1,4), grouping_value = "sector")
+  S1S_preference=calculatePreferences(dfPreference = S1S_preference, expectedPrices = c(1,2,5,3,1,4), groupingValue = "sector")
 
-  ## reshape, save and store the sw at this level
-  S1S_final_SW=S1S_sw[,.(region,year,subsectorL1,sector,sw,tot_price,logit.exponent)]
+  ## reshape, save and store the preference at this level
+  S1S_final_preference=S1S_preference[,.(region,period,subsectorL1,sector,preference,totPrice,lambda)]
 
-  return(list(list_SW = list(S2S1_final_SW=S2S1_final_SW,
-                                 S1S_final_SW=S1S_final_SW,
-                                 S3S2_final_SW=S3S2_final_SW,
-                                 VS3_final_SW=VS3_final_SW,
-                                 FV_final_SW=FV_final_SW)))
+  return(list(list_preference = list(S2S1_final_preference=S2S1_final_preference,
+                                 S1S_final_preference=S1S_final_preference,
+                                 S3S2_final_preference=S3S2_final_preference,
+                                 VS3_final_preference=VS3_final_preference,
+                                 FV_final_preference=FV_final_preference)))
 }

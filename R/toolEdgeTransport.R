@@ -65,7 +65,7 @@ scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePreftrends, pa
 
 annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationTechMap)
 
-combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices)
+combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies)
 
 initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal, annuity, mrtransportData$loadFactor, mrtransportData$annualMileage,
                                             packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years)
