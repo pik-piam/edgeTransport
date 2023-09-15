@@ -2,57 +2,54 @@
 #'
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrtransportData <- function() {
+toolLoadmrtransportData <- function(SSPscen) {
 
   # Energy Service demand [billion (p|t)km/yr]
   histESdemandMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                      regionmapping = "regionmapping_21_EU11.csv", subtype = "histESdemand")
+                                      regionmapping = "regionmapping_21_EU11.csv", subtype = "histESdemand", SSPscen = SSPscen)
   histESdemand <- magpie2dt(histESdemandMagpieobj)
 
   # Energy Intensity after IEA harmonization [MJ/vehkm]
   energyIntensityMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                         regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"))
+                                         regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"), SSPscen = SSPscen)
   energyIntensity <- magpie2dt(energyIntensityMagpieobj)
 
   # Load Factor [(p|t)/veh]
   loadFactorMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                    regionmapping = "regionmapping_21_EU11.csv", subtype = "loadFactor")
+                                    regionmapping = "regionmapping_21_EU11.csv", subtype = "loadFactor", SSPscen = SSPscen)
   loadFactor <- magpie2dt(loadFactorMagpieobj)
 
   # CAPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh]
   CAPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                           regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXtrackedFleet")
+                                           regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXtrackedFleet", SSPscen = SSPscen)
   CAPEXtrackedFleet <- magpie2dt(CAPEXtrackedFleetMagpieobj)
 
   # non-fuel OPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh/yr]
   nonFuelOPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                                 regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXtrackedFleet")
+                                                 regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXtrackedFleet", SSPscen = SSPscen)
   nonFuelOPEXtrackedFleet <- magpie2dt(nonFuelOPEXtrackedFleetMagpieobj)
 
   # CAPEX other [US$2005/vehkm]
   CAPEXotherMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                    regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXother")
+                                    regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXother", SSPscen = SSPscen)
   CAPEXother <- magpie2dt(CAPEXotherMagpieobj)
 
   # non-fuel OPEX other [US$2005/vehkm]
   nonFuelOPEXotherMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                          regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXother")
+                                          regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXother", SSPscen = SSPscen)
   nonFuelOPEXother <- magpie2dt(nonFuelOPEXotherMagpieobj)
 
   # Annual Mileage (currently only for the tracked fleet) [vehkm/veh/yr]
   annualMileageMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "annualMileage")
+                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "annualMileage", SSPscen = SSPscen)
   annualMileage <- magpie2dt(annualMileageMagpieobj)
 
-  # Speed of modes [km/h]
-  speedOfModesMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                      regionmapping = "regionmapping_21_EU11.csv", subtype = "speedOfModes")
-  speedOfModes <- magpie2dt(speedOfModesMagpieobj)
+  # Time value costs [US$2005/pkm]
+  timeValueCostsMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
+                                      regionmapping = "regionmapping_21_EU11.csv", subtype = "timeValueCosts", SSPscen = SSPscen)
+  timeValueCosts <- magpie2dt(timeValueCostsMagpieobj)
 
-  # Value of Time multiplier [-]
-  valueOfTimeMultiplierMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
-                                               regionmapping = "regionmapping_21_EU11.csv", subtype = "valueOfTimeMultiplier")
-  valueOfTimeMultiplier <- magpie2dt(valueOfTimeMultiplierMagpieobj)
+
 
   return(
     list(histESdemand = histESdemand,

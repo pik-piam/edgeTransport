@@ -27,21 +27,21 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 
 ### Input data  ------------------------------------------------
 ## from mrtransport
-mrtransportData <- toolLoadmrtransportData()
+mrtransportData <- toolLoadmrtransportData(SSPscen)
 # choose years according to inputdata
 years <- unique(mrtransportData$energyIntensity$period)
 # set GDP cutoff to differentiate between regions
-GDPcutoff <- 25000 # [constant 2005 Int$MER]
+GDPcutoff <- 25000 # [constant 2005 US$MER]
 
 ## from mrcommons
-mrdriversData <- toolLoadmrcommonsData(SSPscen, years)
+mrdriversData <- toolLoadmrdriversData(SSPscen, years)
 
 ## from mrremind
 mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
 
 ## from REMIND
 REMINDdata$fuelPrices <- toolLoadREMINDfuelPrices(gdxPath, years)
-REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath, years)
+#REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath, years) move to iterative script
 
 ### Package data  ----------------------------------------------------------
 packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
@@ -59,26 +59,16 @@ if (!is.null(packageData$policyParEnergyIntensity)) {
                                                 packageData$mitigationTechMap, years)
 }
 
-# SSP/SDP specific parameters -----------------------------------------------------
-# Calculation of value of time (based on GDP)
-valueOfTimeCosts <- toolCalcValueOfTimeCosts(mrtransportData$valueOfTimeMultiplier, mrremindData$GDPmer)
-# Calculation of 2nd hand vehicle prices (based on GDP)
-secondHandVehiclePrices <- toolCalc2ndHandVehiclePrices(mrtransportData$CAPEXtrackedFleet)
-
 
 # Calculate preference trends (Applying factors)
 scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePreftrends, packageData$policyParPrefTrends, packageData$mitigationTechMap,
                                               mrdriversData$GDPpcMER, GDPcutoff)
+
+
+combinedCostperES <- toolCombineCosts(mrtransportData, packageData$annuityCalc, packageData$mitigationTechMap, REMINDdata$fuelPrices)
+
 # Calculate inconvenience costs -> Kann das noch in eine csv ins package?
-initialIncoCostCurves <- toolApplyInitialIncoCostCurves()
-
-
-
-combinedCostperES <- toolCombineCosts()
-
-scenSpecInputdata <- list(
-
-)
+initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal)
 
 #################################################
 ## Calibration module

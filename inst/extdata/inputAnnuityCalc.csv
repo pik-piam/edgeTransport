@@ -1,2 +1,2 @@
-﻿scenario ;vehicleType ;interestRate
-default;default;0.05
+﻿transportPolScen;vehicleType ;interestRate
+default;all;0.05
