@@ -3,16 +3,12 @@
 #' @import data.table
 
 
-toolCombineCosts <- function(mrtransportInput, annuityCalc, mitigationTechMap, fuelCosts){
-  
-  annuityCalc <- merge(mitigationTechMap, annuityCalc, by = "FVvehvar", all.y = TRUE)[, FVvehvar := NULL]
-  # Calculate annuity factor to annualize CAPEX
-  annuityCalc[, annuityFactor := (1 + interestRate ^ serviceLife  * interestRate)/((1 + ainterestRate) ^ serviceLife - 1)][, c("interestRate", "serviceLife") := NULL]
+toolCombineCosts <- function(mrtransportInput, annuity, fuelCosts){
   
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr
-    annualizedCapexTrackedFleet <- merge(mrtransportInput$CAPEXtrackedFleet, annuityCalc, by = vehicleType, allow.cartesian = TRUE)
-    annualizedCapexTrackedFleet[, value := value * annuityFactor][, unit := "US$2005/veh/yr"]
+    annualizedCapexTrackedFleet <- merge(mrtransportInput$CAPEXtrackedFleet, annuity, by = vehicleType, allow.cartesian = TRUE)
+    annualizedCapexTrackedFleet[, value := value * annuity][, unit := "US$2005/veh/yr"]
     # Combine with non Fuel OPEX
     APEXandNonFuelOPEXtrackedFleet <- rbind(annualizedCapexTrackedFleet, mrtransportInput$nonFuelOPEXtrackedFleet)
     # Merge with annual mileage to convert to US$2005/vehkm

@@ -59,16 +59,17 @@ if (!is.null(packageData$policyParEnergyIntensity)) {
                                                 packageData$mitigationTechMap, years)
 }
 
-
 # Calculate preference trends (Applying factors)
 scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePreftrends, packageData$policyParPrefTrends, packageData$mitigationTechMap,
                                               mrdriversData$GDPpcMER, GDPcutoff)
 
+annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationTechMap)
 
-combinedCostperES <- toolCombineCosts(mrtransportData, packageData$annuityCalc, packageData$mitigationTechMap, REMINDdata$fuelPrices)
+combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices)
 
-# Calculate inconvenience costs -> Kann das noch in eine csv ins package?
-initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal)
+initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal, annuity, mrtransportData$loadFactor, mrtransportData$annualMileage,
+                                            packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years)
+
 
 #################################################
 ## Calibration module

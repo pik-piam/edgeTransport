@@ -1,27 +1,29 @@
-﻿region;incoCostType;sector;technology;unit;1990;2005;2010;2020
-GLO;modelAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
-GLO;modelAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
-GLO;modelAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
-GLO;modelAvailability;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
-GLO;modelAvailability;trn_pass;ICE;US$2005/veh;100000;100000;100000;100000
-GLO;riskAversion;trn_pass;BEV;US$2005/veh;100000;100000;100000;3800
-GLO;riskAversion;trn_pass;FCEV;US$2005/veh;100000;100000;100000;3800
-GLO;riskAversion;trn_pass;NG;US$2005/veh;100000;100000;100000;3800
-GLO;riskAversion;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;3800
-GLO;rangeAnxiety;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
-GLO;stationsAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
-GLO;stationsAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
-GLO;stationsAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
-EUR;modelAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
-EUR;modelAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
-EUR;modelAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;69300
-EUR;modelAvailability;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
-EUR;modelAvailability;trn_pass;ICE;US$2005/veh;100000;100000;100000;100000
-EUR;riskAversion;trn_pass;BEV;US$2005/veh;100000;100000;100000;100000
-EUR;riskAversion;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
-EUR;riskAversion;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
-EUR;riskAversion;trn_pass;Hybrid electric;US$2005/veh;100000;100000;100000;100000
-EUR;rangeAnxiety;trn_pass;BEV;US$2005/veh;100000;100000;100000;65000
-EUR;stationsAvailability;trn_pass;BEV;US$2005/veh;100000;100000;100000;1000
-EUR;stationsAvailability;trn_pass;FCEV;US$2005/veh;100000;100000;100000;100000
-EUR;stationsAvailability;trn_pass;NG;US$2005/veh;100000;100000;100000;100000
+﻿region;incoCostType;FVvehvar;technology;unit;1990;2005;2010;2020
+GLO;modelAvailability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;10000
+GLO;modelAvailability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;69300
+GLO;modelAvailability;LDV|4W;NG;US$2005/veh;100000;100000;100000;69300
+GLO;modelAvailability;LDV|4W;Hybrid electric;US$2005/veh;100000;100000;100000;69300
+GLO;ICEinconvenience ;LDV|4W;ICE;US$2005/veh;0;0;0;0
+GLO;riskAversion;LDV|4W;BEV;US$2005/veh;3800;3800;3800;3800
+GLO;riskAversion;LDV|4W;FCEV;US$2005/veh;3800;3800;3800;3800
+GLO;riskAversion;LDV|4W;NG;US$2005/veh;3800;3800;3800;3800
+GLO;riskAversion;LDV|4W;Hybrid electric;US$2005/veh;3800;3800;3800;3800
+GLO;rangeAnxiety;LDV|4W;BEV;US$2005/veh;100000;100000;100000;65000
+GLO;stationsAvailability;LDV|4W;BEV;US$2005/veh;1000;1000;1000;1000
+GLO;stationsAvailability;LDV|4W;Hybrid electric;US$2005/veh;1000;1000;1000;1000
+GLO;stationsAvailability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;100000
+GLO;stationsAvailability;LDV|4W;NG;US$2005/veh;100000;100000;100000;100000
+EUR;modelAvailability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;10000
+EUR;modelAvailability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;69300
+EUR;modelAvailability;LDV|4W;NG;US$2005/veh;100000;100000;100000;69300
+EUR;modelAvailability;LDV|4W;Hybrid electric;US$2005/veh;100000;100000;100000;69300
+EUR;ICEinconvenience;LDV|4W;ICE;US$2005/veh;0;0;0;0
+EUR;riskAversion;LDV|4W;BEV;US$2005/veh;3800;3800;3800;3800
+EUR;riskAversion;LDV|4W;FCEV;US$2005/veh;3800;3800;3800;3800
+EUR;riskAversion;LDV|4W;NG;US$2005/veh;3800;3800;3800;3800
+EUR;riskAversion;LDV|4W;Hybrid electric;US$2005/veh;3800;3800;3800;3800
+EUR;rangeAnxiety;LDV|4W;BEV;US$2005/veh;100000;100000;100000;65000
+EUR;stationsAvailability;LDV|4W;BEV;US$2005/veh;1000;1000;1000;1000
+EUR;stationsAvailability;LDV|4W;Hybrid electric;US$2005/veh;1000;1000;1000;1000
+EUR;stationsAvailability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;100000
+EUR;stationsAvailability;LDV|4W;NG;US$2005/veh;100000;100000;100000;100000
