@@ -52,7 +52,7 @@ toolCalibrateEDGEinconv <- function(prices, tech_output, logit_exp_data, vot_dat
       for (lamb in unique(dfPreference$lambda)) {                          ## treats all the lambdas separately
         dfPreference[lambda==lamb & is.nan(preference),                            ## only for the nodes that have the specific lambda AND preference that are still not calculated/did not work out the calculation
               fac := share / max(share) * (totPrice / max(totPrice)) ^ expectedPrice,   ## provides a starting point
-              by = c("region", "period",groupingValue)]
+              by = c("region", "period", groupingValue)]
 
         dfPreference[lambda == lamb  & is.nan(preference),
                                preference:= rootFunction(totPrice, share, lamb,fac),                   ## apply the root function
