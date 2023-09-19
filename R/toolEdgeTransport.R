@@ -25,7 +25,10 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 ## Load data
 #################################################
 
-### Input data  ------------------------------------------------
+### Package data  ----------------------------------------------------------
+packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
+
+### Input data  ------------------------------------------------------------
 ## from mrtransport
 mrtransportData <- toolLoadmrtransportData(SSPscen)
 # choose years according to inputdata
@@ -37,14 +40,11 @@ GDPcutoff <- 25000 # [constant 2005 US$MER]
 mrdriversData <- toolLoadmrdriversData(SSPscen, years)
 
 ## from mrremind
-mrremindData$transportSubsidies <- readSource(type = "TransportSubsidies")
+mrremindData <- toolLoadmrremindData(packageData$decisionTree, years)
 
 ## from REMIND
-REMINDdata$fuelPrices <- toolLoadREMINDfuelPrices(gdxPath, years)
+REMINDdata <- toolLoadREMINDfuelPrices(gdxPath, years)
 #REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath, years) move to iterative script
-
-### Package data  ----------------------------------------------------------
-packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
 
 #################################################
 ## Calculate data
@@ -60,12 +60,12 @@ if (!is.null(packageData$policyParEnergyIntensity)) {
 }
 
 # Calculate preference trends (Applying factors)
-scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePreftrends, packageData$policyParPrefTrends, packageData$mitigationTechMap,
+scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePrefTrends, packageData$policyParPrefTrends, packageData$mitigationTechMap, years,
                                               mrdriversData$GDPpcMER, GDPcutoff)
 
 annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationTechMap)
 
-combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies)
+combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies, packageData$decisionTree, years)
 
 initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal, annuity, mrtransportData$loadFactor, mrtransportData$annualMileage,
                                             packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years)

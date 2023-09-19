@@ -7,7 +7,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   ## model input parameters from the package
 
   # Decision tree discrete choice model
-  decisionTree <- toolLoadDecisiontree("regionCode21")
+  decisionTree <- toolLoadDecisionTree("regionCode21")
   # Exponents discrete choice model
   lambdasDiscreteChoice <- fread(system.file("extdata/inputLambdasDiscreteChoiceModel.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Baseline preference trends

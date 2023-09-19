@@ -50,17 +50,16 @@ toolLoadmrtransportData <- function(SSPscen) {
   timeValueCosts <- magpie2dt(timeValueCostsMagpieobj)
 
 
-
   return(
     list(histESdemand = histESdemand,
+         energyIntensity = energyIntensity,
          loadFactor = loadFactor,
          CAPEXtrackedFleet = CAPEXtrackedFleet,
-         nonFuelOPEXtrackedFleet,
+         nonFuelOPEXtrackedFleet = nonFuelOPEXtrackedFleet,
          CAPEXother = CAPEXother,
          nonFuelOPEXother = nonFuelOPEXother,
          annualMileage = annualMileage,
-         speedOfModes = speedOfModesother,
-         valueOfTimeMultiplier = valueOfTimeMultiplier
+         timeValueCosts = timeValueCosts
          )
   )
 

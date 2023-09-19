@@ -4,7 +4,7 @@ fedie;te_esdie_pass_sm;entrp_pass_sm;fedie_p_sm;trn_pass;Liquids
 feelt;te_eselt_pass_sm;entrp_pass_sm;feelt_p_sm;trn_pass;Electricity
 fedie;te_esdie_pass_lo;entrp_pass_lo;fedie_p_lo;trn_aviation_intl;Liquids
 fedie;te_esdie_frgt_sm;entrp_frgt_sm;fedie_f_sm;trn_freight;Liquids
-feelt;te_eselt_frgt_sm;entrp_frgt_sm;feelt_f_sm;trn_freight;Liquids
+feelt;te_eselt_frgt_sm;entrp_frgt_sm;feelt_f_sm;trn_freight;Electricity
 fedie;te_esdie_frgt_lo;entrp_frgt_lo;fedie_f_lo;trn_shipping_intl;Liquids
 feh2t;te_esh2t_pass_sm;entrp_pass_sm;feh2t_p_sm;trn_pass;Hydrogen
 fegat;te_esgat_pass_sm;entrp_pass_sm;fegat_p_sm;trn_pass;NG

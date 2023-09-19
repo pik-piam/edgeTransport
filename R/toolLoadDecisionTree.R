@@ -2,8 +2,9 @@
 #' @author Johanna Hoppe
 #' @param regionAggregation one of the different options for regional aggregation (iso|regionCode21|regionCode12)
 #' @import data.table
+#' @export
 
-toolLoadDecisiontree <- function(regionAggregation = "iso") {
+toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
   # decisionTree.csv contains all possible branches of the decision tree
   decisionTree <- fread(system.file("extdata/decisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)

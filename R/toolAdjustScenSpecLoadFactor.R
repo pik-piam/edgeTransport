@@ -1,36 +1,36 @@
 #' Apply demand scenario specific adjustments to the load Factor
 #' @author Johanna Hoppe
-#' @param loadF load factor input data supplied by mrtransport
+#' @param loadFactor load factor input data supplied by mrtransport
 #' @param demandScen tranport demand scenario
 #' @import data.table
 
 
-toolAdjustScenSpecLoadFactor <- function(loadF, demScenario, SSPscenario) {
+toolApplyScenSpecLoadFactor <- function(loadFactor, demScenario, SSPscenario) {
 
   # initialize zero change as default
   percentChange = 0
   targetYear = 2050 # dummy year
 
-  if(SSP_scen == "SDP_RC"){
+  if(SSPscenario == "SDP_RC"){
     percentChange = 0.3
     targetYear = 2060
   }
 
-  if (!is.null(Dem_Scen)){
-    if (Dem_Scen == "SSP2EU_lowdem"){
+  if (!is.null(demScenario)){
+    if (demScenario == "SSP2EU_lowdem"){
       percentChange = 0.4
       targetYear = 2050}
   }
 
-  loadF[
+  loadFactor[
     subsectorL3 == "trn_pass_road_LDV_4W" &
-      period >= 2020 & year <= targetYear,
-    value := loadFactor * (1 + percentChange*(year - 2020)/(targetYear - 2020))]
+      period >= 2020 & period <= targetYear,
+    value := value * (1 + percentChange * (period - 2020)/(targetYear - 2020))]
 
-  loadF[
+  loadFactor[
     subsectorL3 == "trn_pass_road_LDV_4W" &
       period >= targetYear,
-    value := loadFactor * (1 + percentChange)]
+    value := value * (1 + percentChange)]
 
-  return(loadF)
+  return(loadFactor)
 }
