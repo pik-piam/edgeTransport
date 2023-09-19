@@ -674,7 +674,7 @@ SSP2EU,Mix4,poor,FV,,,Rail,Liquids,1,2050,10
 SSP2EU,Mix4,poor,FV,,,Ship,Electric,1,2050,10
 SSP2EU,Mix4,poor,FV,,,Ship,Hydrogen,1,2050,10
 SSP2EU,Mix4,poor,FV,,,Ship,Liquids,1,2050,10
-SSP2EU,Mix4,poor,FV,,,Truck|heavy,Electric,5,2035,3
+SSP2EU,Mix4,poor,FV,,,Truck|heavy,Electric,5,2035,5
 SSP2EU,Mix4,poor,FV,,,Truck|heavy,Hydrogen,17,2035,3
 SSP2EU,Mix4,poor,FV,,,Truck|heavy,Liquids,1,2050,3
 SSP2EU,Mix4,poor,FV,,,Truck|light,Electric,10,2040,3
@@ -695,7 +695,7 @@ SSP2EU,Mix4,rich,FV,,,Rail,Liquids,1,2050,10
 SSP2EU,Mix4,rich,FV,,,Ship,Electric,1,2050,10
 SSP2EU,Mix4,rich,FV,,,Ship,Hydrogen,1,2050,10
 SSP2EU,Mix4,rich,FV,,,Ship,Liquids,1,2050,10
-SSP2EU,Mix4,rich,FV,,,Truck|heavy,Electric,50,2040,3
+SSP2EU,Mix4,rich,FV,,,Truck|heavy,Electric,50,2040,5
 SSP2EU,Mix4,rich,FV,,,Truck|heavy,Hydrogen,120,2040,3
 SSP2EU,Mix4,rich,FV,,,Truck|heavy,Liquids,1,2050,3
 SSP2EU,Mix4,rich,FV,,,Truck|light,Electric,40,2040,3
@@ -1550,12 +1550,12 @@ SSP2EU,HydrHype4,poor,FV,,,Rail,Liquids,1,2050,10
 SSP2EU,HydrHype4,poor,FV,,,Ship,Electric,1,2050,10
 SSP2EU,HydrHype4,poor,FV,,,Ship,Hydrogen,1,2050,10
 SSP2EU,HydrHype4,poor,FV,,,Ship,Liquids,1,2050,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Electric,3,2035,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Hydrogen,70,2035,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Liquids,1,2050,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|light,Electric,4,2035,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|light,Hydrogen,70,2035,10
-SSP2EU,HydrHype4,poor,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Electric,5,2035,5
+SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Hydrogen,30,2035,3
+SSP2EU,HydrHype4,poor,FV,,,Truck|heavy,Liquids,1,2050,3
+SSP2EU,HydrHype4,poor,FV,,,Truck|light,Electric,10,2040,3
+SSP2EU,HydrHype4,poor,FV,,,Truck|light,Hydrogen,10,2040,3
+SSP2EU,HydrHype4,poor,FV,,,Truck|light,Liquids,1,2050,3
 SSP2EU,HydrHype4,rich,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,HydrHype4,rich,FV,,,Aviation,Hydrogen,3,2055,5
 SSP2EU,HydrHype4,rich,FV,,,Aviation,Liquids,1,2050,10
@@ -1571,16 +1571,16 @@ SSP2EU,HydrHype4,rich,FV,,,Rail,Liquids,1,2050,10
 SSP2EU,HydrHype4,rich,FV,,,Ship,Electric,1,2050,10
 SSP2EU,HydrHype4,rich,FV,,,Ship,Hydrogen,1,2050,10
 SSP2EU,HydrHype4,rich,FV,,,Ship,Liquids,1,2050,10
-SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Electric,3,2035,10
-SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Hydrogen,85,2035,5
-SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Liquids,1,2050,10
-SSP2EU,HydrHype4,rich,FV,,,Truck|light,Electric,4,2035,10
-SSP2EU,HydrHype4,rich,FV,,,Truck|light,Hydrogen,85,2035,10
-SSP2EU,HydrHype4,rich,FV,,,Truck|light,Liquids,1,2050,10
+SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Electric,50,2040,5
+SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Hydrogen,150,2040,3
+SSP2EU,HydrHype4,rich,FV,,,Truck|heavy,Liquids,1,2050,3
+SSP2EU,HydrHype4,rich,FV,,,Truck|light,Electric,40,2040,3
+SSP2EU,HydrHype4,rich,FV,,,Truck|light,Hydrogen,50,2040,3
+SSP2EU,HydrHype4,rich,FV,,,Truck|light,Liquids,1,2050,3
 SSP2EU,HydrHype4,poor,S2,,Bus,,,1,2050,10
-SSP2EU,HydrHype4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2EU,HydrHype4,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,HydrHype4,rich,S2,,Bus,,,1,2050,10
-SSP2EU,HydrHype4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
+SSP2EU,HydrHype4,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,HydrHype4,poor,S3,Cycle,,,,1,2050,10
 SSP2EU,HydrHype4,poor,S3,Domestic Aviation,,,,0.25,2035,10
 SSP2EU,HydrHype4,poor,S3,Domestic Ship,,,,1,2050,10
@@ -1589,7 +1589,7 @@ SSP2EU,HydrHype4,poor,S3,HSR,,,,1,2050,10
 SSP2EU,HydrHype4,poor,S3,Passenger Rail,,,,1,2050,10
 SSP2EU,HydrHype4,poor,S3,Walk,,,,1,2050,10
 SSP2EU,HydrHype4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,HydrHype4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,HydrHype4,poor,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,HydrHype4,rich,S3,Cycle,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,Domestic Aviation,,,,0.25,2035,10
 SSP2EU,HydrHype4,rich,S3,Domestic Ship,,,,1,2050,10
@@ -1598,7 +1598,7 @@ SSP2EU,HydrHype4,rich,S3,HSR,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,Passenger Rail,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,Walk,,,,1,2050,10
 SSP2EU,HydrHype4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,HydrHype4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,HydrHype4,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Electric,5,2050,15
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Hydrogen,2,2050,5
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Liquids,1,2050,10
