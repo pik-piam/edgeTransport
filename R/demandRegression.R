@@ -148,27 +148,16 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
 
   #Apply factors for specific demand scenario on output of demand regression if given/otherwise use default values from demand regression
   #Application: linear regression to given support points for the factors starting from 2020, constant factors after support points
-  if (nrow(demscen_factors) > 0) {
-   print(paste0("You selected the ", unique(demscen_factors$demandScen), " demand scenario"))
-  } else {
-      print(paste0("You selected the default demand scenario"))
-  }
-
   D_star[, factor := demscen_factors[.SD, factor, on=c("region", "sector", "year")]]
-
-  #Covid-19 Adjustments for EU27 (ONLY!) based on FE Harmonization with PRIMES-TREMOVE in 2020 (12-07-2023)
-  D_star[year == 2020 & sector == "trn_pass" & region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 0.9]
-  D_star[year == 2020 & sector == "trn_aviation_intl" & region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 0.7]
-  D_star[year == 2020 & sector == "trn_freight" & region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 0.71]
-  D_star[year == 2020 & sector == "trn_shipping_intl" & region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 0.66]
-
-  D_star[year == 2020 & !region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 1]
-  D_star[year < 2020, factor := 1]
-  #in case no demScen is provided, factors for future years need to be filled with 1
-  D_star[is.na(factor), factor := 1]
-  D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
-  D_star[, demand := factor * demand]
-
+  mods <- D_star[!is.na(factor)]
+    if (nrow(mods) > 0){
+      print(paste0("You selected the ", unique(demscen_factors$demandScen), " demand scenario"))
+      D_star[year <= 2020, factor := 1]
+      D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
+      D_star[, demand := factor * demand]
+    } else {
+      print(paste0("You selected the default demand scenario"))
+    }
   D_star[, "factor" := NULL]
 
 
