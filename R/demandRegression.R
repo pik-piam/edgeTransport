@@ -164,18 +164,9 @@ toolDemandReg <- function(tech_output, price_baseline, GDP_POP,
 
   D_star[year == 2020 & !region %in% c("ENC", "EWN", "ECS", "ESC", "ECE", "FRA", "DEU", "ESW"), factor := 1]
   D_star[year < 2020, factor := 1]
-  D_23 <- copy(D_star[year == 2020])
-  #Normalize after covid
-  D_23[, year := 2023][, factor := 1]
-  D_star <- rbind(D_star, D_23)
   #in case no demScen is provided, factors for future years need to be filled with 1
-  if (nrow(demscen_factors) > 0) {
-    D_star[year > 2020, factor := na.approx(factor, x = year, rule=2), by = c("region", "sector")]
-    #Remove 2023 -> only necessary for approximating the dem scen factors in between given support points based on normalized demand
-    D_star <- D_star[!year == 2023]
-  } else {
-    D_star[is.na(factor), factor := 1]
-  }
+  D_star[is.na(factor), factor := 1]
+  D_star[, factor := na.approx(factor, x=year, rule=2), by=c("region", "sector")]
   D_star[, demand := factor * demand]
 
   D_star[, "factor" := NULL]
