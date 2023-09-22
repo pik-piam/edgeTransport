@@ -47,7 +47,7 @@ toolCalcVint <- function(shares, totdem_regr, prices, mj_km_data, years){
   paux = data.table(subsector_L1 = c("trn_pass_road_LDV_4W",
                                      "Bus_tmp_subsector_L1",
                                      "trn_freight_road_tmp_subsector_L1"),
-                    lifetime = c(15, 10, 10))   ## approximate lifetime of each vehicle
+                    lifetime = c(15, 7, 7))   ## approximate lifetime of each vehicle
   Ddt = data.table(index_yearly = seq(1,length(tall)-1,1))
   Ddt = CJ(index_yearly= Ddt$index_yearly, subsector_L1 = unique(paux$subsector_L1))
   Ddt = merge(Ddt, paux, by = "subsector_L1")
@@ -66,8 +66,8 @@ toolCalcVint <- function(shares, totdem_regr, prices, mj_km_data, years){
   Cap_eachyear[, totdem := totdem/sum_dep]
   Cap_eachyear[, sum_dep:=NULL]
   lf_LDV = 15
-  lf_bus = 10
-  lf_truck = 10
+  lf_bus = 7
+  lf_truck = 7
 
   years_past = data.table(subsector_L1 = c(rep("trn_pass_road_LDV_4W", lf_LDV +1),
                                         rep("Bus_tmp_subsector_L1", lf_bus +1),
