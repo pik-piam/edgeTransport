@@ -44,7 +44,6 @@ mrremindData <- toolLoadmrremindData(packageData$decisionTree, years)
 
 ## from REMIND
 REMINDdata <- toolLoadREMINDfuelPrices(gdxPath, years)
-#REMINDdata$energyServiceDemand <- toolLoadREMINDenServ(gdxPath, years) move to iterative script
 
 #################################################
 ## Calculate data
@@ -67,7 +66,7 @@ annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationT
 
 combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies, packageData$decisionTree, years)
 
-initialIncoCost <- toolApplyInitialIncoCost(combinedCostperES, packageData$incoCostStartVal, annuity, mrtransportData$loadFactor, mrtransportData$annualMileage,
+initialIncoCost <- toolApplyInitialIncoCost(copy(combinedCostperES), packageData$incoCostStartVal, annuity, copy(mrtransportData$loadFactor), copy(mrtransportData$annualMileage),
                                             packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years)
 
 

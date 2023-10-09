@@ -4,7 +4,7 @@
 
 
 toolCombineCosts <- function(mrtransportInput, annuity, fuelCosts, subsidies, decisionTree, yrs){
-  browser()
+
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr
     # Include subsidies on LDV 4 Wheelers
