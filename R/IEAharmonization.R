@@ -109,8 +109,9 @@ toolIEAharmonization <- function(int, demKm, IEA) {
     tech_output=tech_output[, c("region","technology","vehicle_type", "factor_intensity")]
 
     ## harmonize data
+    # leave out DEU as it was carefully adjusted by Alois to meet Ariadne data
     merged_intensity <- tech_output[vehicle_intensity, on=c("region", "technology", "vehicle_type")]
-    merged_intensity[, EJ_Mpkm_final := EJ_Mpkm * factor_intensity]
+    merged_intensity[!region == "DEU", EJ_Mpkm_final := EJ_Mpkm * factor_intensity]
     ## if there is no harmonization data, lets use the existing one
     merged_intensity[is.na(EJ_Mpkm_final), EJ_Mpkm_final := EJ_Mpkm]
 
