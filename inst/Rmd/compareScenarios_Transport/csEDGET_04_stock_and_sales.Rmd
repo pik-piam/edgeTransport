@@ -15,7 +15,7 @@ items <- c(
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 ## LDV Sales by vehicle size
@@ -32,7 +32,7 @@ items <- c(
        "Sales|Transport|LDV|Van"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 ## LDV Stock by technology
@@ -46,7 +46,7 @@ items <- c(
        "Stock|Transport|LDV|Subcompact Car|NG"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 ## LDV Sales by technology
@@ -60,7 +60,7 @@ items <- c(
        "Sales|Transport|LDV|Subcompact Car|NG"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 ## LDV Stock by technology
@@ -74,7 +74,7 @@ items <- c(
        "Stock|Transport|LDV|Large Car and SUV|NG"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 ## LDV Sales by technology
@@ -88,7 +88,7 @@ items <- c(
        "Sales|Transport|LDV|Large Car and SUV|NG"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 
@@ -104,92 +104,121 @@ items <- c(
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
 
-## Truck stock by size
+<!-- ## Truck stock by size -->
+<!-- ```{r} -->
+<!-- tot <- "Stock|Transport|Truck" -->
+<!-- items <- c( -->
+<!--        "Stock|Transport|Truck|Truck (0-3.5t)", -->
+<!--        "Stock|Transport|Truck|Truck (7.5t)", -->
+<!--        "Stock|Transport|Truck|Truck (18t)", -->
+<!--        "Stock|Transport|Truck|Truck (26t)", -->
+<!--        "Stock|Transport|Truck|Truck (40t)" -->
+<!--   ) -->
+
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
+
+<!-- ## Truck sales by size -->
+<!-- ```{r} -->
+<!-- tot <- "Sales|Transport|Truck" -->
+<!-- items <- c( -->
+<!--        "Sales|Transport|Truck|Truck (0-3.5t)", -->
+<!--        "Sales|Transport|Truck|Truck (7.5t)", -->
+<!--        "Sales|Transport|Truck|Truck (18t)", -->
+<!--        "Sales|Transport|Truck|Truck (26t)", -->
+<!--        "Sales|Transport|Truck|Truck (40t)" -->
+<!--   ) -->
+
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
+
+## Truck stock by technology
 ```{r}
 tot <- "Stock|Transport|Truck"
 items <- c(
-       "Stock|Transport|Truck|Truck (0-3.5t)",
-       "Stock|Transport|Truck|Truck (7.5t)",
-       "Stock|Transport|Truck|Truck (18t)",
-       "Stock|Transport|Truck|Truck (26t)",
-       "Stock|Transport|Truck|Truck (40t)"
+       "Stock|Transport|Truck|Electric",
+       "Stock|Transport|Truck|FCEV",
+       "Stock|Transport|Truck|Liquids",
+       "Stock|Transport|Truck|NG"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
-## Truck sales by size
+## Truck sales by technology
 ```{r}
 tot <- "Sales|Transport|Truck"
 items <- c(
-       "Sales|Transport|Truck|Truck (0-3.5t)",
-       "Sales|Transport|Truck|Truck (7.5t)",
-       "Sales|Transport|Truck|Truck (18t)",
-       "Sales|Transport|Truck|Truck (26t)",
-       "Sales|Transport|Truck|Truck (40t)"
+       "Sales|Transport|Truck|Electric",
+       "Sales|Transport|Truck|FCEV",
+       "Sales|Transport|Truck|Liquids",
+       "Sales|Transport|Truck|NG"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
+showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 ```
 
-## Small Truck stock by technology
-```{r}
-tot <- "Stock|Transport|Truck|Truck (0-3.5t)"
-items <- c(
-       "Stock|Transport|Truck|Truck (0-3.5t)|Electric",
-       "Stock|Transport|Truck|Truck (0-3.5t)|FCEV",
-       "Stock|Transport|Truck|Truck (0-3.5t)|Liquids",
-       "Stock|Transport|Truck|Truck (0-3.5t)|NG"
-  )
 
-showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
-```
+<!-- ## Small Truck stock by technology -->
+<!-- ```{r} -->
+<!-- tot <- "Stock|Transport|Truck|Truck (0-3.5t)" -->
+<!-- items <- c( -->
+<!--        "Stock|Transport|Truck|Truck (0-3.5t)|Electric", -->
+<!--        "Stock|Transport|Truck|Truck (0-3.5t)|FCEV", -->
+<!--        "Stock|Transport|Truck|Truck (0-3.5t)|Liquids", -->
+<!--        "Stock|Transport|Truck|Truck (0-3.5t)|NG" -->
+<!--   ) -->
 
-## Small Truck sales by technology
-```{r}
-tot <- "Sales|Transport|Truck|Truck (0-3.5t)"
-items <- c(
-       "Sales|Transport|Truck|Truck (0-3.5t)|Electric",
-       "Sales|Transport|Truck|Truck (0-3.5t)|FCEV",
-       "Sales|Transport|Truck|Truck (0-3.5t)|Liquids",
-       "Sales|Transport|Truck|Truck (0-3.5t)|NG"
-  )
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
 
-showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
-```
+<!-- ## Small Truck sales by technology -->
+<!-- ```{r} -->
+<!-- tot <- "Sales|Transport|Truck|Truck (0-3.5t)" -->
+<!-- items <- c( -->
+<!--        "Sales|Transport|Truck|Truck (0-3.5t)|Electric", -->
+<!--        "Sales|Transport|Truck|Truck (0-3.5t)|FCEV", -->
+<!--        "Sales|Transport|Truck|Truck (0-3.5t)|Liquids", -->
+<!--        "Sales|Transport|Truck|Truck (0-3.5t)|NG" -->
+<!--   ) -->
 
-## Large Truck stock by technology
-```{r}
-tot <- "Stock|Transport|Truck|Truck (40t)"
-items <- c(
-       "Stock|Transport|Truck|Truck (40t)|Electric",
-       "Stock|Transport|Truck|Truck (40t)|FCEV",
-       "Stock|Transport|Truck|Truck (40t)|Liquids",
-       "Stock|Transport|Truck|Truck (40t)|NG"
-  )
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
 
-showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
-```
+<!-- ## Large Truck stock by technology -->
+<!-- ```{r} -->
+<!-- tot <- "Stock|Transport|Truck|Truck (40t)" -->
+<!-- items <- c( -->
+<!--        "Stock|Transport|Truck|Truck (40t)|Electric", -->
+<!--        "Stock|Transport|Truck|Truck (40t)|FCEV", -->
+<!--        "Stock|Transport|Truck|Truck (40t)|Liquids", -->
+<!--        "Stock|Transport|Truck|Truck (40t)|NG" -->
+<!--   ) -->
 
-## Large Truck sales by technology
-```{r}
-tot <- "Sales|Transport|Truck|Truck (40t)"
-items <- c(
-       "Sales|Transport|Truck|Truck (40t)|Electric",
-       "Sales|Transport|Truck|Truck (40t)|FCEV",
-       "Sales|Transport|Truck|Truck (40t)|Liquids",
-       "Sales|Transport|Truck|Truck (40t)|NG"
-  )
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
 
-showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
-```
+<!-- ## Large Truck sales by technology -->
+<!-- ```{r} -->
+<!-- tot <- "Sales|Transport|Truck|Truck (40t)" -->
+<!-- items <- c( -->
+<!--        "Sales|Transport|Truck|Truck (40t)|Electric", -->
+<!--        "Sales|Transport|Truck|Truck (40t)|FCEV", -->
+<!--        "Sales|Transport|Truck|Truck (40t)|Liquids", -->
+<!--        "Sales|Transport|Truck|Truck (40t)|NG" -->
+<!--   ) -->
+
+<!-- showAreaAndBarPlots(data, items, tot, orderVars = "user") -->
+<!-- showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user") -->
+<!-- ``` -->
