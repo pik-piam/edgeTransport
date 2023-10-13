@@ -62,7 +62,7 @@ toolMergeDat <- function(UCD_output, EU_data, PSI_costs, GDP_MER, altCosts, CHN_
 
 
   if (!is.null(Dem_Scen)){
-    if (Dem_Scen == "SSP2EU_lowdem" | Dem_Scen == "SSP2EU_demRedStrong") {
+    if (Dem_Scen == "SSP2EU_demRedStrong") {
     target_LF = 0.4
     target_year = 2050}
   }
