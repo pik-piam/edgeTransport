@@ -1,6 +1,6 @@
 Package: edgeTransport
 Title: Prepare EDGE Transport Data for the REMIND model
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: c(
     person("Alois", "Dirnaichner", email = "dirnaichner@pik-potsdam.de", role = c("aut", "cre")),
     person("Marianna", "Rottoli", email = "rottoli@pik-potsdam.de", role = "aut"),
@@ -15,7 +15,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
-Date: 2023-10-09
+Date: 2023-10-12
 Config/testthat/edition: 3
 Imports:
     rmndt,
