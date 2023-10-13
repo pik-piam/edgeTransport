@@ -20,6 +20,9 @@
 
 toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMIF = TRUE, generateREMINDinputData = TRUE){
 
+  #Can we make EDGE-T regionally and temporally independent? -> We could shift the calibration to mrtransport
+  # regionmapping = "regionmapping_21_EU11.csv" oder H12
+  # timesteps =  c(1990, seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
 #################################################
 ## Load data
