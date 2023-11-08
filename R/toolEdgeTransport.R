@@ -30,6 +30,9 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 
 ### Package data  ----------------------------------------------------------
 packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
+# categories for filtering data
+categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
+filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
 
 ### Input data  ------------------------------------------------------------
 ## from mrtransport
@@ -54,7 +57,7 @@ REMINDdata <- toolLoadREMINDfuelPrices(gdxPath, years)
 
 # Transport Policyscenario specific adjustments ---------------------
 # Load Factor
-scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(mrtransportData$loadFactor, demScen, SSPscen)
+scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(mrtransportData$loadFactor, demScen, SSPscen, filterEntries)
 # Energy intensity
 if (!is.null(packageData$policyParEnergyIntensity)) {
   scenSpecEnIntensity <- toolApplyScenSpecEnInt(mrtransportData$energyIntensity, packageData$policyParEnergyIntensity,
@@ -67,16 +70,24 @@ scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePrefTrends, pa
 
 annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationTechMap)
 
-combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies, packageData$decisionTree, years)
+combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies, packageData$decisionTree, years, filterEntries)
 
 initialIncoCost <- toolApplyInitialIncoCost(copy(combinedCostperES), packageData$incoCostStartVal, annuity, copy(mrtransportData$loadFactor), copy(mrtransportData$annualMileage),
-                                            packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years)
+                                            packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years, filterEntries)
 
 
 #################################################
 ## Calibration module
 #################################################
 # Calibrate historical shareweights/inconvenience cost -----------------------------
+histPrefs <- toolCalibrateHistPrefs(copy(combinedCostperES), copy(mrtransportData$histESdemand), copy(mrtransportData$timeValueCosts), copy(packageData$lambdasDiscreteChoice))
+combinedCosts <- copy(combinedCostperES)
+histESdemand <-  copy(mrtransportData$histESdemand)
+timeValueCost <- copy(mrtransportData$timeValueCosts)
+lambdas <- copy(packageData$lambdasDiscreteChoice)
+decisionTree <- copy(packageData$decisionTree)
+
+
  # Check
  # Store
 

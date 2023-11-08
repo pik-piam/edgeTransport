@@ -44,10 +44,12 @@ toolLoadREMINDfuelPrices <- function(gdxPath, yrs){
  } else {
    decisionTree <- toolLoadDecisionTree("iso")
  }
+
  # fuel needs to be mapped on different technology names
  decisionTree[, fuel := ifelse(technology %in% c("BEV", "Electric"), "Electricity", technology)]
  decisionTree[, fuel := ifelse(technology == "FCEV", "Hydrogen", fuel)]
  decisionTree <- decisionTree[!technology %in% c("Cycle_tmp_technology", "Walk_tmp_technology")]
+ decisionTree <- unique(decisionTree[, c("region", "univocalName", "technology", "fuel")])
 
  fuelPrices <- merge(fuelPrices, decisionTree, by = c("fuel", "region"), allow.cartesian = TRUE, all.y = TRUE)[, fuel := NULL]
 
@@ -64,10 +66,9 @@ toolLoadREMINDfuelPrices <- function(gdxPath, yrs){
  fuelPrices[, variable := "Fuel price"][, unit := "US$2005/MJ"]
  # adjust to temporal resolution
  fuelPrices <- approx_dt(fuelPrices, yrs, "period", "value",
-                c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
-                  "univocalName", "variable", "unit"), extrapolate = TRUE)
- setkey(fuelPrices, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
-        technology, univocalName, period)
+                c("region", "univocalName", "technology",
+                  "variable", "unit"), extrapolate = TRUE)
+ setkey(fuelPrices, region, univocalName, technology, period)
 
  if (anyNA(fuelPrices) == TRUE) {
    stop("Fuel prices contain NAs")

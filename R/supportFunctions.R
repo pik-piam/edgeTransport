@@ -1,6 +1,7 @@
 #' Read and build the complete structure of the edgeTransport decision tree
 #' @author Johanna Hoppe
 #' @param regionAggregation one of the different options for regional aggregation (iso|regionCode21|regionCode12)
+#' @returns data.table of full spatially extended edgeTransport decision tree
 #' @import data.table
 #' @export
 
@@ -13,9 +14,9 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
   # available in certain countries
   # Here we create the full structure of the nested decision tree differentiated for all countries to make it testable
   regionMap <- system.file("extdata", "regionmappingISOto21to12.csv",
-                                 package = "edgeTransport", mustWork = TRUE
+                           package = "edgeTransport", mustWork = TRUE
   )
-  regionMap <- fread(regionMap, skip = 0, , header = TRUE)
+  regionMap <- fread(regionMap, skip = 0, header = TRUE)
   setnames(regionMap, "countryCode", "region")
   ISOcountries <- regionMap[, c("region")]
   ISOcountries[, spatial := "all"]
@@ -31,23 +32,44 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
   # aggregate to the required regions
   switch (regionAggregation,
-    "iso" = {
-      completeDataSetAgg <- completeDataSet
-    },
-    "regionCode21" = {
-      completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
-      completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode21", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
-      setnames(completeDataSetAgg, "regionCode21", "region")
-    },
-    "regionCode12" = {
-      completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
-      completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode12", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
-      setnames(completeDataSetAgg, "regionCode21", "region")
-    }
+          "iso" = {
+            completeDataSetAgg <- completeDataSet
+          },
+          "regionCode21" = {
+            completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
+            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode21", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
+            setnames(completeDataSetAgg, "regionCode21", "region")
+          },
+          "regionCode12" = {
+            completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
+            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode12", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
+            setnames(completeDataSetAgg, "regionCode21", "region")
+          }
   )
 
   setkey(completeDataSetAgg, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
          technology, univocalName)
 
   return(completeDataSetAgg)
+}
+
+
+
+#' Read and build the complete structure of the edgeTransport decision tree
+#' @author Johanna Hoppe
+#' @param categories vector of categories to filter
+#' @param decisionTree decision tree that contains the univocalNames associated to the category
+#' @returns list of categories and their associated univocalNames e.g. trn_pass as list entry containing a vector c("Compact Car", "HSR", ..)
+#' @import data.table
+#' @export
+
+getFilterEntriesUnivocalName <- function(categories, decisionTree) {
+
+  findEntries <- function(category, dt){
+    test <- dt[, lapply(.SD, function(x) grepl(category, x))]
+    entries <- unique(dt[rowSums(test) > 0]$univocalName)
   }
+
+  filterEntries <- sapply(categories, findEntries, dt = decisionTree, USE.NAMES = TRUE)
+
+}

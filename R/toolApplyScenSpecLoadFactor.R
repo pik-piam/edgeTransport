@@ -2,10 +2,12 @@
 #' @author Johanna Hoppe
 #' @param loadFactor load factor input data supplied by mrtransport
 #' @param demandScen tranport demand scenario
+#' @param SSPscenario shared socioeconomic pathway
+#' @param filter list of filters for specific branches in the upper decision tree, containing all associated univocalNames
 #' @import data.table
 
 
-toolApplyScenSpecLoadFactor <- function(loadFactor, demScenario, SSPscenario) {
+toolApplyScenSpecLoadFactor <- function(loadFactor, demScenario, SSPscenario, filter) {
 
   # initialize zero change as default
   percentChange = 0
@@ -23,12 +25,14 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, demScenario, SSPscenario) {
   }
 
   loadFactor[
-    subsectorL3 == "trn_pass_road_LDV_4W" &
-      period >= 2020 & period <= targetYear,
+    univocalName %in% filter$trn_pass_road_LDV_4W &
+      period >= 2020 &
+      period <= targetYear,
     value := value * (1 + percentChange * (period - 2020)/(targetYear - 2020))]
 
   loadFactor[
-    subsectorL3 == "trn_pass_road_LDV_4W" &
+    univocalName %in% filter$trn_pass_road_LDV_4W &
+      period >= 2020 &
       period >= targetYear,
     value := value * (1 + percentChange)]
 

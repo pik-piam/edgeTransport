@@ -4,6 +4,10 @@
 
 toolLoadmrtransportData <- function(SSPscen) {
 
+  replaceMadratSnakeInUnivocalName <- function(dt){
+    dt <- dt[grepl("Truck.*", univocalName), univocalName := gsub("_", ".", univocalName)]
+  }
+
   # Energy Service demand [billion (p|t)km/yr]
   histESdemandMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "histESdemand", SSPscen = SSPscen)
@@ -48,19 +52,21 @@ toolLoadmrtransportData <- function(SSPscen) {
   timeValueCostsMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "timeValueCosts", SSPscen = SSPscen)
   timeValueCosts <- magpie2dt(timeValueCostsMagpieobj)
+  timeValueCosts <- unique(timeValueCosts[, technology := NULL])
 
+  mrtransportdata <- list(histESdemand = histESdemand,
+                           energyIntensity = energyIntensity,
+                           loadFactor = loadFactor,
+                           CAPEXtrackedFleet = CAPEXtrackedFleet,
+                           nonFuelOPEXtrackedFleet = nonFuelOPEXtrackedFleet,
+                           CAPEXother = CAPEXother,
+                           nonFuelOPEXother = nonFuelOPEXother,
+                           annualMileage = annualMileage,
+                           timeValueCosts = timeValueCosts
+                           )
 
-  return(
-    list(histESdemand = histESdemand,
-         energyIntensity = energyIntensity,
-         loadFactor = loadFactor,
-         CAPEXtrackedFleet = CAPEXtrackedFleet,
-         nonFuelOPEXtrackedFleet = nonFuelOPEXtrackedFleet,
-         CAPEXother = CAPEXother,
-         nonFuelOPEXother = nonFuelOPEXother,
-         annualMileage = annualMileage,
-         timeValueCosts = timeValueCosts
-         )
-  )
+  mrtransportdata <- sapply(mrtransportdata, replaceMadratSnakeInUnivocalName, USE.NAMES = TRUE)
+
+  return(mrtransportdata)
 
 }

@@ -43,7 +43,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, mitigationFactors, mitig
   PrefTrends[level == "S2S1", value := value/max(value), by = c("region", "period", "sector", "subsectorL1")]
   PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
   PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
-  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "univocalName")]
 
 return(PrefTrends)
 
