@@ -573,7 +573,7 @@ toolCalculateLogitIncost <- function(prices,
                                                      0.5*exp(1)^(weighted_sharessum[year == (t-1)]*bmodelav),
                                                      pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-    if(tech_scen %in% c("PhOP", "Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscWeak", "CAMP_lscStrong") & t>= 2030){
+    if(tech_scen %in% c("PhOP", "Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscWeak", "CAMP_lscStrong", "NAV_all", "NAV_ele") & t>= 2030){
       ## phase-out of all light-duty vehicle ICEs
       EUreg <- c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "EUR")
 
@@ -583,33 +583,62 @@ toolCalculateLogitIncost <- function(prices,
         floorEU <- linIncrease(t, 2032, 0.35, 2034, 0.95)
       } else if (t== 2035){
         floorEU <- 0.95
-      } else {
+      } else if (t > 2035){
         floorEU <- 1
       }
+
+      if(t >= 2035 & t <= 2037){
+        floorGLO <- linIncrease(t, 2035, floor, 2037, 0.25)
+      } else if(t > 2037 & t <= 2039){
+        floorGLO <- linIncrease(t, 2037, 0.25, 2039, 0.95)
+      } else if (t == 2040){
+        floorGLO <- 0.95
+      } else if (t > 2040){
+        floorGLO <- 1
+      }
+
 
       tmp[technology == "Liquids" & region %in% EUreg, pinco_tot := ifelse(year == t,
                                                                            pmax(pinco_tot, floorEU),
                                                                            pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-      tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
-                                                                             pmax(pinco_tot, floor),
-                                                                             pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+      tmp[technology == "Hybrid Electric" & region %in% EUreg, pmod_av := ifelse(year == t,
+                                                                                 pmax(pmod_av, floorEU),
+                                                                                pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
       tmp[technology == "NG" & region %in% EUreg, pref := ifelse(year == t,
                                                                  pmax(pref, floorEU),
                                                                  pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-      tmp[technology == "Hybrid Electric" & region %in% EUreg, pmod_av := ifelse(year == t,
-                                                                                 pmax(pmod_av, floorEU),
-                                                                                 pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+          if (tech_scen %in% c("NAV_all", "NAV_ele") & t >= 2035){
+            tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
+                                                                                 pmax(pinco_tot, floorGLO),
+                                                                                 pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-    } else {
+            tmp[technology == "NG" & !region %in% EUreg, pref := ifelse(year == t,
+                                                                       pmax(pref, floorGLO),
+                                                                       pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-      tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
+            tmp[technology == "Hybrid Electric" & !region %in% EUreg, pmod_av := ifelse(year == t,
+                                                                                       pmax(pmod_av, floorGLO),
+                                                                                       pmod_av), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+
+          } else {
+            tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
+                                                                                   pmax(pinco_tot, floor),
+                                                                                   pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
+
+          }
+
+
+      } else {
+
+        tmp[technology == "Liquids", pinco_tot := ifelse(year == t,
                                                        pmax(pinco_tot, floor),
                                                        pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-    }
+      }
 
 
     ## hybrid electric inconvenience cost cannot decrease below 50% of 2020 value
@@ -689,7 +718,7 @@ toolCalculateLogitIncost <- function(prices,
   df_shares[, tot_VOT_price:=0]
 
   ## merge value of time for the selected level and assign 0 to the entries that don't have it
-  df <- merge(df, value_time, by=intersect(names(df),names(value_time)), all.x=TRUE)
+  df <- merge(df, value_time, by=intersect(names(df),names(value_time)), all.x = TRUE)
   df <- df[is.na(time_price), time_price := 0]
   df <- df[, tot_VOT_price := time_price]
   df <- df[, tot_price := tot_price + time_price]

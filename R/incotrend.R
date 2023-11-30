@@ -294,7 +294,7 @@ Hybrid Electric,Liquids")
       FVtarget_tb[, value := ifelse(year==2035,0.3*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2040,0.2*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2045,0.1*value[year==2015],value),by = c("region","technology")]
-      FVtarget_tb[year>=2045, value := 0.05]
+      FVtarget_tb[year > 2045, value := value * 0.05]
 
       FVtarget=rbind(FVtarget_all,FVtarget_tb)
 
@@ -313,6 +313,24 @@ Hybrid Electric,Liquids")
       FVtarget_tb[, value := ifelse(year==2030,0.3*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2035,0.1*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[year>=2040, value := 0]
+
+      FVtarget=rbind(FVtarget_all,FVtarget_tb)
+
+    } else if (tech_scen %in% c("NAV_all", "NAV_ele")) {
+
+      FVtarget_all = FVtarget[!(technology %in% c("Liquids","NG") & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1"))]
+
+      FVtarget_all[, value := ifelse(
+        is.na(target), value, apply_logistic_trends(year, target, symmyr, speed) * value),
+        by=c("region", "vehicle_type", "technology")]
+
+      ## ICE trucks and buses
+      FVtarget_tb = FVtarget[subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & technology %in% c("Liquids", "NG")]
+      FVtarget_tb[, value := ifelse(year==2020,0.9*value[year==2015],value),by = c("region","technology")]
+      FVtarget_tb[, value := ifelse(year==2025,0.6*value[year==2015],value),by = c("region","technology")]
+      FVtarget_tb[, value := ifelse(year==2030,0.3*value[year==2015],value),by = c("region","technology")]
+      FVtarget_tb[, value := ifelse(year==2035,0.1*value[year==2015],value),by = c("region","technology")]
+      FVtarget_tb[year >= 2040, value := 0]
 
       FVtarget=rbind(FVtarget_all,FVtarget_tb)
 
