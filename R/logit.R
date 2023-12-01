@@ -587,14 +587,14 @@ toolCalculateLogitIncost <- function(prices,
         floorEU <- 1
       }
 
-      if(t >= 2035 & t <= 2037){
-        floorGLO <- linIncrease(t, 2035, floor, 2037, 0.25)
+      if(t > 2035 & t <= 2037){
+        floorGLO <- linIncrease(t, 2035, floor, 2037, 0.15)
       } else if(t > 2037 & t <= 2039){
-        floorGLO <- linIncrease(t, 2037, 0.25, 2039, 0.95)
+        floorGLO <- linIncrease(t, 2037, 0.15, 2039, 1.6)
       } else if (t == 2040){
-        floorGLO <- 0.95
+        floorGLO <- 2
       } else if (t > 2040){
-        floorGLO <- 1
+        floorGLO <- 2.2
       }
 
 
@@ -610,7 +610,7 @@ toolCalculateLogitIncost <- function(prices,
                                                                  pmax(pref, floorEU),
                                                                  pref), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-          if (tech_scen %in% c("NAV_all", "NAV_ele") & t >= 2035){
+          if (tech_scen %in% c("NAV_all", "NAV_ele") & t > 2035){
             tmp[technology == "Liquids"  & !region %in% EUreg, pinco_tot := ifelse(year == t,
                                                                                  pmax(pinco_tot, floorGLO),
                                                                                  pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
