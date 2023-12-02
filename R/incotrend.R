@@ -279,7 +279,7 @@ Hybrid Electric,Liquids")
     ## remove L2 and L3 from mitab to avoid a join on these sectors
     FVtarget <- mitab[level == "FV"][, c("subsector_L2", "subsector_L3") := NULL][FVtarget, on = c("FV_vehvar", "FV_techvar", "regioncat")]
 
-    if (tech_scen %in% c("Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscWeak", "CAMP_lscStrong")){
+    if (tech_scen %in% c("Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscWeak", "CAMP_lscStrong", "NAV_ele", "NAV_all")){
 
       FVtarget_all = FVtarget[!(technology %in% c("Liquids","NG") & subsector_L1 %in% c("trn_freight_road_tmp_subsector_L1", "Bus_tmp_subsector_L1") & region %in% c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI"))]
 
