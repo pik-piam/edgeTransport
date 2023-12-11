@@ -2252,8 +2252,8 @@ SSP2EU,NAV_all,poor,FV,,,Rail,Electric,2,2040,10
 SSP2EU,NAV_all,poor,FV,,,Rail,Hydrogen,2,2040,10
 SSP2EU,NAV_all,poor,FV,,,Rail,Liquids,0.1,2040,10
 SSP2EU,NAV_all,poor,FV,,,Ship,Electric,1,2050,10
-SSP2EU,NAV_all,poor,FV,,,Ship,Hydrogen,1,2050,10
-SSP2EU,NAV_all,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,NAV_all,poor,FV,,,Ship,Hydrogen,10,2050,10
+SSP2EU,NAV_all,poor,FV,,,Ship,Liquids,0.1,2050,10
 SSP2EU,NAV_all,poor,FV,,,Truck|heavy,Electric,1.5,2025,10
 SSP2EU,NAV_all,poor,FV,,,Truck|heavy,Hydrogen,9,2025,10
 SSP2EU,NAV_all,poor,FV,,,Truck|heavy,Liquids,0.01,2025,10
@@ -2273,8 +2273,8 @@ SSP2EU,NAV_all,rich,FV,,,Rail,Electric,2,2040,10
 SSP2EU,NAV_all,rich,FV,,,Rail,Hydrogen,2,2040,10
 SSP2EU,NAV_all,rich,FV,,,Rail,Liquids,0.1,2040,10
 SSP2EU,NAV_all,rich,FV,,,Ship,Electric,1,2050,10
-SSP2EU,NAV_all,rich,FV,,,Ship,Hydrogen,1,2050,10
-SSP2EU,NAV_all,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,NAV_all,rich,FV,,,Ship,Hydrogen,10,2050,10
+SSP2EU,NAV_all,rich,FV,,,Ship,Liquids,0.1,2050,10
 SSP2EU,NAV_all,rich,FV,,,Truck|heavy,Electric,4,2025,10
 SSP2EU,NAV_all,rich,FV,,,Truck|heavy,Hydrogen,9,2025,10
 SSP2EU,NAV_all,rich,FV,,,Truck|heavy,Liquids,0.01,2025,10
@@ -2338,8 +2338,8 @@ SSP2EU,NAV_ele,poor,FV,,,Rail,Electric,2,2040,10
 SSP2EU,NAV_ele,poor,FV,,,Rail,Hydrogen,2,2040,10
 SSP2EU,NAV_ele,poor,FV,,,Rail,Liquids,0.1,2040,10
 SSP2EU,NAV_ele,poor,FV,,,Ship,Electric,1,2050,10
-SSP2EU,NAV_ele,poor,FV,,,Ship,Hydrogen,1,2050,10
-SSP2EU,NAV_ele,poor,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,NAV_ele,poor,FV,,,Ship,Hydrogen,10,2050,10
+SSP2EU,NAV_ele,poor,FV,,,Ship,Liquids,0.1,2050,10
 SSP2EU,NAV_ele,poor,FV,,,Truck|heavy,Electric,1.5,2025,10
 SSP2EU,NAV_ele,poor,FV,,,Truck|heavy,Hydrogen,9,2025,10
 SSP2EU,NAV_ele,poor,FV,,,Truck|heavy,Liquids,0.01,2025,10
@@ -2359,8 +2359,8 @@ SSP2EU,NAV_ele,rich,FV,,,Rail,Electric,2,2040,10
 SSP2EU,NAV_ele,rich,FV,,,Rail,Hydrogen,2,2040,10
 SSP2EU,NAV_ele,rich,FV,,,Rail,Liquids,0.1,2040,10
 SSP2EU,NAV_ele,rich,FV,,,Ship,Electric,1,2050,10
-SSP2EU,NAV_ele,rich,FV,,,Ship,Hydrogen,1,2050,10
-SSP2EU,NAV_ele,rich,FV,,,Ship,Liquids,1,2050,10
+SSP2EU,NAV_ele,rich,FV,,,Ship,Hydrogen,10,2050,10
+SSP2EU,NAV_ele,rich,FV,,,Ship,Liquids,0.1,2050,10
 SSP2EU,NAV_ele,rich,FV,,,Truck|heavy,Electric,4,2025,10
 SSP2EU,NAV_ele,rich,FV,,,Truck|heavy,Hydrogen,9,2025,10
 SSP2EU,NAV_ele,rich,FV,,,Truck|heavy,Liquids,0.01,2025,10
