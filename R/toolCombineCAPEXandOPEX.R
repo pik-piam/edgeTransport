@@ -10,7 +10,7 @@
 #' @returns data.table including total costs of ownership in US$2005/(p|t)km
 
 
-toolCombineCosts <- function(mrtransportInput, annuity, fuelCosts, subsidies, decisionTree, yrs, filter){
+toolCombineCAPEXandOPEX <- function(mrtransportInput, annuity, fuelCosts, subsidies, decisionTree, yrs, filter){
 
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr

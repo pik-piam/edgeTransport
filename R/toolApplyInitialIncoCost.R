@@ -9,10 +9,11 @@
 #' @param regionmappingISOto21to12 region mapping
 #' @param decisionTree edgeTransport decision tree
 #' @import data.table
+#' @returns data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2005/(p|t)km
 
 
 toolApplyInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loadFactor, annualMileage, regionmappingISOto21to12, decisionTree, mitigationTechMap, yrs, filter) {
-
+ browser()
   incoCostStartVal <- melt(incoCostStartVal, id.vars = c("region", "incoCostType", "FVvehvar", "technology", "unit"), variable.name = "period")
   incoCostStartVal[, value := as.double(value)]
   # map incocost start values on regions
@@ -23,7 +24,7 @@ toolApplyInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, lo
                                 by.x = "region", by.y = "regionCode12", allow.cartesian = TRUE)
   individualIncoCost12[, region := NULL]
   setnames(individualIncoCost12, "regionCode21", "region")
-  GLO <- regionmappingISOto21to12[, "regionCode21"][, region := "GLO"]
+  GLO <- unique(regionmappingISOto21to12[, "regionCode21"])[, region := "GLO"]
   incoCostGLO <- merge(incoCostStartVal, GLO, by = "region", allow.cartesian = TRUE)
   incoCostGLO[, region := NULL]
   setnames(incoCostGLO, "regionCode21", "region")
@@ -68,6 +69,7 @@ toolApplyInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, lo
   annualizedincoCostStartVal <- merge(annualizedincoCostStartVal, loadFactor, c("region", "univocalName", "technology", "period"), all.x = TRUE)
   annualizedincoCostStartVal <- merge(annualizedincoCostStartVal, annualMileage, c("region", "univocalName", "technology", "period"), all.x = TRUE)
   annualizedincoCostStartVal[, value := value / (annualMileage * loadFactor)][, c("loadFactor", "annualMileage") := NULL]
+  #unit US$2005/pkm for passenger and unit US$2005/tkm for freight
   annualizedincoCostStartVal[, unit := ifelse(univocalName %in% c(filter$trn_pass, "International Aviation"), "US$2005/pkm", "US$2005/tkm")]
 
   if (anyNA(annualizedincoCostStartVal) == TRUE) {

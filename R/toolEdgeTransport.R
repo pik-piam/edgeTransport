@@ -63,18 +63,17 @@ if (!is.null(packageData$policyParEnergyIntensity)) {
   scenSpecEnIntensity <- toolApplyScenSpecEnInt(mrtransportData$energyIntensity, packageData$policyParEnergyIntensity,
                                                 packageData$mitigationTechMap, years)
 }
-
-# Calculate preference trends (Applying factors)
+# Preference trends (Applying policy factors)
 scenSpecPrefTrends <- toolApplyScenPrefTrends(packageData$baselinePrefTrends, packageData$policyParPrefTrends, packageData$mitigationTechMap, years,
                                               mrdriversData$GDPpcMER, GDPcutoff)
 
+# Calculation of monetary costs -------------------------------------
 annuity <- toolCalculateAnnuity(packageData$annuityCalc, packageData$mitigationTechMap)
+combinedCAPEXandOPEX <- toolCombineCAPEXandOPEX(copy(mrtransportData), annuity, copy(REMINDdata$fuelPrices), copy(mrremindData$transportSubsidies), packageData$decisionTree, years, filterEntries)
 
-combinedCostperES <- toolCombineCosts(mrtransportData, annuity, REMINDdata$fuelPrices, mrremindData$transportSubsidies, packageData$decisionTree, years, filterEntries)
-
-initialIncoCost <- toolApplyInitialIncoCost(copy(combinedCostperES), packageData$incoCostStartVal, annuity, copy(mrtransportData$loadFactor), copy(mrtransportData$annualMileage),
+# Calculation of non-monetary costs ---------------------
+initialIncoCosts <- toolApplyInitialIncoCost(copy(combinedCAPEXandOPEX), packageData$incoCostStartVal, annuity, copy(mrtransportData$loadFactor), copy(mrtransportData$annualMileage),
                                             packageData$regionmappingISOto21to12, packageData$decisionTree, packageData$mitigationTechMap, years, filterEntries)
-
 
 #################################################
 ## Calibration module
