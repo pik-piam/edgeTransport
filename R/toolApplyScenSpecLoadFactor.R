@@ -7,32 +7,24 @@
 #' @import data.table
 
 
-toolApplyScenSpecLoadFactor <- function(loadFactor, demScenario, SSPscenario, filter) {
+toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
 
-  # initialize zero change as default
-  percentChange = 0
-  targetYear = 2050 # dummy year
+percentChange <- scenParLoadFactor$percentChange
+targetYear <- scenParLoadFactor$targetYear
 
-  if(SSPscenario == "SDP_RC"){
-    percentChange = 0.3
-    targetYear = 2060
-  }
-
-  if (!is.null(demScenario)){
-    if (demScenario == "SSP2EU_lowdem"){
-      percentChange = 0.4
-      targetYear = 2050}
-  }
+if (length(percentChange) > 1) {
+  stop("Scenario specific load factor changes are not unambiguously defined")
+}
 
   loadFactor[
-    univocalName %in% filter$trn_pass_road_LDV_4W &
-      period >= 2020 &
+    univocalName %in% helpers$filter$trn_pass_road_LDV_4W &
+      period >= policyStartYear &
       period <= targetYear,
-    value := value * (1 + percentChange * (period - 2020)/(targetYear - 2020))]
+    value := value * (1 + percentChange * (period - policyStartYear)/(targetYear - policyStartYear))]
 
   loadFactor[
-    univocalName %in% filter$trn_pass_road_LDV_4W &
-      period >= 2020 &
+    univocalName %in% helpers$filter$trn_pass_road_LDV_4W &
+      period >= policyStartYear &
       period >= targetYear,
     value := value * (1 + percentChange)]
 

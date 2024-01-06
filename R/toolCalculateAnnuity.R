@@ -6,9 +6,9 @@
 #' @import data.table
 
 
-toolCalculateAnnuity <- function(annuityCalc, mitigationTechMap) {
+toolCalculateAnnuity <- function(annuityCalc, helpers) {
 
-annuity <- merge(mitigationTechMap[, c("FVvehvar", "univocalName")], annuityCalc, by = "FVvehvar", all.y = TRUE)[, FVvehvar := NULL]
+annuity <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], annuityCalc, by = "FVvehvar", all.y = TRUE)[, FVvehvar := NULL]
 # Calculate annuity factor to annualize CAPEX
 annuity[, annuity := (1 + interestRate ^ serviceLife  * interestRate)/((1 + interestRate) ^ serviceLife - 1)][, c("interestRate", "serviceLife") := NULL]
 

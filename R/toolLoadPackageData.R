@@ -9,19 +9,16 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # Decision tree discrete choice model
   decisionTree <- toolLoadDecisionTree("regionCode21")
   # Exponents discrete choice model
-  lambdasDiscreteChoice <- fread(system.file("extdata/inputLambdasDiscreteChoiceModel.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  lambdasDiscreteChoice <- fread(system.file("extdata/genParLambdasDiscreteChoiceModel.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Baseline preference trends
-  baselinePrefTrends <- fread(system.file("extdata/inputbaselinePrefTrends.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  baselinePrefTrends <- fread(system.file("extdata/genParBaselinePrefTrends.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   baselinePrefTrends <- baselinePrefTrends[SSPscen == SSPscenario][, SSPscen := NULL]
   #Startparameter inconvenience costs
-  incoCostStartVal <- fread(system.file("extdata/inputIncoCostStartVal.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # SSP/SDP specific regression factors
-  DemRegressionFactorsSSP <- fread(system.file("extdata/inputDemRegressionFactorsSSP.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  DemRegressionFactorsSSP <- DemRegressionFactorsSSP[SSPscen == SSPscenario][, SSPscen := NULL]
+  incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Regional regression factors
-  DemRegressionFactorsRegional <- fread(system.file("extdata/inputDemRegressionFactorsRegional.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  regionalDemRegression <- fread(system.file("extdata/genParRegionalDemRegression.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
 
-  annuityCalc <- fread(system.file("extdata/inputAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation # maybe we want another scenario column here rather than the transport policy scenario
   if  (transportPolScenario %in% annuityCalc$transportPolScen){
     annuityCalc <- annuityCalc[transportPolScen == transportPolScenario][, transportPolScen := NULL]} else {
@@ -30,28 +27,44 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
 
   ## scenario specific levers
   # Transport policy scenario preference factors
-  policyParPrefTrends <- fread(system.file("extdata/policyParPrefTrends.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  policyParPrefTrends <- policyParPrefTrends[SSPscen == SSPscenario & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
+  scenParPrefTrends <- fread(system.file("extdata/scenParPrefTrends.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  scenParPrefTrends <- scenParPrefTrends[SSPscen == SSPscenario & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
+  if (nrow(scenParPrefTrends) == 0) scenParPrefTrends <- NULL
+
   # Transport policy scenario inconvenience cost factors
-  policyParIncoCost <- fread(system.file("extdata/policyParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  policyParIncoCost <- policyParIncoCost[SSPscen == SSPscenario & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
+  scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  scenParIncoCost <- scenParIncoCost[SSPscen == SSPscenario & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
   # Transport policy scenario demand reduction factors
-  policyParDemScen <- fread(system.file("extdata/policyParDemScen.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  if  (demScenario %in% policyParDemScen$demScen){
-   policyParDemScen <- policyParDemScen[demScen == demScenario]} else {
-   policyParDemScen <- NULL
+  scenParDemFactors <- fread(system.file("extdata/scenParDemFactors.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  if  (demScenario %in% scenParDemFactors$demScen){
+   scenParDemFactors <- scenParDemFactors[demScen == demScenario]} else {
+   scenParDemFactors <- NULL
   }
   # Transport policy scenario energy intensity reduction factors
-  policyParEnergyIntensity <- fread(system.file("extdata/policyParEnergyIntensity.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  if  (transportPolScenario %in% policyParEnergyIntensity$transportPolScen){
-    policyParEnergyIntensity <- policyParEnergyIntensity[transportPolScen = transportPolScenario]} else {
-    policyParEnergyIntensity <- NULL
+  scenParEnergyIntensity <- fread(system.file("extdata/scenParEnergyIntensity.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  if  (transportPolScenario %in% scenParEnergyIntensity$transportPolScen){
+    scenParEnergyIntensity <- scenParEnergyIntensity[transportPolScen == transportPolScenario]} else {
+    scenParEnergyIntensity <- NULL
+    }
+  # Transport scenario load factor changes
+  scenParLoadFactor <- fread(system.file("extdata/scenParLoadFactor.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+
+  # SSP/SDP specific regression factors
+  scenParDemRegression <- fread(system.file("extdata/scenParDemRegression.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  scenParDemRegression <- scenParDemRegression[SSPscen == SSPscenario][, SSPscen := NULL]
+
+  # Transport scenario exogenous demand changes
+  if  (SSPscen %in% unique(scenParLoadFactor[demScen == "default"]$SSPscen)) {
+    scenParLoadFactor <- scenParLoadFactor[SSPscen == SSPscenario]
+  } else {
+    scenParLoadFactor <- scenParLoadFactor[SSPscen == SSPscenario & demScen == demScenario]
   }
+  if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
 
   ##helpers
   mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
                                          package = "edgeTransport"))
-  regionmappingISOto21to12 <- fread(system.file("extdata", "regionmappingISOto21to12.csv",
+  regionmappingISOto21to12 <- fread(system.file("extdata", "helpersRegionmappingISOto21to12.csv",
                                                     package = "edgeTransport"))
 
   return(
@@ -61,12 +74,13 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
       baselinePrefTrends = baselinePrefTrends,
       incoCostStartVal = incoCostStartVal,
       annuityCalc = annuityCalc,
-      DemRegressionFactorsSSP = DemRegressionFactorsSSP,
-      DemRegressionFactorsRegional = DemRegressionFactorsRegional,
-      policyParPrefTrends = policyParPrefTrends,
-      policyParIncoCost = policyParIncoCost,
-      policyParDemScen = policyParDemScen,
-      policyParEnergyIntensity = policyParEnergyIntensity,
+      scenParDemRegression = scenParDemRegression,
+      regionalDemRegression = regionalDemRegression,
+      scenParPrefTrends = scenParPrefTrends,
+      scenParIncoCost = scenParIncoCost,
+      scenParDemFactors = scenParDemFactors,
+      scenParEnergyIntensity = scenParEnergyIntensity,
+      scenParLoadFactor = scenParLoadFactor,
       mitigationTechMap = mitigationTechMap,
       regionmappingISOto21to12 = regionmappingISOto21to12
     )

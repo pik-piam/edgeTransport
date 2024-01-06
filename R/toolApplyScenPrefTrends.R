@@ -6,24 +6,17 @@
 #' @importFrom rmndt approx_dt
 
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, mitigationFactors, mitigationTechMap, yrs, GDPpcMER, GDPcutoff) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, years, policyStartYear, helpers) {
 
   #function to apply mitigation factors
-  applyLogisticTrend <- function(yrs, final, ysymm, speed, initial = 1){
-    fct <- exp((yrs - ysymm)/speed)/(exp((yrs - ysymm)/speed) + 1)
+  applyLogisticTrend <- function(years, final, ysymm, speed, initial = 1){
+    fct <- exp((years - ysymm)/speed)/(exp((years - ysymm)/speed) + 1)
     initial + fct * (final - initial)
   }
 
-  # change to long-format
-  baselinePrefTrends <- melt(baselinePrefTrends, variable.name = "period", id.vars = c("region", "level", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
-  # get rid of levels as period is treated as a factor after using melt (not supported by approx_dt)
-  baselinePrefTrends[, period := as.numeric(as.character(period))]
-
-  baselinePrefTrends <- approx_dt(baselinePrefTrends, yrs, "period", "value", idxcols = setdiff(names(baselinePrefTrends), c("period", "value")), extrapolate = TRUE)
-
-  # restructure mitigation factors
+  # restructure mitigation factors provided in scenParPrefTrends
   # resolve techmap
-  mitigationFactors <- merge(mitigationTechMap, mitigationFactors, by = "FVvehvar", all.y = TRUE, allow.cartesian = TRUE)
+  mitigationFactors <- merge(helpers$mitigationTechMap[, c("vehicleType", "FVvehvar")], scenParPrefTrends, by = "FVvehvar", all.y = TRUE, allow.cartesian = TRUE)
   mitigationFactors[is.na(vehicleType), vehicleType := ""][, FVvehvar := NULL]
   # implement differentiation by GDP and treatment of single region entries
   GDPpcMER <- GDPpcMER[period == 2020][, period := NULL]
@@ -35,7 +28,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, mitigationFactors, mitig
   mitigationFactors <- merge(mitigationFactors, GDPpcMER, by = "regionCat", allow.cartesian = TRUE, all.x = TRUE)[, regionCat := NULL]
   # apply mitigation factors
   PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  PrefTrends[period > 2020 & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
+  PrefTrends[period  >= policyStartYear & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
   # approximate missing timesteps
 
   # normalize preferences in each level
@@ -43,7 +36,10 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, mitigationFactors, mitig
   PrefTrends[level == "S2S1", value := value/max(value), by = c("region", "period", "sector", "subsectorL1")]
   PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
   PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
-  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "univocalName")]
+  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+
+  # order
+  PrefTrends <- PrefTrends[, c("region", "period", "technology", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
 
 return(PrefTrends)
 

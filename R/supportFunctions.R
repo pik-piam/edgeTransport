@@ -8,12 +8,12 @@
 toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
   # decisionTree.csv contains all possible branches of the decision tree
-  decisionTree <- fread(system.file("extdata/decisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  decisionTree <- fread(system.file("extdata/helpersDecisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   decisionTree[, spatial := "all"]
   # Not all countries feature the same branches of the decision tree - Some vehicleTypes and modes are not
   # available in certain countries
   # Here we create the full structure of the nested decision tree differentiated for all countries to make it testable
-  regionMap <- system.file("extdata", "regionmappingISOto21to12.csv",
+  regionMap <- system.file("extdata", "helpersRegionmappingISOto21to12.csv",
                            package = "edgeTransport", mustWork = TRUE
   )
   regionMap <- fread(regionMap, skip = 0, header = TRUE)
@@ -55,7 +55,7 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
 
 
-#' Read and build the complete structure of the edgeTransport decision tree
+#' List associated univocalNames for any entry of the decision tree
 #' @author Johanna Hoppe
 #' @param categories vector of categories to filter
 #' @param decisionTree decision tree that contains the univocalNames associated to the category
@@ -71,5 +71,46 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
   }
 
   filterEntries <- sapply(categories, findEntries, dt = decisionTree, USE.NAMES = TRUE)
+
+}
+
+
+#' Calculate shares based on discrete choice model.
+#'
+#' Function works for the use of generic preferences as well as for inconvenience costs.
+#' If no preferences are provided the function sets them to one which is equivalent to pure description by inconvenience costs.
+#'
+#' @author Johanna Hoppe
+#' @param dt data.table containing
+#' @param category
+#' @returns data.table
+#' @import data.table
+#' @export
+
+calculateShares <- function(totPrice, lambda, pref = NULL) {
+
+  if (!is.null(pref)) {
+    share <- pref * totPrice ^ lambda / (sum(pref * totPrice ^ lambda))
+  } else {
+    share <- totPrice ^ lambda / (sum(totPrice ^ lambda))
+  }
+
+  return(share)
+}
+
+#' Calculate data for the next higher level of the decision tree.
+#'
+#' Function that aggregates the data for the next higher level of the decision tree
+#'
+#' @author Johanna Hoppe
+#' @param dt data.table containing
+#' @param category
+#' @returns data.table
+#' @import data.table
+#' @export
+
+aggregateNextHigherDecisionLevel <- function(dt, category) {
+
+
 
 }

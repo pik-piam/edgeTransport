@@ -7,7 +7,7 @@
 #' @import data.table
 
 
-toolApplyScenSpecEnInt <- function(enInt, intImprovementFactors, mitigationTechMap, yrs) {
+toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, years, policyStartYear, helpers) {
 
   #get yearly resolution
   enIntYearly <- copy(enInt)
@@ -19,12 +19,12 @@ toolApplyScenSpecEnInt <- function(enInt, intImprovementFactors, mitigationTechM
                              idxcols = c("region", "univocalName", "technology"),
                              extrapolate = T)
 
-  enIntNew <- merge(mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "FVvehvar", all.y = TRUE)
+  enIntNew <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "FVvehvar", all.y = TRUE)
 
-  intImproTab <- intImproTab[level == "FV"]
-  enIntNew <- merge(enIntNew, intImprovementFactors, by = c("FVvehvar", "technology"))[, FVvehvar := NULL]
+  scenParEnergyIntensity <- scenParEnergyIntensity[level == "FV"]
+  enIntNew <- merge(enIntNew, scenParEnergyIntensity, by = c("FVvehvar", "technology"))[, FVvehvar := NULL]
 
-  #Apply efficiency improvements only after year 2020
+  #Apply efficiency improvement factors provided in scenParEnergyIntensity only after year 2020
   enIntNew[, startYear := ifelse(startYear < 2020, 2020, startYear)]
   #fade in and fade out time period
   fadeInOutPeriod <- 15
@@ -59,7 +59,7 @@ toolApplyScenSpecEnInt <- function(enInt, intImprovementFactors, mitigationTechM
   #Keep the enInt from endYear onward constant
   enIntNew <- enIntNew[period <= endFade, c("region", "univocalName", "technology", "period", "value")]
   enIntNew <- approx_dt(enIntNew,
-                             xdata = years[periods >= 2020],
+                             xdata = years[periods  >= policyStartYear],
                              xcol = "period",
                              ycol = "value",
                              idxcols = c("region", "univocalName", "technology"),

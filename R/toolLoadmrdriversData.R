@@ -2,12 +2,12 @@
 #'
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrdriversData <- function(SSPscenario, yrs) {
+toolLoadmrdriversData <- function(SSPscenario, years) {
 
   GDPpcMERmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                         unit = "constant 2005 US$MER")[, yrs, paste0("gdppc_", SSPscenario)]
+                         unit = "constant 2005 US$MER")[, years, paste0("gdppc_", SSPscenario)]
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
-  GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")[, yrs, paste0("gdppc_", SSPscenario)]
+  GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")[, years, paste0("gdppc_", SSPscenario)]
   GDPpcPPP <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
   return(list(
