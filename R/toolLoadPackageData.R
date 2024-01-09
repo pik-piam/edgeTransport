@@ -15,11 +15,10 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   baselinePrefTrends <- baselinePrefTrends[SSPscen == SSPscenario][, SSPscen := NULL]
   #Startparameter inconvenience costs
   incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Regional regression factors
-  regionalDemRegression <- fread(system.file("extdata/genParRegionalDemRegression.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Interest Rate and vehicle service life for annuity calculation # maybe we want another scenario column here rather than the transport policy scenario
+  # Interest Rate and vehicle service life for annuity calculation
+  # NOTE: right now there is only "default". If we add scenario specific annuity parameters, we can shift annuityCalc to the scenPar's
   if  (transportPolScenario %in% annuityCalc$transportPolScen){
     annuityCalc <- annuityCalc[transportPolScen == transportPolScenario][, transportPolScen := NULL]} else {
     annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
@@ -46,14 +45,17 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
     scenParEnergyIntensity <- scenParEnergyIntensity[transportPolScen == transportPolScenario]} else {
     scenParEnergyIntensity <- NULL
     }
-  # Transport scenario load factor changes
+  # Transport scenario (demand scenario or SSP scenario) load factor changes
   scenParLoadFactor <- fread(system.file("extdata/scenParLoadFactor.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
 
-  # SSP/SDP specific regression factors
+  # SSP/SDP specific general regression factors
   scenParDemRegression <- fread(system.file("extdata/scenParDemRegression.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   scenParDemRegression <- scenParDemRegression[SSPscen == SSPscenario][, SSPscen := NULL]
+  # SSP/SDP specific regional regression factors
+  scenParRegionalDemRegression <- fread(system.file("extdata/scenParRegionalDemRegression.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  scenParRegionalDemRegression <- scenParRegionalDemRegression[SSPscen == SSPscenario][, SSPscen := NULL]
 
-  # Transport scenario exogenous demand changes
+  # Demand scenario exogenous demand changes
   if  (SSPscen %in% unique(scenParLoadFactor[demScen == "default"]$SSPscen)) {
     scenParLoadFactor <- scenParLoadFactor[SSPscen == SSPscenario]
   } else {
@@ -75,7 +77,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
       incoCostStartVal = incoCostStartVal,
       annuityCalc = annuityCalc,
       scenParDemRegression = scenParDemRegression,
-      regionalDemRegression = regionalDemRegression,
+      scenParRegionalDemRegression = scenParRegionalDemRegression,
       scenParPrefTrends = scenParPrefTrends,
       scenParIncoCost = scenParIncoCost,
       scenParDemFactors = scenParDemFactors,

@@ -1,10 +1,28 @@
+#' @title toolCalculateFS3share
+#' @description Provides updates for endogenous cost components e.g. inconvenience costs for cars
+#'
+#' @param endoCostData data.table containing all cost components on technology level
+#' @param timesteps years for which to calculate FS3 shares
+#' @param timeValue data.table containing mode specific time value costs based on speed and gdp
+#' @param lambdas data.table containing exponents for discrete choice calculation
+#' @param helpers list containing helpers like mappings, decisionTree etc.
+#' @return data.table containing all cost components on technology level and their respective FS3 shares
+#' @author Johanna Hoppe
+#' @import data.table
+#' @export
+
+
 toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, lambdas, helpers){
-  browser()
+
   timeValueCosts <- merge(timeValue, unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)
   timeValueCosts[, type := "Travel time"][, c("unit", "univocalName", "variable") := NULL]
-  timeValueCosts <- approx_dt(timeValueCosts, timesteps, "period", "value",
+  if (length(timesteps) > 1) {
+    timeValueCosts <- approx_dt(timeValueCosts, timesteps, "period", "value",
                               c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "type"),
-                              extrapolate = FALSE)
+                                extrapolate = FALSE)
+  } else {
+    timeValueCosts <-timeValueCosts[period %in% timesteps]
+  }
 
   # first the FV share needs to be calculated
   FVshare <- copy(endoCostData[period %in% timesteps])

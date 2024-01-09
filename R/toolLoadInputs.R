@@ -42,8 +42,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
       lambdasDiscreteChoice = packageData$lambdasDiscreteChoice,
       baselinePrefTrends = packageData$baselinePrefTrends,
       incoCostStartVal = packageData$incoCostStartVal,
-      annuityCalc = packageData$annuityCalc,
-      regionalDemRegression = packageData$regionalDemRegression
+      annuityCalc = packageData$annuityCalc
     )
 
     # transport scenario (SSPscen + demScen + polScen) specific model parameters
@@ -53,6 +52,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
       scenParPrefTrends = packageData$scenParPrefTrends,
       scenParIncoCost = packageData$scenParIncoCost,
       scenParDemRegression = packageData$scenParDemRegression,
+      scenParRegionalDemRegression = packageData$scenParRegionalDemRegression,
       scenParDemFactors = packageData$scenParDemFactors
     )
 

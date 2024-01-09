@@ -90,7 +90,11 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
 calculateShares <- function(totPrice, lambda, pref = NULL) {
 
   if (!is.null(pref)) {
-    share <- pref * totPrice ^ lambda / (sum(pref * totPrice ^ lambda))
+    if (sum(totPrice) == 0) {
+      share <- 1 # e.g. for active modes with totPrice of zero on FV level
+    } else {
+      share <- pref * totPrice ^ lambda / (sum(pref * totPrice ^ lambda))
+    }
   } else {
     share <- totPrice ^ lambda / (sum(totPrice ^ lambda))
   }
@@ -109,8 +113,56 @@ calculateShares <- function(totPrice, lambda, pref = NULL) {
 #' @import data.table
 #' @export
 
-aggregateNextHigherDecisionLevel <- function(dt, category) {
+toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
 
+  decisionGroups <- names(decisionTree[, -c("region", "univocalName")])
+  indexUpperLevel <- which(match(decisionGroups, upperLevel) == 1)
+  remainingGroups <- decisionGroups[1:indexUpperLevel]
+  aggregatedGroups <- setdiff(decisionGroups, remainingGroups)
+  remainingNames <- setdiff(names(data), aggregatedGroups)
+  data <- data[, .(value = sum(share * value)), by = setdiff(remainingNames, c("value", "share"))]
 
+  return(data)
+}
 
+#' toolCheckAllLevelsComplete
+#'
+#' Checks whether data is complete for all levels of decision tree
+#'
+#' @author Johanna Hoppe
+#' @param data data.table containing data in all levels format that should be checked
+#' @param decisionTree data.table containing full edgeTransport decision Tree
+#' @param name name of variable to be checked
+#' @returns data.table
+#' @import data.table
+#' @export
+
+toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
+
+  decisionFV <- copy(decisionTree)
+  decisionFV[, univocalName := NULL][, level := "FV"]
+
+  decisionVS3 <- copy(decisionFV)
+  decisionVS3[, technology := ""]
+  decisionVS3 <- unique(decisionVS3)[, level := "VS3"]
+
+  decisionS3S2 <- copy(decisionVS3)
+  decisionS3S2[, c("technology", "vehicleType") := ""]
+  decisionS3S2 <- unique(decisionS3S2)[, level := "S3S2"]
+
+  decisionS2S1 <- copy(decisionS3S2)
+  decisionS2S1[, c("technology", "vehicleType", "subsectorL3") := ""]
+  decisionS2S1 <- unique(decisionS2S1)[, level := "S2S1"]
+
+  decisionS1S <- copy(decisionS2S1)
+  decisionS1S[, c("technology", "vehicleType", "subsectorL3", "subsectorL2") := ""]
+  decisionS1S <- unique(decisionS1S)[, level := "S1S"]
+
+  allLevels <- rbind(decisionFV, decisionVS3, decisionS3S2, decisionS2S1, decisionS1S)
+
+  test <- merge(data, allLevels, by = intersect(names(data), names(allLevels)), all = TRUE)
+
+  if (anyNA(test) == TRUE) stop(paste0("Variable ", name, " is incomplete or contains unnessesary data"))
+
+  return(data)
 }

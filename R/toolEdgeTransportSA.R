@@ -53,18 +53,23 @@ scenSpecInputData <- toolPrepareScenInputData(copy(genModelPar), copy(scenModelP
 ########################################################
 #histPrefs <- toolCalibrateHistPrefs(copy(combinedCostperES), copy(mrtransportData$histESdemand), copy(mrtransportData$timeValueCosts), copy(packageData$lambdasDiscreteChoice))
 histPrefs <- readRDS("C:/Users/johannah/Documents/Git_repos/edgeTransport/R/TestPrefTrends.RDS")
+histPrefs <- histPrefs[!subsectorL3 == "trn_pass_road_LDV_4W"]
 
 scenSpecPrefTrends <- rbind(histPrefs, scenSpecInputData$scenSpecPrefTrends)
+scenSpecPrefTrends <- approx_dt(scenSpecPrefTrends, years, "period", "value",
+                                             c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "level"), extrapolate = TRUE)
 
 #-------------------------------------------------------
 inputData <- list(
-  prefTrends = scenSpecInputData$scenSpecPrefTrends,
+  prefTrends = scenSpecPrefTrends,
   loadFactor = scenSpecInputData$scenSpecLoadFactor,
   enIntensity = scenSpecInputData$scenSpecEnIntensity,
   combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
   initialIncoCosts = scenSpecInputData$initialIncoCosts,
   annualMileage = inputDataRaw$annualMileage,
-  timeValueCosts = inputDataRaw$timeValueCosts
+  timeValueCosts = inputDataRaw$timeValueCosts,
+  histESdemand = inputDataRaw$histESdemand,
+  GDPpcMER = inputDataRaw$GDPpcMER
 )
 
 print("Input data preparation finished")
@@ -77,34 +82,41 @@ print("Input data preparation finished")
 dataEndogenousCosts <- toolPrepareDataEndogenousCosts(copy(inputData), copy(genModelPar$lambdasDiscreteChoice), policyStartYear, helpers)
 vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(copy(genModelPar$annuityCalc), helpers)
 
-
 #------------------------------------------------------
 # Start of iterative section
 #------------------------------------------------------
 
 storeEndogenousCostsIterations <- list()
+numberOfvehicles <- NULL
+i<-1
 
 for (i in seq(1,3,1)) {
 
   #################################################
   ## Cost module
   #################################################
-  # Provide endogenous updates to cost components -----------
-  endogenousCosts <- updateEndogenousCosts(copy(dataEndogenousCosts), copy(vehicleDepreciationFactors), copy(genModelPar))
+  # provide endogenous updates to cost components -----------
+  # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
+  endogenousCosts <- toolUpdateEndogenousCosts(copy(dataEndogenousCosts), copy(vehicleDepreciationFactors), copy(scenModelPar$scenParIncoCost),
+                                               policyStartYear, copy(inputData$timeValueCosts),  copy(genModelPar$lambdasDiscreteChoice), helpers, years, numberOfvehicles)
   storeEndogenousCostsIterations[[i]] <- endogenousCosts
 
   #################################################
   ## Discrete choice module
   #################################################
-  # calculate sales shares and mode shares for all levels of the decisionTree
-  salesAndModeShares <- toolDiscreteChoice(copy(inputData), copy(genModelPar), copy(endogenousCosts$updatedEndogenousCosts), helpers)
+  # calculate vehicle sales shares and mode shares for all levels of the decisionTree
+  vehSalesAndModeShares <- toolDiscreteChoice(copy(inputData), copy(genModelPar), copy(endogenousCosts$updatedEndogenousCosts), years, helpers)
 
   #################################################
   ## Demand regression module
   #################################################
-  # Calculate future energy service demand ----------------
-    #Input: SDP/SSP + regional regression factors, historical energy service demand
-    #Output: Energy Service demand for top nodes of decision tree
+  ## demand in million km
+  energyServiceDemand <- toolDemandReg(copy(inputData$histESdemand),
+                                       copy(inputData$combinedCAPEXandOPEX),
+                                       copy(inputData$GDPpcMER),
+                                       scenModelPar$scenParDemRegression,
+                                       scenModelPar$scenParRegionalDemRegression,
+                                       scenModelPar$scenParDemFactors)
 
   #################################################
   ## Vehicle stock module
