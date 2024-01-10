@@ -70,7 +70,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
       timeValueCosts = mrtransportData$timeValueCosts,
       subsidies = mrremindData$subsidies,
       GDPpcMER = mrdriversData$GDPpcMER,
-      GDPpcPPP = mrdriversData$GDPpcPPP
+      GDPpcPPP = mrdriversData$GDPpcPPP,
+      population = mrdriversData$population
     )
 
 

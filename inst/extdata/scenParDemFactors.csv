@@ -1,4 +1,4 @@
-demScen;region;sector;year;factor
+demScen;region;sector;period;factor
 SSP2EU_demRedStrong;CAZ;trn_aviation_intl;2050;0.7
 SSP2EU_demRedStrong;CHA;trn_aviation_intl;2050;0.7
 SSP2EU_demRedStrong;DEU;trn_aviation_intl;2050;0.7

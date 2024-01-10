@@ -7,12 +7,17 @@ toolLoadmrdriversData <- function(SSPscenario, years) {
   GDPpcMERmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
                          unit = "constant 2005 US$MER")[, years, paste0("gdppc_", SSPscenario)]
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
+
   GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")[, years, paste0("gdppc_", SSPscenario)]
   GDPpcPPP <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
+  POPmag <- calcOutput("Population", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")[, years, paste0("pop_", SSPscenario)]
+  POP <- magpie2dt(POPmag, yearcol = "period", regioncol = "region")[, variable := NULL]
+
   return(list(
     GDPpcMER = GDPpcMER,
-    GDPpcPPP = GDPpcPPP
+    GDPpcPPP = GDPpcPPP,
+    population = POP
   ))
 
 }
