@@ -639,3 +639,11 @@ SSP5,Mix4,startYeICE,2020
 SSP5,Mix4,targetYeICE,2027
 SSP5,Mix4,targetValICE,0.2
 SSP5,Mix4,ratioPHEV,0.5
+SSP2EU,CAMP_lscLow,startYeBEV,2025
+SSP2EU,CAMP_lscLow,startValBEV,0.5
+SSP2EU,CAMP_lscLow,targetYeBEV,2030
+SSP2EU,CAMP_lscLow,targetValBEV,0
+SSP2EU,CAMP_lscLow,startYeICE,2020
+SSP2EU,CAMP_lscLow,targetYeICE,2027
+SSP2EU,CAMP_lscLow,targetValICE,0.1
+SSP2EU,CAMP_lscLow,ratioPHEV,0.3
