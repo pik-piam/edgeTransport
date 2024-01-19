@@ -1,6 +1,6 @@
 # Prepare EDGE Transport Data for the REMIND model
 
-R package **edgeTransport**, version **1.4.1**
+R package **edgeTransport**, version **1.5.0**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport)  [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/builds)
 
@@ -46,7 +46,7 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M, Hoppe J (2023). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 1.4.1, <https://github.com/pik-piam/edgeTransport>.
+Dirnaichner A, Rottoli M, Hoppe J (2024). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 1.5.0, <https://github.com/pik-piam/edgeTransport>.
 
 A BibTeX entry for LaTeX users is
 
@@ -54,8 +54,8 @@ A BibTeX entry for LaTeX users is
 @Manual{,
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Alois Dirnaichner and Marianna Rottoli and Johanna Hoppe},
-  year = {2023},
-  note = {R package version 1.4.1},
+  year = {2024},
+  note = {R package version 1.5.0},
   url = {https://github.com/pik-piam/edgeTransport},
 }
 ```
