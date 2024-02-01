@@ -12,7 +12,7 @@
 #'          SSP2EU_lowEn,DEU,   trn_pass,2030, 0.5")
 #' @param SSP_scen REMIND SSP scenario
 #' @importFrom rmndt approx_dt
-#' @importFrom magrittr `%>%`
+#' @importFrom magrittr %>%
 #' @return transport demand projections
 #' @author Marianna Rottoli, Alois Dirnaichner
 #'
