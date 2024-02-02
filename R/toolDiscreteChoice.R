@@ -32,6 +32,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   allCostsFV <- rbind(CAPEXandOPEX, updatedEndoCosts)
   # vehicles that have preference trends receive these instead
   setnames(input$prefTrends, "value", "pref")
+  input$prefTrends[, c("variable", "unit") := NULL]
   preftrends <- input$prefTrends[level == "FV"][, level := NULL]
   FVshares <- merge(allCostsFV, preftrends, by = intersect(names(allCostsFV), names(preftrends)), all.x = TRUE, allow.cartesian = TRUE)
   # vehicleTypes with endogenous inconvenience costs have no preferences, which means that all preferences are set to 1 (equivalent expression)
@@ -154,7 +155,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   S1Sshares[, test := NULL][, level := "S1S"]
 
   # format --------------------------------------------------------------------
-  shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)
+  shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
   toolCheckAllLevelsComplete(copy(shares), helpers$decisionTree, "vehicle sales and mode shares")
 
   return(shares)

@@ -149,8 +149,8 @@ items <- c(
        "ES|Transport|Freight|Road|Truck (40t)",
        "ES|Transport|Freight|Road|Truck (26t)",
        "ES|Transport|Freight|Road|Truck (18t)",
-       "ES|Transport|Freight|Road|Truck (7.5t)",
-       "ES|Transport|Freight|Road|Truck (0-3.5t)"
+       "ES|Transport|Freight|Road|truck (7_5t)",
+       "ES|Transport|Freight|Road|truck (0-3_5t)"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")

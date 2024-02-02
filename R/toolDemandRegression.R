@@ -2,7 +2,7 @@
 
 
 toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaMER, POP,
-                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors) {
+                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors, baseYear, policyStartYear) {
 
   # interpolate SSP specific elasticities based on GDP MER per capita ----------------------------
   setnames(GDPperCapitaMER, "value", "regionGDPpcMER")
@@ -51,10 +51,10 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
                          GDPpcterm = GDPpcgrowthRate ^ incomeElasticity), by = c("period", "region", "sector")]
 
   histESdemand <- merge(historicalESdemand, helpers$decisionTree, by = c("univocalName", "technology", "region"))
-  histESdemand <- histESdemand[, .(value = sum(value)), by = c("region", "period", "sector")]
+  histESdemand <- histESdemand[, .(value = sum(value)), by = c("region", "period", "sector", "unit")]
 
   demandData <- merge(regressionData, histESdemand, by = c("region", "period", "sector"), all.x = TRUE)
-  baseYear <- max(unique(histESdemand$period))
+  demandData[, unit := unit[period == baseYear], by = c("region", "sector")]
   regressionTimeRange <- unique(demandData[period > baseYear]$period)
   # passenger transport
   for (i in regressionTimeRange) {
@@ -78,7 +78,7 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
     print(paste0("No demand scenario specific changes were applied on energy service demand"))
   }
 
-  demandData <- demandData[, c("region", "period", "sector", "value")]
+  demandData <- demandData[, c("region", "period", "sector", "value", "unit")]
   if (anyNA(demandData)) stop("energy service demand calculated in toolDemandRegression() includes NAs")
 
   return(demandData)

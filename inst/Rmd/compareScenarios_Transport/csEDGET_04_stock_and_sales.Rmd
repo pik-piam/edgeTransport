@@ -112,8 +112,8 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 ```{r}
 tot <- "Stock|Transport|Truck"
 items <- c(
-       "Stock|Transport|Truck|Truck (0-3.5t)",
-       "Stock|Transport|Truck|Truck (7.5t)",
+       "Stock|Transport|Truck|truck (0-3_5t)",
+       "Stock|Transport|Truck|truck (7_5t)",
        "Stock|Transport|Truck|Truck (18t)",
        "Stock|Transport|Truck|Truck (26t)",
        "Stock|Transport|Truck|Truck (40t)"
@@ -127,8 +127,8 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 ```{r}
 tot <- "Sales|Transport|Truck"
 items <- c(
-       "Sales|Transport|Truck|Truck (0-3.5t)",
-       "Sales|Transport|Truck|Truck (7.5t)",
+       "Sales|Transport|Truck|truck (0-3_5t)",
+       "Sales|Transport|Truck|truck (7_5t)",
        "Sales|Transport|Truck|Truck (18t)",
        "Sales|Transport|Truck|Truck (26t)",
        "Sales|Transport|Truck|Truck (40t)"
@@ -140,12 +140,12 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 
 ## Small Truck stock by technology
 ```{r}
-tot <- "Stock|Transport|Truck|Truck (0-3.5t)"
+tot <- "Stock|Transport|Truck|truck (0-3_5t)"
 items <- c(
-       "Stock|Transport|Truck|Truck (0-3.5t)|Electric",
-       "Stock|Transport|Truck|Truck (0-3.5t)|FCEV",
-       "Stock|Transport|Truck|Truck (0-3.5t)|Liquids",
-       "Stock|Transport|Truck|Truck (0-3.5t)|NG"
+       "Stock|Transport|Truck|truck (0-3_5t)|Electric",
+       "Stock|Transport|Truck|truck (0-3_5t)|FCEV",
+       "Stock|Transport|Truck|truck (0-3_5t)|Liquids",
+       "Stock|Transport|Truck|truck (0-3_5t)|NG"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
@@ -154,12 +154,12 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 
 ## Small Truck sales by technology
 ```{r}
-tot <- "Sales|Transport|Truck|Truck (0-3.5t)"
+tot <- "Sales|Transport|Truck|truck (0-3_5t)"
 items <- c(
-       "Sales|Transport|Truck|Truck (0-3.5t)|Electric",
-       "Sales|Transport|Truck|Truck (0-3.5t)|FCEV",
-       "Sales|Transport|Truck|Truck (0-3.5t)|Liquids",
-       "Sales|Transport|Truck|Truck (0-3.5t)|NG"
+       "Sales|Transport|Truck|truck (0-3_5t)|Electric",
+       "Sales|Transport|Truck|truck (0-3_5t)|FCEV",
+       "Sales|Transport|Truck|truck (0-3_5t)|Liquids",
+       "Sales|Transport|Truck|truck (0-3_5t)|NG"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")

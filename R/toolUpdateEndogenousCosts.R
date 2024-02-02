@@ -15,8 +15,7 @@
 #' @import data.table
 #' @export
 
-toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, lambdas, helpers, years, numberOfvehicles = NULL) {
-
+toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, lambdas, helpers, years, vehiclesPerTech = NULL) {
 
   # parameters of endogenous cost trends
   bfuelav = - 20    ## value based on Greene 2001
@@ -25,10 +24,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
 
   policyYears <- seq(policyStartYear, 2100, 1)
 
-  if (is.null(numberOfvehicles)){
+  if (is.null(vehiclesPerTech)){
     dataEndoCosts[, totVeh := 1]
   } else {
-    dataEndoCosts <- merge(dataEndoCosts, numberOfvehicles, by = c("region", "period"))
+    dataEndoCosts <- merge(dataEndoCosts, vehiclesPerTech, by = c("region", "period", "sector", "subsectorL2", "subsectorL3", "technology"))
   }
 
   dataEndoCosts[type == "Inconvenience costs", endoCostRaw := value]
@@ -38,6 +37,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
     # calculate proxy for total vehicles of one technology in the fleet ----------------------------
 
     vehDepreciation <- copy(depreciationFactors)
+    vehDepreciation <- vehDepreciation[!indexUsagePeriod == 0]
     vehDepreciation[, period := t - indexUsagePeriod]
     dataEndoCosts <- merge(dataEndoCosts, vehDepreciation[, c("period", "univocalName", "depreciationFactor")], by = c("period", "univocalName"), all.x = TRUE)
     # calculate weighted average of the market sales multiplied with total vehicle number depreciating in time
@@ -165,25 +165,26 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   dataEndoCosts[, c("FS3share", "type") := NULL]
 
   # For model behavior analysis all data is stored
-  updatedEndogenousCosts <- copy(dataEndoCosts)
+  updatedEndogenousCosts <- copy(dataEndoCosts)[, variable := paste0("Inconvenience costs|", variable)]
   updatedEndogenousCosts <- updatedEndogenousCosts[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
                                                        "technology", "univocalName", "variable", "unit", "period", "value")]
   rawEndogenousCosts <- copy(dataEndoCosts)
-  rawEndogenousCosts[, value := endoCostRaw]
+  rawEndogenousCosts[, value := endoCostRaw][, variable := paste0("Inconvenience costs (raw)|", variable)]
   rawEndogenousCosts <- rawEndogenousCosts[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
                                                "univocalName", "variable", "unit", "period", "value")]
   policyMask <- copy(dataEndoCosts)
-  policyMask[, value := endoCostRaw]
+  policyMask[, value := policyMask][, variable := paste0("Policy mask|", variable)]
   policyMask <- policyMask[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
                                                "univocalName", "variable", "unit", "period", "value")]
   techFleetProxy <- copy(dataEndoCosts)
   techFleetProxy[, value := techFleetProxy]
-  techFleetProxy[, variable := "Technology fleet proxy"]
+  techFleetProxy[, variable := "Technology fleet proxy"][, unit := "-"]
   techFleetProxy <- unique(techFleetProxy[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
                                                "univocalName", "variable", "unit", "period", "value")])
 
   endogenousCosts <- list(updatedEndogenousCosts = updatedEndogenousCosts, policyMask = policyMask, rawEndogenousCosts = rawEndogenousCosts, techFleetProxy = techFleetProxy)
-  outputYears <- c(unique(dataEndoCosts$period), years[years > 2100])
+
+  outputYears <- c(1990, seq(2005, 2100, by = 1), 2110, 2130, 2150)
   endogenousCosts <- lapply(endogenousCosts, approx_dt, outputYears, "period", "value",
                        setdiff(names(updatedEndogenousCosts), c("period", "value")), extrapolate = TRUE)
 

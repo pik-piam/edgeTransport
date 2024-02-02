@@ -16,12 +16,12 @@ toolLoadmrtransportData <- function(SSPscen) {
   # Energy Intensity after IEA harmonization [MJ/vehkm]
   energyIntensityMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                          regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"), SSPscen = SSPscen)
-  energyIntensity <- magpie2dt(energyIntensityMagpieobj)
+  energyIntensity <- magpie2dt(energyIntensityMagpieobj)[, variable := paste0(variable, " (raw)")]
 
   # Load Factor [(p|t)/veh]
   loadFactorMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                     regionmapping = "regionmapping_21_EU11.csv", subtype = "loadFactor", SSPscen = SSPscen)
-  loadFactor <- magpie2dt(loadFactorMagpieobj)
+  loadFactor <- magpie2dt(loadFactorMagpieobj)[, variable := paste0(variable, " (raw)")]
 
   # CAPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh]
   CAPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,

@@ -25,28 +25,31 @@ toolPrepareScenInputData <- function(generalPar, scenarioPar, RawInputData, year
   if (!is.null(scenarioPar$scenParLoadFactor)) {
     scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(RawInputData$loadFactor, scenarioPar$scenParLoadFactor,
                                                       policyStartYear, helpers)
+    scenSpecLoadFactor[, variable := "Load factor"]
     print("Policy induced changes to the loadfactor were applied")
   } else {
-    scenSpecLoadFactor <- RawInputData$loadFactor
+    scenSpecLoadFactor <- RawInputData$loadFactor[, variable := "Load factor"]
     print("No policy induced changes to the loadfactor")
   }
 
   # Application of policy induced changes on energy intensity ----------------------------
   if (!is.null(scenarioPar$scenParEnergyIntensity)) {
     scenSpecEnIntensity <- toolApplyScenSpecEnInt(RawInputData$energyIntensity, scenarioPar$scenParEnergyIntensity, years, policyStartYear, helpers)
+    scenSpecEnIntensity[, variable := "Energy intensity sales"]
     print("Policy induced changes to the energy intensity were applied")
   } else {
-    scenSpecEnIntensity <- RawInputData$energyIntensity
+    scenSpecEnIntensity <- RawInputData$energyIntensity[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
 
   # Annualization and formatting of monetary costs ---------------------------------------------------
   annuity <- toolCalculateAnnuity(generalPar$annuityCalc, helpers)
-  combinedCAPEXandOPEX <- toolCombineCAPEXandOPEX(RawInputData$CAPEXtrackedFleet, RawInputData$nonFuelOPEXtrackedFleet, RawInputData$CAPEXother, RawInputData$nonFuelOPEXother,
-                                                  RawInputData$fuelCosts, RawInputData$subsidies, scenSpecEnIntensity, scenSpecLoadFactor, RawInputData$annualMileage, annuity, years, helpers)
+  combinedCAPEXandOPEX <- toolCombineCAPEXandOPEX(copy(RawInputData$CAPEXtrackedFleet), copy(RawInputData$nonFuelOPEXtrackedFleet), copy(RawInputData$CAPEXother),
+                                                  copy(RawInputData$nonFuelOPEXother), copy(RawInputData$fuelCosts), copy(RawInputData$subsidies), copy(scenSpecEnIntensity),
+                                                  copy(scenSpecLoadFactor), copy(RawInputData$annualMileage), copy(annuity), years, helpers)
 
   # Annualization and formatting of non-monetary costs -------------------------------------------------
-  initialIncoCosts <- toolCalcInitialIncoCost(copy(combinedCAPEXandOPEX), generalPar$incoCostStartVal, annuity, scenSpecLoadFactor, RawInputData$annualMileage, years, helpers)
+  initialIncoCosts <- toolCalcInitialIncoCost(copy(combinedCAPEXandOPEX), copy(generalPar$incoCostStartVal), copy(annuity), copy(scenSpecLoadFactor), copy(RawInputData$annualMileage), years, helpers)
 
   scenSpecInputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,

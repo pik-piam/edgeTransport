@@ -18,7 +18,7 @@
 #' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMIF = TRUE, generateREMINDinputData = TRUE){
+toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, generateTransportData = TRUE, generateREMINDinputData = FALSE){
 
   ## manually set input data
   years <- c(
@@ -29,7 +29,10 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   )
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 25000 # [constant 2005 US$MER]
+  # Year when scenario differentiation sets in
   policyStartYear <- 2021
+  # last time step of historical data
+  baseYear <- 2010
 
   ########################################################
   ## Load input data
@@ -53,7 +56,7 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   ########################################################
   #histPrefs <- toolCalibrateHistPrefs(copy(combinedCostperES), copy(mrtransportData$histESdemand), copy(mrtransportData$timeValueCosts), copy(packageData$lambdasDiscreteChoice))
   histPrefs <- readRDS("C:/Users/johannah/Documents/Git_repos/edgeTransport/R/TestPrefTrends.RDS")
-  histPrefs <- histPrefs[!subsectorL3 == "trn_pass_road_LDV_4W"]
+  histPrefs <- histPrefs[!subsectorL3 == "trn_pass_road_LDV_4W"][, variable := paste0("Preference|", level)][, unit := "-"]
 
   scenSpecPrefTrends <- rbind(histPrefs, scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- approx_dt(scenSpecPrefTrends, years, "period", "value",
@@ -83,15 +86,28 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(copy(inputData), copy(genModelPar$lambdasDiscreteChoice), policyStartYear, helpers)
   vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(copy(genModelPar$annuityCalc), helpers)
 
+  #################################################
+  ## Demand regression module
+  #################################################
+  ## demand in million km
+  sectorESdemand <- toolDemandRegression(copy(inputData$histESdemand),
+                                         copy(inputData$combinedCAPEXandOPEX),
+                                         copy(inputData$GDPpcMER),
+                                         copy(inputData$population),
+                                         scenModelPar$scenParDemRegression,
+                                         scenModelPar$scenParRegionalDemRegression,
+                                         scenModelPar$scenParDemFactors, baseYear, policyStartYear)
+
   #------------------------------------------------------
   # Start of iterative section
   #------------------------------------------------------
 
   storeEndogenousCostsIterations <- list()
-  numberOfvehicles <- NULL
-  i<-1
+  storeFleetSizeAndCompositionIterations <- list()
+  fleetVehiclesPerTech <- NULL
+  iterations <- 1
 
-  for (i in seq(1,3,1)) {
+  for (i in seq(1, iterations, 1)) {
 
     #################################################
     ## Cost module
@@ -100,61 +116,53 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
     endogenousCosts <- toolUpdateEndogenousCosts(copy(dataEndogenousCosts), copy(vehicleDepreciationFactors), copy(scenModelPar$scenParIncoCost),
                                                  policyStartYear, copy(inputData$timeValueCosts),  copy(genModelPar$lambdasDiscreteChoice), helpers, years, fleetVehiclesPerTech)
-    storeEndogenousCostsIterations[[i]] <- endogenousCosts
-
+    storeEndogenousCostsIterations[[i]] <- copy(endogenousCosts)
+    lapply(storeEndogenousCostsIterations[[i]], function(dt) dt[, variable := paste0(variable, "|Iteration ", i)])
+    print("Endogenous updates to cost components finished")
     #################################################
     ## Discrete choice module
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
     vehSalesAndModeShares <- toolDiscreteChoice(copy(inputData), copy(genModelPar), copy(endogenousCosts$updatedEndogenousCosts), years, helpers)
 
-    #################################################
-    ## Demand regression module
-    #################################################
-    ## demand in million km
-    energyServiceDemand <- toolDemandReg(copy(inputData$histESdemand),
-                                         copy(inputData$combinedCAPEXandOPEX),
-                                         copy(inputData$GDPpcMER),
-                                         copy(inputData$population),
-                                         scenModelPar$scenParDemRegression,
-                                         scenModelPar$scenParRegionalDemRegression,
-                                         scenModelPar$scenParDemFactors)
-
+    fuelVehicleESdemand <- toolCalculateFVdemand(copy(sectorESdemand), copy(vehSalesAndModeShares), copy(inputData$histESdemand), baseYear, helpers)
+    print("Calculation of vehicle sales and mode shares finished")
     #################################################
     ## Vehicle stock module
     #################################################
     # Calculate vehicle stock for cars, trucks and busses -------
-    fleetSizeAndComposition <- toolCalculateFleetComposition()
-    fleetVehiclesPerTech <- fleetSizeAndComposition$vehiclesPerTech
-      #Input: (Sales) shares for all levels of the decision tree, Energy Service demand for top nodes of decision tree
-      #Ouput: Fleet data, adjusted energy intensity for the fleet (in comparison to sales energy efficiency)
+    fleetSizeAndComposition <- toolCalculateFleetComposition(copy(fuelVehicleESdemand), copy(vehicleDepreciationFactors), copy(vehSalesAndModeShares),
+                                                             copy(inputData$annualMileage), copy(inputData$loadFactor), baseYear, helpers)
+    fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
+    storeFleetSizeAndCompositionIterations[[i]] <- copy(fleetSizeAndComposition$fleetVehNumbers)
+    storeFleetSizeAndCompositionIterations[[i]][, variable := paste0(variable, "|Iteration ", i)]
+    print("Calculation of vehicle stock finished")
   }
   #------------------------------------------------------
   # End of iterative section
   #------------------------------------------------------
 
+  #################################################
+  ## Reporting
+  #################################################
+  vars <- toolCalculateOutputVariables(copy(fuelVehicleESdemand), copy(inputData$enIntensity), copy(inputData$loadFactor), copy(fleetSizeAndComposition),
+            copy(inputDataRaw$CAPEXtrackedFleet), copy(inputDataRaw$subsidies),
+            copy(inputData$combinedCAPEXandOPEX, gdx))
 
-    fleetVariables <- list(
-      fleetEnergyIntensity = inputData$enIntensity
-      fleetAnnualMileage = inputData$annualMileage
-      fleetLoadFactor = inputData$loadFactor
-    )
-    fleetData <- lapply(fleetVariables, calcFleetVariables, fleetComposition$fleetShares)
-    # Check all output data
-    # Store all outut data
+  if (generateTransportData == TRUE) {
+    toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,
+                storeFleetSizeAndCompositionIterations, storeEndogenousCostsIterations, fleetVariables)
+    report <- reportTransportData()
+    write.mif(report, file.path(outputFolder, folderName, "edgeTransportSA.mif"))
+  }
 
+  if (generateREMINDinputData == TRUE) {
+    REMINDinputData <- reportREMINDinputData()
+    if (storeREMINDinputData == TRUE) {
+      lapply(REMINDinputData,  function(x) write.csv(x, file.path(outputFolder, folderName, "5_REMINDinputData", paste0(data.table.name(x), ".csv"))))
+    }
   }
 
 
-
-# Reporting ---------------------------------------------------------------
-# report MIF
-# write MIF
-
-#report REMIND calibration data
-#return REMIND calibration data
-
-#report REMIND input data
-#return REMIND input data
 
 }

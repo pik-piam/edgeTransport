@@ -71,7 +71,7 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
   }
 
   filterEntries <- sapply(categories, findEntries, dt = decisionTree, USE.NAMES = TRUE)
-
+  return(filterEntries)
 }
 
 
@@ -163,6 +163,43 @@ toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
   test <- merge(data, allLevels, by = intersect(names(data), names(allLevels)), all = TRUE)
 
   if (anyNA(test) == TRUE) stop(paste0("Variable ", name, " is incomplete or contains unnessesary data"))
+
+  return(data)
+}
+
+#' toolOrderandCheck
+#'
+#' sort data.table according to edgeTransport data structure and check for NAs
+#' If checkCompletness is activated it is further checked, if the full data set is provided.
+#' In case of fleetVars == TRUE the full data set is reduced to the vehicle types that feature fleet tracking
+#'
+#' @author Johanna Hoppe
+#' @param data data.table containing data in all levels format that should be checked
+#' @param decisionTree data.table containing full edgeTransport decision Tree
+#' @param checkCompleteness if activated it is further checked, if the full data set is provided
+#' @param fleetVars if activated the full data set is reduced to vehicle types that feature fleet tracking
+#' @returns data.table
+#' @import data.table
+#' @export
+
+toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness = FALSE, fleetVars = FALSE) {
+
+  data <- merge(data, decisionTree, by = c(intersect(names(data), names(decisionTree))))
+  allCols <- c(names(decisionTree), "variable", "unit", "period", "value")
+  isComplete <- all(names(data) %in% allCols) && all(allCols %in% names(data))
+  if (isComplete == FALSE) stop(paste0(deparse(substitute(data), " misses columns or has additional columns")))
+  if (anyNA(data) == TRUE) stop(paste0(deparse(substitute(data), " contains NAs")))
+  data <- data[, ..allCols]
+
+  if (checkCompleteness == TRUE){
+    data <- data[period %in% yrs]
+    if (fleetVars == TRUE) decisionTree <- decisionTree[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
+    allTimesteps <- data.table(period = yrs)[, allyears := "All"]
+    decisionTree[, allyears := "All"]
+    decisionTree <- merge(decisionTree,  allTimesteps, by = "allyears")
+    test <- merge(data, decisionTree, by = intersect(names(data), names(decisionTree)), all = TRUE)
+    if (anyNA(test) == TRUE) stop(paste0(deparse(substitute(data), " is not complete")))
+  }
 
   return(data)
 }

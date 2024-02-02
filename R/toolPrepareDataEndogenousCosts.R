@@ -21,7 +21,7 @@ toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, 
 
   # extend to one year timesteps. Inconvenience costs are NA after policy startyear and are updated endogenously in updateEndogenousCosts()
   combinedCosts <- combinedCosts[subsectorL3 == "trn_pass_road_LDV_4W"]
-  timesteps <- seq(min(unique(combinedCosts$period)), 2100, 1)
+  timesteps <- c(1990, seq(2005, 2100, by = 1))
   combinedCosts <- approx_dt(combinedCosts, timesteps, "period", "value",
                   c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType","technology", "univocalName", "variable", "unit", "type"),
                   extrapolate = FALSE, keepna = TRUE)

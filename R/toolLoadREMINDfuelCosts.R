@@ -63,7 +63,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, yrs){
    fuelCosts[, value := ifelse(value <= 0.001, mean(value[value > 0.001]), value), by = c("period", "technology")]
  }
 
- fuelCosts[, variable := "Fuel price"][, unit := "US$2005/MJ"]
+ fuelCosts[, variable := "Fuel costs"][, unit := "US$2005/MJ"]
  # adjust to temporal resolution
  fuelCosts <- approx_dt(fuelCosts, yrs, "period", "value",
                 c("region", "univocalName", "technology",

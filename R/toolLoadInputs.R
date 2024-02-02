@@ -12,6 +12,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
     # categories for filtering data
     categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
     filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
+    filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight"]],)
 
     ### Load other input data  ------------------------------------------------------------
 
@@ -73,7 +74,6 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
       GDPpcPPP = mrdriversData$GDPpcPPP,
       population = mrdriversData$population
     )
-
 
     input <- list(
       helpers = helpers,

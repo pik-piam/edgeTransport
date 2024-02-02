@@ -38,8 +38,9 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
   PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
 
+  PrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
   # order
-  PrefTrends <- PrefTrends[, c("region", "period", "technology", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
+  PrefTrends <- PrefTrends[, c("region", "period", "technology", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "variable", "unit", "value")]
 
 return(PrefTrends)
 
