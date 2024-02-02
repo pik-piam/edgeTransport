@@ -12,12 +12,12 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, years) {
     # categories for filtering data
     categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
     filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
-    filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight"]],)
+    filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]], getFilterEntriesUnivocalName("Bus", packageData$decisionTree)[["Bus"]])
 
     ### Load other input data  ------------------------------------------------------------
 
     ## from mrtransport
-    mrtransportData <- toolLoadmrtransportData(SSPscen)
+    mrtransportData <- toolLoadmrtransportData(SSPscen, filterEntries, packageData$decisionTree)
 
     ## from mrcommons
     mrdriversData <- toolLoadmrdriversData(SSPscen, years)

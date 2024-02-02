@@ -17,11 +17,11 @@ ABW;Motorcycle (50-250cc);1
 ABW;Motorcycle (>250cc);1
 ABW;Passenger Rail;1
 ABW;Subcompact Car;1
-ABW;truck (0-3_5t);1
+ABW;Truck (0-3_5t);1
 ABW;Truck (18t);1
 ABW;Truck (26t);1
 ABW;Truck (40t);1
-ABW;truck (7_5t);1
+ABW;Truck (7_5t);1
 ABW;Van;1
 ABW;Walk;1
 AFG;Bus;1
@@ -42,11 +42,11 @@ AFG;Motorcycle (50-250cc);1
 AFG;Motorcycle (>250cc);1
 AFG;Passenger Rail;1
 AFG;Subcompact Car;1
-AFG;truck (0-3_5t);1
+AFG;Truck (0-3_5t);1
 AFG;Truck (18t);1
 AFG;Truck (26t);1
 AFG;Truck (40t);1
-AFG;truck (7_5t);1
+AFG;Truck (7_5t);1
 AFG;Van;0
 AFG;Walk;1
 AGO;Bus;1
@@ -67,11 +67,11 @@ AGO;Motorcycle (50-250cc);1
 AGO;Motorcycle (>250cc);1
 AGO;Passenger Rail;1
 AGO;Subcompact Car;1
-AGO;truck (0-3_5t);1
+AGO;Truck (0-3_5t);1
 AGO;Truck (18t);1
 AGO;Truck (26t);1
 AGO;Truck (40t);1
-AGO;truck (7_5t);1
+AGO;Truck (7_5t);1
 AGO;Van;0
 AGO;Walk;1
 AIA;Bus;1
@@ -92,11 +92,11 @@ AIA;Motorcycle (50-250cc);1
 AIA;Motorcycle (>250cc);1
 AIA;Passenger Rail;1
 AIA;Subcompact Car;1
-AIA;truck (0-3_5t);1
+AIA;Truck (0-3_5t);1
 AIA;Truck (18t);1
 AIA;Truck (26t);1
 AIA;Truck (40t);1
-AIA;truck (7_5t);1
+AIA;Truck (7_5t);1
 AIA;Van;1
 AIA;Walk;1
 ALA;Bus;1
@@ -117,11 +117,11 @@ ALA;Motorcycle (50-250cc);1
 ALA;Motorcycle (>250cc);1
 ALA;Passenger Rail;1
 ALA;Subcompact Car;1
-ALA;truck (0-3_5t);1
+ALA;Truck (0-3_5t);1
 ALA;Truck (18t);1
 ALA;Truck (26t);1
 ALA;Truck (40t);1
-ALA;truck (7_5t);1
+ALA;Truck (7_5t);1
 ALA;Van;1
 ALA;Walk;1
 ALB;Bus;1
@@ -142,11 +142,11 @@ ALB;Motorcycle (50-250cc);1
 ALB;Motorcycle (>250cc);1
 ALB;Passenger Rail;1
 ALB;Subcompact Car;1
-ALB;truck (0-3_5t);1
+ALB;Truck (0-3_5t);1
 ALB;Truck (18t);1
 ALB;Truck (26t);1
 ALB;Truck (40t);1
-ALB;truck (7_5t);1
+ALB;Truck (7_5t);1
 ALB;Van;1
 ALB;Walk;1
 AND;Bus;1
@@ -167,11 +167,11 @@ AND;Motorcycle (50-250cc);1
 AND;Motorcycle (>250cc);1
 AND;Passenger Rail;1
 AND;Subcompact Car;1
-AND;truck (0-3_5t);1
+AND;Truck (0-3_5t);1
 AND;Truck (18t);1
 AND;Truck (26t);1
 AND;Truck (40t);1
-AND;truck (7_5t);1
+AND;Truck (7_5t);1
 AND;Van;1
 AND;Walk;1
 ARE;Bus;1
@@ -192,11 +192,11 @@ ARE;Motorcycle (50-250cc);1
 ARE;Motorcycle (>250cc);0
 ARE;Passenger Rail;1
 ARE;Subcompact Car;1
-ARE;truck (0-3_5t);1
+ARE;Truck (0-3_5t);1
 ARE;Truck (18t);1
 ARE;Truck (26t);1
 ARE;Truck (40t);1
-ARE;truck (7_5t);1
+ARE;Truck (7_5t);1
 ARE;Van;0
 ARE;Walk;1
 ARG;Bus;1
@@ -217,11 +217,11 @@ ARG;Motorcycle (50-250cc);1
 ARG;Motorcycle (>250cc);1
 ARG;Passenger Rail;1
 ARG;Subcompact Car;1
-ARG;truck (0-3_5t);1
+ARG;Truck (0-3_5t);1
 ARG;Truck (18t);1
 ARG;Truck (26t);1
 ARG;Truck (40t);1
-ARG;truck (7_5t);1
+ARG;Truck (7_5t);1
 ARG;Van;0
 ARG;Walk;1
 ARM;Bus;1
@@ -242,11 +242,11 @@ ARM;Motorcycle (50-250cc);1
 ARM;Motorcycle (>250cc);1
 ARM;Passenger Rail;1
 ARM;Subcompact Car;1
-ARM;truck (0-3_5t);1
+ARM;Truck (0-3_5t);1
 ARM;Truck (18t);1
 ARM;Truck (26t);1
 ARM;Truck (40t);1
-ARM;truck (7_5t);1
+ARM;Truck (7_5t);1
 ARM;Van;0
 ARM;Walk;1
 ASM;Bus;1
@@ -267,11 +267,11 @@ ASM;Motorcycle (50-250cc);1
 ASM;Motorcycle (>250cc);1
 ASM;Passenger Rail;1
 ASM;Subcompact Car;1
-ASM;truck (0-3_5t);1
+ASM;Truck (0-3_5t);1
 ASM;Truck (18t);1
 ASM;Truck (26t);1
 ASM;Truck (40t);1
-ASM;truck (7_5t);1
+ASM;Truck (7_5t);1
 ASM;Van;0
 ASM;Walk;1
 ATA;Bus;1
@@ -292,11 +292,11 @@ ATA;Motorcycle (50-250cc);1
 ATA;Motorcycle (>250cc);1
 ATA;Passenger Rail;1
 ATA;Subcompact Car;1
-ATA;truck (0-3_5t);1
+ATA;Truck (0-3_5t);1
 ATA;Truck (18t);1
 ATA;Truck (26t);1
 ATA;Truck (40t);1
-ATA;truck (7_5t);1
+ATA;Truck (7_5t);1
 ATA;Van;0
 ATA;Walk;1
 ATF;Bus;1
@@ -317,11 +317,11 @@ ATF;Motorcycle (50-250cc);1
 ATF;Motorcycle (>250cc);1
 ATF;Passenger Rail;1
 ATF;Subcompact Car;1
-ATF;truck (0-3_5t);1
+ATF;Truck (0-3_5t);1
 ATF;Truck (18t);1
 ATF;Truck (26t);1
 ATF;Truck (40t);1
-ATF;truck (7_5t);1
+ATF;Truck (7_5t);1
 ATF;Van;1
 ATF;Walk;1
 ATG;Bus;1
@@ -342,11 +342,11 @@ ATG;Motorcycle (50-250cc);1
 ATG;Motorcycle (>250cc);1
 ATG;Passenger Rail;1
 ATG;Subcompact Car;1
-ATG;truck (0-3_5t);1
+ATG;Truck (0-3_5t);1
 ATG;Truck (18t);1
 ATG;Truck (26t);1
 ATG;Truck (40t);1
-ATG;truck (7_5t);1
+ATG;Truck (7_5t);1
 ATG;Van;1
 ATG;Walk;1
 AUS;Bus;1
@@ -367,11 +367,11 @@ AUS;Motorcycle (50-250cc);0
 AUS;Motorcycle (>250cc);1
 AUS;Passenger Rail;1
 AUS;Subcompact Car;0
-AUS;truck (0-3_5t);1
+AUS;Truck (0-3_5t);1
 AUS;Truck (18t);1
 AUS;Truck (26t);1
 AUS;Truck (40t);1
-AUS;truck (7_5t);1
+AUS;Truck (7_5t);1
 AUS;Van;0
 AUS;Walk;1
 AUT;Bus;1
@@ -392,11 +392,11 @@ AUT;Motorcycle (50-250cc);1
 AUT;Motorcycle (>250cc);1
 AUT;Passenger Rail;1
 AUT;Subcompact Car;1
-AUT;truck (0-3_5t);1
+AUT;Truck (0-3_5t);1
 AUT;Truck (18t);1
 AUT;Truck (26t);1
 AUT;Truck (40t);1
-AUT;truck (7_5t);1
+AUT;Truck (7_5t);1
 AUT;Van;0
 AUT;Walk;1
 AZE;Bus;1
@@ -417,11 +417,11 @@ AZE;Motorcycle (50-250cc);1
 AZE;Motorcycle (>250cc);1
 AZE;Passenger Rail;1
 AZE;Subcompact Car;1
-AZE;truck (0-3_5t);1
+AZE;Truck (0-3_5t);1
 AZE;Truck (18t);1
 AZE;Truck (26t);1
 AZE;Truck (40t);1
-AZE;truck (7_5t);1
+AZE;Truck (7_5t);1
 AZE;Van;0
 AZE;Walk;1
 BDI;Bus;1
@@ -442,11 +442,11 @@ BDI;Motorcycle (50-250cc);1
 BDI;Motorcycle (>250cc);1
 BDI;Passenger Rail;1
 BDI;Subcompact Car;1
-BDI;truck (0-3_5t);1
+BDI;Truck (0-3_5t);1
 BDI;Truck (18t);1
 BDI;Truck (26t);1
 BDI;Truck (40t);1
-BDI;truck (7_5t);1
+BDI;Truck (7_5t);1
 BDI;Van;0
 BDI;Walk;1
 BEL;Bus;1
@@ -467,11 +467,11 @@ BEL;Motorcycle (50-250cc);1
 BEL;Motorcycle (>250cc);1
 BEL;Passenger Rail;1
 BEL;Subcompact Car;1
-BEL;truck (0-3_5t);1
+BEL;Truck (0-3_5t);1
 BEL;Truck (18t);1
 BEL;Truck (26t);1
 BEL;Truck (40t);1
-BEL;truck (7_5t);1
+BEL;Truck (7_5t);1
 BEL;Van;0
 BEL;Walk;1
 BEN;Bus;1
@@ -492,11 +492,11 @@ BEN;Motorcycle (50-250cc);1
 BEN;Motorcycle (>250cc);1
 BEN;Passenger Rail;1
 BEN;Subcompact Car;1
-BEN;truck (0-3_5t);1
+BEN;Truck (0-3_5t);1
 BEN;Truck (18t);1
 BEN;Truck (26t);1
 BEN;Truck (40t);1
-BEN;truck (7_5t);1
+BEN;Truck (7_5t);1
 BEN;Van;0
 BEN;Walk;1
 BES;Bus;1
@@ -517,11 +517,11 @@ BES;Motorcycle (50-250cc);1
 BES;Motorcycle (>250cc);1
 BES;Passenger Rail;1
 BES;Subcompact Car;1
-BES;truck (0-3_5t);1
+BES;Truck (0-3_5t);1
 BES;Truck (18t);1
 BES;Truck (26t);1
 BES;Truck (40t);1
-BES;truck (7_5t);1
+BES;Truck (7_5t);1
 BES;Van;1
 BES;Walk;1
 BFA;Bus;1
@@ -542,11 +542,11 @@ BFA;Motorcycle (50-250cc);1
 BFA;Motorcycle (>250cc);1
 BFA;Passenger Rail;1
 BFA;Subcompact Car;1
-BFA;truck (0-3_5t);1
+BFA;Truck (0-3_5t);1
 BFA;Truck (18t);1
 BFA;Truck (26t);1
 BFA;Truck (40t);1
-BFA;truck (7_5t);1
+BFA;Truck (7_5t);1
 BFA;Van;0
 BFA;Walk;1
 BGD;Bus;1
@@ -567,11 +567,11 @@ BGD;Motorcycle (50-250cc);1
 BGD;Motorcycle (>250cc);1
 BGD;Passenger Rail;1
 BGD;Subcompact Car;1
-BGD;truck (0-3_5t);1
+BGD;Truck (0-3_5t);1
 BGD;Truck (18t);1
 BGD;Truck (26t);1
 BGD;Truck (40t);1
-BGD;truck (7_5t);1
+BGD;Truck (7_5t);1
 BGD;Van;0
 BGD;Walk;1
 BGR;Bus;1
@@ -592,11 +592,11 @@ BGR;Motorcycle (50-250cc);1
 BGR;Motorcycle (>250cc);1
 BGR;Passenger Rail;1
 BGR;Subcompact Car;1
-BGR;truck (0-3_5t);1
+BGR;Truck (0-3_5t);1
 BGR;Truck (18t);1
 BGR;Truck (26t);1
 BGR;Truck (40t);1
-BGR;truck (7_5t);1
+BGR;Truck (7_5t);1
 BGR;Van;0
 BGR;Walk;1
 BHR;Bus;1
@@ -617,11 +617,11 @@ BHR;Motorcycle (50-250cc);1
 BHR;Motorcycle (>250cc);0
 BHR;Passenger Rail;1
 BHR;Subcompact Car;1
-BHR;truck (0-3_5t);1
+BHR;Truck (0-3_5t);1
 BHR;Truck (18t);1
 BHR;Truck (26t);1
 BHR;Truck (40t);1
-BHR;truck (7_5t);1
+BHR;Truck (7_5t);1
 BHR;Van;0
 BHR;Walk;1
 BHS;Bus;1
@@ -642,11 +642,11 @@ BHS;Motorcycle (50-250cc);1
 BHS;Motorcycle (>250cc);1
 BHS;Passenger Rail;1
 BHS;Subcompact Car;1
-BHS;truck (0-3_5t);1
+BHS;Truck (0-3_5t);1
 BHS;Truck (18t);1
 BHS;Truck (26t);1
 BHS;Truck (40t);1
-BHS;truck (7_5t);1
+BHS;Truck (7_5t);1
 BHS;Van;1
 BHS;Walk;1
 BIH;Bus;1
@@ -667,11 +667,11 @@ BIH;Motorcycle (50-250cc);1
 BIH;Motorcycle (>250cc);1
 BIH;Passenger Rail;1
 BIH;Subcompact Car;1
-BIH;truck (0-3_5t);1
+BIH;Truck (0-3_5t);1
 BIH;Truck (18t);1
 BIH;Truck (26t);1
 BIH;Truck (40t);1
-BIH;truck (7_5t);1
+BIH;Truck (7_5t);1
 BIH;Van;1
 BIH;Walk;1
 BLM;Bus;1
@@ -692,11 +692,11 @@ BLM;Motorcycle (50-250cc);1
 BLM;Motorcycle (>250cc);1
 BLM;Passenger Rail;1
 BLM;Subcompact Car;1
-BLM;truck (0-3_5t);1
+BLM;Truck (0-3_5t);1
 BLM;Truck (18t);1
 BLM;Truck (26t);1
 BLM;Truck (40t);1
-BLM;truck (7_5t);1
+BLM;Truck (7_5t);1
 BLM;Van;1
 BLM;Walk;1
 BLR;Bus;1
@@ -717,11 +717,11 @@ BLR;Motorcycle (50-250cc);1
 BLR;Motorcycle (>250cc);1
 BLR;Passenger Rail;1
 BLR;Subcompact Car;1
-BLR;truck (0-3_5t);1
+BLR;Truck (0-3_5t);1
 BLR;Truck (18t);1
 BLR;Truck (26t);1
 BLR;Truck (40t);1
-BLR;truck (7_5t);1
+BLR;Truck (7_5t);1
 BLR;Van;0
 BLR;Walk;1
 BLZ;Bus;1
@@ -742,11 +742,11 @@ BLZ;Motorcycle (50-250cc);1
 BLZ;Motorcycle (>250cc);1
 BLZ;Passenger Rail;1
 BLZ;Subcompact Car;1
-BLZ;truck (0-3_5t);1
+BLZ;Truck (0-3_5t);1
 BLZ;Truck (18t);1
 BLZ;Truck (26t);1
 BLZ;Truck (40t);1
-BLZ;truck (7_5t);1
+BLZ;Truck (7_5t);1
 BLZ;Van;1
 BLZ;Walk;1
 BMU;Bus;1
@@ -767,11 +767,11 @@ BMU;Motorcycle (50-250cc);1
 BMU;Motorcycle (>250cc);1
 BMU;Passenger Rail;1
 BMU;Subcompact Car;1
-BMU;truck (0-3_5t);1
+BMU;Truck (0-3_5t);1
 BMU;Truck (18t);1
 BMU;Truck (26t);1
 BMU;Truck (40t);1
-BMU;truck (7_5t);1
+BMU;Truck (7_5t);1
 BMU;Van;1
 BMU;Walk;1
 BOL;Bus;1
@@ -792,11 +792,11 @@ BOL;Motorcycle (50-250cc);1
 BOL;Motorcycle (>250cc);1
 BOL;Passenger Rail;1
 BOL;Subcompact Car;1
-BOL;truck (0-3_5t);1
+BOL;Truck (0-3_5t);1
 BOL;Truck (18t);1
 BOL;Truck (26t);1
 BOL;Truck (40t);1
-BOL;truck (7_5t);1
+BOL;Truck (7_5t);1
 BOL;Van;0
 BOL;Walk;1
 BRA;Bus;1
@@ -817,11 +817,11 @@ BRA;Motorcycle (50-250cc);1
 BRA;Motorcycle (>250cc);1
 BRA;Passenger Rail;1
 BRA;Subcompact Car;1
-BRA;truck (0-3_5t);1
+BRA;Truck (0-3_5t);1
 BRA;Truck (18t);1
 BRA;Truck (26t);1
 BRA;Truck (40t);1
-BRA;truck (7_5t);1
+BRA;Truck (7_5t);1
 BRA;Van;0
 BRA;Walk;1
 BRB;Bus;1
@@ -842,11 +842,11 @@ BRB;Motorcycle (50-250cc);1
 BRB;Motorcycle (>250cc);1
 BRB;Passenger Rail;1
 BRB;Subcompact Car;1
-BRB;truck (0-3_5t);1
+BRB;Truck (0-3_5t);1
 BRB;Truck (18t);1
 BRB;Truck (26t);1
 BRB;Truck (40t);1
-BRB;truck (7_5t);1
+BRB;Truck (7_5t);1
 BRB;Van;1
 BRB;Walk;1
 BRN;Bus;1
@@ -867,11 +867,11 @@ BRN;Motorcycle (50-250cc);1
 BRN;Motorcycle (>250cc);1
 BRN;Passenger Rail;1
 BRN;Subcompact Car;1
-BRN;truck (0-3_5t);1
+BRN;Truck (0-3_5t);1
 BRN;Truck (18t);1
 BRN;Truck (26t);1
 BRN;Truck (40t);1
-BRN;truck (7_5t);1
+BRN;Truck (7_5t);1
 BRN;Van;0
 BRN;Walk;1
 BTN;Bus;1
@@ -892,11 +892,11 @@ BTN;Motorcycle (50-250cc);1
 BTN;Motorcycle (>250cc);1
 BTN;Passenger Rail;1
 BTN;Subcompact Car;1
-BTN;truck (0-3_5t);1
+BTN;Truck (0-3_5t);1
 BTN;Truck (18t);1
 BTN;Truck (26t);1
 BTN;Truck (40t);1
-BTN;truck (7_5t);1
+BTN;Truck (7_5t);1
 BTN;Van;0
 BTN;Walk;1
 BVT;Bus;1
@@ -917,11 +917,11 @@ BVT;Motorcycle (50-250cc);1
 BVT;Motorcycle (>250cc);1
 BVT;Passenger Rail;1
 BVT;Subcompact Car;1
-BVT;truck (0-3_5t);1
+BVT;Truck (0-3_5t);1
 BVT;Truck (18t);1
 BVT;Truck (26t);1
 BVT;Truck (40t);1
-BVT;truck (7_5t);1
+BVT;Truck (7_5t);1
 BVT;Van;1
 BVT;Walk;1
 BWA;Bus;1
@@ -942,11 +942,11 @@ BWA;Motorcycle (50-250cc);1
 BWA;Motorcycle (>250cc);1
 BWA;Passenger Rail;1
 BWA;Subcompact Car;1
-BWA;truck (0-3_5t);1
+BWA;Truck (0-3_5t);1
 BWA;Truck (18t);1
 BWA;Truck (26t);1
 BWA;Truck (40t);1
-BWA;truck (7_5t);1
+BWA;Truck (7_5t);1
 BWA;Van;0
 BWA;Walk;1
 CAF;Bus;1
@@ -967,11 +967,11 @@ CAF;Motorcycle (50-250cc);1
 CAF;Motorcycle (>250cc);1
 CAF;Passenger Rail;1
 CAF;Subcompact Car;1
-CAF;truck (0-3_5t);1
+CAF;Truck (0-3_5t);1
 CAF;Truck (18t);1
 CAF;Truck (26t);1
 CAF;Truck (40t);1
-CAF;truck (7_5t);1
+CAF;Truck (7_5t);1
 CAF;Van;0
 CAF;Walk;1
 CAN;Bus;1
@@ -992,11 +992,11 @@ CAN;Motorcycle (50-250cc);0
 CAN;Motorcycle (>250cc);1
 CAN;Passenger Rail;1
 CAN;Subcompact Car;0
-CAN;truck (0-3_5t);1
+CAN;Truck (0-3_5t);1
 CAN;Truck (18t);1
 CAN;Truck (26t);1
 CAN;Truck (40t);1
-CAN;truck (7_5t);1
+CAN;Truck (7_5t);1
 CAN;Van;1
 CAN;Walk;1
 CCK;Bus;1
@@ -1017,11 +1017,11 @@ CCK;Motorcycle (50-250cc);1
 CCK;Motorcycle (>250cc);1
 CCK;Passenger Rail;1
 CCK;Subcompact Car;1
-CCK;truck (0-3_5t);1
+CCK;Truck (0-3_5t);1
 CCK;Truck (18t);1
 CCK;Truck (26t);1
 CCK;Truck (40t);1
-CCK;truck (7_5t);1
+CCK;Truck (7_5t);1
 CCK;Van;0
 CCK;Walk;1
 CHE;Bus;1
@@ -1042,11 +1042,11 @@ CHE;Motorcycle (50-250cc);1
 CHE;Motorcycle (>250cc);1
 CHE;Passenger Rail;1
 CHE;Subcompact Car;1
-CHE;truck (0-3_5t);1
+CHE;Truck (0-3_5t);1
 CHE;Truck (18t);1
 CHE;Truck (26t);1
 CHE;Truck (40t);1
-CHE;truck (7_5t);1
+CHE;Truck (7_5t);1
 CHE;Van;0
 CHE;Walk;1
 CHL;Bus;1
@@ -1067,11 +1067,11 @@ CHL;Motorcycle (50-250cc);1
 CHL;Motorcycle (>250cc);1
 CHL;Passenger Rail;1
 CHL;Subcompact Car;1
-CHL;truck (0-3_5t);1
+CHL;Truck (0-3_5t);1
 CHL;Truck (18t);1
 CHL;Truck (26t);1
 CHL;Truck (40t);1
-CHL;truck (7_5t);1
+CHL;Truck (7_5t);1
 CHL;Van;0
 CHL;Walk;1
 CHN;Bus;1
@@ -1092,11 +1092,11 @@ CHN;Motorcycle (50-250cc);1
 CHN;Motorcycle (>250cc);1
 CHN;Passenger Rail;1
 CHN;Subcompact Car;1
-CHN;truck (0-3_5t);1
+CHN;Truck (0-3_5t);1
 CHN;Truck (18t);1
 CHN;Truck (26t);1
 CHN;Truck (40t);1
-CHN;truck (7_5t);1
+CHN;Truck (7_5t);1
 CHN;Van;0
 CHN;Walk;1
 CIV;Bus;1
@@ -1117,11 +1117,11 @@ CIV;Motorcycle (50-250cc);1
 CIV;Motorcycle (>250cc);1
 CIV;Passenger Rail;1
 CIV;Subcompact Car;1
-CIV;truck (0-3_5t);1
+CIV;Truck (0-3_5t);1
 CIV;Truck (18t);1
 CIV;Truck (26t);1
 CIV;Truck (40t);1
-CIV;truck (7_5t);1
+CIV;Truck (7_5t);1
 CIV;Van;0
 CIV;Walk;1
 CMR;Bus;1
@@ -1142,11 +1142,11 @@ CMR;Motorcycle (50-250cc);1
 CMR;Motorcycle (>250cc);1
 CMR;Passenger Rail;1
 CMR;Subcompact Car;1
-CMR;truck (0-3_5t);1
+CMR;Truck (0-3_5t);1
 CMR;Truck (18t);1
 CMR;Truck (26t);1
 CMR;Truck (40t);1
-CMR;truck (7_5t);1
+CMR;Truck (7_5t);1
 CMR;Van;0
 CMR;Walk;1
 COD;Bus;1
@@ -1167,11 +1167,11 @@ COD;Motorcycle (50-250cc);1
 COD;Motorcycle (>250cc);1
 COD;Passenger Rail;1
 COD;Subcompact Car;1
-COD;truck (0-3_5t);1
+COD;Truck (0-3_5t);1
 COD;Truck (18t);1
 COD;Truck (26t);1
 COD;Truck (40t);1
-COD;truck (7_5t);1
+COD;Truck (7_5t);1
 COD;Van;0
 COD;Walk;1
 COG;Bus;1
@@ -1192,11 +1192,11 @@ COG;Motorcycle (50-250cc);1
 COG;Motorcycle (>250cc);1
 COG;Passenger Rail;1
 COG;Subcompact Car;1
-COG;truck (0-3_5t);1
+COG;Truck (0-3_5t);1
 COG;Truck (18t);1
 COG;Truck (26t);1
 COG;Truck (40t);1
-COG;truck (7_5t);1
+COG;Truck (7_5t);1
 COG;Van;0
 COG;Walk;1
 COK;Bus;1
@@ -1217,11 +1217,11 @@ COK;Motorcycle (50-250cc);1
 COK;Motorcycle (>250cc);1
 COK;Passenger Rail;1
 COK;Subcompact Car;1
-COK;truck (0-3_5t);1
+COK;Truck (0-3_5t);1
 COK;Truck (18t);1
 COK;Truck (26t);1
 COK;Truck (40t);1
-COK;truck (7_5t);1
+COK;Truck (7_5t);1
 COK;Van;0
 COK;Walk;1
 COL;Bus;1
@@ -1242,11 +1242,11 @@ COL;Motorcycle (50-250cc);1
 COL;Motorcycle (>250cc);1
 COL;Passenger Rail;1
 COL;Subcompact Car;1
-COL;truck (0-3_5t);1
+COL;Truck (0-3_5t);1
 COL;Truck (18t);1
 COL;Truck (26t);1
 COL;Truck (40t);1
-COL;truck (7_5t);1
+COL;Truck (7_5t);1
 COL;Van;0
 COL;Walk;1
 COM;Bus;1
@@ -1267,11 +1267,11 @@ COM;Motorcycle (50-250cc);1
 COM;Motorcycle (>250cc);1
 COM;Passenger Rail;1
 COM;Subcompact Car;1
-COM;truck (0-3_5t);1
+COM;Truck (0-3_5t);1
 COM;Truck (18t);1
 COM;Truck (26t);1
 COM;Truck (40t);1
-COM;truck (7_5t);1
+COM;Truck (7_5t);1
 COM;Van;0
 COM;Walk;1
 CPV;Bus;1
@@ -1292,11 +1292,11 @@ CPV;Motorcycle (50-250cc);1
 CPV;Motorcycle (>250cc);1
 CPV;Passenger Rail;1
 CPV;Subcompact Car;1
-CPV;truck (0-3_5t);1
+CPV;Truck (0-3_5t);1
 CPV;Truck (18t);1
 CPV;Truck (26t);1
 CPV;Truck (40t);1
-CPV;truck (7_5t);1
+CPV;Truck (7_5t);1
 CPV;Van;0
 CPV;Walk;1
 CRI;Bus;1
@@ -1317,11 +1317,11 @@ CRI;Motorcycle (50-250cc);1
 CRI;Motorcycle (>250cc);1
 CRI;Passenger Rail;1
 CRI;Subcompact Car;1
-CRI;truck (0-3_5t);1
+CRI;Truck (0-3_5t);1
 CRI;Truck (18t);1
 CRI;Truck (26t);1
 CRI;Truck (40t);1
-CRI;truck (7_5t);1
+CRI;Truck (7_5t);1
 CRI;Van;1
 CRI;Walk;1
 CUB;Bus;1
@@ -1342,11 +1342,11 @@ CUB;Motorcycle (50-250cc);1
 CUB;Motorcycle (>250cc);1
 CUB;Passenger Rail;1
 CUB;Subcompact Car;1
-CUB;truck (0-3_5t);1
+CUB;Truck (0-3_5t);1
 CUB;Truck (18t);1
 CUB;Truck (26t);1
 CUB;Truck (40t);1
-CUB;truck (7_5t);1
+CUB;Truck (7_5t);1
 CUB;Van;1
 CUB;Walk;1
 CUW;Bus;1
@@ -1367,11 +1367,11 @@ CUW;Motorcycle (50-250cc);1
 CUW;Motorcycle (>250cc);1
 CUW;Passenger Rail;1
 CUW;Subcompact Car;1
-CUW;truck (0-3_5t);1
+CUW;Truck (0-3_5t);1
 CUW;Truck (18t);1
 CUW;Truck (26t);1
 CUW;Truck (40t);1
-CUW;truck (7_5t);1
+CUW;Truck (7_5t);1
 CUW;Van;1
 CUW;Walk;1
 CXR;Bus;1
@@ -1392,11 +1392,11 @@ CXR;Motorcycle (50-250cc);1
 CXR;Motorcycle (>250cc);1
 CXR;Passenger Rail;1
 CXR;Subcompact Car;1
-CXR;truck (0-3_5t);1
+CXR;Truck (0-3_5t);1
 CXR;Truck (18t);1
 CXR;Truck (26t);1
 CXR;Truck (40t);1
-CXR;truck (7_5t);1
+CXR;Truck (7_5t);1
 CXR;Van;0
 CXR;Walk;1
 CYM;Bus;1
@@ -1417,11 +1417,11 @@ CYM;Motorcycle (50-250cc);1
 CYM;Motorcycle (>250cc);1
 CYM;Passenger Rail;1
 CYM;Subcompact Car;1
-CYM;truck (0-3_5t);1
+CYM;Truck (0-3_5t);1
 CYM;Truck (18t);1
 CYM;Truck (26t);1
 CYM;Truck (40t);1
-CYM;truck (7_5t);1
+CYM;Truck (7_5t);1
 CYM;Van;1
 CYM;Walk;1
 CYP;Bus;1
@@ -1442,11 +1442,11 @@ CYP;Motorcycle (50-250cc);1
 CYP;Motorcycle (>250cc);1
 CYP;Passenger Rail;1
 CYP;Subcompact Car;1
-CYP;truck (0-3_5t);1
+CYP;Truck (0-3_5t);1
 CYP;Truck (18t);1
 CYP;Truck (26t);1
 CYP;Truck (40t);1
-CYP;truck (7_5t);1
+CYP;Truck (7_5t);1
 CYP;Van;0
 CYP;Walk;1
 CZE;Bus;1
@@ -1467,11 +1467,11 @@ CZE;Motorcycle (50-250cc);1
 CZE;Motorcycle (>250cc);1
 CZE;Passenger Rail;1
 CZE;Subcompact Car;1
-CZE;truck (0-3_5t);1
+CZE;Truck (0-3_5t);1
 CZE;Truck (18t);1
 CZE;Truck (26t);1
 CZE;Truck (40t);1
-CZE;truck (7_5t);1
+CZE;Truck (7_5t);1
 CZE;Van;0
 CZE;Walk;1
 DEU;Bus;1
@@ -1492,11 +1492,11 @@ DEU;Motorcycle (50-250cc);1
 DEU;Motorcycle (>250cc);1
 DEU;Passenger Rail;1
 DEU;Subcompact Car;1
-DEU;truck (0-3_5t);1
+DEU;Truck (0-3_5t);1
 DEU;Truck (18t);1
 DEU;Truck (26t);1
 DEU;Truck (40t);1
-DEU;truck (7_5t);1
+DEU;Truck (7_5t);1
 DEU;Van;0
 DEU;Walk;1
 DJI;Bus;1
@@ -1517,11 +1517,11 @@ DJI;Motorcycle (50-250cc);1
 DJI;Motorcycle (>250cc);1
 DJI;Passenger Rail;1
 DJI;Subcompact Car;1
-DJI;truck (0-3_5t);1
+DJI;Truck (0-3_5t);1
 DJI;Truck (18t);1
 DJI;Truck (26t);1
 DJI;Truck (40t);1
-DJI;truck (7_5t);1
+DJI;Truck (7_5t);1
 DJI;Van;0
 DJI;Walk;1
 DMA;Bus;1
@@ -1542,11 +1542,11 @@ DMA;Motorcycle (50-250cc);1
 DMA;Motorcycle (>250cc);1
 DMA;Passenger Rail;1
 DMA;Subcompact Car;1
-DMA;truck (0-3_5t);1
+DMA;Truck (0-3_5t);1
 DMA;Truck (18t);1
 DMA;Truck (26t);1
 DMA;Truck (40t);1
-DMA;truck (7_5t);1
+DMA;Truck (7_5t);1
 DMA;Van;1
 DMA;Walk;1
 DNK;Bus;1
@@ -1567,11 +1567,11 @@ DNK;Motorcycle (50-250cc);1
 DNK;Motorcycle (>250cc);1
 DNK;Passenger Rail;1
 DNK;Subcompact Car;1
-DNK;truck (0-3_5t);1
+DNK;Truck (0-3_5t);1
 DNK;Truck (18t);1
 DNK;Truck (26t);1
 DNK;Truck (40t);1
-DNK;truck (7_5t);1
+DNK;Truck (7_5t);1
 DNK;Van;0
 DNK;Walk;1
 DOM;Bus;1
@@ -1592,11 +1592,11 @@ DOM;Motorcycle (50-250cc);1
 DOM;Motorcycle (>250cc);1
 DOM;Passenger Rail;1
 DOM;Subcompact Car;1
-DOM;truck (0-3_5t);1
+DOM;Truck (0-3_5t);1
 DOM;Truck (18t);1
 DOM;Truck (26t);1
 DOM;Truck (40t);1
-DOM;truck (7_5t);1
+DOM;Truck (7_5t);1
 DOM;Van;1
 DOM;Walk;1
 DZA;Bus;1
@@ -1617,11 +1617,11 @@ DZA;Motorcycle (50-250cc);1
 DZA;Motorcycle (>250cc);1
 DZA;Passenger Rail;1
 DZA;Subcompact Car;1
-DZA;truck (0-3_5t);1
+DZA;Truck (0-3_5t);1
 DZA;Truck (18t);1
 DZA;Truck (26t);1
 DZA;Truck (40t);1
-DZA;truck (7_5t);1
+DZA;Truck (7_5t);1
 DZA;Van;0
 DZA;Walk;1
 ECU;Bus;1
@@ -1642,11 +1642,11 @@ ECU;Motorcycle (50-250cc);1
 ECU;Motorcycle (>250cc);1
 ECU;Passenger Rail;1
 ECU;Subcompact Car;1
-ECU;truck (0-3_5t);1
+ECU;Truck (0-3_5t);1
 ECU;Truck (18t);1
 ECU;Truck (26t);1
 ECU;Truck (40t);1
-ECU;truck (7_5t);1
+ECU;Truck (7_5t);1
 ECU;Van;0
 ECU;Walk;1
 EGY;Bus;1
@@ -1667,11 +1667,11 @@ EGY;Motorcycle (50-250cc);1
 EGY;Motorcycle (>250cc);1
 EGY;Passenger Rail;1
 EGY;Subcompact Car;1
-EGY;truck (0-3_5t);1
+EGY;Truck (0-3_5t);1
 EGY;Truck (18t);1
 EGY;Truck (26t);1
 EGY;Truck (40t);1
-EGY;truck (7_5t);1
+EGY;Truck (7_5t);1
 EGY;Van;0
 EGY;Walk;1
 ERI;Bus;1
@@ -1692,11 +1692,11 @@ ERI;Motorcycle (50-250cc);1
 ERI;Motorcycle (>250cc);1
 ERI;Passenger Rail;1
 ERI;Subcompact Car;1
-ERI;truck (0-3_5t);1
+ERI;Truck (0-3_5t);1
 ERI;Truck (18t);1
 ERI;Truck (26t);1
 ERI;Truck (40t);1
-ERI;truck (7_5t);1
+ERI;Truck (7_5t);1
 ERI;Van;0
 ERI;Walk;1
 ESH;Bus;1
@@ -1717,11 +1717,11 @@ ESH;Motorcycle (50-250cc);1
 ESH;Motorcycle (>250cc);1
 ESH;Passenger Rail;1
 ESH;Subcompact Car;1
-ESH;truck (0-3_5t);1
+ESH;Truck (0-3_5t);1
 ESH;Truck (18t);1
 ESH;Truck (26t);1
 ESH;Truck (40t);1
-ESH;truck (7_5t);1
+ESH;Truck (7_5t);1
 ESH;Van;0
 ESH;Walk;1
 ESP;Bus;1
@@ -1742,11 +1742,11 @@ ESP;Motorcycle (50-250cc);1
 ESP;Motorcycle (>250cc);1
 ESP;Passenger Rail;1
 ESP;Subcompact Car;1
-ESP;truck (0-3_5t);1
+ESP;Truck (0-3_5t);1
 ESP;Truck (18t);1
 ESP;Truck (26t);1
 ESP;Truck (40t);1
-ESP;truck (7_5t);1
+ESP;Truck (7_5t);1
 ESP;Van;0
 ESP;Walk;1
 EST;Bus;1
@@ -1767,11 +1767,11 @@ EST;Motorcycle (50-250cc);1
 EST;Motorcycle (>250cc);1
 EST;Passenger Rail;1
 EST;Subcompact Car;1
-EST;truck (0-3_5t);1
+EST;Truck (0-3_5t);1
 EST;Truck (18t);1
 EST;Truck (26t);1
 EST;Truck (40t);1
-EST;truck (7_5t);1
+EST;Truck (7_5t);1
 EST;Van;0
 EST;Walk;1
 ETH;Bus;1
@@ -1792,11 +1792,11 @@ ETH;Motorcycle (50-250cc);1
 ETH;Motorcycle (>250cc);1
 ETH;Passenger Rail;1
 ETH;Subcompact Car;1
-ETH;truck (0-3_5t);1
+ETH;Truck (0-3_5t);1
 ETH;Truck (18t);1
 ETH;Truck (26t);1
 ETH;Truck (40t);1
-ETH;truck (7_5t);1
+ETH;Truck (7_5t);1
 ETH;Van;0
 ETH;Walk;1
 FIN;Bus;1
@@ -1817,11 +1817,11 @@ FIN;Motorcycle (50-250cc);1
 FIN;Motorcycle (>250cc);1
 FIN;Passenger Rail;1
 FIN;Subcompact Car;1
-FIN;truck (0-3_5t);1
+FIN;Truck (0-3_5t);1
 FIN;Truck (18t);1
 FIN;Truck (26t);1
 FIN;Truck (40t);1
-FIN;truck (7_5t);1
+FIN;Truck (7_5t);1
 FIN;Van;0
 FIN;Walk;1
 FJI;Bus;1
@@ -1842,11 +1842,11 @@ FJI;Motorcycle (50-250cc);1
 FJI;Motorcycle (>250cc);1
 FJI;Passenger Rail;1
 FJI;Subcompact Car;1
-FJI;truck (0-3_5t);1
+FJI;Truck (0-3_5t);1
 FJI;Truck (18t);1
 FJI;Truck (26t);1
 FJI;Truck (40t);1
-FJI;truck (7_5t);1
+FJI;Truck (7_5t);1
 FJI;Van;0
 FJI;Walk;1
 FLK;Bus;1
@@ -1867,11 +1867,11 @@ FLK;Motorcycle (50-250cc);1
 FLK;Motorcycle (>250cc);1
 FLK;Passenger Rail;1
 FLK;Subcompact Car;1
-FLK;truck (0-3_5t);1
+FLK;Truck (0-3_5t);1
 FLK;Truck (18t);1
 FLK;Truck (26t);1
 FLK;Truck (40t);1
-FLK;truck (7_5t);1
+FLK;Truck (7_5t);1
 FLK;Van;1
 FLK;Walk;1
 FRA;Bus;1
@@ -1892,11 +1892,11 @@ FRA;Motorcycle (50-250cc);1
 FRA;Motorcycle (>250cc);1
 FRA;Passenger Rail;1
 FRA;Subcompact Car;1
-FRA;truck (0-3_5t);1
+FRA;Truck (0-3_5t);1
 FRA;Truck (18t);1
 FRA;Truck (26t);1
 FRA;Truck (40t);1
-FRA;truck (7_5t);1
+FRA;Truck (7_5t);1
 FRA;Van;0
 FRA;Walk;1
 FRO;Bus;1
@@ -1917,11 +1917,11 @@ FRO;Motorcycle (50-250cc);1
 FRO;Motorcycle (>250cc);1
 FRO;Passenger Rail;1
 FRO;Subcompact Car;1
-FRO;truck (0-3_5t);1
+FRO;Truck (0-3_5t);1
 FRO;Truck (18t);1
 FRO;Truck (26t);1
 FRO;Truck (40t);1
-FRO;truck (7_5t);1
+FRO;Truck (7_5t);1
 FRO;Van;1
 FRO;Walk;1
 FSM;Bus;1
@@ -1942,11 +1942,11 @@ FSM;Motorcycle (50-250cc);1
 FSM;Motorcycle (>250cc);1
 FSM;Passenger Rail;1
 FSM;Subcompact Car;1
-FSM;truck (0-3_5t);1
+FSM;Truck (0-3_5t);1
 FSM;Truck (18t);1
 FSM;Truck (26t);1
 FSM;Truck (40t);1
-FSM;truck (7_5t);1
+FSM;Truck (7_5t);1
 FSM;Van;0
 FSM;Walk;1
 GAB;Bus;1
@@ -1967,11 +1967,11 @@ GAB;Motorcycle (50-250cc);1
 GAB;Motorcycle (>250cc);1
 GAB;Passenger Rail;1
 GAB;Subcompact Car;1
-GAB;truck (0-3_5t);1
+GAB;Truck (0-3_5t);1
 GAB;Truck (18t);1
 GAB;Truck (26t);1
 GAB;Truck (40t);1
-GAB;truck (7_5t);1
+GAB;Truck (7_5t);1
 GAB;Van;0
 GAB;Walk;1
 GBR;Bus;1
@@ -1992,11 +1992,11 @@ GBR;Motorcycle (50-250cc);1
 GBR;Motorcycle (>250cc);1
 GBR;Passenger Rail;1
 GBR;Subcompact Car;1
-GBR;truck (0-3_5t);1
+GBR;Truck (0-3_5t);1
 GBR;Truck (18t);1
 GBR;Truck (26t);1
 GBR;Truck (40t);1
-GBR;truck (7_5t);1
+GBR;Truck (7_5t);1
 GBR;Van;0
 GBR;Walk;1
 GEO;Bus;1
@@ -2017,11 +2017,11 @@ GEO;Motorcycle (50-250cc);1
 GEO;Motorcycle (>250cc);1
 GEO;Passenger Rail;1
 GEO;Subcompact Car;1
-GEO;truck (0-3_5t);1
+GEO;Truck (0-3_5t);1
 GEO;Truck (18t);1
 GEO;Truck (26t);1
 GEO;Truck (40t);1
-GEO;truck (7_5t);1
+GEO;Truck (7_5t);1
 GEO;Van;0
 GEO;Walk;1
 GGY;Bus;1
@@ -2042,11 +2042,11 @@ GGY;Motorcycle (50-250cc);1
 GGY;Motorcycle (>250cc);1
 GGY;Passenger Rail;1
 GGY;Subcompact Car;1
-GGY;truck (0-3_5t);1
+GGY;Truck (0-3_5t);1
 GGY;Truck (18t);1
 GGY;Truck (26t);1
 GGY;Truck (40t);1
-GGY;truck (7_5t);1
+GGY;Truck (7_5t);1
 GGY;Van;1
 GGY;Walk;1
 GHA;Bus;1
@@ -2067,11 +2067,11 @@ GHA;Motorcycle (50-250cc);1
 GHA;Motorcycle (>250cc);1
 GHA;Passenger Rail;1
 GHA;Subcompact Car;1
-GHA;truck (0-3_5t);1
+GHA;Truck (0-3_5t);1
 GHA;Truck (18t);1
 GHA;Truck (26t);1
 GHA;Truck (40t);1
-GHA;truck (7_5t);1
+GHA;Truck (7_5t);1
 GHA;Van;0
 GHA;Walk;1
 GIB;Bus;1
@@ -2092,11 +2092,11 @@ GIB;Motorcycle (50-250cc);1
 GIB;Motorcycle (>250cc);1
 GIB;Passenger Rail;1
 GIB;Subcompact Car;1
-GIB;truck (0-3_5t);1
+GIB;Truck (0-3_5t);1
 GIB;Truck (18t);1
 GIB;Truck (26t);1
 GIB;Truck (40t);1
-GIB;truck (7_5t);1
+GIB;Truck (7_5t);1
 GIB;Van;1
 GIB;Walk;1
 GIN;Bus;1
@@ -2117,11 +2117,11 @@ GIN;Motorcycle (50-250cc);1
 GIN;Motorcycle (>250cc);1
 GIN;Passenger Rail;1
 GIN;Subcompact Car;1
-GIN;truck (0-3_5t);1
+GIN;Truck (0-3_5t);1
 GIN;Truck (18t);1
 GIN;Truck (26t);1
 GIN;Truck (40t);1
-GIN;truck (7_5t);1
+GIN;Truck (7_5t);1
 GIN;Van;0
 GIN;Walk;1
 GLP;Bus;1
@@ -2142,11 +2142,11 @@ GLP;Motorcycle (50-250cc);1
 GLP;Motorcycle (>250cc);1
 GLP;Passenger Rail;1
 GLP;Subcompact Car;1
-GLP;truck (0-3_5t);1
+GLP;Truck (0-3_5t);1
 GLP;Truck (18t);1
 GLP;Truck (26t);1
 GLP;Truck (40t);1
-GLP;truck (7_5t);1
+GLP;Truck (7_5t);1
 GLP;Van;1
 GLP;Walk;1
 GMB;Bus;1
@@ -2167,11 +2167,11 @@ GMB;Motorcycle (50-250cc);1
 GMB;Motorcycle (>250cc);1
 GMB;Passenger Rail;1
 GMB;Subcompact Car;1
-GMB;truck (0-3_5t);1
+GMB;Truck (0-3_5t);1
 GMB;Truck (18t);1
 GMB;Truck (26t);1
 GMB;Truck (40t);1
-GMB;truck (7_5t);1
+GMB;Truck (7_5t);1
 GMB;Van;0
 GMB;Walk;1
 GNB;Bus;1
@@ -2192,11 +2192,11 @@ GNB;Motorcycle (50-250cc);1
 GNB;Motorcycle (>250cc);1
 GNB;Passenger Rail;1
 GNB;Subcompact Car;1
-GNB;truck (0-3_5t);1
+GNB;Truck (0-3_5t);1
 GNB;Truck (18t);1
 GNB;Truck (26t);1
 GNB;Truck (40t);1
-GNB;truck (7_5t);1
+GNB;Truck (7_5t);1
 GNB;Van;0
 GNB;Walk;1
 GNQ;Bus;1
@@ -2217,11 +2217,11 @@ GNQ;Motorcycle (50-250cc);1
 GNQ;Motorcycle (>250cc);1
 GNQ;Passenger Rail;1
 GNQ;Subcompact Car;1
-GNQ;truck (0-3_5t);1
+GNQ;Truck (0-3_5t);1
 GNQ;Truck (18t);1
 GNQ;Truck (26t);1
 GNQ;Truck (40t);1
-GNQ;truck (7_5t);1
+GNQ;Truck (7_5t);1
 GNQ;Van;0
 GNQ;Walk;1
 GRC;Bus;1
@@ -2242,11 +2242,11 @@ GRC;Motorcycle (50-250cc);1
 GRC;Motorcycle (>250cc);1
 GRC;Passenger Rail;1
 GRC;Subcompact Car;1
-GRC;truck (0-3_5t);1
+GRC;Truck (0-3_5t);1
 GRC;Truck (18t);1
 GRC;Truck (26t);1
 GRC;Truck (40t);1
-GRC;truck (7_5t);1
+GRC;Truck (7_5t);1
 GRC;Van;0
 GRC;Walk;1
 GRD;Bus;1
@@ -2267,11 +2267,11 @@ GRD;Motorcycle (50-250cc);1
 GRD;Motorcycle (>250cc);1
 GRD;Passenger Rail;1
 GRD;Subcompact Car;1
-GRD;truck (0-3_5t);1
+GRD;Truck (0-3_5t);1
 GRD;Truck (18t);1
 GRD;Truck (26t);1
 GRD;Truck (40t);1
-GRD;truck (7_5t);1
+GRD;Truck (7_5t);1
 GRD;Van;1
 GRD;Walk;1
 GRL;Bus;1
@@ -2292,11 +2292,11 @@ GRL;Motorcycle (50-250cc);1
 GRL;Motorcycle (>250cc);1
 GRL;Passenger Rail;1
 GRL;Subcompact Car;1
-GRL;truck (0-3_5t);1
+GRL;Truck (0-3_5t);1
 GRL;Truck (18t);1
 GRL;Truck (26t);1
 GRL;Truck (40t);1
-GRL;truck (7_5t);1
+GRL;Truck (7_5t);1
 GRL;Van;1
 GRL;Walk;1
 GTM;Bus;1
@@ -2317,11 +2317,11 @@ GTM;Motorcycle (50-250cc);1
 GTM;Motorcycle (>250cc);1
 GTM;Passenger Rail;1
 GTM;Subcompact Car;1
-GTM;truck (0-3_5t);1
+GTM;Truck (0-3_5t);1
 GTM;Truck (18t);1
 GTM;Truck (26t);1
 GTM;Truck (40t);1
-GTM;truck (7_5t);1
+GTM;Truck (7_5t);1
 GTM;Van;1
 GTM;Walk;1
 GUF;Bus;1
@@ -2342,11 +2342,11 @@ GUF;Motorcycle (50-250cc);1
 GUF;Motorcycle (>250cc);1
 GUF;Passenger Rail;1
 GUF;Subcompact Car;1
-GUF;truck (0-3_5t);1
+GUF;Truck (0-3_5t);1
 GUF;Truck (18t);1
 GUF;Truck (26t);1
 GUF;Truck (40t);1
-GUF;truck (7_5t);1
+GUF;Truck (7_5t);1
 GUF;Van;0
 GUF;Walk;1
 GUM;Bus;1
@@ -2367,11 +2367,11 @@ GUM;Motorcycle (50-250cc);1
 GUM;Motorcycle (>250cc);1
 GUM;Passenger Rail;1
 GUM;Subcompact Car;1
-GUM;truck (0-3_5t);1
+GUM;Truck (0-3_5t);1
 GUM;Truck (18t);1
 GUM;Truck (26t);1
 GUM;Truck (40t);1
-GUM;truck (7_5t);1
+GUM;Truck (7_5t);1
 GUM;Van;0
 GUM;Walk;1
 GUY;Bus;1
@@ -2392,11 +2392,11 @@ GUY;Motorcycle (50-250cc);1
 GUY;Motorcycle (>250cc);1
 GUY;Passenger Rail;1
 GUY;Subcompact Car;1
-GUY;truck (0-3_5t);1
+GUY;Truck (0-3_5t);1
 GUY;Truck (18t);1
 GUY;Truck (26t);1
 GUY;Truck (40t);1
-GUY;truck (7_5t);1
+GUY;Truck (7_5t);1
 GUY;Van;0
 GUY;Walk;1
 HKG;Bus;1
@@ -2417,11 +2417,11 @@ HKG;Motorcycle (50-250cc);1
 HKG;Motorcycle (>250cc);1
 HKG;Passenger Rail;1
 HKG;Subcompact Car;1
-HKG;truck (0-3_5t);1
+HKG;Truck (0-3_5t);1
 HKG;Truck (18t);1
 HKG;Truck (26t);1
 HKG;Truck (40t);1
-HKG;truck (7_5t);1
+HKG;Truck (7_5t);1
 HKG;Van;0
 HKG;Walk;1
 HMD;Bus;1
@@ -2442,11 +2442,11 @@ HMD;Motorcycle (50-250cc);0
 HMD;Motorcycle (>250cc);1
 HMD;Passenger Rail;1
 HMD;Subcompact Car;0
-HMD;truck (0-3_5t);1
+HMD;Truck (0-3_5t);1
 HMD;Truck (18t);1
 HMD;Truck (26t);1
 HMD;Truck (40t);1
-HMD;truck (7_5t);1
+HMD;Truck (7_5t);1
 HMD;Van;0
 HMD;Walk;1
 HND;Bus;1
@@ -2467,11 +2467,11 @@ HND;Motorcycle (50-250cc);1
 HND;Motorcycle (>250cc);1
 HND;Passenger Rail;1
 HND;Subcompact Car;1
-HND;truck (0-3_5t);1
+HND;Truck (0-3_5t);1
 HND;Truck (18t);1
 HND;Truck (26t);1
 HND;Truck (40t);1
-HND;truck (7_5t);1
+HND;Truck (7_5t);1
 HND;Van;1
 HND;Walk;1
 HRV;Bus;1
@@ -2492,11 +2492,11 @@ HRV;Motorcycle (50-250cc);1
 HRV;Motorcycle (>250cc);1
 HRV;Passenger Rail;1
 HRV;Subcompact Car;1
-HRV;truck (0-3_5t);1
+HRV;Truck (0-3_5t);1
 HRV;Truck (18t);1
 HRV;Truck (26t);1
 HRV;Truck (40t);1
-HRV;truck (7_5t);1
+HRV;Truck (7_5t);1
 HRV;Van;0
 HRV;Walk;1
 HTI;Bus;1
@@ -2517,11 +2517,11 @@ HTI;Motorcycle (50-250cc);1
 HTI;Motorcycle (>250cc);1
 HTI;Passenger Rail;1
 HTI;Subcompact Car;1
-HTI;truck (0-3_5t);1
+HTI;Truck (0-3_5t);1
 HTI;Truck (18t);1
 HTI;Truck (26t);1
 HTI;Truck (40t);1
-HTI;truck (7_5t);1
+HTI;Truck (7_5t);1
 HTI;Van;1
 HTI;Walk;1
 HUN;Bus;1
@@ -2542,11 +2542,11 @@ HUN;Motorcycle (50-250cc);1
 HUN;Motorcycle (>250cc);1
 HUN;Passenger Rail;1
 HUN;Subcompact Car;1
-HUN;truck (0-3_5t);1
+HUN;Truck (0-3_5t);1
 HUN;Truck (18t);1
 HUN;Truck (26t);1
 HUN;Truck (40t);1
-HUN;truck (7_5t);1
+HUN;Truck (7_5t);1
 HUN;Van;0
 HUN;Walk;1
 IDN;Bus;1
@@ -2567,11 +2567,11 @@ IDN;Motorcycle (50-250cc);1
 IDN;Motorcycle (>250cc);1
 IDN;Passenger Rail;1
 IDN;Subcompact Car;1
-IDN;truck (0-3_5t);1
+IDN;Truck (0-3_5t);1
 IDN;Truck (18t);1
 IDN;Truck (26t);1
 IDN;Truck (40t);1
-IDN;truck (7_5t);1
+IDN;Truck (7_5t);1
 IDN;Van;0
 IDN;Walk;1
 IMN;Bus;1
@@ -2592,11 +2592,11 @@ IMN;Motorcycle (50-250cc);1
 IMN;Motorcycle (>250cc);1
 IMN;Passenger Rail;1
 IMN;Subcompact Car;1
-IMN;truck (0-3_5t);1
+IMN;Truck (0-3_5t);1
 IMN;Truck (18t);1
 IMN;Truck (26t);1
 IMN;Truck (40t);1
-IMN;truck (7_5t);1
+IMN;Truck (7_5t);1
 IMN;Van;1
 IMN;Walk;1
 IND;Bus;1
@@ -2617,11 +2617,11 @@ IND;Motorcycle (50-250cc);1
 IND;Motorcycle (>250cc);1
 IND;Passenger Rail;1
 IND;Subcompact Car;1
-IND;truck (0-3_5t);1
+IND;Truck (0-3_5t);1
 IND;Truck (18t);1
 IND;Truck (26t);1
 IND;Truck (40t);1
-IND;truck (7_5t);1
+IND;Truck (7_5t);1
 IND;Van;0
 IND;Walk;1
 IOT;Bus;1
@@ -2642,11 +2642,11 @@ IOT;Motorcycle (50-250cc);1
 IOT;Motorcycle (>250cc);1
 IOT;Passenger Rail;1
 IOT;Subcompact Car;1
-IOT;truck (0-3_5t);1
+IOT;Truck (0-3_5t);1
 IOT;Truck (18t);1
 IOT;Truck (26t);1
 IOT;Truck (40t);1
-IOT;truck (7_5t);1
+IOT;Truck (7_5t);1
 IOT;Van;1
 IOT;Walk;1
 IRL;Bus;1
@@ -2667,11 +2667,11 @@ IRL;Motorcycle (50-250cc);1
 IRL;Motorcycle (>250cc);1
 IRL;Passenger Rail;1
 IRL;Subcompact Car;1
-IRL;truck (0-3_5t);1
+IRL;Truck (0-3_5t);1
 IRL;Truck (18t);1
 IRL;Truck (26t);1
 IRL;Truck (40t);1
-IRL;truck (7_5t);1
+IRL;Truck (7_5t);1
 IRL;Van;0
 IRL;Walk;1
 IRN;Bus;1
@@ -2692,11 +2692,11 @@ IRN;Motorcycle (50-250cc);1
 IRN;Motorcycle (>250cc);0
 IRN;Passenger Rail;1
 IRN;Subcompact Car;1
-IRN;truck (0-3_5t);1
+IRN;Truck (0-3_5t);1
 IRN;Truck (18t);1
 IRN;Truck (26t);1
 IRN;Truck (40t);1
-IRN;truck (7_5t);1
+IRN;Truck (7_5t);1
 IRN;Van;0
 IRN;Walk;1
 IRQ;Bus;1
@@ -2717,11 +2717,11 @@ IRQ;Motorcycle (50-250cc);1
 IRQ;Motorcycle (>250cc);0
 IRQ;Passenger Rail;1
 IRQ;Subcompact Car;1
-IRQ;truck (0-3_5t);1
+IRQ;Truck (0-3_5t);1
 IRQ;Truck (18t);1
 IRQ;Truck (26t);1
 IRQ;Truck (40t);1
-IRQ;truck (7_5t);1
+IRQ;Truck (7_5t);1
 IRQ;Van;0
 IRQ;Walk;1
 ISL;Bus;1
@@ -2742,11 +2742,11 @@ ISL;Motorcycle (50-250cc);1
 ISL;Motorcycle (>250cc);1
 ISL;Passenger Rail;1
 ISL;Subcompact Car;1
-ISL;truck (0-3_5t);1
+ISL;Truck (0-3_5t);1
 ISL;Truck (18t);1
 ISL;Truck (26t);1
 ISL;Truck (40t);1
-ISL;truck (7_5t);1
+ISL;Truck (7_5t);1
 ISL;Van;0
 ISL;Walk;1
 ISR;Bus;1
@@ -2767,11 +2767,11 @@ ISR;Motorcycle (50-250cc);1
 ISR;Motorcycle (>250cc);0
 ISR;Passenger Rail;1
 ISR;Subcompact Car;1
-ISR;truck (0-3_5t);1
+ISR;Truck (0-3_5t);1
 ISR;Truck (18t);1
 ISR;Truck (26t);1
 ISR;Truck (40t);1
-ISR;truck (7_5t);1
+ISR;Truck (7_5t);1
 ISR;Van;0
 ISR;Walk;1
 ITA;Bus;1
@@ -2792,11 +2792,11 @@ ITA;Motorcycle (50-250cc);1
 ITA;Motorcycle (>250cc);1
 ITA;Passenger Rail;1
 ITA;Subcompact Car;1
-ITA;truck (0-3_5t);1
+ITA;Truck (0-3_5t);1
 ITA;Truck (18t);1
 ITA;Truck (26t);1
 ITA;Truck (40t);1
-ITA;truck (7_5t);1
+ITA;Truck (7_5t);1
 ITA;Van;0
 ITA;Walk;1
 JAM;Bus;1
@@ -2817,11 +2817,11 @@ JAM;Motorcycle (50-250cc);1
 JAM;Motorcycle (>250cc);1
 JAM;Passenger Rail;1
 JAM;Subcompact Car;1
-JAM;truck (0-3_5t);1
+JAM;Truck (0-3_5t);1
 JAM;Truck (18t);1
 JAM;Truck (26t);1
 JAM;Truck (40t);1
-JAM;truck (7_5t);1
+JAM;Truck (7_5t);1
 JAM;Van;1
 JAM;Walk;1
 JEY;Bus;1
@@ -2842,11 +2842,11 @@ JEY;Motorcycle (50-250cc);1
 JEY;Motorcycle (>250cc);1
 JEY;Passenger Rail;1
 JEY;Subcompact Car;1
-JEY;truck (0-3_5t);1
+JEY;Truck (0-3_5t);1
 JEY;Truck (18t);1
 JEY;Truck (26t);1
 JEY;Truck (40t);1
-JEY;truck (7_5t);1
+JEY;Truck (7_5t);1
 JEY;Van;1
 JEY;Walk;1
 JOR;Bus;1
@@ -2867,11 +2867,11 @@ JOR;Motorcycle (50-250cc);1
 JOR;Motorcycle (>250cc);0
 JOR;Passenger Rail;1
 JOR;Subcompact Car;1
-JOR;truck (0-3_5t);1
+JOR;Truck (0-3_5t);1
 JOR;Truck (18t);1
 JOR;Truck (26t);1
 JOR;Truck (40t);1
-JOR;truck (7_5t);1
+JOR;Truck (7_5t);1
 JOR;Van;0
 JOR;Walk;1
 JPN;Bus;1
@@ -2892,11 +2892,11 @@ JPN;Motorcycle (50-250cc);1
 JPN;Motorcycle (>250cc);1
 JPN;Passenger Rail;1
 JPN;Subcompact Car;1
-JPN;truck (0-3_5t);1
+JPN;Truck (0-3_5t);1
 JPN;Truck (18t);1
 JPN;Truck (26t);1
 JPN;Truck (40t);1
-JPN;truck (7_5t);1
+JPN;Truck (7_5t);1
 JPN;Van;0
 JPN;Walk;1
 KAZ;Bus;1
@@ -2917,11 +2917,11 @@ KAZ;Motorcycle (50-250cc);1
 KAZ;Motorcycle (>250cc);1
 KAZ;Passenger Rail;1
 KAZ;Subcompact Car;1
-KAZ;truck (0-3_5t);1
+KAZ;Truck (0-3_5t);1
 KAZ;Truck (18t);1
 KAZ;Truck (26t);1
 KAZ;Truck (40t);1
-KAZ;truck (7_5t);1
+KAZ;Truck (7_5t);1
 KAZ;Van;0
 KAZ;Walk;1
 KEN;Bus;1
@@ -2942,11 +2942,11 @@ KEN;Motorcycle (50-250cc);1
 KEN;Motorcycle (>250cc);1
 KEN;Passenger Rail;1
 KEN;Subcompact Car;1
-KEN;truck (0-3_5t);1
+KEN;Truck (0-3_5t);1
 KEN;Truck (18t);1
 KEN;Truck (26t);1
 KEN;Truck (40t);1
-KEN;truck (7_5t);1
+KEN;Truck (7_5t);1
 KEN;Van;0
 KEN;Walk;1
 KGZ;Bus;1
@@ -2967,11 +2967,11 @@ KGZ;Motorcycle (50-250cc);1
 KGZ;Motorcycle (>250cc);1
 KGZ;Passenger Rail;1
 KGZ;Subcompact Car;1
-KGZ;truck (0-3_5t);1
+KGZ;Truck (0-3_5t);1
 KGZ;Truck (18t);1
 KGZ;Truck (26t);1
 KGZ;Truck (40t);1
-KGZ;truck (7_5t);1
+KGZ;Truck (7_5t);1
 KGZ;Van;0
 KGZ;Walk;1
 KHM;Bus;1
@@ -2992,11 +2992,11 @@ KHM;Motorcycle (50-250cc);1
 KHM;Motorcycle (>250cc);1
 KHM;Passenger Rail;1
 KHM;Subcompact Car;1
-KHM;truck (0-3_5t);1
+KHM;Truck (0-3_5t);1
 KHM;Truck (18t);1
 KHM;Truck (26t);1
 KHM;Truck (40t);1
-KHM;truck (7_5t);1
+KHM;Truck (7_5t);1
 KHM;Van;0
 KHM;Walk;1
 KIR;Bus;1
@@ -3017,11 +3017,11 @@ KIR;Motorcycle (50-250cc);1
 KIR;Motorcycle (>250cc);1
 KIR;Passenger Rail;1
 KIR;Subcompact Car;1
-KIR;truck (0-3_5t);1
+KIR;Truck (0-3_5t);1
 KIR;Truck (18t);1
 KIR;Truck (26t);1
 KIR;Truck (40t);1
-KIR;truck (7_5t);1
+KIR;Truck (7_5t);1
 KIR;Van;0
 KIR;Walk;1
 KNA;Bus;1
@@ -3042,11 +3042,11 @@ KNA;Motorcycle (50-250cc);1
 KNA;Motorcycle (>250cc);1
 KNA;Passenger Rail;1
 KNA;Subcompact Car;1
-KNA;truck (0-3_5t);1
+KNA;Truck (0-3_5t);1
 KNA;Truck (18t);1
 KNA;Truck (26t);1
 KNA;Truck (40t);1
-KNA;truck (7_5t);1
+KNA;Truck (7_5t);1
 KNA;Van;1
 KNA;Walk;1
 KOR;Bus;1
@@ -3067,11 +3067,11 @@ KOR;Motorcycle (50-250cc);1
 KOR;Motorcycle (>250cc);0
 KOR;Passenger Rail;1
 KOR;Subcompact Car;1
-KOR;truck (0-3_5t);1
+KOR;Truck (0-3_5t);1
 KOR;Truck (18t);1
 KOR;Truck (26t);1
 KOR;Truck (40t);1
-KOR;truck (7_5t);1
+KOR;Truck (7_5t);1
 KOR;Van;0
 KOR;Walk;1
 KWT;Bus;1
@@ -3092,11 +3092,11 @@ KWT;Motorcycle (50-250cc);1
 KWT;Motorcycle (>250cc);0
 KWT;Passenger Rail;1
 KWT;Subcompact Car;1
-KWT;truck (0-3_5t);1
+KWT;Truck (0-3_5t);1
 KWT;Truck (18t);1
 KWT;Truck (26t);1
 KWT;Truck (40t);1
-KWT;truck (7_5t);1
+KWT;Truck (7_5t);1
 KWT;Van;0
 KWT;Walk;1
 LAO;Bus;1
@@ -3117,11 +3117,11 @@ LAO;Motorcycle (50-250cc);1
 LAO;Motorcycle (>250cc);1
 LAO;Passenger Rail;1
 LAO;Subcompact Car;1
-LAO;truck (0-3_5t);1
+LAO;Truck (0-3_5t);1
 LAO;Truck (18t);1
 LAO;Truck (26t);1
 LAO;Truck (40t);1
-LAO;truck (7_5t);1
+LAO;Truck (7_5t);1
 LAO;Van;0
 LAO;Walk;1
 LBN;Bus;1
@@ -3142,11 +3142,11 @@ LBN;Motorcycle (50-250cc);1
 LBN;Motorcycle (>250cc);0
 LBN;Passenger Rail;1
 LBN;Subcompact Car;1
-LBN;truck (0-3_5t);1
+LBN;Truck (0-3_5t);1
 LBN;Truck (18t);1
 LBN;Truck (26t);1
 LBN;Truck (40t);1
-LBN;truck (7_5t);1
+LBN;Truck (7_5t);1
 LBN;Van;0
 LBN;Walk;1
 LBR;Bus;1
@@ -3167,11 +3167,11 @@ LBR;Motorcycle (50-250cc);1
 LBR;Motorcycle (>250cc);1
 LBR;Passenger Rail;1
 LBR;Subcompact Car;1
-LBR;truck (0-3_5t);1
+LBR;Truck (0-3_5t);1
 LBR;Truck (18t);1
 LBR;Truck (26t);1
 LBR;Truck (40t);1
-LBR;truck (7_5t);1
+LBR;Truck (7_5t);1
 LBR;Van;0
 LBR;Walk;1
 LBY;Bus;1
@@ -3192,11 +3192,11 @@ LBY;Motorcycle (50-250cc);1
 LBY;Motorcycle (>250cc);1
 LBY;Passenger Rail;1
 LBY;Subcompact Car;1
-LBY;truck (0-3_5t);1
+LBY;Truck (0-3_5t);1
 LBY;Truck (18t);1
 LBY;Truck (26t);1
 LBY;Truck (40t);1
-LBY;truck (7_5t);1
+LBY;Truck (7_5t);1
 LBY;Van;0
 LBY;Walk;1
 LCA;Bus;1
@@ -3217,11 +3217,11 @@ LCA;Motorcycle (50-250cc);1
 LCA;Motorcycle (>250cc);1
 LCA;Passenger Rail;1
 LCA;Subcompact Car;1
-LCA;truck (0-3_5t);1
+LCA;Truck (0-3_5t);1
 LCA;Truck (18t);1
 LCA;Truck (26t);1
 LCA;Truck (40t);1
-LCA;truck (7_5t);1
+LCA;Truck (7_5t);1
 LCA;Van;1
 LCA;Walk;1
 LIE;Bus;1
@@ -3242,11 +3242,11 @@ LIE;Motorcycle (50-250cc);1
 LIE;Motorcycle (>250cc);1
 LIE;Passenger Rail;1
 LIE;Subcompact Car;1
-LIE;truck (0-3_5t);1
+LIE;Truck (0-3_5t);1
 LIE;Truck (18t);1
 LIE;Truck (26t);1
 LIE;Truck (40t);1
-LIE;truck (7_5t);1
+LIE;Truck (7_5t);1
 LIE;Van;1
 LIE;Walk;1
 LKA;Bus;1
@@ -3267,11 +3267,11 @@ LKA;Motorcycle (50-250cc);1
 LKA;Motorcycle (>250cc);1
 LKA;Passenger Rail;1
 LKA;Subcompact Car;1
-LKA;truck (0-3_5t);1
+LKA;Truck (0-3_5t);1
 LKA;Truck (18t);1
 LKA;Truck (26t);1
 LKA;Truck (40t);1
-LKA;truck (7_5t);1
+LKA;Truck (7_5t);1
 LKA;Van;0
 LKA;Walk;1
 LSO;Bus;1
@@ -3292,11 +3292,11 @@ LSO;Motorcycle (50-250cc);1
 LSO;Motorcycle (>250cc);1
 LSO;Passenger Rail;1
 LSO;Subcompact Car;1
-LSO;truck (0-3_5t);1
+LSO;Truck (0-3_5t);1
 LSO;Truck (18t);1
 LSO;Truck (26t);1
 LSO;Truck (40t);1
-LSO;truck (7_5t);1
+LSO;Truck (7_5t);1
 LSO;Van;0
 LSO;Walk;1
 LTU;Bus;1
@@ -3317,11 +3317,11 @@ LTU;Motorcycle (50-250cc);1
 LTU;Motorcycle (>250cc);1
 LTU;Passenger Rail;1
 LTU;Subcompact Car;1
-LTU;truck (0-3_5t);1
+LTU;Truck (0-3_5t);1
 LTU;Truck (18t);1
 LTU;Truck (26t);1
 LTU;Truck (40t);1
-LTU;truck (7_5t);1
+LTU;Truck (7_5t);1
 LTU;Van;0
 LTU;Walk;1
 LUX;Bus;1
@@ -3342,11 +3342,11 @@ LUX;Motorcycle (50-250cc);1
 LUX;Motorcycle (>250cc);1
 LUX;Passenger Rail;1
 LUX;Subcompact Car;1
-LUX;truck (0-3_5t);1
+LUX;Truck (0-3_5t);1
 LUX;Truck (18t);1
 LUX;Truck (26t);1
 LUX;Truck (40t);1
-LUX;truck (7_5t);1
+LUX;Truck (7_5t);1
 LUX;Van;0
 LUX;Walk;1
 LVA;Bus;1
@@ -3367,11 +3367,11 @@ LVA;Motorcycle (50-250cc);1
 LVA;Motorcycle (>250cc);1
 LVA;Passenger Rail;1
 LVA;Subcompact Car;1
-LVA;truck (0-3_5t);1
+LVA;Truck (0-3_5t);1
 LVA;Truck (18t);1
 LVA;Truck (26t);1
 LVA;Truck (40t);1
-LVA;truck (7_5t);1
+LVA;Truck (7_5t);1
 LVA;Van;0
 LVA;Walk;1
 MAC;Bus;1
@@ -3392,11 +3392,11 @@ MAC;Motorcycle (50-250cc);1
 MAC;Motorcycle (>250cc);1
 MAC;Passenger Rail;1
 MAC;Subcompact Car;1
-MAC;truck (0-3_5t);1
+MAC;Truck (0-3_5t);1
 MAC;Truck (18t);1
 MAC;Truck (26t);1
 MAC;Truck (40t);1
-MAC;truck (7_5t);1
+MAC;Truck (7_5t);1
 MAC;Van;0
 MAC;Walk;1
 MAF;Bus;1
@@ -3417,11 +3417,11 @@ MAF;Motorcycle (50-250cc);1
 MAF;Motorcycle (>250cc);1
 MAF;Passenger Rail;1
 MAF;Subcompact Car;1
-MAF;truck (0-3_5t);1
+MAF;Truck (0-3_5t);1
 MAF;Truck (18t);1
 MAF;Truck (26t);1
 MAF;Truck (40t);1
-MAF;truck (7_5t);1
+MAF;Truck (7_5t);1
 MAF;Van;1
 MAF;Walk;1
 MAR;Bus;1
@@ -3442,11 +3442,11 @@ MAR;Motorcycle (50-250cc);1
 MAR;Motorcycle (>250cc);1
 MAR;Passenger Rail;1
 MAR;Subcompact Car;1
-MAR;truck (0-3_5t);1
+MAR;Truck (0-3_5t);1
 MAR;Truck (18t);1
 MAR;Truck (26t);1
 MAR;Truck (40t);1
-MAR;truck (7_5t);1
+MAR;Truck (7_5t);1
 MAR;Van;0
 MAR;Walk;1
 MCO;Bus;1
@@ -3467,11 +3467,11 @@ MCO;Motorcycle (50-250cc);1
 MCO;Motorcycle (>250cc);1
 MCO;Passenger Rail;1
 MCO;Subcompact Car;1
-MCO;truck (0-3_5t);1
+MCO;Truck (0-3_5t);1
 MCO;Truck (18t);1
 MCO;Truck (26t);1
 MCO;Truck (40t);1
-MCO;truck (7_5t);1
+MCO;Truck (7_5t);1
 MCO;Van;1
 MCO;Walk;1
 MDA;Bus;1
@@ -3492,11 +3492,11 @@ MDA;Motorcycle (50-250cc);1
 MDA;Motorcycle (>250cc);1
 MDA;Passenger Rail;1
 MDA;Subcompact Car;1
-MDA;truck (0-3_5t);1
+MDA;Truck (0-3_5t);1
 MDA;Truck (18t);1
 MDA;Truck (26t);1
 MDA;Truck (40t);1
-MDA;truck (7_5t);1
+MDA;Truck (7_5t);1
 MDA;Van;0
 MDA;Walk;1
 MDG;Bus;1
@@ -3517,11 +3517,11 @@ MDG;Motorcycle (50-250cc);1
 MDG;Motorcycle (>250cc);1
 MDG;Passenger Rail;1
 MDG;Subcompact Car;1
-MDG;truck (0-3_5t);1
+MDG;Truck (0-3_5t);1
 MDG;Truck (18t);1
 MDG;Truck (26t);1
 MDG;Truck (40t);1
-MDG;truck (7_5t);1
+MDG;Truck (7_5t);1
 MDG;Van;0
 MDG;Walk;1
 MDV;Bus;1
@@ -3542,11 +3542,11 @@ MDV;Motorcycle (50-250cc);1
 MDV;Motorcycle (>250cc);1
 MDV;Passenger Rail;1
 MDV;Subcompact Car;1
-MDV;truck (0-3_5t);1
+MDV;Truck (0-3_5t);1
 MDV;Truck (18t);1
 MDV;Truck (26t);1
 MDV;Truck (40t);1
-MDV;truck (7_5t);1
+MDV;Truck (7_5t);1
 MDV;Van;0
 MDV;Walk;1
 MEX;Bus;1
@@ -3567,11 +3567,11 @@ MEX;Motorcycle (50-250cc);1
 MEX;Motorcycle (>250cc);1
 MEX;Passenger Rail;1
 MEX;Subcompact Car;1
-MEX;truck (0-3_5t);1
+MEX;Truck (0-3_5t);1
 MEX;Truck (18t);1
 MEX;Truck (26t);1
 MEX;Truck (40t);1
-MEX;truck (7_5t);1
+MEX;Truck (7_5t);1
 MEX;Van;0
 MEX;Walk;1
 MHL;Bus;1
@@ -3592,11 +3592,11 @@ MHL;Motorcycle (50-250cc);1
 MHL;Motorcycle (>250cc);1
 MHL;Passenger Rail;1
 MHL;Subcompact Car;1
-MHL;truck (0-3_5t);1
+MHL;Truck (0-3_5t);1
 MHL;Truck (18t);1
 MHL;Truck (26t);1
 MHL;Truck (40t);1
-MHL;truck (7_5t);1
+MHL;Truck (7_5t);1
 MHL;Van;0
 MHL;Walk;1
 MKD;Bus;1
@@ -3617,11 +3617,11 @@ MKD;Motorcycle (50-250cc);1
 MKD;Motorcycle (>250cc);1
 MKD;Passenger Rail;1
 MKD;Subcompact Car;1
-MKD;truck (0-3_5t);1
+MKD;Truck (0-3_5t);1
 MKD;Truck (18t);1
 MKD;Truck (26t);1
 MKD;Truck (40t);1
-MKD;truck (7_5t);1
+MKD;Truck (7_5t);1
 MKD;Van;0
 MKD;Walk;1
 MLI;Bus;1
@@ -3642,11 +3642,11 @@ MLI;Motorcycle (50-250cc);1
 MLI;Motorcycle (>250cc);1
 MLI;Passenger Rail;1
 MLI;Subcompact Car;1
-MLI;truck (0-3_5t);1
+MLI;Truck (0-3_5t);1
 MLI;Truck (18t);1
 MLI;Truck (26t);1
 MLI;Truck (40t);1
-MLI;truck (7_5t);1
+MLI;Truck (7_5t);1
 MLI;Van;0
 MLI;Walk;1
 MLT;Bus;1
@@ -3667,11 +3667,11 @@ MLT;Motorcycle (50-250cc);1
 MLT;Motorcycle (>250cc);1
 MLT;Passenger Rail;1
 MLT;Subcompact Car;1
-MLT;truck (0-3_5t);1
+MLT;Truck (0-3_5t);1
 MLT;Truck (18t);1
 MLT;Truck (26t);1
 MLT;Truck (40t);1
-MLT;truck (7_5t);1
+MLT;Truck (7_5t);1
 MLT;Van;0
 MLT;Walk;1
 MMR;Bus;1
@@ -3692,11 +3692,11 @@ MMR;Motorcycle (50-250cc);1
 MMR;Motorcycle (>250cc);1
 MMR;Passenger Rail;1
 MMR;Subcompact Car;1
-MMR;truck (0-3_5t);1
+MMR;Truck (0-3_5t);1
 MMR;Truck (18t);1
 MMR;Truck (26t);1
 MMR;Truck (40t);1
-MMR;truck (7_5t);1
+MMR;Truck (7_5t);1
 MMR;Van;0
 MMR;Walk;1
 MNE;Bus;1
@@ -3717,11 +3717,11 @@ MNE;Motorcycle (50-250cc);1
 MNE;Motorcycle (>250cc);1
 MNE;Passenger Rail;1
 MNE;Subcompact Car;1
-MNE;truck (0-3_5t);1
+MNE;Truck (0-3_5t);1
 MNE;Truck (18t);1
 MNE;Truck (26t);1
 MNE;Truck (40t);1
-MNE;truck (7_5t);1
+MNE;Truck (7_5t);1
 MNE;Van;1
 MNE;Walk;1
 MNG;Bus;1
@@ -3742,11 +3742,11 @@ MNG;Motorcycle (50-250cc);1
 MNG;Motorcycle (>250cc);1
 MNG;Passenger Rail;1
 MNG;Subcompact Car;1
-MNG;truck (0-3_5t);1
+MNG;Truck (0-3_5t);1
 MNG;Truck (18t);1
 MNG;Truck (26t);1
 MNG;Truck (40t);1
-MNG;truck (7_5t);1
+MNG;Truck (7_5t);1
 MNG;Van;0
 MNG;Walk;1
 MNP;Bus;1
@@ -3767,11 +3767,11 @@ MNP;Motorcycle (50-250cc);1
 MNP;Motorcycle (>250cc);1
 MNP;Passenger Rail;1
 MNP;Subcompact Car;1
-MNP;truck (0-3_5t);1
+MNP;Truck (0-3_5t);1
 MNP;Truck (18t);1
 MNP;Truck (26t);1
 MNP;Truck (40t);1
-MNP;truck (7_5t);1
+MNP;Truck (7_5t);1
 MNP;Van;0
 MNP;Walk;1
 MOZ;Bus;1
@@ -3792,11 +3792,11 @@ MOZ;Motorcycle (50-250cc);1
 MOZ;Motorcycle (>250cc);1
 MOZ;Passenger Rail;1
 MOZ;Subcompact Car;1
-MOZ;truck (0-3_5t);1
+MOZ;Truck (0-3_5t);1
 MOZ;Truck (18t);1
 MOZ;Truck (26t);1
 MOZ;Truck (40t);1
-MOZ;truck (7_5t);1
+MOZ;Truck (7_5t);1
 MOZ;Van;0
 MOZ;Walk;1
 MRT;Bus;1
@@ -3817,11 +3817,11 @@ MRT;Motorcycle (50-250cc);1
 MRT;Motorcycle (>250cc);1
 MRT;Passenger Rail;1
 MRT;Subcompact Car;1
-MRT;truck (0-3_5t);1
+MRT;Truck (0-3_5t);1
 MRT;Truck (18t);1
 MRT;Truck (26t);1
 MRT;Truck (40t);1
-MRT;truck (7_5t);1
+MRT;Truck (7_5t);1
 MRT;Van;0
 MRT;Walk;1
 MSR;Bus;1
@@ -3842,11 +3842,11 @@ MSR;Motorcycle (50-250cc);1
 MSR;Motorcycle (>250cc);1
 MSR;Passenger Rail;1
 MSR;Subcompact Car;1
-MSR;truck (0-3_5t);1
+MSR;Truck (0-3_5t);1
 MSR;Truck (18t);1
 MSR;Truck (26t);1
 MSR;Truck (40t);1
-MSR;truck (7_5t);1
+MSR;Truck (7_5t);1
 MSR;Van;1
 MSR;Walk;1
 MTQ;Bus;1
@@ -3867,11 +3867,11 @@ MTQ;Motorcycle (50-250cc);1
 MTQ;Motorcycle (>250cc);1
 MTQ;Passenger Rail;1
 MTQ;Subcompact Car;1
-MTQ;truck (0-3_5t);1
+MTQ;Truck (0-3_5t);1
 MTQ;Truck (18t);1
 MTQ;Truck (26t);1
 MTQ;Truck (40t);1
-MTQ;truck (7_5t);1
+MTQ;Truck (7_5t);1
 MTQ;Van;1
 MTQ;Walk;1
 MUS;Bus;1
@@ -3892,11 +3892,11 @@ MUS;Motorcycle (50-250cc);1
 MUS;Motorcycle (>250cc);1
 MUS;Passenger Rail;1
 MUS;Subcompact Car;1
-MUS;truck (0-3_5t);1
+MUS;Truck (0-3_5t);1
 MUS;Truck (18t);1
 MUS;Truck (26t);1
 MUS;Truck (40t);1
-MUS;truck (7_5t);1
+MUS;Truck (7_5t);1
 MUS;Van;0
 MUS;Walk;1
 MWI;Bus;1
@@ -3917,11 +3917,11 @@ MWI;Motorcycle (50-250cc);1
 MWI;Motorcycle (>250cc);1
 MWI;Passenger Rail;1
 MWI;Subcompact Car;1
-MWI;truck (0-3_5t);1
+MWI;Truck (0-3_5t);1
 MWI;Truck (18t);1
 MWI;Truck (26t);1
 MWI;Truck (40t);1
-MWI;truck (7_5t);1
+MWI;Truck (7_5t);1
 MWI;Van;0
 MWI;Walk;1
 MYS;Bus;1
@@ -3942,11 +3942,11 @@ MYS;Motorcycle (50-250cc);1
 MYS;Motorcycle (>250cc);1
 MYS;Passenger Rail;1
 MYS;Subcompact Car;1
-MYS;truck (0-3_5t);1
+MYS;Truck (0-3_5t);1
 MYS;Truck (18t);1
 MYS;Truck (26t);1
 MYS;Truck (40t);1
-MYS;truck (7_5t);1
+MYS;Truck (7_5t);1
 MYS;Van;0
 MYS;Walk;1
 MYT;Bus;1
@@ -3967,11 +3967,11 @@ MYT;Motorcycle (50-250cc);1
 MYT;Motorcycle (>250cc);1
 MYT;Passenger Rail;1
 MYT;Subcompact Car;1
-MYT;truck (0-3_5t);1
+MYT;Truck (0-3_5t);1
 MYT;Truck (18t);1
 MYT;Truck (26t);1
 MYT;Truck (40t);1
-MYT;truck (7_5t);1
+MYT;Truck (7_5t);1
 MYT;Van;0
 MYT;Walk;1
 NAM;Bus;1
@@ -3992,11 +3992,11 @@ NAM;Motorcycle (50-250cc);1
 NAM;Motorcycle (>250cc);1
 NAM;Passenger Rail;1
 NAM;Subcompact Car;1
-NAM;truck (0-3_5t);1
+NAM;Truck (0-3_5t);1
 NAM;Truck (18t);1
 NAM;Truck (26t);1
 NAM;Truck (40t);1
-NAM;truck (7_5t);1
+NAM;Truck (7_5t);1
 NAM;Van;0
 NAM;Walk;1
 NCL;Bus;1
@@ -4017,11 +4017,11 @@ NCL;Motorcycle (50-250cc);1
 NCL;Motorcycle (>250cc);1
 NCL;Passenger Rail;1
 NCL;Subcompact Car;1
-NCL;truck (0-3_5t);1
+NCL;Truck (0-3_5t);1
 NCL;Truck (18t);1
 NCL;Truck (26t);1
 NCL;Truck (40t);1
-NCL;truck (7_5t);1
+NCL;Truck (7_5t);1
 NCL;Van;0
 NCL;Walk;1
 NER;Bus;1
@@ -4042,11 +4042,11 @@ NER;Motorcycle (50-250cc);1
 NER;Motorcycle (>250cc);1
 NER;Passenger Rail;1
 NER;Subcompact Car;1
-NER;truck (0-3_5t);1
+NER;Truck (0-3_5t);1
 NER;Truck (18t);1
 NER;Truck (26t);1
 NER;Truck (40t);1
-NER;truck (7_5t);1
+NER;Truck (7_5t);1
 NER;Van;0
 NER;Walk;1
 NFK;Bus;1
@@ -4067,11 +4067,11 @@ NFK;Motorcycle (50-250cc);1
 NFK;Motorcycle (>250cc);1
 NFK;Passenger Rail;1
 NFK;Subcompact Car;1
-NFK;truck (0-3_5t);1
+NFK;Truck (0-3_5t);1
 NFK;Truck (18t);1
 NFK;Truck (26t);1
 NFK;Truck (40t);1
-NFK;truck (7_5t);1
+NFK;Truck (7_5t);1
 NFK;Van;0
 NFK;Walk;1
 NGA;Bus;1
@@ -4092,11 +4092,11 @@ NGA;Motorcycle (50-250cc);1
 NGA;Motorcycle (>250cc);1
 NGA;Passenger Rail;1
 NGA;Subcompact Car;1
-NGA;truck (0-3_5t);1
+NGA;Truck (0-3_5t);1
 NGA;Truck (18t);1
 NGA;Truck (26t);1
 NGA;Truck (40t);1
-NGA;truck (7_5t);1
+NGA;Truck (7_5t);1
 NGA;Van;0
 NGA;Walk;1
 NIC;Bus;1
@@ -4117,11 +4117,11 @@ NIC;Motorcycle (50-250cc);1
 NIC;Motorcycle (>250cc);1
 NIC;Passenger Rail;1
 NIC;Subcompact Car;1
-NIC;truck (0-3_5t);1
+NIC;Truck (0-3_5t);1
 NIC;Truck (18t);1
 NIC;Truck (26t);1
 NIC;Truck (40t);1
-NIC;truck (7_5t);1
+NIC;Truck (7_5t);1
 NIC;Van;1
 NIC;Walk;1
 NIU;Bus;1
@@ -4142,11 +4142,11 @@ NIU;Motorcycle (50-250cc);1
 NIU;Motorcycle (>250cc);1
 NIU;Passenger Rail;1
 NIU;Subcompact Car;1
-NIU;truck (0-3_5t);1
+NIU;Truck (0-3_5t);1
 NIU;Truck (18t);1
 NIU;Truck (26t);1
 NIU;Truck (40t);1
-NIU;truck (7_5t);1
+NIU;Truck (7_5t);1
 NIU;Van;0
 NIU;Walk;1
 NLD;Bus;1
@@ -4167,11 +4167,11 @@ NLD;Motorcycle (50-250cc);1
 NLD;Motorcycle (>250cc);1
 NLD;Passenger Rail;1
 NLD;Subcompact Car;1
-NLD;truck (0-3_5t);1
+NLD;Truck (0-3_5t);1
 NLD;Truck (18t);1
 NLD;Truck (26t);1
 NLD;Truck (40t);1
-NLD;truck (7_5t);1
+NLD;Truck (7_5t);1
 NLD;Van;0
 NLD;Walk;1
 NOR;Bus;1
@@ -4192,11 +4192,11 @@ NOR;Motorcycle (50-250cc);1
 NOR;Motorcycle (>250cc);1
 NOR;Passenger Rail;1
 NOR;Subcompact Car;1
-NOR;truck (0-3_5t);1
+NOR;Truck (0-3_5t);1
 NOR;Truck (18t);1
 NOR;Truck (26t);1
 NOR;Truck (40t);1
-NOR;truck (7_5t);1
+NOR;Truck (7_5t);1
 NOR;Van;0
 NOR;Walk;1
 NPL;Bus;1
@@ -4217,11 +4217,11 @@ NPL;Motorcycle (50-250cc);1
 NPL;Motorcycle (>250cc);1
 NPL;Passenger Rail;1
 NPL;Subcompact Car;1
-NPL;truck (0-3_5t);1
+NPL;Truck (0-3_5t);1
 NPL;Truck (18t);1
 NPL;Truck (26t);1
 NPL;Truck (40t);1
-NPL;truck (7_5t);1
+NPL;Truck (7_5t);1
 NPL;Van;0
 NPL;Walk;1
 NRU;Bus;1
@@ -4242,11 +4242,11 @@ NRU;Motorcycle (50-250cc);1
 NRU;Motorcycle (>250cc);1
 NRU;Passenger Rail;1
 NRU;Subcompact Car;1
-NRU;truck (0-3_5t);1
+NRU;Truck (0-3_5t);1
 NRU;Truck (18t);1
 NRU;Truck (26t);1
 NRU;Truck (40t);1
-NRU;truck (7_5t);1
+NRU;Truck (7_5t);1
 NRU;Van;0
 NRU;Walk;1
 NZL;Bus;1
@@ -4267,11 +4267,11 @@ NZL;Motorcycle (50-250cc);0
 NZL;Motorcycle (>250cc);1
 NZL;Passenger Rail;1
 NZL;Subcompact Car;0
-NZL;truck (0-3_5t);1
+NZL;Truck (0-3_5t);1
 NZL;Truck (18t);1
 NZL;Truck (26t);1
 NZL;Truck (40t);1
-NZL;truck (7_5t);1
+NZL;Truck (7_5t);1
 NZL;Van;0
 NZL;Walk;1
 OMN;Bus;1
@@ -4292,11 +4292,11 @@ OMN;Motorcycle (50-250cc);1
 OMN;Motorcycle (>250cc);0
 OMN;Passenger Rail;1
 OMN;Subcompact Car;1
-OMN;truck (0-3_5t);1
+OMN;Truck (0-3_5t);1
 OMN;Truck (18t);1
 OMN;Truck (26t);1
 OMN;Truck (40t);1
-OMN;truck (7_5t);1
+OMN;Truck (7_5t);1
 OMN;Van;0
 OMN;Walk;1
 PAK;Bus;1
@@ -4317,11 +4317,11 @@ PAK;Motorcycle (50-250cc);1
 PAK;Motorcycle (>250cc);1
 PAK;Passenger Rail;1
 PAK;Subcompact Car;1
-PAK;truck (0-3_5t);1
+PAK;Truck (0-3_5t);1
 PAK;Truck (18t);1
 PAK;Truck (26t);1
 PAK;Truck (40t);1
-PAK;truck (7_5t);1
+PAK;Truck (7_5t);1
 PAK;Van;0
 PAK;Walk;1
 PAN;Bus;1
@@ -4342,11 +4342,11 @@ PAN;Motorcycle (50-250cc);1
 PAN;Motorcycle (>250cc);1
 PAN;Passenger Rail;1
 PAN;Subcompact Car;1
-PAN;truck (0-3_5t);1
+PAN;Truck (0-3_5t);1
 PAN;Truck (18t);1
 PAN;Truck (26t);1
 PAN;Truck (40t);1
-PAN;truck (7_5t);1
+PAN;Truck (7_5t);1
 PAN;Van;1
 PAN;Walk;1
 PCN;Bus;1
@@ -4367,11 +4367,11 @@ PCN;Motorcycle (50-250cc);1
 PCN;Motorcycle (>250cc);1
 PCN;Passenger Rail;1
 PCN;Subcompact Car;1
-PCN;truck (0-3_5t);1
+PCN;Truck (0-3_5t);1
 PCN;Truck (18t);1
 PCN;Truck (26t);1
 PCN;Truck (40t);1
-PCN;truck (7_5t);1
+PCN;Truck (7_5t);1
 PCN;Van;0
 PCN;Walk;1
 PER;Bus;1
@@ -4392,11 +4392,11 @@ PER;Motorcycle (50-250cc);1
 PER;Motorcycle (>250cc);1
 PER;Passenger Rail;1
 PER;Subcompact Car;1
-PER;truck (0-3_5t);1
+PER;Truck (0-3_5t);1
 PER;Truck (18t);1
 PER;Truck (26t);1
 PER;Truck (40t);1
-PER;truck (7_5t);1
+PER;Truck (7_5t);1
 PER;Van;0
 PER;Walk;1
 PHL;Bus;1
@@ -4417,11 +4417,11 @@ PHL;Motorcycle (50-250cc);1
 PHL;Motorcycle (>250cc);1
 PHL;Passenger Rail;1
 PHL;Subcompact Car;1
-PHL;truck (0-3_5t);1
+PHL;Truck (0-3_5t);1
 PHL;Truck (18t);1
 PHL;Truck (26t);1
 PHL;Truck (40t);1
-PHL;truck (7_5t);1
+PHL;Truck (7_5t);1
 PHL;Van;0
 PHL;Walk;1
 PLW;Bus;1
@@ -4442,11 +4442,11 @@ PLW;Motorcycle (50-250cc);1
 PLW;Motorcycle (>250cc);1
 PLW;Passenger Rail;1
 PLW;Subcompact Car;1
-PLW;truck (0-3_5t);1
+PLW;Truck (0-3_5t);1
 PLW;Truck (18t);1
 PLW;Truck (26t);1
 PLW;Truck (40t);1
-PLW;truck (7_5t);1
+PLW;Truck (7_5t);1
 PLW;Van;0
 PLW;Walk;1
 PNG;Bus;1
@@ -4467,11 +4467,11 @@ PNG;Motorcycle (50-250cc);1
 PNG;Motorcycle (>250cc);1
 PNG;Passenger Rail;1
 PNG;Subcompact Car;1
-PNG;truck (0-3_5t);1
+PNG;Truck (0-3_5t);1
 PNG;Truck (18t);1
 PNG;Truck (26t);1
 PNG;Truck (40t);1
-PNG;truck (7_5t);1
+PNG;Truck (7_5t);1
 PNG;Van;0
 PNG;Walk;1
 POL;Bus;1
@@ -4492,11 +4492,11 @@ POL;Motorcycle (50-250cc);1
 POL;Motorcycle (>250cc);1
 POL;Passenger Rail;1
 POL;Subcompact Car;1
-POL;truck (0-3_5t);1
+POL;Truck (0-3_5t);1
 POL;Truck (18t);1
 POL;Truck (26t);1
 POL;Truck (40t);1
-POL;truck (7_5t);1
+POL;Truck (7_5t);1
 POL;Van;0
 POL;Walk;1
 PRI;Bus;1
@@ -4517,11 +4517,11 @@ PRI;Motorcycle (50-250cc);0
 PRI;Motorcycle (>250cc);1
 PRI;Passenger Rail;1
 PRI;Subcompact Car;0
-PRI;truck (0-3_5t);1
+PRI;Truck (0-3_5t);1
 PRI;Truck (18t);1
 PRI;Truck (26t);1
 PRI;Truck (40t);1
-PRI;truck (7_5t);1
+PRI;Truck (7_5t);1
 PRI;Van;0
 PRI;Walk;1
 PRK;Bus;1
@@ -4542,11 +4542,11 @@ PRK;Motorcycle (50-250cc);1
 PRK;Motorcycle (>250cc);1
 PRK;Passenger Rail;1
 PRK;Subcompact Car;1
-PRK;truck (0-3_5t);1
+PRK;Truck (0-3_5t);1
 PRK;Truck (18t);1
 PRK;Truck (26t);1
 PRK;Truck (40t);1
-PRK;truck (7_5t);1
+PRK;Truck (7_5t);1
 PRK;Van;0
 PRK;Walk;1
 PRT;Bus;1
@@ -4567,11 +4567,11 @@ PRT;Motorcycle (50-250cc);1
 PRT;Motorcycle (>250cc);1
 PRT;Passenger Rail;1
 PRT;Subcompact Car;1
-PRT;truck (0-3_5t);1
+PRT;Truck (0-3_5t);1
 PRT;Truck (18t);1
 PRT;Truck (26t);1
 PRT;Truck (40t);1
-PRT;truck (7_5t);1
+PRT;Truck (7_5t);1
 PRT;Van;0
 PRT;Walk;1
 PRY;Bus;1
@@ -4592,11 +4592,11 @@ PRY;Motorcycle (50-250cc);1
 PRY;Motorcycle (>250cc);1
 PRY;Passenger Rail;1
 PRY;Subcompact Car;1
-PRY;truck (0-3_5t);1
+PRY;Truck (0-3_5t);1
 PRY;Truck (18t);1
 PRY;Truck (26t);1
 PRY;Truck (40t);1
-PRY;truck (7_5t);1
+PRY;Truck (7_5t);1
 PRY;Van;0
 PRY;Walk;1
 PSE;Bus;1
@@ -4617,11 +4617,11 @@ PSE;Motorcycle (50-250cc);1
 PSE;Motorcycle (>250cc);0
 PSE;Passenger Rail;1
 PSE;Subcompact Car;1
-PSE;truck (0-3_5t);1
+PSE;Truck (0-3_5t);1
 PSE;Truck (18t);1
 PSE;Truck (26t);1
 PSE;Truck (40t);1
-PSE;truck (7_5t);1
+PSE;Truck (7_5t);1
 PSE;Van;0
 PSE;Walk;1
 PYF;Bus;1
@@ -4642,11 +4642,11 @@ PYF;Motorcycle (50-250cc);1
 PYF;Motorcycle (>250cc);1
 PYF;Passenger Rail;1
 PYF;Subcompact Car;1
-PYF;truck (0-3_5t);1
+PYF;Truck (0-3_5t);1
 PYF;Truck (18t);1
 PYF;Truck (26t);1
 PYF;Truck (40t);1
-PYF;truck (7_5t);1
+PYF;Truck (7_5t);1
 PYF;Van;0
 PYF;Walk;1
 QAT;Bus;1
@@ -4667,11 +4667,11 @@ QAT;Motorcycle (50-250cc);1
 QAT;Motorcycle (>250cc);0
 QAT;Passenger Rail;1
 QAT;Subcompact Car;1
-QAT;truck (0-3_5t);1
+QAT;Truck (0-3_5t);1
 QAT;Truck (18t);1
 QAT;Truck (26t);1
 QAT;Truck (40t);1
-QAT;truck (7_5t);1
+QAT;Truck (7_5t);1
 QAT;Van;0
 QAT;Walk;1
 REU;Bus;1
@@ -4692,11 +4692,11 @@ REU;Motorcycle (50-250cc);1
 REU;Motorcycle (>250cc);1
 REU;Passenger Rail;1
 REU;Subcompact Car;1
-REU;truck (0-3_5t);1
+REU;Truck (0-3_5t);1
 REU;Truck (18t);1
 REU;Truck (26t);1
 REU;Truck (40t);1
-REU;truck (7_5t);1
+REU;Truck (7_5t);1
 REU;Van;0
 REU;Walk;1
 ROU;Bus;1
@@ -4717,11 +4717,11 @@ ROU;Motorcycle (50-250cc);1
 ROU;Motorcycle (>250cc);1
 ROU;Passenger Rail;1
 ROU;Subcompact Car;1
-ROU;truck (0-3_5t);1
+ROU;Truck (0-3_5t);1
 ROU;Truck (18t);1
 ROU;Truck (26t);1
 ROU;Truck (40t);1
-ROU;truck (7_5t);1
+ROU;Truck (7_5t);1
 ROU;Van;0
 ROU;Walk;1
 RUS;Bus;1
@@ -4742,11 +4742,11 @@ RUS;Motorcycle (50-250cc);1
 RUS;Motorcycle (>250cc);1
 RUS;Passenger Rail;1
 RUS;Subcompact Car;1
-RUS;truck (0-3_5t);1
+RUS;Truck (0-3_5t);1
 RUS;Truck (18t);1
 RUS;Truck (26t);1
 RUS;Truck (40t);1
-RUS;truck (7_5t);1
+RUS;Truck (7_5t);1
 RUS;Van;0
 RUS;Walk;1
 RWA;Bus;1
@@ -4767,11 +4767,11 @@ RWA;Motorcycle (50-250cc);1
 RWA;Motorcycle (>250cc);1
 RWA;Passenger Rail;1
 RWA;Subcompact Car;1
-RWA;truck (0-3_5t);1
+RWA;Truck (0-3_5t);1
 RWA;Truck (18t);1
 RWA;Truck (26t);1
 RWA;Truck (40t);1
-RWA;truck (7_5t);1
+RWA;Truck (7_5t);1
 RWA;Van;0
 RWA;Walk;1
 SAU;Bus;1
@@ -4792,11 +4792,11 @@ SAU;Motorcycle (50-250cc);1
 SAU;Motorcycle (>250cc);0
 SAU;Passenger Rail;1
 SAU;Subcompact Car;1
-SAU;truck (0-3_5t);1
+SAU;Truck (0-3_5t);1
 SAU;Truck (18t);1
 SAU;Truck (26t);1
 SAU;Truck (40t);1
-SAU;truck (7_5t);1
+SAU;Truck (7_5t);1
 SAU;Van;0
 SAU;Walk;1
 SDN;Bus;1
@@ -4817,11 +4817,11 @@ SDN;Motorcycle (50-250cc);1
 SDN;Motorcycle (>250cc);1
 SDN;Passenger Rail;1
 SDN;Subcompact Car;1
-SDN;truck (0-3_5t);1
+SDN;Truck (0-3_5t);1
 SDN;Truck (18t);1
 SDN;Truck (26t);1
 SDN;Truck (40t);1
-SDN;truck (7_5t);1
+SDN;Truck (7_5t);1
 SDN;Van;0
 SDN;Walk;1
 SEN;Bus;1
@@ -4842,11 +4842,11 @@ SEN;Motorcycle (50-250cc);1
 SEN;Motorcycle (>250cc);1
 SEN;Passenger Rail;1
 SEN;Subcompact Car;1
-SEN;truck (0-3_5t);1
+SEN;Truck (0-3_5t);1
 SEN;Truck (18t);1
 SEN;Truck (26t);1
 SEN;Truck (40t);1
-SEN;truck (7_5t);1
+SEN;Truck (7_5t);1
 SEN;Van;0
 SEN;Walk;1
 SGP;Bus;1
@@ -4867,11 +4867,11 @@ SGP;Motorcycle (50-250cc);1
 SGP;Motorcycle (>250cc);1
 SGP;Passenger Rail;1
 SGP;Subcompact Car;1
-SGP;truck (0-3_5t);1
+SGP;Truck (0-3_5t);1
 SGP;Truck (18t);1
 SGP;Truck (26t);1
 SGP;Truck (40t);1
-SGP;truck (7_5t);1
+SGP;Truck (7_5t);1
 SGP;Van;0
 SGP;Walk;1
 SGS;Bus;1
@@ -4892,11 +4892,11 @@ SGS;Motorcycle (50-250cc);1
 SGS;Motorcycle (>250cc);1
 SGS;Passenger Rail;1
 SGS;Subcompact Car;1
-SGS;truck (0-3_5t);1
+SGS;Truck (0-3_5t);1
 SGS;Truck (18t);1
 SGS;Truck (26t);1
 SGS;Truck (40t);1
-SGS;truck (7_5t);1
+SGS;Truck (7_5t);1
 SGS;Van;1
 SGS;Walk;1
 SHN;Bus;1
@@ -4917,11 +4917,11 @@ SHN;Motorcycle (50-250cc);1
 SHN;Motorcycle (>250cc);1
 SHN;Passenger Rail;1
 SHN;Subcompact Car;1
-SHN;truck (0-3_5t);1
+SHN;Truck (0-3_5t);1
 SHN;Truck (18t);1
 SHN;Truck (26t);1
 SHN;Truck (40t);1
-SHN;truck (7_5t);1
+SHN;Truck (7_5t);1
 SHN;Van;1
 SHN;Walk;1
 SJM;Bus;1
@@ -4942,11 +4942,11 @@ SJM;Motorcycle (50-250cc);1
 SJM;Motorcycle (>250cc);1
 SJM;Passenger Rail;1
 SJM;Subcompact Car;1
-SJM;truck (0-3_5t);1
+SJM;Truck (0-3_5t);1
 SJM;Truck (18t);1
 SJM;Truck (26t);1
 SJM;Truck (40t);1
-SJM;truck (7_5t);1
+SJM;Truck (7_5t);1
 SJM;Van;1
 SJM;Walk;1
 SLB;Bus;1
@@ -4967,11 +4967,11 @@ SLB;Motorcycle (50-250cc);1
 SLB;Motorcycle (>250cc);1
 SLB;Passenger Rail;1
 SLB;Subcompact Car;1
-SLB;truck (0-3_5t);1
+SLB;Truck (0-3_5t);1
 SLB;Truck (18t);1
 SLB;Truck (26t);1
 SLB;Truck (40t);1
-SLB;truck (7_5t);1
+SLB;Truck (7_5t);1
 SLB;Van;0
 SLB;Walk;1
 SLE;Bus;1
@@ -4992,11 +4992,11 @@ SLE;Motorcycle (50-250cc);1
 SLE;Motorcycle (>250cc);1
 SLE;Passenger Rail;1
 SLE;Subcompact Car;1
-SLE;truck (0-3_5t);1
+SLE;Truck (0-3_5t);1
 SLE;Truck (18t);1
 SLE;Truck (26t);1
 SLE;Truck (40t);1
-SLE;truck (7_5t);1
+SLE;Truck (7_5t);1
 SLE;Van;0
 SLE;Walk;1
 SLV;Bus;1
@@ -5017,11 +5017,11 @@ SLV;Motorcycle (50-250cc);1
 SLV;Motorcycle (>250cc);1
 SLV;Passenger Rail;1
 SLV;Subcompact Car;1
-SLV;truck (0-3_5t);1
+SLV;Truck (0-3_5t);1
 SLV;Truck (18t);1
 SLV;Truck (26t);1
 SLV;Truck (40t);1
-SLV;truck (7_5t);1
+SLV;Truck (7_5t);1
 SLV;Van;1
 SLV;Walk;1
 SMR;Bus;1
@@ -5042,11 +5042,11 @@ SMR;Motorcycle (50-250cc);1
 SMR;Motorcycle (>250cc);1
 SMR;Passenger Rail;1
 SMR;Subcompact Car;1
-SMR;truck (0-3_5t);1
+SMR;Truck (0-3_5t);1
 SMR;Truck (18t);1
 SMR;Truck (26t);1
 SMR;Truck (40t);1
-SMR;truck (7_5t);1
+SMR;Truck (7_5t);1
 SMR;Van;1
 SMR;Walk;1
 SOM;Bus;1
@@ -5067,11 +5067,11 @@ SOM;Motorcycle (50-250cc);1
 SOM;Motorcycle (>250cc);1
 SOM;Passenger Rail;1
 SOM;Subcompact Car;1
-SOM;truck (0-3_5t);1
+SOM;Truck (0-3_5t);1
 SOM;Truck (18t);1
 SOM;Truck (26t);1
 SOM;Truck (40t);1
-SOM;truck (7_5t);1
+SOM;Truck (7_5t);1
 SOM;Van;0
 SOM;Walk;1
 SPM;Bus;1
@@ -5092,11 +5092,11 @@ SPM;Motorcycle (50-250cc);1
 SPM;Motorcycle (>250cc);1
 SPM;Passenger Rail;1
 SPM;Subcompact Car;1
-SPM;truck (0-3_5t);1
+SPM;Truck (0-3_5t);1
 SPM;Truck (18t);1
 SPM;Truck (26t);1
 SPM;Truck (40t);1
-SPM;truck (7_5t);1
+SPM;Truck (7_5t);1
 SPM;Van;1
 SPM;Walk;1
 SRB;Bus;1
@@ -5117,11 +5117,11 @@ SRB;Motorcycle (50-250cc);1
 SRB;Motorcycle (>250cc);1
 SRB;Passenger Rail;1
 SRB;Subcompact Car;1
-SRB;truck (0-3_5t);1
+SRB;Truck (0-3_5t);1
 SRB;Truck (18t);1
 SRB;Truck (26t);1
 SRB;Truck (40t);1
-SRB;truck (7_5t);1
+SRB;Truck (7_5t);1
 SRB;Van;1
 SRB;Walk;1
 SSD;Bus;1
@@ -5142,11 +5142,11 @@ SSD;Motorcycle (50-250cc);1
 SSD;Motorcycle (>250cc);1
 SSD;Passenger Rail;1
 SSD;Subcompact Car;1
-SSD;truck (0-3_5t);1
+SSD;Truck (0-3_5t);1
 SSD;Truck (18t);1
 SSD;Truck (26t);1
 SSD;Truck (40t);1
-SSD;truck (7_5t);1
+SSD;Truck (7_5t);1
 SSD;Van;0
 SSD;Walk;1
 STP;Bus;1
@@ -5167,11 +5167,11 @@ STP;Motorcycle (50-250cc);1
 STP;Motorcycle (>250cc);1
 STP;Passenger Rail;1
 STP;Subcompact Car;1
-STP;truck (0-3_5t);1
+STP;Truck (0-3_5t);1
 STP;Truck (18t);1
 STP;Truck (26t);1
 STP;Truck (40t);1
-STP;truck (7_5t);1
+STP;Truck (7_5t);1
 STP;Van;0
 STP;Walk;1
 SUR;Bus;1
@@ -5192,11 +5192,11 @@ SUR;Motorcycle (50-250cc);1
 SUR;Motorcycle (>250cc);1
 SUR;Passenger Rail;1
 SUR;Subcompact Car;1
-SUR;truck (0-3_5t);1
+SUR;Truck (0-3_5t);1
 SUR;Truck (18t);1
 SUR;Truck (26t);1
 SUR;Truck (40t);1
-SUR;truck (7_5t);1
+SUR;Truck (7_5t);1
 SUR;Van;0
 SUR;Walk;1
 SVK;Bus;1
@@ -5217,11 +5217,11 @@ SVK;Motorcycle (50-250cc);1
 SVK;Motorcycle (>250cc);1
 SVK;Passenger Rail;1
 SVK;Subcompact Car;1
-SVK;truck (0-3_5t);1
+SVK;Truck (0-3_5t);1
 SVK;Truck (18t);1
 SVK;Truck (26t);1
 SVK;Truck (40t);1
-SVK;truck (7_5t);1
+SVK;Truck (7_5t);1
 SVK;Van;0
 SVK;Walk;1
 SVN;Bus;1
@@ -5242,11 +5242,11 @@ SVN;Motorcycle (50-250cc);1
 SVN;Motorcycle (>250cc);1
 SVN;Passenger Rail;1
 SVN;Subcompact Car;1
-SVN;truck (0-3_5t);1
+SVN;Truck (0-3_5t);1
 SVN;Truck (18t);1
 SVN;Truck (26t);1
 SVN;Truck (40t);1
-SVN;truck (7_5t);1
+SVN;Truck (7_5t);1
 SVN;Van;0
 SVN;Walk;1
 SWE;Bus;1
@@ -5267,11 +5267,11 @@ SWE;Motorcycle (50-250cc);1
 SWE;Motorcycle (>250cc);1
 SWE;Passenger Rail;1
 SWE;Subcompact Car;1
-SWE;truck (0-3_5t);1
+SWE;Truck (0-3_5t);1
 SWE;Truck (18t);1
 SWE;Truck (26t);1
 SWE;Truck (40t);1
-SWE;truck (7_5t);1
+SWE;Truck (7_5t);1
 SWE;Van;0
 SWE;Walk;1
 SWZ;Bus;1
@@ -5292,11 +5292,11 @@ SWZ;Motorcycle (50-250cc);1
 SWZ;Motorcycle (>250cc);1
 SWZ;Passenger Rail;1
 SWZ;Subcompact Car;1
-SWZ;truck (0-3_5t);1
+SWZ;Truck (0-3_5t);1
 SWZ;Truck (18t);1
 SWZ;Truck (26t);1
 SWZ;Truck (40t);1
-SWZ;truck (7_5t);1
+SWZ;Truck (7_5t);1
 SWZ;Van;0
 SWZ;Walk;1
 SXM;Bus;1
@@ -5317,11 +5317,11 @@ SXM;Motorcycle (50-250cc);1
 SXM;Motorcycle (>250cc);1
 SXM;Passenger Rail;1
 SXM;Subcompact Car;1
-SXM;truck (0-3_5t);1
+SXM;Truck (0-3_5t);1
 SXM;Truck (18t);1
 SXM;Truck (26t);1
 SXM;Truck (40t);1
-SXM;truck (7_5t);1
+SXM;Truck (7_5t);1
 SXM;Van;1
 SXM;Walk;1
 SYC;Bus;1
@@ -5342,11 +5342,11 @@ SYC;Motorcycle (50-250cc);1
 SYC;Motorcycle (>250cc);1
 SYC;Passenger Rail;1
 SYC;Subcompact Car;1
-SYC;truck (0-3_5t);1
+SYC;Truck (0-3_5t);1
 SYC;Truck (18t);1
 SYC;Truck (26t);1
 SYC;Truck (40t);1
-SYC;truck (7_5t);1
+SYC;Truck (7_5t);1
 SYC;Van;0
 SYC;Walk;1
 SYR;Bus;1
@@ -5367,11 +5367,11 @@ SYR;Motorcycle (50-250cc);1
 SYR;Motorcycle (>250cc);0
 SYR;Passenger Rail;1
 SYR;Subcompact Car;1
-SYR;truck (0-3_5t);1
+SYR;Truck (0-3_5t);1
 SYR;Truck (18t);1
 SYR;Truck (26t);1
 SYR;Truck (40t);1
-SYR;truck (7_5t);1
+SYR;Truck (7_5t);1
 SYR;Van;0
 SYR;Walk;1
 TCA;Bus;1
@@ -5392,11 +5392,11 @@ TCA;Motorcycle (50-250cc);1
 TCA;Motorcycle (>250cc);1
 TCA;Passenger Rail;1
 TCA;Subcompact Car;1
-TCA;truck (0-3_5t);1
+TCA;Truck (0-3_5t);1
 TCA;Truck (18t);1
 TCA;Truck (26t);1
 TCA;Truck (40t);1
-TCA;truck (7_5t);1
+TCA;Truck (7_5t);1
 TCA;Van;1
 TCA;Walk;1
 TCD;Bus;1
@@ -5417,11 +5417,11 @@ TCD;Motorcycle (50-250cc);1
 TCD;Motorcycle (>250cc);1
 TCD;Passenger Rail;1
 TCD;Subcompact Car;1
-TCD;truck (0-3_5t);1
+TCD;Truck (0-3_5t);1
 TCD;Truck (18t);1
 TCD;Truck (26t);1
 TCD;Truck (40t);1
-TCD;truck (7_5t);1
+TCD;Truck (7_5t);1
 TCD;Van;0
 TCD;Walk;1
 TGO;Bus;1
@@ -5442,11 +5442,11 @@ TGO;Motorcycle (50-250cc);1
 TGO;Motorcycle (>250cc);1
 TGO;Passenger Rail;1
 TGO;Subcompact Car;1
-TGO;truck (0-3_5t);1
+TGO;Truck (0-3_5t);1
 TGO;Truck (18t);1
 TGO;Truck (26t);1
 TGO;Truck (40t);1
-TGO;truck (7_5t);1
+TGO;Truck (7_5t);1
 TGO;Van;0
 TGO;Walk;1
 THA;Bus;1
@@ -5467,11 +5467,11 @@ THA;Motorcycle (50-250cc);1
 THA;Motorcycle (>250cc);1
 THA;Passenger Rail;1
 THA;Subcompact Car;1
-THA;truck (0-3_5t);1
+THA;Truck (0-3_5t);1
 THA;Truck (18t);1
 THA;Truck (26t);1
 THA;Truck (40t);1
-THA;truck (7_5t);1
+THA;Truck (7_5t);1
 THA;Van;0
 THA;Walk;1
 TJK;Bus;1
@@ -5492,11 +5492,11 @@ TJK;Motorcycle (50-250cc);1
 TJK;Motorcycle (>250cc);1
 TJK;Passenger Rail;1
 TJK;Subcompact Car;1
-TJK;truck (0-3_5t);1
+TJK;Truck (0-3_5t);1
 TJK;Truck (18t);1
 TJK;Truck (26t);1
 TJK;Truck (40t);1
-TJK;truck (7_5t);1
+TJK;Truck (7_5t);1
 TJK;Van;0
 TJK;Walk;1
 TKL;Bus;1
@@ -5517,11 +5517,11 @@ TKL;Motorcycle (50-250cc);1
 TKL;Motorcycle (>250cc);1
 TKL;Passenger Rail;1
 TKL;Subcompact Car;1
-TKL;truck (0-3_5t);1
+TKL;Truck (0-3_5t);1
 TKL;Truck (18t);1
 TKL;Truck (26t);1
 TKL;Truck (40t);1
-TKL;truck (7_5t);1
+TKL;Truck (7_5t);1
 TKL;Van;0
 TKL;Walk;1
 TKM;Bus;1
@@ -5542,11 +5542,11 @@ TKM;Motorcycle (50-250cc);1
 TKM;Motorcycle (>250cc);1
 TKM;Passenger Rail;1
 TKM;Subcompact Car;1
-TKM;truck (0-3_5t);1
+TKM;Truck (0-3_5t);1
 TKM;Truck (18t);1
 TKM;Truck (26t);1
 TKM;Truck (40t);1
-TKM;truck (7_5t);1
+TKM;Truck (7_5t);1
 TKM;Van;0
 TKM;Walk;1
 TLS;Bus;1
@@ -5567,11 +5567,11 @@ TLS;Motorcycle (50-250cc);1
 TLS;Motorcycle (>250cc);1
 TLS;Passenger Rail;1
 TLS;Subcompact Car;1
-TLS;truck (0-3_5t);1
+TLS;Truck (0-3_5t);1
 TLS;Truck (18t);1
 TLS;Truck (26t);1
 TLS;Truck (40t);1
-TLS;truck (7_5t);1
+TLS;Truck (7_5t);1
 TLS;Van;0
 TLS;Walk;1
 TON;Bus;1
@@ -5592,11 +5592,11 @@ TON;Motorcycle (50-250cc);1
 TON;Motorcycle (>250cc);1
 TON;Passenger Rail;1
 TON;Subcompact Car;1
-TON;truck (0-3_5t);1
+TON;Truck (0-3_5t);1
 TON;Truck (18t);1
 TON;Truck (26t);1
 TON;Truck (40t);1
-TON;truck (7_5t);1
+TON;Truck (7_5t);1
 TON;Van;0
 TON;Walk;1
 TTO;Bus;1
@@ -5617,11 +5617,11 @@ TTO;Motorcycle (50-250cc);1
 TTO;Motorcycle (>250cc);1
 TTO;Passenger Rail;1
 TTO;Subcompact Car;1
-TTO;truck (0-3_5t);1
+TTO;Truck (0-3_5t);1
 TTO;Truck (18t);1
 TTO;Truck (26t);1
 TTO;Truck (40t);1
-TTO;truck (7_5t);1
+TTO;Truck (7_5t);1
 TTO;Van;1
 TTO;Walk;1
 TUN;Bus;1
@@ -5642,11 +5642,11 @@ TUN;Motorcycle (50-250cc);1
 TUN;Motorcycle (>250cc);1
 TUN;Passenger Rail;1
 TUN;Subcompact Car;1
-TUN;truck (0-3_5t);1
+TUN;Truck (0-3_5t);1
 TUN;Truck (18t);1
 TUN;Truck (26t);1
 TUN;Truck (40t);1
-TUN;truck (7_5t);1
+TUN;Truck (7_5t);1
 TUN;Van;0
 TUN;Walk;1
 TUR;Bus;1
@@ -5667,11 +5667,11 @@ TUR;Motorcycle (50-250cc);1
 TUR;Motorcycle (>250cc);1
 TUR;Passenger Rail;1
 TUR;Subcompact Car;1
-TUR;truck (0-3_5t);1
+TUR;Truck (0-3_5t);1
 TUR;Truck (18t);1
 TUR;Truck (26t);1
 TUR;Truck (40t);1
-TUR;truck (7_5t);1
+TUR;Truck (7_5t);1
 TUR;Van;0
 TUR;Walk;1
 TUV;Bus;1
@@ -5692,11 +5692,11 @@ TUV;Motorcycle (50-250cc);1
 TUV;Motorcycle (>250cc);1
 TUV;Passenger Rail;1
 TUV;Subcompact Car;1
-TUV;truck (0-3_5t);1
+TUV;Truck (0-3_5t);1
 TUV;Truck (18t);1
 TUV;Truck (26t);1
 TUV;Truck (40t);1
-TUV;truck (7_5t);1
+TUV;Truck (7_5t);1
 TUV;Van;0
 TUV;Walk;1
 TWN;Bus;1
@@ -5717,11 +5717,11 @@ TWN;Motorcycle (50-250cc);1
 TWN;Motorcycle (>250cc);1
 TWN;Passenger Rail;1
 TWN;Subcompact Car;1
-TWN;truck (0-3_5t);1
+TWN;Truck (0-3_5t);1
 TWN;Truck (18t);1
 TWN;Truck (26t);1
 TWN;Truck (40t);1
-TWN;truck (7_5t);1
+TWN;Truck (7_5t);1
 TWN;Van;0
 TWN;Walk;1
 TZA;Bus;1
@@ -5742,11 +5742,11 @@ TZA;Motorcycle (50-250cc);1
 TZA;Motorcycle (>250cc);1
 TZA;Passenger Rail;1
 TZA;Subcompact Car;1
-TZA;truck (0-3_5t);1
+TZA;Truck (0-3_5t);1
 TZA;Truck (18t);1
 TZA;Truck (26t);1
 TZA;Truck (40t);1
-TZA;truck (7_5t);1
+TZA;Truck (7_5t);1
 TZA;Van;0
 TZA;Walk;1
 UGA;Bus;1
@@ -5767,11 +5767,11 @@ UGA;Motorcycle (50-250cc);1
 UGA;Motorcycle (>250cc);1
 UGA;Passenger Rail;1
 UGA;Subcompact Car;1
-UGA;truck (0-3_5t);1
+UGA;Truck (0-3_5t);1
 UGA;Truck (18t);1
 UGA;Truck (26t);1
 UGA;Truck (40t);1
-UGA;truck (7_5t);1
+UGA;Truck (7_5t);1
 UGA;Van;0
 UGA;Walk;1
 UKR;Bus;1
@@ -5792,11 +5792,11 @@ UKR;Motorcycle (50-250cc);1
 UKR;Motorcycle (>250cc);1
 UKR;Passenger Rail;1
 UKR;Subcompact Car;1
-UKR;truck (0-3_5t);1
+UKR;Truck (0-3_5t);1
 UKR;Truck (18t);1
 UKR;Truck (26t);1
 UKR;Truck (40t);1
-UKR;truck (7_5t);1
+UKR;Truck (7_5t);1
 UKR;Van;0
 UKR;Walk;1
 UMI;Bus;1
@@ -5817,11 +5817,11 @@ UMI;Motorcycle (50-250cc);0
 UMI;Motorcycle (>250cc);1
 UMI;Passenger Rail;1
 UMI;Subcompact Car;0
-UMI;truck (0-3_5t);1
+UMI;Truck (0-3_5t);1
 UMI;Truck (18t);1
 UMI;Truck (26t);1
 UMI;Truck (40t);1
-UMI;truck (7_5t);1
+UMI;Truck (7_5t);1
 UMI;Van;0
 UMI;Walk;1
 URY;Bus;1
@@ -5842,11 +5842,11 @@ URY;Motorcycle (50-250cc);1
 URY;Motorcycle (>250cc);1
 URY;Passenger Rail;1
 URY;Subcompact Car;1
-URY;truck (0-3_5t);1
+URY;Truck (0-3_5t);1
 URY;Truck (18t);1
 URY;Truck (26t);1
 URY;Truck (40t);1
-URY;truck (7_5t);1
+URY;Truck (7_5t);1
 URY;Van;0
 URY;Walk;1
 USA;Bus;1
@@ -5867,11 +5867,11 @@ USA;Motorcycle (50-250cc);0
 USA;Motorcycle (>250cc);1
 USA;Passenger Rail;1
 USA;Subcompact Car;0
-USA;truck (0-3_5t);1
+USA;Truck (0-3_5t);1
 USA;Truck (18t);1
 USA;Truck (26t);1
 USA;Truck (40t);1
-USA;truck (7_5t);1
+USA;Truck (7_5t);1
 USA;Van;0
 USA;Walk;1
 UZB;Bus;1
@@ -5892,11 +5892,11 @@ UZB;Motorcycle (50-250cc);1
 UZB;Motorcycle (>250cc);1
 UZB;Passenger Rail;1
 UZB;Subcompact Car;1
-UZB;truck (0-3_5t);1
+UZB;Truck (0-3_5t);1
 UZB;Truck (18t);1
 UZB;Truck (26t);1
 UZB;Truck (40t);1
-UZB;truck (7_5t);1
+UZB;Truck (7_5t);1
 UZB;Van;0
 UZB;Walk;1
 VAT;Bus;1
@@ -5917,11 +5917,11 @@ VAT;Motorcycle (50-250cc);1
 VAT;Motorcycle (>250cc);1
 VAT;Passenger Rail;1
 VAT;Subcompact Car;1
-VAT;truck (0-3_5t);1
+VAT;Truck (0-3_5t);1
 VAT;Truck (18t);1
 VAT;Truck (26t);1
 VAT;Truck (40t);1
-VAT;truck (7_5t);1
+VAT;Truck (7_5t);1
 VAT;Van;1
 VAT;Walk;1
 VCT;Bus;1
@@ -5942,11 +5942,11 @@ VCT;Motorcycle (50-250cc);1
 VCT;Motorcycle (>250cc);1
 VCT;Passenger Rail;1
 VCT;Subcompact Car;1
-VCT;truck (0-3_5t);1
+VCT;Truck (0-3_5t);1
 VCT;Truck (18t);1
 VCT;Truck (26t);1
 VCT;Truck (40t);1
-VCT;truck (7_5t);1
+VCT;Truck (7_5t);1
 VCT;Van;1
 VCT;Walk;1
 VEN;Bus;1
@@ -5967,11 +5967,11 @@ VEN;Motorcycle (50-250cc);1
 VEN;Motorcycle (>250cc);1
 VEN;Passenger Rail;1
 VEN;Subcompact Car;1
-VEN;truck (0-3_5t);1
+VEN;Truck (0-3_5t);1
 VEN;Truck (18t);1
 VEN;Truck (26t);1
 VEN;Truck (40t);1
-VEN;truck (7_5t);1
+VEN;Truck (7_5t);1
 VEN;Van;0
 VEN;Walk;1
 VGB;Bus;1
@@ -5992,11 +5992,11 @@ VGB;Motorcycle (50-250cc);1
 VGB;Motorcycle (>250cc);1
 VGB;Passenger Rail;1
 VGB;Subcompact Car;1
-VGB;truck (0-3_5t);1
+VGB;Truck (0-3_5t);1
 VGB;Truck (18t);1
 VGB;Truck (26t);1
 VGB;Truck (40t);1
-VGB;truck (7_5t);1
+VGB;Truck (7_5t);1
 VGB;Van;1
 VGB;Walk;1
 VIR;Bus;1
@@ -6017,11 +6017,11 @@ VIR;Motorcycle (50-250cc);0
 VIR;Motorcycle (>250cc);1
 VIR;Passenger Rail;1
 VIR;Subcompact Car;0
-VIR;truck (0-3_5t);1
+VIR;Truck (0-3_5t);1
 VIR;Truck (18t);1
 VIR;Truck (26t);1
 VIR;Truck (40t);1
-VIR;truck (7_5t);1
+VIR;Truck (7_5t);1
 VIR;Van;0
 VIR;Walk;1
 VNM;Bus;1
@@ -6042,11 +6042,11 @@ VNM;Motorcycle (50-250cc);1
 VNM;Motorcycle (>250cc);1
 VNM;Passenger Rail;1
 VNM;Subcompact Car;1
-VNM;truck (0-3_5t);1
+VNM;Truck (0-3_5t);1
 VNM;Truck (18t);1
 VNM;Truck (26t);1
 VNM;Truck (40t);1
-VNM;truck (7_5t);1
+VNM;Truck (7_5t);1
 VNM;Van;0
 VNM;Walk;1
 VUT;Bus;1
@@ -6067,11 +6067,11 @@ VUT;Motorcycle (50-250cc);1
 VUT;Motorcycle (>250cc);1
 VUT;Passenger Rail;1
 VUT;Subcompact Car;1
-VUT;truck (0-3_5t);1
+VUT;Truck (0-3_5t);1
 VUT;Truck (18t);1
 VUT;Truck (26t);1
 VUT;Truck (40t);1
-VUT;truck (7_5t);1
+VUT;Truck (7_5t);1
 VUT;Van;0
 VUT;Walk;1
 WLF;Bus;1
@@ -6092,11 +6092,11 @@ WLF;Motorcycle (50-250cc);1
 WLF;Motorcycle (>250cc);1
 WLF;Passenger Rail;1
 WLF;Subcompact Car;1
-WLF;truck (0-3_5t);1
+WLF;Truck (0-3_5t);1
 WLF;Truck (18t);1
 WLF;Truck (26t);1
 WLF;Truck (40t);1
-WLF;truck (7_5t);1
+WLF;Truck (7_5t);1
 WLF;Van;1
 WLF;Walk;1
 WSM;Bus;1
@@ -6117,11 +6117,11 @@ WSM;Motorcycle (50-250cc);1
 WSM;Motorcycle (>250cc);1
 WSM;Passenger Rail;1
 WSM;Subcompact Car;1
-WSM;truck (0-3_5t);1
+WSM;Truck (0-3_5t);1
 WSM;Truck (18t);1
 WSM;Truck (26t);1
 WSM;Truck (40t);1
-WSM;truck (7_5t);1
+WSM;Truck (7_5t);1
 WSM;Van;0
 WSM;Walk;1
 YEM;Bus;1
@@ -6142,11 +6142,11 @@ YEM;Motorcycle (50-250cc);1
 YEM;Motorcycle (>250cc);0
 YEM;Passenger Rail;1
 YEM;Subcompact Car;1
-YEM;truck (0-3_5t);1
+YEM;Truck (0-3_5t);1
 YEM;Truck (18t);1
 YEM;Truck (26t);1
 YEM;Truck (40t);1
-YEM;truck (7_5t);1
+YEM;Truck (7_5t);1
 YEM;Van;0
 YEM;Walk;1
 ZAF;Bus;1
@@ -6167,11 +6167,11 @@ ZAF;Motorcycle (50-250cc);1
 ZAF;Motorcycle (>250cc);1
 ZAF;Passenger Rail;1
 ZAF;Subcompact Car;1
-ZAF;truck (0-3_5t);1
+ZAF;Truck (0-3_5t);1
 ZAF;Truck (18t);1
 ZAF;Truck (26t);1
 ZAF;Truck (40t);1
-ZAF;truck (7_5t);1
+ZAF;Truck (7_5t);1
 ZAF;Van;0
 ZAF;Walk;1
 ZMB;Bus;1
@@ -6192,11 +6192,11 @@ ZMB;Motorcycle (50-250cc);1
 ZMB;Motorcycle (>250cc);1
 ZMB;Passenger Rail;1
 ZMB;Subcompact Car;1
-ZMB;truck (0-3_5t);1
+ZMB;Truck (0-3_5t);1
 ZMB;Truck (18t);1
 ZMB;Truck (26t);1
 ZMB;Truck (40t);1
-ZMB;truck (7_5t);1
+ZMB;Truck (7_5t);1
 ZMB;Van;0
 ZMB;Walk;1
 ZWE;Bus;1
@@ -6217,10 +6217,10 @@ ZWE;Motorcycle (50-250cc);1
 ZWE;Motorcycle (>250cc);1
 ZWE;Passenger Rail;1
 ZWE;Subcompact Car;1
-ZWE;truck (0-3_5t);1
+ZWE;Truck (0-3_5t);1
 ZWE;Truck (18t);1
 ZWE;Truck (26t);1
 ZWE;Truck (40t);1
-ZWE;truck (7_5t);1
+ZWE;Truck (7_5t);1
 ZWE;Van;0
 ZWE;Walk;1

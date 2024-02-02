@@ -70,7 +70,8 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
     entries <- unique(dt[rowSums(test) > 0]$univocalName)
   }
 
-  filterEntries <- sapply(categories, findEntries, dt = decisionTree, USE.NAMES = TRUE)
+  filterEntries <- sapply(categories, findEntries, dt = decisionTree)
+
   return(filterEntries)
 }
 

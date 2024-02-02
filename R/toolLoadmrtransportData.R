@@ -2,11 +2,7 @@
 #'
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrtransportData <- function(SSPscen) {
-
-  replaceMadratSnakeInUnivocalName <- function(dt){
-    dt <- dt[grepl("Truck.*", univocalName), univocalName := gsub("_", ".", univocalName)]
-  }
+toolLoadmrtransportData <- function(SSPscen, filterEntries, decisionTree) {
 
   # Energy Service demand [billion (p|t)km/yr]
   histESdemandMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
@@ -64,8 +60,22 @@ toolLoadmrtransportData <- function(SSPscen) {
                            annualMileage = annualMileage,
                            timeValueCosts = timeValueCosts
                            )
+  #Übergangslösung bis Daten direkt in hoher auflösung aus mrtransport kommen
 
-  mrtransportdata <- sapply(mrtransportdata, replaceMadratSnakeInUnivocalName, USE.NAMES = TRUE)
+  highRes <- c(1990, seq(2005, 2100, by = 1), 2110, 2130, 2150)
+
+  applytimeres <- function(dt, highRes, filter){
+    cols <- names(dt)
+    dthighRes <- dt[univocalName %in% filter]
+    if (nrow(dthighRes) > 0) {
+      dthighRes <- approx_dt(dthighRes, highRes, "period", "value", idxcols = cols[!cols %in% c("value", "period")], extrapolate = TRUE)
+      }
+    dt <- rbind(dt[!univocalName %in% filter], dthighRes)
+  }
+
+  mrtransportdata <- lapply(mrtransportdata, applytimeres, highRes, filterEntries$trackedFleet)
+    browser()
+  mrtransportdata[["histESdemand"]] <-  mrtransportdata[["histESdemand"]][period <= 2010]
 
   return(mrtransportdata)
 
