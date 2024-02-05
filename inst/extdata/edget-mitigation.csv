@@ -1,4 +1,814 @@
 SSP_scenario,tech_scenario,regioncat,level,subsector_L3,subsector_L2,FV_vehvar,FV_techvar,target,symmyr,speed
+SDP,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Cycle,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP1,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP1,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP2,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP2,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Cycle,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Cycle,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Cycle,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Cycle,,,,3,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Cycle,,,,2.25,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Cycle,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Cycle,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Cycle,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Cycle,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Cycle,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Cycle,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Cycle,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Cycle,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,Cycle,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_act,USA,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_act,poor,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_act,rich,S3,Cycle,,,,1.8,2040,10
+SSP2EU,NAV_all,CAZ,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_all,USA,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_all,poor,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_all,rich,S3,Cycle,,,,1.8,2040,10
+SSP2EU,NAV_ele,poor,S3,Cycle,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Cycle,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_lce,USA,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_lce,poor,S3,Cycle,,,,2.5,2040,10
+SSP2EU,NAV_lce,rich,S3,Cycle,,,,1.8,2040,10
+SSP5,Mix2,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix2,rich,S3,Cycle,,,,1,2050,10
+SSP5,Mix3,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix3,rich,S3,Cycle,,,,1,2050,10
+SSP5,Mix4,poor,S3,Cycle,,,,1,2050,10
+SSP5,Mix4,rich,S3,Cycle,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Cycle,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Cycle,,,,1.5,2040,10
+SDP,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SDP,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SDP,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SDP,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SDP,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SDP,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_EI,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_EI,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_EI,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_EI,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_EI,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_EI,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_MC,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_MC,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_MC,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_MC,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_MC,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_MC,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_RC,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_RC,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SDP_RC,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_RC,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SDP_RC,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SDP_RC,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP1,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP1,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP1,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP1,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP1,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP1,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Domestic Aviation,,,,0.4,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,HydrHype4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,HydrHype4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP2EU,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP2EU,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,Mix4_ensec,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,Mix4_ensec,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,NAV_act,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_act,USA,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_act,poor,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_act,rich,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_all,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_all,USA,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_all,poor,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_all,rich,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_ele,poor,S3,Domestic Aviation,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Domestic Aviation,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_lce,USA,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_lce,poor,S3,Domestic Aviation,,,,0.3,2040,10
+SSP2EU,NAV_lce,rich,S3,Domestic Aviation,,,,0.3,2040,10
+SSP5,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
+SSP5,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
+SSP5,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
+SSP5,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
+SSP5,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
+SSP5,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Domestic Aviation,,,,0.53,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Domestic Aviation,,,,0.5,2040,10
+SDP,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP1,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Domestic Ship,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_act,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_act,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_act,rich,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_all,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_all,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_all,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_all,rich,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_ele,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_lce,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_lce,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,NAV_lce,rich,S3,Domestic Ship,,,,1,2040,10
+SSP5,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
+SSP5,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Domestic Ship,,,,1,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Domestic Ship,,,,1,2040,10
+SDP,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP1,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP2,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Freight Rail,,,,1,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,Freight Rail,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_act,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_act,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_act,rich,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_all,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_all,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_all,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_all,rich,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_ele,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_lce,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_lce,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,NAV_lce,rich,S3,Freight Rail,,,,1,2040,10
+SSP5,Mix2,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix2,rich,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix3,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix3,rich,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix4,poor,S3,Freight Rail,,,,1,2050,10
+SSP5,Mix4,rich,S3,Freight Rail,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Freight Rail,,,,1,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Freight Rail,,,,1,2040,10
+SDP,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,HSR,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,HSR,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP1,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP1,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP2,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP2,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,HSR,,,,1.7,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,HSR,,,,1.7,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,HSR,,,,2.8,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,HSR,,,,2,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,HSR,,,,1.35,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,HSR,,,,1.35,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,HSR,,,,1.9,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,HSR,,,,1.6,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,HSR,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,HSR,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,HSR,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,HSR,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,HSR,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_act,USA,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_act,poor,S3,HSR,,,,2.8,2040,10
+SSP2EU,NAV_act,rich,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_all,CAZ,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_all,USA,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_all,poor,S3,HSR,,,,2.8,2040,10
+SSP2EU,NAV_all,rich,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_ele,poor,S3,HSR,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,HSR,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_lce,USA,S3,HSR,,,,1.7,2040,10
+SSP2EU,NAV_lce,poor,S3,HSR,,,,2.8,2040,10
+SSP2EU,NAV_lce,rich,S3,HSR,,,,1.7,2040,10
+SSP5,Mix2,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix2,rich,S3,HSR,,,,1,2050,10
+SSP5,Mix3,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix3,rich,S3,HSR,,,,1,2050,10
+SSP5,Mix4,poor,S3,HSR,,,,1,2050,10
+SSP5,Mix4,rich,S3,HSR,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,HSR,,,,1.35,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,HSR,,,,1.35,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,HSR,,,,1.9,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,HSR,,,,1.2,2040,10
+SDP,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP1,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Passenger Rail,,,,1.5,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Passenger Rail,,,,2,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Passenger Rail,,,,2,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Passenger Rail,,,,2,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Passenger Rail,,,,1.25,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Passenger Rail,,,,1.6,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Passenger Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Passenger Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Passenger Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Passenger Rail,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_act,USA,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_act,poor,S3,Passenger Rail,,,,1.5,2040,10
+SSP2EU,NAV_act,rich,S3,Passenger Rail,,,,1.6,2040,10
+SSP2EU,NAV_all,CAZ,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_all,USA,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_all,poor,S3,Passenger Rail,,,,1.5,2040,10
+SSP2EU,NAV_all,rich,S3,Passenger Rail,,,,1.6,2040,10
+SSP2EU,NAV_ele,poor,S3,Passenger Rail,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Passenger Rail,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_lce,USA,S3,Passenger Rail,,,,4,2040,10
+SSP2EU,NAV_lce,poor,S3,Passenger Rail,,,,1.5,2040,10
+SSP2EU,NAV_lce,rich,S3,Passenger Rail,,,,1.6,2040,10
+SSP5,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
+SSP5,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Passenger Rail,,,,2,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Passenger Rail,,,,2,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Passenger Rail,,,,1.25,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Passenger Rail,,,,1.2,2040,10
+SDP,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SDP,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SDP,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SDP,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SDP,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SDP,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SDP_EI,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SDP_EI,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SDP_EI,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SDP_EI,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SDP_EI,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SDP_EI,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SDP_MC,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SDP_MC,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SDP_MC,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SDP_MC,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SDP_MC,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SDP_MC,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SDP_RC,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SDP_RC,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SDP_RC,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SDP_RC,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SDP_RC,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SDP_RC,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP1,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP1,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP1,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP1,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP1,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP1,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,trn_freight_road,,,,0.7,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,trn_freight_road,,,,0.75,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,HydrHype4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,HydrHype4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP2EU,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP2EU,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,Mix4_ensec,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,Mix4_ensec,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,NAV_act,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_act,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_act,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_act,rich,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_all,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_all,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_all,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_all,rich,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_ele,poor,S3,trn_freight_road,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,trn_freight_road,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_lce,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_lce,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,NAV_lce,rich,S3,trn_freight_road,,,,0.9,2040,10
+SSP5,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
+SSP5,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
+SSP5,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
+SSP5,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
+SSP5,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
+SSP5,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
+SSP2EU,CAMP_lscLow,CAZ,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,trn_freight_road,,,,0.9,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,trn_freight_road,,,,0.8,2040,10
+SDP,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SDP,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SDP,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SDP,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SDP,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SDP,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SDP_EI,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SDP_EI,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SDP_EI,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SDP_EI,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SDP_EI,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SDP_EI,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SDP_MC,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SDP_MC,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SDP_MC,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SDP_MC,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SDP_MC,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SDP_MC,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SDP_RC,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SDP_RC,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SDP_RC,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SDP_RC,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SDP_RC,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SDP_RC,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP1,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP1,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP1,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP1,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP1,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP1,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,trn_pass_road,,,,0.75,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,trn_pass_road,,,,0.65,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,trn_pass_road,,,,0.65,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,trn_pass_road,,,,0.8,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,trn_pass_road,,,,0.8,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,HydrHype4,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,HydrHype4,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP2EU,Mix3,poor,S3,trn_pass_road,,,,0.8,2035,10
+SSP2EU,Mix3,rich,S3,trn_pass_road,,,,0.8,2035,10
+SSP2EU,Mix4,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,Mix4,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP2EU,Mix4_ensec,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,Mix4_ensec,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,NAV_act,CAZ,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_act,USA,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_act,poor,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,NAV_act,rich,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,NAV_all,CAZ,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_all,USA,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_all,poor,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,NAV_all,rich,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,NAV_ele,poor,S3,trn_pass_road,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,trn_pass_road,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_lce,USA,S3,trn_pass_road,,,,0.6,2040,10
+SSP2EU,NAV_lce,poor,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,NAV_lce,rich,S3,trn_pass_road,,,,0.7,2040,10
+SSP5,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
+SSP5,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
+SSP5,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
+SSP5,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
+SSP5,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
+SSP5,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
+SSP2EU,CAMP_lscLow,CAZ,S3,trn_pass_road,,,,0.65,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,trn_pass_road,,,,0.65,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,trn_pass_road,,,,0.8,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,trn_pass_road,,,,0.85,2040,10
+SDP,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_EI,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_EI,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_MC,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_MC,Mix4,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix2,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix2,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix3,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix3,rich,S3,Walk,,,,1,2050,10
+SDP_RC,Mix4,poor,S3,Walk,,,,1,2050,10
+SDP_RC,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP1,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP1,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP2,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP2,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2EU,CAMP_lscStrong,CAZ,S3,Walk,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,USA,S3,Walk,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,poor,S3,Walk,,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,rich,S3,Walk,,,,3,2040,10
+SSP2EU,CAMP_lscWeak,CAZ,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,USA,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,poor,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscWeak,rich,S3,Walk,,,,2.25,2040,10
+SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Walk,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Walk,,,,1.5,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Walk,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Walk,,,,2,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Walk,,,,1,2050,10
+SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Walk,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Walk,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Walk,,,,1.5,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Walk,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Walk,,,,2,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Walk,,,,1,2050,10
+SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Walk,,,,1,2050,10
+SSP2EU,HydrHype4,poor,S3,Walk,,,,1,2050,10
+SSP2EU,HydrHype4,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4_ensec,poor,S3,Walk,,,,1,2050,10
+SSP2EU,Mix4_ensec,rich,S3,Walk,,,,1,2050,10
+SSP2EU,NAV_act,CAZ,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_act,USA,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_act,poor,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_act,rich,S3,Walk,,,,1.7,2040,10
+SSP2EU,NAV_all,CAZ,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_all,USA,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_all,poor,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_all,rich,S3,Walk,,,,1.7,2040,10
+SSP2EU,NAV_ele,poor,S3,Walk,,,,1,2040,10
+SSP2EU,NAV_ele,rich,S3,Walk,,,,1,2040,10
+SSP2EU,NAV_lce,CAZ,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_lce,USA,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_lce,poor,S3,Walk,,,,2.5,2040,10
+SSP2EU,NAV_lce,rich,S3,Walk,,,,1.7,2040,10
+SSP5,Mix2,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix2,rich,S3,Walk,,,,1,2050,10
+SSP5,Mix3,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix3,rich,S3,Walk,,,,1,2050,10
+SSP5,Mix4,poor,S3,Walk,,,,1,2050,10
+SSP5,Mix4,rich,S3,Walk,,,,1,2050,10
+SSP2EU,CAMP_lscLow,CAZ,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,USA,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,poor,S3,Walk,,,,1.75,2040,10
+SSP2EU,CAMP_lscLow,rich,S3,Walk,,,,1.5,2040,10
 SDP,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SDP,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -45,24 +855,6 @@ SDP,Mix2,poor,S2,,Bus,,,1,2050,10
 SDP,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SDP,Mix2,rich,S2,,Bus,,,1,2050,10
 SDP,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SDP,Mix2,poor,S3,Cycle,,,,1,2050,10
-SDP,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SDP,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SDP,Mix2,poor,S3,HSR,,,,1,2050,10
-SDP,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix2,poor,S3,Walk,,,,1,2050,10
-SDP,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SDP,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SDP,Mix2,rich,S3,Cycle,,,,1,2050,10
-SDP,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SDP,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SDP,Mix2,rich,S3,HSR,,,,1,2050,10
-SDP,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix2,rich,S3,Walk,,,,1,2050,10
-SDP,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SDP,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SDP,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SDP,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -109,24 +901,6 @@ SDP,Mix3,poor,S2,,Bus,,,1,2050,10
 SDP,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SDP,Mix3,rich,S2,,Bus,,,1,2050,10
 SDP,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SDP,Mix3,poor,S3,Cycle,,,,1,2050,10
-SDP,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SDP,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SDP,Mix3,poor,S3,HSR,,,,1,2050,10
-SDP,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix3,poor,S3,Walk,,,,1,2050,10
-SDP,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SDP,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SDP,Mix3,rich,S3,Cycle,,,,1,2050,10
-SDP,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SDP,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SDP,Mix3,rich,S3,HSR,,,,1,2050,10
-SDP,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix3,rich,S3,Walk,,,,1,2050,10
-SDP,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SDP,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SDP,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SDP,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -173,24 +947,6 @@ SDP,Mix4,poor,S2,,Bus,,,1,2050,10
 SDP,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SDP,Mix4,rich,S2,,Bus,,,1,2050,10
 SDP,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SDP,Mix4,poor,S3,Cycle,,,,1,2050,10
-SDP,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SDP,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SDP,Mix4,poor,S3,HSR,,,,1,2050,10
-SDP,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix4,poor,S3,Walk,,,,1,2050,10
-SDP,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SDP,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SDP,Mix4,rich,S3,Cycle,,,,1,2050,10
-SDP,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SDP,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SDP,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SDP,Mix4,rich,S3,HSR,,,,1,2050,10
-SDP,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SDP,Mix4,rich,S3,Walk,,,,1,2050,10
-SDP,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SDP,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SDP_EI,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_EI,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_EI,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -237,24 +993,6 @@ SDP_EI,Mix2,poor,S2,,Bus,,,1,2050,10
 SDP_EI,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SDP_EI,Mix2,rich,S2,,Bus,,,1,2050,10
 SDP_EI,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SDP_EI,Mix2,poor,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_EI,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,HSR,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,Walk,,,,1,2050,10
-SDP_EI,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SDP_EI,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SDP_EI,Mix2,rich,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_EI,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,HSR,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,Walk,,,,1,2050,10
-SDP_EI,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SDP_EI,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SDP_EI,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_EI,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_EI,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -301,24 +1039,6 @@ SDP_EI,Mix3,poor,S2,,Bus,,,1,2050,10
 SDP_EI,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SDP_EI,Mix3,rich,S2,,Bus,,,1,2050,10
 SDP_EI,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SDP_EI,Mix3,poor,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_EI,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,HSR,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,Walk,,,,1,2050,10
-SDP_EI,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SDP_EI,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SDP_EI,Mix3,rich,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_EI,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,HSR,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,Walk,,,,1,2050,10
-SDP_EI,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SDP_EI,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SDP_EI,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_EI,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_EI,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -365,24 +1085,6 @@ SDP_EI,Mix4,poor,S2,,Bus,,,1,2050,10
 SDP_EI,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SDP_EI,Mix4,rich,S2,,Bus,,,1,2050,10
 SDP_EI,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SDP_EI,Mix4,poor,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_EI,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,HSR,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,Walk,,,,1,2050,10
-SDP_EI,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SDP_EI,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SDP_EI,Mix4,rich,S3,Cycle,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_EI,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,HSR,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,Walk,,,,1,2050,10
-SDP_EI,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SDP_EI,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SDP_MC,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_MC,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_MC,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -429,24 +1131,6 @@ SDP_MC,Mix2,poor,S2,,Bus,,,1,2050,10
 SDP_MC,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SDP_MC,Mix2,rich,S2,,Bus,,,1,2050,10
 SDP_MC,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SDP_MC,Mix2,poor,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_MC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,HSR,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,Walk,,,,1,2050,10
-SDP_MC,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SDP_MC,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SDP_MC,Mix2,rich,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_MC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,HSR,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,Walk,,,,1,2050,10
-SDP_MC,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SDP_MC,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SDP_MC,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_MC,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_MC,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -493,24 +1177,6 @@ SDP_MC,Mix3,poor,S2,,Bus,,,1,2050,10
 SDP_MC,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SDP_MC,Mix3,rich,S2,,Bus,,,1,2050,10
 SDP_MC,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SDP_MC,Mix3,poor,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_MC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,HSR,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,Walk,,,,1,2050,10
-SDP_MC,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SDP_MC,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SDP_MC,Mix3,rich,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_MC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,HSR,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,Walk,,,,1,2050,10
-SDP_MC,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SDP_MC,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SDP_MC,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_MC,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_MC,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -557,24 +1223,6 @@ SDP_MC,Mix4,poor,S2,,Bus,,,1,2050,10
 SDP_MC,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SDP_MC,Mix4,rich,S2,,Bus,,,1,2050,10
 SDP_MC,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SDP_MC,Mix4,poor,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_MC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,HSR,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,Walk,,,,1,2050,10
-SDP_MC,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SDP_MC,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SDP_MC,Mix4,rich,S3,Cycle,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_MC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,HSR,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,Walk,,,,1,2050,10
-SDP_MC,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SDP_MC,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SDP_RC,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_RC,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_RC,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -621,24 +1269,6 @@ SDP_RC,Mix2,poor,S2,,Bus,,,1,2050,10
 SDP_RC,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SDP_RC,Mix2,rich,S2,,Bus,,,1,2050,10
 SDP_RC,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SDP_RC,Mix2,poor,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_RC,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,HSR,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,Walk,,,,1,2050,10
-SDP_RC,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SDP_RC,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SDP_RC,Mix2,rich,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SDP_RC,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,HSR,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,Walk,,,,1,2050,10
-SDP_RC,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SDP_RC,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SDP_RC,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_RC,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_RC,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -685,24 +1315,6 @@ SDP_RC,Mix3,poor,S2,,Bus,,,1,2050,10
 SDP_RC,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SDP_RC,Mix3,rich,S2,,Bus,,,1,2050,10
 SDP_RC,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SDP_RC,Mix3,poor,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_RC,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,HSR,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,Walk,,,,1,2050,10
-SDP_RC,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SDP_RC,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SDP_RC,Mix3,rich,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SDP_RC,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,HSR,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,Walk,,,,1,2050,10
-SDP_RC,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SDP_RC,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SDP_RC,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SDP_RC,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SDP_RC,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -749,24 +1361,6 @@ SDP_RC,Mix4,poor,S2,,Bus,,,1,2050,10
 SDP_RC,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SDP_RC,Mix4,rich,S2,,Bus,,,1,2050,10
 SDP_RC,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SDP_RC,Mix4,poor,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_RC,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,HSR,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,Walk,,,,1,2050,10
-SDP_RC,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SDP_RC,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SDP_RC,Mix4,rich,S3,Cycle,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SDP_RC,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,HSR,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,Walk,,,,1,2050,10
-SDP_RC,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SDP_RC,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP1,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SSP1,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP1,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -813,24 +1407,6 @@ SSP1,Mix2,poor,S2,,Bus,,,1,2050,10
 SSP1,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP1,Mix2,rich,S2,,Bus,,,1,2050,10
 SSP1,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP1,Mix2,poor,S3,Cycle,,,,1,2050,10
-SSP1,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP1,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix2,poor,S3,HSR,,,,1,2050,10
-SSP1,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix2,poor,S3,Walk,,,,1,2050,10
-SSP1,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP1,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP1,Mix2,rich,S3,Cycle,,,,1,2050,10
-SSP1,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP1,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix2,rich,S3,HSR,,,,1,2050,10
-SSP1,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix2,rich,S3,Walk,,,,1,2050,10
-SSP1,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP1,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP1,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SSP1,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP1,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -877,24 +1453,6 @@ SSP1,Mix3,poor,S2,,Bus,,,1,2050,10
 SSP1,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP1,Mix3,rich,S2,,Bus,,,1,2050,10
 SSP1,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP1,Mix3,poor,S3,Cycle,,,,1,2050,10
-SSP1,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP1,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix3,poor,S3,HSR,,,,1,2050,10
-SSP1,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix3,poor,S3,Walk,,,,1,2050,10
-SSP1,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP1,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP1,Mix3,rich,S3,Cycle,,,,1,2050,10
-SSP1,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP1,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix3,rich,S3,HSR,,,,1,2050,10
-SSP1,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix3,rich,S3,Walk,,,,1,2050,10
-SSP1,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP1,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP1,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SSP1,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP1,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -941,24 +1499,6 @@ SSP1,Mix4,poor,S2,,Bus,,,1,2050,10
 SSP1,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP1,Mix4,rich,S2,,Bus,,,1,2050,10
 SSP1,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP1,Mix4,poor,S3,Cycle,,,,1,2050,10
-SSP1,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP1,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix4,poor,S3,HSR,,,,1,2050,10
-SSP1,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix4,poor,S3,Walk,,,,1,2050,10
-SSP1,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP1,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP1,Mix4,rich,S3,Cycle,,,,1,2050,10
-SSP1,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP1,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SSP1,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SSP1,Mix4,rich,S3,HSR,,,,1,2050,10
-SSP1,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SSP1,Mix4,rich,S3,Walk,,,,1,2050,10
-SSP1,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP1,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1005,24 +1545,6 @@ SSP2,Mix2,poor,S2,,Bus,,,1,2050,10
 SSP2,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP2,Mix2,rich,S2,,Bus,,,1,2050,10
 SSP2,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP2,Mix2,poor,S3,Cycle,,,,1,2050,10
-SSP2,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix2,poor,S3,HSR,,,,1,2050,10
-SSP2,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix2,poor,S3,Walk,,,,1,2050,10
-SSP2,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP2,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP2,Mix2,rich,S3,Cycle,,,,1,2050,10
-SSP2,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix2,rich,S3,HSR,,,,1,2050,10
-SSP2,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix2,rich,S3,Walk,,,,1,2050,10
-SSP2,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP2,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP2,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1069,24 +1591,6 @@ SSP2,Mix3,poor,S2,,Bus,,,1,2050,10
 SSP2,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2,Mix3,rich,S2,,Bus,,,1,2050,10
 SSP2,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP2,Mix3,poor,S3,Cycle,,,,1,2050,10
-SSP2,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix3,poor,S3,HSR,,,,1,2050,10
-SSP2,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix3,poor,S3,Walk,,,,1,2050,10
-SSP2,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP2,Mix3,rich,S3,Cycle,,,,1,2050,10
-SSP2,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix3,rich,S3,HSR,,,,1,2050,10
-SSP2,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix3,rich,S3,Walk,,,,1,2050,10
-SSP2,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1133,24 +1637,6 @@ SSP2,Mix4,poor,S2,,Bus,,,1,2050,10
 SSP2,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP2,Mix4,rich,S2,,Bus,,,1,2050,10
 SSP2,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP2,Mix4,poor,S3,Cycle,,,,1,2050,10
-SSP2,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix4,poor,S3,HSR,,,,1,2050,10
-SSP2,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix4,poor,S3,Walk,,,,1,2050,10
-SSP2,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP2,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP2,Mix4,rich,S3,Cycle,,,,1,2050,10
-SSP2,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SSP2,Mix4,rich,S3,HSR,,,,1,2050,10
-SSP2,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2,Mix4,rich,S3,Walk,,,,1,2050,10
-SSP2,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP2,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,CAMP_lscStrong,CAZ,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,CAMP_lscStrong,CAZ,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,CAMP_lscStrong,CAZ,FV,,,Aviation,Liquids,1,2050,10
@@ -1229,11 +1715,11 @@ SSP2EU,CAMP_lscStrong,rich,FV,,,Rail,Liquids,2,2050,10
 SSP2EU,CAMP_lscStrong,rich,FV,,,Ship,Electric,1,2050,10
 SSP2EU,CAMP_lscStrong,rich,FV,,,Ship,Hydrogen,1,2050,10
 SSP2EU,CAMP_lscStrong,rich,FV,,,Ship,Liquids,1,2050,10
-SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|heavy,Electric,3,2040,10
-SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|heavy,Hydrogen,2,2040,10
+SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|heavy,Electric,1,2040,10
+SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|heavy,Hydrogen,1,2040,10
 SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|heavy,Liquids,1,2050,10
-SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|light,Electric,3,2040,10
-SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|light,Hydrogen,2,2040,10
+SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|light,Electric,1,2040,10
+SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|light,Hydrogen,1,2040,10
 SSP2EU,CAMP_lscStrong,rich,FV,,,Truck|light,Liquids,1,2050,10
 SSP2EU,CAMP_lscStrong,CAZ,S2,,Bus,,,3,2040,10
 SSP2EU,CAMP_lscStrong,CAZ,S2,,trn_pass_road_LDV,,,0.7,2040,10
@@ -1241,44 +1727,8 @@ SSP2EU,CAMP_lscStrong,USA,S2,,Bus,,,2,2040,10
 SSP2EU,CAMP_lscStrong,USA,S2,,trn_pass_road_LDV,,,0.7,2040,10
 SSP2EU,CAMP_lscStrong,poor,S2,,Bus,,,2,2040,10
 SSP2EU,CAMP_lscStrong,poor,S2,,trn_pass_road_LDV,,,1,2040,10
-SSP2EU,CAMP_lscStrong,rich,S2,,Bus,,,2,2040,10
-SSP2EU,CAMP_lscStrong,rich,S2,,trn_pass_road_LDV,,,0.8,2035,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Cycle,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,HSR,,,,1.7,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,Walk,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscStrong,CAZ,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Cycle,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,HSR,,,,1.7,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,Walk,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscStrong,USA,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Cycle,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,HSR,,,,2.8,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Passenger Rail,,,,1.5,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,Walk,,,,2.5,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscStrong,poor,S3,trn_pass_road,,,,0.7,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Cycle,,,,3,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,HSR,,,,1.5,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Passenger Rail,,,,1.5,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,Walk,,,,3,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,trn_freight_road,,,,0.8,2040,10
-SSP2EU,CAMP_lscStrong,rich,S3,trn_pass_road,,,,0.7,2040,10
+SSP2EU,CAMP_lscStrong,rich,S2,,Bus,,,2.5,2040,10
+SSP2EU,CAMP_lscStrong,rich,S2,,trn_pass_road_LDV,,,0.75,2035,10
 SSP2EU,CAMP_lscWeak,CAZ,FV,,,Bus,Electric,2,2040,10
 SSP2EU,CAMP_lscWeak,CAZ,FV,,,Bus,Hydrogen,1.5,2040,10
 SSP2EU,CAMP_lscWeak,CAZ,FV,,,Truck|heavy,Electric,3,2040,10
@@ -1344,10 +1794,10 @@ SSP2EU,CAMP_lscWeak,poor,FV,,,Truck|heavy,Liquids,1,2050,10
 SSP2EU,CAMP_lscWeak,poor,FV,,,Truck|light,Liquids,1,2050,10
 SSP2EU,CAMP_lscWeak,rich,FV,,,Bus,Electric,2,2040,10
 SSP2EU,CAMP_lscWeak,rich,FV,,,Bus,Hydrogen,2,2040,10
-SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|heavy,Electric,3,2040,10
-SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|heavy,Hydrogen,2,2040,10
-SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|light,Electric,3,2040,10
-SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|light,Hydrogen,2,2040,10
+SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|heavy,Electric,1,2040,10
+SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|heavy,Hydrogen,1,2040,10
+SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|light,Electric,1,2040,10
+SSP2EU,CAMP_lscWeak,rich,FV,,,Truck|light,Hydrogen,1,2040,10
 SSP2EU,CAMP_lscWeak,rich,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,CAMP_lscWeak,rich,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,CAMP_lscWeak,rich,FV,,,Aviation,Liquids,1,2050,10
@@ -1369,44 +1819,8 @@ SSP2EU,CAMP_lscWeak,USA,S2,,Bus,,,1.5,2040,10
 SSP2EU,CAMP_lscWeak,USA,S2,,trn_pass_road_LDV,,,0.7,2040,10
 SSP2EU,CAMP_lscWeak,poor,S2,,Bus,,,1.5,2040,10
 SSP2EU,CAMP_lscWeak,poor,S2,,trn_pass_road_LDV,,,0.95,2040,10
-SSP2EU,CAMP_lscWeak,rich,S2,,Bus,,,1.66,2040,10
-SSP2EU,CAMP_lscWeak,rich,S2,,trn_pass_road_LDV,,,0.85,2035,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,HSR,,,,1.35,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Passenger Rail,,,,2,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscWeak,CAZ,S3,trn_pass_road,,,,0.65,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,HSR,,,,1.35,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Passenger Rail,,,,2,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscWeak,USA,S3,trn_pass_road,,,,0.65,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,HSR,,,,1.9,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Passenger Rail,,,,1.25,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscWeak,poor,S3,trn_pass_road,,,,0.8,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Cycle,,,,1.5,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,HSR,,,,1.35,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Passenger Rail,,,,1.35,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,Walk,,,,1.5,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,trn_freight_road,,,,0.87,2040,10
-SSP2EU,CAMP_lscWeak,rich,S3,trn_pass_road,,,,0.8,2040,10
+SSP2EU,CAMP_lscWeak,rich,S2,,Bus,,,2,2040,10
+SSP2EU,CAMP_lscWeak,rich,S2,,trn_pass_road_LDV,,,0.8,2035,10
 SSP2EU,ECEMF_HighEl_HighEff,poor,FV,,,Aviation,Electric,7,2050,15
 SSP2EU,ECEMF_HighEl_HighEff,poor,FV,,,Aviation,Hydrogen,2,2050,5
 SSP2EU,ECEMF_HighEl_HighEff,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1453,24 +1867,6 @@ SSP2EU,ECEMF_HighEl_HighEff,poor,S2,,Bus,,,1.5,2050,10
 SSP2EU,ECEMF_HighEl_HighEff,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,ECEMF_HighEl_HighEff,rich,S2,,Bus,,,1.5,2050,10
 SSP2EU,ECEMF_HighEl_HighEff,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Cycle,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Passenger Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,Walk,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Cycle,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Passenger Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,Walk,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,FV,,,Aviation,Electric,7,2050,15
 SSP2EU,ECEMF_HighEl_LifestCha,poor,FV,,,Aviation,Hydrogen,2,2050,5
 SSP2EU,ECEMF_HighEl_LifestCha,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1517,24 +1913,6 @@ SSP2EU,ECEMF_HighEl_LifestCha,poor,S2,,Bus,,,2,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S2,,Bus,,,2,2050,10
 SSP2EU,ECEMF_HighEl_LifestCha,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Cycle,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Cycle,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighEl_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Electric,5,2050,15
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Hydrogen,2,2050,5
 SSP2EU,ECEMF_HighEl_ModEff,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1581,24 +1959,6 @@ SSP2EU,ECEMF_HighEl_ModEff,poor,S2,,Bus,,,1,2050,10
 SSP2EU,ECEMF_HighEl_ModEff,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP2EU,ECEMF_HighEl_ModEff,rich,S2,,Bus,,,1,2050,10
 SSP2EU,ECEMF_HighEl_ModEff,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,Walk,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,Walk,,,,1,2050,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighEl_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP2EU,ECEMF_HighH2_HighEff,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,ECEMF_HighH2_HighEff,poor,FV,,,Aviation,Hydrogen,5,2055,10
 SSP2EU,ECEMF_HighH2_HighEff,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1645,24 +2005,6 @@ SSP2EU,ECEMF_HighH2_HighEff,poor,S2,,Bus,,,1.5,2050,10
 SSP2EU,ECEMF_HighH2_HighEff,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,ECEMF_HighH2_HighEff,rich,S2,,Bus,,,1.5,2050,10
 SSP2EU,ECEMF_HighH2_HighEff,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Cycle,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Passenger Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,Walk,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Cycle,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Passenger Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,Walk,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_HighEff,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,FV,,,Aviation,Hydrogen,5,2055,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1709,24 +2051,6 @@ SSP2EU,ECEMF_HighH2_LifestCha,poor,S2,,Bus,,,2,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S2,,Bus,,,2,2050,10
 SSP2EU,ECEMF_HighH2_LifestCha,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Cycle,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Passenger Rail,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Cycle,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Domestic Ship,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Freight Rail,,,,1.5,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Passenger Rail,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,Walk,,,,2,2050,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,ECEMF_HighH2_LifestCha,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1773,24 +2097,6 @@ SSP2EU,ECEMF_HighH2_ModEff,poor,S2,,Bus,,,1,2050,10
 SSP2EU,ECEMF_HighH2_ModEff,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP2EU,ECEMF_HighH2_ModEff,rich,S2,,Bus,,,1,2050,10
 SSP2EU,ECEMF_HighH2_ModEff,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,Walk,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,HSR,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,Walk,,,,1,2050,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,ECEMF_HighH2_ModEff,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP2EU,HydrHype4,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,HydrHype4,poor,FV,,,Aviation,Hydrogen,2.5,2055,10
 SSP2EU,HydrHype4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1837,24 +2143,6 @@ SSP2EU,HydrHype4,poor,S2,,Bus,,,1,2050,10
 SSP2EU,HydrHype4,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,HydrHype4,rich,S2,,Bus,,,1,2050,10
 SSP2EU,HydrHype4,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP2EU,HydrHype4,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,HydrHype4,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,HSR,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,Walk,,,,1,2050,10
-SSP2EU,HydrHype4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,HydrHype4,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP2EU,HydrHype4,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,HydrHype4,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,HSR,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,Walk,,,,1,2050,10
-SSP2EU,HydrHype4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,HydrHype4,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,Mix2,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,Mix2,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,Mix2,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1901,24 +2189,6 @@ SSP2EU,Mix2,poor,S2,,Bus,,,1,2050,10
 SSP2EU,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP2EU,Mix2,rich,S2,,Bus,,,1,2050,10
 SSP2EU,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP2EU,Mix2,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,HSR,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,Walk,,,,1,2050,10
-SSP2EU,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP2EU,Mix2,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP2EU,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,HSR,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,Walk,,,,1,2050,10
-SSP2EU,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP2EU,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP2EU,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -1965,24 +2235,6 @@ SSP2EU,Mix3,poor,S2,,Bus,,,1,2050,10
 SSP2EU,Mix3,poor,S2,,trn_pass_road_LDV,,,0.8,2035,10
 SSP2EU,Mix3,rich,S2,,Bus,,,1,2050,10
 SSP2EU,Mix3,rich,S2,,trn_pass_road_LDV,,,0.8,2035,10
-SSP2EU,Mix3,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,HSR,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,Walk,,,,1,2050,10
-SSP2EU,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,Mix3,poor,S3,trn_pass_road,,,,0.8,2035,10
-SSP2EU,Mix3,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP2EU,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,HSR,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,Walk,,,,1,2050,10
-SSP2EU,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP2EU,Mix3,rich,S3,trn_pass_road,,,,0.8,2035,10
 SSP2EU,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -2029,24 +2281,6 @@ SSP2EU,Mix4,poor,S2,,Bus,,,1,2050,10
 SSP2EU,Mix4,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP2EU,Mix4,rich,S2,,Bus,,,1,2050,10
 SSP2EU,Mix4,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP2EU,Mix4,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,HSR,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,Walk,,,,1,2050,10
-SSP2EU,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,Mix4,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP2EU,Mix4,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,HSR,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,Walk,,,,1,2050,10
-SSP2EU,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,Mix4,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP2EU,Mix4_ensec,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,Mix4_ensec,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,Mix4_ensec,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -2093,24 +2327,6 @@ SSP2EU,Mix4_ensec,poor,S2,,Bus,,,1,2050,10
 SSP2EU,Mix4_ensec,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP2EU,Mix4_ensec,rich,S2,,Bus,,,1,2050,10
 SSP2EU,Mix4_ensec,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP2EU,Mix4_ensec,poor,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,Mix4_ensec,poor,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,HSR,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,Walk,,,,1,2050,10
-SSP2EU,Mix4_ensec,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,Mix4_ensec,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP2EU,Mix4_ensec,rich,S3,Cycle,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP2EU,Mix4_ensec,rich,S3,Domestic Ship,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,Freight Rail,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,HSR,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,Passenger Rail,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,Walk,,,,1,2050,10
-SSP2EU,Mix4_ensec,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP2EU,Mix4_ensec,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,NAV_act,CAZ,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,NAV_act,CAZ,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,NAV_act,CAZ,FV,,,Aviation,Liquids,1,2050,10
@@ -2203,42 +2419,6 @@ SSP2EU,NAV_act,poor,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_act,poor,S2,,trn_pass_road_LDV,,,1,2040,10
 SSP2EU,NAV_act,rich,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_act,rich,S2,,trn_pass_road_LDV,,,1,2040,10
-SSP2EU,NAV_act,CAZ,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_act,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_act,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_act,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_act,CAZ,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_act,CAZ,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_act,CAZ,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_act,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_act,CAZ,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_act,USA,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_act,USA,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_act,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_act,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_act,USA,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_act,USA,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_act,USA,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_act,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_act,USA,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_act,poor,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_act,poor,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_act,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_act,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_act,poor,S3,HSR,,,,2.8,2040,10
-SSP2EU,NAV_act,poor,S3,Passenger Rail,,,,1.5,2040,10
-SSP2EU,NAV_act,poor,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_act,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_act,poor,S3,trn_pass_road,,,,0.7,2040,10
-SSP2EU,NAV_act,rich,S3,Cycle,,,,1.8,2040,10
-SSP2EU,NAV_act,rich,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_act,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_act,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_act,rich,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_act,rich,S3,Passenger Rail,,,,1.6,2040,10
-SSP2EU,NAV_act,rich,S3,Walk,,,,1.7,2040,10
-SSP2EU,NAV_act,rich,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_act,rich,S3,trn_pass_road,,,,0.7,2040,10
 SSP2EU,NAV_all,poor,FV,,,Aviation,Electric,1,2045,10
 SSP2EU,NAV_all,poor,FV,,,Aviation,Hydrogen,10,2045,10
 SSP2EU,NAV_all,poor,FV,,,Aviation,Liquids,0.1,2045,10
@@ -2289,42 +2469,6 @@ SSP2EU,NAV_all,poor,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_all,poor,S2,,trn_pass_road_LDV,,,1,2040,10
 SSP2EU,NAV_all,rich,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_all,rich,S2,,trn_pass_road_LDV,,,1,2040,10
-SSP2EU,NAV_all,CAZ,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_all,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_all,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_all,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_all,CAZ,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_all,CAZ,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_all,CAZ,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_all,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_all,CAZ,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_all,USA,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_all,USA,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_all,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_all,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_all,USA,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_all,USA,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_all,USA,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_all,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_all,USA,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_all,poor,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_all,poor,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_all,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_all,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_all,poor,S3,HSR,,,,2.8,2040,10
-SSP2EU,NAV_all,poor,S3,Passenger Rail,,,,1.5,2040,10
-SSP2EU,NAV_all,poor,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_all,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_all,poor,S3,trn_pass_road,,,,0.7,2040,10
-SSP2EU,NAV_all,rich,S3,Cycle,,,,1.8,2040,10
-SSP2EU,NAV_all,rich,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_all,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_all,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_all,rich,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_all,rich,S3,Passenger Rail,,,,1.6,2040,10
-SSP2EU,NAV_all,rich,S3,Walk,,,,1.7,2040,10
-SSP2EU,NAV_all,rich,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_all,rich,S3,trn_pass_road,,,,0.7,2040,10
 SSP2EU,NAV_ele,poor,FV,,,Aviation,Electric,1,2045,10
 SSP2EU,NAV_ele,poor,FV,,,Aviation,Hydrogen,10,2045,10
 SSP2EU,NAV_ele,poor,FV,,,Aviation,Liquids,0.1,2045,10
@@ -2371,24 +2515,6 @@ SSP2EU,NAV_ele,poor,S2,,Bus,,,1,2040,10
 SSP2EU,NAV_ele,poor,S2,,trn_pass_road_LDV,,,1,2040,10
 SSP2EU,NAV_ele,rich,S2,,Bus,,,1,2040,10
 SSP2EU,NAV_ele,rich,S2,,trn_pass_road_LDV,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Cycle,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Domestic Aviation,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,HSR,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Passenger Rail,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,Walk,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,trn_freight_road,,,,1,2040,10
-SSP2EU,NAV_ele,poor,S3,trn_pass_road,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Cycle,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Domestic Aviation,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,HSR,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Passenger Rail,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,Walk,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,trn_freight_road,,,,1,2040,10
-SSP2EU,NAV_ele,rich,S3,trn_pass_road,,,,1,2040,10
 SSP2EU,NAV_lce,CAZ,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,NAV_lce,CAZ,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,NAV_lce,CAZ,FV,,,Aviation,Liquids,1,2050,10
@@ -2481,42 +2607,6 @@ SSP2EU,NAV_lce,poor,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_lce,poor,S2,,trn_pass_road_LDV,,,1,2040,10
 SSP2EU,NAV_lce,rich,S2,,Bus,,,2,2040,10
 SSP2EU,NAV_lce,rich,S2,,trn_pass_road_LDV,,,1,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_lce,CAZ,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_lce,CAZ,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_lce,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_lce,CAZ,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_lce,USA,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_lce,USA,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_lce,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_lce,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_lce,USA,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_lce,USA,S3,Passenger Rail,,,,4,2040,10
-SSP2EU,NAV_lce,USA,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_lce,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_lce,USA,S3,trn_pass_road,,,,0.6,2040,10
-SSP2EU,NAV_lce,poor,S3,Cycle,,,,2.5,2040,10
-SSP2EU,NAV_lce,poor,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_lce,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_lce,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_lce,poor,S3,HSR,,,,2.8,2040,10
-SSP2EU,NAV_lce,poor,S3,Passenger Rail,,,,1.5,2040,10
-SSP2EU,NAV_lce,poor,S3,Walk,,,,2.5,2040,10
-SSP2EU,NAV_lce,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_lce,poor,S3,trn_pass_road,,,,0.7,2040,10
-SSP2EU,NAV_lce,rich,S3,Cycle,,,,1.8,2040,10
-SSP2EU,NAV_lce,rich,S3,Domestic Aviation,,,,0.3,2040,10
-SSP2EU,NAV_lce,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,NAV_lce,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,NAV_lce,rich,S3,HSR,,,,1.7,2040,10
-SSP2EU,NAV_lce,rich,S3,Passenger Rail,,,,1.6,2040,10
-SSP2EU,NAV_lce,rich,S3,Walk,,,,1.7,2040,10
-SSP2EU,NAV_lce,rich,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,NAV_lce,rich,S3,trn_pass_road,,,,0.7,2040,10
 SSP2EU,PhOP,poor,FV,,,Aviation,Electric,1,2050,10
 SSP2EU,PhOP,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP2EU,PhOP,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -2605,24 +2695,6 @@ SSP5,Mix2,poor,S2,,Bus,,,1,2050,10
 SSP5,Mix2,poor,S2,,trn_pass_road_LDV,,,0.9,2035,10
 SSP5,Mix2,rich,S2,,Bus,,,1,2050,10
 SSP5,Mix2,rich,S2,,trn_pass_road_LDV,,,0.9,2035,10
-SSP5,Mix2,poor,S3,Cycle,,,,1,2050,10
-SSP5,Mix2,poor,S3,Domestic Aviation,,,,0.75,2035,10
-SSP5,Mix2,poor,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix2,poor,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix2,poor,S3,HSR,,,,1,2050,10
-SSP5,Mix2,poor,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix2,poor,S3,Walk,,,,1,2050,10
-SSP5,Mix2,poor,S3,trn_freight_road,,,,0.9,2035,10
-SSP5,Mix2,poor,S3,trn_pass_road,,,,0.9,2035,10
-SSP5,Mix2,rich,S3,Cycle,,,,1,2050,10
-SSP5,Mix2,rich,S3,Domestic Aviation,,,,0.75,2035,10
-SSP5,Mix2,rich,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix2,rich,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix2,rich,S3,HSR,,,,1,2050,10
-SSP5,Mix2,rich,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix2,rich,S3,Walk,,,,1,2050,10
-SSP5,Mix2,rich,S3,trn_freight_road,,,,0.9,2035,10
-SSP5,Mix2,rich,S3,trn_pass_road,,,,0.9,2035,10
 SSP5,Mix3,poor,FV,,,Aviation,Electric,1,2050,10
 SSP5,Mix3,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP5,Mix3,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -2669,24 +2741,6 @@ SSP5,Mix3,poor,S2,,Bus,,,1,2050,10
 SSP5,Mix3,poor,S2,,trn_pass_road_LDV,,,0.7,2035,10
 SSP5,Mix3,rich,S2,,Bus,,,1,2050,10
 SSP5,Mix3,rich,S2,,trn_pass_road_LDV,,,0.7,2035,10
-SSP5,Mix3,poor,S3,Cycle,,,,1,2050,10
-SSP5,Mix3,poor,S3,Domestic Aviation,,,,0.5,2035,10
-SSP5,Mix3,poor,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix3,poor,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix3,poor,S3,HSR,,,,1,2050,10
-SSP5,Mix3,poor,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix3,poor,S3,Walk,,,,1,2050,10
-SSP5,Mix3,poor,S3,trn_freight_road,,,,0.7,2035,10
-SSP5,Mix3,poor,S3,trn_pass_road,,,,0.7,2035,10
-SSP5,Mix3,rich,S3,Cycle,,,,1,2050,10
-SSP5,Mix3,rich,S3,Domestic Aviation,,,,0.5,2035,10
-SSP5,Mix3,rich,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix3,rich,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix3,rich,S3,HSR,,,,1,2050,10
-SSP5,Mix3,rich,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix3,rich,S3,Walk,,,,1,2050,10
-SSP5,Mix3,rich,S3,trn_freight_road,,,,0.7,2035,10
-SSP5,Mix3,rich,S3,trn_pass_road,,,,0.7,2035,10
 SSP5,Mix4,poor,FV,,,Aviation,Electric,1,2050,10
 SSP5,Mix4,poor,FV,,,Aviation,Hydrogen,1,2050,10
 SSP5,Mix4,poor,FV,,,Aviation,Liquids,1,2050,10
@@ -2733,24 +2787,6 @@ SSP5,Mix4,poor,S2,,Bus,,,1,2050,10
 SSP5,Mix4,poor,S2,,trn_pass_road_LDV,,,0.5,2035,10
 SSP5,Mix4,rich,S2,,Bus,,,1,2050,10
 SSP5,Mix4,rich,S2,,trn_pass_road_LDV,,,0.5,2035,10
-SSP5,Mix4,poor,S3,Cycle,,,,1,2050,10
-SSP5,Mix4,poor,S3,Domestic Aviation,,,,0.25,2035,10
-SSP5,Mix4,poor,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix4,poor,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix4,poor,S3,HSR,,,,1,2050,10
-SSP5,Mix4,poor,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix4,poor,S3,Walk,,,,1,2050,10
-SSP5,Mix4,poor,S3,trn_freight_road,,,,0.5,2035,10
-SSP5,Mix4,poor,S3,trn_pass_road,,,,0.5,2035,10
-SSP5,Mix4,rich,S3,Cycle,,,,1,2050,10
-SSP5,Mix4,rich,S3,Domestic Aviation,,,,0.25,2035,10
-SSP5,Mix4,rich,S3,Domestic Ship,,,,1,2050,10
-SSP5,Mix4,rich,S3,Freight Rail,,,,1,2050,10
-SSP5,Mix4,rich,S3,HSR,,,,1,2050,10
-SSP5,Mix4,rich,S3,Passenger Rail,,,,1,2050,10
-SSP5,Mix4,rich,S3,Walk,,,,1,2050,10
-SSP5,Mix4,rich,S3,trn_freight_road,,,,0.5,2035,10
-SSP5,Mix4,rich,S3,trn_pass_road,,,,0.5,2035,10
 SSP2EU,CAMP_lscLow,CAZ,FV,,,Aviation,Electric,2,2050,10
 SSP2EU,CAMP_lscLow,CAZ,FV,,,Aviation,Hydrogen,1.5,2050,10
 SSP2EU,CAMP_lscLow,CAZ,FV,,,Aviation,Liquids,3,2050,10
@@ -2814,9 +2850,9 @@ SSP2EU,CAMP_lscLow,poor,FV,,,Truck|heavy,Liquids,1,2050,10
 SSP2EU,CAMP_lscLow,poor,FV,,,Truck|light,Electric,1,2040,10
 SSP2EU,CAMP_lscLow,poor,FV,,,Truck|light,Hydrogen,1,2040,10
 SSP2EU,CAMP_lscLow,poor,FV,,,Truck|light,Liquids,1,2050,10
-SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Electric,2,2050,10
-SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Hydrogen,2,2050,10
-SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Liquids,3,2050,10
+SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Electric,1,2050,10
+SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Hydrogen,1,2050,10
+SSP2EU,CAMP_lscLow,rich,FV,,,Aviation,Liquids,1,2050,10
 SSP2EU,CAMP_lscLow,rich,FV,,,Bus,Electric,2,2040,10
 SSP2EU,CAMP_lscLow,rich,FV,,,Bus,Hydrogen,2,2040,10
 SSP2EU,CAMP_lscLow,rich,FV,,,Bus,Liquids,1,2050,10
@@ -2841,41 +2877,5 @@ SSP2EU,CAMP_lscLow,USA,S2,,Bus,,,1.5,2040,10
 SSP2EU,CAMP_lscLow,USA,S2,,trn_pass_road_LDV,,,0.7,2040,10
 SSP2EU,CAMP_lscLow,poor,S2,,Bus,,,1.5,2040,10
 SSP2EU,CAMP_lscLow,poor,S2,,trn_pass_road_LDV,,,0.95,2040,10
-SSP2EU,CAMP_lscLow,rich,S2,,Bus,,,1.33,2040,10
-SSP2EU,CAMP_lscLow,rich,S2,,trn_pass_road_LDV,,,0.88,2035,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,HSR,,,,1.35,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Passenger Rail,,,,2,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscLow,CAZ,S3,trn_pass_road,,,,0.65,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,HSR,,,,1.35,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Passenger Rail,,,,2,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscLow,USA,S3,trn_pass_road,,,,0.65,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Cycle,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,HSR,,,,1.9,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Passenger Rail,,,,1.25,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,Walk,,,,1.75,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,trn_freight_road,,,,0.9,2040,10
-SSP2EU,CAMP_lscLow,poor,S3,trn_pass_road,,,,0.8,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Cycle,,,,1,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Domestic Aviation,,,,0.53,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Domestic Ship,,,,1,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Freight Rail,,,,1,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,HSR,,,,1.2,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Passenger Rail,,,,1.2,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,Walk,,,,1,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,trn_freight_road,,,,0.89,2040,10
-SSP2EU,CAMP_lscLow,rich,S3,trn_pass_road,,,,0.8,2040,10
+SSP2EU,CAMP_lscLow,rich,S2,,Bus,,,1.5,2040,10
+SSP2EU,CAMP_lscLow,rich,S2,,trn_pass_road_LDV,,,0.85,2035,10

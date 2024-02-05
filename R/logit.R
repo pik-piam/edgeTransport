@@ -573,7 +573,7 @@ toolCalculateLogitIncost <- function(prices,
                                                      0.5*exp(1)^(weighted_sharessum[year == (t-1)]*bmodelav),
                                                      pinco_tot), by = c("region", "technology", "vehicle_type", "subsector_L1")]
 
-    if(tech_scen %in% c("PhOP", "Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscWeak", "CAMP_lscStrong", "NAV_all", "NAV_ele") & t>= 2030){
+    if(tech_scen %in% c("PhOP", "Mix3", "Mix4", "HydrHype4", "ECEMF_HighEl_ModEff", "ECEMF_HighEl_HighEff", "ECEMF_HighEl_LifestCha", "ECEMF_HighH2_ModEff", "ECEMF_HighH2_HighEff", "ECEMF_HighH2_LifestCha", "CAMP_lscLow", "CAMP_lscWeak", "CAMP_lscStrong", "NAV_all", "NAV_ele") & t>= 2030){
       ## phase-out of all light-duty vehicle ICEs
       EUreg <- c("DEU", "ECE", "ECS", "ENC", "ESC", "ESW", "EWN", "FRA", "UKI", "EUR")
 
