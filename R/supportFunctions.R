@@ -126,6 +126,52 @@ toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
   return(data)
 }
 
+
+#' toolApplyMixedTimeRes
+#'
+#' Applies two different temporal resolutions on a data.table object in the edgeTransport data structure
+#' and do a linear approximination for the highRes data that is not available
+#'
+#' @author Johanna Hoppe
+#' @param data data.table containing data in in the edgeTransport data structure (at least featuring univocalName, period, value)
+#' @param dtTimeRes data.table containing the temporal resolution for different univocalNames
+#' @returns data.table
+#' @import data.table
+#' @export
+
+toolApplyMixedTimeRes <- function(data, helpers, idcols = NULL) {
+
+  highRes <- unique(helpers$dtTimeRes$period)
+  highResUnivocalNames <- copy(helpers$dtTimeRes)
+  highResUnivocalNames <- highResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]
+  highResUnivocalNames <- highResUnivocalNames[test == TRUE]$univocalName
+
+  if (c("level") %in% names(data)){
+    #in this data format there is no univocalName
+    #this needs to change temporarily
+    dataFV <- merge(data[level == "FV"], helpers$decisionTree, by = intersect(names(data), names(helpers$decisionTree)))
+    dataHighRes <- dataFV[univocalName %in% highResUnivocalNames][, univocalName := NULL]
+    dataLowRes <- rbind(dataFV[!(univocalName %in% highResUnivocalNames)][, univocalName := NULL], data[!level == "FV"])
+  } else {
+    dataHighRes <- data[univocalName %in% highResUnivocalNames]
+    dataLowRes <- data[!univocalName %in% highResUnivocalNames]
+  }
+
+  if (is.null(idcols)) {
+    dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", extrapolate = TRUE)
+    dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", extrapolate = TRUE)
+  } else {
+    dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
+    dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
+  }
+
+  data <- rbind(dataHighRes, dataLowRes)
+
+return(data)
+}
+
+
+
 #' toolCheckAllLevelsComplete
 #'
 #' Checks whether data is complete for all levels of decision tree
@@ -165,7 +211,6 @@ toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
 
   if (anyNA(test) == TRUE) stop(paste0("Variable ", name, " is incomplete or contains unnessesary data"))
 
-  return(data)
 }
 
 #' toolOrderandCheck

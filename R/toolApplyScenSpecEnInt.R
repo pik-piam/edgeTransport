@@ -1,31 +1,28 @@
 #' Apply demand scenario specific adjustments to the load Factor
 #' @author Johanna Hoppe
 #' @param enInt energy intensity input data supplied by mrtransport
-#' @param intImprovementFactors transport policy scenario specific energy intensity improvement factors
-#' @param mitigationTechMap aggregated vehicle map for policy parameters
-#' @param yrs temporal resolution of edgeTransport
+#' @param scenParEnergyIntensity transport policy scenario specific energy intensity improvement factors
+#' @param policyStartYear year from which scenario specific transport policies are applied
+#' @param helpers list with helpers
 #' @import data.table
 
 
-toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, years, policyStartYear, helpers) {
+toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYear, helpers) {
 
   #get yearly resolution
   enIntYearly <- copy(enInt)
-  enIntYearly <- enIntYearly[period >= 2020]
+  enIntYearly <- enIntYearly[period >= policyStartYear]
   enIntYearly <- approx_dt(enIntYearly,
-                             xdata = seq(2020, period[length(period)]),
+                             xdata = unique(enIntYearly$period),
                              xcol = "period",
                              ycol = "value",
-                             idxcols = c("region", "univocalName", "technology"),
                              extrapolate = T)
 
-  enIntNew <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "FVvehvar", all.y = TRUE)
-
-  scenParEnergyIntensity <- scenParEnergyIntensity[level == "FV"]
+  enIntNew <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "univocalName", all.y = TRUE)
   enIntNew <- merge(enIntNew, scenParEnergyIntensity, by = c("FVvehvar", "technology"))[, FVvehvar := NULL]
 
   #Apply efficiency improvement factors provided in scenParEnergyIntensity only after year 2020
-  enIntNew[, startYear := ifelse(startYear < 2020, 2020, startYear)]
+  enIntNew[, startYear := ifelse(startYear < policyStartYear, policyStartYear, startYear)]
   #fade in and fade out time period
   fadeInOutPeriod <- 15
   #Define start of fade in and end of fade out period, fade in period delays the improvement from the defined start year
@@ -46,29 +43,29 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, years, policyS
                                                                         / fadeInOutPeriod)) / 100,
                 by = c("region", "univocalName", "technology")]
 
+  #sort data.table
+  setkey(enIntNew, region, univocalName, technology, period)
+
   #Calculate cumulated efficiency factors
   enIntNew[, factor := cumprod(annualFactor),
                 by = c("region", "univocalName", "technology")]
 
-  #Remove yearly resolution
-  enIntNew <- enIntNew[period %in% yrs]
-
   #Apply factors
   enIntNew[period >= startFade & period <= endFade, value := value * factor,
-                by = c("region", "univocalName", "technology")]
-  #Keep the enInt from endYear onward constant
-  enIntNew <- enIntNew[period <= endFade, c("region", "univocalName", "technology", "period", "value")]
-  enIntNew <- approx_dt(enIntNew,
-                             xdata = years[periods  >= policyStartYear],
-                             xcol = "period",
-                             ycol = "value",
-                             idxcols = c("region", "univocalName", "technology"),
-                             extrapolate = T)
+           by = c("region", "univocalName", "technology")][, c("factor", "startYear", "startFade", "endYear", "endFade", "annualImprovementRate", "annualFactor") := NULL]
+  #Remove yearly resolution for vehicle types that do not feature fleet tracking and extrapolate the timeSteps after the fadeout year to be constant
+  enIntNew <- toolApplyMixedTimeRes(enIntNew, helpers)
+  enIntNew <- enIntNew[period >= policyStartYear]
+
   #Merge with unaffected enInt data
-  enInt <- merge(enInt, enIntNew, by = c("region", "technology", "univocalName", "period"), all = TRUE)
+  cols <- intersect(names(enInt), names(enIntNew))
+  cols <- cols[!cols == "value"]
+  enInt <- merge(enInt, enIntNew, by = cols, all.x = TRUE)
   enInt[, value := ifelse(is.na(value.y), value.x, value.y)]
   #If Baseline efficiency improvements outperform transportPolScen specific improvements after fadeOut year (when the adjusted ones stay contstant), keep the Baseline
   enInt[!is.na(value.y), value := ifelse(value.x < value.y, value.x, value.y)][, c("value.x", "value.y") := NULL]
+
+  if (anyNA(enInt) == TRUE) {stop("NAs were introduced whilst applying the scenario specific energy intensity improvements. Please check toolApplyScenpecEnInt()")}
 
   return(enInt)
   }

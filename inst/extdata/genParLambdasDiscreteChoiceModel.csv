@@ -24,8 +24,8 @@ Passenger Rail_tmp_vehicletype	Passenger Rail_tmp_subsectorL3	Passenger Rail_tmp
 HSR_tmp_vehicletype	HSR_tmp_subsectorL3	HSR_tmp_subsectorL2	HSR	trn_pass	FV	-1
 Domestic Aviation_tmp_vehicletype	Domestic Aviation_tmp_subsectorL3	Domestic Aviation_tmp_subsectorL2	Domestic Aviation	trn_pass	FV	-3
 International Aviation_tmp_vehicletype	International Aviation_tmp_subsectorL3	International Aviation_tmp_subsectorL2	International Aviation	trn_aviation_intl	FV	-3
-truck (0-3_5t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
-truck (7_5t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
+Truck (0-3_5t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
+Truck (7_5t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
 Truck (18t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
 Truck (26t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4
 Truck (40t)	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	FV	-4

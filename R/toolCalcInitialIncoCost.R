@@ -12,8 +12,9 @@
 #' @returns data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2005/(p|t)km
 
 
-toolCalcInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loadFactor, annualMileage, years, helpers) {
+toolCalcInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loadFactor, annualMileage, helpers) {
 
+  incoCostStartVal <- copy(incoCostStartVal)
   incoCostStartVal <- melt(incoCostStartVal, id.vars = c("region", "incoCostType", "FVvehvar", "technology", "unit"), variable.name = "period")
   incoCostStartVal[, value := as.double(value)]
   # map incocost start values on regions
@@ -50,7 +51,7 @@ toolCalcInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loa
   incoCostStartValReg <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], incoCostStartValReg, by = "FVvehvar", all.y = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
   # get rid of levels for the years, as approx_dt cannot handle them
   incoCostStartValReg[, period := as.numeric(as.character(period))]
-  incoCostStartValReg <- approx_dt(incoCostStartValReg, years[years <= 2020], "period", "value", idxcols = c("region", "incoCostType", "univocalName", "technology", "unit"), extrapolate = TRUE)
+  incoCostStartValReg <- approx_dt(incoCostStartValReg, unique(helpers$dtTimeRes[period <= 2020]$period), "period", "value", idxcols = c("region", "incoCostType", "univocalName", "technology", "unit"), extrapolate = TRUE)
 
   # map on decision tree for LDV 4 Wheelers
   decTree <- unique(helpers$decisionTree[subsectorL3 == "trn_pass_road_LDV_4W", c("region", "univocalName", "technology")])
@@ -64,8 +65,10 @@ toolCalcInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loa
   annualizedincoCostStartVal <- merge(incoCostStartValReg, annuity, by = "univocalName", allow.cartesian = TRUE)
   annualizedincoCostStartVal[, value := value * annuity][, unit := "US$2005/veh/yr"][, annuity := NULL]
 
+  loadFactor <- copy(loadFactor)
   loadFactor[, c("variable", "unit") := NULL]
   setnames(loadFactor, "value", "loadFactor")
+  annualMileage <- copy(annualMileage)
   annualMileage[, c("variable", "unit") := NULL]
   setnames(annualMileage, "value", "annualMileage")
 

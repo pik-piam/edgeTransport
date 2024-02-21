@@ -42,7 +42,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # Transport policy scenario energy intensity reduction factors
   scenParEnergyIntensity <- fread(system.file("extdata/scenParEnergyIntensity.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   if  (transportPolScenario %in% scenParEnergyIntensity$transportPolScen){
-    scenParEnergyIntensity <- scenParEnergyIntensity[transportPolScen == transportPolScenario]} else {
+    scenParEnergyIntensity <- scenParEnergyIntensity[transportPolScen == transportPolScenario & SSPscen == SSPscenario][, c("transportPolScen", "SSPscen") := NULL]} else {
     scenParEnergyIntensity <- NULL
     }
 
@@ -68,6 +68,8 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
                                          package = "edgeTransport"))
   regionmappingISOto21to12 <- fread(system.file("extdata", "helpersRegionmappingISOto21to12.csv",
                                                     package = "edgeTransport"))
+  reportingNames <- fread(system.file("extdata", "helpersReportingNames.csv",
+                                      package = "edgeTransport"))
 
   return(
     list(

@@ -1,8 +1,7 @@
 
 
-saveRDS <- function(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,
+storeRDS <- function(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,
                     storeFleetSizeAndCompositionIterations, storeEndogenousCostsIterations, fleetVariables) {
-browser()
   # Save data
   folderName <- paste0(format(Sys.time(), "%Y-%m-%d_%H.%M"), SSPscen, "-", transportPolScen, "-", demScen)
   file.copy(gdxPath, file.path(outputFolder, folderName))

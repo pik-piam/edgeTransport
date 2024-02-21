@@ -3,10 +3,10 @@ Freight,Domestic Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship_tmp_subsectorL
 Freight,Freight Rail,Freight Rail_tmp_subsectorL2,Freight Rail_tmp_subsectorL3,Freight Rail_tmp_vehicletype,Electric,NA,NA,Freight|Rail,NA,NA,NA,Freight|w/o bunkers
 Freight,Freight Rail,Freight Rail_tmp_subsectorL2,Freight Rail_tmp_subsectorL3,Freight Rail_tmp_vehicletype,Liquids,NA,NA,Freight|Rail,NA,NA,NA,Freight|w/o bunkers
 Freight,International Ship,International Ship_tmp_subsectorL2,International Ship_tmp_subsectorL3,International Ship_tmp_vehicletype,Liquids,NA,NA,Freight|International Shipping,NA,NA,NA,NA
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (0-3_5t),Electric,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (0-3_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (0-3_5t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (0-3_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (0-3_5t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (0-3_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (0-3_5t),NG,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (0-3_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (0-3_5t),Electric,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (0-3_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (0-3_5t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (0-3_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (0-3_5t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (0-3_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (0-3_5t),NG,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (0-3_5t),Freight|w/o bunkers
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (18t),Electric,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (18t),Freight|w/o bunkers
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (18t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (18t),Freight|w/o bunkers
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (18t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (18t),Freight|w/o bunkers
@@ -19,10 +19,10 @@ Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_s
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (40t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (40t),Freight|w/o bunkers
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (40t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (40t),Freight|w/o bunkers
 Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (40t),NG,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (40t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (7_5t),Electric,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (7_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (7_5t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (7_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (7_5t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (7_5t),Freight|w/o bunkers
-Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,truck (7_5t),NG,NA,NA,Freight|Road,NA,NA,Freight|Road|truck (7_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (7_5t),Electric,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (7_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (7_5t),FCEV,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (7_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (7_5t),Liquids,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (7_5t),Freight|w/o bunkers
+Freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (7_5t),NG,NA,NA,Freight|Road,NA,NA,Freight|Road|Truck (7_5t),Freight|w/o bunkers
 Pass,Cycle,Cycle_tmp_subsectorL2,Cycle_tmp_subsectorL3,Cycle_tmp_vehicletype,Cycle_tmp_technology,Pass|non-LDV,NA,NA,Pass|Road|Non-Motorized|Cycling,Pass|Road|Non-Motorized,NA,Pass|w/o bunkers
 Pass,Domestic Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation_tmp_subsectorL3,Domestic Aviation_tmp_vehicletype,Hydrogen,Pass|non-LDV,NA,Pass|Aviation|Domestic,NA,NA,NA,Pass|w/o bunkers
 Pass,Domestic Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation_tmp_subsectorL3,Domestic Aviation_tmp_vehicletype,Liquids,Pass|non-LDV,NA,Pass|Aviation|Domestic,NA,NA,NA,Pass|w/o bunkers

@@ -2,7 +2,9 @@
 #'
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrremindData <- function(decisionTree, yrs) {
+toolLoadmrremindData <- function(decisionTree, helpers) {
+
+  yrs <- unique(helpers$dtTimeRes$period)
 
   subsidies <- magpie2dt(readSource(type = "TransportSubsidies"))
   setnames(subsidies, "variable", "technology")

@@ -4,13 +4,12 @@
 #' @param fuelCosts fuel costs from REMIND
 #' @param subsidies subsides for alternative cars from mrremind
 #' @param decisionTree edgeTransport decision tree
-#' @param years temporal resolution of edgeTransport
 #' @param filter list of filters for specific branches in the upper decision tree, containing all associated univocalNames
 #' @import data.table
 #' @returns data.table including total costs of ownership in US$2005/(p|t)km
 
 
-toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, CAPEXother, nonFuelOPEXother, fuelCosts, subsidies, energyIntensity, loadFactor, annualMileage, annuity, years, helpers){
+toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, CAPEXother, nonFuelOPEXother, fuelCosts, subsidies, energyIntensity, loadFactor, annualMileage, annuity, helpers){
 
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr
@@ -49,12 +48,14 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, 
     combinedCAPEXandOPEX[, unit := ifelse(univocalName %in% c(helpers$filter$trn_pass, "International Aviation"), "US$2005/pkm", "US$2005/tkm")]
 
   # add zeros for active modes (time value costs are treated seperately)
-    nonMotorized <- unique(helpers$decisionTree[univocalName %in% c("Cycle", "Walk"), c("region", "univocalName", "technology")])
-    nonMotorized[, value := 0][, variable := "Price non motorized"][, unit := "US$2005/pkm"][, temporal := "All"]
-    temporal <- data.table(period = years)[, temporal := "All"]
-    nonMotorized <- merge(nonMotorized,  temporal, by = "temporal", allow.cartesian = TRUE)[, temporal := NULL]
-
-    combinedCAPEXandOPEX <- rbind(combinedCAPEXandOPEX, nonMotorized)
+    # use dummy that does not feature fleet tracking
+    dummy <- unique(combinedCAPEXandOPEX$univocalName)
+    dummy <- dummy[!dummy %in% helpers$filterEntries$trackedFleet & dummy %in% helpers$filterEntries$trn_pass][1]
+    walk <- combinedCAPEXandOPEX[univocalName == dummy][, technology := NULL]
+    walk <- unique(walk)[, value := 0]
+    walk[, univocalName := "Walk"][, technology := "Walk_tmp_technology"]
+    cycle <- copy(walk)[, univocalName := "Cycle"][, technology := "Cycle_tmp_technology"]
+    combinedCAPEXandOPEX <- rbind(combinedCAPEXandOPEX, walk, cycle)
 
     if (anyNA(combinedCAPEXandOPEX) == TRUE) {
       stop("combinedCAPEXandOPEX contain NAs")

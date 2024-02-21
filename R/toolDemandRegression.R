@@ -43,9 +43,9 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
   regressionData <- merge(regionalIncomeElasticities, GDP, by = c("region", "period"))
 
   # calculate growth rates
-  regressionData[, `:=` (GDPgrowthRate = regionGDPMER/shift(regionGDPMER),
-                         GDPpcgrowthRate = regionGDPpcMER/shift(regionGDPpcMER),
-                         POPgrowthRate = population/shift(population)), by = c("region", "sector")]
+  regressionData[, `:=` (GDPgrowthRate = regionGDPMER / shift(regionGDPMER),
+                         GDPpcgrowthRate = regionGDPpcMER / shift(regionGDPpcMER),
+                         POPgrowthRate = population / shift(population)), by = c("region", "sector")]
 
   regressionData[, `:=` (GDPterm = GDPgrowthRate ^ incomeElasticity,
                          GDPpcterm = GDPpcgrowthRate ^ incomeElasticity), by = c("period", "region", "sector")]

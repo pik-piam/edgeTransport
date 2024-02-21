@@ -5,30 +5,25 @@ toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, 
   # merge input data with decision tree
   # select only modes that feature inconvenience costs
   # bind with inconvenience cost start values
-  # apply yearly resolution
-  monetaryCosts <- inputData$combinedCAPEXandOPEX
+  monetaryCosts <- inputData$combinedCAPEXandOPEX[univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W]
   monetaryCosts[, type := "Monetary costs"]
   monetaryCosts <- monetaryCosts[, .(value = sum(value)), by = .(region, period, technology, univocalName, type, unit)]
   monetaryCosts[, variable := "CAPEX and OPEX"]
   inconvenienceCosts <- inputData$initialIncoCosts
   inconvenienceCosts[, type := "Inconvenience costs"]
 
+  # insert NAs for future years to be filled in updateEndogenousCosts()
+  highTimeRes <- data.table(period = unique(helpers$dtTimeRes$period))
+  prevTimeRes <- unique(inconvenienceCosts$period)
+  inconvenienceCosts <- approx_dt(inconvenienceCosts, highTimeRes, "period", "value", extrapolate = TRUE)
+  inconvenienceCosts[!period %in% prevTimeRes, value := NA]
   combinedCosts <- rbind(monetaryCosts, inconvenienceCosts)
-  combinedCosts <- merge(combinedCosts, helpers$decisionTree, by = c("region", "univocalName", "technology"), all = TRUE)
-  if (anyNA(combinedCosts)) {
-    stop("Some data got lost on the way to the endogenous cost updates. Please check combinedCosts at the beginning of toolPrepareDataEndogenousCosts.")
-  }
-
-  # extend to one year timesteps. Inconvenience costs are NA after policy startyear and are updated endogenously in updateEndogenousCosts()
-  combinedCosts <- combinedCosts[subsectorL3 == "trn_pass_road_LDV_4W"]
-  timesteps <- c(1990, seq(2005, 2100, by = 1))
-  combinedCosts <- approx_dt(combinedCosts, timesteps, "period", "value",
-                  c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType","technology", "univocalName", "variable", "unit", "type"),
-                  extrapolate = FALSE, keepna = TRUE)
+  combinedCosts <- merge(combinedCosts, helpers$decisionTree, by = c("region", "univocalName", "technology"), all.x = TRUE)
 
   # calculate FS3 share, hence the share of each technology in the overall car sales, in 2020 (needed to calculate the vehicle sales depreciating in time
   # to get a proxy for the fleet share in the iterative section)
-  FS3share <- toolCalculateFS3share(copy(combinedCosts), timesteps[timesteps < policyStartYear], inputData$timeValueCosts, lambdas, helpers)
+  timesteps <- unique(combinedCosts$period)
+  FS3share <- toolCalculateFS3share(combinedCosts, timesteps[timesteps < policyStartYear], inputData$timeValueCosts, inputData$prefTrends, lambdas, helpers)
 
   # merge back to combined costs
   combinedCosts <- merge(combinedCosts, FS3share, by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "technology"), all = TRUE)

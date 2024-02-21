@@ -20,25 +20,20 @@
 
 toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, generateTransportData = TRUE, generateREMINDinputData = FALSE){
 
-  ## manually set input data
-  years <- c(
-    1990,
-    seq(2005, 2060, by = 5),
-    seq(2070, 2110, by = 10),
-    2130, 2150
-  )
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 25000 # [constant 2005 US$MER]
   # Year when scenario differentiation sets in
   policyStartYear <- 2021
   # last time step of historical data
   baseYear <- 2010
+  # share of electricity in hybrid electric vehicles
+  hybridElecShare <- 0.4
 
   ########################################################
   ## Load input data
   ########################################################
 
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, years)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
 
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
@@ -49,18 +44,15 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   ## Prepare input data and apply policy specific changes
   ########################################################
 
-  scenSpecInputData <- toolPrepareScenInputData(copy(genModelPar), copy(scenModelPar), copy(inputDataRaw), years, policyStartYear, helpers)
+  scenSpecInputData <- toolPrepareScenInputData(genModelPar, scenModelPar, inputDataRaw, policyStartYear, helpers)
 
   ########################################################
   ## Calibrate historical preferences
   ########################################################
-  #histPrefs <- toolCalibrateHistPrefs(copy(combinedCostperES), copy(mrtransportData$histESdemand), copy(mrtransportData$timeValueCosts), copy(packageData$lambdasDiscreteChoice))
-  histPrefs <- readRDS("C:/Users/johannah/Documents/Git_repos/edgeTransport/R/TestPrefTrends.RDS")
-  histPrefs <- histPrefs[!subsectorL3 == "trn_pass_road_LDV_4W"][, variable := paste0("Preference|", level)][, unit := "-"]
-
+  histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX, inputDataRaw$histESdemand, inputDataRaw$timeValueCosts,
+                                      genModelPar$lambdasDiscreteChoice, helpers)
   scenSpecPrefTrends <- rbind(histPrefs, scenSpecInputData$scenSpecPrefTrends)
-  scenSpecPrefTrends <- approx_dt(scenSpecPrefTrends, years, "period", "value",
-                                               c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "level"), extrapolate = TRUE)
+  scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends, helpers)
 
   #-------------------------------------------------------
   inputData <- list(
@@ -83,17 +75,17 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   ## endogenous costs update
   ########################################################
 
-  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(copy(inputData), copy(genModelPar$lambdasDiscreteChoice), policyStartYear, helpers)
-  vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(copy(genModelPar$annuityCalc), helpers)
+  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData, genModelPar$lambdasDiscreteChoice, policyStartYear, helpers)
+  vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc, helpers)
 
   #################################################
   ## Demand regression module
   #################################################
   ## demand in million km
-  sectorESdemand <- toolDemandRegression(copy(inputData$histESdemand),
-                                         copy(inputData$combinedCAPEXandOPEX),
-                                         copy(inputData$GDPpcMER),
-                                         copy(inputData$population),
+  sectorESdemand <- toolDemandRegression(inputData$histESdemand,
+                                         inputData$combinedCAPEXandOPEX,
+                                         inputData$GDPpcMER,
+                                         inputData$population,
                                          scenModelPar$scenParDemRegression,
                                          scenModelPar$scenParRegionalDemRegression,
                                          scenModelPar$scenParDemFactors, baseYear, policyStartYear)
@@ -114,8 +106,9 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     #################################################
     # provide endogenous updates to cost components -----------
     # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
-    endogenousCosts <- toolUpdateEndogenousCosts(copy(dataEndogenousCosts), copy(vehicleDepreciationFactors), copy(scenModelPar$scenParIncoCost),
-                                                 policyStartYear, copy(inputData$timeValueCosts),  copy(genModelPar$lambdasDiscreteChoice), helpers, years, fleetVehiclesPerTech)
+    endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts, vehicleDepreciationFactors, scenModelPar$scenParIncoCost,
+                                                 policyStartYear, inputData$timeValueCosts, inputData$prefTrends, genModelPar$lambdasDiscreteChoice,
+                                                 helpers, years, fleetVehiclesPerTech)
     storeEndogenousCostsIterations[[i]] <- copy(endogenousCosts)
     lapply(storeEndogenousCostsIterations[[i]], function(dt) dt[, variable := paste0(variable, "|Iteration ", i)])
     print("Endogenous updates to cost components finished")
@@ -123,7 +116,7 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     ## Discrete choice module
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
-    vehSalesAndModeShares <- toolDiscreteChoice(copy(inputData), copy(genModelPar), copy(endogenousCosts$updatedEndogenousCosts), years, helpers)
+    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCosts$updatedEndogenousCosts, years, helpers)
 
     fuelVehicleESdemand <- toolCalculateFVdemand(copy(sectorESdemand), copy(vehSalesAndModeShares), copy(inputData$histESdemand), baseYear, helpers)
     print("Calculation of vehicle sales and mode shares finished")
@@ -145,9 +138,12 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   #################################################
   ## Reporting
   #################################################
-  vars <- toolCalculateOutputVariables(copy(fuelVehicleESdemand), copy(inputData$enIntensity), copy(inputData$loadFactor), copy(fleetSizeAndComposition),
-            copy(inputDataRaw$CAPEXtrackedFleet), copy(inputDataRaw$subsidies),
-            copy(inputData$combinedCAPEXandOPEX, gdx))
+  # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
+  timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
+
+  vars <- toolCalculateOutputVariables(fuelVehicleESdemand, inputData$enIntensity, inputData$loadFactor, fleetSizeAndComposition,
+            inputDataRaw$CAPEXtrackedFleet, inputDataRaw$subsidies,
+            inputData$combinedCAPEXandOPEX, gdx, timeResReporting)
 
   if (generateTransportData == TRUE) {
     toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,

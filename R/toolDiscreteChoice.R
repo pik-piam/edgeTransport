@@ -21,50 +21,49 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   CAPEXandOPEX[, variable := "CAPEX and OPEX"]
   # vehicles that have endogenous inconvenience costs receive these in addition
   updatedEndoCosts[, type := "Inconvenience costs"]
-  # time resolution of monetary costs for vehicles that have endogenous inconvenience costs needs to be adjusted
-  timesteps <- unique(updatedEndoCosts$period)
-  CAPEXandOPEXEndo <- CAPEXandOPEX[univocalName %in% unique(updatedEndoCosts$univocalName)]
-  CAPEXandOPEXEndo <- approx_dt(CAPEXandOPEXEndo, timesteps, "period", "value",
-                             c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType","technology", "univocalName", "variable", "unit", "type"),
-                              extrapolate = FALSE)
-  CAPEXandOPEX <- rbind(CAPEXandOPEX[!univocalName %in% unique(updatedEndoCosts$univocalName)], CAPEXandOPEXEndo)
-
   allCostsFV <- rbind(CAPEXandOPEX, updatedEndoCosts)
   # vehicles that have preference trends receive these instead
-  setnames(input$prefTrends, "value", "pref")
-  input$prefTrends[, c("variable", "unit") := NULL]
-  preftrends <- input$prefTrends[level == "FV"][, level := NULL]
-  FVshares <- merge(allCostsFV, preftrends, by = intersect(names(allCostsFV), names(preftrends)), all.x = TRUE, allow.cartesian = TRUE)
+  prefTrends <- copy(input$prefTrends)
+  setnames(prefTrends, "value", "pref")
+  prefTrends[, c("variable", "unit") := NULL]
+  prefTrendsFV <- prefTrends[level == "FV"][, level := NULL]
+  FVshares <- merge(allCostsFV, prefTrendsFV, by = intersect(names(allCostsFV), names(prefTrends)), all.x = TRUE, allow.cartesian = TRUE)
   # vehicleTypes with endogenous inconvenience costs have no preferences, which means that all preferences are set to 1 (equivalent expression)
-  FVshares[vehicleType %in% unique(updatedEndoCosts$vehicleType), pref := 1]
+  # As there is no decision for cycling and walking, they have to receive 1 as well
+  FVshares[vehicleType %in% unique(updatedEndoCosts$vehicleType) | subsectorL1 %in% c("Cycle", "Walk"), pref := 1]
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "FV"][, level := NULL]
   FVshares <- merge(FVshares, lambdas, by = intersect(names(FVshares), names(lambdas)), all.x = TRUE)
   # no technology decision for active modes, hence no lambda is supplied
   FVshares[subsectorL1 %in% c("Cycle", "Walk"), lambda := -15]
-
   FVshares <- FVshares[, .(totPrice = sum(value)), by = setdiff(names(FVshares), c("variable", "type", "value"))]
-  FVshares[, share := calculateShares(totPrice, lambda, pref),
-          by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")][, c("totPrice", "lambda", "pref") := NULL]
+  # Some vehicleTypes are just not present at all in certain regions for certain years
+  # They have to be filtered out and get a share of zero
+  FVshares[, zeroTypes := sum(pref), by = c("region", "period", "vehicleType")]
+  FVsharesZero <-  FVshares[zeroTypes == 0][, share := 0][, c("totPrice", "lambda", "pref", "zeroTypes", "univocalName") := NULL]
+  FVshares <- FVshares[!zeroTypes == 0][, c("univocalName", "zeroTypes") := NULL]
 
+  FVshares[, share := calculateShares(totPrice, lambda, pref),
+          by = setdiff(names(FVshares), c("technology", "totPrice", "lambda", "pref", "unit"))][, c("totPrice", "lambda", "pref") := NULL]
   FVshares[, test := sum(share), by = c("region", "period", "vehicleType")]
+
   if (nrow(FVshares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(FVshares)) stop("FV shares in toolDiscreteChoice() were not calculated correctly")
-  FVshares[, c("test", "univocalName") := NULL][, level := "FV"]
+  FVshares[, c("test") := NULL]
+  FVshares <- rbind(FVshares, FVsharesZero)[, level := "FV"]
 
   # calculate all VS3 shares --------------------------------------------------------------------
-
   allCostsFV <- allCostsFV[type == "Monetary Costs"][, univocalName := NULL]
   allCostsFV <- merge(allCostsFV, FVshares[, -c("level")],  by = intersect(names(allCostsFV), names(FVshares)))
   # only FV level features detailed yearly resolution for some vehicle types. Set resolution back to years
-  allCostsFV <- allCostsFV[period %in% years]
+  allCostsFV <- allCostsFV[period %in% helpers$lowTimeRes]
   allCostsVS3 <- toolTraverseDecisionTree(allCostsFV, "vehicleType", helpers$decisionTree)
   # time value costs only need to be added starting from level VS3. If there is no decision in the level (only a single branch) the time value costs are kept
   # and aggregated with a share of one to the upper level
-  timeValueCosts <- merge(input$timeValueCosts, unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)
+  timeValueCosts <- merge(input$timeValueCosts[period %in% helpers$lowTimeRes], unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)
   timeValueCosts[, type := "Travel time"][, univocalName := NULL]
   allCostsVS3 <- rbind(allCostsVS3, timeValueCosts)
 
-  preftrends <- input$prefTrends[level == "VS3"][, level := NULL]
-  VS3shares <- merge(allCostsVS3, preftrends, by = intersect(names(allCostsVS3), names(preftrends)), all.x = TRUE)
+  prefTrendsVS3 <- prefTrends[level == "VS3"][, "level" := NULL]
+  VS3shares <- merge(allCostsVS3, prefTrendsVS3, by = intersect(names(allCostsVS3), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "VS3"]
   lambdas <- lambdas[, c("subsectorL3", "lambda")]
   VS3shares <- merge(VS3shares, lambdas, by = intersect(names(VS3shares), names(lambdas)), all.x = TRUE)
@@ -72,23 +71,28 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   VS3shares[grepl(".*tmp.*", vehicleType), lambda := -15]
   VS3shares[grepl(".*tmp.*", vehicleType), pref := 1]
   VS3shares[grepl(".*tmp.*", vehicleType), technology := ""]
-  if (anyNA(VS3shares)) stop("VS3 preferences are missing in toolDiscreteChoice()")
 
+  if (anyNA(VS3shares)) stop("VS3 preferences are missing in toolDiscreteChoice()")
   VS3shares <- VS3shares[, .(totPrice = sum(value)), by = setdiff(names(VS3shares), c("variable", "type", "value"))]
+  # Some vehicleTypes are just not present at all in certain regions for certain years
+  # They have to be filtered out and get a share of zero
+  VS3sharesZero <-  VS3shares[totPrice == 0 | pref == 0][, share := 0][, c("totPrice", "lambda", "pref") := NULL]
+  VS3shares <- VS3shares[!(totPrice == 0 | pref == 0)]
   VS3shares[, share := calculateShares(totPrice, lambda, pref),
            by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")][, c("totPrice", "lambda", "pref") := NULL]
 
   VS3shares[, test := sum(share), by = c("region", "period", "subsectorL3")]
   if (nrow(VS3shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(VS3shares) | nrow(VS3shares) == 0) stop("VS3 shares in toolDiscreteChoice() were not calculated correctly")
-  VS3shares[, test := NULL][, level := "VS3"]
+  VS3shares[, test := NULL]
+  VS3shares <- rbind(VS3shares, VS3sharesZero)[, level := "VS3"]
 
   # calculate all S3S2 shares --------------------------------------------------------------------
 
   allCostsVS3 <- merge(allCostsVS3, VS3shares[, -c("level")],  by = intersect(names(allCostsVS3), names(VS3shares)))
   allCostsS3S2 <- toolTraverseDecisionTree(allCostsVS3, "subsectorL3", helpers$decisionTree)
 
-  preftrends <- input$prefTrends[level == "S3S2"][, level := NULL]
-  S3S2shares <- merge(allCostsS3S2, preftrends, by = intersect(names(allCostsS3S2), names(preftrends)), all.x = TRUE)
+  prefTrendsS3S <- prefTrends[level == "S3S2"][, level := NULL]
+  S3S2shares <- merge(allCostsS3S2, prefTrendsS3S, by = intersect(names(allCostsS3S2), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S3S2"]
   lambdas <- lambdas[, c("subsectorL2", "lambda")]
   S3S2shares <- merge(S3S2shares, lambdas, by = intersect(names(S3S2shares), names(lambdas)), all.x = TRUE)
@@ -111,8 +115,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   allCostsS3S2 <- merge(allCostsS3S2, S3S2shares[, -c("level")],  by = intersect(names(allCostsS3S2), names(S3S2shares)))
   allCostsS2S1 <- toolTraverseDecisionTree(allCostsS3S2, "subsectorL2", helpers$decisionTree)
 
-  preftrends <- input$prefTrends[level == "S2S1"][, level := NULL]
-  S2S1shares <- merge(allCostsS2S1, preftrends, by = intersect(names(allCostsS2S1), names(preftrends)), all.x = TRUE)
+  prefTrendsS2S1 <- prefTrends[level == "S2S1"][, level := NULL]
+  S2S1shares <- merge(allCostsS2S1, prefTrendsS2S1, by = intersect(names(allCostsS2S1), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S2S1"][, level := NULL]
   lambdas <- lambdas[, c("subsectorL1", "lambda")]
   S2S1shares <- merge(S2S1shares, lambdas, by = intersect(names(S2S1shares), names(lambdas)), all.x = TRUE)
@@ -135,8 +139,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
   allCostsS2S1 <- merge(allCostsS2S1, S2S1shares[, -c("level")],  by = intersect(names(allCostsS2S1), names(S2S1shares)))
   allCostsS1S <- toolTraverseDecisionTree(allCostsS2S1, "subsectorL1", helpers$decisionTree)
 
-  preftrends <- input$prefTrends[level == "S1S"][, level := NULL]
-  S1Sshares <- merge(allCostsS1S, preftrends, by = intersect(names(allCostsS1S), names(preftrends)), all.x = TRUE)
+  prefTrendsS1S <- prefTrends[level == "S1S"][, level := NULL]
+  S1Sshares <- merge(allCostsS1S, prefTrendsS1S, by = intersect(names(allCostsS1S), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S1S"][, level := NULL]
   lambdas <- lambdas[, c("sector", "lambda")]
   S1Sshares <- merge(S1Sshares, lambdas, by = intersect(names(S1Sshares), names(lambdas)), all.x = TRUE)
@@ -156,7 +160,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, 
 
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
-  toolCheckAllLevelsComplete(copy(shares), helpers$decisionTree, "vehicle sales and mode shares")
+  toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
 
   return(shares)
 

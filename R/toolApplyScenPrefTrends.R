@@ -6,11 +6,11 @@
 #' @importFrom rmndt approx_dt
 
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, years, policyStartYear, helpers) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, helpers) {
 
   #function to apply mitigation factors
-  applyLogisticTrend <- function(years, final, ysymm, speed, initial = 1){
-    fct <- exp((years - ysymm)/speed)/(exp((years - ysymm)/speed) + 1)
+  applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
+    fct <- exp((year - ysymm)/speed)/(exp((year - ysymm)/speed) + 1)
     initial + fct * (final - initial)
   }
 
@@ -29,7 +29,6 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   # apply mitigation factors
   PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends[period  >= policyStartYear & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
-  # approximate missing timesteps
 
   # normalize preferences in each level
   PrefTrends[level == "S1S", value := value/max(value), by = c("region", "period", "sector")]

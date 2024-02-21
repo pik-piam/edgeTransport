@@ -15,7 +15,7 @@
 #' @import data.table
 #' @export
 
-toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, lambdas, helpers, years, vehiclesPerTech = NULL) {
+toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, preferences, lambdas, helpers, years, vehiclesPerTech = NULL) {
 
   # parameters of endogenous cost trends
   bfuelav = - 20    ## value based on Greene 2001
@@ -23,6 +23,8 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   coeffrisk = 3800 ## value based on Pettifor 2017
 
   policyYears <- seq(policyStartYear, 2100, 1)
+  # preventing daatEndoCosts to be updated outside of the function
+  dataEndoCosts <- copy(dataEndoCosts)
 
   if (is.null(vehiclesPerTech)){
     dataEndoCosts[, totVeh := 1]
@@ -152,7 +154,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
       }
 
     # calculate FS3 share --------------------------------------------------------------------
-    FS3shares <- toolCalculateFS3share(dataEndoCosts, t, timeValue, lambdas, helpers)
+    FS3shares <- toolCalculateFS3share(dataEndoCosts, t, timeValue, preferences, lambdas, helpers)
     setnames(FS3shares, "FS3share", "FS3shareUpdate")
     dataEndoCosts <- merge(dataEndoCosts, FS3shares, by = intersect(names(dataEndoCosts), names(FS3shares)), all.x = TRUE)
     dataEndoCosts[period == t, FS3share := FS3shareUpdate][, c("FS3shareUpdate", "depreciationFactor") := NULL]

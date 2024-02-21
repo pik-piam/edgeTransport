@@ -1,9 +1,10 @@
 
 
-toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, fleetSizeAndComp, CAPEXtrackedFleet, subsides, combinedCAPEXandOPEX, gdx){
+toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, fleetSizeAndComp, CAPEXtrackedFleet, subsides, combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare, extendedReporting = FALSE){
 
   toolCalculateFleetVariables <- function(salesData, vehiclesConstrYears, helpers) {
-    browser()
+
+    salesData <- copy(salesData)
     salesData <- merge(salesData, helpers$decisionTree, by = c(intersect(names(salesData), names(helpers$decisionTree))))
     vehiclesConstrYears <- copy(vehiclesConstrYears)
     vehiclesConstrYears <- vehiclesConstrYears[, sum := sum(value), by = c("region", "period", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType", "technology", "univocalName")]
@@ -19,12 +20,11 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
     fleetData[, variable := gsub("sales", "fleet", variable)]
     fleetData <- toolOrderandCheck(fleetData, helpers$decisionTree)
 
-
     return(fleetData)
   }
 
   toolCalculateFE <- function(energyIntensity, ESdemand, loadFactor, helpers){
-    browser()
+
     energyIntensity <- copy(energyIntensity)[, c("variable", "unit") := NULL]
     setnames(energyIntensity, "value", "energyIntensity")
     ESdemand <- copy(ESdemand)[, c("variable", "unit") := NULL]
@@ -34,120 +34,202 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
     fleetFEDemand <- merge(ESdemand, energyIntensity, by = intersect(names(ESdemand), names(energyIntensity)))
     fleetFEDemand <- merge(fleetFEDemand, loadFactor, by = intersect(names(fleetFEDemand), names(loadFactor)))
     fleetFEDemand[, value := (energyIntensity / loadFactor) * ESdemand][, unit := "EJ/yr"][, variable := "FE"]
+    # There is no final energy type "hybrid electric". So hybrids need to be split in liquids and electricity
+    fleetFEDemand <- rbind(fleetFEDemand, copy(fleetFEDemand[technology == "Hybrid electric"])[, value := value * hybridElecShare][, technology := "BEV"])
+    fleetFEDemand[technology == "Hybrid electric", value := value * (1 - hybridElecShare)]
+    fleetFEDemand[technology == "Hybrid electric", technology := "Liquids"]
+    fleetFEDemand[univocalName %in% c("Cycle", "Walk"), value := 0]
     fleetFEDemand[, c("loadFactor", "energyIntensity", "ESdemand") := NULL]
     fleetFEDemand <-  toolOrderandCheck(fleetFEDemand, helpers$decisionTree)
+
     return(fleetFEDemand)
   }
 
-  toolSplitLiquids <- function(dtFE, gdx) {
-  browser()
-    calcShares <- function(data, types){
-      data <- data[all_enty %in% types]
-      for (i in types){
-        data[, paste0(i, "Share") := value[all_enty == i] / sum(value), by = c("region", "period")]
-        data[is.na(get(paste0(i, "Share"))), paste0(i, "Share") := 0]
-      }
-      cols <- c("region", "period", paste0(types, "Share"))
-      data <- unique(data[, ..cols])
-      data <- melt(data, id.vars = c("region", "period"), variable.name = "split", value.name = "share")
-      data[, sum := sum(share), c("region", "period")]
-      if (nrow(data[sum < 0.9999 | sum > 1.0001])) stop("Something went wrong with the liquid splitting. Please check toolSplitLiquids()")
-      data[, sum := NULL]
-    }
+  toolCalculateUE <- function(FEdemand){
 
-    applySplit <- function(x, mode, split) {
-      browser()
-      mode <- mode[[x]]
-      split <- split[[x]]
-      dataTable <- merge(dataTable, split, by = intersect(names(dataTable), names(split)))
-      dataTable[grepl(".*fos.*", split), split := "Fossil"]
-      dataTable[grepl(".*bio.*", split), split := "Biomass"]
-      dataTable[grepl(".*syn.*", split), split := "Hydrogen"]
-      dataTable[, value := value * share][, technology := paste0(technology, "|", split)]
-    }
+    # Note that this is a really rough assumptions (as the aircarft burning hydrogen is getting the same efficiency than
+    # a fuel cell electric truck)
+    MappUE <- data.table(
+      technology = c("Electric", "BEV", "Hydrogen", "FCEV", "Liquids", "Hybrid electric"),
+      UEefficiency = c(0.64, 0.64, 0.25, 0.25, 0.23))
 
-    demFeSector <- magpie2dt(readGDX(gdx, "vm_demFeSector", field = "l", restore_zeros = F))
-    # Select transport sector
-    demFeSector <- demFeSector[emi_sectors == "trans"]
-    setnames(demFeSector, c("all_regi", "ttot"), c("region", "period"))
-    # Fuel types
-    LiquidsTypes = c("seliqfos", "seliqbio", "seliqsyn")
-    # Splits for different transport modes
-    splits <- list(
-      LDVs = demFeSector[all_enty1 == "fepet" & all_emiMkt == "ES"],
-      nonLDVs = demFeSector[all_enty1 == "fedie" & all_emiMkt == "ES"],
-      bunker = demFeSector[all_enty1 == "fedie" & all_emiMkt == "other"]
-    )
-    Liquidsplits <- lapply(modes, calcShares, LiquidsTypes)
-    # Make sure that only Liquids are supplied
-    dtFE <- dtFE[technology == "Liquids"]
-    modes <- list(
-      LDVs = dtFE[univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
-                                      helpers$filterEntries$trn_pass_road_LDV_2W)],
-      nonLDVs = dtFE[univocalName %in% c(helpers$filterEntries$trn_freight_road, "Domestic Ship",
-                                         "Freight Rail", "Domestic Aviation", "Passenger Rail", "HSR", "Bus")],
-      bunker = dtFE[univocalName %in% c("International Ship", "International Aviation")]
-    )
-    splittedLiquids <- rbindlist(sapply(c(LDVs, nonLDVs, bunker), applySplit, modes, splits))
-    return(splittedLiquids)
+    UEdemand <- copy(FEdemand)
+    UEdemand <- merge(UEdemand, UEefficiency, by = "technology")
+    UEdemand[univocalName %in% c("Cycle", "Walk"), UEefficiency := 1]
+    UEdemand[, value := value * UEefficency]
+    UEdemand[, variable := "Useful energy"]
+
+    UEdemand <-  toolOrderandCheck(fleetFEDemand, helpers$decisionTree)
+
+    return(fleetFEDemand)
   }
 
-  toolCalculateEmissions <- function(dtFE, gdx) {
-    browser()
-    # Tailpipe emissions
-    ## load emission factors for fossil fuels
-    emissionFactors <- readgdx(gdx, "pm_emifac")[all_enty %in% c("fepet", "fedie", "fegas")]  ## MtCO2/EJ
-    Pm_emifac
+  toolSplitMixedCarrier <- function(dtFE, gdx) {
 
-    emissionFactors[all_enty == "fegat", all_enty := "fegat"]
-    setnames(emissionFactors, old = c("value", "all_regi"), new = c("emissionFactor", "region"))
+    calcSplit <- function(REMINDsegment, dataREMIND, splitOverall) {
+
+      # Final energy carrier types liquids and gases consist of the following secondary energy carrier types in REMIND
+      mixedCarrierTypes <- c("seliqfos", "seliqbio", "seliqsyn", "segafos", "segabio", "segasyn")
+      # Final energy carrier type liquids used in LDVs is listed under "fepet" in REMIND and liquids used for other modes (except for bunkers)
+      # are listed under "fedie". The emissions from these energy carrier types fall under the effort sharing regulation(ES).
+      # For gases there is no differentiation between LDVs and other modes + there are not used in bunkers at all
+      dataREMIND <- switch(
+        REMINDsegment,
+        LDVs = dataREMIND[to %in% c("fepet", "fegat") & type == "ES"],
+        nonLDVs = dataREMIND[to %in% c("fedie", "fegat") & type == "ES"],
+        bunker = dataREMIND[to == "fedie" & type == "other"]
+      )
+
+      # some regions do not have all entrys -> add zeros to fill the gaps
+      dummy <- unique(dataREMIND[, c("region", "period")])[, all := "All"]
+      carrier <- unique(dataREMIND[, c("from", "to", "emiSectors", "type")])[, all := "All"]
+      dummy <- merge(dummy, carrier, by = intersect(names(carrier), names(dummy)), allow.cartesian = TRUE)
+      dataREMIND <- merge(dummy, dataREMIND, by = intersect(names(dataREMIND), names(dummy)), all = TRUE)
+      dataREMIND[is.na(value), value := 0]
+
+      dataLiquids <- merge(dataREMIND[from %in% mixedCarrierTypes[grepl(".*liq.*", mixedCarrierTypes)]], splitOverall$liqBioToSyn, by = c("region", "period"))
+      dataGases <- merge(dataREMIND[from %in% mixedCarrierTypes[grepl(".*ga.*", mixedCarrierTypes)]], splitOverall$gasesBioToSyn, by = c("region", "period"))
+
+      # calc shares liquids (synfuels -> Liquids|Hydrogen)
+      dataLiquids[, Fossil := value[from == "seliqfos"] / sum(value), by = c("region", "period")]
+      dataLiquids[, Biomass := sum(value[from %in% c("seliqbio", "seliqsyn")]) /
+                    sum(value) * bioToSynShareOverall, by = c("region", "period")]
+      dataLiquids[, Hydrogen := sum(value[from %in% c("seliqbio", "seliqsyn")]) / sum(value)
+                  * synToBioShareOverall, by = c("region", "period")]
+      cols <- c("region", "period", "Fossil", "Hydrogen", "Biomass")
+      sharesLiquids <- unique(dataLiquids[, ..cols])
+      sharesLiquids <- melt(sharesLiquids, id.vars = c("region", "period"))[, variable := paste0("Share|Liquids|", variable)][, type := "Liquids"]
+
+      # calc shares gases i.a. (syngases -> Gases|Hydrogen)
+      if (nrow(dataGases) > 0) {
+        dataGases[, Fossil := ifelse(!sum(value) == 0, value[from == "segafos"] / sum(value), 0), by = c("region", "period")]
+        dataGases[, Biomass := ifelse(!sum(value) == 0, sum(value[from %in% c("segabio", "segasyn")]) / sum(value)
+                  *  bioToSynShareOverall, 0), by = c("region", "period")]
+        dataGases[, Hydrogen := ifelse(!sum(value) == 0, sum(value[from %in% c("segabio", "segasyn")]) / sum(value)
+                  * synToBioShareOverall, 0), by = c("region", "period")]
+        sharesGases <- unique(dataGases[, ..cols])
+        sharesGases <- melt(sharesGases, id.vars = c("region", "period"))[, variable := paste0("Share|Gases|", variable)][, type := "Gases"]
+        shares <- rbind(sharesLiquids, sharesGases)
+
+      } else {shares <- sharesLiquids}
+
+      # apply low time resolution
+      shares <- approx_dt(shares, timeResReporting, "period", "value", extrapolate = TRUE)
+      shares[, sum := sum(value), by = c("region", "period", "type")]
+
+      if (anyNA(shares) | nrow(shares[(sum < 0.9999 | sum > 1.0001) & sum != 0])) stop("Something went wrong with the mixed carrier splitting. Please check calcSplit()")
+      shares[, c("sum", "type") := NULL]
+      return(shares)
+    }
+
+    applySplit <- function(REMINDsegment, FEdata, mixedCarrierSplits) {
+
+      # map EDGE-T categories on segements
+      modes <- list(
+        LDVs = c(helpers$filterEntries$trn_pass_road_LDV_4W,
+                                        helpers$filterEntries$trn_pass_road_LDV_2W),
+        nonLDVs = c(helpers$filterEntries$trn_freight_road, "Domestic Ship",
+                                           "Freight Rail", "Domestic Aviation", "Passenger Rail", "HSR", "Bus"),
+        bunker = c("International Ship", "International Aviation")
+      )
+      splittedFEdata <- FEdata[univocalName %in% modes[[REMINDsegment]]]
+      splittedFEdata[, c("variable") := NULL]
+      mixedCarrierSplits <- copy(mixedCarrierSplits[[REMINDsegment]])[, technology := ifelse(grepl(".*Liquids.*", variable), "Liquids", "Gases")]
+      setnames(mixedCarrierSplits, "value", "share")
+      splittedFEdata <- merge(splittedFEdata, mixedCarrierSplits, by = c("region", "period", "technology"), allow.cartesian = TRUE, all.x = TRUE)
+      splittedFEdata[, value := value * share][, technology := gsub("Share\\|", "", variable)][, variable := "FE"]
+      splittedFEdata[, c("share") := NULL]
+
+      if (anyNA(splittedFEdata)) stop("Something went wrong with the mixed carrier splitting. Please check applySplit()")
+
+      return(splittedFEdata)
+    }
+
+    # for reading a variable from a gdx some transformation steps are necessary to get a data.table
+    # therefore readGDX from gdxdt is used
+    demFeSector <- magpie2dt(readGDX(gdx, "vm_demFeSector", field = "l", restore_zeros = FALSE))
+    setnames(demFeSector, c("all_regi", "all_enty", "all_enty1", "emi_sectors", "all_emiMkt", "ttot"), c("region", "from", "to", "emiSectors", "type", "period"))
+    # Select transport sector
+    demFeSector <- demFeSector[emiSectors == "trans"]
+    # "vm_demFeSector" contains reasonable data from 2005 onward (before REMIND is not running the optimization)
+    demFeSector <-  demFeSector[period >= 2005]
+
+    # For now, REMIND cannot really differentiate which segment in transport is getting how much bio/syn fuels.
+    # Therefore we keep the share of bio to synfuels constant in each segment and equal to to the share in transport overall.
+    # The fossil share is kept for each segment and the remaining FE is splitted accordingly.
+    # Both syn und bio share needs to be calculated, as both can be 0 or either one of them (soo 1 - the other does not work)
+    liqBioToSyn <- demFeSector[to %in% c("fepet", "fedie") & from %in% c("seliqsyn", "seliqbio")]
+    liqBioToSyn <- liqBioToSyn[, sumbio := sum(value[from == "seliqbio"]), by = c("region", "period")]
+    liqBioToSyn <- liqBioToSyn[, sumsyn := sum(value[from == "seliqsyn"]), by = c("region", "period")]
+    liqBioToSyn <- liqBioToSyn[, sum := sum(value), by = c("region", "period")]
+    liqBioToSyn <- liqBioToSyn[, bioToSynShareOverall := ifelse(!sum(value) == 0, sumbio / sum, 0), by = c("region", "period")]
+    liqBioToSyn <- liqBioToSyn[, synToBioShareOverall := ifelse(!sum(value) == 0, sumsyn / sum, 0), by = c("region", "period")]
+    liqBioToSyn <- unique(liqBioToSyn[, .(region, period, bioToSynShareOverall, synToBioShareOverall)])
+    gasesBioToSyn <- demFeSector[to == "fegat" & from %in% c("segasyn", "segabio")]
+    gasesBioToSyn <- gasesBioToSyn[, sumbio := sum(value[from == "segabio"]), by = c("region", "period")]
+    gasesBioToSyn <- gasesBioToSyn[, sumsyn := sum(value[from == "segasyn"]), by = c("region", "period")]
+    gasesBioToSyn <- gasesBioToSyn[, sum := sum(value), by = c("region", "period")]
+    gasesBioToSyn <- gasesBioToSyn[, bioToSynShareOverall := ifelse(!sum(value) == 0, sumbio / sum, 0), by = c("region", "period")]
+    gasesBioToSyn <- gasesBioToSyn[, synToBioShareOverall := ifelse(!sum(value) == 0, sumsyn / sum, 0), by = c("region", "period")]
+    gasesBioToSyn <- unique(gasesBioToSyn[, .(region, period, bioToSynShareOverall, synToBioShareOverall)])
+
+    splitTransportOverall <- list(liqBioToSyn = liqBioToSyn, gasesBioToSyn = gasesBioToSyn)
+
+    REMINDsegments <- c("LDVs", "nonLDVs", "bunker")
+    splitShares <- sapply(REMINDsegments, calcSplit, demFeSector, splitTransportOverall, simplify = FALSE, USE.NAMES = TRUE)
+
+    # Make sure that only Liquids are supplied
+    dtFE <- copy(dtFE)
+    dtFE <- dtFE[technology %in% c("Liquids", "Gases")]
+    splittedCarriers <- rbindlist(lapply(REMINDsegments, applySplit, dtFE, splitShares))
+    splitShares <- rbindlist(splitShares)
+    carrierSplit <- list(splitShares = splitShares,
+                         splittedCarriers = splittedCarriers)
+    return(carrierSplit)
+  }
+
+  toolCalculateEmissions <- function(dtFE, gdx, prefix) {
+
+    # Get emission factors from REMIND gdx
+    GtCtoGtCO2 <- rgdx.scalar(gdx, "sm_c_2_co2", ts = FALSE)
+    EJ2TWa <- rgdx.scalar(gdx, "sm_EJ_2_TWa", ts = FALSE)
+    gdxColNames <- c("period", "region", "from", "to", "conversionTechnology", "emissionType", "value")
+    emissionFactors <- as.data.table(rgdx.param(gdx, "pm_emifac", names = gdxColNames))
+    # liquid fuels
+    emissionFactors[from == "seliqfos" & to ==  "fedie" & emissionType == "co2",  emissionFactor := value * GtCtoGtCO2 *1e3 * EJ2TWa]
+    emissionFactors[from == "seliqfos" & to ==  "fepet" & emissionType == "co2",  emissionFactor := value * GtCtoGtCO2 *1e3 * EJ2TWa]
+    # gaseous fuels
+    emissionFactors[from == "segafos" & to ==  "fegas" & emissionType == "co2",  emissionFactor := value * GtCtoGtCO2 *1e3 * EJ2TWa]
+    # unit MtCO2/EJ
+    emissionFactors <- emissionFactors[!is.na(emissionFactor)]
+    emissionFactors <- emissionFactors[, c("region", "period", "to", "emissionFactor")]
+
     ## attribute explicitly fuel used to the FE values
+    dtFE <- copy(dtFE)
     dtFE[univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
-                             helpers$filterEntries$trn_pass_road_LDV_2W) & technology == "Liquids", all_enty := "fepet"]
+                             helpers$filterEntries$trn_pass_road_LDV_2W) & technology %in% c("Liquids", "Hybrid electric"), to := "fepet"]
     dtFE[!(univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
-                             helpers$filterEntries$trn_pass_road_LDV_2W)) & technology == "Liquids", all_enty := "fedie"]
-    dtFE[technology == "Gases", all_enty := "fegat"]
-    dtFE[technology == "Electricity", all_enty := "feelt"]
-    dtFE[technology == "Hydrogen", all_enty := "feh2t"]
+                             helpers$filterEntries$trn_pass_road_LDV_2W)) & technology == "Liquids", to := "fedie"]
+    dtFE[technology == "Gases", to := "fegas"]
+
+    emissionFactors[, period := as.double(as.character(period))]
     ## merge with emission factors
-    emiTailpipe <- merge(dtFE, emissionFactors, by = c("all_enty", "region"))
+    emi <- merge(dtFE, emissionFactors, by = c("to", "region", "period"), all.x = TRUE)
+    emi[is.na(emissionFactor), emissionFactor := 0]
     ## calculate emissions and attribute variable and unit names
-    emiTailpipe[, value := value * emissionFactor][, c("variable", "unit") := c("Emi|CO2|Tailpipe", "Mt CO2/yr")]
-
-    # Demand emissions (bio and synfuels counted as zero)
-    emiDemand <- copy(emiTailpipe)
-    prodFe <- readgdx(gdx, "vm_prodFE")[, ttot := as.numeric(ttot)]
-    setnames(prodFe,
-             c("period", "region", "se", "all_enty", "te", "feDemand"))
-    # Calculate secondary energy share
-    prodFe[, seShare := feDemand / sum(feDemand), by = c("period", "region", "all_enty")]
-    prodFe <- prodFe[all_enty %in% c("fedie", "fepet", "fegat") & se %in% c("segafos", "seliqfos")][, c("se", "te", "feDemand") := NULL]
-
-    emiDemand <- merge(emiDemand, prodFe, by = c("period", "region", "all_enty"))
-    ## in case no fossil fuels are used (e.g. 100% biodiesel), the value in seShare results NA. set the NA value to 0
-    emiDemand[is.na(seShare), seShare := 0]
-    emiDemand <- emiDemand[, value := value * seShare][, c("seShare", "type", "emissionFactor", "all_enty") := NULL]
-    emiDemand[, variable := "Emi|CO2|Demand"]
-
-    emi <- rbind(emiDemand, emiTailpipe)
-
+    emi[, value := value * emissionFactor][, variable := paste0("Emi|CO2|", prefix)][, unit := "Mt CO2/yr"]
+    emi[, c("to", "emissionFactor") := NULL]
     return(emi)
-
   }
 
   toolAggregateCosts <- function (combinedCAPEXandOPEX){
 
-    combinedCAPEXandOPEX <- copy(inputData$combinedCAPEXandOPEX)
+    combinedCAPEXandOPEX <- copy(combinedCAPEXandOPEX)
     combinedCAPEXandOPEX[grepl("Capital.*", variable), type := "Capital costs sales"]
     combinedCAPEXandOPEX[grepl("Operating.*", variable), type := "Operating costs (total non-fuel)"]
     combinedCAPEXandOPEX[grepl("Fuel.*", variable), type := "Fuel costs"]
-    activeModes <- combinedCAPEXandOPEX[univocalName %in% c("Walk", "Cycle")][, type := "Capital costs sales"]
-    #Insert placeholders for active modes
-    combinedCAPEXandOPEX <- rbind(combinedCAPEXandOPEX[!univocalName %in% c("Walk", "Cycle")],
-                                  activeModes,
-                                  copy(activeModes)[, type := "Operational costs (non fuel)"],
-                                  copy(activeModes)[, type := "Fuel costs"])[, variable := NULL]
-    if (anyNA(combinedCAPEXandOPEX$type) == TRUE) stop("Some cost types did not receive an aggregaten level and would get lost in the aggregation. Please check toolAggregateCosts()")
+    if (anyNA(combinedCAPEXandOPEX) == TRUE) stop("Some cost mixedCarrierTypes did not receive an aggregated level and would get lost in the aggregation. Please check toolAggregateCosts()")
+    combinedCAPEXandOPEX[, variable := NULL]
     setnames(combinedCAPEXandOPEX, "type", "variable")
     cols <- names(combinedCAPEXandOPEX)
     combinedCAPEXandOPEX <- combinedCAPEXandOPEX[, .(value = sum(value)), by = eval(cols[cols != "value"])]
@@ -155,35 +237,50 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
     return(combinedCAPEXandOPEX)
   }
 
-  ESdemand <- copy(fuelVehicleESdemand)
-  enIntensity <- copy(inputData$enIntensity)
-  loadFactor <- copy(inputData$loadFactor)
-  fleetSizeAndComp <- copy(fleetSizeAndComposition)
-  CAPEXtrackedFleet <- copy(inputDataRaw$CAPEXtrackedFleet)
-  subsides <- copy(inputDataRaw$subsidies)
-  combinedCAPEXandOPEX <- copy(inputData$combinedCAPEXandOPEX)
+  #0: Switch from mixed time resolution to the reporting time resolution for all vars
+  ESdemand <- ESdemand[period %in% timeResReporting]
+  enIntensity <- enIntensity[period %in% timeResReporting]
+  loadFactor <- loadFactor[period %in% timeResReporting]
+  fleetSizeAndComp <- lapply(fleetSizeAndComp, FUN = function(x) x <- x[period %in% timeResReporting])
+  CAPEXtrackedFleet <- CAPEXtrackedFleet[period %in% timeResReporting]
+  subsides <- subsides[period %in% timeResReporting]
+  combinedCAPEXandOPEX <- combinedCAPEXandOPEX[period %in% timeResReporting]
 
-  # Aggregate costs
+  #1: Move from sales to fleet reporting for *affected* variables (in the variables named fleet other modes are still included)
+  # aggregate costs
   aggregatedCosts <- toolAggregateCosts(combinedCAPEXandOPEX)
-
   fleetESdemand <- rbind(ESdemand[!grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)], fleetSizeAndComp$fleetESdemand)
   fleetVariables <- list(fleetEnergyIntensity = enIntensity,
                          fleetCAPEX = copy(aggregatedCosts[grepl("Capital.*", variable)]))
   fleetData <- lapply(fleetVariables, toolCalculateFleetVariables, fleetSizeAndComp$fleetVehNumbersConstrYears, helpers)
 
-  # Calculate fleet FE demand
+  #2: Calculate final energy
   fleetFEdemand <- toolCalculateFE(fleetData$fleetEnergyIntensity, fleetESdemand, loadFactor, helpers)
 
-  # Calculate emissions
-  fleetEmissions <- toolCalculateEmissions(fleetFEdemand, gdx)
+  #3: Calculate liquids and gases split
+  mixedCarrierSplit <- toolSplitMixedCarrier(fleetFEdemand[technology %in% c("Liquids", "Gases")], gdx)
 
-  # Calculate vehicle sales and vintages
-  sales <- fleetVehNumbersConstrYears[period == constrYear]
+  #4: Calculate emissions
+  fleetEmissionsTailpipe <- toolCalculateEmissions(fleetFEdemand, gdx, "Tailpipe")
+  FEwithoutBioSyn <- rbind(mixedCarrierSplit$splittedCarriers[grepl(".*Fossil", technology)][, technology := gsub("|.*", "", technology)], fleetFEdemand[!technology %in% c("Liquids", "Gases")])
+  fleetEmissionsDemand <- toolCalculateEmissions(fleetFEdemand, gdx, "Demand")
+  fleetEmissions <- rbind(fleetEmissionsTailpipe, fleetEmissionsDemand)
+
+  #5: Calculate vehicle sales and vintages
+  sales <- fleetSizeAndComp$fleetVehNumbersConstrYears[period == constrYear]
   sales[, variable := "Sales"][, constrYear := NULL]
-  vintages <- fleetVehNumbersConstrYears[!period == constrYear]
+  vintages <- fleetSizeAndComp$fleetVehNumbersConstrYears[!period == constrYear]
   cols <- names(vintages)
   vintages <- vintages[, .(value = sum(value)), by = eval(cols[cols %in% c("value", "constrYear")])][, variable := "Vintages"]
 
+  #6: Calculate yearly capital costs
+  fleetES <- copy(fleetESdemand)
+  fleetES[, c("variable", "unit") := NULL]
+  setnames(fleetES, "value", "ESdemand")
+  fleetYrlCAPEX <- merge(fleetData$fleetCAPEX, fleetES, by = intersect(names(fleetData$fleetCAPEX), names(fleetES)))
+  fleetYrlCAPEX[, value * ESdemand][, unit := "billion US$2005/yr"]
+
+  #7: Calculate upfront capital cost for vehicle sales
   upfrontCAPEX <- rbind(CAPEXtrackedFleet, subsides)
   cols <- names(upfrontCAPEX)
   cols <- cols[!cols %in% c("value", "variable")]
@@ -191,14 +288,28 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
 
   outputVars <- list(
     aggregatedCosts = aggregatedCosts,
+    fleetESdemand = fleetESdemand,
     fleetEnergyIntensity = fleetData$fleetEnergyIntensity,
     fleetCAPEX = fleetData$fleetCAPEX,
     fleetFEDemand = fleetFEDemand,
+    mixedCarrierSplit = mixedCarrierSplit,
     fleetEmissions = fleetEmissions,
     sales = sales,
     vintages = vintages,
+    stock = fleetSizeAndComp$fleetVehNumbers,
+    fleetYrlCAPEX = fleetYrlCAPEX,
     upfrontCAPEX = upfrontCAPEX
   )
+
+  # Extended reporting
+  if (extendedReporting == TRUE) {
+    # Calculate useful energy
+    fleetUEdemand <- toolCalculateUE(fleetFEdemand)
+    extendedOutput <- list(fleetUEdemand = fleetUEdemand,
+                           loadFactor = loadFactor)
+
+    outputVars <- append(outputVars, extendedOutput)
+  }
 
   return(outputVars)
 }
