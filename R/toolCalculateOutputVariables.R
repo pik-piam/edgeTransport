@@ -249,9 +249,10 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
   #1: Move from sales to fleet reporting for *affected* variables (in the variables named fleet other modes are still included)
   # aggregate costs
   aggregatedCosts <- toolAggregateCosts(combinedCAPEXandOPEX)
+  aggregatedCosts <- merge(aggregatedCosts, helpers$decisionTree, by = intersect(names(aggregatedCosts), names(helpers$decisionTree)))
   fleetESdemand <- rbind(ESdemand[!grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)], fleetSizeAndComp$fleetESdemand)
   fleetVariables <- list(fleetEnergyIntensity = enIntensity,
-                         fleetCAPEX = copy(aggregatedCosts[grepl("Capital.*", variable)]))
+                         fleetCosts = copy(aggregatedCosts))
   fleetData <- lapply(fleetVariables, toolCalculateFleetVariables, fleetSizeAndComp$fleetVehNumbersConstrYears, helpers)
 
   #2: Calculate final energy
@@ -273,31 +274,31 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
   cols <- names(vintages)
   vintages <- vintages[, .(value = sum(value)), by = eval(cols[cols %in% c("value", "constrYear")])][, variable := "Vintages"]
 
-  #6: Calculate yearly capital costs
+  #6: Calculate yearly costs
   fleetES <- copy(fleetESdemand)
   fleetES[, c("variable", "unit") := NULL]
   setnames(fleetES, "value", "ESdemand")
-  fleetYrlCAPEX <- merge(fleetData$fleetCAPEX, fleetES, by = intersect(names(fleetData$fleetCAPEX), names(fleetES)))
-  fleetYrlCAPEX[, value * ESdemand][, unit := "billion US$2005/yr"]
+  fleetYrlCosts <- merge(fleetData$fleetCosts, fleetES, by = intersect(names(fleetData$fleetCosts), names(fleetES)))
+  fleetYrlCosts[, value := value * ESdemand][, unit := "billion US$2005/yr"]
 
   #7: Calculate upfront capital cost for vehicle sales
   upfrontCAPEX <- rbind(CAPEXtrackedFleet, subsides)
   cols <- names(upfrontCAPEX)
   cols <- cols[!cols %in% c("value", "variable")]
-  upfrontCAPEX <-  upfrontCAPEX[, .(value = sum(value)), ..cols][, variable := "Upfront capital costs sales"]
+  upfrontCAPEX <-  upfrontCAPEX[, .(value = sum(value)), by = cols][, variable := "Upfront capital costs sales"]
 
   outputVars <- list(
     aggregatedCosts = aggregatedCosts,
     fleetESdemand = fleetESdemand,
     fleetEnergyIntensity = fleetData$fleetEnergyIntensity,
     fleetCAPEX = fleetData$fleetCAPEX,
-    fleetFEDemand = fleetFEDemand,
+    fleetFEdemand = fleetFEdemand,
     mixedCarrierSplit = mixedCarrierSplit,
     fleetEmissions = fleetEmissions,
     sales = sales,
     vintages = vintages,
     stock = fleetSizeAndComp$fleetVehNumbers,
-    fleetYrlCAPEX = fleetYrlCAPEX,
+    fleetYrlCosts = fleetYrlCosts,
     upfrontCAPEX = upfrontCAPEX
   )
 

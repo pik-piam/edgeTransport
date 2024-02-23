@@ -143,7 +143,9 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
 
   vars <- toolCalculateOutputVariables(fuelVehicleESdemand, inputData$enIntensity, inputData$loadFactor, fleetSizeAndComposition,
             inputDataRaw$CAPEXtrackedFleet, inputDataRaw$subsidies,
-            inputData$combinedCAPEXandOPEX, gdx, timeResReporting)
+            inputData$combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare)
+
+  toMIF <- toolReportAndAggregateMIF(vars, helpers)
 
   if (generateTransportData == TRUE) {
     toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,

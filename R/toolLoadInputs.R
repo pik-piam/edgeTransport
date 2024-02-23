@@ -33,7 +33,9 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     mitigationTechMap = packageData$mitigationTechMap,
     filterEntries = filterEntries,
     dtTimeRes = dtTimeRes,
-    lowTimeRes = lowTimeRes
+    lowTimeRes = lowTimeRes,
+    reportingNames = packageData$reportingNames,
+    reportingAggregation = packageData$reportingAggregation
   )
 
   ## from mrcommons
