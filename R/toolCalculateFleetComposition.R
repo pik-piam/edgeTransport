@@ -1,8 +1,9 @@
 
-toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors, vehSalesAndModeShares, annualMileage, loadFactor, baseYear, helpers) {
+toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors, vehSalesAndModeShares, annualMileage, loadFactor, helpers) {
 
-  reportedTimesteps <- c(1990, seq(2005, 2100, by = 1), 2110, 2130, 2150)
-
+  highTimeRes <- unique(helpers$dtTimeRes$period)
+  #start fleet calc
+  startYear <- 2005
   # calculate total energy service demand for modes with tracked fleets ------------------------------------------------------------
   fleetESdemand <- fleetESdemand[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
   fleetESdemand <- fleetESdemand[, .(totalESdemand = sum(value)), by = c("region", "period", "subsectorL3")]
@@ -21,19 +22,19 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   vehDepreciationFactors <- merge(unifyDt, vehDepreciationFactors, by = c("indexUsagePeriod", "subsectorL3"), all = TRUE)
   vehDepreciationFactors[is.na(depreciationFactor), depreciationFactor := 0]
 
-  #1. The baseyear demand that needs to be covered by new additions is calculated
-  contributionsToBaseYear <- copy(vehDepreciationFactors)
-  contributionsToBaseYear[, period := baseYear - indexUsagePeriod][, indexUsagePeriod := NULL]
-  fleetESdemand <- merge(fleetESdemand, contributionsToBaseYear, by = c("period", "subsectorL3"), all.x = TRUE)
-  fleetESdemand[!is.na(depreciationFactor), demandNewAdditions := ifelse(period == baseYear, totalESdemand[period == baseYear] / sum(depreciationFactor), 0),
+  #1. The startYear demand that needs to be covered by new additions is calculated
+  contributionsTostartYear <- copy(vehDepreciationFactors)
+  contributionsTostartYear[, period := startYear - indexUsagePeriod][, indexUsagePeriod := NULL]
+  fleetESdemand <- merge(fleetESdemand, contributionsTostartYear, by = c("period", "subsectorL3"), all.x = TRUE)
+  fleetESdemand[!is.na(depreciationFactor), demandNewAdditions := ifelse(period == startYear, totalESdemand[period == startYear] / sum(depreciationFactor), 0),
                 by = c("region", "subsectorL3")][, depreciationFactor := NULL]
-  fleetESdemand <- fleetESdemand[period >= baseYear]
+  fleetESdemand <- fleetESdemand[period >= startYear]
   #2.In order to obtain a starting point, it is assumed that the absolute number of new additions (equivalent to the contributed energy service demand, when annual mileage stays constant as well)
   # is constant back to the last year that contributes to the fleet in the base year.
   # hence, the new additions of the previous years contribute to the energy service demand of the fleet in the base year according to the respective depreciation factor
   # the new additions in the base year contribute completely and are therefore counted with a depreciation factor of 1 (no depreciation)
-  # Now we calculate for every construction year the contribution to the baseYear and if applicable also the contribution to future timesteps
-  constructionYears <- seq(baseYear - max(vehDepreciationFactors$indexUsagePeriod), baseYear, 1)
+  # Now we calculate for every construction year the contribution to the startYear and if applicable also the contribution to future timesteps
+  constructionYears <- seq(startYear - max(vehDepreciationFactors$indexUsagePeriod), startYear, 1)
   contributionYears <- seq(1, max(vehDepreciationFactors$indexUsagePeriod), 1)
 
   # Initialize columns for fleet tracking (to have them in the data.table before the construction year columns)
@@ -43,14 +44,14 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
     for (j in contributionYears) {
       vehDepreciation <- copy(vehDepreciationFactors)[, period := i + indexUsagePeriod][, indexUsagePeriod := NULL]
       fleetESdemand <- merge(fleetESdemand, vehDepreciation, by = c("period", "subsectorL3"), all.x = TRUE)
-      fleetESdemand[, eval(paste0("C", i)) := demandNewAdditions[period == baseYear] * depreciationFactor, by = c("region", "subsectorL3")][, depreciationFactor := NULL]
+      fleetESdemand[, eval(paste0("C", i)) := demandNewAdditions[period == startYear] * depreciationFactor, by = c("region", "subsectorL3")][, depreciationFactor := NULL]
     }
   }
   vintCols <- paste0("C", constructionYears)[1:length(constructionYears) - 1]
-  fleetESdemand[period == baseYear, vintagesDemand := rowSums(.SD, na.rm = TRUE), .SDcols = vintCols]
+  fleetESdemand[period == startYear, vintagesDemand := rowSums(.SD, na.rm = TRUE), .SDcols = vintCols]
   setkey(fleetESdemand, "period")
 
-  for (i in timesteps[timesteps > baseYear]) {
+  for (i in timesteps[timesteps > startYear]) {
     #1. Look only on affected years to lower runtime
     tmp <-  fleetESdemand[period %in% c(i, i + contributionYears)]
     #2. Calculate the demand covered by vintages
@@ -133,10 +134,9 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   fleetESdemandConstrYears <- copy(fleetESdemand)
   fleetESdemand <- fleetESdemand[, .(value = sum(contribConstrYear)), by = c("period", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName", "unit")]
   fleetESdemand[, variable := "Energy service demand"]
-
   cols <- names(fleetESdemand)
   cols <- cols[!cols %in% c("period", "value")]
-  fleetESdemand <- approx_dt(fleetESdemand, reportedTimesteps, "period", "value",
+  fleetESdemand <- approx_dt(fleetESdemand, highTimeRes, "period", "value",
                                eval(cols), extrapolate = TRUE)
   fleetESdemandConstrYears[, variable := paste0("Energy service demand construction year ", constrYear)]
   setnames(fleetESdemandConstrYears, "contribConstrYear", "value")
@@ -145,7 +145,7 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   fleetVehNumbersConstrYears <- copy(fleetVehNumbers)
   fleetVehNumbers <- fleetVehNumbers[, .(value = sum(contribConstrYear)), by = c("period", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName", "unit")]
   fleetVehNumbers[, variable := "Stock"]
-  fleetVehNumbers <- approx_dt(fleetVehNumbers, reportedTimesteps, "period", "value",
+  fleetVehNumbers <- approx_dt(fleetVehNumbers, highTimeRes, "period", "value",
                                     eval(cols), extrapolate = TRUE)
   fleetVehNumbersConstrYears[, variable := paste0("Stock construction year ", constrYear)]
   setnames(fleetVehNumbersConstrYears, "contribConstrYear", "value")

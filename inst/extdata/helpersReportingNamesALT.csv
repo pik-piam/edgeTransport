@@ -1,0 +1,11 @@
+sector;sectorName ;subsectorL1;subsectorL1Name;subsectorL2;subsectorL2Name;subsectorL3;subsectorL3Name;;;name;reportName
+trn_pass;Pass;trn_pass_road;Road;trn_pass_road_LDV;LDV;trn_pass_road_LDV_2W;Two Wheelers;;;;
+trn_aviation_intl;Pass;trn_freight_road;Road;;;trn_pass_road_LDV_4W;Four Wheelers;;;;
+trn_shipping_intl;Freight;;;;;;;;;;
+trn_freight;Freight;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;Passenger Rail;non-HSR

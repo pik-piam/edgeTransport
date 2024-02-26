@@ -1,26 +1,26 @@
-univocalName;aggrbunkers;aggrAviationShipping;aggrActiveModes;aggrVehSizes
-International Aviation;with bunkers;Aviation;NA;NA
-Domestic Aviation;with bunkers;Aviation;NA;NA
-Motorcycle (50-250cc);with bunkers;NA;NA;NA
-Moped;with bunkers;NA;NA;NA
-Motorcycle (>250cc);with bunkers;NA;NA;NA
-Compact Car;with bunkers;NA;NA;
-Mini Car;with bunkers;NA;NA;
-Subcompact Car;with bunkers;NA;NA;
-Large Car and SUV;with bunkers;NA;NA;
-Large Car;with bunkers;NA;NA;
-Midsize Car;with bunkers;NA;NA;
-Van;with bunkers;NA;NA;
-HSR;with bunkers;NA;NA;
-Bus;with bunkers;NA;NA;
-Passenger Rail;with bunkers;NA;NA;
-Walk;with bunkers;NA;Non-motorized;
-Cycle;with bunkers;NA;Non-motorized;
-International Ship;with bunkers;Shipping;NA;
-Domestic Ship;with bunkers;Shipping;NA;
-Freight Rail;with bunkers;NA;NA;
-Truck (0-3_5t);with bunkers;NA;NA;
-Truck (7_5t);with bunkers;NA;NA;
-Truck (18t);with bunkers;NA;NA;
-Truck (26t);with bunkers;NA;NA;
-Truck (40t);with bunkers;NA;NA;
+univocalName;aggrAviationShipping;aggrActiveModes;aggrVehSizes
+International Aviation;|Aviation;NA;NA
+Domestic Aviation;|Aviation;NA;NA
+Motorcycle (50-250cc);NA;NA;NA
+Moped;NA;NA;NA
+Motorcycle (>250cc);NA;NA;NA
+Mini Car;NA;NA;|Small
+Subcompact Car;NA;NA;|Small
+Compact Car;NA;NA;|Medium
+Midsize Car;NA;NA;|Medium
+Large Car and SUV;NA;NA;|Large
+Large Car;NA;NA;|Large
+Van;NA;NA;|Large
+HSR;NA;NA;NA
+Bus;NA;NA;NA
+Passenger Rail;NA;NA;NA
+Walk;NA;|Non-motorized;NA
+Cycle;NA;|Non-motorized;NA
+International Ship;|Shipping;NA;NA
+Domestic Ship;|Shipping;NA;NA
+Freight Rail;NA;NA;NA
+Truck (0-3_5t);NA;NA;|Light
+Truck (7_5t);NA;NA;|Light
+Truck (18t);NA;NA;|Heavy
+Truck (26t);NA;NA;|Heavy
+Truck (40t);NA;NA;|Heavy

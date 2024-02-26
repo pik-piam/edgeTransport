@@ -81,6 +81,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     fuelCosts = REMINDdata$fuelCosts,
     timeValueCosts = mrtransportData$timeValueCosts,
     subsidies = mrremindData$subsidies,
+    GDPMER = mrdriversData$GDPMER,
     GDPpcMER = mrdriversData$GDPpcMER,
     GDPpcPPP = mrdriversData$GDPpcPPP,
     population = mrdriversData$population

@@ -64,6 +64,7 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     annualMileage = inputDataRaw$annualMileage,
     timeValueCosts = inputDataRaw$timeValueCosts,
     histESdemand = inputDataRaw$histESdemand,
+    GDPMER = inputDataRaw$GDPMER,
     GDPpcMER = inputDataRaw$GDPpcMER,
     population = inputDataRaw$population
   )
@@ -125,7 +126,7 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     #################################################
     # Calculate vehicle stock for cars, trucks and busses -------
     fleetSizeAndComposition <- toolCalculateFleetComposition(copy(fuelVehicleESdemand), copy(vehicleDepreciationFactors), copy(vehSalesAndModeShares),
-                                                             copy(inputData$annualMileage), copy(inputData$loadFactor), baseYear, helpers)
+                                                             copy(inputData$annualMileage), copy(inputData$loadFactor), helpers)
     fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
     storeFleetSizeAndCompositionIterations[[i]] <- copy(fleetSizeAndComposition$fleetVehNumbers)
     storeFleetSizeAndCompositionIterations[[i]][, variable := paste0(variable, "|Iteration ", i)]
@@ -145,13 +146,12 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
             inputDataRaw$CAPEXtrackedFleet, inputDataRaw$subsidies,
             inputData$combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare)
 
-  toMIF <- toolReportAndAggregateMIF(vars, helpers)
-
   if (generateTransportData == TRUE) {
-    toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData, histPrefs,
-                storeFleetSizeAndCompositionIterations, storeEndogenousCostsIterations, fleetVariables)
-    report <- reportTransportData()
-    write.mif(report, file.path(outputFolder, folderName, "edgeTransportSA.mif"))
+    toMIF <- toolReportAndAggregateMIF(vars, helpers, paste0(transportPolScen, " ", SSPscen), "EDGE-T", gdx, inputData$GDPMER)
+    #toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData,
+                #storeFleetSizeAndCompositionIterations, storeEndogenousCostsIterations, vars)
+    write.mif(toMIF, file.path(outputFolder, folderName, "edgeTransportSA.mif"))
+    file.copy(gdx, outputFolder, folderName)
   }
 
   if (generateREMINDinputData == TRUE) {

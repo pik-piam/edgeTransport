@@ -1,10 +1,16 @@
 name;reportName
-trn_aviation_intl;Pass
+trn_aviation_intl;Pass|Bunkers
 trn_pass;Pass
 trn_freight;Freight
-trn_shipping_intl;Freight
+trn_shipping_intl;Freight|Bunkers
 trn_pass_road;Road
 trn_freight_road;Road
 trn_pass_road_LDV;LDV
 trn_pass_road_LDV_2W;Two Wheelers
 trn_pass_road_LDV_4W;Four Wheelers
+Passenger Rail;non-HSR
+Freight Rail;Rail
+Domestic Aviation;Domestic
+International Aviation;International
+Domestic Ship;Domestic
+International Ship;International
