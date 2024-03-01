@@ -1,4 +1,4 @@
-ValidationKey: '3003672'
+ValidationKey: '3026799'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
@@ -6,3 +6,4 @@ AcceptedWarnings:
 - '''.*'' is needed for checks on size reduction of PDFs'
 AcceptedNotes: ~
 allowLinterWarnings: yes
+enforceVersionUpdate: no
