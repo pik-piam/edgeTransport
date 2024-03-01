@@ -294,7 +294,7 @@ Hybrid Electric,Liquids")
       FVtarget_tb[, value := ifelse(year==2035,0.3*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2040,0.2*value[year==2015],value),by = c("region","technology")]
       FVtarget_tb[, value := ifelse(year==2045,0.1*value[year==2015],value),by = c("region","technology")]
-      FVtarget_tb[year>=2050, value := value * 0.05]
+      FVtarget_tb[year>2045, value := value * 0.05]
 
       FVtarget=rbind(FVtarget_all,FVtarget_tb)
 
