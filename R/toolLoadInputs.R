@@ -31,6 +31,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     decisionTree = packageData$decisionTree,
     regionmappingISOto21to12 = packageData$regionmappingISOto21to12,
     mitigationTechMap = packageData$mitigationTechMap,
+    mapEdgeToREMIND = packageData$mapEdgeToREMIND,
     filterEntries = filterEntries,
     dtTimeRes = dtTimeRes,
     lowTimeRes = lowTimeRes,
@@ -42,6 +43,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
 
   ## from REMIND
+  if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
+                                            "EDGE-T_standalone", "REMIND", "fulldata_EU.gdx")}
   REMINDdata <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
   # from mrremind (soon to be replaced by mrtransport data)

@@ -46,20 +46,20 @@ toolPrepareScenInputData <- function(generalPar, scenarioPar, RawInputData, poli
 
   # Annualization and formatting of monetary costs ---------------------------------------------------
   annuity <- toolCalculateAnnuity(generalPar$annuityCalc, helpers)
-  combinedCAPEXandOPEX <- toolCombineCAPEXandOPEX(RawInputData$CAPEXtrackedFleet, RawInputData$nonFuelOPEXtrackedFleet, RawInputData$CAPEXother,
+  transportCosts <- toolCombineCAPEXandOPEX(RawInputData$CAPEXtrackedFleet, RawInputData$nonFuelOPEXtrackedFleet, RawInputData$CAPEXother,
                                                   RawInputData$nonFuelOPEXother, RawInputData$fuelCosts, RawInputData$subsidies, scenSpecEnIntensity,
                                                   scenSpecLoadFactor, RawInputData$annualMileage, annuity, helpers)
 
   # Annualization and formatting of non-monetary costs -------------------------------------------------
-  initialIncoCosts <- toolCalculateInitialIncoCost(combinedCAPEXandOPEX, generalPar$incoCostStartVal, annuity, scenSpecLoadFactor, RawInputData$annualMileage, helpers)
+  initialIncoCosts <- toolCalculateInitialIncoCost(transportCosts$combinedCAPEXandOPEX, generalPar$incoCostStartVal, annuity, scenSpecLoadFactor, RawInputData$annualMileage, helpers)
 
   scenSpecInputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecLoadFactor,
     scenSpecEnIntensity = scenSpecEnIntensity,
-    combinedCAPEXandOPEX = combinedCAPEXandOPEX,
-    initialIncoCosts = initialIncoCosts
-   )
+    combinedCAPEXandOPEX = transportCosts$combinedCAPEXandOPEX,
+    upfrontCAPEXtrackedFleet = transportCosts$upfrontCAPEXtrackedFleet,
+    initialIncoCosts = initialIncoCosts)
 
   return(scenSpecInputData)
 }

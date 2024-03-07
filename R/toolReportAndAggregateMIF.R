@@ -95,6 +95,12 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   varsToMIFint <- copy(vars$int)
   varsToMIFext <- lapply(varsToMIFext, rename, helpers$reportingNames)
   varsToMIFint <- lapply(varsToMIFint, rename, helpers$reportingNames)
+  if (!is.null(vars$analyticsData)) {
+    varsToMIFanalytics <- lapply(vars$analyticsData, rename, helpers$reportingNames)
+    varsToMIFanalytics <- lapply(varsToMIFanalytics,
+                                 function(x){x[, variable := paste0(variable, "|", vehicleType, "|", technology)]
+                                             x[, c("region", "period", "variable", "value", "unit")]})
+  }
   # Remove variables that do not need to be aggregated
   varsToAggregateExt <- varsToMIFext
   varsToAggregateInt <- varsToMIFint[!names(vars) %in% c("FEsplitShares")]
@@ -153,6 +159,7 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   }
 
   toMIF <- rbind(toMIFint, toMIFext)
+  if (!is.null(varsToMIFanalytics)) toMIF <- rbind(toMIF, varsToMIFanalytics)
   toMIF[, model := model][, scenario := scenario]
   toMIF <- dcast(toMIF, model + scenario + region + variable + unit ~ period)
 

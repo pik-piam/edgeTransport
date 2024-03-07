@@ -5,6 +5,7 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   #start fleet calc
   startYear <- 2005
   # calculate total energy service demand for modes with tracked fleets ------------------------------------------------------------
+  fleetESdemand <- copy(fleetESdemand)
   fleetESdemand <- fleetESdemand[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
   fleetESdemand <- fleetESdemand[, .(totalESdemand = sum(value)), by = c("region", "period", "subsectorL3")]
   # calculate distribution of total demand on construction years ------------------------------------------------------------
@@ -13,6 +14,7 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   fleetESdemand <- approx_dt(fleetESdemand, timesteps, "period", "totalESdemand",
                              c("region", "subsectorL3"),
                              extrapolate = TRUE)
+  vehDepreciationFactors <- copy(vehDepreciationFactors)
   vehDepreciationFactors <- merge(vehDepreciationFactors, unique(helpers$decisionTree[, c("univocalName", "subsectorL3")]), by = "univocalName")
   vehDepreciationFactors <- unique(vehDepreciationFactors[, c("indexUsagePeriod", "depreciationFactor", "subsectorL3")])
   # to update all sectors in the same loop the years need to be unified and get the depreciation factor of zero (no contribution)
@@ -109,12 +111,14 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   fleetESdemand[, c("totalESdemand", "demandNewAdditions", "vintagesDemand", "test") := NULL]
 
   #Calculate vehicles
+  annualMileage <- copy(annualMileage)
   annualMileage <- merge(annualMileage, helpers$decisionTree, by = c(intersect(names(annualMileage), names(helpers$decisionTree))))
   annualMileage <- annualMileage[, c("region", "period", "vehicleType", "technology", "value")]
   annualMileage <- approx_dt(annualMileage, timesteps, "period", "value",
                         c("region", "vehicleType", "technology"),
                         extrapolate = TRUE)
   setnames(annualMileage, "value", "annualMileage")
+  loadFactor <- copy(loadFactor)
   loadFactor <- merge(loadFactor, helpers$decisionTree, by = c(intersect(names(loadFactor), names(helpers$decisionTree))))
   loadFactor <- loadFactor[, c("region", "period", "vehicleType", "technology", "univocalName", "value")]
   loadFactor <- approx_dt(loadFactor, timesteps, "period", "value",

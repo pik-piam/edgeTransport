@@ -8,7 +8,7 @@
 #' @export
 
 
-toolLoadREMINDesDemand <- function(gdxPath, yrs) {
+toolLoadREMINDesDemand <- function(gdxPath) {
   value <- unit <- variable <- NULL
 
   mapEdgeToREMIND <- fread(system.file("extdata/helpersMappingEdgeTtoREMINDcategories.csv", package = "edgeTransport", mustWork = TRUE))
@@ -29,10 +29,6 @@ toolLoadREMINDesDemand <- function(gdxPath, yrs) {
                   * trillionToBillion]
   ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "bn pkm/yr", "bn tkm/yr")][, variable := "Energy service demand"]
 
-  # adjust to temporal resolution
-  ESdemand <- approx_dt(ESdemand, yrs, "period", "value",
-                          c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
-                            "univocalName", "variable", "unit"), extrapolate = TRUE)
   setkey(ESdemand, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
          technology, univocalName, period)
 

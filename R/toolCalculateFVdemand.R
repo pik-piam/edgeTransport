@@ -1,4 +1,4 @@
-toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, histESdemand, baseYear, helpers){
+toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, histESdemand = NULL,  baseYear = NULL){
 
   toolCalcFVSshares <- function(sharesAllLevels) {
 
@@ -24,10 +24,14 @@ toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, histESdema
   FVSshares <- toolCalcFVSshares(salesAndModeShares)
   fuelVehicleESdemand <- merge(sectorESdemand, FVSshares, by = intersect(names(sectorESdemand), names(FVSshares)), all = TRUE)
   fuelVehicleESdemand[, value := value * FVSshare][, FVSshare := NULL]
-  fuelVehicleESdemand <- fuelVehicleESdemand[period > baseYear, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "unit", "period", "value")]
-  fuelVehicleESdemand <- merge(fuelVehicleESdemand, helpers$decisionTree, by = intersect(names(fuelVehicleESdemand), names(helpers$decisionTree)))[, variable := "Energy service demand"]
-  histESdemand <- merge(histESdemand, helpers$decisionTree, by = intersect(names(histESdemand), names(helpers$decisionTree)))
-  fuelVehicleESdemand <- rbind(fuelVehicleESdemand, histESdemand)
+
+  if (!is.null(histESdemand)){
+    fuelVehicleESdemand <- fuelVehicleESdemand[period > baseYear, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "unit", "period", "value")]
+    fuelVehicleESdemand[, variable := "Energy service demand"]
+    fuelVehicleESdemand <- merge(fuelVehicleESdemand, helpers$decisionTree, by = intersect(names(fuelVehicleESdemand), names(helpers$decisionTree)))
+    histESdemand <- merge(histESdemand, helpers$decisionTree, by = intersect(names(histESdemand), names(helpers$decisionTree)))
+    fuelVehicleESdemand <- rbind(fuelVehicleESdemand, histESdemand)
+  }
 
   fuelVehicleESdemand <- toolOrderandCheck(fuelVehicleESdemand, helpers$decisionTree)
 

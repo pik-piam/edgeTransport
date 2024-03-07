@@ -13,8 +13,10 @@
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
  value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL
 
-   mapEdgeToREMIND <- fread(system.file("extdata/helpersMappingEdgeTtoREMINDcategories.csv", package = "edgeTransport", mustWork = TRUE))
-   mapEdgeToREMIND <- unique(mapEdgeToREMIND[, c("all_enty", "fuel")])
+   mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
+   # active modes do not feed into all_enty
+   mapEdgeToREMIND <- mapEdgeToREMIND[!is.na(all_enty)]
+   decisionTree <- copy(helpers$decisionTree)
 
    # load prices from REMIND gdx
    fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
@@ -27,30 +29,14 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    GJtoMJ <- 1e-3 # dollar per GJ to dollar per MJ
    fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$2005/MJ
    # map on EDGE-T structure
-   fuelCosts <- merge(fuelCosts, mapEdgeToREMIND, by = "all_enty", all.y = TRUE)[, all_enty := NULL]
-   #Average over diesel and gasoline
-   fuelCosts <- fuelCosts[, .(value = mean(value)), by = c("region", "period", "fuel")]
+   fuelCosts <- merge(fuelCosts, mapEdgeToREMIND, by = "all_enty", all.y = TRUE, allow.cartesian = TRUE)[, all_enty := NULL]
    # calculate price for hybrids
-   fuelCosts <- fuelCosts %>%
-     dcast(... ~ fuel) %>%
-     .[, `Hybrid electric` := (1 - hybridElecShare) * Liquids + hybridElecShare * Electricity] %>%
-     melt(id.vars = c("region", "period"), variable.name = "fuel")
-
-   # map on decisiontree for provided spatial resolution
-   if (length(unique(fuelCosts$region)) == 21) {
-     decisionTree <- toolLoadDecisionTree("regionCode21")
-   } else if (length(unique(fuelCosts$region)) == 12) {
-     decisionTree <- toolLoadDecisionTree("regionCode12")
-   } else {
-     decisionTree <- toolLoadDecisionTree("iso")
-   }
-
-   # fuel needs to be mapped on different technology names
-   decisionTree[, fuel := ifelse(technology %in% c("BEV", "Electric"), "Electricity", technology)]
-   decisionTree[, fuel := ifelse(technology == "FCEV", "Hydrogen", fuel)]
-   decisionTree <- unique(decisionTree[, c("region", "univocalName", "technology", "fuel")])
-
-   fuelCosts <- merge(fuelCosts, decisionTree[!univocalName %in% c("Cycle", "Walk")], by = c("fuel", "region"), allow.cartesian = TRUE, all.y = TRUE)[, fuel := NULL]
+   dummy <- fuelCosts[univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W & technology %in% c("BEV", "Liquids")]
+   fuelCostsHybrids <- dummy %>%
+     dcast(... ~ technology) %>%
+     .[, `Hybrid electric` := (1 - hybridElecShare) * Liquids + hybridElecShare * BEV] %>%
+     melt(id.vars = c("region", "period", "univocalName"), variable.name = "technology")
+   fuelCosts <- rbind(fuelCosts, fuelCostsHybrids[technology == "Hybrid electric"])
 
    # corrections to the data
    # prices before 2020 are often not plausible -> choose 2020 as a start date if previous years are provided

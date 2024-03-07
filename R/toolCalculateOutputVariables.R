@@ -1,6 +1,7 @@
 
 
-toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, fleetSizeAndComp, CAPEXtrackedFleet, subsides, combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare, extendedReporting = FALSE){
+toolCalculateOutputVariables <- function(inputDataRaw, hybridElecShare, inputData, ESdemandFuelVehicle, fleetSizeAndCompositionIterations, endogenousCostsIterations, gdx, timeResReporting,
+                                         REMINDinputOnly = FALSE, extendedReporting = FALSE, analytics = FALSE){
 
   toolCalculateFleetVariables <- function(salesData, vehiclesConstrYears, helpers, timeResReporting) {
 
@@ -28,23 +29,23 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
     return(fleetData)
   }
 
-  toolCalculateFE <- function(energyIntensity, ESdemand, loadFactor, helpers){
+  toolCalculateFE <- function(energyIntensity, ESdemandFuelVehicle, loadFactor, helpers){
 
     energyIntensity <- copy(energyIntensity)[, c("variable", "unit") := NULL]
     setnames(energyIntensity, "value", "energyIntensity")
-    ESdemand <- copy(ESdemand)[, c("variable", "unit") := NULL]
-    setnames(ESdemand, "value", "ESdemand")
+    ESdemandFuelVehicle <- copy(ESdemandFuelVehicle)[, c("variable", "unit") := NULL]
+    setnames(ESdemandFuelVehicle, "value", "ESdemandFuelVehicle")
     loadFactor <- copy(loadFactor)[, c("variable", "unit") := NULL]
     setnames(loadFactor, "value", "loadFactor")
-    fleetFEDemand <- merge(ESdemand, energyIntensity, by = intersect(names(ESdemand), names(energyIntensity)))
+    fleetFEDemand <- merge(ESdemandFuelVehicle, energyIntensity, by = intersect(names(ESdemandFuelVehicle), names(energyIntensity)))
     fleetFEDemand <- merge(fleetFEDemand, loadFactor, by = intersect(names(fleetFEDemand), names(loadFactor)))
-    fleetFEDemand[, value := (energyIntensity / loadFactor) * ESdemand][, unit := "EJ/yr"][, variable := "FE"]
+    fleetFEDemand[, value := (energyIntensity / loadFactor) * ESdemandFuelVehicle][, unit := "EJ/yr"][, variable := "FE"]
     # There is no final energy type "hybrid electric". So hybrids need to be split in liquids and electricity
     fleetFEDemand <- rbind(fleetFEDemand, copy(fleetFEDemand[technology == "Hybrid electric"])[, value := value * hybridElecShare][, technology := "BEV"])
     fleetFEDemand[technology == "Hybrid electric", value := value * (1 - hybridElecShare)]
     fleetFEDemand[technology == "Hybrid electric", technology := "Liquids"]
     fleetFEDemand[univocalName %in% c("Cycle", "Walk"), value := 0]
-    fleetFEDemand[, c("loadFactor", "energyIntensity", "ESdemand") := NULL]
+    fleetFEDemand[, c("loadFactor", "energyIntensity", "ESdemandFuelVehicle") := NULL]
     fleetFEDemand <-  toolOrderandCheck(fleetFEDemand, helpers$decisionTree)
 
     return(fleetFEDemand)
@@ -59,9 +60,9 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
       UEefficiency = c(0.64, 0.64, 0.25, 0.25, 0.23))
 
     UEdemand <- copy(FEdemand)
-    UEdemand <- merge(UEdemand, UEefficiency, by = "technology")
+    UEdemand <- merge(UEdemand, MappUE, by = "technology")
     UEdemand[univocalName %in% c("Cycle", "Walk"), UEefficiency := 1]
-    UEdemand[, value := value * UEefficency]
+    UEdemand[, value := value * UEefficiency]
     UEdemand[, variable := "Useful energy"]
 
     UEdemand <-  toolOrderandCheck(fleetFEDemand, helpers$decisionTree)
@@ -246,103 +247,132 @@ toolCalculateOutputVariables <- function(ESdemand, enIntensity, loadFactor, flee
 
   # Move from sales to fleet reporting for *affected* variables (in the variables named fleet other modes are still included)
   # aggregate costs
-  aggregatedCosts <- toolAggregateCosts(combinedCAPEXandOPEX)
+  aggregatedCosts <- toolAggregateCosts(inputData$combinedCAPEXandOPEX)
   aggregatedCosts <- merge(aggregatedCosts, helpers$decisionTree, by = intersect(names(aggregatedCosts), names(helpers$decisionTree)))
   # Energy service demand on fleet level deviates from the sales level regarding the share that each technology gets
-  fleetESdemand <- rbind(ESdemand[!grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)], fleetSizeAndComp$fleetESdemand)
+  fleetSizeAndComp <- copy(fleetSizeAndCompositionIterations[[length(fleetSizeAndCompositionIterations)]])
+  fleetESdemand <- rbind(ESdemandFuelVehicle[!grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)], fleetSizeAndComp$fleetESdemand)
   # Energy intensity and Capital costs are tied to the construction year and have to be recalculated to reflect the value for each year referring to the vehicle stock
-  fleetVariables <- list(fleetEnergyIntensity = enIntensity,
+  fleetVariables <- list(fleetEnergyIntensity = inputData$enIntensity,
                          fleetCapCosts = copy(aggregatedCosts[variable == "Capital costs sales"]))
   fleetData <- lapply(fleetVariables, toolCalculateFleetVariables, fleetSizeAndComp$fleetVehNumbersConstrYears, helpers, timeResReporting)
 
   # Switch from mixed time resolution to the reporting time resolution for all vars
-  ESdemand <- ESdemand[period %in% timeResReporting]
   fleetESdemand <- fleetESdemand[period %in% timeResReporting]
   fleetData <- lapply(fleetData, FUN = function(x) x <- x[period %in% timeResReporting])
-  fleetSizeAndComp <- lapply(fleetSizeAndComp, FUN = function(x) x <- x[period %in% timeResReporting])
-  enIntensity <- enIntensity[period %in% timeResReporting]
-  loadFactor <- loadFactor[period %in% timeResReporting]
-  CAPEXtrackedFleet <- CAPEXtrackedFleet[period %in% timeResReporting]
-  aggregatedCosts <- aggregatedCosts[period %in% timeResReporting]
-  subsides <- subsides[period %in% timeResReporting]
-  combinedCAPEXandOPEX <- combinedCAPEXandOPEX[period %in% timeResReporting]
+  inputData$loadFactor <- inputData$loadFactor[period %in% timeResReporting]
 
   # Calculate final energy
-  fleetFEdemand <- toolCalculateFE(fleetData$fleetEnergyIntensity, fleetESdemand, loadFactor, helpers)
+  fleetFEdemand <- toolCalculateFE(fleetData$fleetEnergyIntensity, fleetESdemand, inputData$loadFactor, helpers)
 
-  # Calculate liquids and gases split
-  mixedCarrierSplit <- toolSplitMixedCarrier(fleetFEdemand[technology %in% c("Liquids", "Gases")], gdx)
-
-  # Calculate emissions
-  fleetEmissionsTailpipe <- toolCalculateEmissions(fleetFEdemand, gdx, "Tailpipe")
-  FEwithoutBioSyn <- rbind(mixedCarrierSplit$splittedCarriers[grepl(".*Fossil", technology)][, technology := gsub("|.*", "", technology)], fleetFEdemand[!technology %in% c("Liquids", "Gases")])
-  fleetEmissionsDemand <- toolCalculateEmissions(fleetFEdemand, gdx, "Demand")
-  fleetEmissions <- rbind(fleetEmissionsTailpipe, fleetEmissionsDemand)
-
-  # Calculate vehicle sales
-  sales <- copy(fleetSizeAndComp$fleetVehNumbersConstrYears[period == constrYear])
-  sales[, variable := "Sales"][, constrYear := NULL]
-  sales <- approx_dt(sales, timeResReporting, "period", "value", extrapolate = TRUE)
-
-  # Calculate yearly costs
-  fleetES <- copy(fleetESdemand)
-  fleetES[, c("variable", "unit") := NULL]
-  setnames(fleetES, "value", "ESdemand")
-  fleetCost <- rbind(fleetData$fleetCapCosts, aggregatedCosts[!variable == "Capital costs sales"])
-  fleetYrlCosts <- merge(fleetCost, fleetES, by = intersect(names(fleetCost), names(fleetES)))
-  fleetYrlCosts[, value := value * ESdemand][, unit := "billion US$2005/yr"][, ESdemand := NULL]
-
-  # Calculate upfront capital cost for vehicle sales
-  upfrontCAPEX <- rbind(CAPEXtrackedFleet, subsides)
-  cols <- names(upfrontCAPEX)
-  cols <- cols[!cols %in% c("value", "variable")]
-  upfrontCAPEX <-  upfrontCAPEX[, .(value = sum(value)), by = cols][, variable := "Upfront capital costs sales"]
-  upfrontCAPEX <- merge(upfrontCAPEX, helpers$decisionTree, by = intersect(names(upfrontCAPEX), names(helpers$decisionTree)))
-
-  # Differentiate between intensive and extensive variables (those that can be aggregated without a weight)
   outputVarsExt <- list(
     fleetESdemand = fleetESdemand,
-    fleetFEdemand = fleetFEdemand,
-    FEsplittedCarriers = mixedCarrierSplit$splittedCarriers,
-    fleetEmissions = fleetEmissions,
-    sales = sales,
-    stock = fleetSizeAndComp$fleetVehNumbers,
-    fleetYrlCosts = fleetYrlCosts
+    fleetFEdemand = fleetFEdemand
   )
   outputVarsInt <- list(
     fleetEnergyIntensity = fleetData$fleetEnergyIntensity,
-    upfrontCAPEX = upfrontCAPEX
+    fleetCapCosts = fleetData$fleetCapCosts
   )
 
-  # Extended reporting
-  if (extendedReporting == TRUE) {
+  if (REMINDinputOnly == FALSE) {
 
-     # Calculate useful energy
-    fleetUEdemand <- toolCalculateUE(fleetFEdemand)
+      # Switch from mixed time resolution to the reporting time resolution for all vars
+      ESdemandFuelVehicle <- ESdemandFuelVehicle[period %in% timeResReporting]
+      fleetSizeAndComp <- lapply(fleetSizeAndComp, FUN = function(x) x <- x[period %in% timeResReporting])
+      inputData$enIntensity <- inputData$enIntensity[period %in% timeResReporting]
+      inputData$upfrontCAPEXtrackedFleet <- inputData$upfrontCAPEXtrackedFleet[period %in% timeResReporting]
+      aggregatedCosts <- aggregatedCosts[period %in% timeResReporting]
+      inputData$combinedCAPEXandOPEX <- inputData$combinedCAPEXandOPEX[period %in% timeResReporting]
 
-    # Calculate vintages (stock without sales)
-    vintages <- copy(fleetSizeAndComp$fleetVehNumbersConstrYears[!period == constrYear])
-    vintages[, variable := "Vintages"][, constrYear := NULL]
-    cols <- names(vintages)
-    vintages <- vintages[, .(value = sum(value)), by = eval(cols[!cols %in% c("value", "constrYear")])]
-    vintages <- approx_dt(vintages, timeResReporting, "period", "value", extrapolate = TRUE)
+      # Calculate liquids and gases split
+      mixedCarrierSplit <- toolSplitMixedCarrier(fleetFEdemand[technology %in% c("Liquids", "Gases")], gdx)
+
+      # Calculate emissions
+      fleetEmissionsTailpipe <- toolCalculateEmissions(fleetFEdemand, gdx, "Tailpipe")
+      FEwithoutBioSyn <- rbind(mixedCarrierSplit$splittedCarriers[grepl(".*Fossil", technology)][, technology := gsub("|.*", "", technology)], fleetFEdemand[!technology %in% c("Liquids", "Gases")])
+      fleetEmissionsDemand <- toolCalculateEmissions(fleetFEdemand, gdx, "Demand")
+      fleetEmissions <- rbind(fleetEmissionsTailpipe, fleetEmissionsDemand)
+
+      # Calculate vehicle sales
+      sales <- copy(fleetSizeAndComp$fleetVehNumbersConstrYears[period == constrYear])
+      sales[, variable := "Sales"][, constrYear := NULL]
+      sales <- approx_dt(sales, timeResReporting, "period", "value", extrapolate = TRUE)
+
+      # Calculate yearly costs
+      fleetES <- copy(fleetESdemand)
+      fleetES[, c("variable", "unit") := NULL]
+      setnames(fleetES, "value", "ESdemand")
+      fleetCost <- rbind(fleetData$fleetCapCosts, aggregatedCosts[!variable == "Capital costs sales"])
+      fleetYrlCosts <- merge(fleetCost, fleetES, by = intersect(names(fleetCost), names(fleetES)))
+      fleetYrlCosts[, value := value * ESdemand][, unit := "billion US$2005/yr"][, ESdemand := NULL]
+
+      # Calculate upfront capital cost for vehicle sales
+      inputData$upfrontCAPEXtrackedFleet <- copy(inputData$upfrontCAPEXtrackedFleet)
+      inputData$upfrontCAPEXtrackedFleet <- merge(inputData$upfrontCAPEXtrackedFleet, helpers$decisionTree, by = intersect(names(inputData$upfrontCAPEXtrackedFleet), names(helpers$decisionTree)))
+
+      # Differentiate between intensive and extensive variables (those that can be aggregated without a weight)
+      addOutputVarsExt <- list(
+        FEsplittedCarriers = mixedCarrierSplit$splittedCarriers,
+        fleetEmissions = fleetEmissions,
+        sales = sales,
+        stock = fleetSizeAndComp$fleetVehNumbers,
+        fleetYrlCosts = fleetYrlCosts
+      )
+      addOutputVarsInt <- list(
+        upfrontCAPEXtrackedFleet = inputData$upfrontCAPEXtrackedFleet
+      )
+
+      outputVarsExt <- append(outputVarsExt, addOutputVarsExt)
+      outputVarsInt <- append(outputVarsInt, addOutputVarsInt)
+
+      # Extended reporting
+      if (extendedReporting == TRUE) {
+        browser()
+         # Calculate useful energy
+        fleetUEdemand <- toolCalculateUE(fleetFEdemand)
+
+        # Calculate vintages (stock without sales)
+        vintages <- copy(fleetSizeAndComp$fleetVehNumbersConstrYears[!period == constrYear])
+        vintages[, variable := "Vintages"][, constrYear := NULL]
+        cols <- names(vintages)
+        vintages <- vintages[, .(value = sum(value)), by = eval(cols[!cols %in% c("value", "constrYear")])]
+        vintages <- approx_dt(vintages, timeResReporting, "period", "value", extrapolate = TRUE)
 
 
-    extendedExt <- list(fleetUEdemand = fleetUEdemand,
-                        vintages = vintages,
-                        )
+        extendedExt <- list(fleetUEdemand = fleetUEdemand,
+                            vintages = vintages,
+                            )
 
-    extendedInt <- list(loadFactor = loadFactor,
-                        fleetCost = fleetCost,
-                        FEsplitShares = mixedCarrierSplit$splitShares
-                        )
+        extendedInt <- list(loadFactor = inputData$loadFactor,
+                            operatingCostNonFuel = fleetCost[variable == "Operating costs (total non-fuel)"],
+                            fuelCost = fleetCost[variable == "Fuel costs"],
+                            FEsplitShares = mixedCarrierSplit$splitShares
+                            )
 
-    outputVarsExt <- append(outputVars, extendedExt)
-    outputVarsInt <- append(outputVars, extendedInt)
-  }
+        outputVarsExt <- append(outputVarsExt, extendedExt)
+        outputVarsInt <- append(outputVarsInt, extendedInt)
+      }
 
-  outputVars <- list(ext = outputVarsExt,
+      outputVars <- list(ext = outputVarsExt,
                      int = outputVarsInt)
 
+      if (analytics == TRUE) {
+
+        updatedEndogenousCosts <- list()
+        policyMask <- list()
+        rawEndogenousCost <- list()
+        for (i in 1:length(endogenousCostsIterations)) {
+          updatedEndogenousCosts[i] <- endogenousCostsIterations[[i]]$updatedEndogenousCosts
+          policyMask[i] <- endogenousCostsIterations[[i]]$policyMask
+          rawEndogenousCost[i] <- endogenousCostsIterations[[i]]$rawEndogenousCost
+        }
+        updatedEndogenousCosts <- rbindlist(updatedEndogenousCosts)
+        policyMask <- rbindlist(policyMask)
+        rawEndogenousCost <- rbindlist(rawEndogenousCost)
+        analyticsData <- list(updatedEndogenousCosts, policyMask, rawEndogenousCost)
+        outputVars <- append(outputVars, analyticsData)
+      }
+
   return(outputVars)
+  }
 }

@@ -72,6 +72,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
                                       package = "edgeTransport"))
   reportingAggregation <- fread(system.file("extdata", "helpersReportingAggregation.csv",
                                       package = "edgeTransport"))
+  mapEdgeToREMIND <- fread(system.file("extdata/helpersMappingEdgeTtoREMINDcategories.csv", package = "edgeTransport", mustWork = TRUE))
 
   return(
     list(
@@ -89,6 +90,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
       scenParLoadFactor = scenParLoadFactor,
       mitigationTechMap = mitigationTechMap,
       regionmappingISOto21to12 = regionmappingISOto21to12,
+      mapEdgeToREMIND = mapEdgeToREMIND,
       reportingNames = reportingNames,
       reportingAggregation = reportingAggregation
     )

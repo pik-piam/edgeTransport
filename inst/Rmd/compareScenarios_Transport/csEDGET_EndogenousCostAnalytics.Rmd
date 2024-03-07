@@ -1,0 +1,21 @@
+# Endogenous Cost Analytics
+
+```{r}
+
+data <- as.data.table(data)
+plotData <- data[grepl("(Policy mask.*|rawEndogenousCost.*|updatedEndogenousCost.*"), variable]
+
+# Convert year to a factor for better plotting
+plotData$period <- as.factor(plotData$period)
+
+# Create the line plot with facets
+ggplot(plotData, aes(x = period, y = value, group = variable, color = variable)) +
+  geom_line() +
+  facet_grid(region ~ vehicleType + technology, scales = "free_y") +
+  labs(title = "Endogenous Cost",
+       x = "period",
+       y = "value",
+       color = "variable") +
+  theme_minimal()
+
+```

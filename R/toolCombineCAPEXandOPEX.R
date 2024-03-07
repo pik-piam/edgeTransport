@@ -14,8 +14,11 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, 
   # Tracked fleet (LDV 4W, Trucks, Busses)
     # Annualize and discount CAPEX to convert to US$2005/veh/yr
     # Include subsidies on LDV 4 Wheelers
-    annualizedCapexTrackedFleet <- rbind(CAPEXtrackedFleet, subsidies)
-    annualizedCapexTrackedFleet <- merge(annualizedCapexTrackedFleet, annuity, by = "univocalName", allow.cartesian = TRUE)
+    upfrontCAPEXtrackedFleet <- rbind(CAPEXtrackedFleet, subsidies) # in US$2005/veh
+    cols <- names(upfrontCAPEXtrackedFleet)
+    cols <- cols[!cols %in% c("value", "variable")]
+    upfrontCAPEXtrackedFleet[, .(value = sum(value)), by = cols][, variable := "Upfront capital costs sales"]
+    annualizedCapexTrackedFleet <- merge(upfrontCAPEXtrackedFleet, annuity, by = "univocalName", allow.cartesian = TRUE)
     annualizedCapexTrackedFleet[, value := value * annuity][, unit := "US$2005/veh/yr"][, annuity := NULL]
     # Combine with non Fuel OPEX
     CAPEXandNonFuelOPEXtrackedFleet <- rbind(annualizedCapexTrackedFleet, nonFuelOPEXtrackedFleet)
@@ -36,7 +39,6 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, 
     setnames(energyIntensity, "value", "energyIntensity")
     fuelCosts <- merge(fuelCosts, energyIntensity, by = c("region", "univocalName", "technology", "period"))
     fuelCosts[, value := value * energyIntensity][, unit := "US$2005/vehkm"][, energyIntensity := NULL]
-
     combinedCAPEXandOPEX <- rbind(CAPEXandNonFuelOPEX, fuelCosts)
 
   # Convert all cost components from US$2005/vehkm to US$2005/(p|t)km
@@ -61,5 +63,10 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet, nonFuelOPEXtrackedFleet, 
       stop("combinedCAPEXandOPEX contain NAs")
     }
 
-    return(combinedCAPEXandOPEX)
+    transportCosts <- list(
+      combinedCAPEXandOPEX = combinedCAPEXandOPEX,
+      upfrontCAPEXtrackedFleet = upfrontCAPEXtrackedFleet
+    )
+
+    return(transportCosts)
 }

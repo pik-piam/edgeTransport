@@ -18,7 +18,7 @@
 #' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gdxPath, outputFolder = NULL, generateTransportData = TRUE, generateREMINDinputData = FALSE){
+toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", gdxPath = NULL, outputFolder = NULL, generateTransportData = TRUE, generateREMINDinputData = FALSE){
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 25000 # [constant 2005 US$MER]
@@ -60,6 +60,7 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     loadFactor = scenSpecInputData$scenSpecLoadFactor,
     enIntensity = scenSpecInputData$scenSpecEnIntensity,
     combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
+    upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
     initialIncoCosts = scenSpecInputData$initialIncoCosts,
     annualMileage = inputDataRaw$annualMileage,
     timeValueCosts = inputDataRaw$timeValueCosts,
@@ -76,8 +77,8 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   ## endogenous costs update
   ########################################################
 
-  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData, genModelPar$lambdasDiscreteChoice, policyStartYear, helpers)
   vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc, helpers)
+  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData, genModelPar$lambdasDiscreteChoice, policyStartYear, helpers)
 
   #################################################
   ## Demand regression module
@@ -95,10 +96,10 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   # Start of iterative section
   #------------------------------------------------------
 
-  storeEndogenousCostsIterations <- list()
-  storeFleetSizeAndCompositionIterations <- list()
+  endogenousCostsIterations <- list()
+  fleetSizeAndCompositionIterations <- list()
   fleetVehiclesPerTech <- NULL
-  iterations <- 1
+  iterations <- 2
 
   for (i in seq(1, iterations, 1)) {
 
@@ -107,29 +108,27 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
     #################################################
     # provide endogenous updates to cost components -----------
     # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
-    endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts, vehicleDepreciationFactors, scenModelPar$scenParIncoCost,
+    endogenousCostsIterations[[i]] <- toolUpdateEndogenousCosts(dataEndogenousCosts, vehicleDepreciationFactors, scenModelPar$scenParIncoCost,
                                                  policyStartYear, inputData$timeValueCosts, inputData$prefTrends, genModelPar$lambdasDiscreteChoice,
                                                  helpers, years, fleetVehiclesPerTech)
-    storeEndogenousCostsIterations[[i]] <- copy(endogenousCosts)
-    lapply(storeEndogenousCostsIterations[[i]], function(dt) dt[, variable := paste0(variable, "|Iteration ", i)])
+    lapply(endogenousCostsIterations[[i]], function(dt) dt[, variable := paste0(variable, "|Iteration ", i)])
     print("Endogenous updates to cost components finished")
     #################################################
     ## Discrete choice module
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
-    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCosts$updatedEndogenousCosts, years, helpers)
+    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCostsIterations[[i]]$updatedEndogenousCosts, years, helpers)
 
-    fuelVehicleESdemand <- toolCalculateFVdemand(copy(sectorESdemand), copy(vehSalesAndModeShares), copy(inputData$histESdemand), baseYear, helpers)
+    ESdemandFuelVehicle <- toolCalculateFVdemand(sectorESdemand, vehSalesAndModeShares, helpers, inputData$histESdemand, baseYear)
     print("Calculation of vehicle sales and mode shares finished")
     #################################################
     ## Vehicle stock module
     #################################################
     # Calculate vehicle stock for cars, trucks and busses -------
-    fleetSizeAndComposition <- toolCalculateFleetComposition(copy(fuelVehicleESdemand), copy(vehicleDepreciationFactors), copy(vehSalesAndModeShares),
-                                                             copy(inputData$annualMileage), copy(inputData$loadFactor), helpers)
-    fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
-    storeFleetSizeAndCompositionIterations[[i]] <- copy(fleetSizeAndComposition$fleetVehNumbers)
-    storeFleetSizeAndCompositionIterations[[i]][, variable := paste0(variable, "|Iteration ", i)]
+    fleetSizeAndCompositionIterations[[i]] <- toolCalculateFleetComposition(ESdemandFuelVehicle, vehicleDepreciationFactors, vehSalesAndModeShares,
+                                                             inputData$annualMileage, inputData$loadFactor, helpers)
+    fleetVehiclesPerTech <- fleetSizeAndCompositionIterations[[i]]$fleetVehiclesPerTech
+
     print("Calculation of vehicle stock finished")
   }
   #------------------------------------------------------
@@ -139,23 +138,44 @@ toolEdgeTransport <- function(SSPscen, transportPolScen, demScen = "default", gd
   #################################################
   ## Reporting
   #################################################
-  # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
-  timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
-
-  vars <- toolCalculateOutputVariables(fuelVehicleESdemand, inputData$enIntensity, inputData$loadFactor, fleetSizeAndComposition,
-            inputDataRaw$CAPEXtrackedFleet, inputDataRaw$subsidies,
-            inputData$combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare)
+  # Save data
+  outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d"),
+                                                 SSPscen, "-", transportPolScen, "-", demScen))
 
   if (generateTransportData == TRUE) {
-    toMIF <- toolReportAndAggregateMIF(vars, helpers, paste0(transportPolScen, " ", SSPscen), "EDGE-T", gdx, inputData$GDPMER)
-    #toolSaveRDS(SSPscen, transportPolScen, demScen, inputDataRaw, inputData,
-                #storeFleetSizeAndCompositionIterations, storeEndogenousCostsIterations, vars)
-    write.mif(toMIF, file.path(outputFolder, folderName, "edgeTransportSA.mif"))
-    file.copy(gdx, outputFolder, folderName)
+    result <- system.time({
+    toolStoreData(outputFolder = outputFolder,
+                  SSPscen = SSPscen,
+                  transportPolScen = transportPolScen,
+                  demScen = demScen,
+                  gdxPath = gdxPath,
+                  inputDataRaw = inputDataRaw,
+                  hybridElecShare = hybridElecShare,
+                  inputData = inputData,
+                  histPrefs = histPrefs,
+                  fleetSizeAndCompositionIterations = fleetSizeAndCompositionIterations,
+                  endogenousCostsIterations = endogenousCostsIterations,
+                  ESdemandFuelVehicle = ESdemandFuelVehicle,
+                  vehSalesAndModeShares = vehSalesAndModeShares)
+      Sys.sleep(2)  # Example code that takes some time
+    })
+    elapsed_time <- result[3]
+    cat("Elapsed time:", elapsed_time, "seconds\n")
+    toolReportEdgeTransport(folderPath = outputFolder,
+                            gdxPath = gdxPath,
+                            ESdemandFuelVehicle = ESdemandFuelVehicle,
+                            inputData = inputData,
+                            inputDataRaw = inputDataRaw,
+                            fleetSizeAndCompositionIterations = fleetSizeAndCompositionIterations,
+                            endogenousCostsIterations = endogenousCostsIterations,
+                            hybridElecShare = hybridElecShare,
+                            extendedReporting = TRUE,
+                            analytics = TRUE)
   }
 
   if (generateREMINDinputData == TRUE) {
     REMINDinputData <- reportREMINDinputData()
+    iterativeEDGETinputData <- reportIterativeEDGETinputData()
     if (storeREMINDinputData == TRUE) {
       lapply(REMINDinputData,  function(x) write.csv(x, file.path(outputFolder, folderName, "5_REMINDinputData", paste0(data.table.name(x), ".csv"))))
     }
