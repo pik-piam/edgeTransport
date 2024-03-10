@@ -1,5 +1,5 @@
 
-toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gdx,  extendedReporting = FALSE) {
+toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gdx,  reportExtendedTransportData = FALSE) {
 
   rename <- function(var, mapNames) {
     cols <- names(var)
@@ -16,7 +16,7 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   }
 
   aggregate <- function(var, mapAggregation, weight = NULL) {
-
+   browser()
     var <- merge(var, mapAggregation, by = "univocalName", allow.cartesian = TRUE, all.x = TRUE)
     var[, univocalName := NULL]
     aggrOrder <- c("sector", "aggrAviationShipping", "aggrActiveModes", "subsectorL1", "subsectorL2",
@@ -33,6 +33,7 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
     }
 
     for (i in seq(0, length(aggrOrder) - 1)) {
+      browser()
       cols <- aggrOrder[1:(length(aggrOrder) - i)]
       last <- cols[length(cols)]
       byCols <- c("region",  cols, "variable", "unit", "period")
@@ -69,6 +70,26 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
       aggrVar[, eval(cols) := NULL]
       aggregatedVars <- rbind(aggregatedVars, aggrVar)
     }
+
+    if (fuel %in% names(var)) {
+      # Aggregate keeping technology level
+      aggregateLeveltoTech <- c("sector", "subsectorL3", "subsectorL2", "aggrVehSizes")
+      for (i in aggregateLeveltoTech) {
+        cols <- aggrOrder[1:match(i, aggrOrder)]
+        last <- cols[length(cols)]
+        after <- aggrOrder[(match(i, aggrOrder) + 1)]
+        cols <- c(cols, "technology", "fuel")
+        byCols <- c("region",  cols, "variable", "unit", "period")
+        aggrVar <- copy(var)
+        # To prevent duplicates mode types with now further breakdown needs to be filtered out
+        # (e.g. Bus|BEV has been calculated above)
+        aggrVar <- aggrVar[!is.na(get(last)) & !is.na(get(after)), .(value = sum(value)), by = eval(byCols)]
+        aggrVar[, variable := paste0(variable, "|Transport")]
+        for (r in cols) aggrVar[!is.na(get(r)), variable := paste0(variable, get(r))]
+        aggrVar[, eval(cols) := NULL]
+        aggregatedVars <- rbind(aggregatedVars, aggrVar)
+      }
+    }
     # Aggregate with bunkers
     aggrVar <- copy(var)
     aggrVar[grepl(".*Pass.*", sector), sector := "|Pass with bunkers"]
@@ -95,8 +116,10 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   varsToMIFint <- copy(vars$int)
   varsToMIFext <- lapply(varsToMIFext, rename, helpers$reportingNames)
   varsToMIFint <- lapply(varsToMIFint, rename, helpers$reportingNames)
-  if (!is.null(vars$analyticsData)) {
-    varsToMIFanalytics <- lapply(vars$analyticsData, rename, helpers$reportingNames)
+  varsToMIFanalytics <- NULL
+  if (!is.null(vars$updatedEndogenousCosts)) {
+    varsToMIFanalytics <- list(vars$updatedEndogenousCosts, vars$policyMask, vars$rawEndogenousCost)
+    varsToMIFanalytics <- lapply(varsToMIFanalytics, rename, helpers$reportingNames)
     varsToMIFanalytics <- lapply(varsToMIFanalytics,
                                  function(x){x[, variable := paste0(variable, "|", vehicleType, "|", technology)]
                                              x[, c("region", "period", "variable", "value", "unit")]})
@@ -117,10 +140,10 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   # Regional aggregation
   ## Aggregation to world is always supplied
   mapWorld <- unique(toMIFext[, c("region")])[, aggrReg := "World"]
-  worldDataExt <- aggregate_map(toMIFext, mapWorld, by = "region")
+  worldDataExt <- as.data.table(aggregate_map(toMIFext, mapWorld, by = "region"))
   weight <- copy(GDPMER)
   setnames(weight, "value", "weight_val_col")
-  worldDataInt <- aggregate_map(toMIFint, mapWorld, by = "region", weights = weight, weight_item_col = "region")
+  worldDataInt <- as.data.table(aggregate_map(toMIFint, mapWorld, by = "region", weights = weight, weight_item_col = "region"))
 
   ## if regionSubsetList != NULL -> gdx provides 21 region resolution
   regionSubsetList <- toolRegionSubsets(gdx)
@@ -139,11 +162,12 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
       tmp <- data.table(region = regionSubsetList[[i]], aggrReg = namesReg[i])
       regSubsetAggregation <- rbind(regSubsetAggregation, tmp)
     }
-    subsetDataExt <- aggregate_map(toMIFext, regSubsetAggregation, by = "region")
+    subsetDataExt <- as.data.table(aggregate_map(toMIFext[region %in% unique(regSubsetAggregation$region)], regSubsetAggregation, by = "region"))
     weight <- copy(GDPMER)
     setnames(weight, "value", "weight_val_col")
-    subsetDataDataInt <- aggregate_map(toMIFint, regSubsetAggregation, by = "region",
-                                       weights = weight, weight_item_col = "region")
+    subsetDataDataInt <- as.data.table(aggregate_map(toMIFint[region %in% unique(regSubsetAggregation$region)], regSubsetAggregation, by = "region",
+                                       weights = weight, weight_item_col = "region"))
+
     # EUR and EU27 aggregation is always provided in the 21 region resolution
     toMIFint <- rbind(toMIFint, subsetDataDataInt[region %in% c("EUR", "EU27")])
     toMIFext <- rbind(toMIFext, subsetDataExt[region %in% c("EUR", "EU27")])
@@ -153,7 +177,7 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   toMIFext <- rbind(toMIFext, worldDataExt)
 
   # Other subset region are only provided in the extended reporting
-  if (extendedReporting == TRUE) {
+  if (reportExtendedTransportData == TRUE) {
     toMIFint <- rbind(toMIFint, subsetDataDataInt[!region %in% c("EUR", "EU27")])
     toMIFext <- rbind(toMIFext, subsetDataExt[!region %in% c("EUR", "EU27")])
   }
@@ -161,6 +185,7 @@ toolReportAndAggregateMIF <- function(vars, GDPMER, helpers, scenario, model, gd
   toMIF <- rbind(toMIFint, toMIFext)
   if (!is.null(varsToMIFanalytics)) toMIF <- rbind(toMIF, varsToMIFanalytics)
   toMIF[, model := model][, scenario := scenario]
+
   toMIF <- dcast(toMIF, model + scenario + region + variable + unit ~ period)
 
   # Use gdp as weight for aggregation (as it is done in mrremind)

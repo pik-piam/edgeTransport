@@ -92,8 +92,8 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   }
 
-  tempFile <- tempfile()
-  sink(tempFile)
+  calibrationNotes <- character()
+  calibrationNotes <- capture.output({
 
   dataStructureDummy <- names(helpers$decisionTree)
   dataStructureDummy <- dataStructureDummy[!dataStructureDummy %in% c("univocalName")]
@@ -194,10 +194,14 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   historicalPreferences <- rbind(FVpreference, VS3preference, S3S2preference, S2S1preference, S1Spreference)
   toolCheckAllLevelsComplete(historicalPreferences, helpers$decisionTree, "Historical preferences")
-  sink(tempFile)
+  })
   historicalPreferences <-  historicalPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
   historicalPreferences[, variable := paste0("Preference|", level)][, unit := "-"]
   setnames(historicalPreferences, "preference", "value")
-  return(historicalPreferences)
+
+  result <- list(historicalPreferences = historicalPreferences,
+                 calibrationNotes = calibrationNotes)
+
+  return(result)
 }
