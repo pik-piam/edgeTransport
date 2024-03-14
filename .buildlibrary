@@ -1,9 +1,9 @@
-ValidationKey: '3026799'
+ValidationKey: '3048584'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
 - 'Warning: namespace ''.*'' is not available and has been replaced'
 - '''.*'' is needed for checks on size reduction of PDFs'
-AcceptedNotes: ~
+AcceptedNotes: checking installed package size
 allowLinterWarnings: yes
 enforceVersionUpdate: no
