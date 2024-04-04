@@ -1,17 +1,23 @@
 ```{r reference models for historical}
+
 # Sometimes it is necessary to choose a single model for the historical data,
 # e.g., calculating per capita variables. These reference models are defined here.
+
 histRefModel <- c(
   "Population" = "WDI",
   "GDP|PPP pCap" = "James_IMF"
 )
 
-
 options(mip.histRefModel = histRefModel) # nolint
+
 ```
 
-# TODO: move this function
-```{r load custom functions}
+
+```{r load custom plotting function}
+
+library(ggplot2)
+library(dplyr)
+
 showLinePlotsByVariable <- function(
     data, vars, xVar, scales = "free_y",
     showHistorical = FALSE,
@@ -98,6 +104,7 @@ showLinePlotsByVariable <- function(
 
   return(invisible(NULL))
 }
+
 ```
 
 ```{r calcuate pCap variables}
