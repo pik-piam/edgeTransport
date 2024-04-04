@@ -243,7 +243,7 @@ data %>%
   data
 ```
 
-
+# TODO needed?
 ```{r add gdp column}
 # Create a new column gdp with the value of GDP|PPP pCap (kUS$2005).
 data %>% 
@@ -257,11 +257,10 @@ data %>%
   data
 ```
 
-
+# TODO needed?
 ```{r calcuate pGDP variables}
 # For all variables in following table, add a new variable to data with the name
-# "OldName pGDP". Calculate its value by 
-#     OldValue / (GDP|PPP pCap) * conversionFactor 
+# "OldName pGDP". Calculate its value by OldValue / (GDP|PPP pCap) * conversionFactor 
 # and set its unit to newUnit. 
 # The new variable "OldName pGDP" will be available in the plot sections.
 pGdpVariables <- tribble(
@@ -299,6 +298,7 @@ options(mip.histRefModel = histRefModel)
 source("cs2_plot_functions.R", local=TRUE)
 ```
 
+# TODO: needed?
 
 ```{r sectionPaths, include=FALSE}
 if (length(params$sections) == 1 && params$sections == "all") {

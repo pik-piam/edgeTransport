@@ -46,7 +46,7 @@ In case of questions / problems please contact Alois Dirnaichner <dirnaichner@pi
 
 To cite package **edgeTransport** in publications use:
 
-Dirnaichner A, Rottoli M, Hoppe J (2024). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 1.5.5, <URL: https://github.com/pik-piam/edgeTransport>.
+Dirnaichner A, Rottoli M, Hoppe J (2024). _edgeTransport: Prepare EDGE Transport Data for the REMIND model_. R package version 1.5.5, <https://github.com/pik-piam/edgeTransport>.
 
 A BibTeX entry for LaTeX users is
 
