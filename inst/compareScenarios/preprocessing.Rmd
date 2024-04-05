@@ -1,3 +1,10 @@
+```{r load additional libraries}
+
+library(ggplot2)
+library(dplyr)
+
+```
+
 ```{r reference models for historical}
 
 # Sometimes it is necessary to choose a single model for the historical data,
@@ -14,9 +21,6 @@ options(mip.histRefModel = histRefModel) # nolint
 
 
 ```{r load custom plotting function}
-
-library(ggplot2)
-library(dplyr)
 
 showLinePlotsByVariable <- function(
     data, vars, xVar, scales = "free_y",
