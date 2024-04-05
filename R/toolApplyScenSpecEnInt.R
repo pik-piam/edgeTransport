@@ -1,9 +1,10 @@
-#' Apply demand scenario specific adjustments to the load Factor
+#' Apply demand scenario specific adjustments to the energy intensity
 #' @author Johanna Hoppe
-#' @param enInt energy intensity input data supplied by mrtransport
-#' @param scenParEnergyIntensity transport policy scenario specific energy intensity improvement factors
-#' @param policyStartYear year from which scenario specific transport policies are applied
-#' @param helpers list with helpers
+#' @param enInt Energy intensity input data supplied by mrtransport
+#' @param scenParEnergyIntensity Transport policy scenario specific energy intensity improvement factors
+#' @param policyStartYear Year from which scenario specific transport policies are applied
+#' @param helpers List with helpers
+#' @returns data.table with scenario specific energy intensity input data
 #' @import data.table
 
 

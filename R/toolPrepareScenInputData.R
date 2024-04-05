@@ -1,10 +1,22 @@
+#' Apply transport scenario specific adjustments to input data
+#' @author Johanna Hoppe
+#' @param genModelPar General model parameters
+#' @param scenModelPar Transport scenario (SSPscen + demScen + polScen) specific model parameters
+#' @param inputDataRaw Raw input data
+#' @param policyStartYear Year when scenario differentiation sets in
+#' @param GDPcutoff GDP cutoff to differentiate between regions
+#' @param helpers List with helpers
+#' @returns list of data.tables with scenario specific input data
+#' @import data.table
+#' @export
 
-
-toolPrepareScenInputData <- function(generalPar, scenarioPar, RawInputData, policyStartYear, helpers) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers) {
 
   # Preparation of baseline preference trends -------------------------------------
   # change to long-format
-  basePrefTrends <- melt(generalPar$baselinePrefTrends, variable.name = "period", id.vars = c("region", "level", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
+  basePrefTrends <- melt(genModelPar$baselinePrefTrends, variable.name = "period",
+                         id.vars = c("region", "level", "sector", "subsectorL1",
+                                     "subsectorL2", "subsectorL3", "vehicleType", "technology"))
   # interpolate all timesteps
   # get rid of levels as period is treated as a factor after using melt (not supported by approx_dt)
   basePrefTrends[, period := as.numeric(as.character(period))]
@@ -12,11 +24,13 @@ toolPrepareScenInputData <- function(generalPar, scenarioPar, RawInputData, poli
   basePrefTrends <- basePrefTrends[period >= 2020]
 
   # order
-  basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
+  basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
+                                       "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
   basePrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
   # Application of policy induced changes to baseline preference trends --------------
-  if (!is.null(scenarioPar$scenParPrefTrends)) {
-    scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenarioPar$scenParPrefTrends, RawInputData$GDPpcMER, policyStartYear, helpers)
+  if (!is.null(scenModelPar$scenParPrefTrends)) {
+    scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
+                                                  inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends
@@ -24,34 +38,45 @@ toolPrepareScenInputData <- function(generalPar, scenarioPar, RawInputData, poli
   }
 
   # Application of policy induced changes on load factor ----------------------------
-  if (!is.null(scenarioPar$scenParLoadFactor)) {
-    scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(RawInputData$loadFactor, scenarioPar$scenParLoadFactor,
+  if (!is.null(scenModelPar$scenParLoadFactor)) {
+    scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(inputDataRaw$loadFactorRaw, scenModelPar$scenParLoadFactor,
                                                       policyStartYear, helpers)
     scenSpecLoadFactor[, variable := "Load factor"]
     print("Policy induced changes to the loadfactor were applied")
   } else {
-    scenSpecLoadFactor <- RawInputData$loadFactor[, variable := "Load factor"]
+    scenSpecLoadFactor <- inputDataRaw$loadFactor[, variable := "Load factor"]
     print("No policy induced changes to the loadfactor")
   }
 
   # Application of policy induced changes on energy intensity ----------------------------
-  if (!is.null(scenarioPar$scenParEnergyIntensity)) {
-    scenSpecEnIntensity <- toolApplyScenSpecEnInt(RawInputData$energyIntensity, scenarioPar$scenParEnergyIntensity,policyStartYear, helpers)
+  if (!is.null(scenModelPar$scenParEnergyIntensity)) {
+    scenSpecEnIntensity <- toolApplyScenSpecEnInt(inputDataRaw$energyIntensityRaw,
+                                                  scenModelPar$scenParEnergyIntensity,policyStartYear, helpers)
     scenSpecEnIntensity[, variable := "Energy intensity sales"]
     print("Policy induced changes to the energy intensity were applied")
   } else {
-    scenSpecEnIntensity <- RawInputData$energyIntensity[, variable := "Energy intensity sales"]
+    scenSpecEnIntensity <- inputDataRaw$energyIntensity[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
 
   # Annualization and formatting of monetary costs ---------------------------------------------------
-  annuity <- toolCalculateAnnuity(generalPar$annuityCalc, helpers)
-  transportCosts <- toolCombineCAPEXandOPEX(RawInputData$CAPEXtrackedFleet, RawInputData$nonFuelOPEXtrackedFleet, RawInputData$CAPEXother,
-                                                  RawInputData$nonFuelOPEXother, RawInputData$fuelCosts, RawInputData$subsidies, scenSpecEnIntensity,
-                                                  scenSpecLoadFactor, RawInputData$annualMileage, annuity, helpers)
+  annuity <- toolCalculateAnnuity(genModelPar$annuityCalc, helpers)
+  transportCosts <- toolCombineCAPEXandOPEX(inputDataRaw$CAPEXtrackedFleet,
+                                            inputDataRaw$nonFuelOPEXtrackedFleet,
+                                            inputDataRaw$CAPEXother,
+                                            inputDataRaw$nonFuelOPEXother,
+                                            inputDataRaw$fuelCosts,
+                                            inputDataRaw$subsidies,
+                                            scenSpecEnIntensity,
+                                            scenSpecLoadFactor,
+                                            inputDataRaw$annualMileage,
+                                            annuity,
+                                            helpers)
 
   # Annualization and formatting of non-monetary costs -------------------------------------------------
-  initialIncoCosts <- toolCalculateInitialIncoCost(transportCosts$combinedCAPEXandOPEX, generalPar$incoCostStartVal, annuity, scenSpecLoadFactor, RawInputData$annualMileage, helpers)
+  initialIncoCosts <- toolCalculateInitialIncoCost(transportCosts$combinedCAPEXandOPEX,
+                                                   genModelPar$incoCostStartVal, annuity, scenSpecLoadFactor,
+                                                   inputDataRaw$annualMileage, helpers)
 
   scenSpecInputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,

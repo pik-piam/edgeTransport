@@ -2,7 +2,7 @@
 
 
 toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaMER, POP,
-                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors, baseYear, policyStartYear) {
+                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors, baseYear, policyStartYear, helpers) {
 
   # interpolate SSP specific elasticities based on GDP MER per capita ----------------------------
   setnames(GDPperCapitaMER, "value", "regionGDPpcMER")

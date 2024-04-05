@@ -6,8 +6,7 @@
 #' @param reporting generate EDGE-T reporting data
 #' @return NULL
 #' @author Alois Dirnaichner
-#' @importFrom data.table fread
-#' @importFrom gdxdt writegdx.parameter
+#' @importFrom data.table freadtraceback()
 #' @importFrom gdxrrw rgdx
 #' @export
 
@@ -46,7 +45,7 @@ toolIterativeEDGETransport <- function() {
   # share of electricity in hybrid electric vehicles
   hybridElecShare <- 0.4
   numberOfRegions <- lenght(readGDX(gdx, "all_regi"))
-  iterationNumber <- as.vector(rgdx(gdx, list(name="o_iterationNumber"))$val)
+  iterationNumber <- as.vector(rgdx(gdx, list(name = "o_iterationNumber"))$val)
 
   inputs <- toolLoadIterativeInputs(edgeTransportFolder, numberOfRegions, SSPscenario,
                                        transportPolScenario, demScenario = NULL)

@@ -1,6 +1,6 @@
 #' Read and build the complete structure of the edgeTransport decision tree
 #' @author Johanna Hoppe
-#' @param regionAggregation one of the different options for regional aggregation (iso|regionCode21|regionCode12)
+#' @param regionAggregation choose one of the different options for regional aggregation (iso|regionCode21|regionCode12)
 #' @returns data.table of full spatially extended edgeTransport decision tree
 #' @import data.table
 #' @export
@@ -8,7 +8,8 @@
 toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
   # decisionTree.csv contains all possible branches of the decision tree
-  decisionTree <- fread(system.file("extdata/helpersDecisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  decisionTree <- fread(system.file("extdata/helpersDecisionTree.csv",
+                                    package = "edgeTransport", mustWork = TRUE), header = TRUE)
   decisionTree[, spatial := "all"]
   # Not all countries feature the same branches of the decision tree - Some vehicleTypes and modes are not
   # available in certain countries
@@ -37,12 +38,16 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
           },
           "regionCode21" = {
             completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
-            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode21", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
+            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode21", "sector", "subsectorL1",
+                                                                "subsectorL2", "subsectorL3", "vehicleType",
+                                                                "technology", "univocalName")])
             setnames(completeDataSetAgg, "regionCode21", "region")
           },
           "regionCode12" = {
             completeDataSetAgg <- merge(completeDataSet, regionMap, by = "region")
-            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode12", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName")])
+            completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode12", "sector", "subsectorL1",
+                                                                "subsectorL2", "subsectorL3", "vehicleType",
+                                                                "technology", "univocalName")])
             setnames(completeDataSetAgg, "regionCode21", "region")
           }
   )
@@ -59,7 +64,8 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
 #' @author Johanna Hoppe
 #' @param categories vector of categories to filter
 #' @param decisionTree decision tree that contains the univocalNames associated to the category
-#' @returns list of categories and their associated univocalNames e.g. trn_pass as list entry containing a vector c("Compact Car", "HSR", ..)
+#' @returns list of categories and their associated univocalNames e.g. trn_pass as list entry
+#'          containing a vector c("Compact Car", "HSR", ..)
 #' @import data.table
 #' @export
 
@@ -79,12 +85,14 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
 #' Calculate shares based on discrete choice model.
 #'
 #' Function works for the use of generic preferences as well as for inconvenience costs.
-#' If no preferences are provided the function sets them to one which is equivalent to pure description by inconvenience costs.
+#' If no preferences are provided the function sets them to one which is equivalent to
+#' pure description by inconvenience costs.
 #'
 #' @author Johanna Hoppe
-#' @param dt data.table containing
-#' @param category
-#' @returns data.table
+#' @param totPrice total price of an option in a branch of the decision tree
+#' @param lambda exponent that determines the price sensitivity of the decision model
+#' @param pref optional use of generic preference fators
+#' @returns share of option in a branch of the decision tree
 #' @import data.table
 #' @export
 
@@ -108,8 +116,9 @@ calculateShares <- function(totPrice, lambda, pref = NULL) {
 #' Function that aggregates the data for the next higher level of the decision tree
 #'
 #' @author Johanna Hoppe
-#' @param dt data.table containing
-#' @param category
+#' @param data data.table containing the data of the lower level
+#' @param upperLevel name of the upper level in the decision tree
+#' @param decisionTree full edgeTransport decision tree
 #' @returns data.table
 #' @import data.table
 #' @export
@@ -129,14 +138,19 @@ toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
 
 #' toolApplyMixedTimeRes
 #'
-#' Applies two different temporal resolutions on a data.table object in the edgeTransport data structure
-#' and do a linear approximination for the highRes data that is not available
+#' Applies two different temporal resolutions on a data.table object in the
+#' edgeTransport data structure and do a linear approximination for the highRes data that is not available
 #'
 #' @author Johanna Hoppe
-#' @param data data.table containing data in in the edgeTransport data structure (at least featuring univocalName, period, value)
-#' @param dtTimeRes data.table containing the temporal resolution for different univocalNames
+#' @param data data.table containing data in in the edgeTransport data structure
+#'              (at least featuring univocalName, period, value)
+#' @param hepers list containg several helpers used throughout the model.
+#'          It includes dtTimeRes, a data.table containing the temporal
+#'          resolution for different univocalNames
+#' @param idcols optional supply of idcols for using approx_dt
 #' @returns data.table
 #' @import data.table
+#' @importFrom rmndt approx_dt
 #' @export
 
 toolApplyMixedTimeRes <- function(data, helpers, idcols = NULL) {

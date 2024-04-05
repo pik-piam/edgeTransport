@@ -6,7 +6,6 @@
 #' @param filter list of filters for specific branches in the upper decision tree, containing all associated univocalNames
 #' @import data.table
 
-
 toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
 
 percentChange <- scenParLoadFactor$percentChange

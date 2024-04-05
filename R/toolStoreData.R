@@ -1,6 +1,58 @@
-toolStoreData <- function(...){
+toolStoreData <- function(outputFolder, outputRaw = NULL, ...){
 
-  vars <- list(...)
+  allocateFile <- function(varName) {
+    subfolder <- NULL
+    if (varName %in% c("hybridElecShare",
+                       "histESdemand",
+                       "energyIntensityRaw",
+                       "loadFactorRaw",
+                       "annualMileage",
+                       "CAPEXtrackedFleet",
+                       "nonFuelOPEXtrackedFleet",
+                       "CAPEXother",
+                       "nonFuelOPEXother",
+                       "fuelCosts",
+                       "timeValueCosts",
+                       "subsidies",
+                       "GDPMER",
+                       "helpers")) subfolder <- "1_InputDataRaw"
+    if (varName %in% c("prefTrends",
+                       "loadFactor",
+                       "enIntensity",
+                       "combinedCAPEXandOPEX",
+                       "upfrontCAPEXtrackedFleet",
+                       "initialIncoCosts")) subfolder <- "2_InputDataPolicy"
+    if (varName %in% c("histPrefs")) subfolder <- "3_Calibration"
+    if (varName %in% c("fleetSizeAndComposition",
+                       "vehSalesAndModeShares",
+                       "fleetVehNumbersIterations",
+                       "endogenousCosts",
+                       "ESdemandFVsalesLevel")) subfolder <- "4_Output"
+    if (varName %in% c("REMINDinputData")) subfolder <- "5_REMINDinputData"
+    if (is.null(subfolder)) stop(paste0("No subfolder assigned to ", varName))
+
+    return(subfolder)
+  }
+
+  storeRDS <- function(varName, vars, outputFolder, subfolder = NULL) {
+      if (is.null(subfolder)) subfolder <- allocateFile(varName)
+      saveRDS(vars[[varName]], file.path(outputFolder, subfolder, paste0(varName, ".RDS")))
+  }
+
+  storeCSV <- function(varName, vars, outputFolder, subfolder = NULL) {
+    if (is.null(subfolder)) subfolder <- allocateFile(varName)
+    write.csv(vars[[varName]], file.path(outputFolder, subfolder, paste0(varName, ".csv")))
+  }
+
+  vars <- list()
+  if (!is.null(outputRaw)) vars <- outputRaw
+  addVars <- list(...)
+  vars <- append(vars, addVars)
+
+  #########################################################################
+  ## Create output folder and subfolders
+  #########################################################################
+
   if (!dir.exists(outputFolder)) {
     dir.create(outputFolder)
     dir.create(file.path(outputFolder, "1_InputDataRaw"))
@@ -9,50 +61,31 @@ toolStoreData <- function(...){
     dir.create(file.path(outputFolder, "4_Output"))
   }
 
-  # store general data if provided
+  #########################################################################
+  ## Store special cases (files that should be stored in a different way
+  ## than transferred in vars)
+  #########################################################################
+  # general data
   if (!(is.null(vars$SSPscen) & is.null(vars$transportPolScen) & is.null(vars$demScen))) {
     cfg <- list(
       packageVersionEdgeTransport = packageVersion("edgeTransport"),
       packageVersionMrTransport = packageVersion("mrtransport"),
-      SSPscen = SSPscen,
-      transportPolScen = transportPolScen,
-      demScen = demScen,
+      SSPscen = vars$SSPscen,
+      transportPolScen = vars$transportPolScen,
+      demScen = vars$demScen,
       timeStamp = format(Sys.time(), "%Y-%m-%d_%H.%M")
     )
     saveRDS(cfg, file.path(outputFolder, "cfg.RDS"))
+    vars <- vars[!names(vars) %in% c("SSPscen", "transportPolScen", "demScen")]
   }
-
-  storeRDS <- function(varName, vars, outputfolder, subfolder) {
-    saveRDS(vars[[varName]], file.path(outputFolder, subfolder, paste0(varName, ".RDS")))
-  }
-
-
-  if (!is.null(vars$gdxPath)) {file.copy(gdxPath, file.path(outputFolder))}
-
-  # store raw input data
-  if (!is.null(vars$inputDataRaw)) {
-    varsToExclude <- c("GDPpcMER", "GDPpcPPP", "population")
-    vars$inputDataRaw <- vars$inputDataRaw[!names(vars$inputDataRaw) %in% varsToExclude]
-    lapply(names(vars$inputDataRaw), storeRDS, vars$inputDataRaw, outputfolder, "1_InputDataRaw")
-  }
-  if (!is.null(vars$hybridElecShare)){
-    saveRDS(vars$hybridElecShare, file.path(outputFolder, "1_InputDataRaw", "hybridElecShare.RDS"))
-  }
-  if (!is.null(vars$helpers)){
-    saveRDS(vars$helpers, file.path(outputFolder, "1_InputDataRaw", "helpers.RDS"))
-  }
-
-  # store transport policy specific Input data if provided
-  # Some variables do not get policy specific changes
-  if (!is.null(vars$inputData)){
-    varsToExclude <- c("annualMileage", "timeValueCosts", "histESdemand", "GDPMER", "GDPpcMER", "population")
-    vars$inputData <- vars$inputData[!names(vars$inputData) %in% varsToExclude]
-    lapply(names(vars$inputData), storeRDS, vars$inputData, outputfolder, "2_InputDataPolicy")
-  }
+  if (!is.null(vars$gdxPath)) {
+    file.copy(gdxPath, file.path(outputFolder))
+    vars <- vars[!names(vars) %in% c("gdxPath")]}
 
   # store calibration data if provided
   if (!is.null(vars$histPrefs)){
-    lapply(names(vars$histPrefs), storeRDS, vars$histPrefs, outputfolder, "3_Calibration")
+    lapply(names(vars$histPrefs), storeRDS, vars$histPrefs, outputFolder, "3_Calibration")
+    vars <- vars[!names(vars) %in% c("histPrefs")]
   }
 
   # store output data if provided
@@ -62,6 +95,7 @@ toolStoreData <- function(...){
       iteration <- unique(fleetSizeAndCompositionIterations[[i]][1]$iteration)
       fleetVehNumbersIterations[[i]][, variable := paste0(variable, "|Iteration ", iteration)][, iteration := NULL]
       saveRDS(vars$fleetSizeAndCompositionIterations[[i]], file.path(outputFolder, "4_Output", paste("fleetVehNumbersIteration", "", iteration, ".RDS")))
+      vars <- vars[!names(vars) %in% c("fleetVehNumbersIterations")]
     }
   }
   if (!is.null(vars$endogenousCostsIterations)){
@@ -69,16 +103,8 @@ toolStoreData <- function(...){
       iteration <- unique(endogenousCostsIterations[[i]][1]$iteration)
       endogenousCostsIterations[[i]][, variable := paste0(variable, "|Iteration ", iteration)][, iteration := NULL]
       saveRDS(vars$endogenousCostsIterations[[i]], file.path(outputFolder, "4_Output", paste("endogenousCostsIterations", "", iteration, ".RDS")))
+      vars <- vars[!names(vars) %in% c("endogenousCostsIterations")]
     }
-  }
-  if (!is.null(vars$ESdemandFuelVehicle)){
-    saveRDS(vars$ESdemandFuelVehicle, file.path(outputFolder, "4_Output", "ESdemandFuelVehicle.RDS"))
-  }
-  if (!is.null(vars$vehSalesAndModeShares)){
-    saveRDS(vars$vehSalesAndModeShares, file.path(outputFolder, "4_Output", "vehSalesAndModeShares.RDS"))
-  }
-  if (!is.null(vars$fleetSizeAndComposition)){
-    saveRDS(vars$fleetSizeAndComposition, file.path(outputFolder, "4_Output", "fleetSizeAndComposition.RDS"))
   }
 
   # store REMIND inputdata if provided
@@ -86,8 +112,14 @@ toolStoreData <- function(...){
     if (!dir.exists(file.path(outputFolder, "5_REMINDinputData"))) {
       dir.create(file.path(outputFolder, "5_REMINDinputData"))
     }
-    apply(names(vars$REMINDinputData), storeRDS, vars$REMINDinputData, outputFolder, "5_REMINDinputData")
+    lapply(names(vars$REMINDinputData), storeCSV, vars$REMINDinputData, outputFolder, "5_REMINDinputData")
   }
+
+  ###########################################################################
+  ## Remaining variables are allocated to a subfolder and stored as RDS files
+  ###########################################################################
+  if (!is.null(vars)) invisible(lapply(names(vars), storeRDS, vars, outputFolder))
+
 }
 
 

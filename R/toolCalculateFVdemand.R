@@ -27,7 +27,7 @@ toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, h
 
   if (!is.null(histESdemand)){
     fuelVehicleESdemand <- fuelVehicleESdemand[period > baseYear, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "unit", "period", "value")]
-    fuelVehicleESdemand[, variable := "Energy service demand"]
+    fuelVehicleESdemand[, variable := "ES"]
     fuelVehicleESdemand <- merge(fuelVehicleESdemand, helpers$decisionTree, by = intersect(names(fuelVehicleESdemand), names(helpers$decisionTree)))
     histESdemand <- merge(histESdemand, helpers$decisionTree, by = intersect(names(histESdemand), names(helpers$decisionTree)))
     fuelVehicleESdemand <- rbind(fuelVehicleESdemand, histESdemand)

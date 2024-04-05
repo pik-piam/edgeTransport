@@ -1,14 +1,13 @@
-﻿SSPscen;demScen;percentChange;targetYear
-SDP_RC;default;0.3;2060
-SSP1;demRedWeak;0.2;2050
-SSP2;demRedWeak;0.2;2050
-SSP2EU;demRedWeak;0.2;2050
-SSP5;demRedWeak;0.2;2050
-SSP2EU;demRedWeak;0.2;2050
-SDP;demRedWeak;0.2;2050
-SSP1;demRedStrong;0.4;2050
-SSP2;demRedStrong;0.4;2050
-SSP2EU;demRedStrong;0.4;2050
-SSP5;demRedStrong;0.4;2050
-SSP2EU;demRedStrong;0.4;2050
-SDP;demRedStrong;0.4;2050
+SSPscen	demScen	percentChange	targetYear
+SDP_RC	default	0.3	2060
+SSP1	demRedWeak	0.2	2050
+SSP2	demRedWeak	0.2	2050
+SSP2EU	demRedWeak	0.2	2050
+SSP5	demRedWeak	0.2	2050
+SSP2EU	demRedWeak	0.2	2050
+SDP	demRedWeak	0.2	2050
+SSP1	demRedStrong	0.4	2050
+SSP2	demRedStrong	0.4	2050
+SSP2EU	demRedStrong	0.4	2050
+SSP5	demRedStrong	0.4	2050
+SDP	demRedStrong	0.4	2050

@@ -1,7 +1,11 @@
-#' Read and build the complete structure of the edgeTransport decision tree
+#' Load all inputs that are required to run the model
 #' @author Johanna Hoppe
-#' @param regionAggregation one of the different options for regional aggregation (iso|regionCode21|regionCode12)
-#' @returns data.table of full spatially extended edgeTransport decision tree
+#' @param SSPscen SSP or SDP scenario
+#' @param transportPolScen EDGE-T transport policy scenario
+#' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
+#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
+#' @param hybridElecShare Share of electricity in hybrid electric vehicles
+#' @returns list with different input data sets
 #' @import data.table
 #' @export
 
@@ -24,7 +28,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   # categories for filtering data
   categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
   filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
-  filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]], getFilterEntriesUnivocalName("Bus", packageData$decisionTree)[["Bus"]])
+  filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]],
+                                       getFilterEntriesUnivocalName("Bus", packageData$decisionTree)[["Bus"]])
 
   # mappings and other helpers
   helpers <- list(
@@ -39,16 +44,17 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     reportingAggregation = packageData$reportingAggregation
   )
 
-  ## from mrcommons
+  ## from mrdrivers
   mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
 
   ## from REMIND
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
-                                            "EDGE-T_standalone", "REMIND", "fulldata_EU.gdx")}
+                                            "REMINDinputForTransportStandalone", "fulldata_EU.gdx")}
+  if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
   REMINDdata <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
   # from mrremind (soon to be replaced by mrtransport data)
-  mrremindData <- toolLoadmrremindData(packageData$decisionTree, helpers)
+  mrremindData <- toolLoadmrremindData(helpers)
 
   ### structure inputs  ------------------------------------------------------------
 
@@ -74,8 +80,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   # raw input data
   inputDataRaw <- list(
     histESdemand = mrtransportData$histESdemand,
-    energyIntensity = mrtransportData$energyIntensity,
-    loadFactor = mrtransportData$loadFactor,
+    energyIntensityRaw = mrtransportData$energyIntensityRaw,
+    loadFactorRaw = mrtransportData$loadFactorRaw,
     annualMileage = mrtransportData$annualMileage,
     CAPEXtrackedFleet = mrtransportData$CAPEXtrackedFleet,
     nonFuelOPEXtrackedFleet = mrtransportData$nonFuelOPEXtrackedFleet,

@@ -137,7 +137,7 @@ toolCalculateFleetComposition <- function(fleetESdemand, vehDepreciationFactors,
   fleetESdemand[univocalName %in% c(helpers$filterEntries$trn_freight, "International Ship"), unit := "billion tkm/yr"]
   fleetESdemandConstrYears <- copy(fleetESdemand)
   fleetESdemand <- fleetESdemand[, .(value = sum(contribConstrYear)), by = c("period", "region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "univocalName", "unit")]
-  fleetESdemand[, variable := "Energy service demand"]
+  fleetESdemand[, variable := "ES"]
   cols <- names(fleetESdemand)
   cols <- cols[!cols %in% c("period", "value")]
   fleetESdemand <- approx_dt(fleetESdemand, highTimeRes, "period", "value",

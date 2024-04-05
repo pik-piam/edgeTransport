@@ -1,9 +1,11 @@
-#' Load fuel prices from a REMIND fulldata.gdx in [US$2005/MJ] and map them on to the edgeTransport decision tree.
-#' The output is provided in the same spatial resolution as the transferred gdx file and the temporal resolution is set according to the param yrs.
+#' Load fuel prices from a REMIND fulldata.gdx in [US$2005/MJ] and map them on to
+#' the edgeTransport decision tree. The output is provided in the same spatial resolution
+#' as the transferred gdx file and the temporal resolution is set according to the param yrs.
 #'
 #' @param gdxPath path to REMIND fulldata.gdx
-#' @param yrs requested temporal resolution
-#'
+#' @param hybridElecShare Share of electricity in hybrid electric vehicles
+#' @param helpers list with helpers
+#' @returns fuel costs on technology level
 #' @import data.table
 #' @importFrom rmndt approx_dt magpie2dt
 #' @importFrom gdx readGDX

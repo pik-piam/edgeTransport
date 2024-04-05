@@ -27,7 +27,7 @@ toolLoadREMINDesDemand <- function(gdxPath) {
   trillionToBillion <- 1e3
   ESdemand[, value := value
                   * trillionToBillion]
-  ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "bn pkm/yr", "bn tkm/yr")][, variable := "Energy service demand"]
+  ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "bn pkm/yr", "bn tkm/yr")][, variable := "ES"]
 
   setkey(ESdemand, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
          technology, univocalName, period)

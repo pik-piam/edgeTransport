@@ -1,5 +1,7 @@
 #' Load input data from the mrtransport package
-#'
+#' @param SSPscen SSP scenario for which the mrtransport input data should be loaded
+#' @returns list of data.tables with the mrtransport input data
+#' @importFrom madrat calcOutput
 #' @importFrom rmndt magpie2dt
 
 toolLoadmrtransportData <- function(SSPscen) {
@@ -12,12 +14,12 @@ toolLoadmrtransportData <- function(SSPscen) {
   # Energy Intensity after IEA harmonization [MJ/vehkm]
   energyIntensityMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                          regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"), SSPscen = SSPscen)
-  energyIntensity <- magpie2dt(energyIntensityMagpieobj)[, variable := paste0(variable, " (raw)")]
+  energyIntensityRaw <- magpie2dt(energyIntensityMagpieobj)[, variable := paste0(variable, " (raw)")]
 
   # Load Factor [(p|t)/veh]
   loadFactorMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                     regionmapping = "regionmapping_21_EU11.csv", subtype = "loadFactor", SSPscen = SSPscen)
-  loadFactor <- magpie2dt(loadFactorMagpieobj)[, variable := paste0(variable, " (raw)")]
+  loadFactorRaw <- magpie2dt(loadFactorMagpieobj)[, variable := paste0(variable, " (raw)")]
 
   # CAPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh]
   CAPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
@@ -51,8 +53,8 @@ toolLoadmrtransportData <- function(SSPscen) {
   timeValueCosts <- unique(timeValueCosts[, technology := NULL])
 
   mrtransportdata <- list(histESdemand = histESdemand,
-                           energyIntensity = energyIntensity,
-                           loadFactor = loadFactor,
+                           energyIntensityRaw = energyIntensityRaw,
+                           loadFactorRaw = loadFactorRaw,
                            CAPEXtrackedFleet = CAPEXtrackedFleet,
                            nonFuelOPEXtrackedFleet = nonFuelOPEXtrackedFleet,
                            CAPEXother = CAPEXother,

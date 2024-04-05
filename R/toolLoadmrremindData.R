@@ -1,8 +1,11 @@
 #' Load data from mrremind
-#'
+#' @param helpers list containg several helpers used throughout the model.
+#'          It includes dtTimeRes, a data.table containing the temporal
+#'          resolution for different univocalNames
+#' @returns list of data.tables containing mrremind input data
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrremindData <- function(decisionTree, helpers) {
+toolLoadmrremindData <- function(helpers) {
 
   yrs <- unique(helpers$dtTimeRes$period)
 
@@ -26,7 +29,9 @@ toolLoadmrremindData <- function(decisionTree, helpers) {
         by = c("region", "technology")]
 
   # map on decision tree, apply only on 4 wheelers
-  subsidies <- merge(unique(decisionTree[subsectorL3 == "trn_pass_road_LDV_4W", c("region", "univocalName", "technology")]), subsidies, by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  subsidies <- merge(unique(helpers$decisionTree[subsectorL3 == "trn_pass_road_LDV_4W",
+                                         c("region", "univocalName", "technology")]), subsidies,
+                     by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := "US$2005/veh"]
   #Q: How to include phase out of the incentives? Is that needed at all?
 

@@ -6,7 +6,7 @@
 #' @importFrom rmndt approx_dt
 
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, helpers) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers) {
 
   #function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
