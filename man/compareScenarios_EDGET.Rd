@@ -9,8 +9,7 @@ compareScenarios_EDGET(
   mifHist,
   outputDir = getwd(),
   outputFile = "CompareScenarios_EDGE-Transport",
-  outputFormat = "PDF",
-  ...
+  outputFormat = "PDF"
 )
 }
 \arguments{
@@ -28,80 +27,10 @@ output document to be created.}
 
 \item{outputFormat}{\code{character(1)}, not case-sensitive. \code{"html"},
 \code{"pdf"}, or \code{"rmd"}.}
-
-\item{...}{YAML parameters, see below.}
 }
 \value{
 The value returned by \code{\link[rmarkdown:render]{render()}}.
 }
 \description{
-Renders the *.Rmd-files associated to CompareScenarios EDGE TRansport. In the Rmds,
-scenario- and historical .mif-files are loaded. Then plots are created from
-this data. The result may be rendered to PDF or HTML. Alternatively one can
-choose Rmd as output format and obtain a copy of the *.Rmd-files.
-}
-\section{YAML Parameters}{
-
-\describe{
-  \item{\code{yearsScen}}{
-    \code{numeric(n)}.
-    Default: \code{c(seq(2005, 2060, 5), seq(2070, 2100, 10))}.
-    Years to show for scenario data.}
-  \item{\code{yearsHist}}{
-    \code{numeric(n)}.
-    Default: \code{c(seq(1990, 2020, 1), seq(2025, 2100, 5))}.
-    Years to show for historical data.}
-  \item{\code{yearsBarPlot}}{
-    \code{numeric(n)}.
-    Default: \code{c(2010, 2030, 2050, 2100)}.
-    Years to show in bar plots of scenario data.}
-  \item{\code{reg}}{
-    \code{NULL} or \code{character(n)}.
-    Default: \code{NULL}.
-    Regions to show. \code{NULL} means all.}
-  \item{\code{modelsHistExclude}}{
-    \code{character(n) or NULL}.
-    Default: \code{c()}.
-    Models in historical data to exclude.}
-  \item{\code{sections}}{
-    \code{character(n)}.
-    Default: \code{"all"}.
-    Names of sections to include. A subset of
-    \code{c("01_energy_demand", "02_energy_services", "03_stock_and_sales", "04_costs_and_shareweight_trends")}
-    or \code{"all"} for all available sections.}
-  \item{\code{userSectionPath}}{
-    \code{NULL} or \code{character(n)}.
-    Default: \code{NULL}.
-    Path to a *.Rmd-file that may be included as additional section.}
-  \item{\code{mainReg}}{
-    \code{character(1)}.
-    Default: \code{"World"}.
-    A region for which larger plots are shown.}
-  \item{\code{figWidth, figHeight}}{
-    \code{numeric(1)}.
-    Default: \code{15} and \code{10}, respectively.
-    Size of plots in inches.}
-  \item{\code{warning}}{
-    \code{logical(1)}.
-    Default: \code{TRUE}.
-    Show warnings in output?}
-}
-}
-
-\examples{
-\dontrun{
-compareScenarios2(
-  mifScen = c("path/to/Base.mif", "path/to/NDC.mif"),
-  mifHist = "path/to/historical.mif",
-  outputFile = "CompareScenarios2Example1",
-  userSectionPath = "path/to/myPlots.Rmd")
-compareScenarios2(
-  mifScen = c(ScenarioName1 = "path/to/scen1.mif", ScenarioName2 = "path/to/scen2.mif"),
-  mifHist = "path/to/historical.mif",
-  outputFile = "CompareScenarios2Example2",
-  figWidth = 18, figHeight = 10)
-}
-}
-\author{
-Christof Schoetz, Johanna Hoppe
+A wrapper for piamPlotComparison::compareScenarios
 }
