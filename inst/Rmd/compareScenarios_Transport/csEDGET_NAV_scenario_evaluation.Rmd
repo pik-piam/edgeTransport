@@ -74,14 +74,14 @@ ggplot(ES_data, aes(x = scenario, y = share_public)) +
 
 ```{r Calculate ES reduction rate for Aviation compared to Baseline for all scenarios}
 targetyear <- 2050
-ES_data_base_dom <- data[scenario == Baseline & variable == "ES|Transport|Pass|Aviation|Domestic" & period == targetyear]
-ES_data_base_int <- data[scenario == Baseline & variable == "ES|Transport|Pass|Aviation|International" & period == targetyear]
+ES_data_base_dom <- data[scenario == Baseline & variable == "ES|Transport|Pass|Domestic Aviation" & period == targetyear]
+ES_data_base_int <- data[scenario == Baseline & variable == "ES|Transport|Bunkers|Pass|International Aviation" & period == targetyear]
 setnames(ES_data_base_dom, "value", "ES_dom_base")
 setnames(ES_data_base_int, "value", "ES_int_base")
 ES_data_base <- merge(ES_data_base_dom[, c("region", "ES_dom_base")], ES_data_base_int[, c("region", "ES_int_base")])
 
-ES_data_dom <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Pass|Aviation|Domestic" & period == targetyear]
-ES_data_int <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Pass|Aviation|International" & period == targetyear]
+ES_data_dom <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Pass|Domestic Aviation" & period == targetyear]
+ES_data_int <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Bunkers|Pass|International Aviation" & period == targetyear]
 setnames(ES_data_dom, "value", "ES_dom")
 setnames(ES_data_int, "value", "ES_int")
 ES_data <- merge(ES_data_dom[, c("region", "ES_dom", "scenario")], ES_data_int[, c("region", "ES_int", "scenario")])
@@ -112,9 +112,9 @@ ggplot(ES_data, aes(x = scenario, y = reduction_rate_int)) +
 
 ```{r Calculate ES reduction rate for Freight shipping compared to Baseline for all scenarios}
 targetyear <- 2050
-ES_data_base <- data[scenario == Baseline & grepl("ES\\|Transport\\|Freight\\|(International Shipping|Navigation)$", variable) & period == targetyear]
+ES_data_base <- data[scenario == Baseline & grepl("ES\\|Transport\\|Freight\\|(International Shipping|Domestic Shipping)$", variable) & period == targetyear]
 ES_data_base <- ES_data_base[, .(ES_Freight_shipping_base = sum(value)), by = "region"]
-ES_data <- data[!scenario %in% c(Baseline, "historical") & grepl("ES\\|Transport\\|Freight\\|(International Shipping|Navigation)$", variable) & period == targetyear]
+ES_data <- data[!scenario %in% c(Baseline, "historical") & grepl("ES\\|Transport\\|Freight\\|(International Shipping|Domestic Shipping)$", variable) & period == targetyear]
 ES_data <- ES_data[, .(ES_Freight_shipping = sum(value)), by = c("scenario", "region")]
 ES_data <- merge(ES_data_base, ES_data, all = TRUE)
 ES_data[, reduction_rate := round((ES_Freight_shipping/ES_Freight_shipping_base)*100-100)]
