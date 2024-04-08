@@ -93,7 +93,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   nas <- FVtarget[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
-    browser()
   }
 
   setnames(FVtarget, "sw", "value")
@@ -221,7 +220,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   nas <- S3target[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
-    browser()
   }
 
   S2target[, sw := sw/max(sw),
@@ -229,7 +227,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   nas <- S2target[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
-    browser()
   }
 
   S1target[, sw := sw/max(sw),
@@ -237,7 +234,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   nas <- S1target[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
-    browser()
   }
 
   VStarget[, sw := sw/max(sw),
@@ -245,7 +241,6 @@ toolPreftrend <- function(SWS, ptab, calibdem, incocost, years, GDP_POP_MER,
   nas <- VStarget[is.na(sw)]
   if(nrow(nas) > 0){
     print("Warning: NAs in SWs found.")
-    browser()
   }
 
 
@@ -332,7 +327,6 @@ Hybrid Electric,Liquids")
     nas <- FVtarget[logit_type != "pchar" & is.na(value)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in FV shareweight trends for %s scenario.", tech_scen))
-      browser()
     }
     ## level S2: Bus vs LDV
     S2target[, regioncat := ifelse(region %in% richregions, "rich", "poor")]
@@ -350,7 +344,6 @@ Hybrid Electric,Liquids")
     nas <- S2target[is.na(sw)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in S2 shareweight trends for %s scenario.", tech_scen))
-      browser()
     }
 
     ## level S3: all other mode shares
@@ -369,7 +362,6 @@ Hybrid Electric,Liquids")
     nas <- S3target[is.na(sw)]
     if(nrow(nas) > 0){
       print(sprintf("NAs found in S3 shareweight trends for %s scenario.", tech_scen))
-      browser()
     }
 
   }else{

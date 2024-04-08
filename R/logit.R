@@ -66,7 +66,6 @@ toolCalculateLogitSW <- function(prices,
     nas <- df[is.na(share)]
     if(nrow(nas) > 0) {
       print("NAs found in SWs.")
-      browser()
     }
     MJ_km <- merge(df, mj_km_data, by=intersect(names(df),names(mj_km_data)), all = FALSE)
 
@@ -237,7 +236,6 @@ toolCalculateLogitSW <- function(prices,
   if(nrow(nas) > 0){
     print("NAs found in FV shares.")
     nas
-    browser()
   }
   # VS1
   VS1_all <- X2Xcalc(prices = FV,
