@@ -140,7 +140,6 @@ toolSharesIntensityDemand <- function(logit_shares,
         nas <- dt[!complete.cases(dt)]
         if(nrow(nas) > 0){
             print("NAs found in REMIND output table")
-            browser()
         }
     }
     demand_list = list(demand = demand,

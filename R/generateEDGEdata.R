@@ -449,7 +449,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     if(nrow(nas) > 0) {
       print("NAs found in FV vintage shares.")
       nas
-      browser()
     }
     shares$FV_shares = vintages[["shares"]]$FV_shares
     prices = vintages[["prices"]]
@@ -474,7 +473,6 @@ toolGenerateEDGEdata <- function(input_folder, output_folder, cache_folder = NUL
     if(nrow(nas) > 0) {
       print("NAs found in final demand output.")
       nas
-      browser()
     }
 
     num_veh_stations = toolVehicleStations(

@@ -418,14 +418,12 @@ toolReportEDGET <- function(output_folder = ".",
 
     vars <- varlist[[aggrname]]
     #access the first element in vars
-    
+
 
     if (length(unique(datatable[variable %in% vars]$variable)) < length(vars)){
-      browser()
       print(paste0("Missing variables to aggregate data to ", aggrname))
       }
     else if (length(unique(datatable[variable %in% vars]$variable)) > length(vars)) {
-      browser()
       print(paste0('duplicates from: ', aggrname, 'not summed up'))
       }
     else {
@@ -992,11 +990,11 @@ toolReportEDGET <- function(output_folder = ".",
 
   #Calculate useful energy
   UE <- toMIF[grepl("FE", variable) & grepl("Electric|Liquids|Hydrogen", variable)] #select only FE for electricity, liquids and hydrogen
-  
-  
+
+
   #create new column named technology and assign values based on variables in UE.varialbe: if the variable contains "Electricity" then technology is "Electric", if the variable contains "Liquids" then technology is "Liquids", if the variable contains "Hydrogen" then technology is "Hydrogen"
   UE[, technology := ifelse(grepl("Electricity", variable), "Electric", ifelse(grepl("Liquids", variable), "Liquids", ifelse(grepl("Hydrogen", variable), "Hydrogen", NA)))]
-  
+
   UE <- merge(UE, Mapp_UE, technology) #merge with efficiencies
   UE[, value:= value*UE_efficiency][, c("variable", "technology", "UE_efficiency"):= list(gsub("FE","UE", variable), NULL, NULL)] #calculate useful energy
 
