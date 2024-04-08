@@ -1,4 +1,4 @@
-﻿region;incoCostType;FVvehvar;technology;unit;1990;2005;2010;2020
+region;incoCostType;FVvehvar;technology;unit;1990;2005;2010;2020
 GLO;Model availability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;10000
 GLO;Model availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;69300
 GLO;Model availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;69300

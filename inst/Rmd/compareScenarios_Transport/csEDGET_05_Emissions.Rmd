@@ -2,10 +2,10 @@
 
 ## Emissions Passenger
 ```{r}
-tot <- "Emi|CO2|Transport|Pass|w/o bunkers|Tailpipe"
+tot <- "Emi|CO2|Transport|Pass|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Pass|Aviation|International|Tailpipe",
-      "Emi|CO2|Transport|Pass|Aviation|Domestic|Tailpipe",
+      "Emi|CO2|Transport|Bunkers|Pass|International Aviation|Tailpipe",
+      "Emi|CO2|Transport|Pass|Domestic Aviation|Tailpipe",
       "Emi|CO2|Transport|Pass|Rail|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|LDV|Four Wheelers|Tailpipe",
@@ -37,10 +37,10 @@ walk(items, showLinePlots, data = data)
 
 ## Emissions Freight
 ```{r}
-tot <- "Emi|CO2|Transport|Freight|w/o bunkers|Tailpipe"
+tot <- "Emi|CO2|Transport|Freight|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Freight|International Shipping|Tailpipe",
-      "Emi|CO2|Transport|Freight|Navigation|Tailpipe",
+      "Emi|CO2|Transport|Bunkers|Freight|International Shipping|Tailpipe",
+      "Emi|CO2|Transport|Freight|Domestic Shipping|Tailpipe",
       "Emi|CO2|Transport|Freight|Rail|Tailpipe",
       "Emi|CO2|Transport|Freight|Road|Tailpipe"
   )
