@@ -14,8 +14,7 @@ items <- c(
 showAreaAndBarPlots(data, items[2:6], tot, orderVars = "user")
 showAreaAndBarPlots(data, items[2:6], tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(c(items,"Emi|CO2|Transport|Pass|Road|LDV|Tailpipe",
-      "Emi|CO2|Transport|Pass|non-LDV|Tailpipe"), showLinePlots, data = data)
+walk(c(items,"Emi|CO2|Transport|Pass|Road|LDV|Tailpipe"), showLinePlots, data = data)
 ```
 
 ## Emissions LDV Four Wheelers
@@ -39,7 +38,7 @@ walk(items, showLinePlots, data = data)
 ```{r}
 tot <- "Emi|CO2|Transport|Freight|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Bunkers|Freight|International Shipping|Tailpipe",
+      "Emi|CO2|Transport|Bunkers|Bunkers|Freight|International Shipping|Tailpipe",
       "Emi|CO2|Transport|Freight|Domestic Shipping|Tailpipe",
       "Emi|CO2|Transport|Freight|Rail|Tailpipe",
       "Emi|CO2|Transport|Freight|Road|Tailpipe"

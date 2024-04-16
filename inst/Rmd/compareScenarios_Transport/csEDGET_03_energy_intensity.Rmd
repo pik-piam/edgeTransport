@@ -19,7 +19,7 @@ walk(items, showLinePlots, data = data, scales = "fixed")
 ```{r}
 items <- c(
             "EInt|Transport|Freight",
-            "EInt|Transport|Bunkers|Freight|International Shipping",
+            "EInt|Transport|Bunkers|Bunkers|Freight|International Shipping",
             "EInt|Transport|Freight|Domestic Shipping",
             "EInt|Transport|Freight|Rail",
             "EInt|Transport|Freight|Road"
@@ -45,7 +45,7 @@ walk(items, showLinePlots, data = data, scales = "fixed")
 ```{r}
 items <- c(
             "Energy intensity|Transport|Freight",
-            "Energy intensity|Transport|Bunkers|Freight|International Shipping",
+            "Energy intensity|Transport|Bunkers|Bunkers|Freight|International Shipping",
             "Energy intensity|Transport|Freight|Domestic Shipping",
             "Energy intensity|Transport|Freight|Rail",
             "Energy intensity|Transport|Freight|Road"

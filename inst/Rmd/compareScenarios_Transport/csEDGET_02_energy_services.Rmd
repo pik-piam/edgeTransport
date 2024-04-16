@@ -109,7 +109,7 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 tot_wbunk <- "ES|Transport|Freight with bunkers"
 tot_wobunk <- "ES|Transport|Freight"
 items <- c(
-      "ES|Transport|Bunkers|Freight|International Shipping",
+      "ES|Transport|Bunkers|Bunkers|Freight|International Shipping",
       "ES|Transport|Freight|Domestic Shipping",
       "ES|Transport|Freight|Rail",
       "ES|Transport|Freight|Road"
@@ -129,7 +129,7 @@ walk(items, showLinePlots, data=data)
 
 items <- c(
       "ES|Transport|Freight pCap",
-      "ES|Transport|Bunkers|Freight|International Shipping pCap",
+      "ES|Transport|Bunkers|Bunkers|Freight|International Shipping pCap",
       "ES|Transport|Freight|Domestic Shipping pCap",
       "ES|Transport|Freight|Rail pCap",
       "ES|Transport|Freight|Road pCap"

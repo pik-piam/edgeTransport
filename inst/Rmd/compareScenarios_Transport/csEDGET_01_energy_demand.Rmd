@@ -218,7 +218,7 @@ showLinePlots(data, tot)
 
 ### Freight Shipping International
 ```{r}
-tot <- "FE|Transport|Bunkers|Freight|International Shipping"
+tot <- "FE|Transport|Bunkers|Bunkers|Freight|International Shipping"
 showLinePlots(data, tot)
 ```
 
@@ -330,12 +330,12 @@ walk(items, showLinePlots, data = data)
 
 ### International Shipping
 ```{r}
-tot <- "FE|Transport|Bunkers|Freight|International Shipping|Liquids"
+tot <- "FE|Transport|Bunkers|Bunkers|Freight|International Shipping|Liquids"
 
 items <- c(
-    "FE|Transport|Bunkers|Freight|International Shipping|Liquids|Fossil",
-    "FE|Transport|Bunkers|Freight|International Shipping|Liquids|Hydrogen",
-    "FE|Transport|Bunkers|Freight|International Shipping|Liquids|Biomass"
+    "FE|Transport|Bunkers|Bunkers|Freight|International Shipping|Liquids|Fossil",
+    "FE|Transport|Bunkers|Bunkers|Freight|International Shipping|Liquids|Hydrogen",
+    "FE|Transport|Bunkers|Bunkers|Freight|International Shipping|Liquids|Biomass"
   )
 showAreaAndBarPlots(data, items, tot,  orderVars = "user")
 walk(items, showLinePlots, data = data)
@@ -369,7 +369,7 @@ walk(c("FE|Transport|Pass|Aviation", items[1:5], "FE|Transport|Pass|Road|LDV", i
 tot_wbunk <- "FE|Transport|Freight edge"
 tot_wobunk <- "FE|Transport|Freight"
 items <- c(
-      "FE|Transport|Bunkers|Freight|International Shipping",
+      "FE|Transport|Bunkers|Bunkers|Freight|International Shipping",
       "FE|Transport|Freight|Domestic Shipping",
       "FE|Transport|Freight|Rail",
       "FE|Transport|Freight|Road"
