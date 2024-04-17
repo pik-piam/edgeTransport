@@ -200,7 +200,7 @@ pCapVariables <- tribble(
   "ES|Transport|Pass|Rail|non-HSR", "pkm/yr", 1e9,
   "ES|Transport|Pass|Rail|HSR", "pkm/yr", 1e9,
   "ES|Transport|Freight", "tkm/yr", 1e9,
-  "ES|Transport|Bunkers|Bunkers|Bunkers|Freight|International Shipping", "tkm/yr", 1e9,
+  "ES|Transport|Bunkers|Bunkers|Freight|International Shipping", "tkm/yr", 1e9,
   "ES|Transport|Freight|Road", "tkm/yr", 1e9,
   "ES|Transport|Freight|Domestic Shipping", "tkm/yr", 1e9,
   "ES|Transport|Freight|Rail", "tkm/yr", 1e9,
