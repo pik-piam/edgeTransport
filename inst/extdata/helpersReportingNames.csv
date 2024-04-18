@@ -1,4 +1,4 @@
-*description: Change naming for entries of the decision tree to comply with the reporting convention. Note that the levels of the decision tree are now transferred to variable names that will be aggregated level by level ;
+*description: Change naming for entries of the decision tree to comply with the reporting convention. Note that the levels of the decision tree are now transferred to variable names that will be aggregated level by level;
 name;reportName
 trn_aviation_intl;Bunkers|Pass
 trn_pass;Pass
