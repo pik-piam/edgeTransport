@@ -6,7 +6,7 @@
 #' @param policyStartYear Year when scenario differentiation sets in
 #' @param GDPcutoff GDP cutoff to differentiate between regions
 #' @param helpers List with helpers
-#' @returns list of data.tables with scenario specific input data
+#' @returns List of data.tables with scenario specific input data
 #' @import data.table
 #' @export
 

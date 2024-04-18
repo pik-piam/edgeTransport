@@ -1,13 +1,17 @@
-#' Apply demand scenario specific adjustments to the load Factor
+#' Apply scenario specific adjustments to the preference trends
 #' @author Johanna Hoppe
-#' @param enInt energy enInt input data supplied by mrtransport
-#' @param polScen tranport policy scenario
+#' @param baselinePrefTrends Baseline preference trends
+#' @param scenParPrefTrends Scenario parameters to be applied on the preference trends
+#' @param GDPpcMER Per capita GDP based on market exchange rate
+#' @param policyStartYear Year from which the scenario parameters are applied on the baseline preference trends
+#' @param GDPcutoff Threshold used to categorize countries into different mitigation groups based on their GDP
+#' @param helpers List containing several helpers used throughout the model
+#' @param ICEban Switch to turn on ICE phase out policies
+#' @returns Scenario specific preference trends
 #' @import data.table
-#' @importFrom rmndt approx_dt
-
 
 toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, ICEban) {
-
+   browser()
   #function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
     fct <- exp((year - ysymm)/speed)/(exp((year - ysymm)/speed) + 1)
@@ -23,8 +27,8 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   GDPpcMER[, regionCat := ifelse(value > GDPcutoff, "above GDP cutoff", "below GDP cutoff")]
   GDPpcMER <- GDPpcMER[, c("region", "regionCat")]
   # some regions have individual mitigation factors
-  individualReg <- mitigationFactors[!regionCat %in% c("above GDP cutoff", "below GDP cutoff")]$regionCat
-  GDPpcMER[, regionCat := ifelse(regionCat %in% individualReg, region, regionCat)]
+  individualReg <- unique(mitigationFactors[!regionCat %in% c("above GDP cutoff", "below GDP cutoff")]$regionCat)
+  GDPpcMER[, regionCat := ifelse(region %in% individualReg, region, regionCat)]
   mitigationFactors <- merge(mitigationFactors, GDPpcMER, by = "regionCat", allow.cartesian = TRUE, all.x = TRUE)[, regionCat := NULL]
   # apply mitigation factors
   PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)

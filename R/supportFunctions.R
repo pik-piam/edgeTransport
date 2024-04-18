@@ -144,7 +144,7 @@ toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
 #' @author Johanna Hoppe
 #' @param data data.table containing data in in the edgeTransport data structure
 #'              (at least featuring univocalName, period, value)
-#' @param hepers list containg several helpers used throughout the model.
+#' @param helpers list containing several helpers used throughout the model.
 #'          It includes dtTimeRes, a data.table containing the temporal
 #'          resolution for different univocalNames
 #' @param idcols optional supply of idcols for using approx_dt

@@ -14,7 +14,7 @@
 #' @param reportExtendedTransportData Optional extension of transport reporting providing more detailed variables
 #' @param reportREMINDinputData Optional reporting of REMIND input data
 #' @param reportAnalytics Optional reporting of analytics data (e.g. variables over iterations)
-#' @return generated REMIND transport input data
+#' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
 #' @export
@@ -47,7 +47,7 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
   ########################################################
-  ## Prepare input data and apply policy specific changes
+  ## Prepare input data and apply scenario specific changes
   ########################################################
 
   scenSpecInputData <- toolPrepareScenInputData(genModelPar, scenModelPar, inputDataRaw,

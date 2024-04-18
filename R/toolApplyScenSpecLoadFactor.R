@@ -1,9 +1,10 @@
 #' Apply demand scenario specific adjustments to the load Factor
 #' @author Johanna Hoppe
 #' @param loadFactor load factor input data supplied by mrtransport
-#' @param demandScen tranport demand scenario
-#' @param SSPscenario shared socioeconomic pathway
-#' @param filter list of filters for specific branches in the upper decision tree, containing all associated univocalNames
+#' @param scenParLoadFactor Scenario specific parameters to be applied don the baseline load factor
+#' @param policyStartYear Year when scenario differentiation sets in
+#' @param helpers List with helpers
+#' @returns Scenario specific load factor
 #' @import data.table
 
 toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
