@@ -111,7 +111,7 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
   #------------------------------------------------------
 
   fleetVehiclesPerTech <- NULL
-  iterations <- 3
+  iterations <- 1
 
   if (reportAnalytics) {
     endogenousCostsIterations <- list()

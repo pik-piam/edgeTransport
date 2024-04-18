@@ -11,7 +11,7 @@
 #' @import data.table
 
 toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, ICEban) {
-   browser()
+
   #function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
     fct <- exp((year - ysymm)/speed)/(exp((year - ysymm)/speed) + 1)

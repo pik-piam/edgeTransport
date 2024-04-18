@@ -16,7 +16,7 @@
 #' @export
 
 toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, preferences, lambdas, helpers, ICEban, vehiclesPerTech = NULL) {
-  browser()
+
   # parameters of endogenous cost trends
   bfuelav = - 20    ## value based on Greene 2001
   bmodelav = - 12   ## value based on Greene 2001
@@ -56,25 +56,26 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
     }
     return(floorCosts)
   }
-  browser()
+
   policyMask <- copy(scenParIncoCost)
+  # Expand regional and temporal resolution
+  regions <- unique(dataEndoCosts$region)
+  tempAndregions <- CJ(region = regions, period = policyYears)
+  tempAndregions[, all := "All"]
+  policyMask[, all := "All"]
+  policyMask <- merge(policyMask, tempAndregions, by = "all", allow.cartesian = TRUE)[, all := NULL]
   # Hybrid electric vehicles get a different policy parameter than BEV and ICE
   policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
   setnames(policyMaskPHEV, "value", "policyMask")
-  policyMaskPHEV <- policyMaskPHEV[, c("FVvehvar", "technology", "policyMask")]
-  policyMaskPHEV <- cbind(policyMaskPHEV, period = policyYears)
+  policyMaskPHEV <- policyMaskPHEV[, c("region", "period", "FVvehvar", "technology", "policyMask")]
   policyMask <- policyMask[!technology == "Hybrid electric"]
-  policyMask <- dcast(policyMask, FVvehvar + technology ~ param, value.var = "value")
+  policyMask <- dcast(policyMask, region + period + FVvehvar + technology ~ param, value.var = "value")
   # At the start of the policy intervention, the inconvenience costs for ICEs are zero, as they are the predominant and well-established technology.
   policyMask[technology == "Liquids", startValue := 0]
-  policyMask <- cbind(policyMask, period = policyYears)
-  policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue), by = c("technology", "period")]
-  policyMask <- policyMask[, c("FVvehvar", "technology", "policyMask", "period")]
+  policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue), by = c("region", "period","technology")]
+  policyMask <- policyMask[, c("region", "period", "FVvehvar", "technology", "policyMask")]
   policyMask <- rbind(policyMask, policyMaskPHEV)
   policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
-  # Get regional resolution
-  regions <- unique(dataEndoCosts$region)
-  policyMask <- cbind(policyMask, region = regions)
 
   # Change policy mask for ICEs when ban is activated
   if (ICEban) {
@@ -214,7 +215,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   endogenousCosts <- lapply(endogenousCosts, approx_dt, outputYears, "period", "value",
                        setdiff(names(updatedEndogenousCosts), c("period", "value")), extrapolate = TRUE)
 
-  browser()
+
   return(endogenousCosts)
 }
 
