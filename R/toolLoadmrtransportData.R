@@ -62,22 +62,6 @@ toolLoadmrtransportData <- function(SSPscen) {
                            annualMileage = annualMileage,
                            timeValueCosts = timeValueCosts
                            )
-  #Übergangslösung bis Daten direkt in hoher auflösung aus mrtransport kommen
-
-  # highRes <- c(1990, seq(2005, 2100, by = 1), 2110, 2130, 2150)
-  #
-  # applydtTimeRes <- function(dt, highRes, filter){
-  #   cols <- names(dt)
-  #   dthighRes <- dt[univocalName %in% filter]
-  #   if (nrow(dthighRes) > 0) {
-  #     dthighRes <- approx_dt(dthighRes, highRes, "period", "value", idxcols = cols[!cols %in% c("value", "period")], extrapolate = TRUE)
-  #     }
-  #   dt <- rbind(dt[!univocalName %in% filter], dthighRes)
-  # }
-  #
-  # trackedFleet <- c("Compact Car", "Large Car", "Large Car and SUV", "Midsize Car", "Mini Car", "Subcompact Car", "Van", "Truck (0-3_5t)", "Truck (18t)", "Truck (26t)", "Truck (40t)", "Truck (7_5t)", "Bus")
-  # mrtransportdata <- lapply(mrtransportdata, applydtTimeRes, highRes, trackedFleet)
-  # mrtransportdata[["histESdemand"]] <-  mrtransportdata[["histESdemand"]][period <= 2010]
 
   return(mrtransportdata)
 
