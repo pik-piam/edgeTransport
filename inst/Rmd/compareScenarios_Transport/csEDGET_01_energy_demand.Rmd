@@ -3,14 +3,14 @@
 
 ## Final Energy by carrier
 
-### Total
+### Total with bunkers
 ```{r}
-tot <- "FE|Transport"
+tot <- "FE|Transport|with bunkers"
 items <- c(
-  "FE|Transport|Electricity",
-  "FE|Transport|Hydrogen",
-  "FE|Transport|Gases",
-  "FE|Transport|Liquids"
+  "FE|Transport|with bunkers|Electricity",
+  "FE|Transport|with bunkers|Hydrogen",
+  "FE|Transport|with bunkers|Gases",
+  "FE|Transport|with bunkers|Liquids"
   )
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -18,7 +18,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Total w/o bunkers
+### Total 
 ```{r}
 tot <- "FE|Transport"
 items <- c(
@@ -47,8 +47,7 @@ showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
-
-### Passenger
+### Passenger with bunkers
 ```{r}
 tot <- "FE|Transport|Pass with bunkers"
 items <- c(
@@ -63,22 +62,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Passenger w/o bunkers
-```{r}
-tot <- "FE|Transport|Pass"
-items <- c(
-  "FE|Transport|Pass|Electricity",
-  "FE|Transport|Pass|Hydrogen",
-  "FE|Transport|Pass|Gases",
-  "FE|Transport|Pass|Liquids"
-  )
-showAreaAndBarPlots(data, items, tot, orderVars = "user")
-showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
-showLinePlots(data, tot)
-walk(items, showLinePlots, data = data)
-```
-
-### Passenger w/o bunkers
+### Passenger 
 ```{r}
 tot <- "FE|Transport|Pass"
 items <- c(
@@ -168,7 +152,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Freight w/o bunkers
+### Freight 
 ```{r}
 tot <- "FE|Transport|Freight"
 items <- c(

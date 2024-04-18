@@ -3,7 +3,7 @@
 
 ## Useful Energy by carrier
 
-### Total w/o bunkers
+### Total 
 ```{r}
 items <- c(
   "UE|Transport|Electricity",
@@ -36,7 +36,7 @@ items <- c(
 walk(items, showLinePlots, data = data)
 ```
 
-### Passenger w/o bunkers
+### Passenger 
 ```{r}
 items <- c(
   "UE|Transport|Pass|Electricity",
