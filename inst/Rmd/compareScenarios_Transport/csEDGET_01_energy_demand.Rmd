@@ -47,6 +47,7 @@ showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
+
 ### Passenger with bunkers
 ```{r}
 tot <- "FE|Transport|Pass with bunkers"
