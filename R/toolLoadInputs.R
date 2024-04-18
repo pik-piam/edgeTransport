@@ -49,7 +49,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
 
   ## from REMIND
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
-                                            "REMINDinputForTransportStandalone", "fulldata_EU.gdx")}
+                                            "REMINDinputForTransportStandalone", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
   REMINDdata <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 

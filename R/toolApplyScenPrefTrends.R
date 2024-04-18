@@ -6,7 +6,7 @@
 #' @importFrom rmndt approx_dt
 
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, ICEban) {
 
   #function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
@@ -36,6 +36,25 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
   PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
   PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+
+  # Apply ICE ban if switched on
+  if (ICEban) {
+    #Ban is applied to EU28
+    affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
+    #affectedRegions <- affectedRegions[!affectedRegions == "UKI"] currently we apply the ban also to UK
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period == 2025, 0.98 * value[period == 2015], value), by = c("region","technology")]
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period == 2030, 0.75 * value[period == 2015], value), by = c("region","technology")]
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period == 2035, 0.3 * value[period == 2015], value), by = c("region","technology")]
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period == 2040, 0.2 * value[period == 2015], value), by = c("region","technology")]
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period == 2045, 0.1  * value[period == 2015], value), by = c("region","technology")]
+    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
+               value := ifelse(period > 2045, value[period == 2015] * 0.05, value), by = c("region","technology")]
+  }
 
   PrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
   # order

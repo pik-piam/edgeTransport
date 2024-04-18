@@ -1,8 +1,23 @@
-
-
+#' Energy service demand projection
+#'
+#' @param historicalESdemand Historical energy service demand
+#' @param CAPEXandOPEX Data annualized total cost of ownership
+#' @param GDPperCapitaMER GDP per capita based on market exchange rate
+#' @param POP Population data
+#' @param scenParDemandRegression Scenario specific general regression factors
+#' @param scenParRegionalDemRegression Scenario specific regionally differentiated regression factors
+#' @param scenParDemandFactors Demand scenario factors
+#' @param baseYear End year of historical energy service demand data
+#' @param policyStartYear Start year of scenario differentiation
+#' @param helpers list with helpers
+#' @returns Scenario specific energy service demand for all model years on CES level
+#' @author Johanna Hoppe
+#' @import data.table
+#' @export
 
 toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaMER, POP,
-                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors, baseYear, policyStartYear, helpers) {
+                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors,
+                                    baseYear, policyStartYear, helpers) {
 
   # interpolate SSP specific elasticities based on GDP MER per capita ----------------------------
   setnames(GDPperCapitaMER, "value", "regionGDPpcMER")
@@ -16,12 +31,14 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
     return(elasticityRegionValues)
   }
   categories <- unique(scenParDemandRegression$sector)
-  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, scenParDemandRegression, GDPperCapitaMER))
+  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
+                                                 scenParDemandRegression, GDPperCapitaMER))
 
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,
-                                               id.vars = c("region", "sector"), variable.name = "period", value.name = "regionalSummand")
+                                               id.vars = c("region", "sector"), variable.name = "period",
+                                                  value.name = "regionalSummand")
     scenParRegionalDemRegression[, period := as.numeric(as.character(period))]
     scenParRegionalDemRegression <- approx_dt(scenParRegionalDemRegression, unique(regionalIncomeElasticities$period),
                                       "period", "regionalSummand", c("region", "sector"), extrapolate = TRUE)
@@ -68,8 +85,10 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
 
   if (!is.null(scenParDemandFactors)) {
     print(paste0("Demand scenario specific changes were applied on energy service demand"))
-    #Apply factors for specific demand scenario on output of demand regression if given/otherwise use default values from demand regression
-    #Application: linear regression to given support points for the factors starting from 2020, constant factors after support points
+    # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
+    # default values from demand regression
+    # Application: linear regression to given support points for the factors starting from 2020,
+    # constant factors after support points
     demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
     demandData[period < policyStartYear, factor := 1]
     demandData[, factor := na.approx(factor, x = period, rule = 2), by = c("region", "sector")]

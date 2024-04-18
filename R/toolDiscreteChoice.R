@@ -10,7 +10,7 @@
 #' @export
 
 
-toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, years, helpers) {
+toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers) {
 
   # calculate all FV shares --------------------------------------------------------------------
   CAPEXandOPEX <- copy(input$combinedCAPEXandOPEX)

@@ -10,7 +10,7 @@
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, ICEban) {
 
   # Preparation of baseline preference trends -------------------------------------
   # change to long-format
@@ -30,7 +30,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes to baseline preference trends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
-                                                  inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers)
+                                                  inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, ICEban)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends

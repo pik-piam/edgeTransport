@@ -113,6 +113,7 @@ toolStoreData <- function(outputFolder, outputRaw = NULL, ...){
       dir.create(file.path(outputFolder, "5_REMINDinputData"))
     }
     lapply(names(vars$REMINDinputData), storeCSV, vars$REMINDinputData, outputFolder, "5_REMINDinputData")
+    vars <- vars[!names(vars) %in% c("REMINDinputData")]
   }
 
   ###########################################################################

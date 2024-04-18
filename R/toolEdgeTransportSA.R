@@ -19,7 +19,7 @@
 #' @import data.table
 #' @export
 
-toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", gdxPath = NULL, outputFolder = ".",
+toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demScen = "default", gdxPath = NULL, outputFolder = ".",
                                 storeData = TRUE, reportTransportData = TRUE, reportExtendedTransportData = FALSE,
                                 reportREMINDinputData = FALSE, reportAnalytics = FALSE){
 
@@ -43,12 +43,15 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", 
   scenModelPar <- inputs$scenModelPar
   inputDataRaw <- inputs$inputDataRaw
 
+  # If no demand scenario specific factors are applied, the demScen equals the SSPscen
+  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
+
   ########################################################
   ## Prepare input data and apply policy specific changes
   ########################################################
 
   scenSpecInputData <- toolPrepareScenInputData(genModelPar, scenModelPar, inputDataRaw,
-                                                policyStartYear, GDPcutoff, helpers)
+                                                policyStartYear, GDPcutoff, helpers, ICEban)
 
   ########################################################
   ## Calibrate historical preferences
@@ -98,14 +101,17 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", 
                                          inputData$population,
                                          scenModelPar$scenParDemRegression,
                                          scenModelPar$scenParRegionalDemRegression,
-                                         scenModelPar$scenParDemFactors, baseYear, policyStartYear, helpers)
+                                         scenModelPar$scenParDemFactors,
+                                         baseYear,
+                                         policyStartYear,
+                                         helpers)
 
   #------------------------------------------------------
   # Start of iterative section
   #------------------------------------------------------
 
   fleetVehiclesPerTech <- NULL
-  iterations <- 1
+  iterations <- 3
 
   if (reportAnalytics) {
     endogenousCostsIterations <- list()
@@ -119,9 +125,16 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", 
     #################################################
     # provide endogenous updates to cost components -----------
     # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
-    endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts, vehicleDepreciationFactors, scenModelPar$scenParIncoCost,
-                                                 policyStartYear, inputData$timeValueCosts, inputData$prefTrends, genModelPar$lambdasDiscreteChoice,
-                                                 helpers, years, fleetVehiclesPerTech)
+    endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts,
+                                                 vehicleDepreciationFactors,
+                                                 scenModelPar$scenParIncoCost,
+                                                 policyStartYear,
+                                                 inputData$timeValueCosts,
+                                                 inputData$prefTrends,
+                                                 genModelPar$lambdasDiscreteChoice,
+                                                 helpers,
+                                                 ICEban,
+                                                 fleetVehiclesPerTech)
 
     if (reportAnalytics) endogenousCostsIterations[[i]] <- copy(endogenousCosts)[, iteration := i]
 
@@ -130,15 +143,26 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", 
     ## Discrete choice module
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
-    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCosts$updatedEndogenousCosts, years, helpers)
-    ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand, vehSalesAndModeShares, helpers, inputData$histESdemand, baseYear)
+    vehSalesAndModeShares <- toolDiscreteChoice(inputData,
+                                                genModelPar,
+                                                endogenousCosts$updatedEndogenousCosts,
+                                                helpers)
+    ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
+                                                  vehSalesAndModeShares,
+                                                  helpers,
+                                                  inputData$histESdemand,
+                                                  baseYear)
     print("Calculation of vehicle sales and mode shares finished")
     #################################################
     ## Vehicle stock module
     #################################################
     # Calculate vehicle stock for cars, trucks and busses -------
-    fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel, vehicleDepreciationFactors, vehSalesAndModeShares,
-                                                             inputData$annualMileage, inputData$loadFactor, helpers)
+    fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
+                                                             vehicleDepreciationFactors,
+                                                             vehSalesAndModeShares,
+                                                             inputData$annualMileage,
+                                                             inputData$loadFactor,
+                                                             helpers)
     if (reportAnalytics) fleetVehNumbersIterations[[i]] <- fleetSizeAndComposition$fleetVehNumbers
     fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
 
@@ -151,6 +175,8 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, demScen = "default", 
   #################################################
   ## Reporting
   #################################################
+  # Rename transportPolScen if ICE ban is activated
+  if (ICEban & transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4")) transportPolScen <- paste0(transportPolScen, "ICEban")
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d"),
                                                  SSPscen, "-", transportPolScen, "-", demScen))

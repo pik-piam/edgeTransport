@@ -1,3 +1,12 @@
+#' Format all cost components
+#'
+#' @author Johanna Hoppe
+#' @param inputData List containing inputData
+#' @param lambdas exponents for discrete choice calculation
+#' @param policyStartYear  Year when scenario differentiation sets in
+#' @param helpers List with helpers
+#' @returns data.table including all cost components
+#' @import data.table
 
 toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, helpers) {
 
@@ -18,15 +27,20 @@ toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, 
   inconvenienceCosts <- approx_dt(inconvenienceCosts, highTimeRes, "period", "value", extrapolate = TRUE)
   inconvenienceCosts[!period %in% prevTimeRes, value := NA]
   combinedCosts <- rbind(monetaryCosts, inconvenienceCosts)
-  combinedCosts <- merge(combinedCosts, helpers$decisionTree, by = c("region", "univocalName", "technology"), all.x = TRUE)
+  combinedCosts <- merge(combinedCosts, helpers$decisionTree, by = intersect(names(combinedCosts),
+                                                                             names(helpers$decisionTree)), all.x = TRUE)
 
-  # calculate FS3 share, hence the share of each technology in the overall car sales, in 2020 (needed to calculate the vehicle sales depreciating in time
+  # calculate FS3 share, hence the share of each technology in the overall car sales, in 2020
+  # (needed to calculate the vehicle sales depreciating in time
   # to get a proxy for the fleet share in the iterative section)
   timesteps <- unique(combinedCosts$period)
-  FS3share <- toolCalculateFS3share(combinedCosts, timesteps[timesteps < policyStartYear], inputData$timeValueCosts, inputData$prefTrends, lambdas, helpers)
+  FS3share <- toolCalculateFS3share(combinedCosts, timesteps[timesteps < policyStartYear], inputData$timeValueCosts,
+                                    inputData$prefTrends, lambdas, helpers)
 
   # merge back to combined costs
-  combinedCosts <- merge(combinedCosts, FS3share, by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "technology"), all = TRUE)
+  combinedCosts <- merge(combinedCosts, FS3share,
+                         by = intersect(names(combinedCosts), names(FS3share)),
+                         all = TRUE)
 
   return(combinedCosts)
 }

@@ -1,13 +1,18 @@
 
 
-toolReportREMINDinputData <- function(fleetESdemand, fleetFEdemand, fleetEnergyIntensity, fleetCapCosts, combinedCAPEXandOPEX, scenSpecPrefTrends,
-                                      scenSpecEnIntensity, initialIncoCosts, annualMileage, timeValueCosts, demScen, SSPscen, transportPolScen, helpers) {
+toolReportREMINDinputData <- function(fleetESdemand, fleetFEdemand, fleetEnergyIntensity, fleetCapCosts,
+                                      combinedCAPEXandOPEX, scenSpecPrefTrends, scenSpecEnIntensity, initialIncoCosts,
+                                      annualMileage, timeValueCosts, demScen, SSPscen, transportPolScen, helpers) {
 
 
   prepareForREMIND <- function(dt, demScen, SSPscen, transportPolScen) {
+    cols <- names(copy(dt))
+    cols <- cols[!cols %in% c("region", "period", "value")]
     dt[, DEM_scenario := paste0("gdp_", demScen)]
     dt[, GDP_scenario := paste0("gdp_", SSPscen)]
     dt[, EDGE_scenario := transportPolScen]
+    setcolorder(dt, c("region", "period", "GDP_scenario", "EDGE_scenario", "DEM_scenario", cols, "value"))
+    return(dt)
   }
 
   #############################################################
@@ -22,7 +27,7 @@ toolReportREMINDinputData <- function(fleetESdemand, fleetFEdemand, fleetEnergyI
   p35_esCapCost <- copy(fleetCapCosts)
   p35_esCapCost <- merge(p35_esCapCost, unique(helpers$mapEdgeToREMIND[, c("all_teEs", "univocalName", "technology")]),
                          by = c("univocalName", "technology"))
-  browser()
+
   p35_esCapCost <- p35_esCapCost[, .(value = sum(value)), by = c("region", "period", "all_teEs")]
 
   # Aggregate energy efficiency of transport fuel technologies [trn pkm/Twa or trn tkm/Twa]
@@ -79,7 +84,7 @@ toolReportREMINDinputData <- function(fleetESdemand, fleetFEdemand, fleetEnergyI
     timeValueCosts = timeValueCosts
   )
 
-  lapply(output, prepareForREMIND, demScen, SSPscen, transportPolScen)
+  output <- lapply(output, prepareForREMIND, demScen, SSPscen, transportPolScen)
 
   return(output)
 }

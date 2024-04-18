@@ -15,8 +15,8 @@
 #' @import data.table
 #' @export
 
-toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, preferences, lambdas, helpers, years, vehiclesPerTech = NULL) {
-
+toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, preferences, lambdas, helpers, ICEban, vehiclesPerTech = NULL) {
+  browser()
   # parameters of endogenous cost trends
   bfuelav = - 20    ## value based on Greene 2001
   bmodelav = - 12   ## value based on Greene 2001
@@ -32,6 +32,64 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
     dataEndoCosts <- merge(dataEndoCosts, vehiclesPerTech, by = c("region", "period", "sector", "subsectorL2", "subsectorL3", "technology"))
   }
 
+  # calculate policy mask from scenParIncoCost ---------------------------------------------------
+
+  linFunc <- function(year, startYear, startValue, targetYear, targetValue) {
+    if (year < startYear) {
+      return(startValue)
+    } else if (year < targetYear) {
+      return(startValue + ((targetValue - startValue) / (targetYear - startYear)) * (year - startYear))
+    } else{
+      return(targetValue)
+    }
+  }
+
+  applyICEban <- function(year, currentMask) {
+    if (year >= 2030 & year <= 2032){
+      floorCosts <- linFunc(year, 2030, currentMask, 2032, 0.35)
+    } else if(year > 2032 & year <=2034){
+      floorCosts <- linFunc(year, 2032, 0.35, 2034, 0.95)
+    } else if (year == 2035){
+      floorCosts <- 0.95
+    } else {
+      floorCosts <- 1
+    }
+    return(floorCosts)
+  }
+  browser()
+  policyMask <- copy(scenParIncoCost)
+  # Hybrid electric vehicles get a different policy parameter than BEV and ICE
+  policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
+  setnames(policyMaskPHEV, "value", "policyMask")
+  policyMaskPHEV <- policyMaskPHEV[, c("FVvehvar", "technology", "policyMask")]
+  policyMaskPHEV <- cbind(policyMaskPHEV, period = policyYears)
+  policyMask <- policyMask[!technology == "Hybrid electric"]
+  policyMask <- dcast(policyMask, FVvehvar + technology ~ param, value.var = "value")
+  # At the start of the policy intervention, the inconvenience costs for ICEs are zero, as they are the predominant and well-established technology.
+  policyMask[technology == "Liquids", startValue := 0]
+  policyMask <- cbind(policyMask, period = policyYears)
+  policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue), by = c("technology", "period")]
+  policyMask <- policyMask[, c("FVvehvar", "technology", "policyMask", "period")]
+  policyMask <- rbind(policyMask, policyMaskPHEV)
+  policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
+  # Get regional resolution
+  regions <- unique(dataEndoCosts$region)
+  policyMask <- cbind(policyMask, region = regions)
+
+  # Change policy mask for ICEs when ban is activated
+  if (ICEban) {
+    #Ban is applied to EU28 or EUR in case of REMIND running on 12 regions
+    affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
+    affectedRegions <- c(affectedRegions, "EUR")
+    #affectedRegions <- affectedRegions[!affectedRegions == "UKI"]
+    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric"), policyMask := applyICEban(period, policyMask), by = c("period")]
+  }
+
+  #check whether policy mask is calculated correctly for respective technologys
+  if (anyNA(policyMask)) {
+    stop("Something went wrong with the calculation of the policyMask in toolUpdateEndogenousCosts() ")
+  }
+  dataEndoCosts <- merge(dataEndoCosts, policyMask, by = c("region", "period", "univocalName", "technology"), all.x = TRUE)
   dataEndoCosts[type == "Inconvenience costs", endoCostRaw := value]
 
   for (t in policyYears) {
@@ -84,40 +142,6 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
     if (anyNA(dataEndoCosts[period == t & type == "Inconvenience costs"]$endoCostRaw)) {
       stop(paste0("Something went wrong with the calculation of the raw endogenous costs in toolUpdateEndogenousCosts() ", t))
     }
-
-    # calculate policy mask from scenParIncoCost ---------------------------------------------------
-
-    linFunc <- function(year, startYear, startValue, targetYear, targetValue) {
-      if (year < startYear) {
-        return(startValue)
-      } else if (year < targetYear) {
-        return(startValue + ((targetValue - startValue) / (targetYear - startYear)) * (year - startYear))
-      } else{
-        return(targetValue)
-      }
-    }
-
-    policyMask <- copy(scenParIncoCost)
-    # Hybrid electric vehicles get a different policy parameter than BEV and ICE
-    policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
-    setnames(policyMaskPHEV, "value", "policyMaskUpdate")
-    policyMaskPHEV <- policyMaskPHEV[, c("FVvehvar", "technology", "policyMaskUpdate")]
-    policyMask <- policyMask[!technology == "Hybrid electric"]
-    policyMask <- dcast(policyMask, FVvehvar + technology ~ param, value.var = "value")
-    # At the start of the policy intervention, the inconvenience costs for ICEs are zero, as they are the predominant and well-established technology.
-    policyMask[technology == "Liquids", startValue := 0]
-    policyMask[, policyMaskUpdate := linFunc(t, startYear, startValue, targetYear, targetValue), by = c("technology")]
-    policyMask <- policyMask[, c("FVvehvar", "technology", "policyMaskUpdate")]
-    policyMask <- rbind(policyMask, policyMaskPHEV)
-    policyMask[, period := t]
-    policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE)[, FVvehvar := NULL]
-    dataEndoCosts <- merge(dataEndoCosts, policyMask, by = c("univocalName", "technology", "period"), all.x = TRUE)
-    dataEndoCosts[period == t, policyMask := policyMaskUpdate][, c("policyMaskUpdate") := NULL]
-
-    #check whether policy mask was updated for respective technologys
-    if (anyNA(dataEndoCosts[period == t & technology %in% c("BEV", "Liquids", "Hybrid electric")]$policyMask)) {
-      stop(paste0("Something went wrong with the calculation of the policyMask in toolUpdateEndogenousCosts() ", t))
-      }
 
     # calculate resulting endogenous costs ---------------------------------------------------
     # The policy mask affects only certain types of inconvenience costs. Others are affected indirectly by the increasing/decreasing market share of the technologies.
@@ -190,6 +214,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   endogenousCosts <- lapply(endogenousCosts, approx_dt, outputYears, "period", "value",
                        setdiff(names(updatedEndogenousCosts), c("period", "value")), extrapolate = TRUE)
 
-
+  browser()
   return(endogenousCosts)
 }
+
