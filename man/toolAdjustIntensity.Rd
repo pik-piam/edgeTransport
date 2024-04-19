@@ -9,7 +9,7 @@ toolAdjustIntensity(intensity, intImproTab, years)
 \arguments{
 \item{intensity}{energy intensity raw data in EJ/pkm or EJ/tkm}
 
-\item{intImproTab}{table that provides techScen specific annual improvement rates, start year and end year}
+\item{intImproTab}{table that provides transportPolScen specific annual improvement rates, start year and end year}
 
 \item{years}{time horizon of EDGE-T}
 }

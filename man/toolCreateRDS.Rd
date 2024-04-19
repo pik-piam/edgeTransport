@@ -5,14 +5,14 @@
 \title{Creates RDS files for iterative REMIND-EDGE runs from csv input files.
 Existing files are overwritten silently. Does not return anything.}
 \usage{
-toolCreateRDS(input_path, data_path, SSP_scenario, DEM_scenario, EDGE_scenario)
+toolCreateRDS(input_path, data_path, SSPscen, DEM_scenario, EDGE_scenario)
 }
 \arguments{
 \item{input_path}{the path to the folder containing the input (csv-) files}
 
 \item{data_path}{the path to the output folder}
 
-\item{SSP_scenario}{the SSP dimension, usually this refers to the GDP scenario in REMIND}
+\item{SSPscen}{the SSP dimension, usually this refers to the GDP scenario in REMIND}
 
 \item{DEM_scenario}{the demand scenario.}
 

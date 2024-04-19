@@ -1,0 +1,5 @@
+transportPolScen;FVvehvar;interestRate;serviceLife
+default;LDV|4W;0.05;15
+default;Bus;0.05;15
+default;Truck|light;0.05;15
+default;Truck|heavy;0.05;15

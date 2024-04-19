@@ -8,8 +8,8 @@ CostReg <- CostReg[!CostReg == params$mainReg]
 scen <- unique(data$scenario)
 ```
 
-## Prices S3S
-```{r Prices S3S}
+## Prices S1S
+```{r Prices S1S}
 
   
  
@@ -23,15 +23,15 @@ for (reg0 in CostReg) {
   plotdata <- plotdata[, variable:=gsub("Walk\\||Cycle\\||trn_pass_road\\||Domestic Aviation\\||Passenger Rail\\||HSR\\|","",variable)]
   plotdata[, variable := factor(variable, levels = c("Eq inconvenience cost","tot_VOT_price","fuel_price_pkm","non_fuel_price"))]
   
-  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S3S [USD2005/pkm]", title = paste0("Prices logit S3S ",reg0) )
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S1S [USD2005/pkm]", title = paste0("Prices logit S1S ",reg0) )
   p2 <- p2 + theme_mip(size = 18)
   print(p2)
   cat("\n\n")}
 
 ```
 
-## Prices S2S3
-```{r Prices S2S3}
+## Prices S2S1
+```{r Prices S2S1}
 
 for (reg0 in CostReg) {
   plotdata <- data[grepl("Logit cost\\|S2\\|(Bus|trn_pass_road_LDV)",variable)]
@@ -42,15 +42,15 @@ for (reg0 in CostReg) {
   plotdata <- plotdata[, variable := gsub("Bus\\||trn_pass_road_LDV\\|","", variable)]
   plotdata[, variable := factor(variable, levels = c("Eq inconvenience cost","tot_VOT_price","fuel_price_pkm","non_fuel_price"))]
 
-  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S2 [USD2005/pkm]", title = paste0("Prices logit S2S3 ",reg0))
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S2 [USD2005/pkm]", title = paste0("Prices logit S2S1 ",reg0))
   p2 <- p2 + theme_mip(size = 18)
   print(p2)
   cat("\n\n")}
 
 ```
 
-## Prices S1S2
-```{r Prices S1S2}
+## Prices S3S2
+```{r Prices S3S2}
 
 for (reg0 in CostReg) {
   plotdata <- data[grepl("Logit cost\\|S1\\|(trn_pass_road_LDV_4W|trn_pass_road_LDV_2W)",variable)]
@@ -62,7 +62,7 @@ for (reg0 in CostReg) {
   plotdata[, variable := factor(variable, levels = c("Eq inconvenience cost","tot_VOT_price","fuel_price_pkm","non_fuel_price"))]
   
 
-  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S1S2 [USD2005/pkm]", title = paste0("Prices logit S1S2 ",reg0))
+  p2 <- mipBarYearData(plotdata, ylab = "Prices logit S3S2 [USD2005/pkm]", title = paste0("Prices logit S3S2 ",reg0))
   p2 <- p2 + theme_mip(size = 18)
   print(p2)
   cat("\n\n")}

@@ -1,0 +1,71 @@
+univocalName;technology;all_enty;all_teEs;all_in
+International Aviation;Liquids;fedie;te_esdie_pass_lo;entrp_pass_lo
+Domestic Aviation;Liquids;fedie;te_esdie_pass_sm;entrp_pass_sm
+Domestic Aviation;Hydrogen;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Motorcycle (50-250cc);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Motorcycle (50-250cc);Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Moped;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Moped;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Motorcycle (>250cc);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Motorcycle (>250cc);Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Compact Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Compact Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Compact Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Compact Car;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Mini Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Mini Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Mini Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Mini Car;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Subcompact Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Subcompact Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Subcompact Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Subcompact Car;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Large Car and SUV;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Large Car and SUV;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Large Car and SUV;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Large Car and SUV;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Large Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Large Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Large Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Large Car;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Midsize Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Midsize Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Midsize Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Midsize Car;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Van;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Van;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Van;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Van;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+Bus;Liquids;fedie;te_esdie_pass_sm;entrp_pass_sm
+Bus;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
+HSR;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
+Passenger Rail;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
+Passenger Rail;Liquids;fedie;te_esdie_pass_sm;entrp_pass_sm
+Walk;Walk_tmp_technology;NA;NA;entrp_pass_sm
+Cycle;Cycle_tmp_technology;NA;NA;entrp_pass_sm
+Bus;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Bus;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
+Truck (0-3_5t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (0-3_5t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
+Truck (18t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (18t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
+Truck (26t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (26t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
+Truck (7_5t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (7_5t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
+Truck (40t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (40t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
+Domestic Ship;Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Freight Rail;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
+Freight Rail;Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
+Truck (0-3_5t);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Truck (0-3_5t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
+Truck (18t);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Truck (18t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
+Truck (26t);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Truck (26t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
+Truck (7_5t);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Truck (7_5t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
+Truck (40t);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Truck (40t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
+International Ship;Liquids;fedie;te_esdie_frgt_lo;entrp_frgt_lo

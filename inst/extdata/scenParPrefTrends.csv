@@ -1,0 +1,2971 @@
+SSPscen;transportPolScen;regionCat;technology;FVvehvar;subsectorL2;subsectorL1;level;target;symmyr;speed
+SDP;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Cycle;S3;3;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Cycle;S3;2.25;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Cycle;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Cycle;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Cycle;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Cycle;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Cycle;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Cycle;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Cycle;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Cycle;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_act;USA;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Cycle;S3;1.8;2040;10
+SSP2EU;NAV_all;CAZ;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_all;USA;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Cycle;S3;1.8;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Cycle;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Cycle;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_lce;USA;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Cycle;S3;2.5;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Cycle;S3;1.8;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Cycle;S3;1.5;2040;10
+SDP;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_EI;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_EI;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_EI;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_EI;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_EI;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_EI;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_MC;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_MC;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_MC;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_MC;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_MC;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_MC;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_RC;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_RC;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SDP_RC;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_RC;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SDP_RC;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SDP_RC;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP1;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP1;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP1;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP1;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP1;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP1;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Domestic Aviation;S3;0.4;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP2EU;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;NAV_act;CAZ;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_act;USA;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_all;CAZ;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_all;USA;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Domestic Aviation;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Domestic Aviation;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_lce;USA;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP5;Mix2;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP5;Mix3;below GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP5;Mix3;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2035;10
+SSP5;Mix4;below GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP5;Mix4;above GDP cutoff;;;;Domestic Aviation;S3;0.25;2035;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2040;10
+SDP;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Domestic Ship;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_act;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_all;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_all;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_lce;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SDP;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Freight Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_act;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_all;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_all;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_lce;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SDP;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;HSR;S3;1.7;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;HSR;S3;1.7;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;HSR;S3;2.8;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;HSR;S3;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;HSR;S3;1.9;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;HSR;S3;1.6;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_act;USA;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;HSR;S3;2.8;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_all;CAZ;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_all;USA;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;HSR;S3;2.8;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;HSR;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;HSR;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_lce;USA;;;;HSR;S3;1.7;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;HSR;S3;2.8;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;HSR;S3;1.7;2040;10
+SSP5;Mix2;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;HSR;S3;1.9;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;HSR;S3;1.2;2040;10
+SDP;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Passenger Rail;S3;1.5;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Passenger Rail;S3;1.25;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Passenger Rail;S3;1.6;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Passenger Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Passenger Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Passenger Rail;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Passenger Rail;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Passenger Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Passenger Rail;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Passenger Rail;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Passenger Rail;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_act;USA;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Passenger Rail;S3;1.5;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Passenger Rail;S3;1.6;2040;10
+SSP2EU;NAV_all;CAZ;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_all;USA;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Passenger Rail;S3;1.5;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Passenger Rail;S3;1.6;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Passenger Rail;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Passenger Rail;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_lce;USA;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Passenger Rail;S3;1.5;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Passenger Rail;S3;1.6;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Passenger Rail;S3;1.25;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Passenger Rail;S3;1.2;2040;10
+SDP;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_EI;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_EI;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_EI;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_EI;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_EI;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_MC;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_MC;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_MC;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_MC;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_MC;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_RC;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SDP_RC;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_RC;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SDP_RC;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SDP_RC;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP1;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP1;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP1;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP1;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP1;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP1;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;trn_freight_road;S3;0.7;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;trn_freight_road;S3;0.75;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP2EU;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;NAV_act;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_act;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_all;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_all;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;trn_freight_road;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;trn_freight_road;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_lce;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP5;Mix2;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP5;Mix2;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP5;Mix3;below GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP5;Mix3;above GDP cutoff;;;;trn_freight_road;S3;0.7;2035;10
+SSP5;Mix4;below GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP5;Mix4;above GDP cutoff;;;;trn_freight_road;S3;0.5;2035;10
+SSP2EU;CAMP_lscLow;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;trn_freight_road;S3;0.8;2040;10
+SDP;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_EI;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_EI;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_EI;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_EI;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_EI;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_MC;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_MC;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_MC;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_MC;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_MC;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_RC;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SDP_RC;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_RC;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SDP_RC;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SDP_RC;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP1;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP1;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP1;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP1;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP1;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP1;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;trn_pass_road;S3;0.75;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.8;2035;10
+SSP2EU;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.8;2035;10
+SSP2EU;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;NAV_act;CAZ;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_act;USA;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;NAV_all;CAZ;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_all;USA;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;trn_pass_road;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;trn_pass_road;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_lce;USA;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP5;Mix2;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP5;Mix2;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP5;Mix3;below GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP5;Mix3;above GDP cutoff;;;;trn_pass_road;S3;0.7;2035;10
+SSP5;Mix4;below GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP5;Mix4;above GDP cutoff;;;;trn_pass_road;S3;0.5;2035;10
+SSP2EU;CAMP_lscLow;CAZ;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;trn_pass_road;S3;0.85;2040;10
+SDP;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;;Walk;S3;3;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;;Walk;S3;2.25;2040;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;;Walk;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;;Walk;S3;1.5;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;;Walk;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;;Walk;S3;2;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;;Walk;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;;Walk;S3;1.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;;Walk;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;;Walk;S3;2;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;NAV_act;CAZ;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_act;USA;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;;Walk;S3;1.7;2040;10
+SSP2EU;NAV_all;CAZ;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_all;USA;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;;Walk;S3;1.7;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;;Walk;S3;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;;Walk;S3;1;2040;10
+SSP2EU;NAV_lce;CAZ;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_lce;USA;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;;Walk;S3;2.5;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;;Walk;S3;1.7;2040;10
+SSP5;Mix2;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;USA;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;;Walk;S3;1.5;2040;10
+SDP;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SDP;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SDP;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SDP;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SDP;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SDP;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SDP;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SDP;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SDP;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SDP;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SDP;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SDP;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SDP;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SDP;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SDP;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SDP;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SDP;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SDP;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SDP;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SDP;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SDP;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SDP;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SDP;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SDP;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SDP;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SDP;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SDP;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SDP_EI;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SDP_EI;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_EI;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_EI;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SDP_EI;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SDP_EI;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SDP_EI;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SDP_EI;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SDP_EI;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SDP_EI;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SDP_EI;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SDP_EI;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_EI;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_EI;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SDP_EI;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SDP_EI;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SDP_EI;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SDP_EI;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SDP_EI;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SDP_EI;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SDP_EI;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SDP_EI;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_EI;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_EI;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SDP_MC;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SDP_MC;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_MC;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_MC;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SDP_MC;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SDP_MC;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SDP_MC;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SDP_MC;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SDP_MC;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SDP_MC;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SDP_MC;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SDP_MC;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_MC;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_MC;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SDP_MC;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SDP_MC;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SDP_MC;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SDP_MC;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SDP_MC;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SDP_MC;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SDP_MC;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SDP_MC;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_MC;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_MC;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SDP_RC;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SDP_RC;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_RC;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SDP_RC;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SDP_RC;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SDP_RC;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SDP_RC;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SDP_RC;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SDP_RC;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SDP_RC;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SDP_RC;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SDP_RC;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_RC;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SDP_RC;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SDP_RC;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SDP_RC;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SDP_RC;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SDP_RC;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SDP_RC;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SDP_RC;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SDP_RC;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SDP_RC;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SDP_RC;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SDP_RC;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP1;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SSP1;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SSP1;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP1;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP1;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SSP1;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SSP1;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP1;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SSP1;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SSP1;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SSP1;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SSP1;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SSP1;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SSP1;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SSP1;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SSP1;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SSP1;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP1;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP1;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP1;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP1;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SSP1;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SSP1;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SSP1;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SSP1;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP1;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP1;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SSP1;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SSP1;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP1;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SSP1;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SSP1;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP1;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP1;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SSP2;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SSP2;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SSP2;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SSP2;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;4;2035;10
+SSP2;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;14;2035;10
+SSP2;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3;2035;10
+SSP2;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3;2035;10
+SSP2;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SSP2;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SSP2;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP2;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;15;2035;10
+SSP2;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;3;2035;10
+SSP2;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;3;2035;10
+SSP2;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP2;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP2;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP2;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SSP2;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SSP2;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SSP2;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP2;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP2;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;15;2040;1
+SSP2;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2040;10
+SSP2;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;18;2040;1
+SSP2;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;20;2040;10
+SSP2;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;CAMP_lscStrong;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;BEV;Truck|heavy;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;FCEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;BEV;Truck|light;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;FCEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;BEV;Bus;;;FV;4;2035;10
+SSP2EU;CAMP_lscStrong;USA;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;BEV;Truck|heavy;;;FV;3;2035;10
+SSP2EU;CAMP_lscStrong;USA;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;USA;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;CAMP_lscStrong;USA;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;BEV;Bus;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;BEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;BEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;FCEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Hydrogen;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong;CAZ;;;Bus;;S2;3;2040;10
+SSP2EU;CAMP_lscStrong;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscStrong;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscStrong;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;Bus;;S2;2.5;2040;10
+SSP2EU;CAMP_lscStrong;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.75;2035;10
+SSP2EU;CAMP_lscWeak;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;BEV;Truck|heavy;;;FV;3;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;FCEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;BEV;Truck|light;;;FV;3;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;FCEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;BEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak;USA;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak;USA;BEV;Truck|heavy;;;FV;3;2035;10
+SSP2EU;CAMP_lscWeak;USA;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak;USA;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;CAMP_lscWeak;USA;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;BEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;BEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;BEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;FCEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Electric;Rail;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Hydrogen;Rail;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Rail;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak;CAZ;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscWeak;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscWeak;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscWeak;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.95;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscWeak;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.8;2035;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Hydrogen;Aviation;;;FV;2;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;BEV;Bus;;;FV;13;2030;15
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;BEV;LDV|2W;;;FV;7;2030;15
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Electric;Rail;;;FV;6;2040;15
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;3
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Hydrogen;Aviation;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;BEV;Bus;;;FV;10;2035;15
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;BEV;LDV|2W;;;FV;7;2050;15
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Electric;Rail;;;FV;5;2050;15
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;BEV;Truck|heavy;;;FV;50;2040;5
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;FCEV;Truck|heavy;;;FV;60;2040;3
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;Bus;;S2;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;Bus;;S2;1.5;2050;10
+SSP2EU;ECEMF_HighEl_HighEff;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Hydrogen;Aviation;;;FV;2;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;BEV;Bus;;;FV;13;2030;15
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;BEV;LDV|2W;;;FV;7;2030;15
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Electric;Rail;;;FV;6;2040;15
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;3
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Hydrogen;Aviation;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;BEV;Bus;;;FV;10;2035;15
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;BEV;LDV|2W;;;FV;7;2050;15
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Electric;Rail;;;FV;5;2050;15
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;BEV;Truck|heavy;;;FV;50;2040;5
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;FCEV;Truck|heavy;;;FV;60;2040;3
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;Bus;;S2;2;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;Bus;;S2;2;2050;10
+SSP2EU;ECEMF_HighEl_LifestCha;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Hydrogen;Aviation;;;FV;2;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;BEV;Bus;;;FV;10;2030;15
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;BEV;LDV|2W;;;FV;5;2030;15
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Electric;Rail;;;FV;4;2040;15
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;3
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Hydrogen;Aviation;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;BEV;Bus;;;FV;6;2035;15
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;FCEV;Bus;;;FV;1.1;2035;5
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;BEV;LDV|2W;;;FV;3;2050;15
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Electric;Rail;;;FV;3;2050;15
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Hydrogen;Rail;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Hydrogen;Ship;;;FV;1.1;2050;5
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;BEV;Truck|heavy;;;FV;50;2040;5
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;FCEV;Truck|heavy;;;FV;60;2040;3
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;ECEMF_HighEl_ModEff;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Hydrogen;Aviation;;;FV;5;2055;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;FCEV;Bus;;;FV;160;2040;5
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;BEV;LDV|2W;;;FV;3;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Hydrogen;Rail;;;FV;5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Hydrogen;Ship;;;FV;5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;FCEV;Truck|heavy;;;FV;30;2035;3
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Hydrogen;Aviation;;;FV;3;2055;5
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;FCEV;Bus;;;FV;220;2035;5
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;BEV;LDV|2W;;;FV;3;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Electric;Rail;;;FV;2.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Hydrogen;Rail;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Hydrogen;Ship;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;BEV;Truck|heavy;;;FV;40;2040;5
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;FCEV;Truck|heavy;;;FV;250;2040;3
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;FCEV;Truck|light;;;FV;50;2040;3
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;Bus;;S2;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;Bus;;S2;1.5;2050;10
+SSP2EU;ECEMF_HighH2_HighEff;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Hydrogen;Aviation;;;FV;5;2055;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;FCEV;Bus;;;FV;160;2040;5
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;BEV;LDV|2W;;;FV;3;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Hydrogen;Rail;;;FV;5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Hydrogen;Ship;;;FV;5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;FCEV;Truck|heavy;;;FV;30;2035;3
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Hydrogen;Aviation;;;FV;3;2055;5
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;FCEV;Bus;;;FV;220;2035;5
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;BEV;LDV|2W;;;FV;3;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Electric;Rail;;;FV;2.5;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Hydrogen;Rail;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Hydrogen;Ship;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;BEV;Truck|heavy;;;FV;40;2040;5
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;FCEV;Truck|heavy;;;FV;250;2040;3
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;FCEV;Truck|light;;;FV;50;2040;3
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;Bus;;S2;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;Bus;;S2;2;2050;10
+SSP2EU;ECEMF_HighH2_LifestCha;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Hydrogen;Aviation;;;FV;2.5;2055;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;FCEV;Bus;;;FV;150;2040;5
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;BEV;LDV|2W;;;FV;2.5;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Electric;Rail;;;FV;2.5;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Hydrogen;Rail;;;FV;4;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Hydrogen;Ship;;;FV;4;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;FCEV;Truck|heavy;;;FV;30;2035;3
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Hydrogen;Aviation;;;FV;3;2055;5
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;FCEV;Bus;;;FV;200;2035;5
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;BEV;LDV|2W;;;FV;3;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Electric;Rail;;;FV;1.5;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Hydrogen;Rail;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Hydrogen;Ship;;;FV;2;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;BEV;Truck|heavy;;;FV;40;2040;5
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;FCEV;Truck|heavy;;;FV;250;2040;3
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;FCEV;Truck|light;;;FV;50;2040;3
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;ECEMF_HighH2_ModEff;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;HydrHype4;below GDP cutoff;Hydrogen;Aviation;;;FV;2.5;2055;10
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;HydrHype4;below GDP cutoff;FCEV;Bus;;;FV;150;2040;5
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;HydrHype4;below GDP cutoff;FCEV;Truck|heavy;;;FV;30;2035;3
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;HydrHype4;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;HydrHype4;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;HydrHype4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;HydrHype4;above GDP cutoff;Hydrogen;Aviation;;;FV;3;2055;5
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;BEV;Bus;;;FV;3;2060;15
+SSP2EU;HydrHype4;above GDP cutoff;FCEV;Bus;;;FV;200;2035;5
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;BEV;Truck|heavy;;;FV;40;2040;5
+SSP2EU;HydrHype4;above GDP cutoff;FCEV;Truck|heavy;;;FV;250;2040;3
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;HydrHype4;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;HydrHype4;above GDP cutoff;FCEV;Truck|light;;;FV;50;2040;3
+SSP2EU;HydrHype4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;HydrHype4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;HydrHype4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;HydrHype4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;HydrHype4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SSP2EU;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SSP2EU;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Electric;Rail;;;FV;1.5;2050;10
+SSP2EU;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;4;2035;10
+SSP2EU;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3;2035;10
+SSP2EU;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SSP2EU;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Electric;Rail;;;FV;1.5;2050;10
+SSP2EU;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP2EU;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;3;2035;10
+SSP2EU;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.8;2035;10
+SSP2EU;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.8;2035;10
+SSP2EU;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP2EU;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP2EU;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;5
+SSP2EU;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;7;2035;3
+SSP2EU;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP2EU;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP2EU;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;50;2040;5
+SSP2EU;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;60;2040;3
+SSP2EU;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SSP2EU;Mix4_ensec;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;BEV;Truck|heavy;;;FV;5000;2040;1
+SSP2EU;Mix4_ensec;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;BEV;Truck|light;;;FV;500;2040;1
+SSP2EU;Mix4_ensec;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix4_ensec;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix4_ensec;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;NAV_act;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;BEV;Bus;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;FCEV;Bus;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;BEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;FCEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_act;USA;BEV;Truck|light;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;FCEV;Truck|light;;;FV;1;2035;10
+SSP2EU;NAV_act;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_act;below GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_act;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_act;CAZ;;;Bus;;S2;3;2040;10
+SSP2EU;NAV_act;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_act;USA;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_act;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_act;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_act;above GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_all;below GDP cutoff;Hydrogen;Aviation;;;FV;10;2045;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Aviation;;;FV;0.1;2045;10
+SSP2EU;NAV_all;below GDP cutoff;BEV;Bus;;;FV;7;2025;10
+SSP2EU;NAV_all;below GDP cutoff;FCEV;Bus;;;FV;5;2025;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Bus;;;FV;0.01;2025;10
+SSP2EU;NAV_all;below GDP cutoff;BEV;LDV|2W;;;FV;4;2030;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;LDV|2W;;;FV;0.05;2030;10
+SSP2EU;NAV_all;below GDP cutoff;Electric;Rail;;;FV;2;2040;10
+SSP2EU;NAV_all;below GDP cutoff;Hydrogen;Rail;;;FV;2;2040;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Rail;;;FV;0.1;2040;10
+SSP2EU;NAV_all;below GDP cutoff;Hydrogen;Ship;;;FV;10;2050;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Ship;;;FV;0.1;2050;10
+SSP2EU;NAV_all;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2025;10
+SSP2EU;NAV_all;below GDP cutoff;FCEV;Truck|heavy;;;FV;9;2025;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Truck|heavy;;;FV;0.01;2025;10
+SSP2EU;NAV_all;below GDP cutoff;BEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_all;below GDP cutoff;FCEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_all;below GDP cutoff;Liquids;Truck|light;;;FV;0.01;2025;10
+SSP2EU;NAV_all;above GDP cutoff;Hydrogen;Aviation;;;FV;10;2045;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Aviation;;;FV;0.1;2045;10
+SSP2EU;NAV_all;above GDP cutoff;BEV;Bus;;;FV;9;2025;10
+SSP2EU;NAV_all;above GDP cutoff;FCEV;Bus;;;FV;6;2025;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Bus;;;FV;0.01;2025;10
+SSP2EU;NAV_all;above GDP cutoff;BEV;LDV|2W;;;FV;4;2030;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;LDV|2W;;;FV;0.05;2030;10
+SSP2EU;NAV_all;above GDP cutoff;Electric;Rail;;;FV;2;2040;10
+SSP2EU;NAV_all;above GDP cutoff;Hydrogen;Rail;;;FV;2;2040;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Rail;;;FV;0.1;2040;10
+SSP2EU;NAV_all;above GDP cutoff;Hydrogen;Ship;;;FV;10;2050;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Ship;;;FV;0.1;2050;10
+SSP2EU;NAV_all;above GDP cutoff;BEV;Truck|heavy;;;FV;4;2025;10
+SSP2EU;NAV_all;above GDP cutoff;FCEV;Truck|heavy;;;FV;9;2025;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Truck|heavy;;;FV;0.01;2025;10
+SSP2EU;NAV_all;above GDP cutoff;BEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_all;above GDP cutoff;FCEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_all;above GDP cutoff;Liquids;Truck|light;;;FV;0.01;2025;10
+SSP2EU;NAV_all;CAZ;;;Bus;;S2;3;2040;10
+SSP2EU;NAV_all;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_all;USA;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_all;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_all;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_all;above GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;Hydrogen;Aviation;;;FV;10;2045;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Aviation;;;FV;0.1;2045;10
+SSP2EU;NAV_ele;below GDP cutoff;BEV;Bus;;;FV;7;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;FCEV;Bus;;;FV;5;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Bus;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;BEV;LDV|2W;;;FV;4;2030;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;LDV|2W;;;FV;0.05;2030;10
+SSP2EU;NAV_ele;below GDP cutoff;Electric;Rail;;;FV;2;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;Hydrogen;Rail;;;FV;2;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Rail;;;FV;0.1;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;Hydrogen;Ship;;;FV;10;2050;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Ship;;;FV;0.1;2050;10
+SSP2EU;NAV_ele;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;FCEV;Truck|heavy;;;FV;9;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Truck|heavy;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;BEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;FCEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;Liquids;Truck|light;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;Hydrogen;Aviation;;;FV;10;2045;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Aviation;;;FV;0.1;2045;10
+SSP2EU;NAV_ele;above GDP cutoff;BEV;Bus;;;FV;9;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;FCEV;Bus;;;FV;6;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Bus;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;BEV;LDV|2W;;;FV;4;2030;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;LDV|2W;;;FV;0.05;2030;10
+SSP2EU;NAV_ele;above GDP cutoff;Electric;Rail;;;FV;2;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;Hydrogen;Rail;;;FV;2;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Rail;;;FV;0.1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;Hydrogen;Ship;;;FV;10;2050;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Ship;;;FV;0.1;2050;10
+SSP2EU;NAV_ele;above GDP cutoff;BEV;Truck|heavy;;;FV;4;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;FCEV;Truck|heavy;;;FV;9;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Truck|heavy;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;BEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;FCEV;Truck|light;;;FV;4;2025;10
+SSP2EU;NAV_ele;above GDP cutoff;Liquids;Truck|light;;;FV;0.01;2025;10
+SSP2EU;NAV_ele;below GDP cutoff;;;Bus;;S2;1;2040;10
+SSP2EU;NAV_ele;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;Bus;;S2;1;2040;10
+SSP2EU;NAV_ele;above GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_lce;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;BEV;Bus;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;FCEV;Bus;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;BEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;FCEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_lce;USA;BEV;Truck|light;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;FCEV;Truck|light;;;FV;1;2035;10
+SSP2EU;NAV_lce;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_lce;below GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;BEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;FCEV;Bus;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;NAV_lce;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;NAV_lce;CAZ;;;Bus;;S2;3;2040;10
+SSP2EU;NAV_lce;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_lce;USA;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_lce;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_lce;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;NAV_lce;above GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;PhOP;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP2EU;PhOP;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP2EU;PhOP;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;PhOP;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;PhOP;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;3
+SSP2EU;PhOP;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;3
+SSP2EU;PhOP;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;PhOP;below GDP cutoff;BEV;Truck|light;;;FV;10;2040;3
+SSP2EU;PhOP;below GDP cutoff;FCEV;Truck|light;;;FV;10;2040;3
+SSP2EU;PhOP;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP2EU;PhOP;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP2EU;PhOP;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP2EU;PhOP;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;PhOP;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;PhOP;above GDP cutoff;BEV;Truck|heavy;;;FV;50;2040;3
+SSP2EU;PhOP;above GDP cutoff;FCEV;Truck|heavy;;;FV;120;2040;3
+SSP2EU;PhOP;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;3
+SSP2EU;PhOP;above GDP cutoff;BEV;Truck|light;;;FV;40;2040;3
+SSP2EU;PhOP;above GDP cutoff;FCEV;Truck|light;;;FV;50;2040;3
+SSP2EU;PhOP;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;3
+SSP5;Mix2;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SSP5;Mix2;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix2;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SSP5;Mix2;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix2;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix2;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP5;Mix2;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix2;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP5;Mix3;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;BEV;Bus;;;FV;3.5;2035;10
+SSP5;Mix3;below GDP cutoff;FCEV;Bus;;;FV;3.5;2035;10
+SSP5;Mix3;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;BEV;Truck|heavy;;;FV;5;2035;10
+SSP5;Mix3;below GDP cutoff;FCEV;Truck|heavy;;;FV;17;2035;10
+SSP5;Mix3;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;BEV;Truck|light;;;FV;3.5;2035;10
+SSP5;Mix3;below GDP cutoff;FCEV;Truck|light;;;FV;3.5;2035;10
+SSP5;Mix3;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;BEV;Bus;;;FV;4;2035;10
+SSP5;Mix3;above GDP cutoff;FCEV;Bus;;;FV;4;2035;10
+SSP5;Mix3;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;BEV;Truck|heavy;;;FV;7;2035;10
+SSP5;Mix3;above GDP cutoff;FCEV;Truck|heavy;;;FV;20;2035;10
+SSP5;Mix3;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix3;above GDP cutoff;BEV;Truck|light;;;FV;4;2035;10
+SSP5;Mix3;above GDP cutoff;FCEV;Truck|light;;;FV;4;2035;10
+SSP5;Mix3;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix3;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP5;Mix3;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix3;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.7;2035;10
+SSP5;Mix4;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;BEV;Bus;;;FV;5;2035;10
+SSP5;Mix4;below GDP cutoff;FCEV;Bus;;;FV;5;2035;10
+SSP5;Mix4;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;BEV;Truck|heavy;;;FV;17;2035;10
+SSP5;Mix4;below GDP cutoff;FCEV;Truck|heavy;;;FV;85;2035;10
+SSP5;Mix4;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;BEV;Truck|light;;;FV;5;2035;10
+SSP5;Mix4;below GDP cutoff;FCEV;Truck|light;;;FV;5;2035;10
+SSP5;Mix4;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;BEV;Bus;;;FV;6;2035;10
+SSP5;Mix4;above GDP cutoff;FCEV;Bus;;;FV;6;2035;10
+SSP5;Mix4;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;BEV;Truck|heavy;;;FV;20;2035;10
+SSP5;Mix4;above GDP cutoff;FCEV;Truck|heavy;;;FV;100;2035;10
+SSP5;Mix4;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP5;Mix4;above GDP cutoff;BEV;Truck|light;;;FV;6;2035;10
+SSP5;Mix4;above GDP cutoff;FCEV;Truck|light;;;FV;6;2035;10
+SSP5;Mix4;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix4;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP5;Mix4;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP5;Mix4;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.5;2035;10
+SSP2EU;CAMP_lscLow;CAZ;Hydrogen;Aviation;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Aviation;;;FV;3;2050;10
+SSP2EU;CAMP_lscLow;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow;CAZ;FCEV;Bus;;;FV;3;2040;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Bus;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;CAZ;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;CAZ;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Hydrogen;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Aviation;;;FV;3;2050;10
+SSP2EU;CAMP_lscLow;USA;BEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscLow;USA;FCEV;Bus;;;FV;3;2035;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Bus;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;BEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow;USA;FCEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;USA;BEV;Truck|light;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow;USA;FCEV;Truck|light;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Hydrogen;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;BEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Bus;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;FCEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Electric;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Hydrogen;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow;CAZ;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscLow;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscLow;USA;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.95;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.85;2035;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Cycle;S3;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Domestic Aviation;S3;0.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;HSR;S3;1.9;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;HSR;S3;1.2;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Passenger Rail;S3;1.25;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Passenger Rail;S3;1.2;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;trn_freight_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;trn_pass_road;S3;0.85;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;;Walk;S3;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Hydrogen;Aviation;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Aviation;;;FV;3;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;FCEV;Bus;;;FV;3;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Bus;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Hydrogen;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Aviation;;;FV;3;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;BEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;FCEV;Bus;;;FV;3;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Bus;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;BEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;FCEV;Truck|heavy;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;USA;BEV;Truck|light;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;FCEV;Truck|light;;;FV;1;2035;10
+SSP2EU;CAMP_lscLow_noBan;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Hydrogen;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Aviation;;;FV;2;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;BEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Bus;;;FV;1.5;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;FCEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Electric;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Hydrogen;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Rail;;;FV;1.25;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscLow_noBan;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.95;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;Bus;;S2;1.5;2040;10
+SSP2EU;CAMP_lscLow_noBan;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.85;2035;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Cycle;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Cycle;S3;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Domestic Aviation;S3;0.3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;HSR;S3;1.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;HSR;S3;1.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;HSR;S3;2.8;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;HSR;S3;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Passenger Rail;S3;4;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Passenger Rail;S3;1.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;trn_freight_road;S3;0.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;trn_pass_road;S3;0.6;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;trn_pass_road;S3;0.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;trn_pass_road;S3;0.75;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;;Walk;S3;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;;Walk;S3;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;BEV;Truck|heavy;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;FCEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;BEV;Truck|light;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;FCEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;BEV;Bus;;;FV;4;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;BEV;Truck|heavy;;;FV;3;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;USA;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;CAMP_lscStrong_noBan;USA;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;BEV;Bus;;;FV;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;BEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;BEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;FCEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Electric;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Hydrogen;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Rail;;;FV;2;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;BEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;FCEV;Truck|heavy;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;BEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;FCEV;Truck|light;;;FV;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;Bus;;S2;3;2040;10
+SSP2EU;CAMP_lscStrong_noBan;CAZ;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;USA;;;trn_pass_road_LDV;;S2;0.7;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;Bus;;S2;2;2040;10
+SSP2EU;CAMP_lscStrong_noBan;below GDP cutoff;;;trn_pass_road_LDV;;S2;1;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;Bus;;S2;2.5;2040;10
+SSP2EU;CAMP_lscStrong_noBan;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.75;2035;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Cycle;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Cycle;S3;2.25;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Domestic Aviation;S3;0.53;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Domestic Aviation;S3;0.4;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Domestic Ship;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Freight Rail;S3;1;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;HSR;S3;1.35;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;HSR;S3;1.9;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;HSR;S3;1.6;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Passenger Rail;S3;2;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Passenger Rail;S3;1.25;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Passenger Rail;S3;1.6;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;trn_freight_road;S3;0.9;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;trn_freight_road;S3;0.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;trn_pass_road;S3;0.65;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;trn_pass_road;S3;0.8;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;USA;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;below GDP cutoff;;;;Walk;S3;1.75;2040;10
+SSP2EU;CAMP_lscWeak_noBan;above GDP cutoff;;;;Walk;S3;2.25;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;BEV;Bus;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;FCEV;Bus;;;FV;1.5;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;BEV;Truck|heavy;;;FV;3;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;FCEV;Truck|heavy;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;BEV;Truck|light;;;FV;3;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;FCEV;Truck|light;;;FV;2;2040;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;CAZ;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;BEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;BEV;Truck|heavy;;;FV;3;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;BEV;Truck|light;;;FV;3;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Electric;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;CAMP_lscWeak_noBan;USA;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Cycle;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Domestic Aviation;S3;0.75;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Domestic Ship;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Freight Rail;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;HSR;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Passenger Rail;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;trn_freight_road;S3;0.9;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;trn_pass_road;S3;0.9;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;;Walk;S3;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;BEV;Bus;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;FCEV;Bus;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;BEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;FCEV;Truck|heavy;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;BEV;Truck|light;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;FCEV;Truck|light;;;FV;1.5;2035;10
+SSP2EU;Mix2_ban;below GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Hydrogen;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Aviation;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;BEV;Bus;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;FCEV;Bus;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Bus;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;BEV;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;LDV|2W;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Electric;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Hydrogen;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Rail;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Hydrogen;Ship;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Ship;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;BEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;FCEV;Truck|heavy;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Truck|heavy;;;FV;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;BEV;Truck|light;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;FCEV;Truck|light;;;FV;2;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;Liquids;Truck|light;;;FV;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix2_ban;below GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;Bus;;S2;1;2050;10
+SSP2EU;Mix2_ban;above GDP cutoff;;;trn_pass_road_LDV;;S2;0.9;2035;10

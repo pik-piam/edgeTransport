@@ -6,9 +6,9 @@
 ### Total w/o bunkers
 ```{r}
 items <- c(
-  "UE|Transport|w/o bunkers|Electricity",
-  "UE|Transport|w/o bunkers|Hydrogen",
-  "UE|Transport|w/o bunkers|Liquids"
+  "UE|Transport|Electricity",
+  "UE|Transport|Hydrogen",
+  "UE|Transport|Liquids"
   )
 
 walk(items, showLinePlots, data = data)
@@ -39,9 +39,9 @@ walk(items, showLinePlots, data = data)
 ### Passenger w/o bunkers
 ```{r}
 items <- c(
-  "UE|Transport|Pass|w/o bunkers|Electricity",
-  "UE|Transport|Pass|w/o bunkers|Hydrogen",
-  "UE|Transport|Pass|w/o bunkers|Liquids"
+  "UE|Transport|Pass|Electricity",
+  "UE|Transport|Pass|Hydrogen",
+  "UE|Transport|Pass|Liquids"
   )
 walk(items, showLinePlots, data = data)
 ```

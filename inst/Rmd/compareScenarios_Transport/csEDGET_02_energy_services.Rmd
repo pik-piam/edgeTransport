@@ -1,11 +1,11 @@
 # Energy Services
 ## Passenger
 ```{r}
-tot_wbunk <- "ES|Transport edge|Pass"
-tot_wobunk <- "ES|Transport|Pass|w/o bunkers"
+tot_wbunk <- "ES|Transport|Pass with bunkers"
+tot_wobunk <- "ES|Transport|Pass"
 items <- c(
-    "ES|Transport|Pass|Aviation|International",
-    "ES|Transport|Pass|Aviation|Domestic",
+    "ES|Transport|Bunkers|Pass|International Aviation",
+    "ES|Transport|Pass|Domestic Aviation",
     "ES|Transport|Pass|Rail|HSR",
     "ES|Transport|Pass|Rail|non-HSR",
     "ES|Transport|Pass|Road|Bus",
@@ -26,10 +26,10 @@ walk(c("ES|Transport|Pass|Aviation", items[1:5], "ES|Transport|Pass|Road|LDV", i
 ```{r}
 
 items <- c(
-    "ES|Transport|Pass|w/o bunkers pCap",
+    "ES|Transport|Pass pCap",
     "ES|Transport|Pass|Aviation pCap",
-    "ES|Transport|Pass|Aviation|International pCap",
-    "ES|Transport|Pass|Aviation|Domestic pCap",
+    "ES|Transport|Bunkers|Pass|International Aviation pCap",
+    "ES|Transport|Pass|Domestic Aviation pCap",
     "ES|Transport|Pass|Rail|HSR pCap",
     "ES|Transport|Pass|Rail|non-HSR pCap",
     "ES|Transport|Pass|Road|Bus pCap",
@@ -106,11 +106,11 @@ showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 
 ## Freight
 ```{r}
-tot_wbunk <- "ES|Transport edge|Freight"
-tot_wobunk <- "ES|Transport|Freight|w/o bunkers"
+tot_wbunk <- "ES|Transport|Freight with bunkers"
+tot_wobunk <- "ES|Transport|Freight"
 items <- c(
-      "ES|Transport|Freight|International Shipping",
-      "ES|Transport|Freight|Navigation",
+      "ES|Transport|Bunkers|Freight|International Shipping",
+      "ES|Transport|Freight|Domestic Shipping",
       "ES|Transport|Freight|Rail",
       "ES|Transport|Freight|Road"
   )
@@ -128,9 +128,9 @@ walk(items, showLinePlots, data=data)
 ```{r}
 
 items <- c(
-      "ES|Transport|Freight|w/o bunkers pCap",
-      "ES|Transport|Freight|International Shipping pCap",
-      "ES|Transport|Freight|Navigation pCap",
+      "ES|Transport|Freight pCap",
+      "ES|Transport|Bunkers|Freight|International Shipping pCap",
+      "ES|Transport|Freight|Domestic Shipping pCap",
       "ES|Transport|Freight|Rail pCap",
       "ES|Transport|Freight|Road pCap"
     )
@@ -149,8 +149,8 @@ items <- c(
        "ES|Transport|Freight|Road|Truck (40t)",
        "ES|Transport|Freight|Road|Truck (26t)",
        "ES|Transport|Freight|Road|Truck (18t)",
-       "ES|Transport|Freight|Road|Truck (7.5t)",
-       "ES|Transport|Freight|Road|Truck (0-3.5t)"
+       "ES|Transport|Freight|Road|truck (7_5t)",
+       "ES|Transport|Freight|Road|truck (0-3_5t)"
   )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")

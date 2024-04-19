@@ -1,91 +1,216 @@
-#' Edge Transport Stand Alone
+#' Energy Demand Generator (EDGE)- Transport Model
 #'
-#' Stand alone version of the EDGE Transport model. It includes the transport specific input data preparation,
-#' a choice model to determine transport mode and technology shares, a demand regression and a fleet tracking for cars, busses and trucks
+#' The Edge Transport Model includes the transport specific input data preparation,
+#' a choice model to determine transport mode and technology shares, a demand regression
+#' and a fleet tracking for cars, busses and trucks
 #'
 #' @param SSPscen SSP or SDP scenario
-#' @param TransportPolScen EDGE-T transport policy scenario
+#' @param transportPolScen EDGE-T transport policy scenario
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
-#' @param storeRDS Optional saving of intermediate RDS files
-#' @param reportMif Optional transport reporting in MIF format
-#' @param generateREMINDinputData generate the REMIND input data cs4 files
-#' @return generated REMIND transport input data
+#' @param storeData Optional saving of intermediate RDS files
+#' @param reportTransportData Optional transport reporting in MIF format
+#' @param reportExtendedTransportData Optional extension of transport reporting providing more detailed variables
+#' @param reportREMINDinputData Optional reporting of REMIND input data
+#' @param reportAnalytics Optional reporting of analytics data (e.g. variables over iterations)
+#' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
-#' @importFrom rmarkdown render
-#' @importFrom quitte write.mif
 #' @export
 
-toolEdgeTransportSA <- function(SSPscen, techScen, demScen, gdxPath, outputFolder = NULL, storeRDS = TRUE, reportMif = TRUE, generateREMINDinputData = TRUE){
+toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demScen = "default", gdxPath = NULL, outputFolder = ".",
+                                storeData = TRUE, reportTransportData = TRUE, reportExtendedTransportData = FALSE,
+                                reportREMINDinputData = FALSE, reportAnalytics = FALSE){
 
-# Input data ----------------------------------------------------------------------
+  # set GDP cutoff to differentiate between regions
+  GDPcutoff <- 25000 # [constant 2005 US$MER]
+  # Year when scenario differentiation sets in
+  policyStartYear <- 2021
+  # last time step of historical data
+  baseYear <- 2010
+  # share of electricity in hybrid electric vehicles
+  hybridElecShare <- 0.4
 
- # Energy Service demand
- # Energy Efficiency
- # Load Factor
- # CAPEX and non-fuel OPEX
- # Annual Mileage
- # Speed of modes
+  ########################################################
+  ## Load input data
+  ########################################################
 
- # Calculation of value of time
- # IEA Harmonization: Adjust energy efficiency to meet IEA energy balances in 2010
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
 
- # Check
- # Store
+  helpers <- inputs$helpers
+  genModelPar <- inputs$genModelPar
+  scenModelPar <- inputs$scenModelPar
+  inputDataRaw <- inputs$inputDataRaw
 
-# Transport Policy scenario specific parameters & levers --------------------------
- # Baseline preference trends
- # Transport policy scenario preference factors
- ## Function to adjust preference trends (Applying factors)
- # Startparameter inconvenience costs
- # Transport policy scenario inconvenience floor costs
- # logit exponents
- # SSP/SDP specific regression factors
- # Regional regression factors
+  # If no demand scenario specific factors are applied, the demScen equals the SSPscen
+  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
-# Transport Policyscenario specific adjustments of input data ---------------------
+  ########################################################
+  ## Prepare input data and apply scenario specific changes
+  ########################################################
 
- # Load Factor
- # Energy efficiency
+  scenSpecInputData <- toolPrepareScenInputData(genModelPar, scenModelPar, inputDataRaw,
+                                                policyStartYear, GDPcutoff, helpers, ICEban)
 
- # Check
- # Store
+  ########################################################
+  ## Calibrate historical preferences
+  ########################################################
+  histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX,
+                                      inputDataRaw$histESdemand,
+                                      inputDataRaw$timeValueCosts,
+                                      genModelPar$lambdasDiscreteChoice,
+                                      helpers)
+  scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences, scenSpecInputData$scenSpecPrefTrends)
+  scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends, helpers)
+
+  #-------------------------------------------------------
+  inputData <- list(
+    prefTrends = scenSpecPrefTrends,
+    loadFactor = scenSpecInputData$scenSpecLoadFactor,
+    enIntensity = scenSpecInputData$scenSpecEnIntensity,
+    combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
+    upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
+    initialIncoCosts = scenSpecInputData$initialIncoCosts,
+    annualMileage = inputDataRaw$annualMileage,
+    timeValueCosts = inputDataRaw$timeValueCosts,
+    histESdemand = inputDataRaw$histESdemand,
+    GDPMER = inputDataRaw$GDPMER,
+    GDPpcMER = inputDataRaw$GDPpcMER,
+    population = inputDataRaw$population
+  )
+
+  print("Input data preparation finished")
+
+  ########################################################
+  ## Prepare data for
+  ## endogenous costs update
+  ########################################################
+
+  vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc, helpers)
+  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData, genModelPar$lambdasDiscreteChoice,
+                                                        policyStartYear, helpers)
+
+  #################################################
+  ## Demand regression module
+  #################################################
+  ## demand in million km
+  sectorESdemand <- toolDemandRegression(inputData$histESdemand,
+                                         inputData$combinedCAPEXandOPEX,
+                                         inputData$GDPpcMER,
+                                         inputData$population,
+                                         scenModelPar$scenParDemRegression,
+                                         scenModelPar$scenParRegionalDemRegression,
+                                         scenModelPar$scenParDemFactors,
+                                         baseYear,
+                                         policyStartYear,
+                                         helpers)
+
+  #------------------------------------------------------
+  # Start of iterative section
+  #------------------------------------------------------
+
+  fleetVehiclesPerTech <- NULL
+  iterations <- 1
+
+  if (reportAnalytics) {
+    endogenousCostsIterations <- list()
+    fleetVehNumbersIterations <- list()
+  }
+
+  for (i in seq(1, iterations, 1)) {
+
+    #################################################
+    ## Cost module
+    #################################################
+    # provide endogenous updates to cost components -----------
+    # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
+    endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts,
+                                                 vehicleDepreciationFactors,
+                                                 scenModelPar$scenParIncoCost,
+                                                 policyStartYear,
+                                                 inputData$timeValueCosts,
+                                                 inputData$prefTrends,
+                                                 genModelPar$lambdasDiscreteChoice,
+                                                 helpers,
+                                                 ICEban,
+                                                 fleetVehiclesPerTech)
+
+    if (reportAnalytics) endogenousCostsIterations[[i]] <- copy(endogenousCosts)[, iteration := i]
+
+    print("Endogenous updates to cost components finished")
+    #################################################
+    ## Discrete choice module
+    #################################################
+    # calculate vehicle sales shares and mode shares for all levels of the decisionTree
+    vehSalesAndModeShares <- toolDiscreteChoice(inputData,
+                                                genModelPar,
+                                                endogenousCosts$updatedEndogenousCosts,
+                                                helpers)
+    ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
+                                                  vehSalesAndModeShares,
+                                                  helpers,
+                                                  inputData$histESdemand,
+                                                  baseYear)
+    print("Calculation of vehicle sales and mode shares finished")
+    #################################################
+    ## Vehicle stock module
+    #################################################
+    # Calculate vehicle stock for cars, trucks and busses -------
+    fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
+                                                             vehicleDepreciationFactors,
+                                                             vehSalesAndModeShares,
+                                                             inputData$annualMileage,
+                                                             inputData$loadFactor,
+                                                             helpers)
+    if (reportAnalytics) fleetVehNumbersIterations[[i]] <- fleetSizeAndComposition$fleetVehNumbers
+    fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
+
+    print("Calculation of vehicle stock finished")
+  }
+  #------------------------------------------------------
+  # End of iterative section
+  #------------------------------------------------------
+
+  #################################################
+  ## Reporting
+  #################################################
+  # Rename transportPolScen if ICE ban is activated
+  if (ICEban & transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4")) transportPolScen <- paste0(transportPolScen, "ICEban")
+  # Save data
+  outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d"),
+                                                 SSPscen, "-", transportPolScen, "-", demScen))
+
+  outputRaw <- list(
+    SSPscen = SSPscen,
+    transportPolScen = transportPolScen,
+    demScen = demScen,
+    gdxPath = gdxPath,
+    hybridElecShare = hybridElecShare,
+    histPrefs = histPrefs,
+    fleetSizeAndComposition = fleetSizeAndComposition,
+    endogenousCosts = endogenousCosts,
+    vehSalesAndModeShares = vehSalesAndModeShares,
+    ESdemandFVsalesLevel = ESdemandFVsalesLevel,
+    helpers = helpers
+  )
+  # not all data from inputdataRaw and inputdata is needed for the reporting
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population")],
+                      inputData[!names(inputData) %in% c("histESdemand", "GDPMER", "GDPpcMER", "population")])
+  outputRaw <- append(outputRaw, add)
+
+  if (reportAnalytics) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
+                                 fleetVehNumbersIterations = fleetVehNumbersIterations))
+
+  if (storeData) toolStoreData(outputFolder = outputFolder, outputRaw = outputRaw)
+
+  output <- toolReportEdgeTransport(folderPath = outputFolder,
+                                    data = outputRaw,
+                                    reportTransportData = reportTransportData,
+                                    reportREMINDinputData = reportREMINDinputData,
+                                    reportExtendedTransportData = reportExtendedTransportData,
+                                    reportAnalytics = reportAnalytics)
 
 
-# Calibration module: Calibrate historical shareweights/inconvenience cost --------
-
- # Check
- # Store
-
-## Start of iterative section
-# Cost module: Calculate cost components and provide endogenous updates -----------
-  #Input: All cost components, Start values inconveneience costs, fleet data
-  #Output: TCO + i.a. inconvenience/VOT costs for all levels of the decision tree
-
-# Discrete Choice module: Transport mode, vehicle and technology choice -----------
-  #Input: TCO + i.a. inconvenience/VOT costs, preference trends, logit exponents
-  #Output: Shares for all levels of the decision tree
-
-# Demand regression module: Calculate future energy service demand ----------------
-  #Input: SDP/SSP + regional regression factors, historical energy service demand
-  #Output: Energy Service demand for top nodes of decision tree
-
-# Vehicle stock module: Calculate vehicle stock for cars, trucks and busses -------
-  #Input: (Sales) shares for all levels of the decision tree, Energy Service demand for top nodes of decision tree
-  #Ouput: Fleet data, adjusted energy intensity for the fleet (in comparison to sales energy efficiency)
-
-# Check all output data
-# Store all outut data
-## End of iterative section
-
-
-# Reporting ---------------------------------------------------------------
-# report MIF
-# write MIF
-
-#report REMIND input data
-#return REMIND input data
-
+return(output)
 }
