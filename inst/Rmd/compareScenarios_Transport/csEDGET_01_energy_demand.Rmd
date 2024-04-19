@@ -48,7 +48,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Passenger
+### Passenger with bunkers
 ```{r}
 tot <- "FE|Transport|Pass with bunkers"
 items <- c(
@@ -63,7 +63,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Passenger w/o bunkers
+### Passenger 
 ```{r}
 tot <- "FE|Transport|Pass"
 items <- c(
@@ -153,7 +153,7 @@ tot <- "FE|Transport|Pass|Aviation"
 showLinePlots(data, tot)
 ```
 
-### Freight
+### Freight with bunkers
 ```{r}
 tot <- "FE|Transport|Freight with bunkers"
 items <- c(
@@ -168,7 +168,7 @@ showLinePlots(data, tot)
 walk(items, showLinePlots, data = data)
 ```
 
-### Freight w/o bunkers
+### Freight 
 ```{r}
 tot <- "FE|Transport|Freight"
 items <- c(
@@ -343,7 +343,7 @@ walk(items, showLinePlots, data = data)
 
 ## Final Energy by transport modes
 
-### Passenger
+### Passenger with bunkers
 ```{r}
 tot_wbunk <- "FE|Transport|Pass with bunkers"
 tot_wobunk <- "FE|Transport|Pass"

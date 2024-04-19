@@ -1,5 +1,5 @@
 # Energy Services
-## Passenger
+## Passenger with bunkers
 ```{r}
 tot_wbunk <- "ES|Transport|Pass with bunkers"
 tot_wobunk <- "ES|Transport|Pass"
@@ -104,7 +104,7 @@ showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill=TRUE, orderVars = "user")
 ```
 
-## Freight
+## Freight with bunkers
 ```{r}
 tot_wbunk <- "ES|Transport|Freight with bunkers"
 tot_wobunk <- "ES|Transport|Freight"
