@@ -1,4 +1,5 @@
 #' Read and build the complete structure of the edgeTransport decision tree
+#'
 #' @author Johanna Hoppe
 #' @param regionAggregation choose one of the different options for regional aggregation (iso|regionCode21|regionCode12)
 #' @returns data.table of full spatially extended edgeTransport decision tree

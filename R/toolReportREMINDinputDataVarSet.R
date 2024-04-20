@@ -1,6 +1,6 @@
 
 
-toolReportREMINDinputData <- function(fleetESdemand, fleetFEdemand, fleetEnergyIntensity, fleetCapCosts,
+toolReportREMINDinputDataVarSet <- function(fleetESdemand, fleetFEdemand, fleetEnergyIntensity, fleetCapCosts,
                                       combinedCAPEXandOPEX, scenSpecPrefTrends, scenSpecEnIntensity, initialIncoCosts,
                                       annualMileage, timeValueCosts, demScen, SSPscen, transportPolScen, helpers) {
 

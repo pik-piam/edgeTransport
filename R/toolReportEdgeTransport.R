@@ -1,5 +1,37 @@
-toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data = NULL, reportTransportData = TRUE, reportREMINDinputData = FALSE,
-                                    reportExtendedTransportData = FALSE, reportAnalytics = FALSE, storeData = TRUE) {
+#'Report EDGE-Transport Model results
+#'
+#'This function reports the transport model results of an iterative or standalone run.
+#'If not handed over in the function call, it first loads the transport model results from the stored RDS files.
+#'Then it calculates the output variables and brings the data into the right format.
+#'A basic output variables set is always calculated that is needed for all reporting packages.
+#'With the help of switches, different reporting packages can be generated:
+#'- reportTransportData activates the reduced reporting of transport variables in MIF format to be attached to a REMIND.mif.
+#'  It includes the variables needed to create REMIND compareScenarios2 and report results for projects
+#'- reportTransportData + reportExtendedTransportData activates further the extended reporting of transport variables
+#'  and if storeData is activated as well, triggers the generation of a seperate transport.MIF.
+#'  It includes the reduced reporting and additional transport variables for a detailed analysis of the transport sector
+#'  using transportCompareScenarios provided in the edgeTransport package
+#'- reportTransportData + reportExtendedTransportData + reportAnalytics activates further the generation of additional variables
+#'  for the analysis of the model behavior such as the inconvenience costs over iterations. They can be analyzed in the analytics
+#'  sheet in compareScenariosTransport. It can be used in combination or without reportExtendedTransportData.
+#'- reportREMINDinputData activates the reporting of REMIND input data from a standalone run. This mode is used in the REMIND input data
+#'  generation with all other switches turned off. It can be also used in combination with the other switches.
+#'
+#' @param folderPath Path to the EDGE-Transport output folder of an iterative or standalone run
+#' @param data List of model results. If not handed over, the data is loaded from the RDS files in the output folder
+#' @param reportTransportData Switch for activating the reporting of transport data in MIF format
+#' @param reportExtendedTransportData Switch for activating the reporting of detailed transport data im MIF format needed to create transportCompareScenarios
+#' @param reportAnalytics Switch for activating reporting of model analytics data
+#' @param reportREMINDinputdata Switch for activating reporting of REMIND input data
+#' @param storeData Switch for activating data storage and creating the transport.MIF file
+#'
+#' @returns The function either returns the REMINDinputData if reportREMINDinputdata is enabled or the transport data in MIF format
+#' @author Johanna Hoppe
+#' @import data.table
+#' @export
+
+toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data = NULL, reportTransportData = TRUE, reportExtendedTransportData = FALSE, reportAnalytics = FALSE,
+                                    reportREMINDinputData = FALSE, storeData = TRUE) {
 
   # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
@@ -22,7 +54,7 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
     data$fleetSizeAndComposition <- readRDS(file.path(folderPath, "4_Output", "fleetSizeAndComposition.RDS"))
     data$ESdemandFVsalesLevel <- readRDS(file.path(folderPath, "4_Output", "ESdemandFVsalesLevel.RDS"))
 
-    # load files for standard transport reporting
+    # load files for standard and extended transport reporting
     if (reportTransportData) {
       data$upfrontCAPEXtrackedFleet <- readRDS(file.path(folderPath, "2_InputDataPolicy", "upfrontCAPEXtrackedFleet.RDS"))
       gdxPath <- list.files(path = folderPath, pattern = "\\.gdx$", full.names = TRUE)
@@ -56,23 +88,25 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
   #########################################################################
   ## Calculate output variables
   #########################################################################
-  outputVars <- toolCalculateOutputVariables(data,
-                                             timeResReporting = timeResReporting,
-                                             reportTransportData = reportTransportData,
-                                             reportExtendedTransportData = reportExtendedTransportData,
-                                             reportAnalytics = reportAnalytics)
+
+  # Base variable set that is needed to report REMIND input data and additional detailed transport data
+  outputVars <- toolReportBaseVarSet(data = data, timeResReporting = timeResReporting)
+  browser()
+  if (reportTransportData) outputVars <- append(outputVars, reportTransportVarSet(data = data,timeResReporting = timeResReporting))
+    else if (reportExtendedTransportData) outputVars <- append(outputVars, reportExtendedTransportVarSet(data = data,timeResReporting = timeResReporting))
+    else if (reportAnalytics) outputVars <- append(outputVars, reportAnalyticsVarSet(data = data,timeResReporting = timeResReporting))
 
   #########################################################################
   ## Transfer output variables to MIF format
   #########################################################################
   if (reportTransportData) {
-    reporting <- toolReportAndAggregateMIF(vars = outputVars,
-                                           GDPMER = data$GDPMER,
-                                           helpers = data$helpers,
-                                           scenario = paste0(data$transportPolScen, " ", data$SSPscen),
-                                           model = "EDGE-T",
-                                           gdx = data$gdxPath,
-                                           reportExtendedTransportData = reportExtendedTransportData)
+    reporting <- toolReportMIF(vars = outputVars,
+                               GDPMER = data$GDPMER,
+                               helpers = data$helpers,
+                               scenario = paste0(data$transportPolScen, " ", data$SSPscen),
+                               model = "EDGE-T",
+                               gdx = data$gdxPath,
+                               reportExtendedTransportData = reportExtendedTransportData)
 
     if (storeData) write.mif(reporting, file.path(folderPath, "Transport.mif"))
   }
