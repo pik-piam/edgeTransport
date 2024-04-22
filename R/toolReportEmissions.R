@@ -1,28 +1,25 @@
-#'Report variables in relation to the vehicle fleet.
+#'Report emissions allocated to the transport sector.
+#'Only direkt emissions from liquid or gaseous energy carriers used in ICEs are considered.
+#'Indirect emissions from electricity and hydrogen are not allocated to the transport sector.
 #'
-#'Variables like energy intensity and capital costs are linked to the
-#'construction year of a vehicle.
-#'As energy intensity and capital costs change over time for new sales, the composition
-#'of the fleet from vehicles of different construction years needs to be taken into account
-#'to report these variables.
-#'
-#' @param salesData
-#' @param vehiclesConstrYears
+#' @param dtFE Final energy data for liquids and gases
+#' @param gdxPath Path to REMIND fulldata.gdx containing emission factors
+#' @param prefix Prefix that specifies the emissions we are referring to in the variable name (either tailpipe or demand)
 #' @param helpers
 #'
-#' @returns
+#' @returns Emissions data for provided values in dtFE
 #' @author Johanna Hoppe
 #' @importFrom gdxrrw rgdx.scalar, rgdx.param
 #' @import data.table
 #' @export
 
-toolReportEmissions <- function(dtFE, gdx, prefix, helpers) {
-  browser()
+toolReportEmissions <- function(dtFE, gdxPath, prefix, helpers) {
+
   # Get emission factors from REMIND gdx
-  GtCtoGtCO2 <- rgdx.scalar(gdx, "sm_c_2_co2", ts = FALSE)
-  EJ2TWa <- rgdx.scalar(gdx, "sm_EJ_2_TWa", ts = FALSE)
+  GtCtoGtCO2 <- rgdx.scalar(gdxPath, "sm_c_2_co2", ts = FALSE)
+  EJ2TWa <- rgdx.scalar(gdxPath, "sm_EJ_2_TWa", ts = FALSE)
   gdxColNames <- c("period", "region", "from", "to", "conversionTechnology", "emissionType", "value")
-  emissionFactors <- as.data.table(rgdx.param(gdx, "pm_emifac", names = gdxColNames))
+  emissionFactors <- as.data.table(rgdx.param(gdxPath, "pm_emifac", names = gdxColNames))
   # liquid fuels
   emissionFactors[from == "seliqfos" & to ==  "fedie" & emissionType == "co2",  emissionFactor := value * GtCtoGtCO2 *1e3 * EJ2TWa]
   emissionFactors[from == "seliqfos" & to ==  "fepet" & emissionType == "co2",  emissionFactor := value * GtCtoGtCO2 *1e3 * EJ2TWa]
@@ -35,7 +32,7 @@ toolReportEmissions <- function(dtFE, gdx, prefix, helpers) {
   ## attribute explicitly fuel used to the FE values
   dtFE <- copy(dtFE)
   dtFE[univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
-                           helpers$filterEntries$trn_pass_road_LDV_2W) & technology %in% c("Liquids", "Hybrid electric"), to := "fepet"]
+                           helpers$filterEntries$trn_pass_road_LDV_2W) & technology == "Liquids", to := "fepet"]
   dtFE[!(univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
                              helpers$filterEntries$trn_pass_road_LDV_2W)) & technology == "Liquids", to := "fedie"]
   dtFE[technology == "Gases", to := "fegas"]

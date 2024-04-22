@@ -19,6 +19,7 @@
 toolReportFleetVariables <- function(salesData, vehiclesConstrYears, helpers) {
 
   # Calculate vehicle shares of different construction years for each period---------------------
+  vehiclesConstrYears<- copy(vehiclesConstrYears)
   cols <- names(vehiclesConstrYears)
   vehiclesConstrYears <- vehiclesConstrYears[, sum := sum(value),
                                              by = eval(cols[!cols %in% c("constrYear", "variable", "value")])]

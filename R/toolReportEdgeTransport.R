@@ -93,15 +93,30 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
   #########################################################################
 
   # Base variable set that is needed to report REMIND input data and additional detailed transport data
-  outputVars <- toolReportBaseVarSet(data = data, timeResReporting = timeResReporting)
+  baseVarSet <- toolReportBaseVarSet(data = data, timeResReporting = timeResReporting)
+  outputVars <- baseVarSet
   browser()
-  if (reportTransportData) outputVars <- outputVars, reportTransportVarSet(data = data,
-                                                                           baseVarSet = outputVars,
-                                                                           timeResReporting = timeResReporting)
-    else if (reportExtendedTransportData) outputVars <- append(outputVars, reportExtendedTransportVarSet(data = data,
-                                                                                                         baseVarSet = outputVars,
-                                                                                                         timeResReporting = timeResReporting))
-    else if (reportAnalytics) outputVars <- append(outputVars, reportAnalyticsVarSet(data = data,timeResReporting = timeResReporting))
+  if (reportTransportData) {
+    transportVarSet <- reportTransportVarSet(data = data,
+                                        baseVarSet = outputVars,
+                                        timeResReporting = timeResReporting)
+    # New memory adress to modify output vars
+    outputVars <- copy(outputVars)
+    # Prevent double accounting for liquids and gases, where the split in different production routes is reported in addition
+    outputVars[["ext"]][["fleetFEdemand"]] <- NULL
+    outputVars$ext <- append(outputVars$ext, transportVarSet$ext)
+    outputVars$int <- append(outputVars$int, transportVarSet$int)
+  } else if (reportExtendedTransportData) {
+    extendedTransportVarSet <- append(outputVars, reportExtendedTransportVarSet(data = data,
+                                                                   baseVarSet = outputVars,
+                                                                   timeResReporting = timeResReporting))
+    outputVars$ext <- append(extendedTransportVarSet$ext)
+    outputVars$int <- append(extendedTransportVarSet$int)
+  } else if (reportAnalytics) {
+    analyticsVarSet <- append(outputVars, reportAnalyticsVarSet(data = data,timeResReporting = timeResReporting))
+    outputVars$ext <- append(analyticsVarSet$ext)
+    outputVars$int <- append(analyticsVarSet$int)
+  }
 
   #########################################################################
   ## Transfer output variables to MIF format
@@ -122,10 +137,10 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
   ## Report REMIND input data
   #########################################################################
   if (reportREMINDinputData) {
-    REMINDinputData <- toolReportREMINDinputData(outputVars$ext$fleetESdemand,
-                                                 outputVars$ext$fleetFEdemand,
-                                                 outputVars$int$fleetEnergyIntensity,
-                                                 outputVars$int$fleetCost[variable == "Capital costs"],
+    REMINDinputData <- toolReportREMINDinputData(baseVarSet$ext$fleetESdemand,
+                                                 baseVarSet$ext$fleetFEdemand,
+                                                 baseVarSet$int$fleetEnergyIntensity,
+                                                 baseVarSet$int$fleetCost[variable == "Capital costs"],
                                                  data$combinedCAPEXandOPEX,
                                                  data$prefTrends,
                                                  data$enIntensity,

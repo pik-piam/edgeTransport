@@ -1,10 +1,10 @@
-#'Report the split of liquids and gases into fossil|bio|synthetic
+#'Report the split of liquids and gases into fossil|bio|hydrogen
 #'
 #' @param dtFE Final energy data for liquids and gases
 #' @param gdxPath Path to REMIND gdx, which contains the share of the various production routes for liquid and gaseous energy carriers
 #' @param helpers List of helpers
 #'
-#' @returns Final energy for liquids and gases split into fossil|bio|synthetic
+#' @returns Final energy for liquids and gases split into fossil|bio|hydrogen
 #' @author Johanna Hoppe
 #' @importFrom gdxdt readGDX
 #' @importFrom rmndt magpie2dt
@@ -73,7 +73,7 @@ toolReportLiquidsAndGasesComposition <- function(dtFE, gdxPath, timeResReporting
   }
 
   applySplit <- function(REMINDsegment, FEdata, mixedCarrierSplits, helpers) {
-   browser()
+
     # map EDGE-T categories on segements
     modes <- list(
       LDVs = c(helpers$filterEntries$trn_pass_road_LDV_4W,

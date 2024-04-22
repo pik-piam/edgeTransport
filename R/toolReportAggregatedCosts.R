@@ -9,7 +9,7 @@
 #' @export
 
 toolReportAggregatedCosts <- function (combinedCAPEXandOPEX){
-
+  combinedCAPEXandOPEX <- copy(combinedCAPEXandOPEX)
   combinedCAPEXandOPEX[grepl("Capital.*", variable), type := "Capital costs sales"]
   combinedCAPEXandOPEX[grepl("Operating.*", variable), type := "Operating costs (total non-fuel)"]
   combinedCAPEXandOPEX[grepl("Fuel.*", variable), type := "Fuel costs"]
