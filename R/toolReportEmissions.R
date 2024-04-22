@@ -1,17 +1,18 @@
 #'Report variables in relation to the vehicle fleet.
 #'
-#'Variables like energy intensity and capital costs are linked to the 
+#'Variables like energy intensity and capital costs are linked to the
 #'construction year of a vehicle.
-#'As energy intensity and capital costs change over time for new sales, the composition 
-#'of the fleet from vehicles of different construction years needs to be taken into account 
+#'As energy intensity and capital costs change over time for new sales, the composition
+#'of the fleet from vehicles of different construction years needs to be taken into account
 #'to report these variables.
 #'
-#' @param salesData 
+#' @param salesData
 #' @param vehiclesConstrYears
 #' @param helpers
-#' 
-#' @returns 
+#'
+#' @returns
 #' @author Johanna Hoppe
+#' @importFrom gdxrrw rgdx.scalar, rgdx.param
 #' @import data.table
 #' @export
 
@@ -30,7 +31,7 @@ toolReportEmissions <- function(dtFE, gdx, prefix, helpers) {
   # unit MtCO2/EJ
   emissionFactors <- emissionFactors[!is.na(emissionFactor)]
   emissionFactors <- emissionFactors[, c("region", "period", "to", "emissionFactor")]
-  
+
   ## attribute explicitly fuel used to the FE values
   dtFE <- copy(dtFE)
   dtFE[univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
@@ -38,7 +39,7 @@ toolReportEmissions <- function(dtFE, gdx, prefix, helpers) {
   dtFE[!(univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
                              helpers$filterEntries$trn_pass_road_LDV_2W)) & technology == "Liquids", to := "fedie"]
   dtFE[technology == "Gases", to := "fegas"]
-  
+
   emissionFactors[, period := as.double(as.character(period))]
   ## merge with emission factors
   emi <- merge(dtFE, emissionFactors, by = c("to", "region", "period"), all.x = TRUE)
@@ -46,5 +47,6 @@ toolReportEmissions <- function(dtFE, gdx, prefix, helpers) {
   ## calculate emissions and attribute variable and unit names
   emi[, value := value * emissionFactor][, variable := paste0("Emi|CO2|", prefix)][, unit := "Mt CO2/yr"]
   emi[, c("to", "emissionFactor") := NULL]
+
   return(emi)
 }

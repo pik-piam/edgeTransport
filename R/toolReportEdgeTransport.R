@@ -20,7 +20,8 @@
 #' @param folderPath Path to the EDGE-Transport output folder of an iterative or standalone run
 #' @param data List of model results. If not handed over, the data is loaded from the RDS files in the output folder
 #' @param reportTransportData Switch for activating the reporting of transport data in MIF format
-#' @param reportExtendedTransportData Switch for activating the reporting of detailed transport data im MIF format needed to create transportCompareScenarios
+#' @param reportExtendedTransportData Switch for activating the reporting of detailed transport data im MIF format
+#'                                    needed to create transportCompareScenarios
 #' @param reportAnalytics Switch for activating reporting of model analytics data
 #' @param reportREMINDinputdata Switch for activating reporting of REMIND input data
 #' @param storeData Switch for activating data storage and creating the transport.MIF file
@@ -30,10 +31,12 @@
 #' @import data.table
 #' @export
 
-toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data = NULL, reportTransportData = TRUE, reportExtendedTransportData = FALSE, reportAnalytics = FALSE,
+toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data = NULL, reportTransportData = TRUE,
+                                    reportExtendedTransportData = FALSE, reportAnalytics = FALSE,
                                     reportREMINDinputData = FALSE, storeData = TRUE) {
 
-  # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
+  # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in
+  # toolCalculateOutputVariables()
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
   #########################################################################
@@ -92,8 +95,12 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
   # Base variable set that is needed to report REMIND input data and additional detailed transport data
   outputVars <- toolReportBaseVarSet(data = data, timeResReporting = timeResReporting)
   browser()
-  if (reportTransportData) outputVars <- append(outputVars, reportTransportVarSet(data = data,timeResReporting = timeResReporting))
-    else if (reportExtendedTransportData) outputVars <- append(outputVars, reportExtendedTransportVarSet(data = data,timeResReporting = timeResReporting))
+  if (reportTransportData) outputVars <- outputVars, reportTransportVarSet(data = data,
+                                                                           baseVarSet = outputVars,
+                                                                           timeResReporting = timeResReporting)
+    else if (reportExtendedTransportData) outputVars <- append(outputVars, reportExtendedTransportVarSet(data = data,
+                                                                                                         baseVarSet = outputVars,
+                                                                                                         timeResReporting = timeResReporting))
     else if (reportAnalytics) outputVars <- append(outputVars, reportAnalyticsVarSet(data = data,timeResReporting = timeResReporting))
 
   #########################################################################
@@ -118,7 +125,7 @@ toolReportEdgeTransport <- function(folderPath = file.path(".","EDGE-T"), data =
     REMINDinputData <- toolReportREMINDinputData(outputVars$ext$fleetESdemand,
                                                  outputVars$ext$fleetFEdemand,
                                                  outputVars$int$fleetEnergyIntensity,
-                                                 outputVars$int$fleetCapCosts,
+                                                 outputVars$int$fleetCost[variable == "Capital costs"],
                                                  data$combinedCAPEXandOPEX,
                                                  data$prefTrends,
                                                  data$enIntensity,
