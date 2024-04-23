@@ -16,6 +16,7 @@
 #' @param reportAnalytics Optional reporting of analytics data (e.g. variables over iterations)
 #' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
+#' @importFrom reporttransport toolReportEdgeTransport
 #' @import data.table
 #' @export
 
@@ -136,7 +137,7 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
                                                  ICEban,
                                                  fleetVehiclesPerTech)
 
-    if (reportAnalytics) endogenousCostsIterations[[i]] <- copy(endogenousCosts)[, iteration := i]
+    if (reportAnalytics) endogenousCostsIterations[[i]] <- lapply(copy(endogenousCosts), function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
 
     print("Endogenous updates to cost components finished")
     #################################################
@@ -163,7 +164,8 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
                                                              inputData$annualMileage,
                                                              inputData$loadFactor,
                                                              helpers)
-    if (reportAnalytics) fleetVehNumbersIterations[[i]] <- fleetSizeAndComposition$fleetVehNumbers
+
+    if (reportAnalytics) fleetVehNumbersIterations[[i]] <- copy(fleetSizeAndComposition$fleetVehNumbers)[, variable := paste0(variable, "|Iteration ", i)]
     fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
 
     print("Calculation of vehicle stock finished")
@@ -171,7 +173,7 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
   #------------------------------------------------------
   # End of iterative section
   #------------------------------------------------------
-
+  browser()
   #################################################
   ## Reporting
   #################################################
@@ -203,7 +205,7 @@ toolEdgeTransportSA <- function(SSPscen, transportPolScen, ICEban = FALSE, demSc
                                  fleetVehNumbersIterations = fleetVehNumbersIterations))
 
   if (storeData) toolStoreData(outputFolder = outputFolder, outputRaw = outputRaw)
-
+  browser()
   output <- toolReportEdgeTransport(folderPath = outputFolder,
                                     data = outputRaw,
                                     reportTransportData = reportTransportData,

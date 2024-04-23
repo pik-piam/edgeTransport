@@ -26,6 +26,7 @@ toolStoreData <- function(outputFolder, outputRaw = NULL, ...){
     if (varName %in% c("fleetSizeAndComposition",
                        "vehSalesAndModeShares",
                        "fleetVehNumbersIterations",
+                       "endogenousCostsIterations",
                        "endogenousCosts",
                        "ESdemandFVsalesLevel")) subfolder <- "4_Output"
     if (varName %in% c("REMINDinputData")) subfolder <- "5_REMINDinputData"
@@ -90,19 +91,15 @@ toolStoreData <- function(outputFolder, outputRaw = NULL, ...){
 
   # store output data if provided
   if (!is.null(vars$fleetVehNumbersIterations)){
-    for (i in 1:length(fleetVehNumbersIterations)) {
+    for (i in 1:length(vars$fleetVehNumbersIterations)) {
       # store fleetVehNumbers over iterations
-      iteration <- unique(fleetSizeAndCompositionIterations[[i]][1]$iteration)
-      fleetVehNumbersIterations[[i]][, variable := paste0(variable, "|Iteration ", iteration)][, iteration := NULL]
-      saveRDS(vars$fleetSizeAndCompositionIterations[[i]], file.path(outputFolder, "4_Output", paste("fleetVehNumbersIteration", "", iteration, ".RDS")))
+      saveRDS(vars$fleetSizeAndCompositionIterations[[i]], file.path(outputFolder, "4_Output", paste0("fleetVehNumbersIteration", "", i, ".RDS")))
       vars <- vars[!names(vars) %in% c("fleetVehNumbersIterations")]
     }
   }
   if (!is.null(vars$endogenousCostsIterations)){
-    for (i in 1:length(endogenousCostsIterations)) {
-      iteration <- unique(endogenousCostsIterations[[i]][1]$iteration)
-      endogenousCostsIterations[[i]][, variable := paste0(variable, "|Iteration ", iteration)][, iteration := NULL]
-      saveRDS(vars$endogenousCostsIterations[[i]], file.path(outputFolder, "4_Output", paste("endogenousCostsIterations", "", iteration, ".RDS")))
+    for (i in 1:length(vars$endogenousCostsIterations)) {
+      saveRDS(vars$endogenousCostsIterations[[i]], file.path(outputFolder, "4_Output", paste0("endogenousCostsIterations", "", i, ".RDS")))
       vars <- vars[!names(vars) %in% c("endogenousCostsIterations")]
     }
   }
