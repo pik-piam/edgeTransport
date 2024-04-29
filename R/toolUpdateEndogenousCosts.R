@@ -23,7 +23,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   coeffrisk = 3800 ## value based on Pettifor 2017
 
   policyYears <- seq(policyStartYear, 2100, 1)
-  # preventing daatEndoCosts to be updated outside of the function
+  # preventing dataEndoCosts to be updated outside of the function
   dataEndoCosts <- copy(dataEndoCosts)
 
   if (is.null(vehiclesPerTech)){
