@@ -1,8 +1,7 @@
 #' Energy service demand projection
 #'
 #' @param historicalESdemand Historical energy service demand
-#' @param CAPEXandOPEX Data annualized total cost of ownership
-#' @param GDPperCapitaMER GDP per capita based on market exchange rate
+#' @param GDPperCapitaPPP GDP per capita based on purchase power parity
 #' @param POP Population data
 #' @param scenParDemandRegression Scenario specific general regression factors
 #' @param scenParRegionalDemRegression Scenario specific regionally differentiated regression factors
@@ -15,24 +14,29 @@
 #' @import data.table
 #' @export
 
-toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaMER, POP,
+toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP,
                                   scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors,
                                     baseYear, policyStartYear, helpers) {
 
-  # interpolate SSP specific elasticities based on GDP MER per capita ----------------------------
-  setnames(GDPperCapitaMER, "value", "regionGDPpcMER")
+  # interpolate SSP specific elasticities based on GDP PPP per capita ----------------------------
+  setnames(GDPperCapitaPPP, "value", "regionGDPpcPPP")
+  GDPperCapitaPPP <- GDPperCapitaPPP[period %in% helpers$lowTimeRes]
+  POP <- POP[period %in% helpers$lowTimeRes]
+
   approxElasticities <- function(category, elasticityGDPValues, GDPpc) {
     # creates a function to interpolate elasticitis for certain GDP values
     appfun <- approxfun(
-    x = elasticityGDPValues[sector == category, GDPpcMER],
+    x = elasticityGDPValues[sector == category, GDPpcPPP],
     y = elasticityGDPValues[sector == category, value], rule = 2)
 
-    elasticityRegionValues <- copy(GDPpc)[, `:=`(sector = category, value = appfun(regionGDPpcMER))]
+    elasticityRegionValues <- copy(GDPpc)[, `:=`(sector = category, value = appfun(regionGDPpcPPP))]
     return(elasticityRegionValues)
   }
   categories <- unique(scenParDemandRegression$sector)
+  #The elasticities change here depending on the SSP specific factors
+  #-> Hence the historical energy service demand changes here by SSP choice, wich is not good
   regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
-                                                 scenParDemandRegression, GDPperCapitaMER))
+                                                 scenParDemandRegression, GDPperCapitaPPP))
 
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
@@ -53,27 +57,28 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
 
   # merge with Population data ------------------------------------------------------------
   setnames(POP, "value", "population")
-  GDP <- merge(GDPperCapitaMER, POP, by = c("region", "period"))
-  GDP[, regionGDPMER := regionGDPpcMER * population][, regionGDPpcMER := NULL]
+  GDP <- merge(GDPperCapitaPPP, POP, by = c("region", "period"))
+  GDP[, regionGDPppp := regionGDPpcPPP * population][, regionGDPpcPPP := NULL]
 
   setnames(regionalIncomeElasticities, "value", "incomeElasticity")
   regressionData <- merge(regionalIncomeElasticities, GDP, by = c("region", "period"))
 
   # calculate growth rates
-  regressionData[, `:=` (GDPgrowthRate = regionGDPMER / shift(regionGDPMER),
-                         GDPpcgrowthRate = regionGDPpcMER / shift(regionGDPpcMER),
+  regressionData[, `:=` (GDPgrowthRate = regionGDPppp / shift(regionGDPppp),
+                         GDPpcgrowthRate = regionGDPpcPPP / shift(regionGDPpcPPP),
                          POPgrowthRate = population / shift(population)), by = c("region", "sector")]
 
   regressionData[, `:=` (GDPterm = GDPgrowthRate ^ incomeElasticity,
                          GDPpcterm = GDPpcgrowthRate ^ incomeElasticity), by = c("period", "region", "sector")]
 
   histESdemand <- merge(historicalESdemand, helpers$decisionTree, by = c("univocalName", "technology", "region"))
+  histESdemand <- histESdemand[period %in% helpers$lowTimeRes]
   histESdemand <- histESdemand[, .(value = sum(value)), by = c("region", "period", "sector", "unit")]
 
   demandData <- merge(regressionData, histESdemand, by = c("region", "period", "sector"), all.x = TRUE)
   demandData[, unit := unit[period == baseYear], by = c("region", "sector")]
   regressionTimeRange <- unique(demandData[period > baseYear]$period)
-  # passenger transport
+
   for (i in regressionTimeRange) {
     demandData[period <= i & sector %in% c("trn_pass", "trn_aviation_intl"),
                value := ifelse(is.na(value), shift(value) * GDPpcterm * POPgrowthRate, value),
@@ -84,7 +89,6 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
   }
 
   if (!is.null(scenParDemandFactors)) {
-    print(paste0("Demand scenario specific changes were applied on energy service demand"))
     # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
     # default values from demand regression
     # Application: linear regression to given support points for the factors starting from 2020,
@@ -93,6 +97,7 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
     demandData[period < policyStartYear, factor := 1]
     demandData[, factor := na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
     demandData[, value := factor * value]
+    print(paste0("Demand scenario specific changes were applied on energy service demand"))
   } else {
     print(paste0("No demand scenario specific changes were applied on energy service demand"))
   }
@@ -103,9 +108,3 @@ toolDemandRegression <- function(historicalESdemand, CAPEXandOPEX, GDPperCapitaM
   return(demandData)
 
 }
-
-
-
-
-
-

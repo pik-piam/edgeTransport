@@ -6,7 +6,7 @@
 #' @param policyStartYear Year from which the scenario parameters are applied on the baseline preference trends
 #' @param GDPcutoff Threshold used to categorize countries into different mitigation groups based on their GDP
 #' @param helpers List containing several helpers used throughout the model
-#' @param ICEban Switch to turn on ICE phase out policies
+#' @param isICEban Switch to turn on ICE phase out policies
 #' @returns Scenario specific preference trends
 #' @import data.table
 
@@ -42,7 +42,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
 
   # Apply ICE ban if switched on
-  if (ICEban) {
+  if (isICEban) {
     #Ban is applied to EU28
     affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
     #affectedRegions <- affectedRegions[!affectedRegions == "UKI"] currently we apply the ban also to UK

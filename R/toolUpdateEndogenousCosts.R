@@ -1,8 +1,9 @@
 #' @title toolUpdateEndogenousCosts
 #' @description Provides updates for endogenous cost components e.g. inconvenience costs for cars
 #'
-#' @param dataEndoCosts data.table containing all cost components for cars over the full range of policy years in a yearly resolution.
-#'                      Exogenous CAPEX and OPEX are provided over the full range. Endogenous cost components and FS3 shares are provided until policyStartYear. Rest is filled with NA.
+#' @param dataEndoCosts data.table containing all cost components for cars over the full range
+#'                      of policy years in a yearly resolution. Exogenous CAPEX and OPEX are provided over the full range.
+#'                      Endogenous cost components and FS3 shares are provided until policyStartYear. Rest is filled with NA.
 #' @param depreciationFactors data.table containing vehicle depreciation factor for each year of service Life
 #' @param scenParIncoCost data.table containing scenario specific parameters for inconvenience costs policy mask
 #' @param policyStartYear year from which scenario-specific differentiation begins
@@ -10,12 +11,22 @@
 #' @param lambdas data.table containing exponents for discrete choice calculation
 #' @param helpers list containing helpers like mappings, decisionTree etc.
 #' @param numberOfvehicles data.table containing total number of vehicles for all years and regions
-#' @return list containing data.table with endogenous cost components over the full time span and additional data.tables for model behaviour analysis
+#' @return list containing data.table with endogenous cost components over the full time span and additional data.tables
+#'         for model behaviour analysis
 #' @author Johanna Hoppe
 #' @import data.table
 #' @export
 
-toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenParIncoCost, policyStartYear, timeValue, preferences, lambdas, helpers, ICEban, vehiclesPerTech = NULL) {
+toolUpdateEndogenousCosts <- function(dataEndoCosts,
+                                      depreciationFactors,
+                                      scenParIncoCost,
+                                      policyStartYear,
+                                      timeValue,
+                                      preferences,
+                                      lambdas,
+                                      helpers,
+                                      ICEban,
+                                      vehiclesPerTech = NULL) {
 
   # parameters of endogenous cost trends
   bfuelav = - 20    ## value based on Greene 2001
@@ -29,7 +40,8 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   if (is.null(vehiclesPerTech)){
     dataEndoCosts[, totVeh := 1]
   } else {
-    dataEndoCosts <- merge(dataEndoCosts, vehiclesPerTech, by = c("region", "period", "sector", "subsectorL2", "subsectorL3", "technology"))
+    dataEndoCosts <- merge(dataEndoCosts, vehiclesPerTech,
+                           by = c("region", "period", "sector", "subsectorL2", "subsectorL3", "technology"))
   }
 
   # calculate policy mask from scenParIncoCost ---------------------------------------------------
@@ -78,7 +90,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
 
   # Change policy mask for ICEs when ban is activated
-  if (ICEban) {
+  if (isICEban) {
     #Ban is applied to EU28 or EUR in case of REMIND running on 12 regions
     affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
     affectedRegions <- c(affectedRegions, "EUR")

@@ -12,16 +12,14 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   years <- unique(helpers$dtTimeRes$period)
 
   GDPMERmag <- calcOutput("GDP", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                            unit = "constant 2005 US$MER",
-                            average2020 = FALSE)[, , paste0("gdp_", SSPscen)]|> time_interpolate(years)
+                            unit = "constant 2005 US$MER")[, , paste0("gdp_", SSPscen)]|> time_interpolate(years)
   GDPMER <- magpie2dt(GDPMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
   GDPpcMERmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                         unit = "constant 2005 US$MER",
-                         average2020 = FALSE)[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
+                         unit = "constant 2005 US$MER")[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
-  GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                            average2020 = FALSE)[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
+  GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")
+  GDPpcPPPmag <- GDPpcPPPmag[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
   GDPpcPPP <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
   POPmag <- calcOutput("Population", aggregate = TRUE,

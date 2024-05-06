@@ -165,66 +165,13 @@ toolIterativeEDGETransport <- function() {
                      valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Intensities
-  writegdx.parameter("p35_fe2es.gdx", finalInputs$intensity, "p35_fe2es",
+  writegdx.parameter("p35_fe2es.gdx", REMINDInputs$intensity, "p35_fe2es",
                      valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
   ## Shares: demand can represent the shares since it is normalized
-  writegdx.parameter("p35_shFeCes.gdx", finalInputs$shFeCes, "p35_shFeCes",
+  writegdx.parameter("p35_shFeCes.gdx", REMINDInputs$shFeCes, "p35_shFeCes",
                      valcol="value",
                      uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
 
-
-
-  ## use logit to calculate costs
-  REMINDCapCost <- toolCapCosts(
-    base_price=prices$base,
-    Fdemand_ES = shares_int_dem[["demandF_plot_pkm"]],
-    stations = num_veh_stations$stations,
-    EDGE2CESmap = EDGE2CESmap,
-    EDGE2teESmap = EDGE2teESmap,
-    REMINDyears = REMINDyears,
-    scenario = scenario)
-  saveRDS(REMINDCapCost[["capCostPerTech"]], file = datapath("capCostPerTech.RDS"))
-
-  ## full REMIND time range for inputs
-  REMINDtall <- c(seq(1900,1985,5),
-                  seq(1990, 2060, by = 5),
-                  seq(2070, 2110, by = 10),
-                  2130, 2150)
-
-  ## prepare the entries to be saved in the gdx files: intensity, shares, non_fuel_price. Final entries: intensity in [trillionkm/Twa], capcost in [2005USD/trillionpkm], shares in [-]
-  finalInputs <- toolPrepare4REMIND(
-    demByTech = demByTech,
-    intensity = intensity,
-    capCost = REMINDCapCost[["CESlevelCosts"]],
-    EDGE2teESmap = EDGE2teESmap,
-    REMINDtall = REMINDtall)
-
-
-
-  ## add the columns of SSP scenario and EDGE scenario to the output parameters
-  for (i in names(finalInputs)) {
-    finalInputs[[i]]$SSP_scenario <- scenario
-    finalInputs[[i]]$DEM_scenario <- demScen
-    finalInputs[[i]]$EDGE_scenario <- EDGE_scenario
-  }
-
-
-  ## calculate shares
-  finalInputs$shFeCes = finalInputs$demByTech[, value := value/sum(value), by = c("tall", "all_regi", "all_in")]
-  ## 7 decimals the lowest accepted value
-  finalInputs$shFeCes[, value := round(value, digits = 7)]
-  finalInputs$shFeCes[, value := ifelse(value == 0, 1e-7, value)]
-  finalInputs$shFeCes[, sumvalue := sum(value), by = c("tall", "all_regi", "all_in")]
-  finalInputs$shFeCes[, maxtech := ifelse(value == max(value), TRUE, FALSE), by =c("tall", "all_regi", "all_in")]
-
-  ## attribute the variation to the maximum share value
-  finalInputs$shFeCes[sumvalue!=1 & maxtech==TRUE, value := value + (1-sumvalue), by = c("tall", "all_regi")]
-  ## remove temporary columns
-  finalInputs$shFeCes[, c("sumvalue", "maxtech") := NULL]
-
-
-
   print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
-
 }

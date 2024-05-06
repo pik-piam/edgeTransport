@@ -36,7 +36,7 @@ Imports:
     yaml,
     ymlthis
 Suggests:
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     markdown,
     covr
