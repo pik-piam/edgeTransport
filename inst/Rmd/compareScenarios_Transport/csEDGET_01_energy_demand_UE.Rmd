@@ -28,9 +28,9 @@ walk(items, showLinePlots, data = data)
 ### Passenger
 ```{r}
 items <- c(
-  "UE|Transport|Pass|Electricity",
-  "UE|Transport|Pass|Hydrogen",
-  "UE|Transport|Pass|Liquids"
+  "UE|Transport|Pass with bunkers|Electricity",
+  "UE|Transport|Pass with bunkers|Hydrogen",
+  "UE|Transport|Pass with bunkers|Liquids"
   )
 
 walk(items, showLinePlots, data = data)

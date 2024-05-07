@@ -42,13 +42,13 @@ ggplot(ES_data, aes(x = scenario, y = reduction_rate)) +
 
 ```{r Calculate ES shares for all scenarios}
 targetyear <- 2050
-Pass_land <- c("ES|Transport|Pass|Rail", "ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Road|Non-Motorized")
+Pass_land <- c("ES|Transport|Pass|Rail", "ES|Transport|Pass|Road|LDV", "ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Non-motorized")
 Pass_land_public <- c("ES|Transport|Pass|Road|Bus", "ES|Transport|Pass|Rail")
 ES_data_land <- data[!scenario %in% c(Baseline, "historical") & variable %in% Pass_land & period == targetyear]
 ES_data_land <- ES_data_land[, .(ES_Pass_land = sum(value)), by = c("region", "scenario")]
 ES_data_public <- data[!scenario %in% c(Baseline, "historical") & variable %in% Pass_land_public & period == targetyear]
 ES_data_public <- ES_data_public[, .(ES_Pass_public = sum(value)), by = c("region", "scenario")]
-ES_data_nonmot <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Pass|Road|Non-Motorized" & period == targetyear]
+ES_data_nonmot <- data[!scenario %in% c(Baseline, "historical") & variable == "ES|Transport|Pass|Non-motorized" & period == targetyear]
 ES_data_nonmot <- ES_data_nonmot[, .(ES_Pass_nonmot = sum(value)), by = c("region", "scenario")]
 ES_data <- merge(ES_data_land, ES_data_public, by = c("region", "scenario"))
 ES_data <- merge(ES_data, ES_data_nonmot, by = c("region", "scenario"))

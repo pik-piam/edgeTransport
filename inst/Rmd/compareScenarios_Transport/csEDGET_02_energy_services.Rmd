@@ -11,8 +11,8 @@ items <- c(
     "ES|Transport|Pass|Road|Bus",
     "ES|Transport|Pass|Road|LDV|Four Wheelers",
     "ES|Transport|Pass|Road|LDV|Two Wheelers",
-    "ES|Transport|Pass|Road|Non-Motorized|Walking",
-    "ES|Transport|Pass|Road|Non-Motorized|Cycling"
+    "ES|Transport|Pass|Non-motorized|Walk",
+    "ES|Transport|Pass|Non-motorized|Cycle"
   )
 showAreaAndBarPlots(data, items, tot_wbunk,  orderVars = "user")
 showAreaAndBarPlots(data, items[2:9], tot_wobunk, orderVars = "user")
@@ -36,8 +36,8 @@ items <- c(
     "ES|Transport|Pass|Road|LDV pCap",
     "ES|Transport|Pass|Road|LDV|Four Wheelers pCap",
     "ES|Transport|Pass|Road|LDV|Two Wheelers pCap",
-    "ES|Transport|Pass|Road|Non-Motorized|Walking pCap",
-    "ES|Transport|Pass|Road|Non-Motorized|Cycling pCap"
+    "ES|Transport|Pass|Non-motorized|Walk pCap",
+    "ES|Transport|Pass|Non-motorized|Cycle pCap"
     )
 showMultiLinePlots(data, items)    
 showMultiLinePlotsByVariable(data, items, "GDP|PPP pCap")

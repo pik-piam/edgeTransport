@@ -2,15 +2,15 @@
 ## Passenger per pkm
 ```{r}
 items <- c(
-          "EInt|Transport|Pass",
-          "EInt|Transport|Bunkers|Pass|International Aviation",
-          "EInt|Transport|Pass|Rail",
-          "EInt|Transport|Pass|Domestic Aviation",
-          "EInt|Transport|Pass|Road",
-          "EInt|Transport|Pass|Road|LDV",
-          "EInt|Transport|Pass|Road|LDV|Four Wheelers",
-          "EInt|Transport|Pass|Road|LDV|Two Wheelers",
-          "EInt|Transport|Pass|Road|Bus"
+          "Energy Intensity|Transport|Pass",
+          "Energy Intensity|Transport|Bunkers|Pass|International Aviation",
+          "Energy Intensity|Transport|Pass|Rail",
+          "Energy Intensity|Transport|Pass|Domestic Aviation",
+          "Energy Intensity|Transport|Pass|Road",
+          "Energy Intensity|Transport|Pass|Road|LDV",
+          "Energy Intensity|Transport|Pass|Road|LDV|Four Wheelers",
+          "Energy Intensity|Transport|Pass|Road|LDV|Two Wheelers",
+          "Energy Intensity|Transport|Pass|Road|Bus"
   )
 walk(items, showLinePlots, data = data, scales = "fixed")
 ```
@@ -18,11 +18,11 @@ walk(items, showLinePlots, data = data, scales = "fixed")
 ## Freight per tkm
 ```{r}
 items <- c(
-            "EInt|Transport|Freight",
-            "EInt|Transport|Bunkers|Freight|International Shipping",
-            "EInt|Transport|Freight|Domestic Shipping",
-            "EInt|Transport|Freight|Rail",
-            "EInt|Transport|Freight|Road"
+            "Energy Intensity|Transport|Freight",
+            "Energy Intensity|Transport|Bunkers|Freight|International Shipping",
+            "Energy Intensity|Transport|Freight|Domestic Shipping",
+            "Energy Intensity|Transport|Freight|Rail",
+            "Energy Intensity|Transport|Freight|Road"
   )
 walk(items, showLinePlots, data = data, scales = "fixed")
 ```
