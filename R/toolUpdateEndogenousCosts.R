@@ -25,7 +25,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                                       preferences,
                                       lambdas,
                                       helpers,
-                                      ICEban,
+                                      isICEban,
                                       vehiclesPerTech = NULL) {
 
   # parameters of endogenous cost trends

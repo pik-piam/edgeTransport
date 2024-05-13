@@ -130,7 +130,7 @@ toolEdgeTransportSA <- function(SSPscen,
   #------------------------------------------------------
 
   fleetVehiclesPerTech <- NULL
-  iterations <- 3
+  iterations <- 1
 
   if (isAnalyticsReported) {
     endogenousCostsIterations <- list()
@@ -203,7 +203,8 @@ toolEdgeTransportSA <- function(SSPscen,
   ## Reporting
   #################################################
   # Rename transportPolScen if ICE ban is activated
-  if (isICEban && transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4")) transportPolScen <- paste0(transportPolScen, "ICEban")
+
+  if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  SSPscen, "-", transportPolScen, "-", demScen))

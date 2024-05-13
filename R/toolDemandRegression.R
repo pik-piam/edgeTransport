@@ -48,11 +48,10 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP,
                                       "period", "regionalSummand", c("region", "sector"), extrapolate = TRUE)
     regionalIncomeElasticities <- merge(regionalIncomeElasticities, scenParRegionalDemRegression,
                                         by = c("region", "period", "sector"), all.x = TRUE)
-    # do not apply scenario specific changes before policy start year
-    regionalIncomeElasticities[period < policyStartYear, regionalSummand := 0]
     # some regions do not get a SSP specific regional summand or not for all elasticity types
     regionalIncomeElasticities[is.na(regionalSummand), regionalSummand := 0]
-    regionalIncomeElasticities[, value := value + regionalSummand][, regionalSummand := NULL]
+    regionalIncomeElasticities[period > baseYear, value := value + regionalSummand]
+    regionalIncomeElasticities[, regionalSummand := NULL]
   }
 
   # merge with Population data ------------------------------------------------------------

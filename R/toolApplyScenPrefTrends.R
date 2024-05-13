@@ -10,7 +10,7 @@
 #' @returns Scenario specific preference trends
 #' @import data.table
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, ICEban) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban) {
 
   #function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){

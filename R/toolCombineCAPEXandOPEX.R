@@ -23,7 +23,7 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet,
 
   # Apply very random subsidy phase out from the old EDGE-T version -> Remove after reproduktion of old values
   subsidies[, value := ifelse(period >= 2020 & period <= 2030,
-                              -(value * 1.14 * 0.78 *(1/15*(period - 2020) - 1)),
+                              -(value * 1.14 * 0.78 * (1/15 * (period - 2020) - 1)),
                               value), by = c("region", "period", "value")]
 
   # Tracked fleet (LDV 4W, Trucks, Busses)
