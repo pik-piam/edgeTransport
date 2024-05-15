@@ -22,8 +22,6 @@ walk(c(items,"Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV",
 ```{r}
 tot <- "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers"
 items <- c(
-      "",
-      "",
       "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Large",
       "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Medium",
       "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Small",
