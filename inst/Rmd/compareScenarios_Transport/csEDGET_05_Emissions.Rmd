@@ -2,32 +2,32 @@
 
 ## Emissions Passenger
 ```{r}
-tot <- "Emi|CO2|Transport|Pass|w/o bunkers|Tailpipe"
+tot <- "Emi|CO2|Energy|Tailpipe|Transport|Pass"
 items <- c(
-      "Emi|CO2|Transport|Pass|Aviation|International|Tailpipe",
-      "Emi|CO2|Transport|Pass|Aviation|Domestic|Tailpipe",
-      "Emi|CO2|Transport|Pass|Rail|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Four Wheelers|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Two Wheelers|Tailpipe")
+      "Emi|CO2|Energy|Tailpipe|Transport|Bunkers|Pass|International Aviation",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Domestic Aviation",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Rail",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|Bus",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Two Wheelers")
 
 showAreaAndBarPlots(data, items[2:6], tot, orderVars = "user")
 showAreaAndBarPlots(data, items[2:6], tot, fill = TRUE, orderVars = "user")
 showLinePlots(data, tot)
-walk(c(items,"Emi|CO2|Transport|Pass|Road|LDV|Tailpipe",
-      "Emi|CO2|Transport|Pass|non-LDV|Tailpipe"), showLinePlots, data = data)
+walk(c(items,"Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV",
+      ""), showLinePlots, data = data)
 ```
 
 ## Emissions LDV Four Wheelers
 ```{r}
-tot <- "Emi|CO2|Transport|Pass|Road|LDV|Four Wheelers|Tailpipe"
+tot <- "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers"
 items <- c(
-      "Emi|CO2|Transport|Pass|Road|LDV|Van|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|SUV|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Large|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Medium|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Small|Tailpipe",
-      "Emi|CO2|Transport|Pass|Road|LDV|Mini|Tailpipe")
+      "",
+      "",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Large",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Medium",
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Small",
+      "")
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
@@ -37,12 +37,12 @@ walk(items, showLinePlots, data = data)
 
 ## Emissions Freight
 ```{r}
-tot <- "Emi|CO2|Transport|Freight|w/o bunkers|Tailpipe"
+tot <- "Emi|CO2|Energy|Tailpipe|Transport|Freight"
 items <- c(
-      "Emi|CO2|Transport|Freight|International Shipping|Tailpipe",
-      "Emi|CO2|Transport|Freight|Navigation|Tailpipe",
-      "Emi|CO2|Transport|Freight|Rail|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|Tailpipe"
+      "Emi|CO2|Energy|Tailpipe|Transport|Bunkers|Freight|International Shipping",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Domestic Shipping",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Rail",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road"
   )
 showAreaAndBarPlots(data, items[2:4], tot, orderVars = "user")
 showAreaAndBarPlots(data, items[2:4], tot_wobunk, fill = TRUE, orderVars = "user")
@@ -52,13 +52,13 @@ walk(items, showLinePlots, data = data)
 
 ## Emissions Freight Road      
 ```{r}
-tot <- "Emi|CO2|Transport|Freight|Road|Tailpipe"
+tot <- "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road"
 items <- c(
-      "Emi|CO2|Transport|Freight|Road|Truck (40t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|Truck (26t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|Truck (18t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|Truck (7.5t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|Truck (0-3.5t)|Tailpipe")
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road|Heavy|Truck (40t)",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road|Heavy|Truck (26t)",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road|Heavy|Truck (18t)",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road|Light|Truck (7_5t)",
+      "Emi|CO2|Energy|Tailpipe|Transport|Freight|Road|Light|Truck (0-3_5t)")
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")

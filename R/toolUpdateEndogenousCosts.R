@@ -64,11 +64,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
   tempAndregions[, all := "All"]
   policyMask[, all := "All"]
   policyMask <- merge(policyMask, tempAndregions, by = "all", allow.cartesian = TRUE)[, all := NULL]
-  # Hybrid electric vehicles get a different policy parameter than BEV and ICE
-  policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
+  # Hybrid Electric vehicles get a different policy parameter than BEV and ICE
+  policyMaskPHEV <- policyMask[technology == "Hybrid Electric"]
   setnames(policyMaskPHEV, "value", "policyMask")
   policyMaskPHEV <- policyMaskPHEV[, c("region", "period", "FVvehvar", "technology", "policyMask")]
-  policyMask <- policyMask[!technology == "Hybrid electric"]
+  policyMask <- policyMask[!technology == "Hybrid Electric"]
   policyMask <- dcast(policyMask, region + period + FVvehvar + technology ~ param, value.var = "value")
   # At the start of the policy intervention, the inconvenience costs for ICEs are zero, as they are the predominant and well-established technology.
   policyMask[technology == "Liquids", startValue := 0]
@@ -83,7 +83,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
     affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
     affectedRegions <- c(affectedRegions, "EUR")
     #affectedRegions <- affectedRegions[!affectedRegions == "UKI"]
-    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric"), policyMask := applyICEban(period, policyMask), by = c("period")]
+    policyMask[technology %in% c("Liquids", "Gases", "Hybrid Electric"), policyMask := applyICEban(period, policyMask), by = c("period")]
   }
 
   #check whether policy mask is calculated correctly for respective technologys
@@ -108,13 +108,13 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
 
     # update raw endogenous costs-------------------------------------------------------------------
 
-    ## Stations availability featured by BEV, FCEV, Hybrid electric, NG
+    ## Stations availability featured by BEV, FCEV, Hybrid Electric, NG
     dataEndoCosts[variable == "Stations availability", endoCostRaw := ifelse(period == t,
                     value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
 
-    ## Risk aversion featured by BEV, FCEV, Hybrid electric, NG
+    ## Risk aversion featured by BEV, FCEV, Hybrid Electric, NG
     # HOW IT SHOULD BE (check in Pettifor 2017)
     # dataEndoCosts[variable == "Risk aversion", endoCostRaw := ifelse(period == t,
                 #      pmax(value[period == (policyStartYear - 1)] - coeffrisk * techFleetProxy[period == (t - 1)], 0),
@@ -125,7 +125,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
 
-    ## Model availability featured by BEV, FCEV, Hybrid electric, NG
+    ## Model availability featured by BEV, FCEV, Hybrid Electric, NG
     dataEndoCosts[variable == "Model availability", endoCostRaw := ifelse(period == t,
                    value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bmodelav),
                     endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
@@ -160,7 +160,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts, depreciationFactors, scenPa
                      by = c("region", "technology", "vehicleType", "univocalName")]
 
     # Model availability for hybrid electric
-    dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t,
+    dataEndoCosts[variable == "Model availability" & technology == "Hybrid Electric" & period == t,
                   value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
                     by = c("region", "technology", "vehicleType", "univocalName")]
 

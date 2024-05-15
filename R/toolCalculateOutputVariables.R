@@ -40,9 +40,9 @@ toolCalculateOutputVariables <- function(data, timeResReporting, reportTransport
     fleetFEdemand <- merge(fleetFEdemand, loadFactor, by = intersect(names(fleetFEdemand), names(loadFactor)))
     fleetFEdemand[, value := (energyIntensity / loadFactor) * ESdemandFVsalesLevel][, unit := "EJ/yr"][, variable := "FE"]
     # There is no final energy type "hybrid electric". So hybrids need to be split in liquids and electricity
-    fleetFEdemand <- rbind(fleetFEdemand, copy(fleetFEdemand[technology == "Hybrid electric"])[, value := value * hybridElecShare][, technology := "BEV"])
-    fleetFEdemand[technology == "Hybrid electric", value := value * (1 - hybridElecShare)]
-    fleetFEdemand[technology == "Hybrid electric", technology := "Liquids"]
+    fleetFEdemand <- rbind(fleetFEdemand, copy(fleetFEdemand[technology == "Hybrid Electric"])[, value := value * hybridElecShare][, technology := "BEV"])
+    fleetFEdemand[technology == "Hybrid Electric", value := value * (1 - hybridElecShare)]
+    fleetFEdemand[technology == "Hybrid Electric", technology := "Liquids"]
     fleetFEdemand[technology %in% c("BEV", "Electric"), technology := "Electricity"]
     fleetFEdemand[technology == "FCEV", technology := "Hydrogen"]
     # Add liquids and BEV share of hybrids to the other tech modes
@@ -220,7 +220,7 @@ toolCalculateOutputVariables <- function(data, timeResReporting, reportTransport
     ## attribute explicitly fuel used to the FE values
     dtFE <- copy(dtFE)
     dtFE[univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
-                             helpers$filterEntries$trn_pass_road_LDV_2W) & technology %in% c("Liquids", "Hybrid electric"), to := "fepet"]
+                             helpers$filterEntries$trn_pass_road_LDV_2W) & technology %in% c("Liquids", "Hybrid Electric"), to := "fepet"]
     dtFE[!(univocalName %in% c(helpers$filterEntries$trn_pass_road_LDV_4W,
                              helpers$filterEntries$trn_pass_road_LDV_2W)) & technology == "Liquids", to := "fedie"]
     dtFE[technology == "Gases", to := "fegas"]

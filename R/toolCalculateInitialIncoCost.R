@@ -48,7 +48,7 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
                       value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[!region %in% EUreg & incoCostType == "riskAversion", value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[!region %in% EUreg & incoCostType == "stationsAvailability"
-                      & technology %in% c("BEV", "Hybrid electric"), value := value * ((ratio - 1) / 2 + 1)]
+                      & technology %in% c("BEV", "Hybrid Electric"), value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[, ratio := NULL]
 
   # map data on decision tree and interpolate missing timesteps <= 2020
