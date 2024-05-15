@@ -43,13 +43,13 @@ trn_pass;Passenger Rail;Passenger Rail_tmp_subsectorL2;Passenger Rail_tmp_subsec
 trn_pass;Passenger Rail;Passenger Rail_tmp_subsectorL2;Passenger Rail_tmp_subsectorL3;Passenger Rail_tmp_vehicletype;Liquids;Passenger Rail
 trn_pass;Walk;Walk_tmp_subsectorL2;Walk_tmp_subsectorL3;Walk_tmp_vehicletype;Walk_tmp_technology;Walk
 trn_pass;Cycle;Cycle_tmp_subsectorL2;Cycle_tmp_subsectorL3;Cycle_tmp_vehicletype;Cycle_tmp_technology;Cycle
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Compact Car;Hybrid electric;Compact Car
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Mini Car;Hybrid electric;Mini Car
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Subcompact Car;Hybrid electric;Subcompact Car
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Large Car and SUV;Hybrid electric;Large Car and SUV
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Large Car;Hybrid electric;Large Car
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Midsize Car;Hybrid electric;Midsize Car
-trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Van;Hybrid electric;Van
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Compact Car;Hybrid Electric;Compact Car
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Mini Car;Hybrid Electric;Mini Car
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Subcompact Car;Hybrid Electric;Subcompact Car
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Large Car and SUV;Hybrid Electric;Large Car and SUV
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Large Car;Hybrid Electric;Large Car
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Midsize Car;Hybrid Electric;Midsize Car
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Van;Hybrid Electric;Van
 trn_pass;trn_pass_road;Bus;Bus_tmp_subsectorL3;Bus_tmp_vehicletype;BEV;Bus
 trn_pass;trn_pass_road;Bus;Bus_tmp_subsectorL3;Bus_tmp_vehicletype;FCEV;Bus
 trn_freight;trn_freight_road;trn_freight_road_tmp_subsectorL2;trn_freight_road_tmp_subsectorL3;Truck (0-3_5t);Liquids;Truck (0-3_5t)

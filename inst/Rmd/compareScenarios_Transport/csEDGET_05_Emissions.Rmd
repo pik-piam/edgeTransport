@@ -2,10 +2,10 @@
 
 ## Emissions Passenger
 ```{r}
-tot <- "Emi|CO2|Transport|Pass with bunkers|Tailpipe"
+tot <- "Emi|CO2|Transport|Pass|w/o bunkers|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Bunkers|Pass|International Aviation|Tailpipe",
-      "Emi|CO2|Transport|Pass|Domestic Aviation|Tailpipe",
+      "Emi|CO2|Transport|Pass|Aviation|International|Tailpipe",
+      "Emi|CO2|Transport|Pass|Aviation|Domestic|Tailpipe",
       "Emi|CO2|Transport|Pass|Rail|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|Bus|Tailpipe",
       "Emi|CO2|Transport|Pass|Road|LDV|Four Wheelers|Tailpipe",
@@ -37,10 +37,10 @@ walk(items, showLinePlots, data = data)
 
 ## Emissions Freight
 ```{r}
-tot <- "Emi|CO2|Transport|Freight with bunkers|Tailpipe"
+tot <- "Emi|CO2|Transport|Freight|w/o bunkers|Tailpipe"
 items <- c(
-      "Emi|CO2|Transport|Bunkers|Freight|International Shipping|Tailpipe",
-      "Emi|CO2|Transport|Freight|Domestic Shipping|Tailpipe",
+      "Emi|CO2|Transport|Freight|International Shipping|Tailpipe",
+      "Emi|CO2|Transport|Freight|Navigation|Tailpipe",
       "Emi|CO2|Transport|Freight|Rail|Tailpipe",
       "Emi|CO2|Transport|Freight|Road|Tailpipe"
   )
@@ -57,8 +57,8 @@ items <- c(
       "Emi|CO2|Transport|Freight|Road|Truck (40t)|Tailpipe",
       "Emi|CO2|Transport|Freight|Road|Truck (26t)|Tailpipe",
       "Emi|CO2|Transport|Freight|Road|Truck (18t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|truck (7_5t)|Tailpipe",
-      "Emi|CO2|Transport|Freight|Road|truck (0-3_5t)|Tailpipe")
+      "Emi|CO2|Transport|Freight|Road|Truck (7.5t)|Tailpipe",
+      "Emi|CO2|Transport|Freight|Road|Truck (0-3.5t)|Tailpipe")
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
