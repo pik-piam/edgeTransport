@@ -24,8 +24,8 @@ tot <- "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers"
 items <- c(
       "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Large",
       "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Medium",
-      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Small",
-      "")
+      "Emi|CO2|Energy|Tailpipe|Transport|Pass|Road|LDV|Four Wheelers|Small"
+      )
 
 showAreaAndBarPlots(data, items, tot, orderVars = "user")
 showAreaAndBarPlots(data, items, tot, fill = TRUE, orderVars = "user")
