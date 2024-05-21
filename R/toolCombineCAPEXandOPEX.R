@@ -68,14 +68,14 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet,
   # use dummy that does not feature fleet tracking
   dummy <- unique(combinedCAPEXandOPEX$univocalName)
   dummy <- dummy[!dummy %in% helpers$filterEntries$trackedFleet & dummy %in% helpers$filterEntries$trn_pass][1]
-  walk <- combinedCAPEXandOPEX[univocalName == dummy][, technology := NULL]
+  walk <- combinedCAPEXandOPEX[univocalName == dummy & technology == "Liquids"][, technology := NULL]
   walk <- unique(walk)[, value := 0]
   walk[, univocalName := "Walk"][, technology := "Walk_tmp_technology"]
   cycle <- copy(walk)[, univocalName := "Cycle"][, technology := "Cycle_tmp_technology"]
   combinedCAPEXandOPEX <- rbind(combinedCAPEXandOPEX, walk, cycle)
 
-  if (anyNA(combinedCAPEXandOPEX) == TRUE) {
-    stop("combinedCAPEXandOPEX contain NAs")
+  if (anyNA(combinedCAPEXandOPEX) == TRUE | anyDuplicated(combinedCAPEXandOPEX) == TRUE) {
+    stop("combinedCAPEXandOPEX contain NAs or duplicates")
   }
 
   transportCosts <- list(

@@ -42,13 +42,11 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
 
    # corrections to the data
    # prices before 2020 are often not plausible -> choose 2020 as a start date if previous years are provided
-   fuelCosts <- fuelCosts[period >= 2020]
    test <- fuelCosts[value <= 0.001]
+   fuelCosts <- fuelCosts[period >= 2020 & value >= 0.001]
    if(nrow(test)){
      print(paste("Fuel prices lower than 1$/GJ found. Regions:", paste(unique(test$region), collapse = ", ")))
-     print("The weighted averages of non-zero regions of the corresponding fuel will be used.")
-     browser()
-     fuelCosts[, value := ifelse(value <= 0.001, mean(value[value > 0.001]), value), by = c("period", "technology")]
+     print("Values are filtered out and are interpolated from other timesteps.")
    }
 
    fuelCosts[, variable := "Fuel costs"][, unit := "US$2005/MJ"]
