@@ -69,7 +69,7 @@ tot <- "ES|Transport|Pass|Road|LDV|Four Wheelers"
 items <- c(
        "ES|Transport|Pass|Road|LDV|Four Wheelers|BEV",
        "ES|Transport|Pass|Road|LDV|Four Wheelers|FCEV",
-       "ES|Transport|Pass|Road|LDV|Four Wheelers|Hybrid Electric",
+       "ES|Transport|Pass|Road|LDV|Four Wheelers|Hybrid electric",
        "ES|Transport|Pass|Road|LDV|Four Wheelers|Gases",
        "ES|Transport|Pass|Road|LDV|Four Wheelers|Liquids"
   )

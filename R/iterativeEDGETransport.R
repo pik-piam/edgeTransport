@@ -42,7 +42,7 @@ toolIterativeEDGETransport <- function() {
   ## Load input data
   #############################################################
   inputFolder = paste0("./")
-  # share of electricity in hybrid electric vehicles
+  # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
   numberOfRegions <- lenght(readGDX(gdx, "all_regi"))
   iterationNumber <- as.vector(rgdx(gdx, list(name = "o_iterationNumber"))$val)

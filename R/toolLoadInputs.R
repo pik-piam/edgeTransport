@@ -4,7 +4,7 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
-#' @param hybridElecShare Share of electricity in hybrid electric vehicles
+#' @param hybridElecShare Share of electricity in Hybrid electric vehicles
 #' @returns list with different input data sets
 #' @import data.table
 #' @export

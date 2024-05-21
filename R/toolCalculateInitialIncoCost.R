@@ -34,7 +34,7 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
                                            & !region %in% individualIncoCost12$region])
   ## use ICE price difference to DEU to introduce regional differentiation in all regions apart from EU regions
   # this is done for the 2020 value of model availability and range anxiety and for all years for risk aversion
-  # and sationsAvailability for BEV and hybrid electric
+  # and sationsAvailability for BEV and Hybrid electric
   # Q: This procedure is not really straight forward - maybe we get to a more systemic approach?
   EUreg <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"])$regionCode21
   reference <- combinedCost[! variable == "Fuel price" & period == 2020]
@@ -48,7 +48,7 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
                       value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[!region %in% EUreg & incoCostType == "riskAversion", value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[!region %in% EUreg & incoCostType == "stationsAvailability"
-                      & technology %in% c("BEV", "Hybrid Electric"), value := value * ((ratio - 1) / 2 + 1)]
+                      & technology %in% c("BEV", "Hybrid electric"), value := value * ((ratio - 1) / 2 + 1)]
   incoCostStartValReg[, ratio := NULL]
 
   # map data on decision tree and interpolate missing timesteps <= 2020

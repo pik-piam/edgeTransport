@@ -38,7 +38,7 @@ toolEdgeTransportSA <- function(SSPscen,
   policyStartYear <- 2021
   # last time step of historical data
   baseYear <- 2010
-  # share of electricity in hybrid electric vehicles
+  # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
 
   ########################################################
