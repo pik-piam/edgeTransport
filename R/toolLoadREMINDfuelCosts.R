@@ -13,7 +13,7 @@
 #' @importFrom magrittr `%>%`
 
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
- value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL
+ value <- unit <- variable <- `Hybrid Electric` <- fuel <- NULL
 
    mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
    # active modes do not feed into all_enty
@@ -36,9 +36,9 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    dummy <- fuelCosts[univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W & technology %in% c("BEV", "Liquids")]
    fuelCostsHybrids <- dummy %>%
      dcast(... ~ technology) %>%
-     .[, `Hybrid electric` := (1 - hybridElecShare) * Liquids + hybridElecShare * BEV] %>%
+     .[, `Hybrid Electric` := (1 - hybridElecShare) * Liquids + hybridElecShare * BEV] %>%
      melt(id.vars = c("region", "period", "univocalName"), variable.name = "technology")
-   fuelCosts <- rbind(fuelCosts, fuelCostsHybrids[technology == "Hybrid electric"])
+   fuelCosts <- rbind(fuelCosts, fuelCostsHybrids[technology == "Hybrid Electric"])
 
    # corrections to the data
    # prices before 2020 are often not plausible -> choose 2020 as a start date if previous years are provided

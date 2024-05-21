@@ -1,0 +1,62 @@
+# Useful Energy Demand
+
+
+## Useful Energy by carrier
+
+### Total 
+```{r}
+items <- c(
+  "UE|Transport|Electricity",
+  "UE|Transport|Hydrogen",
+  "UE|Transport|Liquids"
+  )
+
+walk(items, showLinePlots, data = data)
+```
+
+### Road
+```{r}
+items <- c(
+  "UE|Transport|Road|Electricity",
+  "UE|Transport|Road|Liquids",
+  "UE|Transport|Road|Hydrogen",
+  )
+
+walk(items, showLinePlots, data = data)
+```
+
+### Passenger
+```{r}
+items <- c(
+  "UE|Transport|Pass with bunkers|Electricity",
+  "UE|Transport|Pass with bunkers|Hydrogen",
+  "UE|Transport|Pass with bunkers|Liquids"
+  )
+
+walk(items, showLinePlots, data = data)
+```
+
+### Passenger
+```{r}
+items <- c(
+  "UE|Transport|Pass|Electricity",
+  "UE|Transport|Pass|Hydrogen",
+  "UE|Transport|Pass|Liquids"
+  )
+walk(items, showLinePlots, data = data)
+```
+
+
+## Useful Energy by transport modes
+
+### Passenger
+```{r}
+items <- c(
+    "UE|Transport|Pass|Rail|HSR",
+    "UE|Transport|Pass|Rail|non-HSR",
+    "UE|Transport|Pass|Road|Bus",
+    "UE|Transport|Pass|Road|LDV|Four Wheelers",
+    "UE|Transport|Pass|Road|LDV|Two Wheelers"
+  )
+walk(items, showLinePlots, data = data)
+```

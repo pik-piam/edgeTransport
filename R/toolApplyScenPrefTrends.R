@@ -35,11 +35,11 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   PrefTrends[period  >= policyStartYear & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
 
   # normalize preferences in each level
-  PrefTrends[level == "S1S", value := value/max(value), by = c("region", "period", "sector")]
-  PrefTrends[level == "S2S1", value := value/max(value), by = c("region", "period", "sector", "subsectorL1")]
-  PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
-  PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
-  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+  PrefTrends[level == "S1S", value := value/max(value), by = c("region", "period", "sector")] # S1S: logit level: distances (e.g. short-medium, long)
+  PrefTrends[level == "S2S1", value := value/max(value), by = c("region", "period", "sector", "subsectorL1")] # S2S1: logit level: modes/categories (e.g. walk, road, rail)
+  PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")] # S3S2: logit level: modes/technologies (e.g. LDV, bus, Liquids)
+  PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")] # VS3: logit level: modes/technologies (e.g. cars, Liquids)
+  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]  # FV: logit level: vehicle type (e.g. large car, moped)
 
   # Apply ICE ban if switched on
   if (isICEban) {
