@@ -264,3 +264,23 @@ toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness 
 
   return(data)
 }
+
+#' Check a data.table for NAs and duplicates and throw an error if needed
+#' @author Johanna Hoppe
+#' @param dt data.table to be checked
+#' @param varname name of the variable
+#' @param codePosition position in the code to find the bug
+#' @returns
+#' @import data.table
+#' @export
+
+checkForNAsDups <- function(dt, varname, codePosition) {
+
+  if (anyNA(dt)) {
+    stop(paste0(varname, " in ", codePosition, " contains NAs."))
+  }
+  if (anyDuplicated(dt)) {
+    stop(paste0(varname, " in ", codePosition, " contains duplicates."))
+  }
+
+}
