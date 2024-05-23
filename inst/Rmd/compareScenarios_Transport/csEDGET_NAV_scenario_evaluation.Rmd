@@ -1,7 +1,7 @@
 # Evaluation Sheet NAVIGATE scenarios
 ```{r setting}
 data <- as.data.table(data)
-Baseline <- "Mix1 SSP2"
+Baseline <- "Mix2 SSP2EU"
 ```
 
 ```{r Calculate ES reduction rate for Passenger Cars compared to Baseline for all scenarios}
