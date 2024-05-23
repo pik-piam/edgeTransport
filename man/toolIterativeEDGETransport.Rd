@@ -4,7 +4,7 @@
 \alias{toolIterativeEDGETransport}
 \title{EDGE-Transport iterative}
 \usage{
-toolIterativeEDGETransport(reporting = FALSE)
+toolIterativeEDGETransport()
 }
 \arguments{
 \item{reporting}{generate EDGE-T reporting data}

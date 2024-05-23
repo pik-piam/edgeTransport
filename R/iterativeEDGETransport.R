@@ -6,7 +6,7 @@
 #' @param reporting generate EDGE-T reporting data
 #' @return NULL
 #' @author Alois Dirnaichner
-#' @importFrom data.table freadtraceback()
+#' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
 #' @export
 

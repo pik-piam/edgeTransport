@@ -270,7 +270,6 @@ toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness 
 #' @param dt data.table to be checked
 #' @param varname name of the variable
 #' @param codePosition position in the code to find the bug
-#' @returns
 #' @import data.table
 #' @export
 

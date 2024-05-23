@@ -3,9 +3,11 @@
 #' Function that traverses each level of the decision tree and calculates the shares according to the discrete choice approach
 #'
 #' @author Johanna Hoppe
-#' @param dt data.table containing
-#' @param category
-#' @returns data.table
+#' @param input dataset for discrete choice module
+#' @param generalModelPar general model parameter
+#' @param updatedEndoCosts updated endogenous costs
+#' @param helpers list of helpers
+#' @returns calculated shares
 #' @import data.table
 #' @export
 
