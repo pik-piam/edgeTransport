@@ -30,11 +30,15 @@ Endogenous cost components and FS3 shares are provided until policyStartYear. Re
 
 \item{timeValue}{data.table containing mode specific time value costs based on speed and gdp}
 
+\item{preferences}{preference factor trends}
+
 \item{lambdas}{data.table containing exponents for discrete choice calculation}
 
 \item{helpers}{list containing helpers like mappings, decisionTree etc.}
 
-\item{numberOfvehicles}{data.table containing total number of vehicles for all years and regions}
+\item{isICEban}{optional enabling of ICE ban}
+
+\item{vehiclesPerTech}{data.table containing total number of vehicles for all years and regions}
 }
 \value{
 list containing data.table with endogenous cost components over the full time span and additional data.tables

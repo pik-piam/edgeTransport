@@ -11,6 +11,7 @@
 #' @param helpers list with helpers
 #' @returns Scenario specific energy service demand for all model years on CES level
 #' @author Johanna Hoppe
+#' @importFrom stats approxfun
 #' @import data.table
 #' @export
 

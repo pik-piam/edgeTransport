@@ -1,12 +1,13 @@
-#' Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level) in [bn (p|t)km/yr] and the requested temporal resolution
+#' Load REMIND energy service demand
+#'
+#' Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level)
+#' in [bn (p|t)km/yr] and the requested temporal resolution
 #'
 #' @param gdxPath path to REMIND fulldata.gdx
-#' @param yrs requested temporal resolution
 #'
 #' @import data.table
 #' @importFrom gdx readGDX
 #' @export
-
 
 toolLoadREMINDesDemand <- function(gdxPath) {
   value <- unit <- variable <- NULL

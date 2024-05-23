@@ -1,10 +1,16 @@
 #' Function that converts CAPEX and OPEX into US$2005/(p|t)km and provides them combined in a structured format
-#' @param mrtransportInput list containing all mrtransport input data
+#'
+#' @param CAPEXtrackedFleet CAPEX data for vehicle types that feature fleet tracking: Cars, trucks, busses
+#' @param nonFuelOPEXtrackedFleet non-fuel OPEX data for vehicle types that feature fleet tracking: Cars, trucks, busses
+#' @param CAPEXother CAPEX data for other vehicle types
+#' @param nonFuelOPEXother non-fuel OPEX data for other vehicle types
+#' @param fuelCosts fuel cost data
+#' @param subsidies purchase price subsidy data
+#' @param energyIntensity energy intensity data
+#' @param loadFactor load factor data
+#' @param annualMileage annual mileage data
 #' @param annuity calculated annuity for different vehicle types
-#' @param fuelCosts fuel costs from REMIND
-#' @param subsidies subsides for alternative cars from mrremind
-#' @param decisionTree edgeTransport decision tree
-#' @param filter list of filters for specific branches in the upper decision tree, containing all associated univocalNames
+#' @param helpers list with helpers
 #' @import data.table
 #' @returns data.table including total costs of ownership in US$2005/(p|t)km
 

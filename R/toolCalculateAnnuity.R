@@ -2,7 +2,7 @@
 #'
 #' @author Johanna Hoppe
 #' @param annuityCalc input data for interest rate and service Life from edgeTransport
-#' @param mitigationTechMap map to disaggregate vehicle types
+#' @param helpers list with helpers
 #' @import data.table
 
 

@@ -19,17 +19,27 @@ toolCombineCAPEXandOPEX(
 )
 }
 \arguments{
-\item{fuelCosts}{fuel costs from REMIND}
+\item{CAPEXtrackedFleet}{CAPEX data for vehicle types that feature fleet tracking: Cars, trucks, busses}
 
-\item{subsidies}{subsides for alternative cars from mrremind}
+\item{nonFuelOPEXtrackedFleet}{non-fuel OPEX data for vehicle types that feature fleet tracking: Cars, trucks, busses}
+
+\item{CAPEXother}{CAPEX data for other vehicle types}
+
+\item{nonFuelOPEXother}{non-fuel OPEX data for other vehicle types}
+
+\item{fuelCosts}{fuel cost data}
+
+\item{subsidies}{purchase price subsidy data}
+
+\item{energyIntensity}{energy intensity data}
+
+\item{loadFactor}{load factor data}
+
+\item{annualMileage}{annual mileage data}
 
 \item{annuity}{calculated annuity for different vehicle types}
 
-\item{mrtransportInput}{list containing all mrtransport input data}
-
-\item{decisionTree}{edgeTransport decision tree}
-
-\item{filter}{list of filters for specific branches in the upper decision tree, containing all associated univocalNames}
+\item{helpers}{list with helpers}
 }
 \value{
 data.table including total costs of ownership in US$2005/(p|t)km

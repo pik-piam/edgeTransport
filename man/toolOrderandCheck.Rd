@@ -17,6 +17,8 @@ toolOrderandCheck(
 
 \item{decisionTree}{data.table containing full edgeTransport decision Tree}
 
+\item{yrs}{temporal resolution}
+
 \item{checkCompleteness}{if activated it is further checked, if the full data set is provided}
 
 \item{fleetVars}{if activated the full data set is reduced to vehicle types that feature fleet tracking}

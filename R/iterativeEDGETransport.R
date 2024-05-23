@@ -1,11 +1,9 @@
 #' EDGE-Transport iterative
+#' EDGE-Transport iterative script
 #'
-#' Run in the REMIND output folder.
+#' Run in the REMIND output folder in between iterations
 #'
-#' @md
-#' @param reporting generate EDGE-T reporting data
-#' @return NULL
-#' @author Alois Dirnaichner
+#' @author Johanna Hoppe
 #' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
 #' @export

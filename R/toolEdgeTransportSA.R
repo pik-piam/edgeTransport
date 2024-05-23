@@ -6,6 +6,7 @@
 #'
 #' @param SSPscen SSP or SDP scenario
 #' @param transportPolScen EDGE-T transport policy scenario
+#' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data

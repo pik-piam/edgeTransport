@@ -16,13 +16,13 @@ toolCreateRDS(
 \arguments{
 \item{inputPath}{the path to the folder containing the input (csv-) files}
 
-\item{demScen}{the SSP dimension, usually this refers to the GDP scenario in REMIND}
+\item{edgeTransportFolder}{the path to the EDGE-Transport folder}
 
-\item{transportPolScen}{the EDGE-T scenario dimension}
+\item{SSPscen}{SSP scenario}
 
-\item{dataPath}{the path to the output folder}
+\item{demScen}{demand scenario}
 
-\item{DEM_scenario}{the demand scenario.}
+\item{transportPolScen}{Transport policy scenario}
 }
 \description{
 Creates RDS files for iterative REMIND-EDGE runs from csv input files.

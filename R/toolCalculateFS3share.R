@@ -5,6 +5,7 @@
 #' @param timesteps years for which to calculate FS3 shares
 #' @param timeValue data.table containing mode specific time value costs based on speed and gdp
 #' @param lambdas data.table containing exponents for discrete choice calculation
+#' @param preferences data.table containing preference trends
 #' @param helpers list containing helpers like mappings, decisionTree etc.
 #' @return data.table containing all cost components on technology level and their respective FS3 shares
 #' @author Johanna Hoppe

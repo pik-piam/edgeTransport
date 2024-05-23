@@ -2,15 +2,14 @@
 % Please edit documentation in R/toolLoadREMINDesDemand.R
 \name{toolLoadREMINDesDemand}
 \alias{toolLoadREMINDesDemand}
-\title{Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level) in [bn (p|t)km/yr] and the requested temporal resolution}
+\title{Load REMIND energy service demand}
 \usage{
 toolLoadREMINDesDemand(gdxPath)
 }
 \arguments{
 \item{gdxPath}{path to REMIND fulldata.gdx}
-
-\item{yrs}{requested temporal resolution}
 }
 \description{
-Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level) in [bn (p|t)km/yr] and the requested temporal resolution
+Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level)
+in [bn (p|t)km/yr] and the requested temporal resolution
 }

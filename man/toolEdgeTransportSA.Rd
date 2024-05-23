@@ -23,6 +23,8 @@ toolEdgeTransportSA(
 
 \item{transportPolScen}{EDGE-T transport policy scenario}
 
+\item{isICEban}{optional enabling of ICE ban}
+
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}

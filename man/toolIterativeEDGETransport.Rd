@@ -2,16 +2,14 @@
 % Please edit documentation in R/iterativeEDGETransport.R
 \name{toolIterativeEDGETransport}
 \alias{toolIterativeEDGETransport}
-\title{EDGE-Transport iterative}
+\title{EDGE-Transport iterative
+EDGE-Transport iterative script}
 \usage{
 toolIterativeEDGETransport()
 }
-\arguments{
-\item{reporting}{generate EDGE-T reporting data}
-}
 \description{
-Run in the REMIND output folder.
+Run in the REMIND output folder in between iterations
 }
 \author{
-Alois Dirnaichner
+Johanna Hoppe
 }

@@ -8,11 +8,13 @@
 #' @param scenParIncoCost data.table containing scenario specific parameters for inconvenience costs policy mask
 #' @param policyStartYear year from which scenario-specific differentiation begins
 #' @param timeValue data.table containing mode specific time value costs based on speed and gdp
+#' @param preferences preference factor trends
 #' @param lambdas data.table containing exponents for discrete choice calculation
 #' @param helpers list containing helpers like mappings, decisionTree etc.
-#' @param numberOfvehicles data.table containing total number of vehicles for all years and regions
+#' @param isICEban optional enabling of ICE ban
+#' @param vehiclesPerTech data.table containing total number of vehicles for all years and regions
 #' @return list containing data.table with endogenous cost components over the full time span and additional data.tables
-#'         for model behaviour analysis
+#'         for model behavior analysis
 #' @author Johanna Hoppe
 #' @import data.table
 #' @export

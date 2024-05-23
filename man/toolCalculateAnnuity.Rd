@@ -9,7 +9,7 @@ toolCalculateAnnuity(annuityCalc, helpers)
 \arguments{
 \item{annuityCalc}{input data for interest rate and service Life from edgeTransport}
 
-\item{mitigationTechMap}{map to disaggregate vehicle types}
+\item{helpers}{list with helpers}
 }
 \description{
 Calculate annuity for different vehicle types

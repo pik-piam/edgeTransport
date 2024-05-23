@@ -1,17 +1,17 @@
 ---
-title: "Data preparation with EDGEtransport"
-author: "Marianna Rottoli"
+title: "EnergyDemandGenerator-Transport Model (EDGE-T)"
+author: "Johanna Hoppe"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data preparation with EDGEtransport}
+  %\VignetteIndexEntry{EnergyDemandGenerator-Transport Model (EDGE-T)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ## Description
 
-The input data preparation routine of EDGE-Transport produces transport detailed data compatible with the structure of REMIND. The code is provided as R package, while the input data is available upon request. The input data is necessary to run the package. The input data generation routine uses the functions provided in the [edgeTrpLib](https://github.com/pik-piam/edgeTrpLib) package.
+lore ipsum
 
 ## Usage
 
@@ -20,56 +20,48 @@ The package can be installed from github...
 Data can be generated as follows:
 
 `
-generateEDGEdata(input_folder, output_folder, SSP_scen = "SSP2", transportPolScen = NULL, IEAbal = NULL, GDP_country = NULL, POP_country = NULL, trsp_incent = NULL, RatioPPP2MER_country = NULL, JRC_IDEES_Trsp = NULL, JRC_IDEES_MarBunk = NULL, storeRDS = FALSE)
+toolEdgeTransportSA <- function(SSPscen,
+                                transportPolScen,
+                                isICEban = FALSE,
+                                demScen = "default",
+                                gdxPath = NULL,
+                                outputFolder = ".",
+                                isStored = TRUE,
+                                isTransportReported = TRUE,
+                                isTransportExtendedReported = FALSE,
+                                isREMINDinputReported = FALSE,
+                                isAnalyticsReported = FALSE)
 `
 
 Where:
 
-`input_folder` character string containing the path to the input data folder
+`SSPscen` character string containing the selected SSP scenario. Options are: `SSP1`, `SSP2`
 
-`output_folder` character string containing the path where output data are saved
+`transportPolScen` character string containing the transport policy scenario. Options are: 
 
-`SSP_scen` character string containing the selected SSP scenario. Options are: `SDP`, `SSP1`, `SSP2`, `SSP2-Ariadne`, `SSP2_LowEn`, `SSP5`. By default, `SSP2` is selected
+`demScen` character string containing the demand scenario, used to apply reduction factors on total demands from the regression. Options are:
 
-`transportPolScen` character string containing the EDGE-T technology scenario, if provided. By default, SSP/SDP "coherent" technology development is selected. Hybrid matches SSP-technology scenario (e.g. SSP2 with high hydrogen demand) are allowed.
+`gdxPath` character string containing a path to a REMIND fulldata.gdx to load the fuel price trajectories from. 
 
-`IEAbal` use mrremind generated data: in case of a REMIND preprocessing run, load population.  Product of: `calcOutput("IO", subtype = "IEA_output", aggregate = TRUE)`
+`outputFolder` character string containing a path to a folder for storing output data
 
-`GDP_country` use mrremind generated data: in case of a REMIND preprocessing run, load GDP.  Product of: `calcOutput("GDPppp", aggregate =F)`
+`isStored` boolean for optional saving of intermediate RDS files
 
-`RatioPPP2MER_country use` mrremind generated data: in case of a REMIND preprocessing run, load ratio between PPP and MER GDP.  Product of: `calcOutput("RatioPPP2MER", aggregate =F)`
+`isTransportReported` boolean for optional transport reporting in model intercomparison formate (MIF)
 
-`POP_country` use mrremind generated data: in case of a REMIND preprocessing run, load IEA balances. Product of: `calcOutput("Population", aggregate =F)`
+`isTransportExtendedReported` boolean for optional extension of transport reporting providing more detailed variables
 
-`JRC_IDEES_Trsp` use mrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="Transport")`
+`isREMINDinputReported` boolean for optional reporting of REMIND input data
 
-`JRC_IDEES_MarBunk` use mmrremind generated data: in case of a REMIND preprocessing run, load JRC_IDEE data. Product of: `calcOutput("JRC_IDEES", subtype="maritimebunkers")`
-
-`trsp_incent` use mmrremind generated data: in case of a REMIND preprocessing run, load transportSubsidies data. Product of: `readSource("TransportSubsidies", convert=T)`
-
-`storeRDS` logical. If `TRUE`, levels 0, 1 and 2 temporary output RDS files are saved, and a reporting PDF to validate the data is produced in level_2. By default, the parameter is set to `FALSE`.
-
+`isAnalyticsReported` boolean for optional reporting of analytics data (e.g. variables over iterations)
 
 ## Data generation structure
 
-The package contains three levels of data wrangling.
-
-* Level 0: this level performs the raw data loading and processing. The scripts in this level load the input data, such as: detailed historical demand, technology performances-load factor, intensity, value of time, inconvenience costs for 4wheelers.
-* Level 1: in this level the inconvenience costs and preference factors are calibrated on the historical transport demand. The calibrated preferences are then projected in time for technologies-vehicles-modes based on assumptions of the evolution of the transport system.
-* Level 2: the future composition of the transport system is defined via a logit function. The total demand for transport is calculated via regressions. Data is then saved in the form of .csv files.
+lore ipsum
 
 ## Scenarios description
 
-The data preparation routine allows to provide combinations of transport scenarios and macro-economic scenarios. The transport scenarios are characterized by a set of assumptions about technological development, evolution of preferences for technologies and transport modes, lifestyle changes, introduction of policy packages. The assumptions are reported in a set of switches reported in the mapping file `EDGEtransport/data-raw/EDGEscenario_description.csv`. An extensive description of the scenarios is provided here [CIT]. The scenario options are the following:
-
-`ConvCase` stands for *Conventional Case*, represents a conventional case, internal combustion engines, no incentives to BEVs and FCEVs
-
-`ElecEra` stands for *Electric Era* incentives to BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
-
-`ElecEraWise` stands for *Electric Era* with also *sustainable demand* projections and lifestyle changes concerning: a moderate growth of demand, an increased preference for public transport and non-motorized modes.
-
-`HydrHype` stands for *Hydrogen Hype* incentives to FCEVs, slow development of BEVs, takeover of alternative vehicles at the expenses of conventional vehicles
-
-The macro-economic scenarios are based on the Shared Socio-Economic Pathways [see @riahi_shared_2017]. The entries that vary across scenarios are GDP and population projections. There are no assumptions specific to transport structure across the various SSPs.
-
+lore ipsum
 ## References
+
+lore ipsum - credits mariannas paper

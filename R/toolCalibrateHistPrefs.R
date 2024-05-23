@@ -8,6 +8,7 @@
 #' @returns data.table with calibrated historical preferences
 #'
 #' @importFrom rootSolve multiroot
+#' @importFrom utils capture.output
 
 
 toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, lambdas, helpers){

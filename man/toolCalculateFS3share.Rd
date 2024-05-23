@@ -20,6 +20,8 @@ toolCalculateFS3share(
 
 \item{timeValue}{data.table containing mode specific time value costs based on speed and gdp}
 
+\item{preferences}{data.table containing preference trends}
+
 \item{lambdas}{data.table containing exponents for discrete choice calculation}
 
 \item{helpers}{list containing helpers like mappings, decisionTree etc.}

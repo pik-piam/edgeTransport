@@ -237,6 +237,7 @@ toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
 #' @author Johanna Hoppe
 #' @param data data.table containing data in all levels format that should be checked
 #' @param decisionTree data.table containing full edgeTransport decision Tree
+#' @param yrs temporal resolution
 #' @param checkCompleteness if activated it is further checked, if the full data set is provided
 #' @param fleetVars if activated the full data set is reduced to vehicle types that feature fleet tracking
 #' @returns data.table

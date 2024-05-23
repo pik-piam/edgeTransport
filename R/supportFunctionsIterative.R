@@ -2,10 +2,10 @@
 #' Existing files are overwritten silently. Does not return anything.
 #'
 #' @param inputPath the path to the folder containing the input (csv-) files
-#' @param dataPath the path to the output folder
-#' @param demScen the SSP dimension, usually this refers to the GDP scenario in REMIND
-#' @param DEM_scenario the demand scenario.
-#' @param transportPolScen the EDGE-T scenario dimension
+#' @param edgeTransportFolder the path to the EDGE-Transport folder
+#' @param SSPscen SSP scenario
+#' @param demScen demand scenario
+#' @param transportPolScen Transport policy scenario
 #' @import data.table
 #' @export
 

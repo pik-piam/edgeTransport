@@ -1,10 +1,9 @@
-ValidationKey: '6043140'
+ValidationKey: '30971113866'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
 - 'Warning: namespace ''.*'' is not available and has been replaced'
 - '''.*'' is needed for checks on size reduction of PDFs'
-AcceptedNotes: 
-- 'Undefined global functions or variables:'
+AcceptedNotes: 'Undefined global functions or variables:'
 allowLinterWarnings: yes
-
+enforceVersionUpdate: no
