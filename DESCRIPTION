@@ -1,6 +1,6 @@
 Package: edgeTransport
 Title: Prepare EDGE Transport Data for the REMIND model
-Version: 1.5.5.9002
+Version: 1.5.5.9003
 Authors@R: c(
     person("Johanna", "Hoppe", , "johanna.hoppe@pik-potsdam.de", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-6753-5090")),
@@ -27,7 +27,8 @@ Imports:
     magrittr,
     gdx,
     gdxrrw,
-    reporttransport
+    reporttransport,
+    zoo
 Suggests:
     testthat (>= 3.0.0),
     knitr,
