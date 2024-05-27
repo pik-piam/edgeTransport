@@ -42,7 +42,7 @@ Endogenous cost components and FS3 shares are provided until policyStartYear. Re
 }
 \value{
 list containing data.table with endogenous cost components over the full time span and additional data.tables
-        for model behaviour analysis
+        for model behavior analysis
 }
 \description{
 Provides updates for endogenous cost components e.g. inconvenience costs for cars

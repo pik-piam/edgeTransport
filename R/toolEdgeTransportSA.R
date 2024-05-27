@@ -211,8 +211,7 @@ toolEdgeTransportSA <- function(SSPscen,
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 SSPscen, "-", transportPolScen, "-", demScen))
-
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen))
   outputRaw <- list(
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
@@ -236,13 +235,12 @@ toolEdgeTransportSA <- function(SSPscen,
 
   if (isStored) storeData(outputFolder = outputFolder, outputRaw = outputRaw)
 
-  output <- toolReportEdgeTransport(folderPath = outputFolder,
-                                    data = outputRaw,
-                                    isTransportReported = isTransportReported,
-                                    isREMINDinputReported = isREMINDinputReported,
-                                    isTransportExtendedReported = isTransportExtendedReported,
-                                    isAnalyticsReported = isAnalyticsReported)
-
+  output <- toolReportEdgeTransport(outputFolder,
+                                    outputRaw,
+                                    isTransportReported,
+                                    isTransportExtendedReported,
+                                    isAnalyticsReported,
+                                    isREMINDinputReported)
 
 return(output)
 }

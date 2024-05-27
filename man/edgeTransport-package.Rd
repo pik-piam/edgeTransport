@@ -16,12 +16,13 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Alois Dirnaichner \email{dirnaichner@pik-potsdam.de}
+\strong{Maintainer}: Johanna Hoppe \email{johanna.hoppe@pik-potsdam.de} (\href{https://orcid.org/0009-0004-6753-5090}{ORCID})
 
 Authors:
 \itemize{
+  \item Alois Dirnaichner \email{dirnaichner@pik-potsdam.de}
   \item Marianna Rottoli \email{rottoli@pik-potsdam.de}
-  \item Johanna Hoppe
+  \item Jarusch Muessel \email{jarusch.muessel@pik-potsdam.de}
 }
 
 }

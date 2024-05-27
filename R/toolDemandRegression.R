@@ -12,6 +12,7 @@
 #' @returns Scenario specific energy service demand for all model years on CES level
 #' @author Johanna Hoppe
 #' @importFrom stats approxfun
+#' @importFrom zoo na.approx
 #' @import data.table
 #' @export
 
