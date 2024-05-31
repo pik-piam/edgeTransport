@@ -102,7 +102,6 @@ toolEdgeTransportSA <- function(SSPscen,
   )
 
   print("Input data preparation finished")
-
   ########################################################
   ## Prepare data for
   ## endogenous costs update
@@ -207,7 +206,6 @@ toolEdgeTransportSA <- function(SSPscen,
   ## Reporting
   #################################################
   # Rename transportPolScen if ICE ban is activated
-
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
@@ -226,8 +224,8 @@ toolEdgeTransportSA <- function(SSPscen,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population")],
-                      inputData[!names(inputData) %in% c("histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")])
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPMER", "GDPpcMER", "GDPpcPPP", "population")],
+                      inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
