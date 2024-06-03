@@ -17,7 +17,7 @@
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
 #' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
-#' @importFrom reporttransport toolReportEdgeTransport
+#' @importFrom reporttransport reportEdgeTransport
 #' @import data.table
 #' @export
 
@@ -26,7 +26,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isICEban = FALSE,
                                 demScen = "default",
                                 gdxPath = NULL,
-                                outputFolder = ".",
+                                outputFolder = NULL,
                                 isStored = TRUE,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
@@ -45,9 +45,12 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   ## Load input data
   ########################################################
+  if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
                                               "REMINDinputForTransportStandalone", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
+
+
 
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
 
@@ -207,6 +210,9 @@ toolEdgeTransportSA <- function(SSPscen,
   #################################################
   # Rename transportPolScen if ICE ban is activated
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
+
+  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
+
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen))
@@ -233,12 +239,12 @@ toolEdgeTransportSA <- function(SSPscen,
 
   if (isStored) storeData(outputFolder = outputFolder, outputRaw = outputRaw)
 
-  output <- toolReportEdgeTransport(outputFolder,
-                                    outputRaw,
-                                    isTransportReported,
-                                    isTransportExtendedReported,
-                                    isAnalyticsReported,
-                                    isREMINDinputReported)
+  output <- reportEdgeTransport(outputFolder,
+                                outputRaw,
+                                isTransportReported,
+                                isTransportExtendedReported,
+                                isAnalyticsReported,
+                                isREMINDinputReported)
 
 return(output)
 }
