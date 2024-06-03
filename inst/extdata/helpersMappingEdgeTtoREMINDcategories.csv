@@ -56,7 +56,7 @@ Truck (7_5t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
 Truck (40t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
 Truck (40t);Gases;fegat;te_esgat_frgt_sm;entrp_frgt_sm
 Domestic Ship;Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
-Freight Rail;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
+Freight Rail;Electric;feelt;te_esdie_frgt_sm;entrp_frgt_sm
 Freight Rail;Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
 Truck (0-3_5t);BEV;feelt;te_eselt_frgt_sm;entrp_frgt_sm
 Truck (0-3_5t);FCEV;feh2t;te_esh2t_frgt_sm;entrp_frgt_sm
