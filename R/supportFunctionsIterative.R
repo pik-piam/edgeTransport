@@ -2,7 +2,8 @@
 #' Existing files are overwritten silently. Does not return anything.
 #'
 #' @param inputPath the path to the folder containing the input (csv-) files
-#' @param edgeTransportFolder the path to the EDGE-Transport folder
+#' @param edgeTransportFolder the path to the EDGE-Transport folde
+#' @param inputFiles files to load as input for the iterative script
 #' @param SSPscen SSP scenario
 #' @param demScen demand scenario
 #' @param transportPolScen Transport policy scenario

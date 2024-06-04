@@ -8,6 +8,7 @@ Existing files are overwritten silently. Does not return anything.}
 toolCreateRDS(
   inputPath,
   edgeTransportFolder,
+  inputFiles,
   SSPscen,
   demScen,
   transportPolScen
@@ -16,7 +17,9 @@ toolCreateRDS(
 \arguments{
 \item{inputPath}{the path to the folder containing the input (csv-) files}
 
-\item{edgeTransportFolder}{the path to the EDGE-Transport folder}
+\item{edgeTransportFolder}{the path to the EDGE-Transport folde}
+
+\item{inputFiles}{files to load as input for the iterative script}
 
 \item{SSPscen}{SSP scenario}
 
