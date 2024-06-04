@@ -135,7 +135,7 @@ toolIterativeEDGETransport <- function() {
     ## Discrete choice module
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
-    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCosts$updatedEndogenousCosts, years, helpers)
+    vehSalesAndModeShares <- toolDiscreteChoice(inputData, genModelPar, endogenousCosts$updatedEndogenousCosts, helpers)
 
     fuelVehicleESdemand <- toolCalculateFVdemand(inputData$REMINDsectorESdemand, vehSalesAndModeShares, helpers)
     print("Calculation of vehicle sales and mode shares finished")
