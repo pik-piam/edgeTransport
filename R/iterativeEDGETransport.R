@@ -42,10 +42,18 @@ toolIterativeEDGETransport <- function() {
   inputFolder = paste0("./")
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
-  numberOfRegions <- lenght(readGDX(gdx, "all_regi"))
+  numberOfRegions <- length(readGDX(gdx, "all_regi"))
   iterationNumber <- as.vector(rgdx(gdx, list(name = "o_iterationNumber"))$val)
 
-  inputs <- toolLoadIterativeInputs(edgeTransportFolder, numberOfRegions, SSPscenario,
+  InputFiles <- c("CAPEXandNonFuelOPEX",
+                  "scenSpecPrefTrends",
+                  "scenSpecLoadFactor",
+                  "scenSpecEnIntensity",
+                  "initialIncoCosts",
+                  "annualMileage",
+                  "timeValueCosts")
+
+  inputs <- toolLoadIterativeInputs(edgeTransportFolder, inputFolder, InputFiles, numberOfRegions, SSPscenario,
                                        transportPolScenario, demScenario = NULL)
 
   helpers <- inputs$helpers
@@ -150,26 +158,54 @@ toolIterativeEDGETransport <- function() {
   ## Reporting
   #################################################
   # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
-  timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
+    timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
-  vars <- toolCalculateOutputVariables(fuelVehicleESdemand, inputData$enIntensity, inputData$loadFactor, fleetSizeAndComposition,
-                                       inputDataRaw$CAPEXtrackedFleet, inputDataRaw$subsidies,
-                                       inputData$combinedCAPEXandOPEX, gdx, timeResReporting, hybridElecShare, REMINDinputOnly = TRUE)
+    outputFolder <- edgeTransportPath
 
-  REMINDInputs <- prepareREMINDinputs(outputVarsExt, outputVarsInt)
+    outputRaw <- list(
+      SSPscen = SSPscen,
+      transportPolScen = transportPolScen,
+      demScen = demScen,
+      gdxPath = gdxPath,
+      hybridElecShare = hybridElecShare,
+      histPrefs = histPrefs,
+      fleetSizeAndComposition = fleetSizeAndComposition,
+      endogenousCosts = endogenousCosts,
+      vehSalesAndModeShares = vehSalesAndModeShares,
+      ESdemandFVsalesLevel = ESdemandFVsalesLevel,
+      helpers = helpers
+    )
+    # not all data from inputdataRaw and inputdata is needed for the reporting
+    add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population", "GDPMER")],
+                  inputData[!names(inputData) %in% c("histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")])
+    outputRaw <- append(outputRaw, add)
 
-  ## CapCosts
-  writegdx.parameter("p35_esCapCost.gdx", REMINDInputs$capCost, "p35_esCapCost",
-                     valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+    #store analytics data
+    outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
+                                        fleetVehNumbersIterations = fleetVehNumbersIterations))
 
-  ## Intensities
-  writegdx.parameter("p35_fe2es.gdx", REMINDInputs$intensity, "p35_fe2es",
-                     valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+    storeData(outputFolder = outputFolder, outputRaw = outputRaw)
 
-  ## Shares: demand can represent the shares since it is normalized
-  writegdx.parameter("p35_shFeCes.gdx", REMINDInputs$shFeCes, "p35_shFeCes",
-                     valcol="value",
-                     uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
+    baseOutput <- toolReportEdgeTransport(outputFolder,
+                                          outputRaw,
+                                          isTransportReported = FALSE)
 
-  print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
+    f35_esCapCost <- reportToREMINDcapitalCosts(baseOutput$int$fleetCost[variable == "Capital costs"], timeResReporting, helpers)
+    f35_fe2es <- reportToREMINDenergyEfficiency(baseOutput$int$fleetEnergyIntensity, timeResReporting, helpers)
+    f35_shFeCes <- reportToREMINDfinalEnergyShares(baseOutput$ext$fleetFEdemand, timeResReporting, helpers)
+
+    ## CapCosts
+    writegdx.parameter("p35_esCapCost.gdx", f35_esCapCost, "p35_esCapCost",
+                       valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+
+    ## Intensities
+    writegdx.parameter("p35_fe2es.gdx", f35_fe2es, "p35_fe2es",
+                       valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+
+    ## Shares: demand can represent the shares since it is normalized
+    writegdx.parameter("p35_shFeCes.gdx", f35_shFeCes, "p35_shFeCes",
+                       valcol="value",
+                       uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
+
+    print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
 }

@@ -9,7 +9,7 @@
 #' @import data.table
 #' @export
 
-toolCreateRDS <- function(inputPath, edgeTransportFolder, SSPscen, demScen, transportPolScen) {
+toolCreateRDS <- function(inputPath, edgeTransportFolder, inputFiles, SSPscen, demScen, transportPolScen) {
 
   print("Loading csv data from input folder and creating RDS files...")
   dir.create(file.path(edgeTransportFolder), showWarnings = FALSE)
@@ -25,28 +25,27 @@ toolCreateRDS <- function(inputPath, edgeTransportFolder, SSPscen, demScen, tran
 
   ## Create RDS files for lists
   files <- c()
-  lapply(files, csv2RDS)
+  lapply(inputFiles, csv2RDS)
 
   return()
 }
 
-toolLoadRDSinputs <- function(edgeTransportFolder) {
+toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 
   loadRDS <- function(filename, edgeTransportFolder) {
     tmp <- readRDS(file.path(edgeTransportFolder, filename))
   }
 
-  files <- c()
   inputData <- sapply(files, loadRDS, simplify = FALSE, USE.NAMES = TRUE)
 
   return(inputData)
 }
 
-toolLoadIterativeInputs <- function(edgeTransportFolder, numberOfRegions, SSPscenario, transportPolScenario, demScenario = NULL) {
+toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, numberOfRegions, SSPscenario, transportPolScenario, demScenario = NULL) {
 
   # Input from REMIND input data
   # In the first iteration input data needs to be loaded
-  if (length(list.files(path = edgeTransportFolder, pattern = "RDS")) < 8) {
+  if (length(list.files(path = edgeTransportFolder, pattern = "RDS")) < 7) {
     toolCreateRDS(inputFolder, edgeTransportFolder,
                   SSPscen = SSPscen,
                   demScen = demScen,

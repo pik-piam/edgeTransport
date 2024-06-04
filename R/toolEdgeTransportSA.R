@@ -26,7 +26,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isICEban = FALSE,
                                 demScen = "default",
                                 gdxPath = NULL,
-                                outputFolder = ".",
+                                outputFolder = NULL,
                                 isStored = TRUE,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
@@ -226,7 +226,7 @@ toolEdgeTransportSA <- function(SSPscen,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population")],
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population", "GDPMER")],
                       inputData[!names(inputData) %in% c("histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
