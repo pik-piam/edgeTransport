@@ -122,13 +122,18 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # update raw endogenous costs-------------------------------------------------------------------
 
-    ## Stations availability featured by BEV, FCEV, Hybrid electric, NG
-    dataEndoCosts[variable == "Stations availability", endoCostRaw := ifelse(period == t,
+    ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
+    dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV", "Gases"), endoCostRaw := ifelse(period == t,
                     value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
+    dataEndoCosts[variable == "Stations availability" & technology %in% c("BEV", "Hybrid electric"), endoCostRaw := ifelse(period == t,
+                                                                                                                  value[period == t - 1],
+                                                                                                                  endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
-    ## Risk aversion featured by BEV, FCEV, Hybrid electric, NG
+
+
+    ## Risk aversion featured by BEV, FCEV, Hybrid electric, Gases
     # HOW IT SHOULD BE (check in Pettifor 2017)
     # dataEndoCosts[variable == "Risk aversion", endoCostRaw := ifelse(period == t,
                 #      pmax(value[period == (policyStartYear - 1)] - coeffrisk * techFleetProxy[period == (t - 1)], 0),
@@ -139,10 +144,15 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
 
-    ## Model availability featured by BEV, FCEV, Hybrid electric, NG
-    dataEndoCosts[variable == "Model availability", endoCostRaw := ifelse(period == t,
+    ## Model availability featured by BEV, FCEV, Hybrid electric, Gases
+    dataEndoCosts[variable == "Model availability"  &  technology == "Hybrid electric" , endoCostRaw := ifelse(period == t,
                    value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bmodelav),
                     endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
+
+    # Model availability of BEV, FCEV, Gases is not updated
+    dataEndoCosts[variable == "Model availability"  &  !technology == "Hybrid electric" , endoCostRaw := ifelse(period == t,
+                                                                                                               value[period == t-1], endoCostRaw),
+                  by = c("region", "technology", "vehicleType", "univocalName")]
 
     # Range anxiety featured by BEV (Does it make sense, that Range anxiety behaves exactly like stations availability?)
     dataEndoCosts[variable == "Range anxiety", endoCostRaw := ifelse(period == t,
@@ -169,7 +179,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # Range anxiety featured by BEV (right now, the policy masks ensures that BEVs are phased-in not too quickly, therefore pmax is used. This is a result from poor parameterization
     # and should be reworked)
-    dataEndoCosts[variable == "Stations availability" & period == t,
+    dataEndoCosts[variable == "Range anxiety" & period == t,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
                      by = c("region", "technology", "vehicleType", "univocalName")]
 

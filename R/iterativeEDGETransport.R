@@ -190,7 +190,8 @@ toolIterativeEDGETransport <- function() {
                                           outputRaw,
                                           isTransportReported = FALSE)
 
-    f35_esCapCost <- reportToREMINDcapitalCosts(baseOutput$int$fleetCost[variable == "Capital costs"], timeResReporting, helpers)
+    f35_esCapCost <- reportToREMINDcapitalCosts(baseOutput$int$fleetCost[variable == "Capital costs"], baseOutput$ext$fleetESdemand, timeResReporting,
+                                                demScen, SSPscen, transportPolScen, helpers)
     f35_fe2es <- reportToREMINDenergyEfficiency(baseOutput$int$fleetEnergyIntensity, timeResReporting, helpers)
     f35_shFeCes <- reportToREMINDfinalEnergyShares(baseOutput$ext$fleetFEdemand, timeResReporting, helpers)
 
