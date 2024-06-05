@@ -60,6 +60,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     lambdasDiscreteChoice = packageData$lambdasDiscreteChoice,
     baselinePrefTrends = packageData$baselinePrefTrends,
     incoCostStartVal = packageData$incoCostStartVal,
+    genParDemRegression = packageData$genParDemRegression,
     annuityCalc = packageData$annuityCalc
   )
 
