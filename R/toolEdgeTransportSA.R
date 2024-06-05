@@ -244,7 +244,8 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isTransportReported,
                                 isTransportExtendedReported,
                                 isAnalyticsReported,
-                                isREMINDinputReported)
+                                isREMINDinputReported,
+                                isStored)
 
 return(output)
 }
