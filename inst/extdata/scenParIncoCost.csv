@@ -119,22 +119,6 @@ SDP_MC;ConvCase;LDV|4W;Liquids;startYear;2020
 SDP_MC;ConvCase;LDV|4W;Liquids;targetYear;2027
 SDP_MC;ConvCase;LDV|4W;Liquids;targetValue;0.1
 SDP_MC;ConvCase;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;ConvCase;LDV|4W;BEV;startYear;2025
-SDP_MC;ConvCase;LDV|4W;BEV;startValue;0.5
-SDP_MC;ConvCase;LDV|4W;BEV;targetYear;2035
-SDP_MC;ConvCase;LDV|4W;BEV;targetValue;0.1
-SDP_MC;ConvCase;LDV|4W;Liquids;startYear;2020
-SDP_MC;ConvCase;LDV|4W;Liquids;targetYear;2027
-SDP_MC;ConvCase;LDV|4W;Liquids;targetValue;0.1
-SDP_MC;ConvCase;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;ElecEra;LDV|4W;BEV;startYear;2025
-SDP_MC;ElecEra;LDV|4W;BEV;startValue;0.5
-SDP_MC;ElecEra;LDV|4W;BEV;targetYear;2035
-SDP_MC;ElecEra;LDV|4W;BEV;targetValue;0
-SDP_MC;ElecEra;LDV|4W;Liquids;startYear;2020
-SDP_MC;ElecEra;LDV|4W;Liquids;targetYear;2027
-SDP_MC;ElecEra;LDV|4W;Liquids;targetValue;0.2
-SDP_MC;ElecEra;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SDP_MC;ElecEra;LDV|4W;BEV;startYear;2025
 SDP_MC;ElecEra;LDV|4W;BEV;startValue;0.5
 SDP_MC;ElecEra;LDV|4W;BEV;targetYear;2035
@@ -151,14 +135,6 @@ SDP_MC;Mix;LDV|4W;Liquids;startYear;2020
 SDP_MC;Mix;LDV|4W;Liquids;targetYear;2027
 SDP_MC;Mix;LDV|4W;Liquids;targetValue;0.1
 SDP_MC;Mix;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;Mix;LDV|4W;BEV;startYear;2025
-SDP_MC;Mix;LDV|4W;BEV;startValue;0.5
-SDP_MC;Mix;LDV|4W;BEV;targetYear;2035
-SDP_MC;Mix;LDV|4W;BEV;targetValue;0
-SDP_MC;Mix;LDV|4W;Liquids;startYear;2020
-SDP_MC;Mix;LDV|4W;Liquids;targetYear;2027
-SDP_MC;Mix;LDV|4W;Liquids;targetValue;0.1
-SDP_MC;Mix;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SDP_MC;Mix1;LDV|4W;BEV;startYear;2025
 SDP_MC;Mix1;LDV|4W;BEV;startValue;0.5
 SDP_MC;Mix1;LDV|4W;BEV;targetYear;2035
@@ -167,22 +143,6 @@ SDP_MC;Mix1;LDV|4W;Liquids;startYear;2020
 SDP_MC;Mix1;LDV|4W;Liquids;targetYear;2027
 SDP_MC;Mix1;LDV|4W;Liquids;targetValue;0
 SDP_MC;Mix1;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;Mix1;LDV|4W;BEV;startYear;2025
-SDP_MC;Mix1;LDV|4W;BEV;startValue;0.5
-SDP_MC;Mix1;LDV|4W;BEV;targetYear;2035
-SDP_MC;Mix1;LDV|4W;BEV;targetValue;0
-SDP_MC;Mix1;LDV|4W;Liquids;startYear;2020
-SDP_MC;Mix1;LDV|4W;Liquids;targetYear;2027
-SDP_MC;Mix1;LDV|4W;Liquids;targetValue;0
-SDP_MC;Mix1;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;Mix2;LDV|4W;BEV;startYear;2025
-SDP_MC;Mix2;LDV|4W;BEV;startValue;0.5
-SDP_MC;Mix2;LDV|4W;BEV;targetYear;2035
-SDP_MC;Mix2;LDV|4W;BEV;targetValue;0.15
-SDP_MC;Mix2;LDV|4W;Liquids;startYear;2020
-SDP_MC;Mix2;LDV|4W;Liquids;targetYear;2027
-SDP_MC;Mix2;LDV|4W;Liquids;targetValue;0.05
-SDP_MC;Mix2;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SDP_MC;Mix2;LDV|4W;BEV;startYear;2025
 SDP_MC;Mix2;LDV|4W;BEV;startValue;0.5
 SDP_MC;Mix2;LDV|4W;BEV;targetYear;2035
@@ -199,22 +159,7 @@ SDP_MC;Mix3;LDV|4W;Liquids;startYear;2020
 SDP_MC;Mix3;LDV|4W;Liquids;targetYear;2040
 SDP_MC;Mix3;LDV|4W;Liquids;targetValue;1
 SDP_MC;Mix3;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;Mix3;LDV|4W;BEV;startYear;2025
-SDP_MC;Mix3;LDV|4W;BEV;startValue;0.5
-SDP_MC;Mix3;LDV|4W;BEV;targetYear;2035
-SDP_MC;Mix3;LDV|4W;BEV;targetValue;0.1
-SDP_MC;Mix3;LDV|4W;Liquids;startYear;2020
 SDP_MC;Mix3;LDV|4W;Liquids;targetYear;2045
-SDP_MC;Mix3;LDV|4W;Liquids;targetValue;1
-SDP_MC;Mix3;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SDP_MC;Mix4;LDV|4W;BEV;startYear;2025
-SDP_MC;Mix4;LDV|4W;BEV;startValue;0.5
-SDP_MC;Mix4;LDV|4W;BEV;targetYear;2035
-SDP_MC;Mix4;LDV|4W;BEV;targetValue;0
-SDP_MC;Mix4;LDV|4W;Liquids;startYear;2020
-SDP_MC;Mix4;LDV|4W;Liquids;targetYear;2035
-SDP_MC;Mix4;LDV|4W;Liquids;targetValue;1
-SDP_MC;Mix4;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SDP_MC;Mix4;LDV|4W;BEV;startYear;2025
 SDP_MC;Mix4;LDV|4W;BEV;startValue;0.5
 SDP_MC;Mix4;LDV|4W;BEV;targetYear;2035

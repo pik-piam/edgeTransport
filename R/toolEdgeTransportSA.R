@@ -17,7 +17,6 @@
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
 #' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
-#' @importFrom reporttransport reportEdgeTransport
 #' @import data.table
 #' @export
 
@@ -124,6 +123,7 @@ toolEdgeTransportSA <- function(SSPscen,
   sectorESdemand <- toolDemandRegression(inputData$histESdemand,
                                          inputData$GDPpcPPP,
                                          inputData$population,
+                                         genModelPar$genParDemRegression,
                                          scenModelPar$scenParDemRegression,
                                          scenModelPar$scenParRegionalDemRegression,
                                          scenModelPar$scenParDemFactors,

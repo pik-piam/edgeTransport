@@ -8,7 +8,7 @@
 
 toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario = NULL) {
 
-  ## model input parameters from the package
+  ## General model parameters from the package
 
   # Decision tree discrete choice model
   decisionTree <- toolLoadDecisionTree("regionCode21")
@@ -22,6 +22,9 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   #Startparameter inconvenience costs
   incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv",
                                         package = "edgeTransport", mustWork = TRUE), header = TRUE)
+
+  genParDemRegression <- fread(system.file("extdata/genParDemRegression.csv",
+                                                  package = "edgeTransport", mustWork = TRUE), skip = 1, header = TRUE)
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv",
                                    package = "edgeTransport", mustWork = TRUE), header = TRUE)
@@ -101,6 +104,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
       lambdasDiscreteChoice = lambdasDiscreteChoice,
       baselinePrefTrends = baselinePrefTrends,
       incoCostStartVal = incoCostStartVal,
+      genParDemRegression = genParDemRegression,
       annuityCalc = annuityCalc,
       scenParDemRegression = scenParDemRegression,
       scenParRegionalDemRegression = scenParRegionalDemRegression,

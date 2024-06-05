@@ -8,7 +8,8 @@ toolDemandRegression(
   historicalESdemand,
   GDPperCapitaPPP,
   POP,
-  scenParDemandRegression,
+  genParDemRegression,
+  scenParDemRegression,
   scenParRegionalDemRegression,
   scenParDemandFactors,
   baseYear,
@@ -23,7 +24,9 @@ toolDemandRegression(
 
 \item{POP}{Population data}
 
-\item{scenParDemandRegression}{Scenario specific general regression factors}
+\item{genParDemRegression}{General regression factors}
+
+\item{scenParDemRegression}{Scenario specific general regression factors}
 
 \item{scenParRegionalDemRegression}{Scenario specific regionally differentiated regression factors}
 

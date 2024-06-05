@@ -3,7 +3,8 @@
 #' @param historicalESdemand Historical energy service demand
 #' @param GDPperCapitaPPP GDP per capita based on purchase power parity
 #' @param POP Population data
-#' @param scenParDemandRegression Scenario specific general regression factors
+#' @param genParDemRegression General regression factors
+#' @param scenParDemRegression Scenario specific general regression factors
 #' @param scenParRegionalDemRegression Scenario specific regionally differentiated regression factors
 #' @param scenParDemandFactors Demand scenario factors
 #' @param baseYear End year of historical energy service demand data
@@ -16,8 +17,8 @@
 #' @import data.table
 #' @export
 
-toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP,
-                                  scenParDemandRegression, scenParRegionalDemRegression, scenParDemandFactors,
+toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genParDemRegression,
+                                  scenParDemRegression, scenParRegionalDemRegression, scenParDemandFactors,
                                     baseYear, policyStartYear, helpers) {
 
   # interpolate SSP specific elasticities based on GDP PPP per capita ----------------------------
@@ -34,12 +35,14 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP,
     elasticityRegionValues <- copy(GDPpc)[, `:=`(sector = category, value = appfun(regionGDPpcPPP))]
     return(elasticityRegionValues)
   }
-  categories <- unique(scenParDemandRegression$sector)
-  #The elasticities change here depending on the SSP specific factors
-  #-> Hence the historical energy service demand changes here by SSP choice, wich is not good
-  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
-                                                 scenParDemandRegression, GDPperCapitaPPP))
 
+  categories <- unique(scenParDemRegression$sector)
+  # Regional elasticities until policyStartYear
+  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, genParDemRegression, GDPperCapitaPPP[period < policyStartYear]))
+  # apply SSP specific global changes
+  scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
+                                                 scenParDemRegression, GDPperCapitaPPP[period >= policyStartYear]))
+  regionalIncomeElasticities <- rbind(regionalIncomeElasticities, scenSpecRegionalIncomeElasticities)
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,
