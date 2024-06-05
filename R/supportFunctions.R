@@ -173,11 +173,11 @@ toolApplyMixedTimeRes <- function(data, helpers, idcols = NULL) {
   }
 
   if (is.null(idcols)) {
-    dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", extrapolate = TRUE)
-    dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", extrapolate = TRUE)
+    if (nrow(dataHighRes) > 0) dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", extrapolate = TRUE)
+    if (nrow(dataLowRes) > 0) dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", extrapolate = TRUE)
   } else {
-    dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
-    dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
+    if (nrow(dataHighRes) > 0) dataHighRes <- approx_dt(dataHighRes, highRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
+    if (nrow(dataLowRes) > 0) dataLowRes <- approx_dt(dataLowRes, helpers$lowTimeRes, "period", "value", idxcols = idcols, extrapolate = TRUE)
   }
 
   data <- rbind(dataHighRes, dataLowRes)

@@ -3,6 +3,7 @@
 #' @param historicalESdemand Historical energy service demand
 #' @param GDPperCapitaPPP GDP per capita based on purchase power parity
 #' @param POP Population data
+#' @param genParDemRegression General regression factors
 #' @param scenParDemRegression Scenario specific general regression factors
 #' @param scenParRegionalDemRegression Scenario specific regionally differentiated regression factors
 #' @param scenParDemandFactors Demand scenario factors
