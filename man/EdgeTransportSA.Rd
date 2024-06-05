@@ -11,7 +11,7 @@ calcEdgeTransportSA(
   demScen = "default",
   gdxPath = NULL,
   outputFolder = NULL,
-  isStored = TRUE,
+  isStored = FALSE,
   isTransportReported = TRUE,
   isTransportExtendedReported = FALSE,
   isREMINDinputReported = FALSE,
