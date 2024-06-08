@@ -584,38 +584,6 @@ SSP5;Mix4;LDV|4W;Liquids;startYear;2020
 SSP5;Mix4;LDV|4W;Liquids;targetYear;2027
 SSP5;Mix4;LDV|4W;Liquids;targetValue;0.2
 SSP5;Mix4;LDV|4W;Hybrid electric;ratioPHEV;0.5
-SSP2EU;CAMP_lscLow;LDV|4W;BEV;startYear;2025
-SSP2EU;CAMP_lscLow;LDV|4W;BEV;startValue;0.5
-SSP2EU;CAMP_lscLow;LDV|4W;BEV;targetYear;2030
-SSP2EU;CAMP_lscLow;LDV|4W;BEV;targetValue;0
-SSP2EU;CAMP_lscLow;LDV|4W;Liquids;startYear;2020
-SSP2EU;CAMP_lscLow;LDV|4W;Liquids;targetYear;2027
-SSP2EU;CAMP_lscLow;LDV|4W;Liquids;targetValue;0.1
-SSP2EU;CAMP_lscLow;LDV|4W;Hybrid electric;ratioPHEV;0.3
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;BEV;startYear;2025
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;BEV;startValue;0.5
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;BEV;targetYear;2030
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;BEV;targetValue;0
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;Liquids;startYear;2020
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;Liquids;targetYear;2027
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;Liquids;targetValue;0.1
-SSP2EU;CAMP_lscLow_noBan;LDV|4W;Hybrid electric;ratioPHEV;0.3
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;BEV;startYear;2025
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;BEV;startValue;0.5
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;BEV;targetYear;2030
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;BEV;targetValue;0
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;Liquids;startYear;2020
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;Liquids;targetYear;2027
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;Liquids;targetValue;0.1
-SSP2EU;CAMP_lscStrong_noBan;LDV|4W;Hybrid electric;ratioPHEV;0.3
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;BEV;startYear;2025
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;BEV;startValue;0.5
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;BEV;targetYear;2030
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;BEV;targetValue;0
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;Liquids;startYear;2020
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;Liquids;targetYear;2027
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;Liquids;targetValue;0.1
-SSP2EU;CAMP_lscWeak_noBan;LDV|4W;Hybrid electric;ratioPHEV;0.3
 SSP2EU;Mix2_ban;LDV|4W;BEV;startYear;2025
 SSP2EU;Mix2_ban;LDV|4W;BEV;startValue;0.5
 SSP2EU;Mix2_ban;LDV|4W;BEV;targetYear;2035
