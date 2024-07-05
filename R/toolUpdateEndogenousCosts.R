@@ -121,11 +121,14 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                   by = c("region", "univocalName", "technology", "variable")]
 
     # update raw endogenous costs-------------------------------------------------------------------
-
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
-    dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV", "Gases"), endoCostRaw := ifelse(period == t,
-                    value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
-                      endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
+    dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV"), endoCostRaw := ifelse(period == t,
+                                                                                                         value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                                                                                                         endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
+
+    dataEndoCosts[variable == "Stations availability" & technology %in% c("Gases"), endoCostRaw := ifelse(period == t,
+                                                                                                          pmax(value[period == (policyStartYear - 1)], value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav)),
+                                                                                                          endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("BEV", "Hybrid electric"), endoCostRaw := ifelse(period == t,
                                                                                                                   value[period == t - 1],
