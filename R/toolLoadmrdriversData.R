@@ -18,6 +18,10 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
                          unit = "constant 2005 US$MER")[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
+  GDPpppMag <- calcOutput("GDP", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")
+  GDPpppMag <- GDPpppMag[, , paste0("gdp_", SSPscen)]|> time_interpolate(years)
+  GDPppp <- magpie2dt(GDPpppMag, yearcol = "period", regioncol = "region")[, variable := NULL]
+
   GDPpcPPPmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")
   GDPpcPPPmag <- GDPpcPPPmag[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
   GDPpcPPP <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := NULL]
@@ -30,6 +34,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
    list(
     GDPMER = GDPMER,
     GDPpcMER = GDPpcMER,
+    GDPppp = GDPppp,
     GDPpcPPP = GDPpcPPP,
     population = POP
    )
