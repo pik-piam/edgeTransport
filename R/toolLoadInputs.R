@@ -90,6 +90,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     subsidies = mrremindData$subsidies,
     GDPMER = mrdriversData$GDPMER,
     GDPpcMER = mrdriversData$GDPpcMER,
+    GDPppp = mrdriversData$GDPppp,
     GDPpcPPP = mrdriversData$GDPpcPPP,
     population = mrdriversData$population
   )

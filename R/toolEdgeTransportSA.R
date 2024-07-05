@@ -49,8 +49,6 @@ toolEdgeTransportSA <- function(SSPscen,
                                               "REMINDinputForTransportStandalone", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
 
-
-
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
 
   helpers <- inputs$helpers
@@ -230,7 +228,7 @@ toolEdgeTransportSA <- function(SSPscen,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPMER", "GDPpcMER", "GDPpcPPP", "population")],
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPMER", "GDPpcMER", "GDPpcPPP")],
                       inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
