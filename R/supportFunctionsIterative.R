@@ -18,15 +18,20 @@ toolCreateRDS <- function(inputPath, edgeTransportFolder, inputFiles, SSPscen, d
   # Loads the csv input files chooses the correct scenario and
   # converts the files into RDS local files
   csv2RDS <- function(filename, inputPath) {
+    if (filename == "scenSpecPrefTrends") colNames <- c("region", "period", "SSPscen", "demScen", "transportPolScen", "sector",
+                                                        "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
+                                                        "level", "variable", "unit", "value")
+    else if (filename == "initialIncoCosts") colNames <- c("region", "period", "SSPscen", "demScen", "transportPolScen", "univocalName","technology","variable","unit","type","value")
+    else colNames <-  c("region", "period", "SSPscen", "demScen", "transportPolScen",
+                        "univocalName", "technology", "variable", "unit", "value")
     tmp <- fread(
-      file.path(inputPath, paste0(filename, ".cs4r")))
+      file.path(inputPath, paste0(filename, ".cs4r")), skip = 5, col.names = eval(colNames))
     tmp <- tmp[SSPscen == SSPscen & demScen == demScen & transportPolScen == transportPolScen]
     saveRDS(tmp, file.path(edgeTransportFolder, paste0(filename,".RDS")))
   }
 
   ## Create RDS files for lists
-  files <- c()
-  lapply(inputFiles, csv2RDS)
+  lapply(inputFiles, csv2RDS, inputPath)
 
   return()
 }
@@ -34,25 +39,26 @@ toolCreateRDS <- function(inputPath, edgeTransportFolder, inputFiles, SSPscen, d
 toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 
   loadRDS <- function(filename, edgeTransportFolder) {
-    tmp <- readRDS(file.path(edgeTransportFolder, filename))
+    tmp <- readRDS(file.path(edgeTransportFolder, paste0(filename,".RDS")))
   }
 
-  inputData <- sapply(files, loadRDS, simplify = FALSE, USE.NAMES = TRUE)
-
+  inputData <- sapply(inputFiles, loadRDS, edgeTransportFolder, simplify = FALSE, USE.NAMES = TRUE)
   return(inputData)
 }
 
-toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, numberOfRegions, SSPscenario, transportPolScenario, demScenario = NULL) {
+toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
 
   # Input from REMIND input data
   # In the first iteration input data needs to be loaded
-  if (length(list.files(path = edgeTransportFolder, pattern = "RDS")) < 7) {
-    toolCreateRDS(inputFolder, edgeTransportFolder,
-                  SSPscen = SSPscen,
-                  demScen = demScen,
-                  transportPolScen = transportPolScen)
+  if (length(list.files(path = edgeTransportFolder, pattern = "RDS")) < length(inputFiles)) {
+    toolCreateRDS(inputPath = inputFolder,
+                  edgeTransportFolder = edgeTransportFolder,
+                  inputFiles = inputFiles,
+                  SSPscen = SSPscenario,
+                  demScen = demScenario,
+                  transportPolScen = transportPolScenario)
   }
-  RDSinputs <- toolLoadRDSinputs(edgeTransportFolder)
+  RDSinputs <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)
 
   # Model input parameters from the package
   ## Exponents discrete choice model
@@ -79,7 +85,7 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, numberOfRe
   } else {
     stop("EDGE-Transport iterative does not suppoert the spatial resolution of ", numberOfRegions, "regions provided by the REMIND gdx. Choose either 12 or 21 regions")
   }
-
+  browser()
   # Time resolution
   dtTimeRes <- unique(RDSinputs$energyIntensity[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)

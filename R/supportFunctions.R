@@ -49,7 +49,7 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
             completeDataSetAgg <- unique(completeDataSetAgg[, c("regionCode12", "sector", "subsectorL1",
                                                                 "subsectorL2", "subsectorL3", "vehicleType",
                                                                 "technology", "univocalName")])
-            setnames(completeDataSetAgg, "regionCode21", "region")
+            setnames(completeDataSetAgg, "regionCode12", "region")
           }
   )
 

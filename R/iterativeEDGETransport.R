@@ -6,10 +6,12 @@
 #' @author Johanna Hoppe
 #' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
+#' @importFrom gdx readGDX
+
 #' @export
 
 
-toolIterativeEDGETransport <- function() {
+iterativeEDGETransport <- function() {
 
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
 
@@ -45,7 +47,7 @@ toolIterativeEDGETransport <- function() {
   numberOfRegions <- length(readGDX(gdx, "all_regi"))
   iterationNumber <- as.vector(rgdx(gdx, list(name = "o_iterationNumber"))$val)
 
-  InputFiles <- c("CAPEXandNonFuelOPEX",
+  inputFiles <- c("CAPEXandNonFuelOPEX",
                   "scenSpecPrefTrends",
                   "scenSpecLoadFactor",
                   "scenSpecEnIntensity",
@@ -53,8 +55,9 @@ toolIterativeEDGETransport <- function() {
                   "annualMileage",
                   "timeValueCosts")
 
-  inputs <- toolLoadIterativeInputs(edgeTransportFolder, inputFolder, InputFiles, numberOfRegions, SSPscenario,
-                                       transportPolScenario, demScenario = NULL)
+  inputs <- toolLoadIterativeInputs(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions,
+                                    SSPscen, transportPolScen, demScen)
+
 
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
