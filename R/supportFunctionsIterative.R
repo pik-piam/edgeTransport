@@ -2,44 +2,37 @@
 #' Existing files are overwritten silently. Does not return anything.
 #'
 #' @param inputPath the path to the folder containing the input (csv-) files
-#' @param edgeTransportFolder the path to the EDGE-Transport folde
-#' @param inputFiles files to load as input for the iterative script
-#' @param SSPscen SSP scenario
-#' @param demScen demand scenario
-#' @param transportPolScen Transport policy scenario
+#' @param filename name of the file
+#' @param SSPscenario SSP scenario
+#' @param demScenario demand scenario
+#' @param transportPolScenario Transport policy scenario
 #' @import data.table
 #' @export
 
-toolCreateRDS <- function(inputPath, edgeTransportFolder, inputFiles, SSPscen, demScen, transportPolScen) {
-
-  print("Loading csv data from input folder and creating RDS files...")
-  dir.create(file.path(edgeTransportFolder), showWarnings = FALSE)
-
-  # Loads the csv input files chooses the correct scenario and
+# Loads the csv input files chooses the correct scenario and
   # converts the files into RDS local files
-  csv2RDS <- function(filename, inputPath) {
-    if (filename == "scenSpecPrefTrends") colNames <- c("region", "period", "SSPscen", "demScen", "transportPolScen", "sector",
+  csv2RDS <- function(filename, inputPath, SSPscenario, demScenario, transportPolScenario) {
+    if (filename == "scenSpecPrefTrends") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen", "sector",
                                                         "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
                                                         "level", "variable", "unit", "value")
-    else if (filename == "initialIncoCosts") colNames <- c("region", "period", "SSPscen", "demScen", "transportPolScen", "univocalName","technology","variable","unit","type","value")
-    else colNames <-  c("region", "period", "SSPscen", "demScen", "transportPolScen",
+    else if (filename == "initialIncoCosts") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName","technology","variable","unit","type","value")
+    else if (filename == "timeValueCosts") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName", "variable", "unit", "value")
+    else colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen",
                         "univocalName", "technology", "variable", "unit", "value")
     tmp <- fread(
       file.path(inputPath, paste0(filename, ".cs4r")), skip = 5, col.names = eval(colNames))
-    tmp <- tmp[SSPscen == SSPscen & demScen == demScen & transportPolScen == transportPolScen]
-    saveRDS(tmp, file.path(edgeTransportFolder, paste0(filename,".RDS")))
+    tmp <- tmp[SSPscen == SSPscenario & demScen == demScenario & transportPolScen == transportPolScenario][, c("SSPscen", "demScen", "transportPolScen") := NULL]
+    # magclass enforces the same temporal resolution for all vehicletypes -> get rid of the introduced NAs
+    assign(filename, tmp[!is.na(tmp$value)])
+    tmp <- setNames(list(get(eval(filename))), filename)
+    return(tmp)
   }
-
-  ## Create RDS files for lists
-  lapply(inputFiles, csv2RDS, inputPath)
-
-  return()
-}
 
 toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 
   loadRDS <- function(filename, edgeTransportFolder) {
-    tmp <- readRDS(file.path(edgeTransportFolder, paste0(filename,".RDS")))
+    filePath <- list.files(file.path(".", edgeTransportFolder), paste0(filename, ".RDS"), recursive = TRUE, full.names = TRUE)
+    tmp <- readRDS(filePath)
   }
 
   inputData <- sapply(inputFiles, loadRDS, edgeTransportFolder, simplify = FALSE, USE.NAMES = TRUE)
@@ -47,18 +40,19 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 }
 
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
-
   # Input from REMIND input data
   # In the first iteration input data needs to be loaded
-  if (length(list.files(path = edgeTransportFolder, pattern = "RDS")) < length(inputFiles)) {
-    toolCreateRDS(inputPath = inputFolder,
-                  edgeTransportFolder = edgeTransportFolder,
-                  inputFiles = inputFiles,
-                  SSPscen = SSPscenario,
-                  demScen = demScenario,
-                  transportPolScen = transportPolScenario)
+  if (!dir.exists(file.path(edgeTransportFolder)))  {
+    print("Loading csv data from input folder and creating RDS files...")}
+  RDSfiles <- list()
+  for (filename in inputFiles) {
+    if (length(list.files(file.path(".", edgeTransportFolder), paste0(filename, ".RDS"), recursive = TRUE, full.names = TRUE)) < 1) {
+      RDSfiles <- append(RDSfiles, csv2RDS(filename, inputFolder, SSPscenario, demScenario, transportPolScenario))
+    }
   }
-  RDSinputs <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)
+  if (length(RDSfiles) > 0) storeData(file.path(".", edgeTransportFolder), varsList = RDSfiles)
+
+  if (!length(RDSfiles) == length(inputFiles)) RDSfiles <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)
 
   # Model input parameters from the package
   ## Exponents discrete choice model
@@ -66,15 +60,25 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
 
   ## Transport policy scenario inconvenience cost factors
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  scenParIncoCost <- scenParIncoCost[SSPscen == SSPscenario & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
+  scenParIncoCost <- scenParIncoCost[SSPscen == gsub("gdp_", "", SSPscenario) & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters, we can shift annuityCalc to the scenPar's
   if  (transportPolScenario %in% annuityCalc$transportPolScen){
     annuityCalc <- annuityCalc[transportPolScen == transportPolScenario][, transportPolScen := NULL]} else {
-      annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
-    }
+    annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
+  }
+
+  mapEdgeToREMIND <- fread(system.file("extdata/helpersMappingEdgeTtoREMINDcategories.csv", package = "edgeTransport", mustWork = TRUE))
+  regionmappingISOto21to12 <- fread(system.file("extdata", "helpersRegionmappingISOto21to12.csv",
+                                                package = "edgeTransport"))
+  reportingNames <- fread(system.file("extdata", "helpersReportingNames.csv",
+                                      package = "edgeTransport"), skip = 1)
+  reportingAggregation <- fread(system.file("extdata", "helpersReportingAggregation.csv",
+                                            package = "edgeTransport"), skip = 1)
+  mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
+                                         package = "edgeTransport"))
 
   ## Decision tree
   # map on decisiontree for provided spatial resolution
@@ -85,34 +89,44 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
   } else {
     stop("EDGE-Transport iterative does not suppoert the spatial resolution of ", numberOfRegions, "regions provided by the REMIND gdx. Choose either 12 or 21 regions")
   }
-  browser()
+
+  categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
+  filterEntries <- getFilterEntriesUnivocalName(categories, decisionTree)
+  filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]],
+                                       getFilterEntriesUnivocalName("Bus", decisionTree)[["Bus"]])
+
   # Time resolution
-  dtTimeRes <- unique(RDSinputs$energyIntensity[, c("univocalName", "period")])
+  dtTimeRes <- unique(RDSinputs$scenSpecEnIntensity[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)
   lowResUnivocalNames <- copy(dtTimeRes)
   lowResUnivocalNames <- lowResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]
   lowResUnivocalNames <- lowResUnivocalNames[test == FALSE, univocalName]
   lowTimeRes <- unique(dtTimeRes[univocalName %in% lowResUnivocalNames]$period)
   helpers <- list(dtTimeRes = dtTimeRes,
-                  decisionTree = decisionTree)
+                  lowTimeRes = lowTimeRes,
+                  decisionTree = decisionTree,
+                  filterEntries = filterEntries,
+                  mapEdgeToREMIND  = mapEdgeToREMIND,
+                  reportingNames = reportingNames,
+                  reportingAggregation = reportingAggregation,
+                  mitigationTechMap = mitigationTechMap)
 
   # general model parameters
   genModelPar <- list(
-    lambdasDiscreteChoice = packageData$lambdasDiscreteChoice,
-    annuityCalc = packageData$annuityCalc
+    lambdasDiscreteChoice = lambdasDiscreteChoice,
+    annuityCalc = annuityCalc
   )
 
   # transport scenario (SSPscen + demScen + polScen) specific model parameters
   scenModelPar <- list(
-    scenParIncoCost = packageData$scenParIncoCost
+    scenParIncoCost = scenParIncoCost
   )
-
 
   return(
     list(
       genModelPar = genModelPar,
       scenModelPar = scenModelPar,
-      RDSinputs = RDSinputs,
+      RDSinputs = RDSfiles,
       helpers = helpers
     )
   )

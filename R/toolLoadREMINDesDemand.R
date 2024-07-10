@@ -9,10 +9,10 @@
 #' @importFrom gdx readGDX
 #' @export
 
-toolLoadREMINDesDemand <- function(gdxPath) {
+toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   value <- unit <- variable <- NULL
 
-  mapEdgeToREMIND <- fread(system.file("extdata/helpersMappingEdgeTtoREMINDcategories.csv", package = "edgeTransport", mustWork = TRUE))
+  mapEdgeToREMIND <- merge(helpers$mapEdgeToREMIND, unique(helpers$decisionTree[, c("sector", "univocalName")]), by = "univocalName", allow.cartesian = TRUE, all.x = TRUE)
   mapEdgeToREMIND <- unique(mapEdgeToREMIND[, c("all_in", "sector")])
 
   ESdemand <- readGDX(gdxPath, c("vm_cesIO"), field = "l")
@@ -30,8 +30,7 @@ toolLoadREMINDesDemand <- function(gdxPath) {
                   * trillionToBillion]
   ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "bn pkm/yr", "bn tkm/yr")][, variable := "ES"]
 
-  setkey(ESdemand, region, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType,
-         technology, univocalName, period)
+  setcolorder(ESdemand, c("region", "period", "sector", "value", "unit"))
 
   if (anyNA(ESdemand) == TRUE) {
     stop("Energy service demand from REMIND contain NAs")
