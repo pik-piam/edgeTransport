@@ -86,9 +86,9 @@ toolEdgeTransportSA <- function(SSPscen,
 
   #-------------------------------------------------------
   inputData <- list(
-    prefTrends = scenSpecPrefTrends,
-    loadFactor = scenSpecInputData$scenSpecLoadFactor,
-    enIntensity = scenSpecInputData$scenSpecEnIntensity,
+    scenSpecPrefTrends = scenSpecPrefTrends,
+    scenSpecLoadFactor = scenSpecInputData$scenSpecLoadFactor,
+    scenSpecEnIntensity = scenSpecInputData$scenSpecEnIntensity,
     combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
     initialIncoCosts = scenSpecInputData$initialIncoCosts,
@@ -111,7 +111,6 @@ toolEdgeTransportSA <- function(SSPscen,
                                                                         helpers)
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
                                                         genModelPar$lambdasDiscreteChoice,
-                                                        policyStartYear,
                                                         helpers)
 
   #################################################
@@ -154,7 +153,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                  scenModelPar$scenParIncoCost,
                                                  policyStartYear,
                                                  inputData$timeValueCosts,
-                                                 inputData$prefTrends,
+                                                 inputData$scenSpecPrefTrends,
                                                  genModelPar$lambdasDiscreteChoice,
                                                  helpers,
                                                  isICEban,
@@ -188,7 +187,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                              vehicleDepreciationFactors,
                                                              vehSalesAndModeShares,
                                                              inputData$annualMileage,
-                                                             inputData$loadFactor,
+                                                             inputData$scenSpecLoadFactor,
                                                              helpers)
 
     if (isAnalyticsReported) {
@@ -235,7 +234,7 @@ toolEdgeTransportSA <- function(SSPscen,
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
                                     fleetVehNumbersIterations = fleetVehNumbersIterations))
 
-  if (isStored) storeData(outputFolder = outputFolder, outputRaw = outputRaw)
+  if (isStored) storeData(outputFolder = outputFolder, varsList = outputRaw)
 
   output <- reportEdgeTransport(outputFolder,
                                 outputRaw,

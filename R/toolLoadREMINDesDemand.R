@@ -4,6 +4,7 @@
 #' in [bn (p|t)km/yr] and the requested temporal resolution
 #'
 #' @param gdxPath path to REMIND fulldata.gdx
+#' @param helpers list of helpers
 #'
 #' @import data.table
 #' @importFrom gdx readGDX
@@ -28,7 +29,7 @@ toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   trillionToBillion <- 1e3
   ESdemand[, value := value
                   * trillionToBillion]
-  ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "bn pkm/yr", "bn tkm/yr")][, variable := "ES"]
+  ESdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "billion pkm/yr", "billion tkm/yr")][, variable := "ES"]
 
   setcolorder(ESdemand, c("region", "period", "sector", "value", "unit"))
 

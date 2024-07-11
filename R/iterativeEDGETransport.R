@@ -7,11 +7,12 @@
 #' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
 #' @importFrom gdx readGDX
+#' @importFrom gdxdt writegdx
 
 #' @export
 
 
-iterativeEDGETransport <- function() {
+iterativeEdgeTransport <- function() {
 
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
 
@@ -94,6 +95,7 @@ iterativeEDGETransport <- function() {
   if (length(pathFuelCosts) > 0) {
     REMINDfuelCostIterations <- readRDS(list.files(file.path(".", edgeTransportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE))
     REMINDfuelCostIterations <- rbind(REMINDfuelCostIterations, copy(REMINDfuelCost)[, iteration := iterationNumber])
+    storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
     averagePricesOverIterations <- TRUE
     if(averagePricesOverIterations) {
       if(max(unique(REMINDfuelCostIterations$iteration)) >= 20 &
@@ -167,7 +169,7 @@ iterativeEDGETransport <- function() {
                                                 endogenousCosts$updatedEndogenousCosts,
                                                 helpers)
 
-    ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
+    ESdemandFVsalesLevel <- toolCalculateFVdemand(inputData$REMINDsectorESdemand,
                                                   vehSalesAndModeShares,
                                                   helpers,
                                                   inputData$histESdemand,
@@ -177,11 +179,14 @@ iterativeEDGETransport <- function() {
     ## Vehicle stock module
     #################################################
     # Calculate vehicle stock for cars, trucks and busses -------
-    fleetSizeAndComposition <- toolCalculateFleetComposition(fuelVehicleESdemand, vehicleDepreciationFactors,vehSalesAndModeShares,
-                                                             inputData$annualMileage, inputData$loadFactor, helpers)
+    fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
+                                                             vehicleDepreciationFactors,
+                                                             vehSalesAndModeShares,
+                                                             inputData$annualMileage,
+                                                             inputData$scenSpecLoadFactor,
+                                                             helpers)
     fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
-    storeFleetSizeAndCompositionIterations[[iteration]] <- copy(fleetSizeAndComposition$fleetVehNumbers)
-    storeFleetSizeAndCompositionIterations[[iteration]][, variable := paste0(variable, "|Iteration ", iteration)]
+    storeData(file.path(".", edgeTransportFolder), fleetVehiclesPerTech = fleetVehiclesPerTech)
     print("Calculation of vehicle stock finished")
 
   #------------------------------------------------------
@@ -194,53 +199,60 @@ iterativeEDGETransport <- function() {
   # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an interpolation step in toolCalculateOutputVariables()
     timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
-    outputFolder <- edgeTransportPath
+    outputFolder <- file.path(".", edgeTransportFolder)
 
     outputRaw <- list(
+      combinedCAPEXandOPEX = inputData$combinedCAPEXandOPEX,
+      scenSpecEnIntensity = inputData$scenSpecEnIntensity,
+      scenSpecLoadFactor = inputData$scenSpecLoadFactor,
       SSPscen = SSPscen,
       transportPolScen = transportPolScen,
       demScen = demScen,
-      gdxPath = gdxPath,
       hybridElecShare = hybridElecShare,
-      histPrefs = histPrefs,
       fleetSizeAndComposition = fleetSizeAndComposition,
       endogenousCosts = endogenousCosts,
       vehSalesAndModeShares = vehSalesAndModeShares,
       ESdemandFVsalesLevel = ESdemandFVsalesLevel,
       helpers = helpers
     )
-    # not all data from inputdataRaw and inputdata is needed for the reporting
-    add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPpcMER", "GDPpcPPP", "population", "GDPMER")],
-                  inputData[!names(inputData) %in% c("histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")])
-    outputRaw <- append(outputRaw, add)
 
-    #store analytics data
-    outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
-                                        fleetVehNumbersIterations = fleetVehNumbersIterations))
+    storeData(outputFolder = outputFolder, varsList = outputRaw)
 
-    storeData(outputFolder = outputFolder, outputRaw = outputRaw)
-
-    baseOutput <- toolReportEdgeTransport(outputFolder,
-                                          outputRaw,
-                                          isTransportReported = FALSE)
+    baseOutput <- reportEdgeTransport(outputFolder,
+                                      outputRaw,
+                                      isTransportReported = FALSE)
 
     f35_esCapCost <- reportToREMINDcapitalCosts(baseOutput$int$fleetCost[variable == "Capital costs"], baseOutput$ext$fleetESdemand, timeResReporting,
                                                 demScen, SSPscen, transportPolScen, helpers)
-    f35_fe2es <- reportToREMINDenergyEfficiency(baseOutput$int$fleetEnergyIntensity, timeResReporting, helpers)
-    f35_shFeCes <- reportToREMINDfinalEnergyShares(baseOutput$ext$fleetFEdemand, timeResReporting, helpers)
+    f35_fe2es <- reportToREMINDenergyEfficiency(baseOutput$int$fleetEnergyIntensity,
+                                                inputData$scenSpecLoadFactor,
+                                                baseOutput$ext$fleetESdemand,
+                                                hybridElecShare,
+                                                timeResReporting,
+                                                demScen,
+                                                SSPscen,
+                                                transportPolScen,
+                                                helpers)
+
+    f35_shFeCes <- reportToREMINDfinalEnergyShares(baseOutput$ext$fleetFEdemand,
+                                                   timeResReporting,
+                                                   demScen,
+                                                   SSPscen,
+                                                   transportPolScen,
+                                                   helpers)
 
     ## CapCosts
     writegdx.parameter("p35_esCapCost.gdx", f35_esCapCost, "p35_esCapCost",
-                       valcol="value", uelcols=c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                       valcol="value", uelcols=c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
     ## Intensities
     writegdx.parameter("p35_fe2es.gdx", f35_fe2es, "p35_fe2es",
-                       valcol="value", uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                       valcol="value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
     ## Shares: demand can represent the shares since it is normalized
     writegdx.parameter("p35_shFeCes.gdx", f35_shFeCes, "p35_shFeCes",
                        valcol="value",
-                       uelcols = c("tall", "all_regi", "SSP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
+                       uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
 
     print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
 }
