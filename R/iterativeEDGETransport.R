@@ -1,15 +1,14 @@
 #' EDGE-Transport iterative
-#' EDGE-Transport iterative script
 #'
 #' Run in the REMIND output folder in between iterations
 #'
 #' @author Johanna Hoppe
-#' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
 #' @importFrom gdx readGDX
 #' @importFrom gdxdt writegdx writegdx.parameter
 #' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
 #' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
+#' @import data.table
 #' @export
 
 
@@ -245,7 +244,7 @@ iterativeEdgeTransport <- function() {
 
     ## CapCosts
     writegdx.parameter("p35_esCapCost.gdx", f35_esCapCost, "p35_esCapCost",
-                       valcol="value", uelcols=c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                       valcol="value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
     ## Intensities
     writegdx.parameter("p35_fe2es.gdx", f35_fe2es, "p35_fe2es",
