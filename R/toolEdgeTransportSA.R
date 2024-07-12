@@ -18,6 +18,7 @@
 #' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
+#' @importFrom reporttransport reportEdgeTransport storeData
 #' @export
 
 toolEdgeTransportSA <- function(SSPscen,

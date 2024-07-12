@@ -7,8 +7,9 @@
 #' @importFrom data.table fread
 #' @importFrom gdxrrw rgdx
 #' @importFrom gdx readGDX
-#' @importFrom gdxdt writegdx
-
+#' @importFrom gdxdt writegdx writegdx.parameter
+#' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
+#' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @export
 
 
@@ -69,7 +70,7 @@ iterativeEdgeTransport <- function() {
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
-  RDSinputs <- inputs$RDSinputs
+  RDSinputs <- inputs$RDSfiles
 
   # Data from previous REMIND iteration
   ## Load REMIND energy service demand
@@ -111,7 +112,8 @@ iterativeEdgeTransport <- function() {
     REMINDfuelCost[, iteration := iterationNumber]
     storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCost)
   }
-  combinedCAPEXandOPEX <- rbind(RDSinputs$CAPEXandNonFuelOPEX, REMINDfuelCost)
+
+  combinedCAPEXandOPEX <- rbind(RDSinputs$CAPEXandNonFuelOPEX, REMINDfuelCost, use.names = TRUE)
 
   # Data from previous EDGE-T iteration
   fleetVehiclesPerTech <- NULL

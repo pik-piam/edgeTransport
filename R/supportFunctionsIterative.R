@@ -38,6 +38,18 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
   inputData <- sapply(inputFiles, loadRDS, edgeTransportFolder, simplify = FALSE, USE.NAMES = TRUE)
   return(inputData)
 }
+#' Load iterative inputs
+#'
+#' @param edgeTransportFolder transport folder
+#' @param inputFolder the path to the folder containing the input (csv-) files
+#' @param inputFiles names of the input files
+#' @param numberOfRegions regional resolution
+#' @param SSPscenario SSP scenario
+#' @param demScenario demand scenario
+#' @param transportPolScenario Transport policy scenario
+#' @importFrom reporttransport storeData
+#' @import data.table
+#' @export
 
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
   # Input from REMIND input data
@@ -96,7 +108,7 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
                                        getFilterEntriesUnivocalName("Bus", decisionTree)[["Bus"]])
 
   # Time resolution
-  dtTimeRes <- unique(RDSinputs$scenSpecEnIntensity[, c("univocalName", "period")])
+  dtTimeRes <- unique(RDSfiles$scenSpecEnIntensity[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)
   lowResUnivocalNames <- copy(dtTimeRes)
   lowResUnivocalNames <- lowResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]
@@ -126,7 +138,7 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
     list(
       genModelPar = genModelPar,
       scenModelPar = scenModelPar,
-      RDSinputs = RDSfiles,
+      RDSfiles = RDSfiles,
       helpers = helpers
     )
   )
