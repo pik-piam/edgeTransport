@@ -4,10 +4,12 @@
 \alias{toolLoadREMINDesDemand}
 \title{Load REMIND energy service demand}
 \usage{
-toolLoadREMINDesDemand(gdxPath)
+toolLoadREMINDesDemand(gdxPath, helpers)
 }
 \arguments{
 \item{gdxPath}{path to REMIND fulldata.gdx}
+
+\item{helpers}{list of helpers}
 }
 \description{
 Load the energy service demand from a REMIND fulldata.gdx on sector level (CES level)

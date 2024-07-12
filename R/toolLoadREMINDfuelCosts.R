@@ -58,5 +58,5 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
      stop("Fuel costs contain NAs")
    }
 
- return(list(fuelCosts = fuelCosts))
+ return(fuelCosts)
 }

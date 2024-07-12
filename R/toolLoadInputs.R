@@ -48,7 +48,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
 
   ## from REMIND
-  REMINDdata <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
+  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
   # from mrremind (soon to be replaced by mrtransport data)
   mrremindData <- toolLoadmrremindData(helpers)
@@ -85,7 +85,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     nonFuelOPEXtrackedFleet = mrtransportData$nonFuelOPEXtrackedFleet,
     CAPEXother = mrtransportData$CAPEXother,
     nonFuelOPEXother = mrtransportData$nonFuelOPEXother,
-    fuelCosts = REMINDdata$fuelCosts,
+    REMINDfuelCosts = REMINDfuelCosts,
     timeValueCosts = mrtransportData$timeValueCosts,
     subsidies = mrremindData$subsidies,
     GDPMER = mrdriversData$GDPMER,

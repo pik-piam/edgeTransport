@@ -3,12 +3,11 @@
 #' @author Johanna Hoppe
 #' @param inputData List containing inputData
 #' @param lambdas exponents for discrete choice calculation
-#' @param policyStartYear  Year when scenario differentiation sets in
 #' @param helpers List with helpers
 #' @returns data.table including all cost components
 #' @import data.table
 
-toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, helpers) {
+toolPrepareDataEndogenousCosts <- function(inputData, lambdas, helpers) {
 
   # format input data
   # merge input data with decision tree
@@ -34,8 +33,9 @@ toolPrepareDataEndogenousCosts <- function(inputData, lambdas, policyStartYear, 
   # (needed to calculate the vehicle sales depreciating in time
   # to get a proxy for the fleet share in the iterative section)
   timesteps <- unique(combinedCosts$period)
+  policyStartYear <- max(unique(inconvenienceCosts[!is.na(value)]$period)) + 1
   FS3share <- toolCalculateFS3share(combinedCosts, timesteps[timesteps < policyStartYear], inputData$timeValueCosts,
-                                    inputData$prefTrends, lambdas, helpers)
+                                    inputData$scenSpecPrefTrends, lambdas, helpers)
 
   # merge back to combined costs
   combinedCosts <- merge(combinedCosts, FS3share,

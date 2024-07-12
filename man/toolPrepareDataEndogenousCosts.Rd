@@ -4,14 +4,12 @@
 \alias{toolPrepareDataEndogenousCosts}
 \title{Format all cost components}
 \usage{
-toolPrepareDataEndogenousCosts(inputData, lambdas, policyStartYear, helpers)
+toolPrepareDataEndogenousCosts(inputData, lambdas, helpers)
 }
 \arguments{
 \item{inputData}{List containing inputData}
 
 \item{lambdas}{exponents for discrete choice calculation}
-
-\item{policyStartYear}{Year when scenario differentiation sets in}
 
 \item{helpers}{List with helpers}
 }

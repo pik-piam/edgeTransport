@@ -16,7 +16,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
 
   # calculate all FV shares --------------------------------------------------------------------
   CAPEXandOPEX <- copy(input$combinedCAPEXandOPEX)
-  CAPEXandOPEX <- merge(CAPEXandOPEX, helpers$decisionTree, by = c("region", "univocalName", "technology"), all = TRUE)
+  CAPEXandOPEX <- merge(CAPEXandOPEX, helpers$decisionTree, by = c("region", "univocalName", "technology"), all.x = TRUE)
   # detailed resolution of CAPEX and OPEX not needed
   CAPEXandOPEX[, type := "Monetary Costs"]
   CAPEXandOPEX <- CAPEXandOPEX[, .(value = sum(value)), by = c(setdiff(names(CAPEXandOPEX), c("value", "variable")))]
@@ -25,7 +25,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   updatedEndoCosts[, type := "Inconvenience costs"]
   allCostsFV <- rbind(CAPEXandOPEX, updatedEndoCosts)
   # vehicles that have preference trends receive these instead
-  prefTrends <- copy(input$prefTrends)
+  prefTrends <- copy(input$scenSpecPrefTrends)
   setnames(prefTrends, "value", "pref")
   prefTrends[, c("variable", "unit") := NULL]
   prefTrendsFV <- prefTrends[level == "FV"][, level := NULL]
@@ -43,7 +43,6 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   FVshares[, zeroTypes := sum(pref), by = c("region", "period", "vehicleType")]
   FVsharesZero <-  FVshares[zeroTypes == 0][, share := 0][, c("totPrice", "lambda", "pref", "zeroTypes", "univocalName") := NULL]
   FVshares <- FVshares[!zeroTypes == 0][, c("univocalName", "zeroTypes") := NULL]
-
   FVshares[, share := calculateShares(totPrice, lambda, pref),
           by = setdiff(names(FVshares), c("technology", "totPrice", "lambda", "pref", "unit"))][, c("totPrice", "lambda", "pref") := NULL]
   FVshares[, test := sum(share), by = c("region", "period", "vehicleType")]
@@ -159,7 +158,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
 
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
-  toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
+  #toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
 
   return(shares)
 

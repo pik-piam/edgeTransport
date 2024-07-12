@@ -66,7 +66,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
                                             inputDataRaw$nonFuelOPEXtrackedFleet,
                                             inputDataRaw$CAPEXother,
                                             inputDataRaw$nonFuelOPEXother,
-                                            inputDataRaw$fuelCosts,
+                                            inputDataRaw$REMINDfuelCosts,
                                             inputDataRaw$subsidies,
                                             scenSpecEnIntensity,
                                             scenSpecLoadFactor,
