@@ -110,6 +110,7 @@ iterativeEdgeTransport <- function() {
   } else {
     REMINDfuelCost[, iteration := iterationNumber]
     storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCost)
+    REMINDfuelCost[, iteration := NULL]
   }
   setcolorder(RDSinputs$CAPEXandNonFuelOPEX, names(REMINDfuelCost))
   combinedCAPEXandOPEX <- rbind(RDSinputs$CAPEXandNonFuelOPEX, REMINDfuelCost)
