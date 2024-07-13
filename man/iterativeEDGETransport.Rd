@@ -2,8 +2,7 @@
 % Please edit documentation in R/iterativeEdgeTransport.R
 \name{iterativeEdgeTransport}
 \alias{iterativeEdgeTransport}
-\title{EDGE-Transport iterative
-EDGE-Transport iterative script}
+\title{EDGE-Transport iterative}
 \usage{
 iterativeEdgeTransport()
 }
