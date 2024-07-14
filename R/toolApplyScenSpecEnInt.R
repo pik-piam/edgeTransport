@@ -66,7 +66,7 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
   #If Baseline efficiency improvements outperform transportPolScen specific improvements after fadeOut year (when the adjusted ones stay contstant), keep the Baseline
   enInt[!is.na(value.y), value := ifelse(value.x < value.y, value.x, value.y)][, c("value.x", "value.y") := NULL]
 
-  if (anyNA(enInt) == TRUE) {stop("NAs were introduced whilst applying the scenario specific energy intensity improvements. Please check toolApplyScenpecEnInt()")}
+  if (anyNA(enInt) == TRUE) {stop("NAs were introduced whilst applying the scenario specific energy intensity improvements. Please check toolApplyScenSpecEnInt()")}
 
   return(enInt)
   }

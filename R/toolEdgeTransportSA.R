@@ -134,7 +134,7 @@ toolEdgeTransportSA <- function(SSPscen,
   #------------------------------------------------------
 
   fleetVehiclesPerTech <- NULL
-  iterations <- 3
+  iterations <- 1
 
   if (isAnalyticsReported) {
     endogenousCostsIterations <- list()
@@ -214,6 +214,9 @@ toolEdgeTransportSA <- function(SSPscen,
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen))
+  demScen <- paste0("gdp_", demScen)
+  SSPscen <- paste0("gdp_", SSPscen)
+
   outputRaw <- list(
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
