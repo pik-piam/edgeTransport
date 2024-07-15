@@ -134,7 +134,7 @@ toolEdgeTransportSA <- function(SSPscen,
   #------------------------------------------------------
 
   fleetVehiclesPerTech <- NULL
-  iterations <- 1
+  iterations <- 3
 
   if (isAnalyticsReported) {
     endogenousCostsIterations <- list()

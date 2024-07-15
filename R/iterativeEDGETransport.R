@@ -104,7 +104,7 @@ iterativeEdgeTransport <- function() {
         byCols <- names(REMINDfuelCostIterations)
         byCols <- byCols[!byCols %in% c("value", "iteration")]
         REMINDfuelCost <- copy(REMINDfuelCostIterations[iteration >= 20])
-        REMINDfuelCost[, .(value = mean(value)), by = ..byCols]
+        REMINDfuelCost <- REMINDfuelCost[, .(value = mean(value)), by = eval(byCols)]
       }
     }
   } else {
@@ -114,7 +114,6 @@ iterativeEdgeTransport <- function() {
   }
   setcolorder(RDSinputs$CAPEXandNonFuelOPEX, names(REMINDfuelCost))
   combinedCAPEXandOPEX <- rbind(RDSinputs$CAPEXandNonFuelOPEX, REMINDfuelCost)
-
   # Data from previous EDGE-T iteration
   fleetVehiclesPerTech <- NULL
   pathTofleetVehiclesPerTech <- list.files(file.path(".", edgeTransportFolder), "fleetVehiclesPerTech.RDS", recursive = TRUE, full.names = TRUE)
