@@ -93,7 +93,6 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
   # Change policy mask for ICEs when ban is activated
   if (isICEban) {
-    browser()
     #Ban is applied to EU28 or EUR in case of REMIND running on 12 regions
     affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
     affectedRegions <- c(affectedRegions, "EUR")
