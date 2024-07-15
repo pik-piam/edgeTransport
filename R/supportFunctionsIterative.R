@@ -72,13 +72,13 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
 
   ## Transport policy scenario inconvenience cost factors
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  scenParIncoCost <- scenParIncoCost[SSPscen == gsub("gdp_", "", SSPscenario) & transportPolScen == transportPolScenario][, c("SSPscen", "transportPolScen") := NULL]
+  scenParIncoCost <- scenParIncoCost[SSPscen == gsub("gdp_", "", SSPscenario) & transportPolScen == gsub("ICEban", "", transportPolScenario)][, c("SSPscen", "transportPolScen") := NULL]
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters, we can shift annuityCalc to the scenPar's
-  if  (transportPolScenario %in% annuityCalc$transportPolScen){
-    annuityCalc <- annuityCalc[transportPolScen == transportPolScenario][, transportPolScen := NULL]} else {
+  if  (gsub("ICEban", "", transportPolScenario) %in% annuityCalc$transportPolScen){
+    annuityCalc <- annuityCalc[transportPolScen == gsub("ICEban", "", transportPolScenario)][, transportPolScen := NULL]} else {
     annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
   }
 
@@ -91,6 +91,8 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
                                             package = "edgeTransport"), skip = 1)
   mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
                                          package = "edgeTransport"))
+  regionmappingISOto21to12 <- fread(system.file("extdata", "helpersRegionmappingISOto21to12.csv",
+                                                package = "edgeTransport"))
 
   ## Decision tree
   # map on decisiontree for provided spatial resolution
@@ -121,7 +123,8 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
                   mapEdgeToREMIND  = mapEdgeToREMIND,
                   reportingNames = reportingNames,
                   reportingAggregation = reportingAggregation,
-                  mitigationTechMap = mitigationTechMap)
+                  mitigationTechMap = mitigationTechMap,
+                  regionmappingISOto21to12 = regionmappingISOto21to12)
 
   # general model parameters
   genModelPar <- list(
