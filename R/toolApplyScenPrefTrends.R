@@ -31,8 +31,14 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   GDPpcMER[, regionCat := ifelse(region %in% individualReg, region, regionCat)]
   mitigationFactors <- merge(mitigationFactors, GDPpcMER, by = "regionCat", allow.cartesian = TRUE, all.x = TRUE)[, regionCat := NULL]
   # apply mitigation factors
+
+  checkMitigation <- copy(baselinePrefTrends)
+  setnames(checkMitigation, "value", "old")
   PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends[period  >= policyStartYear & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
+  check <- merge(checkMitigation, PrefTrends, by = intersect(names(checkMitigation), names(PrefTrends)), all = TRUE)
+  check[, diff := abs(value - old)]
+  if (max(check$diff) < 0.001) stop("Mitigation preference factors have not been applied correctly. Please check toolApplyScenPrefTrends()")
 
   # normalize preferences in each level
   PrefTrends[level == "S1S", value := value/max(value), by = c("region", "period", "sector")] # S1S: logit level: distances (e.g. short-medium, long)
@@ -57,7 +63,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
     PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
                value := ifelse(period == 2045, 0.1  * value[period == 2015], value), by = c("region","technology")]
     PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period > 2045, value[period == 2015] * 0.05, value), by = c("region","technology")]
+               value := ifelse(period > 2045, value * 0.05, value), by = c("region","technology")]
   }
 
   PrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
