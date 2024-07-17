@@ -40,7 +40,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # Transport policy scenario preference factors
   scenParPrefTrends <- fread(system.file("extdata/scenParPrefTrends.csv", package = "edgeTransport", mustWork = TRUE),
                              header = TRUE)
-  scenParPrefTrends <- scenParPrefTrends[SSPscenario == SSPscen & transportPolScen == transportPolScen]
+  scenParPrefTrends <- scenParPrefTrends[SSPscenario == SSPscen & transportPolScen == transportPolScenario]
   scenParPrefTrends[, c("SSPscen", "transportPolScen") := NULL]
   if (nrow(scenParPrefTrends) == 0) scenParPrefTrends <- NULL
 
