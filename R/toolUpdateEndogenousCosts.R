@@ -58,11 +58,18 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     }
   }
 
+  ## the policymaker bans ICEs increasingly more strictly
+  strangeICEbanFunction <- function(x, x0, y0, x1, y1) {
+    return(min(y1, max(y0, (y1 - y0)/(x1 - x0) * (x - x0) + y0)))
+  }
+
   applyICEban <- function(year, currentMask) {
-    if (year >= 2030 & year <= 2032){
-      floorCosts <- linFunc(year, 2030, currentMask, 2032, 0.35)
-    } else if(year > 2032 & year <=2034){
-      floorCosts <- linFunc(year, 2032, 0.35, 2034, 0.95)
+    if (year < 2030){
+      floorCosts <- currentMask
+    } else if (year >= 2030 & year <= 2032){
+      floorCosts <- strangeICEbanFunction(year, 2030, currentMask, 2032, 0.35)
+    } else if(year > 2032 & year <= 2034){
+      floorCosts <- strangeICEbanFunction(year, 2032, 0.35, 2034, 0.95)
     } else if (year == 2035){
       floorCosts <- 0.95
     } else {
@@ -97,6 +104,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
     affectedRegions <- c(affectedRegions, "EUR")
     #affectedRegions <- affectedRegions[!affectedRegions == "UKI"]
+    # After 2030 Gases and Hybrid Electric get the policy mask of liquids
+    policyMaskICEban <- policyMask[technology %in% c("Liquids") & region %in% affectedRegions]
+    policyMask <- rbind(policyMask[!(technology %in% c("Gases", "Hybrid electric") & region %in% affectedRegions)],
+                        copy(policyMaskICEban)[, technology := "Hybrid electric"], copy(policyMaskICEban)[, technology := "Gases"])
+    setkey(policyMask, region, period, technology)
     policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
                policyMask := applyICEban(period, policyMask), by = c("period")]
   }
@@ -123,13 +135,13 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
-    dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV"), endoCostRaw := ifelse(period == t,
-                                                                                                         value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
-                                                                                                         endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
-
     dataEndoCosts[variable == "Stations availability" & technology %in% c("Gases"), endoCostRaw := ifelse(period == t,
                                                                                                           pmax(value[period == (policyStartYear - 1)], value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav)),
                                                                                                           endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
+
+    dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV", "Gases"), endoCostRaw := ifelse(period == t,
+                                                                                                         value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                                                                                                         endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("BEV", "Hybrid electric"), endoCostRaw := ifelse(period == t,
                                                                                                                   value[period == t - 1],
@@ -150,7 +162,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     ## Model availability featured by BEV, FCEV, Hybrid electric, Gases
     dataEndoCosts[variable == "Model availability"  &  technology == "Hybrid electric" , endoCostRaw := ifelse(period == t,
-                   value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bmodelav),
+                   value[period == (policyStartYear - 1)],
                     endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     # Model availability of BEV, FCEV, Gases is not updated
@@ -165,7 +177,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # ICE inconvenience featured by ICE (Why 0.5?)
     dataEndoCosts[variable == "ICE inconvenience", endoCostRaw := ifelse(period == t,
-                    0.5 * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                    0.5 * exp(techFleetProxy[period == (t - 1)] * bmodelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
     # check whether all inconvenience cost types were updated
     if (anyNA(dataEndoCosts[period == t & type == "Inconvenience costs"]$endoCostRaw)) {
@@ -187,17 +199,25 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
                      by = c("region", "technology", "vehicleType", "univocalName")]
 
+    ratioPhev <- unique(policyMaskPHEV$policyMask)
     # Model availability for Hybrid electric
+    if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 &
+                      region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
+                                by = c("region", "technology", "vehicleType", "univocalName")]
+
     dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t,
-                  value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
+                  value := pmax(value[period == (policyStartYear - 1)] * ratioPhev, endoCostRaw),
                     by = c("region", "technology", "vehicleType", "univocalName")]
+
 
     # Stations availability for NG vehicles is fixed to 2020 values (due to very low costs for NG in CHA). Maybe this fix can be removed nowadays?
     # For PhOP scenario NG and Hybrid electrics needs to be phased out like ICEs: Not implemented yet
-    dataEndoCosts[variable == "Stations availability" & technology == "NG" & period == t,
+    dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
                     value := pmax(value[period == (policyStartYear - 1)], endoCostRaw),
                       by = c("region", "technology", "vehicleType", "univocalName")]
-
+    if (isICEban) dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
+                                value := pmax(policyMask, endoCostRaw),
+                                by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[period == t & is.na(value), value := endoCostRaw]
 
