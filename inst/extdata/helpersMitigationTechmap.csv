@@ -1,0 +1,25 @@
+univocalName;vehicleType;FVvehvar
+International Aviation;International Aviation_tmp_vehicletype;Aviation
+Domestic Aviation;Domestic Aviation_tmp_vehicletype;Aviation
+Motorcycle (50-250cc);Motorcycle (50-250cc);LDV|2W
+Moped;Moped;LDV|2W
+Motorcycle (>250cc);Motorcycle (>250cc);LDV|2W
+Bus;Bus_tmp_vehicletype;Bus
+Truck (0-3_5t);Truck (0-3_5t);Truck|light
+Truck (18t);Truck (18t);Truck|light
+Truck (26t);Truck (26t);Truck|heavy
+Truck (7_5t);Truck (7_5t);Truck|light
+Truck (40t);Truck (40t);Truck|heavy
+Domestic Ship;Domestic Ship_tmp_vehicletype;Ship
+International Ship;International Ship_tmp_vehicletype;Ship
+Freight Rail;Freight Rail_tmp_vehicletype;Rail
+Passenger Rail;Passenger Rail_tmp_vehicletype;Rail
+HSR;HSR_tmp_vehicletype;Rail
+Compact Car;Compact Car;LDV|4W
+Mini Car;Mini Car;LDV|4W
+Subcompact Car;Subcompact Car;LDV|4W
+Large Car and SUV;Large Car and SUV;LDV|4W
+Large Car;Large Car;LDV|4W
+Light Truck and SUV;Light Truck and SUV;LDV|4W
+Midsize Car;Midsize Car;LDV|4W
+Van;Van;LDV|4W
