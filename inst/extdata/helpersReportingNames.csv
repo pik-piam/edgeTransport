@@ -1,0 +1,17 @@
+*description: Change naming for entries of the decision tree to comply with the reporting convention. Note that the levels of the decision tree are now transferred to variable names that will be aggregated level by level;
+name;reportName
+trn_aviation_intl;Bunkers|Pass
+trn_pass;Pass
+trn_freight;Freight
+trn_shipping_intl;Bunkers|Freight
+trn_pass_road;Road
+trn_freight_road;Road
+trn_pass_road_LDV;LDV
+trn_pass_road_LDV_2W;Two Wheelers
+trn_pass_road_LDV_4W;Four Wheelers
+Passenger Rail;non-HSR
+Freight Rail;Rail
+Domestic Aviation;Domestic Aviation
+International Aviation;International Aviation
+Domestic Ship;Domestic Shipping
+International Ship;International Shipping

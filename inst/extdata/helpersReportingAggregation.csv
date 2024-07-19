@@ -1,0 +1,27 @@
+*description: Additional aggregation levels for the reporting that ere added to the decision tree. Here is an exmple how your inserted levels look like in the reported variables: FE|Transport|Freight|Road|Heavy|Truck (18t) for inserting an additional aggrVehSizes level in the decisionTree;;;
+univocalName;aggrActiveModes;aggrRail;aggrVehSizes
+International Aviation;NA;NA;NA
+Domestic Aviation;NA;NA;NA
+Motorcycle (50-250cc);NA;NA;NA
+Moped;NA;NA;NA
+Motorcycle (>250cc);NA;NA;NA
+Mini Car;NA;NA;|Small
+Subcompact Car;NA;NA;|Small
+Compact Car;NA;NA;|Medium
+Midsize Car;NA;NA;|Medium
+Large Car and SUV;NA;NA;|Large
+Large Car;NA;NA;|Large
+Van;NA;NA;|Large
+HSR;NA;|Rail;NA
+Bus;NA;NA;NA
+Passenger Rail;NA;|Rail;NA
+Walk;|Non-motorized;NA;NA
+Cycle;|Non-motorized;NA;NA
+International Ship;NA;NA;NA
+Domestic Ship;NA;NA;NA
+Freight Rail;NA;NA;NA
+Truck (0-3_5t);NA;NA;|Light
+Truck (7_5t);NA;NA;|Light
+Truck (18t);NA;NA;|Heavy
+Truck (26t);NA;NA;|Heavy
+Truck (40t);NA;NA;|Heavy
