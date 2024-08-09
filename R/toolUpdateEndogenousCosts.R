@@ -66,18 +66,19 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   applyICEban <- function(year, currentMask) {
     if (year < 2030){
       floorCosts <- currentMask
-    } else if (year >= 2030 & year <= 2032){
-      floorCosts <- strangeICEbanFunction(year, 2030, currentMask, 2032, 0.35)
+    } else if (year == 2030){
+      floorCosts <- 0.05
+    }  else if (year > 2030 & year <= 2032){
+      floorCosts <- strangeICEbanFunction(year, 2030, 0.1, 2032, 0.3)
     } else if(year > 2032 & year <= 2034){
-      floorCosts <- strangeICEbanFunction(year, 2032, 0.35, 2034, 0.95)
+      floorCosts <- strangeICEbanFunction(year, 2032, 0.3, 2034, 0.5)
     } else if (year == 2035){
-      floorCosts <- 0.95
-    } else {
+      floorCosts <- 0.6
+    } else if  (year > 2035) {
       floorCosts <- 1
     }
     return(floorCosts)
   }
-
   policyMask <- copy(scenParIncoCost)
   # Expand regional and temporal resolution
   regions <- unique(dataEndoCosts$region)
