@@ -80,10 +80,13 @@ toolEdgeTransportSA <- function(SSPscen,
                                       inputDataRaw$timeValueCosts,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
+
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
+  if (isICEban) scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers)
+  scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
 
   #-------------------------------------------------------
   inputData <- list(
@@ -227,6 +230,7 @@ toolEdgeTransportSA <- function(SSPscen,
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
     vehSalesAndModeShares = vehSalesAndModeShares,
+    sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
     helpers = helpers
   )

@@ -1,3 +1,30 @@
+#' Normalize preferences so that the maximum in each branch of the decision tree equals 1
+#'
+#' @author Johanna Hoppe
+#' @param preferenceTab data.table including preferences for all levels of the decision tree
+#' @returns Normalized preferences
+#' @import data.table
+#' @export
+
+toolNormalizePreferences <- function(preferenceTab) {
+  preferenceTab[level == "S1S", max := max(value), by = c("region", "period", "sector")]
+  preferenceTab[level == "S1S" & max != 0, value := value/max(value), by = c("region", "period", "sector")] # S1S: logit level: distances (e.g. short-medium, long)
+  preferenceTab[level == "S2S1", max := max(value), by = c("region", "period", "sector", "subsectorL1")]
+  preferenceTab[level == "S2S1" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1")] # S2S1: logit level: modes/categories (e.g. walk, road, rail)
+  preferenceTab[level == "S3S2", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
+  preferenceTab[level == "S3S2" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")] # S3S2: logit level: modes/technologies (e.g. LDV, bus, Liquids)
+  preferenceTab[level == "VS3", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
+  preferenceTab[level == "VS3" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")] # VS3: logit level: modes/technologies (e.g. cars, Liquids)
+  preferenceTab[level == "FV", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+  preferenceTab[level == "FV" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]  # FV: logit level: vehicle type (e.g. large car, moped)
+  preferenceTab[, max := NULL]
+
+  if (anyNA(preferenceTab)) stop("Something went wrong with the normalization of the preference trends. Please check toolNormalizePreferences()")
+
+  return(preferenceTab)
+}
+
+
 #' Read and build the complete structure of the edgeTransport decision tree
 #'
 #' @author Johanna Hoppe
