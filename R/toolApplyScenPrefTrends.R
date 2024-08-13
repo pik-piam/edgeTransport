@@ -31,7 +31,6 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   GDPpcMER[, regionCat := ifelse(region %in% individualReg, region, regionCat)]
   mitigationFactors <- merge(mitigationFactors, GDPpcMER, by = "regionCat", allow.cartesian = TRUE, all.x = TRUE)[, regionCat := NULL]
   # apply mitigation factors
-
   checkMitigation <- copy(baselinePrefTrends)
   setnames(checkMitigation, "value", "old")
   PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
@@ -39,32 +38,6 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   check <- merge(checkMitigation, PrefTrends, by = intersect(names(checkMitigation), names(PrefTrends)), all = TRUE)
   check[, diff := abs(value - old)]
   if (max(check$diff) < 0.001) stop("Mitigation preference factors have not been applied correctly. Please check toolApplyScenPrefTrends()")
-
-  # normalize preferences in each level
-  PrefTrends[level == "S1S", value := value/max(value), by = c("region", "period", "sector")] # S1S: logit level: distances (e.g. short-medium, long)
-  PrefTrends[level == "S2S1", value := value/max(value), by = c("region", "period", "sector", "subsectorL1")] # S2S1: logit level: modes/categories (e.g. walk, road, rail)
-  PrefTrends[level == "S3S2", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")] # S3S2: logit level: modes/technologies (e.g. LDV, bus, Liquids)
-  PrefTrends[level == "VS3", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")] # VS3: logit level: modes/technologies (e.g. cars, Liquids)
-  PrefTrends[level == "FV", value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]  # FV: logit level: vehicle type (e.g. large car, moped)
-
-  # Apply ICE ban if switched on
-  if (isICEban) {
-    #Ban is applied to EU28
-    affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
-    #affectedRegions <- affectedRegions[!affectedRegions == "UKI"] currently we apply the ban also to UK
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period == 2025, 0.98 * value[period == 2015], value), by = c("region","technology")]
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period == 2030, 0.75 * value[period == 2015], value), by = c("region","technology")]
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period == 2035, 0.3 * value[period == 2015], value), by = c("region","technology")]
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period == 2040, 0.2 * value[period == 2015], value), by = c("region","technology")]
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period == 2045, 0.1  * value[period == 2015], value), by = c("region","technology")]
-    PrefTrends[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-               value := ifelse(period > 2045, value * 0.05, value), by = c("region","technology")]
-  }
 
   PrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
   # order

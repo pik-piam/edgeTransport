@@ -1,5 +1,5 @@
 #' @title toolCalculateFS3share
-#' @description Provides updates for endogenous cost components e.g. inconvenience costs for cars
+#' @description Calculates fuel subsector L3 shares
 #'
 #' @param endoCostData data.table containing all cost components on technology level
 #' @param timesteps years for which to calculate FS3 shares
@@ -52,7 +52,6 @@ toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preference
   VS3share[, test := sum(VS3share), by = c("region", "period", "subsectorL3")]
   if (nrow(VS3share[test < 0.9999 | test > 1.0001]) > 0) stop("VS3 shares in toolPrepareEndogenousCosts were not calculated correctly")
   VS3share[, test := NULL]
-
   shares <- merge(FVshare, VS3share, by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType"), allow.cartesian = TRUE)
   shares <- shares[, .(FS3share = sum(VS3share * FVshare)), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "technology")]
   shares[, test := sum(FS3share), by = c("region", "period", "subsectorL3")]

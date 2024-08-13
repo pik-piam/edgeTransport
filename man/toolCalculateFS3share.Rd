@@ -30,7 +30,7 @@ toolCalculateFS3share(
 data.table containing all cost components on technology level and their respective FS3 shares
 }
 \description{
-Provides updates for endogenous cost components e.g. inconvenience costs for cars
+Calculates fuel subsector L3 shares
 }
 \author{
 Johanna Hoppe
