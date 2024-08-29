@@ -17,6 +17,7 @@
                                                         "level", "variable", "unit", "value")
     else if (filename == "initialIncoCosts") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName","technology","variable","unit","type","value")
     else if (filename == "timeValueCosts") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName", "variable", "unit", "value")
+    else if (filename == "f29_trpdemand") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen", "all_in", "value")
     else colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen",
                         "univocalName", "technology", "variable", "unit", "value")
     tmp <- fread(
@@ -52,19 +53,6 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 #' @export
 
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
-  # Input from REMIND input data
-  # In the first iteration input data needs to be loaded
-  if (!dir.exists(file.path(edgeTransportFolder)))  {
-    print("Loading csv data from input folder and creating RDS files...")}
-  RDSfiles <- list()
-  for (filename in inputFiles) {
-    if (length(list.files(file.path(".", edgeTransportFolder), paste0(filename, ".RDS"), recursive = TRUE, full.names = TRUE)) < 1) {
-      RDSfiles <- append(RDSfiles, csv2RDS(filename, inputFolder, SSPscenario, demScenario, transportPolScenario))
-    }
-  }
-  if (length(RDSfiles) > 0) storeData(file.path(".", edgeTransportFolder), varsList = RDSfiles)
-
-  if (!length(RDSfiles) == length(inputFiles)) RDSfiles <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)
 
   # Model input parameters from the package
   ## Exponents discrete choice model
@@ -108,6 +96,32 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
   filterEntries <- getFilterEntriesUnivocalName(categories, decisionTree)
   filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]],
                                        getFilterEntriesUnivocalName("Bus", decisionTree)[["Bus"]])
+
+  # Input from REMIND input data
+  # In the first iteration input data needs to be loaded
+  if (!dir.exists(file.path(edgeTransportFolder)))  {
+    print("Loading csv data from input folder and creating RDS files...")}
+  RDSfiles <- list()
+  for (filename in inputFiles) {
+    if (length(list.files(file.path(".", edgeTransportFolder), paste0(filename, ".RDS"), recursive = TRUE, full.names = TRUE)) < 1) {
+      RDSfiles <- append(RDSfiles, csv2RDS(filename, inputFolder, SSPscenario, demScenario, transportPolScenario))
+    }
+  }
+  if (!is.null(RDSfiles$f29_trpdemand)) {
+    mapEdgeSectorToREMIND <- merge(mapEdgeToREMIND, unique(decisionTree[, c("sector", "univocalName")]), by = "univocalName", allow.cartesian = TRUE, all.x = TRUE)
+    mapEdgeSectorToREMIND <- mapEdgeSectorToREMIND[!is.na(all_in)]
+    mapEdgeSectorToREMIND <- unique(mapEdgeSectorToREMIND[, c("all_in", "sector")])
+    RDSfiles$f29_trpdemand <- merge(RDSfiles$f29_trpdemand[period >= 1990], mapEdgeSectorToREMIND, by = "all_in")[, all_in := NULL]
+    ## convert unit
+    trillionToBillion <- 1e3
+    RDSfiles$f29_trpdemand[, value := value
+                           * trillionToBillion]
+    RDSfiles$f29_trpdemand[, unit := ifelse(sector %in% c("trn_pass", "trn_aviation_intl"), "billion pkm/yr", "billion tkm/yr")][, variable := "ES"]
+    setcolorder(RDSfiles$f29_trpdemand, c("region", "period", "sector", "value", "unit"))
+  }
+  if (length(RDSfiles) > 0) storeData(file.path(".", edgeTransportFolder), varsList = RDSfiles)
+
+  if (!length(RDSfiles) == length(inputFiles)) RDSfiles <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)
 
   # Time resolution
   dtTimeRes <- unique(RDSfiles$scenSpecEnIntensity[, c("univocalName", "period")])
