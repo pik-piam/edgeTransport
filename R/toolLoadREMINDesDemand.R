@@ -14,11 +14,11 @@ toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   value <- unit <- variable <- NULL
 
   mapEdgeToREMIND <- merge(helpers$mapEdgeToREMIND, unique(helpers$decisionTree[, c("sector", "univocalName")]), by = "univocalName", allow.cartesian = TRUE, all.x = TRUE)
+  mapEdgeToREMIND <- mapEdgeToREMIND[!is.na(all_in)]
   mapEdgeToREMIND <- unique(mapEdgeToREMIND[, c("all_in", "sector")])
 
-  ESdemand <- readGDX(gdxPath, c("vm_cesIO"), field = "l")
+  ESdemand <- readGDX(gdxPath, c("vm_cesIO"), field = "l", restore_zeros = FALSE)
   ESdemand <- ESdemand[, , c("entrp_pass_sm", "entrp_pass_lo", "entrp_frgt_sm", "entrp_frgt_lo")]
-
   ESdemand <- magpie2dt(ESdemand, regioncol = "region",
                    yearcol = "period", datacols = "all_in")
 

@@ -60,11 +60,11 @@ iterativeEdgeTransport <- function() {
                   "scenSpecEnIntensity",
                   "initialIncoCosts",
                   "annualMileage",
-                  "timeValueCosts")
+                  "timeValueCosts",
+                  "f29_trpdemand")
 
   inputs <- toolLoadIterativeInputs(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions,
                                     SSPscen, transportPolScen, demScen)
-
 
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
@@ -74,6 +74,8 @@ iterativeEdgeTransport <- function() {
   # Data from previous REMIND iteration
   ## Load REMIND energy service demand
   REMINDsectorESdemand <- toolLoadREMINDesDemand(gdx, helpers)
+  REMINDsectorESdemand <- rbind(REMINDsectorESdemand, RDSinputs$f29_trpdemand[!period %in% unique(REMINDsectorESdemand$period)])
+
   ## Load REMIND fuel cost
   REMINDfuelCost <- toolLoadREMINDfuelCosts(gdx, hybridElecShare, helpers)
   # Convert fuel costs from US$2005/MJ to US$2005/vehkm
