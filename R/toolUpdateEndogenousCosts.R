@@ -64,18 +64,16 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   }
 
   applyICEban <- function(year, currentMask) {
-    if (year < 2030){
+    if (year < 2021){
       floorCosts <- currentMask
-    } else if (year == 2030){
-      floorCosts <- 0.05
-    }  else if (year > 2030 & year <= 2032){
-      floorCosts <- strangeICEbanFunction(year, 2030, 0.1, 2032, 0.3)
-    } else if(year > 2032 & year <= 2034){
-      floorCosts <- strangeICEbanFunction(year, 2032, 0.3, 2034, 0.5)
-    } else if (year == 2035){
-      floorCosts <- 0.6
-    } else if  (year > 2035) {
+    }  else if (year >= 2021 & year <= 2030){
+      floorCosts <- strangeICEbanFunction(year, 2025, 0.08, 2030, 0.19)
+    } else if (year > 2030 & year < 2035){
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.2, 2034, 0.6)
+    } else if(year == 2035){
       floorCosts <- 1
+    } else if  (year > 2035) {
+      floorCosts <- 2
     }
     return(floorCosts)
   }
@@ -99,6 +97,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   policyMask <- rbind(policyMask, policyMaskPHEV)
   policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
 
+
   # Change policy mask for ICEs when ban is activated
   if (isICEban) {
     #Ban is applied to EU28 or EUR in case of REMIND running on 12 regions
@@ -110,8 +109,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     policyMask <- rbind(policyMask[!(technology %in% c("Gases", "Hybrid electric") & region %in% affectedRegions)],
                         copy(policyMaskICEban)[, technology := "Hybrid electric"], copy(policyMaskICEban)[, technology := "Gases"])
     setkey(policyMask, region, period, technology)
+    dt <- policyMask
+    after <- policyMask
+
     policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
-               policyMask := applyICEban(period, policyMask), by = c("period")]
+               policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
 
   #check whether policy mask is calculated correctly for respective technologys
