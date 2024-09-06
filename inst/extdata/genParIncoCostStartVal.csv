@@ -1,43 +1,43 @@
 region;incoCostType;FVvehvar;technology;unit;1990;2005;2010;2020
-GLO;Model availability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;13000
-GLO;Model availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;70000
-GLO;Model availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;80000
-GLO;Model availability;LDV|4W;Hybrid electric;US$2005/veh;100000;100000;100000;60000
-GLO;ICE inconvenience ;LDV|4W;Liquids;US$2005/veh;0;0;0;0
-GLO;Risk aversion;LDV|4W;BEV;US$2005/veh;3800;3800;3800;4000
-GLO;Risk aversion;LDV|4W;FCEV;US$2005/veh;3800;3800;3800;3800
-GLO;Risk aversion;LDV|4W;Gases;US$2005/veh;3800;3800;3800;3800
-GLO;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;3800;3800;3800;3800
-GLO;Range anxiety;LDV|4W;BEV;US$2005/veh;100000;100000;100000;65000
-GLO;Stations availability;LDV|4W;BEV;US$2005/veh;1000;1000;1000;1000
-GLO;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1000;1000;1000;1000
-GLO;Stations availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;100000
-GLO;Stations availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;100000
-EUR;Model availability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;11000
-EUR;Model availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;70000
-EUR;Model availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;80000
-EUR;Model availability;LDV|4W;Hybrid electric;US$2005/veh;100000;100000;100000;60000
+GLO;Model availability;LDV|4W;BEV;US$2005/veh;123136;123136;123136;16008
+GLO;Model availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;86195
+GLO;Model availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;98509
+GLO;Model availability;LDV|4W;Hybrid electric;US$2005/veh;123136;123136;123136;73882
+GLO;ICE inconvenience;LDV|4W;Liquids;US$2005/veh;0;0;0;0
+GLO;Risk aversion;LDV|4W;BEV;US$2005/veh;4680;4680;4680;4926
+GLO;Risk aversion;LDV|4W;FCEV;US$2005/veh;4680;4680;4680;4680
+GLO;Risk aversion;LDV|4W;Gases;US$2005/veh;4680;4680;4680;4680
+GLO;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;4680;4680;4680;4680
+GLO;Range anxiety;LDV|4W;BEV;US$2005/veh;123136;123136;123136;80039
+GLO;Stations availability;LDV|4W;BEV;US$2005/veh;1232;1232;1232;1232
+GLO;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1232;1232;1232;1232
+GLO;Stations availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;123136
+GLO;Stations availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;123136
+EUR;Model availability;LDV|4W;BEV;US$2005/veh;123136;123136;123136;13545
+EUR;Model availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;86195
+EUR;Model availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;98509
+EUR;Model availability;LDV|4W;Hybrid electric;US$2005/veh;123136;123136;123136;73882
 EUR;ICE inconvenience;LDV|4W;Liquids;US$2005/veh;0;0;0;0
-EUR;Risk aversion;LDV|4W;BEV;US$2005/veh;3800;3800;3800;4500
-EUR;Risk aversion;LDV|4W;FCEV;US$2005/veh;3800;3800;3800;5000
-EUR;Risk aversion;LDV|4W;Gases;US$2005/veh;3800;3800;3800;7000
-EUR;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;3800;3800;3800;3000
-EUR;Range anxiety;LDV|4W;BEV;US$2005/veh;100000;100000;100000;70000
-EUR;Stations availability;LDV|4W;BEV;US$2005/veh;1000;1000;1000;2000
-EUR;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1000;1000;1000;1000
-EUR;Stations availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;120000
-EUR;Stations availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;160000
-CHA;Model availability;LDV|4W;BEV;US$2005/veh;100000;100000;100000;9000
-CHA;Model availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;70000
-CHA;Model availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;80000
-CHA;Model availability;LDV|4W;Hybrid electric;US$2005/veh;100000;100000;100000;50000
-CHA;ICE inconvenience ;LDV|4W;Liquids;US$2005/veh;0;0;0;0
-CHA;Risk aversion;LDV|4W;BEV;US$2005/veh;3800;3800;3800;3800
-CHA;Risk aversion;LDV|4W;FCEV;US$2005/veh;3800;3800;3800;3800
-CHA;Risk aversion;LDV|4W;Gases;US$2005/veh;3800;3800;3800;3800
-CHA;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;3800;3800;3800;3800
-CHA;Range anxiety;LDV|4W;BEV;US$2005/veh;100000;100000;100000;60000
-CHA;Stations availability;LDV|4W;BEV;US$2005/veh;1000;1000;1000;1000
-CHA;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1000;1000;1000;1000
-CHA;Stations availability;LDV|4W;FCEV;US$2005/veh;100000;100000;100000;100000
-CHA;Stations availability;LDV|4W;Gases;US$2005/veh;100000;100000;100000;100000
+EUR;Risk aversion;LDV|4W;BEV;US$2005/veh;4680;4680;4680;5542
+EUR;Risk aversion;LDV|4W;FCEV;US$2005/veh;4680;4680;4680;6157
+EUR;Risk aversion;LDV|4W;Gases;US$2005/veh;4680;4680;4680;8620
+EUR;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;4680;4680;4680;3695
+EUR;Range anxiety;LDV|4W;BEV;US$2005/veh;123136;123136;123136;86195
+EUR;Stations availability;LDV|4W;BEV;US$2005/veh;1232;1232;1232;2463
+EUR;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1232;1232;1232;1232
+EUR;Stations availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;147763
+EUR;Stations availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;197018
+CHA;Model availability;LDV|4W;BEV;US$2005/veh;123136;123136;123136;11083
+CHA;Model availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;86195
+CHA;Model availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;98509
+CHA;Model availability;LDV|4W;Hybrid electric;US$2005/veh;123136;123136;123136;61568
+CHA;ICE inconvenience;LDV|4W;Liquids;US$2005/veh;0;0;0;0
+CHA;Risk aversion;LDV|4W;BEV;US$2005/veh;4680;4680;4680;4680
+CHA;Risk aversion;LDV|4W;FCEV;US$2005/veh;4680;4680;4680;4680
+CHA;Risk aversion;LDV|4W;Gases;US$2005/veh;4680;4680;4680;4680
+CHA;Risk aversion;LDV|4W;Hybrid electric;US$2005/veh;4680;4680;4680;4680
+CHA;Range anxiety;LDV|4W;BEV;US$2005/veh;123136;123136;123136;73882
+CHA;Stations availability;LDV|4W;BEV;US$2005/veh;1232;1232;1232;1232
+CHA;Stations availability;LDV|4W;Hybrid electric;US$2005/veh;1232;1232;1232;1232
+CHA;Stations availability;LDV|4W;FCEV;US$2005/veh;123136;123136;123136;123136
+CHA;Stations availability;LDV|4W;Gases;US$2005/veh;123136;123136;123136;123136

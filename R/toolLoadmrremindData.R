@@ -13,9 +13,6 @@ toolLoadmrremindData <- function(helpers) {
   setnames(subsidies, "variable", "technology")
   #average between legal and private entities
   subsidies <- subsidies[, .(value = mean(value)), by = c("region", "period", "technology")]
-  # exchange rate 2020: 1 euro = 1.12 dollar
-  # conversion from EUR2020 to US$2005 : inflation/exchange rate = 1.3504/1.12 = 1.205714286
-  subsidies[, value := value / 1.205714286] # in 2005 USD
   subsidies[, value := - value] # count subsidies negative
   completeSub <- unique(subsidies[, c("region", "technology")])[, temporal := "all"]
   temporal <- data.table(period = yrs)[, temporal := "all"]
@@ -32,7 +29,7 @@ toolLoadmrremindData <- function(helpers) {
   subsidies <- merge(unique(helpers$decisionTree[subsectorL3 == "trn_pass_road_LDV_4W",
                                          c("region", "univocalName", "technology")]), subsidies,
                      by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := "US$2005/veh"]
+  subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := "US$2017/veh"]
   #Q: How to include phase out of the incentives? Is that needed at all?
 
 return(list(

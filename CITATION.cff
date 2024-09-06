@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 title: 'edgeTransport: Prepare EDGE Transport Data for the REMIND model'
-version: 2.4.0
+version: 2.4.0.9001
 date-released: '2024-09-06'
 abstract: EDGE-T is a fork of the GCAM transport module https://jgcri.github.io/gcam-doc/energy.html#transportation
   with a high level of detail in its representation of technological and modal options.

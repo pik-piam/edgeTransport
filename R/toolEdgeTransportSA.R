@@ -34,7 +34,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isAnalyticsReported = FALSE){
 
   # set GDP cutoff to differentiate between regions
-  GDPcutoff <- 25000 # [constant 2005 US$MER]
+  GDPcutoff <- 30800 # [constant 2017 US$MER]
   # Year when scenario differentiation sets in
   policyStartYear <- 2021
   # last time step of historical data

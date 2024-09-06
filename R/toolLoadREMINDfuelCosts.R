@@ -1,4 +1,4 @@
-#' Load fuel prices from a REMIND fulldata.gdx in [US$2005/MJ] and map them on to
+#' Load fuel prices from a REMIND fulldata.gdx in [US$2017/MJ] and map them on to
 #' the edgeTransport decision tree. The output is provided in the same spatial resolution
 #' as the transferred gdx file and the temporal resolution is set according to the param yrs.
 #'
@@ -26,10 +26,10 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
    setnames(fuelCosts, c("all_regi", "ttot"), c("region", "period"))
    fuelCosts <- fuelCosts[, c("region", "period", "all_enty", "value")]
-   # convert from TerraUS2005$ per TWyear to US2005$ per EJ
+   # convert from TerraUS$2017 per TWyear to US$2017 per EJ
    tdptwyr2dpgj <- 31.71  # TerraDollar per TWyear to Dollar per GJ
    GJtoMJ <- 1e-3 # dollar per GJ to dollar per MJ
-   fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$2005/MJ
+   fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$2017/MJ
    # map on EDGE-T structure
    fuelCosts <- merge(fuelCosts, mapEdgeToREMIND, by = "all_enty", all.y = TRUE, allow.cartesian = TRUE)[, all_enty := NULL]
    # calculate price for hybrids
@@ -49,7 +49,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
      print("Values are filtered out and are interpolated from other timesteps.")
    }
 
-   fuelCosts[, variable := "Fuel costs"][, unit := "US$2005/MJ"]
+   fuelCosts[, variable := "Fuel costs"][, unit := "US$2017/MJ"]
 
    # get right temporal resolution
    fuelCosts <- toolApplyMixedTimeRes(fuelCosts, helpers)
