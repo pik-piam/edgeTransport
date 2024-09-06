@@ -30,7 +30,7 @@ Imports:
     gdxrrw,
     zoo,
     gdxdt,
-    reporttransport (>= 0.0.10)
+    reporttransport (>= 0.3.0)
 Suggests:
     testthat (>= 3.0.0),
     knitr,
