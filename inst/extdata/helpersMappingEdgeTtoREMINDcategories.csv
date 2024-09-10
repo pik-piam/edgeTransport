@@ -41,8 +41,8 @@ Bus;Gases;fegat;te_esgat_pass_sm;entrp_pass_sm
 HSR;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
 Passenger Rail;Electric;feelt;te_eselt_pass_sm;entrp_pass_sm
 Passenger Rail;Liquids;fedie;te_esdie_pass_sm;entrp_pass_sm
-Walk;Walk_tmp_technology;NA;NA;NA
-Cycle;Cycle_tmp_technology;NA;NA;NA
+Walk;Walk_tmp_technology;NA;NA;entrp_pass_sm
+Cycle;Cycle_tmp_technology;NA;NA;entrp_pass_sm
 Bus;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
 Bus;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
 Truck (0-3_5t);Liquids;fedie;te_esdie_frgt_sm;entrp_frgt_sm
