@@ -1,6 +1,6 @@
 Package: edgeTransport
 Title: Prepare EDGE Transport Data for the REMIND model
-Version: 2.5.0
+Version: 2.6.0
 Authors@R: c(
     person("Johanna", "Hoppe", , "johanna.hoppe@pik-potsdam.de", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-6753-5090")),
