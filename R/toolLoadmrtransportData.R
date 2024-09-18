@@ -20,22 +20,22 @@ toolLoadmrtransportData <- function(SSPscen) {
                                     regionmapping = "regionmapping_21_EU11.csv", subtype = "loadFactor", SSPscen = SSPscen)
   loadFactorRaw <- magpie2dt(loadFactorMagpieobj)[, variable := paste0(variable, " (raw)")]
 
-  # CAPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh]
+  # CAPEX for the tracked fleet (cars, trucks, busses) [US$2017/veh]
   CAPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                            regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXtrackedFleet", SSPscen = SSPscen)
   CAPEXtrackedFleet <- magpie2dt(CAPEXtrackedFleetMagpieobj)
 
-  # non-fuel OPEX for the tracked fleet (cars, trucks, busses) [US$2005/veh/yr]
+  # non-fuel OPEX for the tracked fleet (cars, trucks, busses) [US$2017/veh/yr]
   nonFuelOPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                                  regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXtrackedFleet", SSPscen = SSPscen)
   nonFuelOPEXtrackedFleet <- magpie2dt(nonFuelOPEXtrackedFleetMagpieobj)
 
-  # CAPEX other [US$2005/vehkm]
+  # CAPEX other [US$2017/vehkm]
   CAPEXotherMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                     regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXother", SSPscen = SSPscen)
   CAPEXother <- magpie2dt(CAPEXotherMagpieobj)
 
-  # non-fuel OPEX other [US$2005/vehkm]
+  # non-fuel OPEX other [US$2017/vehkm]
   nonFuelOPEXotherMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                           regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXother", SSPscen = SSPscen)
   nonFuelOPEXother <- magpie2dt(nonFuelOPEXotherMagpieobj)
@@ -45,7 +45,7 @@ toolLoadmrtransportData <- function(SSPscen) {
                                        regionmapping = "regionmapping_21_EU11.csv", subtype = "annualMileage", SSPscen = SSPscen)
   annualMileage <- magpie2dt(annualMileageMagpieobj)
 
-  # Time value costs [US$2005/pkm]
+  # Time value costs [US$2017/pkm]
   timeValueCostsMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                       regionmapping = "regionmapping_21_EU11.csv", subtype = "timeValueCosts", SSPscen = SSPscen)
   timeValueCosts <- magpie2dt(timeValueCostsMagpieobj)

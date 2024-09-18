@@ -27,7 +27,7 @@ toolCalculateInitialIncoCost(
 \item{helpers}{list with helpers}
 }
 \value{
-data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2005/(p|t)km
+data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2017/(p|t)km
 }
 \description{
 Apply regional differences for inconvenience cost start values based on ICE cost differences

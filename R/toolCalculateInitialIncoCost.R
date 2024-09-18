@@ -8,7 +8,7 @@
 #' @param annualMileage annual mileage data
 #' @param helpers list with helpers
 #' @import data.table
-#' @returns data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2005/(p|t)km
+#' @returns data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$2017/(p|t)km
 
 toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loadFactor, annualMileage, helpers) {
 
@@ -65,13 +65,13 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
   incoCostStartValReg <- merge(decTree, incoCostStartValReg, by = c("region", "univocalName", "technology"),
                                all.x = TRUE, allow.cartesian = TRUE)
 
-  incoCostStartValReg[, unit := "US$2005/veh/yr"]
+  incoCostStartValReg[, unit := "US$2017/veh/yr"]
   setnames(incoCostStartValReg, "incoCostType", "variable")
 
-  # convert to US$2005/pkm
-  # Annualize and discount to convert to US$2005/veh/yr
+  # convert to US$2017/pkm
+  # Annualize and discount to convert to US$2017/veh/yr
   annualizedincoCostStartVal <- merge(incoCostStartValReg, annuity, by = "univocalName", allow.cartesian = TRUE)
-  annualizedincoCostStartVal[, value := value * annuity][, unit := "US$2005/veh/yr"][, annuity := NULL]
+  annualizedincoCostStartVal[, value := value * annuity][, unit := "US$2017/veh/yr"][, annuity := NULL]
 
   loadFactor <- copy(loadFactor)
   loadFactor[, c("variable", "unit") := NULL]
@@ -85,9 +85,9 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
   annualizedincoCostStartVal <- merge(annualizedincoCostStartVal, annualMileage,
                                       c("region", "univocalName", "technology", "period"), all.x = TRUE)
   annualizedincoCostStartVal[, value := value / (annualMileage * loadFactor)][, c("loadFactor", "annualMileage") := NULL]
-  #unit US$2005/pkm for passenger and unit US$2005/tkm for freight
+  #unit US$2017/pkm for passenger and unit US$2017/tkm for freight
   annualizedincoCostStartVal[, unit := ifelse(univocalName %in% c(helpers$filter$trn_pass, "International Aviation"),
-                                              "US$2005/pkm", "US$2005/tkm")]
+                                              "US$2017/pkm", "US$2017/tkm")]
 
   if (anyNA(annualizedincoCostStartVal) == TRUE) {
     stop("Inconvenience cost start values contain NAs")

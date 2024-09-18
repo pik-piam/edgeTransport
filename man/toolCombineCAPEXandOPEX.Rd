@@ -2,7 +2,7 @@
 % Please edit documentation in R/toolCombineCAPEXandOPEX.R
 \name{toolCombineCAPEXandOPEX}
 \alias{toolCombineCAPEXandOPEX}
-\title{Function that converts CAPEX and OPEX into US$2005/(p|t)km and provides them combined in a structured format}
+\title{Function that converts CAPEX and OPEX into US$2017/(p|t)km and provides them combined in a structured format}
 \usage{
 toolCombineCAPEXandOPEX(
   CAPEXtrackedFleet,
@@ -42,8 +42,8 @@ toolCombineCAPEXandOPEX(
 \item{helpers}{list with helpers}
 }
 \value{
-data.table including total costs of ownership in US$2005/(p|t)km
+data.table including total costs of ownership in US$2017/(p|t)km
 }
 \description{
-Function that converts CAPEX and OPEX into US$2005/(p|t)km and provides them combined in a structured format
+Function that converts CAPEX and OPEX into US$2017/(p|t)km and provides them combined in a structured format
 }

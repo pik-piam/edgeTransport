@@ -2,7 +2,7 @@
 % Please edit documentation in R/toolLoadREMINDfuelCosts.R
 \name{toolLoadREMINDfuelCosts}
 \alias{toolLoadREMINDfuelCosts}
-\title{Load fuel prices from a REMIND fulldata.gdx in [US$2005/MJ] and map them on to
+\title{Load fuel prices from a REMIND fulldata.gdx in [US$2017/MJ] and map them on to
 the edgeTransport decision tree. The output is provided in the same spatial resolution
 as the transferred gdx file and the temporal resolution is set according to the param yrs.}
 \usage{
@@ -19,7 +19,7 @@ toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 fuel costs on technology level
 }
 \description{
-Load fuel prices from a REMIND fulldata.gdx in [US$2005/MJ] and map them on to
+Load fuel prices from a REMIND fulldata.gdx in [US$2017/MJ] and map them on to
 the edgeTransport decision tree. The output is provided in the same spatial resolution
 as the transferred gdx file and the temporal resolution is set according to the param yrs.
 }
