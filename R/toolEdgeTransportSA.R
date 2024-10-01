@@ -47,7 +47,7 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
-                                              "REMINDinputForTransportStandalone", "fulldata.gdx")}
+                                              "REMINDinputForTransportStandalone", "v1.1", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
 
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)

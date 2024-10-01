@@ -15,7 +15,7 @@
 
 toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preferences, lambdas, helpers){
 
-  #time costs in [$2005/pkm] for traveling with mode X in region Y
+  #time costs in [US$2017/pkm] for traveling with mode X in region Y
   timeValueCosts <- merge(timeValue, unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)
   timeValueCosts[, type := "Travel time"][, c("unit", "univocalName", "variable") := NULL]
   if (length(timesteps) > 1) {
