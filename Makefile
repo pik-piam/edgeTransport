@@ -44,3 +44,9 @@ docs:           ## Generate the package documentation (man/*.Rd files) and
                 ## NAMESPACE via roxygen2::roxygenize(), view the generated
                 ## documentation with `?package::function`.
 	Rscript -e 'roxygen2::roxygenize()'
+
+test-standard-scenarios: ## Run and store standard scenarios and create compare Scenarios reports
+
+  Rscript -e "folderN <- '$(folderName)';
+              source('tests/testtestStandardScenarios.R');
+              testStandardScenarios(folderN)"
