@@ -3,13 +3,10 @@ library(mrdrivers)
 library(mrremind)
 library(dplyr)
 library(tidyr)
-library(edgeTransport)
-
- "/p/projects/edget/PRchangeLog/20240920_PR280_unitShift2017USD/USD2005"
 
 testStandardScenarios <- function(folderName, path = "."){
 
-  outputFolder <- file.path(paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
+  outputFolder <- file.path(path, paste0(format(Sys.time(), "%Y-%m-%d"),
                                                                  "-", folderName))
 
   allScens <-  tribble(
