@@ -48,5 +48,6 @@ docs:           ## Generate the package documentation (man/*.Rd files) and
 test-standard-scenarios: ## Run and store standard scenarios and create compare Scenarios reports
 
   Rscript -e "folderN <- '$(folderName)';
+              testPath <- '$(path)';
               source('tests/testtestStandardScenarios.R');
-              testStandardScenarios(folderN)"
+              testStandardScenarios(folderName = folderN, path = testPath)"
