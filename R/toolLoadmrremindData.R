@@ -13,9 +13,6 @@ toolLoadmrremindData <- function(helpers) {
   setnames(subsidies, "variable", "technology")
   #average between legal and private entities
   subsidies <- subsidies[, .(value = mean(value)), by = c("region", "period", "technology")]
-  # exchange rate 2020: 1 euro = 1.12 dollar
-  # conversion from EUR2020 to US$2017 : inflation/exchange rate = 1.3504/1.12 = 1.205714286
-  subsidies[, value := value / 1.205714286] # in 2005 USD
   subsidies[, value := - value] # count subsidies negative
   completeSub <- unique(subsidies[, c("region", "technology")])[, temporal := "all"]
   temporal <- data.table(period = yrs)[, temporal := "all"]

@@ -22,6 +22,14 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
 
    # load prices from REMIND gdx
    fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
+
+   fuelCosts <- GDPuc::toolConvertGDP(
+     gdp = fuelCosts,
+     unit_in = "constant 2005 US$MER",
+     unit_out = "constant 2017 US$MER",
+     replace_NAs = "with_USA"
+   )
+
    ## smooth prices from REMIND gdx (over years) and convert to data.table
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
    setnames(fuelCosts, c("all_regi", "ttot"), c("region", "period"))
@@ -32,6 +40,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$2017/MJ
    # map on EDGE-T structure
    fuelCosts <- merge(fuelCosts, mapEdgeToREMIND, by = "all_enty", all.y = TRUE, allow.cartesian = TRUE)[, all_enty := NULL]
+
    # calculate price for hybrids
    dummy <- fuelCosts[univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W & technology %in% c("BEV", "Liquids")]
    fuelCostsHybrids <- dummy %>%
