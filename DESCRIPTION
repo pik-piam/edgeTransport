@@ -31,6 +31,7 @@ Imports:
     gdxrrw,
     zoo,
     gdxdt,
+    GDPuc,
     reporttransport (>= 0.0.13)
 Suggests:
     testthat (>= 3.0.0),
