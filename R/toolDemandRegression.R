@@ -43,6 +43,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
                                                  scenParDemRegression, GDPperCapitaPPP[period >= policyStartYear]))
   regionalIncomeElasticities <- rbind(regionalIncomeElasticities, scenSpecRegionalIncomeElasticities)
+
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,
