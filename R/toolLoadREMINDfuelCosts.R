@@ -23,7 +23,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    # load prices from REMIND gdx
    fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
 
-   fuelCosts <- GDPuc::convertGDP(
+   fuelCosts <- GDPuc::toolConvertGDP(
      gdp = fuelCosts,
      unit_in = "constant 2005 US$MER",
      unit_out = "constant 2017 US$MER",
