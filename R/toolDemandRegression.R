@@ -22,6 +22,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                                     baseYear, policyStartYear, helpers) {
 
   # interpolate SSP specific elasticities based on GDP PPP per capita ----------------------------
+  GDPperCapitaPPP <- copy(GDPperCapitaPPP)
   setnames(GDPperCapitaPPP, "value", "regionGDPpcPPP")
   GDPperCapitaPPP <- GDPperCapitaPPP[period %in% helpers$lowTimeRes]
   POP <- POP[period %in% helpers$lowTimeRes]
