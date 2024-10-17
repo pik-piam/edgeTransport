@@ -1,6 +1,6 @@
 Package: edgeTransport
 Title: Prepare EDGE Transport Data for the REMIND model
-Version: 2.7.2
+Version: 2.7.3
 Authors@R: c(
     person("Johanna", "Hoppe", , "johanna.hoppe@pik-potsdam.de", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-6753-5090")),
@@ -11,14 +11,15 @@ Description: EDGE-T is a fork of the GCAM transport module https://jgcri.github.
 Depends:
     R (>= 3.5.0),
     data.table (>= 1.11.0),
-    mrtransport (>= 0.6.0)
+    mrtransport (>= 0.6.0),
+    GDPuc (>= 1.3.0)
 License: GPL-3
 URL: https://github.com/pik-piam/edgeTransport
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
-Date: 2024-10-02
+Date: 2024-10-11
 Config/testthat/edition: 3
 Imports:
     rmndt,
