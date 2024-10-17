@@ -17,13 +17,13 @@ if (length(percentChange) > 1) {
 }
 
   loadFactor[
-    univocalName %in% helpers$filter$trn_pass_road_LDV_4W &
+    univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
       period >= policyStartYear &
       period <= targetYear,
     value := value * (1 + percentChange * (period - policyStartYear)/(targetYear - policyStartYear))]
 
   loadFactor[
-    univocalName %in% helpers$filter$trn_pass_road_LDV_4W &
+    univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
       period >= policyStartYear &
       period >= targetYear,
     value := value * (1 + percentChange)]

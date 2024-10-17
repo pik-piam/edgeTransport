@@ -91,7 +91,7 @@ iterativeEdgeTransport <- function() {
   setnames(loadFactor, "value", "loadFactor")
   REMINDfuelCost <- merge(REMINDfuelCost, loadFactor, by = c("region", "univocalName", "technology", "period"))
   REMINDfuelCost[, value := value / loadFactor][, loadFactor := NULL]
-  REMINDfuelCost[, unit := ifelse(univocalName %in% c(helpers$filter$trn_pass, "International Aviation"), "US$2017/pkm", "US$2017/tkm")]
+  REMINDfuelCost[, unit := ifelse(univocalName %in% c(helpers$filterEntries$trn_pass, "International Aviation"), "US$2017/pkm", "US$2017/tkm")]
 
   pathFuelCosts <- list.files(file.path(".", edgeTransportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE)
   if (length(pathFuelCosts) > 0) {

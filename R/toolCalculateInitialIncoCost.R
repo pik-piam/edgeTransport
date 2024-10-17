@@ -86,7 +86,7 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
                                       c("region", "univocalName", "technology", "period"), all.x = TRUE)
   annualizedincoCostStartVal[, value := value / (annualMileage * loadFactor)][, c("loadFactor", "annualMileage") := NULL]
   #unit US$2017/pkm for passenger and unit US$2017/tkm for freight
-  annualizedincoCostStartVal[, unit := ifelse(univocalName %in% c(helpers$filter$trn_pass, "International Aviation"),
+  annualizedincoCostStartVal[, unit := ifelse(univocalName %in% c(helpers$filterEntries$trn_pass, "International Aviation"),
                                               "US$2017/pkm", "US$2017/tkm")]
 
   if (anyNA(annualizedincoCostStartVal) == TRUE) {

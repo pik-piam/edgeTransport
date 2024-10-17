@@ -68,7 +68,7 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet,
   setnames(loadFactor, "value", "loadFactor")
   combinedCAPEXandOPEX <- merge(combinedCAPEXandOPEX, loadFactor, by = c("region", "univocalName", "technology", "period"))
   combinedCAPEXandOPEX[, value := value / loadFactor][, loadFactor := NULL]
-  combinedCAPEXandOPEX[, unit := ifelse(univocalName %in% c(helpers$filter$trn_pass, "International Aviation"), "US$2017/pkm", "US$2017/tkm")]
+  combinedCAPEXandOPEX[, unit := ifelse(univocalName %in% c(helpers$filterEntries$trn_pass, "International Aviation"), "US$2017/pkm", "US$2017/tkm")]
 
   # add zeros for active modes (time value costs are treated seperately)
   # use dummy that does not feature fleet tracking
