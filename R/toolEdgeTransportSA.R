@@ -235,8 +235,8 @@ toolEdgeTransportSA <- function(SSPscen,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPMER")],
-                      inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+  add <- append(inputDataRaw,
+                inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
