@@ -12,10 +12,10 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   years <- unique(helpers$dtTimeRes$period)
 
   GDPMERmag <- calcOutput("GDP", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                            unit = "constant 2005 US$MER")[, , paste0("gdp_", SSPscen)]|> time_interpolate(years)
+                            unit = "constant 2017 US$MER")[, , paste0("gdp_", SSPscen)]|> time_interpolate(years)
   GDPMER <- magpie2dt(GDPMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
   GDPpcMERmag <- calcOutput("GDPpc", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv",
-                         unit = "constant 2005 US$MER")[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
+                         unit = "constant 2017 US$MER")[, , paste0("gdppc_", SSPscen)]|> time_interpolate(years)
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := NULL]
 
   GDPpppMag <- calcOutput("GDP", aggregate = TRUE, regionmapping = "regionmapping_21_EU11.csv")
