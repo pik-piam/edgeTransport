@@ -70,6 +70,8 @@ iterativeEdgeTransport <- function() {
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
   RDSinputs <- inputs$RDSfiles
+  
+
 
   # Data from previous REMIND iteration
   ## Load REMIND energy service demand
@@ -78,20 +80,20 @@ iterativeEdgeTransport <- function() {
 
   ## Load REMIND fuel cost
   REMINDfuelCost <- toolLoadREMINDfuelCosts(gdx, hybridElecShare, helpers)
-  # Convert fuel costs from US$2017/MJ to US$2017/vehkm
+  # Convert fuel costs from US$/MJ to US$/vehkm
   # Merge with energy intensity
   energyIntensity <- copy(RDSinputs$scenSpecEnIntensity)
   energyIntensity[, c("variable", "unit") := NULL]
   setnames(energyIntensity, "value", "energyIntensity")
   REMINDfuelCost <- merge(REMINDfuelCost, energyIntensity, by = c("region", "univocalName", "technology", "period"))
-  REMINDfuelCost[, value := value * energyIntensity][, unit := "US$2017/vehkm"][, energyIntensity := NULL]
-  # Convert fuel costs from US$2017/vehkm to US$2017/(p|t)km
+  REMINDfuelCost[, value := value * energyIntensity][, unit := gsub("MJ", "vehkm", unit)][, energyIntensity := NULL]
+  # Convert fuel costs from US$/vehkm to US$/(p|t)km
   loadFactor <- copy(RDSinputs$scenSpecLoadFactor)
   loadFactor[, c("variable", "unit") := NULL]
   setnames(loadFactor, "value", "loadFactor")
   REMINDfuelCost <- merge(REMINDfuelCost, loadFactor, by = c("region", "univocalName", "technology", "period"))
   REMINDfuelCost[, value := value / loadFactor][, loadFactor := NULL]
-  REMINDfuelCost[, unit := ifelse(univocalName %in% c(helpers$filterEntries$trn_pass, "International Aviation"), "US$2017/pkm", "US$2017/tkm")]
+  REMINDfuelCost[, unit := ifelse(univocalName %in% c(helpers$filterEntries$trn_pass, "International Aviation"), gsub("vehkm", "pkm", unit), gsub("vehkm", "tkm", unit))]
 
   pathFuelCosts <- list.files(file.path(".", edgeTransportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE)
   if (length(pathFuelCosts) > 0) {
