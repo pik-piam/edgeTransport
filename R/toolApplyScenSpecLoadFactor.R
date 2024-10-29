@@ -9,12 +9,13 @@
 
 toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
 
-percentChange <- scenParLoadFactor$percentChange
-targetYear <- scenParLoadFactor$targetYear
+  loadFactor <- copy(loadFactor)
+  percentChange <- scenParLoadFactor$percentChange
+  targetYear <- scenParLoadFactor$targetYear
 
-if (length(percentChange) > 1) {
-  stop("Scenario specific load factor changes are not unambiguously defined")
-}
+  if (length(percentChange) > 1) {
+    stop("Scenario specific load factor changes are not unambiguously defined")
+  }
 
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &

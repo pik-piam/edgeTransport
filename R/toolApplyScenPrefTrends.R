@@ -20,6 +20,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
 
   # restructure mitigation factors provided in scenParPrefTrends
   # resolve techmap
+  GDPpcMER <- copy(GDPpcMER)[, c("variable", "unit") := NULL]
   mitigationFactors <- merge(helpers$mitigationTechMap[, c("vehicleType", "FVvehvar")], scenParPrefTrends, by = "FVvehvar", all.y = TRUE, allow.cartesian = TRUE)
   mitigationFactors[is.na(vehicleType), vehicleType := ""][, FVvehvar := NULL]
   # implement differentiation by GDP and treatment of single region entries

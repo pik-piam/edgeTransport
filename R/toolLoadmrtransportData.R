@@ -25,7 +25,7 @@ toolLoadmrtransportData <- function(SSPscen) {
                                            regionmapping = "regionmapping_21_EU11.csv", subtype = "CAPEXtrackedFleet", SSPscen = SSPscen)
   CAPEXtrackedFleet <- magpie2dt(CAPEXtrackedFleetMagpieobj)
 
-  # non-fuel OPEX for the tracked fleet (cars, trucks, busses) [US$/veh/yr]
+  # non-fuel OPEX for the tracked fleet (cars, trucks, busses) [US$/veh yr]
   nonFuelOPEXtrackedFleetMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                                  regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXtrackedFleet", SSPscen = SSPscen)
   nonFuelOPEXtrackedFleet <- magpie2dt(nonFuelOPEXtrackedFleetMagpieobj)
@@ -40,7 +40,7 @@ toolLoadmrtransportData <- function(SSPscen) {
                                           regionmapping = "regionmapping_21_EU11.csv", subtype = "nonFuelOPEXother", SSPscen = SSPscen)
   nonFuelOPEXother <- magpie2dt(nonFuelOPEXotherMagpieobj)
 
-  # Annual Mileage (currently only for the tracked fleet) [vehkm/veh/yr]
+  # Annual Mileage (currently only for the tracked fleet) [vehkm/veh yr]
   annualMileageMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
                                        regionmapping = "regionmapping_21_EU11.csv", subtype = "annualMileage", SSPscen = SSPscen)
   annualMileage <- magpie2dt(annualMileageMagpieobj)
