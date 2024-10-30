@@ -16,7 +16,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   ## from mrtransport
   mrtransportData <- toolLoadmrtransportData(SSPscen)
   # vehicle types that feature fleet tracking get a different temporal resolution
-  dtTimeRes <- unique(mrtransportData$energyIntensity[, c("univocalName", "period")])
+  dtTimeRes <- unique(mrtransportData$energyIntensityRaw[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)
   lowResUnivocalNames <- copy(dtTimeRes)
   lowResUnivocalNames <- lowResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]

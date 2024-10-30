@@ -142,6 +142,7 @@ toolEdgeTransportSA <- function(SSPscen,
   if (isAnalyticsReported) {
     endogenousCostsIterations <- list()
     fleetVehNumbersIterations <- list()
+    costsDiscreteChoiceIterations <- list()
   }
 
   for (i in seq(1, iterations, 1)) {
@@ -177,8 +178,12 @@ toolEdgeTransportSA <- function(SSPscen,
                                                 genModelPar,
                                                 endogenousCosts$updatedEndogenousCosts,
                                                 helpers)
+    if (isAnalyticsReported) {
+      costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
+                                               function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
+    }
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
-                                                  vehSalesAndModeShares,
+                                                  vehSalesAndModeShares$shares,
                                                   helpers,
                                                   inputData$histESdemand,
                                                   baseYear)
@@ -189,7 +194,7 @@ toolEdgeTransportSA <- function(SSPscen,
     # Calculate vehicle stock for cars, trucks and busses -------
     fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
                                                              vehicleDepreciationFactors,
-                                                             vehSalesAndModeShares,
+                                                             vehSalesAndModeShares$shares,
                                                              inputData$annualMileage,
                                                              inputData$scenSpecLoadFactor,
                                                              helpers)
@@ -229,18 +234,19 @@ toolEdgeTransportSA <- function(SSPscen,
     histPrefs = histPrefs,
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
-    vehSalesAndModeShares = vehSalesAndModeShares,
+    vehSalesAndModeShares = vehSalesAndModeShares$shares,
     sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("GDPMER", "GDPpcMER", "GDPpcPPP")],
-                      inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+  add <- append(inputDataRaw,
+                inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
-                                    fleetVehNumbersIterations = fleetVehNumbersIterations))
+                                                               costsDiscreteChoiceIterations = costsDiscreteChoiceIterations,
+                                                               fleetVehNumbersIterations = fleetVehNumbersIterations))
 
   if (isStored) storeData(outputFolder = outputFolder, varsList = outputRaw)
 
