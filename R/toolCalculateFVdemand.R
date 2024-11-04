@@ -1,3 +1,15 @@
+#' Calculate eneryg service demand on fuel vehicle level
+#'
+#' @author Johanna Hoppe
+#' @param sectorESdemand energy service demand on CES node level
+#' @param salesAndModeShares vehicle sales and mode shares
+#' @param helpers List with helpers
+#' @param histESdemand historcial energy service demand for iterative EDGE-T
+#' @param baseYear ned year of historical energy service demand
+#' @returns data.table 
+#' @import data.table
+#' @export
+
 toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, histESdemand = NULL,  baseYear = NULL){
 
 # Calculate FV to sector shares --------------------------------------------

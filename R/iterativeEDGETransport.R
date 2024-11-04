@@ -175,7 +175,7 @@ iterativeEdgeTransport <- function() {
                                                 helpers)
 
     ESdemandFVsalesLevel <- toolCalculateFVdemand(inputData$REMINDsectorESdemand,
-                                                  vehSalesAndModeShares,
+                                                  vehSalesAndModeShares$shares,
                                                   helpers,
                                                   inputData$histESdemand,
                                                   baseYear)
