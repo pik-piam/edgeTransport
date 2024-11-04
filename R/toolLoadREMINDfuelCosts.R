@@ -11,6 +11,7 @@
 #' @importFrom gdx readGDX
 #' @importFrom magclass lowpass
 #' @importFrom magrittr `%>%`
+#' @export 
 
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
  value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL

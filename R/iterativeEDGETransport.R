@@ -175,7 +175,7 @@ iterativeEdgeTransport <- function() {
                                                 helpers)
 
     ESdemandFVsalesLevel <- toolCalculateFVdemand(inputData$REMINDsectorESdemand,
-                                                  vehSalesAndModeShares,
+                                                  vehSalesAndModeShares$shares,
                                                   helpers,
                                                   inputData$histESdemand,
                                                   baseYear)
@@ -186,7 +186,7 @@ iterativeEdgeTransport <- function() {
     # Calculate vehicle stock for cars, trucks and busses -------
     fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
                                                              vehicleDepreciationFactors,
-                                                             vehSalesAndModeShares,
+                                                             vehSalesAndModeShares$shares,
                                                              inputData$annualMileage,
                                                              inputData$scenSpecLoadFactor,
                                                              helpers)
