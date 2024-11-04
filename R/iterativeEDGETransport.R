@@ -216,7 +216,7 @@ iterativeEdgeTransport <- function() {
       hybridElecShare = hybridElecShare,
       fleetSizeAndComposition = fleetSizeAndComposition,
       endogenousCosts = endogenousCosts,
-      vehSalesAndModeShares = vehSalesAndModeShares,
+      vehSalesAndModeShares = vehSalesAndModeShares$shares,
       ESdemandFVsalesLevel = ESdemandFVsalesLevel,
       helpers = helpers
     )
