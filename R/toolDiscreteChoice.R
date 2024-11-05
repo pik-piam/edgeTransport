@@ -19,8 +19,6 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   CAPEXandOPEX <- merge(CAPEXandOPEX, helpers$decisionTree, by = c("region", "univocalName", "technology"), all.x = TRUE)
   # detailed resolution of CAPEX and OPEX not needed
   CAPEXandOPEX[, type := "Monetary Costs"]
-  CAPEXandOPEX <- CAPEXandOPEX[, .(value = sum(value)), by = c(setdiff(names(CAPEXandOPEX), c("value", "variable")))]
-  CAPEXandOPEX[, variable := "CAPEX and OPEX"]
   # vehicles that have endogenous inconvenience costs receive these in addition
   updatedEndoCosts[, type := "Inconvenience costs"]
   allCostsFV <- rbind(CAPEXandOPEX, updatedEndoCosts)
@@ -50,6 +48,10 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   if (nrow(FVshares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(FVshares)) stop("FV shares in toolDiscreteChoice() were not calculated correctly")
   FVshares[, c("test") := NULL]
   FVshares <- rbind(FVshares, FVsharesZero)[, level := "FV"]
+  # Discrete choice cost structure
+  storeAllCostsFV <- copy(allCostsFV)
+  storeAllCostsFV[, variable := paste0("Logit cost|FV|", variable)][, type := NULL]
+  costsDiscreteChoice <- list(allCostsFV = storeAllCostsFV)
 
   # calculate all VS3 shares --------------------------------------------------------------------
   allCostsFV <- allCostsFV[type == "Monetary Costs"][, univocalName := NULL]
@@ -86,6 +88,9 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   if (nrow(VS3shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(VS3shares) | nrow(VS3shares) == 0) stop("VS3 shares in toolDiscreteChoice() were not calculated correctly")
   VS3shares[, test := NULL]
   VS3shares <- rbind(VS3shares, VS3sharesZero)[, level := "VS3"]
+  storeAllCostsVS3 <- copy(allCostsVS3)
+  storeAllCostsVS3[, variable := paste0("Logit cost|VS3|", variable)][, type := NULL]
+  costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsVS3 = storeAllCostsVS3))
 
   # calculate all S3S2 shares --------------------------------------------------------------------
   allCostsVS3 <- merge(allCostsVS3, VS3shares[, -c("level")],  by = intersect(names(allCostsVS3), names(VS3shares)))
@@ -109,6 +114,9 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S3S2shares[, test := sum(share), by = c("region", "period", "subsectorL2")]
   if (nrow(S3S2shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S3S2shares) | nrow(S3S2shares) == 0) stop("S3S2 shares in toolDiscreteChoice() were not calculated correctly")
   S3S2shares[, test := NULL][, level := "S3S2"]
+  storeAllCostsS3S2 <- copy(allCostsS3S2)
+  storeAllCostsS3S2[, variable := paste0("Logit cost|S3S2|", variable)][, type := NULL]
+  costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS3S2 = storeAllCostsS3S2))
 
   # calculate all S2S1 shares --------------------------------------------------------------------
   allCostsS3S2 <- merge(allCostsS3S2, S3S2shares[, -c("level")],  by = intersect(names(allCostsS3S2), names(S3S2shares)))
@@ -132,6 +140,9 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S2S1shares[, test := sum(share), by = c("region", "period", "subsectorL1")]
   if (nrow(S2S1shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S2S1shares) | nrow(S2S1shares) == 0) stop("S2S1 shares in toolDiscreteChoice() were not calculated correctly")
   S2S1shares[, test := NULL][, level := "S2S1"]
+  storeAllCostsS2S1 <- copy(allCostsS2S1)
+  storeAllCostsS2S1[, variable := paste0("Logit cost|S2S1|", variable)][, type := NULL]
+  costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS2S1 = storeAllCostsS2S1))
 
   # calculate all S1S shares --------------------------------------------------------------------
   allCostsS2S1 <- merge(allCostsS2S1, S2S1shares[, -c("level")],  by = intersect(names(allCostsS2S1), names(S2S1shares)))
@@ -155,11 +166,15 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S1Sshares[, test := sum(share), by = c("region", "period", "sector")]
   if (nrow(S1Sshares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S1Sshares) | nrow(S1Sshares) == 0) stop("S1S shares in toolDiscreteChoice() were not calculated correctly")
   S1Sshares[, test := NULL][, level := "S1S"]
+  storeAllCostsS1S <- copy(allCostsS1S)
+  storeAllCostsS1S[, variable := paste0("Logit cost|S1S|", variable)][, type := NULL]
+  costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS1S = storeAllCostsS1S))
 
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
   #toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
 
-  return(shares)
+  return(list(shares = shares,
+              costsDiscreteChoice = costsDiscreteChoice))
 
 }

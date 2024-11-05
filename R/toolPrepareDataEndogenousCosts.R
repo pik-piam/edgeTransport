@@ -6,6 +6,7 @@
 #' @param helpers List with helpers
 #' @returns data.table including all cost components
 #' @import data.table
+#' @export
 
 toolPrepareDataEndogenousCosts <- function(inputData, lambdas, helpers) {
 

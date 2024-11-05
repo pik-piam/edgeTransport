@@ -5,6 +5,7 @@
 #' @param helpers list with helpers
 #' @returns data.table including vehicle depreciation factors over service life#'
 #' @import data.table
+#' @export
 
 toolCalculateVehicleDepreciationFactors <- function(annuityCalc, helpers) {
 
