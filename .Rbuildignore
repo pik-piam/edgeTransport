@@ -1,3 +1,6 @@
+^pull_request_template.md
+^renv$
+^renv\.locks$
 ^edgetRansport\.Rproj$
 ^.*\.zenodo.json$
 ^\.buildlibrary$
