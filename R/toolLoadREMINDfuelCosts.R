@@ -11,7 +11,7 @@
 #' @importFrom gdx readGDX
 #' @importFrom magclass lowpass
 #' @importFrom magrittr `%>%`
-#' @export 
+#' @export
 
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
  value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL
@@ -23,13 +23,6 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
 
    # load prices from REMIND gdx
    fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
-
-   fuelCosts <- GDPuc::toolConvertGDP(
-     gdp = fuelCosts,
-     unit_in = "constant 2005 US$MER",
-     unit_out = "constant 2017 US$MER",
-     replace_NAs = "with_USA"
-   )
 
    ## smooth prices from REMIND gdx (over years) and convert to data.table
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
