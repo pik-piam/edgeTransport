@@ -251,3 +251,7 @@ SSP2_demDiffer;REF;trn_pass;2040;1
 SSP2_demDiffer;SSA;trn_pass;2040;1.08
 SSP2_demDiffer;UKI;trn_pass;2040;0.92
 SSP2_demDiffer;USA;trn_pass;2040;0.92
+SSP2_highDemDEU;DEU;trn_aviation_intl;2050;1.1
+SSP2_highDemDEU;DEU;trn_shipping_intl;2050;1.1
+SSP2_highDemDEU;DEU;trn_freight;2050;1.1
+SSP2_highDemDEU;DEU;trn_pass;2050;1.1
