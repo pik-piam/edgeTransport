@@ -1,4 +1,7 @@
-^edgetRansport\.Rproj$
+^pull_request_template.md
+^renv$
+^renv\.locks$
+^edgeTransport\.Rproj$
 ^.*\.zenodo.json$
 ^\.buildlibrary$
 ^GDP*\.RDS$
@@ -11,6 +14,7 @@
 ^\.git$
 ^.lintr$
 ^tests/.lintr$
+^tests/PRtest/*
 ^vignettes/.lintr$
 ^Makefile$
 ^.*CITATION.cff$

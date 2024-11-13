@@ -29,7 +29,8 @@ toolLoadmrremindData <- function(helpers) {
   subsidies <- merge(unique(helpers$decisionTree[subsectorL3 == "trn_pass_road_LDV_4W",
                                          c("region", "univocalName", "technology")]), subsidies,
                      by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := "US$2017/veh"]
+  monUnit <- gsub(".*?(\\d{4}).*", "US$\\1", mrdrivers::toolGetUnitDollar())
+  subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := paste0(monUnit, "/veh")]
   #Q: How to include phase out of the incentives? Is that needed at all?
 
 return(list(

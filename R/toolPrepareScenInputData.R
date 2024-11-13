@@ -45,7 +45,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
     scenSpecLoadFactor[, variable := "Load factor"]
     print("Policy induced changes to the loadfactor were applied")
   } else {
-    scenSpecLoadFactor <- inputDataRaw$loadFactor[, variable := "Load factor"]
+    scenSpecLoadFactor <- copy(inputDataRaw$loadFactorRaw)[, variable := "Load factor"]
     print("No policy induced changes to the loadfactor")
   }
 
@@ -56,7 +56,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
     scenSpecEnIntensity[, variable := "Energy intensity sales"]
     print("Policy induced changes to the energy intensity were applied")
   } else {
-    scenSpecEnIntensity <- inputDataRaw$energyIntensity[, variable := "Energy intensity sales"]
+    scenSpecEnIntensity <- copy(inputDataRaw$energyIntensityRaw)[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
 

@@ -22,8 +22,10 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                                     baseYear, policyStartYear, helpers) {
 
   # interpolate SSP specific elasticities based on GDP PPP per capita ----------------------------
+  GDPperCapitaPPP <- copy(GDPperCapitaPPP)[, c("variable", "unit") := NULL]
   setnames(GDPperCapitaPPP, "value", "regionGDPpcPPP")
   GDPperCapitaPPP <- GDPperCapitaPPP[period %in% helpers$lowTimeRes]
+  POP <- copy(POP)[, c("variable", "unit") := NULL]
   POP <- POP[period %in% helpers$lowTimeRes]
 
   approxElasticities <- function(category, elasticityGDPValues, GDPpc) {
@@ -43,6 +45,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
                                                  scenParDemRegression, GDPperCapitaPPP[period >= policyStartYear]))
   regionalIncomeElasticities <- rbind(regionalIncomeElasticities, scenSpecRegionalIncomeElasticities)
+
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,

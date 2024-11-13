@@ -1,4 +1,4 @@
-#' Load fuel prices from a REMIND fulldata.gdx in [US$2017/MJ] and map them on to
+#' Load fuel prices from a REMIND fulldata.gdx in [US$/MJ] and map them on to
 #' the edgeTransport decision tree. The output is provided in the same spatial resolution
 #' as the transferred gdx file and the temporal resolution is set according to the param yrs.
 #'
@@ -11,6 +11,7 @@
 #' @importFrom gdx readGDX
 #' @importFrom magclass lowpass
 #' @importFrom magrittr `%>%`
+#' @export
 
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
  value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL
@@ -23,21 +24,14 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    # load prices from REMIND gdx
    fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
 
-   fuelCosts <- GDPuc::toolConvertGDP(
-     gdp = fuelCosts,
-     unit_in = "constant 2005 US$MER",
-     unit_out = "constant 2017 US$MER",
-     replace_NAs = "with_USA"
-   )
-
    ## smooth prices from REMIND gdx (over years) and convert to data.table
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
    setnames(fuelCosts, c("all_regi", "ttot"), c("region", "period"))
    fuelCosts <- fuelCosts[, c("region", "period", "all_enty", "value")]
-   # convert from TerraUS$2017 per TWyear to US$2017 per EJ
+   # convert from TerraUS$ per TWyear to US$ per EJ
    tdptwyr2dpgj <- 31.71  # TerraDollar per TWyear to Dollar per GJ
    GJtoMJ <- 1e-3 # dollar per GJ to dollar per MJ
-   fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$2017/MJ
+   fuelCosts[, value := value * tdptwyr2dpgj * GJtoMJ] # US$/MJ
    # map on EDGE-T structure
    fuelCosts <- merge(fuelCosts, mapEdgeToREMIND, by = "all_enty", all.y = TRUE, allow.cartesian = TRUE)[, all_enty := NULL]
 
@@ -58,7 +52,8 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
      print("Values are filtered out and are interpolated from other timesteps.")
    }
 
-   fuelCosts[, variable := "Fuel costs"][, unit := "US$2017/MJ"]
+   monUnit <- gsub(".*?(\\d{4}).*", "US$\\1", mrdrivers::toolGetUnitDollar())
+   fuelCosts[, variable := "Fuel costs"][, unit := paste0(monUnit, "/MJ")]
 
    # get right temporal resolution
    fuelCosts <- toolApplyMixedTimeRes(fuelCosts, helpers)
