@@ -8028,7 +8028,7 @@ SSP2;MEA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP2;MEA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;9.164e-01;2.857e-01;1.000e+00;1.000e+00;1.000e+00
 SSP2;MEA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NEN;;;;;Cycle;trn_pass;S1S;3.033e-03;3.024e-03;2.621e-03;1.820e-02;1.820e-02
-SSP2;NEN;;;;;Domestic Aviation;trn_pass;S1S;1.442e-05;7.535e-06;2.449e-06;1.428e-06;1.428e-06
+SSP2;NEN;;;;;Domestic Aviation;trn_pass;S1S;1.082e-05;7.535e-06;2.449e-06;1.428e-06;1.428e-06
 SSP2;NEN;;;;;Domestic Ship;trn_freight;S1S;3.175e-02;3.175e-02;3.175e-02;3.175e-02;3.175e-02
 SSP2;NEN;;;;;Freight Rail;trn_freight;S1S;1.925e-02;1.925e-02;1.925e-02;1.925e-02;1.925e-02
 SSP2;NEN;;;;;HSR;trn_pass;S1S;2.000e-05;4.532e-05;7.364e-06;5.523e-06;5.523e-06
@@ -8038,7 +8038,7 @@ SSP2;NEN;;;;;Passenger Rail;trn_pass;S1S;3.000e-06;2.967e-06;6.751e-07;3.215e-07
 SSP2;NEN;;;;;Walk;trn_pass;S1S;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NEN;;;;;trn_freight_road;trn_freight;S1S;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NEN;;;;;trn_pass_road;trn_pass;S1S;4.960e-02;6.868e-02;2.790e-02;2.325e-02;2.325e-02
-SSP2;NEN;;;;Bus;trn_pass_road;trn_pass;S2S1;1.030e-02;8.044e-03;4.022e-03;2.011e-03;2.011e-03
+SSP2;NEN;;;;Bus;trn_pass_road;trn_pass;S2S1;1.287e-02;8.044e-03;4.022e-03;2.011e-03;2.011e-03
 SSP2;NEN;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NEN;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;3.994e-02;3.994e-02;3.994e-02;3.994e-02;3.994e-02
 SSP2;NEN;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
@@ -8106,8 +8106,8 @@ SSP2;NES;;;;;International Ship;trn_shipping_intl;S1S;1.000e+00;1.000e+00;1.000e
 SSP2;NES;;;;;Passenger Rail;trn_pass;S1S;1.607e-03;1.148e-03;7.303e-04;4.017e-04;4.017e-04
 SSP2;NES;;;;;Walk;trn_pass;S1S;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NES;;;;;trn_freight_road;trn_freight;S1S;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
-SSP2;NES;;;;;trn_pass_road;trn_pass;S1S;3.272e-01;2.818e-01;2.242e-01;1.233e-01;1.233e-01
-SSP2;NES;;;;Bus;trn_pass_road;trn_pass;S2S1;6.301e-02;3.734e-02;2.240e-02;2.240e-02;2.240e-02
+SSP2;NES;;;;;trn_pass_road;trn_pass;S1S;2.727e-01;2.818e-01;2.242e-01;1.233e-01;1.233e-01
+SSP2;NES;;;;Bus;trn_pass_road;trn_pass;S2S1;6.721e-02;3.734e-02;2.240e-02;2.240e-02;2.240e-02
 SSP2;NES;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
 SSP2;NES;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;4.923e-03;4.923e-03;4.923e-03;4.923e-03;4.923e-03
 SSP2;NES;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.000e+00;1.000e+00;1.000e+00;1.000e+00;1.000e+00
