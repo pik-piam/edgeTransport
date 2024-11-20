@@ -1,6 +1,8 @@
 # testthat snapshots are machine-generated regression tests that
 # have to be preserved exactly as they are
-exclude: '^tests/testthat/_snaps/.*$'
+# PRtest is a routine manually generated and is used independetly 
+# but stored in edgeTRansport package for versioning
+exclude: '^(tests/testthat/_snaps/.*$|tests/PRtest/)'
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 2c9f875913ee60ca25ce70243dc24d5b6415598c  # frozen: v4.6.0
