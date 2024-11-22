@@ -5668,7 +5668,7 @@ SDP_RC;USA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road
 SDP_RC;USA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.5382;0.3524;0.3524
 SDP_RC;USA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.3588;0.3588
 SSP1;CAZ;;;;;Cycle;trn_pass;S1S;0.01911;0.03822;0.03822;0.07645;0.07645
-SSP1;CAZ;;;;;Domestic Aviation;trn_pass;S1S;0.001432;0.0003817;0.0004532;0.0004773;0.0004773
+SSP1;CAZ;;;;;Domestic Aviation;trn_pass;S1S;0.001432;0.001145;0.0004532;0.0004773;0.0004773
 SSP1;CAZ;;;;;Domestic Ship;trn_freight;S1S;0.01583;0.01583;0.01583;0.01583;0.01583
 SSP1;CAZ;;;;;Freight Rail;trn_freight;S1S;0.107;0.1605;0.1605;0.1445;0.1445
 SSP1;CAZ;;;;;HSR;trn_pass;S1S;8.79E-08;8.79E-05;0.0002638;0.0002638;0.0002638
@@ -5738,7 +5738,7 @@ SSP1;CAZ;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;CAZ;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;CAZ;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;CHA;;;;;Cycle;trn_pass;S1S;0.09454;0.04412;0.03782;0.04848;0.04848
-SSP1;CHA;;;;;Domestic Aviation;trn_pass;S1S;0.12;0.00678;0.004363;0.0008393;0.0008393
+SSP1;CHA;;;;;Domestic Aviation;trn_pass;S1S;0.12;0.02034;0.004363;0.0008393;0.0008393
 SSP1;CHA;;;;;Domestic Ship;trn_freight;S1S;0.01847;0.01922;0.02232;0.02232;0.02232
 SSP1;CHA;;;;;Freight Rail;trn_freight;S1S;0.03204;0.05355;0.05693;0.05693;0.05693
 SSP1;CHA;;;;;HSR;trn_pass;S1S;0.2402;0.08143;0.01916;0.003695;0.003695
@@ -5805,7 +5805,7 @@ SSP1;CHA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;CHA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.6711;0.56;0.56
 SSP1;CHA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5703;0.5703
 SSP1;DEU;;;;;Cycle;trn_pass;S1S;0.042;0.025;0.025;0.1875;0.1875
-SSP1;DEU;;;;;Domestic Aviation;trn_pass;S1S;6.6E-05;1.49E-05;1.49E-05;1.49E-05;1.49E-05
+SSP1;DEU;;;;;Domestic Aviation;trn_pass;S1S;6.6E-05;4.47E-05;1.49E-05;1.49E-05;1.49E-05
 SSP1;DEU;;;;;Domestic Ship;trn_freight;S1S;0.004;0.002127;0.002127;0.002127;0.002127
 SSP1;DEU;;;;;Freight Rail;trn_freight;S1S;0.032;0.042;0.042;0.042;0.042
 SSP1;DEU;;;;;HSR;trn_pass;S1S;0.00018;0.00025;0.000625;0.000625;0.000625
@@ -5872,7 +5872,7 @@ SSP1;DEU;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;DEU;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5919;0.5919
 SSP1;DEU;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.737;0.5741;0.5741
 SSP1;ECE;;;;;Cycle;trn_pass;S1S;0.01942;0.01942;0.09709;0.1092;0.1092
-SSP1;ECE;;;;;Domestic Aviation;trn_pass;S1S;6.98E-05;1.75E-05;1.75E-05;4.91E-06;4.91E-06
+SSP1;ECE;;;;;Domestic Aviation;trn_pass;S1S;6.98E-05;5.25E-05;1.75E-05;4.91E-06;4.91E-06
 SSP1;ECE;;;;;Domestic Ship;trn_freight;S1S;0.0003966;0.0003966;0.0003966;0.0003966;0.0003966
 SSP1;ECE;;;;;Freight Rail;trn_freight;S1S;0.06019;0.09029;0.08125;0.08125;0.08125
 SSP1;ECE;;;;;HSR;trn_pass;S1S;0.0001139;0.0001708;0.0004555;0.0003202;0.0003202
@@ -6006,7 +6006,7 @@ SSP1;ECS;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;ECS;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;ECS;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;ENC;;;;;Cycle;trn_pass;S1S;0.025;0.025;0.05556;0.1;0.1
-SSP1;ENC;;;;;Domestic Aviation;trn_pass;S1S;5.97E-05;1.49E-05;1.33E-05;5.97E-06;5.97E-06
+SSP1;ENC;;;;;Domestic Aviation;trn_pass;S1S;5.97E-05;4.47E-05;1.33E-05;5.97E-06;5.97E-06
 SSP1;ENC;;;;;Domestic Ship;trn_freight;S1S;0.01246;0.01246;0.01246;0.01246;0.01246
 SSP1;ENC;;;;;Freight Rail;trn_freight;S1S;0.02928;0.04392;0.04392;0.04392;0.04392
 SSP1;ENC;;;;;HSR;trn_pass;S1S;0.000125;0.00025;0.0002222;0.0002;0.0002
@@ -6075,7 +6075,7 @@ SSP1;ENC;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;ENC;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5549;0.5549
 SSP1;ENC;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.783;0.5383;0.5383
 SSP1;ESC;;;;;Cycle;trn_pass;S1S;0.01942;0.02184;0.04369;0.1638;0.1638
-SSP1;ESC;;;;;Domestic Aviation;trn_pass;S1S;0.0001286;9.04E-06;9.04E-06;1.81E-05;1.81E-05
+SSP1;ESC;;;;;Domestic Aviation;trn_pass;S1S;0.0001286;9.04E-05;9.04E-06;1.81E-05;1.81E-05
 SSP1;ESC;;;;;Domestic Ship;trn_freight;S1S;0.01209;0.01209;0.01209;0.01209;0.01209
 SSP1;ESC;;;;;Freight Rail;trn_freight;S1S;0.004094;0.006141;0.006141;0.006141;0.006141
 SSP1;ESC;;;;;HSR;trn_pass;S1S;0.0006613;0.000186;0.00062;0.00062;0.00062
@@ -6209,7 +6209,7 @@ SSP1;ESW;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;ESW;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.481;0.481
 SSP1;ESW;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.7273;0.4666;0.4666
 SSP1;EWN;;;;;Cycle;trn_pass;S1S;0.01;0.01;0.05;0.1;0.1
-SSP1;EWN;;;;;Domestic Aviation;trn_pass;S1S;4.77E-05;1.19E-05;1.19E-05;1.19E-06;1.19E-06
+SSP1;EWN;;;;;Domestic Aviation;trn_pass;S1S;4.77E-05;3.57E-05;1.19E-05;1.19E-06;1.19E-06
 SSP1;EWN;;;;;Domestic Ship;trn_freight;S1S;0.006261;0.006957;0.006261;0.006261;0.006261
 SSP1;EWN;;;;;Freight Rail;trn_freight;S1S;0.0127;0.02116;0.01905;0.01905;0.01905
 SSP1;EWN;;;;;HSR;trn_pass;S1S;0.0001;0.0001;0.0004;0.0002;0.0002
@@ -6276,7 +6276,7 @@ SSP1;EWN;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;EWN;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5708;0.5708
 SSP1;EWN;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.7806;0.5536;0.5536
 SSP1;FRA;;;;;Cycle;trn_pass;S1S;0.01942;0.02184;0.03641;0.1019;0.1019
-SSP1;FRA;;;;;Domestic Aviation;trn_pass;S1S;0.0001169;1.64E-05;1.1E-05;5.48E-06;5.48E-06
+SSP1;FRA;;;;;Domestic Aviation;trn_pass;S1S;0.0001169;8.2E-05;1.1E-05;5.48E-06;5.48E-06
 SSP1;FRA;;;;;Domestic Ship;trn_freight;S1S;0.003419;0.003419;0.003419;0.003419;0.003419
 SSP1;FRA;;;;;Freight Rail;trn_freight;S1S;0.01799;0.02698;0.02698;0.02698;0.02698
 SSP1;FRA;;;;;HSR;trn_pass;S1S;0.0003359;0.0002267;0.0002015;0.0002015;0.0002015
@@ -6410,7 +6410,7 @@ SSP1;IND;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;IND;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.9164;0.4277;1;1;1
 SSP1;IND;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;JPN;;;;;Cycle;trn_pass;S1S;0.01743;0.01743;0.03486;0.01961;0.01961
-SSP1;JPN;;;;;Domestic Aviation;trn_pass;S1S;0.0001729;5.19E-05;7.78E-05;2.19E-05;2.19E-05
+SSP1;JPN;;;;;Domestic Aviation;trn_pass;S1S;0.0001729;0.0002076;7.78E-05;2.19E-05;2.19E-05
 SSP1;JPN;;;;;Domestic Ship;trn_freight;S1S;0.01167;0.01111;0.01167;0.01167;0.01167
 SSP1;JPN;;;;;Freight Rail;trn_freight;S1S;0.002833;0.004047;0.004249;0.004249;0.004249
 SSP1;JPN;;;;;HSR;trn_pass;S1S;0.0004081;0.0004081;0.0004591;0.0001291;0.0001291
@@ -6477,7 +6477,7 @@ SSP1;JPN;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;JPN;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.8457;0.01709;0.05857;0.5536;0.5536
 SSP1;JPN;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5637;0.5637
 SSP1;LAM;;;;;Cycle;trn_pass;S1S;0.01091;0.02182;0.05455;0.2728;0.2728
-SSP1;LAM;;;;;Domestic Aviation;trn_pass;S1S;0.008921;0.002975;0.007435;0.005575;0.005575
+SSP1;LAM;;;;;Domestic Aviation;trn_pass;S1S;0.008921;0.007437;0.007435;0.005575;0.005575
 SSP1;LAM;;;;;Domestic Ship;trn_freight;S1S;0.0097;0.0097;0.008908;0.006736;0.006736
 SSP1;LAM;;;;;Freight Rail;trn_freight;S1S;0.04782;0.07173;0.06587;0.05978;0.05978
 SSP1;LAM;;;;;HSR;trn_pass;S1S;0.005236;0.2905;0.2905;0.2905;0.2905
@@ -6547,7 +6547,7 @@ SSP1;LAM;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;LAM;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;LAM;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;MEA;;;;;Cycle;trn_pass;S1S;0.0166;0.0166;0.0166;0.04149;0.04149
-SSP1;MEA;;;;;Domestic Aviation;trn_pass;S1S;0.008522;0.00142;0.00426;0.00625;0.00625
+SSP1;MEA;;;;;Domestic Aviation;trn_pass;S1S;0.008522;0.00426;0.00426;0.00625;0.00625
 SSP1;MEA;;;;;Domestic Ship;trn_freight;S1S;0.00206;0.00206;0.00206;0.00206;0.00206
 SSP1;MEA;;;;;Freight Rail;trn_freight;S1S;0.003202;0.004803;0.004803;0.004803;0.004803
 SSP1;MEA;;;;;HSR;trn_pass;S1S;0;0.01667;0.01667;0.01667;0.01667
@@ -6611,7 +6611,7 @@ SSP1;MEA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;MEA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.9164;0.2857;1;1;1
 SSP1;MEA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;NEN;;;;;Cycle;trn_pass;S1S;0.003033;0.003024;0.002621;0.0182;0.0182
-SSP1;NEN;;;;;Domestic Aviation;trn_pass;S1S;7.21E-06;1.88E-06;6.12E-07;3.57E-07;3.57E-07
+SSP1;NEN;;;;;Domestic Aviation;trn_pass;S1S;7.21E-06;9.4E-06;6.12E-07;3.57E-07;3.57E-07
 SSP1;NEN;;;;;Domestic Ship;trn_freight;S1S;0.03175;0.03175;0.03175;0.03175;0.03175
 SSP1;NEN;;;;;Freight Rail;trn_freight;S1S;0.01925;0.02888;0.02888;0.02888;0.02888
 SSP1;NEN;;;;;HSR;trn_pass;S1S;2E-05;4.53E-05;7.36E-06;5.52E-06;5.52E-06
@@ -6680,7 +6680,7 @@ SSP1;NEN;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;NEN;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.5771;0.5771
 SSP1;NEN;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.8457;0.5598;0.5598
 SSP1;NES;;;;;Cycle;trn_pass;S1S;0.008738;0.007802;0.009929;0.01365;0.01365
-SSP1;NES;;;;;Domestic Aviation;trn_pass;S1S;0.004721;0.000843;0.0003577;9.84E-05;9.84E-05
+SSP1;NES;;;;;Domestic Aviation;trn_pass;S1S;0.004721;0.004215;0.0003577;9.84E-05;9.84E-05
 SSP1;NES;;;;;Domestic Ship;trn_freight;S1S;0.01468;0.01468;0.01468;0.01322;0.01322
 SSP1;NES;;;;;Freight Rail;trn_freight;S1S;0.01697;0.02545;0.02545;0.02545;0.02545
 SSP1;NES;;;;;HSR;trn_pass;S1S;0.0005085;0.0003632;0.0002311;0.0001271;0.0001271
@@ -6749,7 +6749,7 @@ SSP1;NES;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;NES;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;NES;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;OAS;;;;;Cycle;trn_pass;S1S;0.01256;0.03616;0.04821;0.1205;0.1205
-SSP1;OAS;;;;;Domestic Aviation;trn_pass;S1S;0.02456;0.00921;0.0129;0.03315;0.03315
+SSP1;OAS;;;;;Domestic Aviation;trn_pass;S1S;0.02456;0.02303;0.0129;0.03315;0.03315
 SSP1;OAS;;;;;Domestic Ship;trn_freight;S1S;0.03712;0.03375;0.02856;0.027;0.027
 SSP1;OAS;;;;;Freight Rail;trn_freight;S1S;0.04736;0.06457;0.05464;0.05166;0.05166
 SSP1;OAS;;;;;HSR;trn_pass;S1S;0.000966;0.004347;0.004347;0.005796;0.005796
@@ -6819,7 +6819,7 @@ SSP1;OAS;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;OAS;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;OAS;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;REF;;;;;Cycle;trn_pass;S1S;0.01379;0.0149;0.0745;0.07824;0.07824
-SSP1;REF;;;;;Domestic Aviation;trn_pass;S1S;0.03574;0.00925;0.01156;0.003468;0.003468
+SSP1;REF;;;;;Domestic Aviation;trn_pass;S1S;0.03574;0.02775;0.01156;0.003468;0.003468
 SSP1;REF;;;;;Domestic Ship;trn_freight;S1S;0.007227;0.007227;0.007227;0.007227;0.007227
 SSP1;REF;;;;;Freight Rail;trn_freight;S1S;0.1296;0.1944;0.1944;0.1944;0.1944
 SSP1;REF;;;;;HSR;trn_pass;S1S;0;0.002516;0.002516;0.000755;0.000755
@@ -6887,7 +6887,7 @@ SSP1;REF;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;REF;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;REF;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;SSA;;;;;Cycle;trn_pass;S1S;0.01388;0.01987;0.02915;0.03279;0.03279
-SSP1;SSA;;;;;Domestic Aviation;trn_pass;S1S;0.008602;0.01347;0.009878;0.001481;0.001481
+SSP1;SSA;;;;;Domestic Aviation;trn_pass;S1S;0.008602;0.009429;0.009878;0.001481;0.001481
 SSP1;SSA;;;;;Domestic Ship;trn_freight;S1S;0.001495;0.001495;0.001495;0.001495;0.001495
 SSP1;SSA;;;;;Freight Rail;trn_freight;S1S;0.01665;0.02498;0.02498;0.02247;0.02247
 SSP1;SSA;;;;;HSR;trn_pass;S1S;1.48E-05;2.22E-05;0.06504;0.009756;0.009756
@@ -6955,7 +6955,7 @@ SSP1;SSA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;SSA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;SSA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP1;UKI;;;;;Cycle;trn_pass;S1S;0.025;0.01092;0.03277;0.06553;0.06553
-SSP1;UKI;;;;;Domestic Aviation;trn_pass;S1S;5.97E-05;2.23E-06;2.23E-06;2.23E-06;2.23E-06
+SSP1;UKI;;;;;Domestic Aviation;trn_pass;S1S;5.97E-05;2.23E-05;2.23E-06;2.23E-06;2.23E-06
 SSP1;UKI;;;;;Domestic Ship;trn_freight;S1S;0.00867;0.00867;0.00867;0.00867;0.00867
 SSP1;UKI;;;;;Freight Rail;trn_freight;S1S;0.00618;0.00927;0.00927;0.00927;0.00927
 SSP1;UKI;;;;;HSR;trn_pass;S1S;0.000125;0.0001334;0.0001779;0.0002224;0.0002224
@@ -7024,7 +7024,7 @@ SSP1;UKI;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP1;UKI;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;0.6165;0.6165
 SSP1;UKI;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;0.8543;0.5981;0.5981
 SSP1;USA;;;;;Cycle;trn_pass;S1S;0.008197;0.008197;0.008197;0.04098;0.04098
-SSP1;USA;;;;;Domestic Aviation;trn_pass;S1S;0.001009;0.0003817;0.0004295;0.0002625;0.0002625
+SSP1;USA;;;;;Domestic Aviation;trn_pass;S1S;0.001009;0.0007634;0.0004295;0.0002625;0.0002625
 SSP1;USA;;;;;Domestic Ship;trn_freight;S1S;0.003267;0.003267;0.003267;0.003267;0.003267
 SSP1;USA;;;;;Freight Rail;trn_freight;S1S;0.03427;0.0514;0.0514;0.0514;0.0514
 SSP1;USA;;;;;HSR;trn_pass;S1S;4.53E-06;4.53E-06;4.53E-06;0.0002265;0.0002265
@@ -7097,7 +7097,7 @@ SSP2;CAZ;;;;;trn_freight_road;trn_freight;S1S;1;1;1;1;1
 SSP2;CAZ;;;;;trn_pass_road;trn_pass;S1S;0.1509;0.1509;0.1509;0.1509;0.1509
 SSP2;CAZ;;;;Bus;trn_pass_road;trn_pass;S2S1;0.08852;0.08852;0.1107;0.1402;0.1402
 SSP2;CAZ;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1;1;1;1;1
-SSP2;CAZ;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.04;0.034;0.03;0.02;0.02
+SSP2;CAZ;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.999;0.034;0.03;0.02;0.02
 SSP2;CAZ;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1;1;1;1;1
 SSP2;CAZ;;Compact Car;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;VS3;0.1291;0.1291;0.1291;0.1291;0.1291
 SSP2;CAZ;;Large Car;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;VS3;0.3264;0.3264;0.3264;0.3264;0.3264
@@ -7225,7 +7225,7 @@ SSP2;DEU;;;;;Cycle;trn_pass;S1S;0.042;0.05;0.07;0.1875;0.1875
 SSP2;DEU;;;;;Domestic Aviation;trn_pass;S1S;6.6E-05;6.2E-05;5.97E-05;5.97E-05;5.97E-05
 SSP2;DEU;;;;;Domestic Ship;trn_freight;S1S;0.004;0.004;0.004;0.004;0.004
 SSP2;DEU;;;;;Freight Rail;trn_freight;S1S;0.032;0.032;0.032;0.032;0.032
-SSP2;DEU;;;;;HSR;trn_pass;S1S;0.00018;0.0002;0.0003;0.0004;0.0005
+SSP2;DEU;;;;;HSR;trn_pass;S1S;0.00018;0.0002;0.0003;0.0004;0.0004
 SSP2;DEU;;;;;International Aviation;trn_aviation_intl;S1S;1;1;1;1;1
 SSP2;DEU;;;;;International Ship;trn_shipping_intl;S1S;1;1;1;1;1
 SSP2;DEU;;;;;Passenger Rail;trn_pass;S1S;0.0032;0.004;0.0042;0.0042;0.0042
