@@ -94,6 +94,40 @@ plotStandardScenarios <- function(folderNameD, defScenN, refFolderD = NULL){
   	mifs,
   	mifHist,
   	outDir,
+  	outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "2050_EUR.pdf"),
+  	outputFormat = "pdf",
+  	mifScenNames = scenNames,
+  	yearsScen = c(seq(2005, 2050, 5)),
+	yearsHist = c(seq(1960, 2020, 1), seq(2025, 2050, 5)),
+	yearsBarPlot = c(2020, 2030, 2040, 2050),
+	sections = sec,
+  	reg = c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR"),
+  	mainReg = "EUR"
+	)
+
+	#H12
+	piamPlotComparison::compareScenarios(
+  	projectLibrary = "reporttransport",
+  	mifs, 
+  	mifHist,
+  	outDir,
+  	outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "2050_H12.pdf"),
+  	outputFormat = "pdf",
+  	mifScenNames = scenNames,
+  	yearsScen = c(seq(2005, 2050, 5)),
+	yearsHist = c(seq(1960, 2020, 1), seq(2025, 2050, 5)),
+	yearsBarPlot = c(2020, 2030, 2040, 2050),
+	sections = sec,
+  	reg = c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World"),
+  	mainReg = "World"
+	)
+	
+	#EU21
+	piamPlotComparison::compareScenarios(
+  	projectLibrary = "reporttransport",
+  	mifs,
+  	mifHist,
+  	outDir,
   	outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR.pdf"),
   	outputFormat = "pdf",
   	mifScenNames = scenNames,
