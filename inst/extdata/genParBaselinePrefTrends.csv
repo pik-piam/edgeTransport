@@ -6416,10 +6416,10 @@ SSP1;JPN;;;;;Freight Rail;trn_freight;S1S;0.002833;0.004047;0.004249;0.004249;0.
 SSP1;JPN;;;;;HSR;trn_pass;S1S;0.0004081;0.0002857;0.0003673;0.0001033;0.0001033
 SSP1;JPN;;;;;International Aviation;trn_aviation_intl;S1S;1;1;1;1;1
 SSP1;JPN;;;;;International Ship;trn_shipping_intl;S1S;1;1;1;1;1
-SSP1;JPN;;;;;Passenger Rail;trn_pass;S1S;0.006084;0.00426;0.0056;0.001825;0.001825
-SSP1;JPN;;;;;Walk;trn_pass;S1S;1;0.35;1;1;1
+SSP1;JPN;;;;;Passenger Rail;trn_pass;S1S;0.006084;0.006085;0.0084;0.00365;0.00365
+SSP1;JPN;;;;;Walk;trn_pass;S1S;1;0.5;1;1;1
 SSP1;JPN;;;;;trn_freight_road;trn_freight;S1S;1;1;1;1;1
-SSP1;JPN;;;;;trn_pass_road;trn_pass;S1S;0.07113;0.0534;0.0534;0.01502;0.01502
+SSP1;JPN;;;;;trn_pass_road;trn_pass;S1S;0.07113;0.04195;0.04195;0.0118;0.0118
 SSP1;JPN;;;;Bus;trn_pass_road;trn_pass;S2S1;0.06081;0.09122;0.09122;0.09122;0.09122
 SSP1;JPN;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1;1;1;1;1
 SSP1;JPN;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.07;0.06;0.05491;0.05491;0.05491
