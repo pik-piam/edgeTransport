@@ -81,6 +81,14 @@ plotStandardScenarios <- function(folderNameD, defScenN, refFolderD = NULL){
 	mifs <- list.files(testDirs, "Transport.mif", full.names = TRUE, recursive = TRUE)
 
 	mifs <- mifs[grep(allScens$transportPolScen[n], mifs)]
+	mifs <- mifs[grep("SSP2", mifs)]
+	mifs <- mifs[grep("demRed", mifs, invert = TRUE)]
+	if (2 != length(mifs)) {
+		cat("ERROR: Wrong number of mifs selected.")
+		cat(mifs)
+		cat(" ")
+		quit(save = 'no', status = 1)
+	}
 	scenNames <- c(allScens$scenName1[n], allScens$scenName2[n])
 	filename <- allScens$filename[n]
 	outDir <- file.path(folderNameD, filename)
