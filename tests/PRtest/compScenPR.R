@@ -56,6 +56,14 @@ plotStandardScenarios <- function(refFolderD, defScenN = 2){
 	mifs <- list.files(testDirs, "Transport.mif", full.names = TRUE, recursive = TRUE)
 
 	mifs <- mifs[grep(allScens$transportPolScen[n], mifs)]
+	mifs <- mifs[grep("SSP2", mifs)]
+	mifs <- mifs[grep("demRed", mifs, invert = TRUE)]
+	if (2 != length(mifs)) {
+		cat("ERROR: Wrong number of mifs selected.")
+		cat(mifs)
+		cat(" ")
+		quit(save = 'no', status = 1)
+	}
 	scenNames <- c(allScens$scenName1[n], allScens$scenName2[n])
 	filename <- allScens$filename[n]
 	outDir <- file.path(current_path, filename)
@@ -63,6 +71,40 @@ plotStandardScenarios <- function(refFolderD, defScenN = 2){
 	
 	sec <- c("00_info", "01_energy_demand","02_energy_services","03_energy_intensity", "04_stock_and_sales", "05_emissions", "06_input_parameters", "08_transportRemindInputfiles")
 
+	#EU21
+	piamPlotComparison::compareScenarios(
+  	projectLibrary = "reporttransport",
+  	mifs,
+  	mifHist,
+  	outDir,
+  	outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR-short.pdf"),
+  	outputFormat = "pdf",
+  	mifScenNames = scenNames,
+  	sections = sec,
+  	yearsScen = c(seq(2005, 2050, 5)),
+	yearsHist = c(seq(1960, 2020, 1), seq(2025, 2050, 5)),
+	yearsBarPlot = c(2020, 2030, 2040, 2050),
+  	reg = c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR"),
+  	mainReg = "EUR"
+	)
+
+	#H12
+	piamPlotComparison::compareScenarios(
+  	projectLibrary = "reporttransport",
+  	mifs, 
+  	mifHist,
+  	outDir,
+  	outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "H12-short.pdf"),
+  	outputFormat = "pdf",
+  	mifScenNames = scenNames,
+  	sections = sec,
+  	reg = c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World"),
+  	yearsScen = c(seq(2005, 2050, 5)),
+	yearsHist = c(seq(1960, 2020, 1), seq(2025, 2050, 5)),
+	yearsBarPlot = c(2020, 2030, 2040, 2050),
+  	mainReg = "World"
+	)
+	
 	#EU21
 	piamPlotComparison::compareScenarios(
   	projectLibrary = "reporttransport",
