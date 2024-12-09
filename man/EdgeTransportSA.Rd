@@ -9,7 +9,6 @@ calcEdgeTransportSA(
   transportPolScen,
   isICEban = FALSE,
   demScen = "default",
-  gdxPath = NULL,
   outputFolder = NULL,
   isStored = FALSE,
   isTransportReported = TRUE,
@@ -26,8 +25,6 @@ calcEdgeTransportSA(
 \item{isICEban}{optional enabling of ICE ban}
 
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
-
-\item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
 \item{outputFolder}{Path to folder for storing output data}
 
