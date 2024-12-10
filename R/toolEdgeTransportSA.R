@@ -8,7 +8,6 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
-#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
 #' @param isTransportReported Optional transport reporting in MIF format
@@ -25,7 +24,6 @@ toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = FALSE,
                                 demScen = "default",
-                                gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
                                 isTransportReported = TRUE,
@@ -46,11 +44,8 @@ toolEdgeTransportSA <- function(SSPscen,
   ## Load input data
   ########################################################
   if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
-  if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
-                                              "REMINDinputForTransportStandalone", "v1.2", "fulldata.gdx")}
-  if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
 
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
 
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
@@ -229,7 +224,6 @@ toolEdgeTransportSA <- function(SSPscen,
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
-    gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,
     fleetSizeAndComposition = fleetSizeAndComposition,
