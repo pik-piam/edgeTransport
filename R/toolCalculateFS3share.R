@@ -40,7 +40,7 @@ toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preference
   # second the VS3 share needs to be calculated
   VS3share <- copy(endoCostData[period %in% timesteps & type == "Monetary costs"])
   VS3share <- merge(VS3share, FVshare, by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"))
-  VS3share <- VS3share[, value := sum(FVshare * value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "type")]
+  VS3share <- VS3share[, .(value = sum(FVshare * value)), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "type")]
   VS3share <- rbind(VS3share, timeValueCosts[vehicleType %in% unique(VS3share$vehicleType)])
   VS3share <- VS3share[, totPrice := sum(value), by = list(region, period, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType)]
   lambdasVS3 <- lambdas[level == "VS3"]
