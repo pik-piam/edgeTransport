@@ -10,6 +10,7 @@
 #' @return data.table containing all cost components on technology level and their respective FS3 shares
 #' @author Johanna Hoppe
 #' @import data.table
+#' @importFrom data.table .
 #' @export
 
 
@@ -31,7 +32,7 @@ toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preference
 
   # first the FV share needs to be calculated
   FVshare <- copy(endoCostData[period %in% timesteps])
-  FVshare <- FVshare[, totPrice := sum(value), by = list(region, period, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType, technology)]
+  FVshare <- FVshare[, .(totPrice = sum(value)), by = .(region, period, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType, technology)]
   FVshare <- merge(FVshare, lambdas[level == "FV"], by = c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType"))
   FVshare[, FVshare := calculateShares(totPrice, lambda), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")][, c("totPrice", "lambda", "level") := NULL]
   FVshare[, testShare := sum(FVshare), by = c("region", "period", "vehicleType")]

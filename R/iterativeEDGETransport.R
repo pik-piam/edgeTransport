@@ -6,6 +6,7 @@
 #' @importFrom gdxrrw rgdx
 #' @importFrom gdx readGDX
 #' @importFrom gdxdt writegdx writegdx.parameter
+#' @importFrom data.table .
 #' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
 #' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @import data.table
@@ -112,7 +113,7 @@ iterativeEdgeTransport <- function() {
         byCols <- names(REMINDfuelCostIterations)
         byCols <- byCols[!byCols %in% c("value", "iteration")]
         REMINDfuelCost <- copy(REMINDfuelCostIterations[iteration >= 20])
-        REMINDfuelCost <- REMINDfuelCost[, value := mean(value), by = eval(byCols)]
+        REMINDfuelCost <- REMINDfuelCost[, .(value = mean(value)), by = eval(byCols)]
       }
     }
   } else {
