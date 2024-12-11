@@ -9,29 +9,32 @@
 
 
 toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYear, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- region <- univocalName <- technology <- FVvehvar <- startYear <- startFade <- endFade <- endYear <- NULL
+  value.x <- value.y <- annualFactor <- annualImprovementRate <- NULL
 
-  #get yearly resolution
+  # get yearly resolution
   enIntYearly <- copy(enInt)
   enIntYearly <- enIntYearly[period >= policyStartYear]
   enIntYearly <- approx_dt(enIntYearly,
                              xdata = unique(enIntYearly$period),
                              xcol = "period",
                              ycol = "value",
-                             extrapolate = T)
+                             extrapolate = TRUE)
 
   enIntNew <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "univocalName", all.y = TRUE)
   enIntNew <- merge(enIntNew, scenParEnergyIntensity, by = c("FVvehvar", "technology"))[, FVvehvar := NULL]
 
-  #Apply efficiency improvement factors provided in scenParEnergyIntensity only after year 2020
+  # Apply efficiency improvement factors provided in scenParEnergyIntensity only after year 2020
   enIntNew[, startYear := ifelse(startYear < policyStartYear, policyStartYear, startYear)]
-  #fade in and fade out time period
+  # fade in and fade out time period
   fadeInOutPeriod <- 15
-  #Define start of fade in and end of fade out period, fade in period delays the improvement from the defined start year
+  # Define start of fade in and end of fade out period, fade in period delays the improvement from the defined start year
   enIntNew[, startFade := startYear]
   enIntNew[, startYear := startFade + fadeInOutPeriod]
   enIntNew[, endFade := endYear + fadeInOutPeriod]
 
-  #Delete rows that are out of time scope
+  # Delete rows that are out of time scope
   enIntNew <- enIntNew[period <= endFade]
   enIntNew[period < startFade, annualFactor := 0,
                 by = c("region", "univocalName", "technology")]
@@ -44,29 +47,31 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
                                                                         / fadeInOutPeriod)) / 100,
                 by = c("region", "univocalName", "technology")]
 
-  #sort data.table
+  # sort data.table
   setkey(enIntNew, region, univocalName, technology, period)
 
-  #Calculate cumulated efficiency factors
+  # Calculate cumulated efficiency factors
   enIntNew[, factor := cumprod(annualFactor),
                 by = c("region", "univocalName", "technology")]
 
-  #Apply factors
+  # Apply factors
   enIntNew[period >= startFade & period <= endFade, value := value * factor,
            by = c("region", "univocalName", "technology")][, c("factor", "startYear", "startFade", "endYear", "endFade", "annualImprovementRate", "annualFactor") := NULL]
-  #Remove yearly resolution for vehicle types that do not feature fleet tracking and extrapolate the timeSteps after the fadeout year to be constant
+  # Remove yearly resolution for vehicle types that do not feature fleet tracking and extrapolate the timeSteps after the fadeout year to be constant
   enIntNew <- toolApplyMixedTimeRes(enIntNew, helpers)
   enIntNew <- enIntNew[period >= policyStartYear]
 
-  #Merge with unaffected enInt data
+  # Merge with unaffected enInt data
   cols <- intersect(names(enInt), names(enIntNew))
   cols <- cols[!cols == "value"]
   enInt <- merge(enInt, enIntNew, by = cols, all.x = TRUE)
   enInt[, value := ifelse(is.na(value.y), value.x, value.y)]
-  #If Baseline efficiency improvements outperform transportPolScen specific improvements after fadeOut year (when the adjusted ones stay contstant), keep the Baseline
+  # If Baseline efficiency improvements outperform transportPolScen specific improvements after fadeOut year (when the adjusted ones stay contstant), keep the Baseline
   enInt[!is.na(value.y), value := ifelse(value.x < value.y, value.x, value.y)][, c("value.x", "value.y") := NULL]
 
-  if (anyNA(enInt) == TRUE) {stop("NAs were introduced whilst applying the scenario specific energy intensity improvements. Please check toolApplyScenSpecEnInt()")}
+  if (anyNA(enInt) == TRUE) {
+stop("NAs were introduced whilst applying the scenario specific energy intensity improvements. Please check toolApplyScenSpecEnInt()")
+}
 
   return(enInt)
   }

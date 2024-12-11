@@ -1,0 +1,167 @@
+#!/bin/bash
+
+help='
+Usage: ./test-standard-runs <folderName> <refFolder=lastFolder> <path=.> 
+
+Creates a new directory <folderName> in <path> and initializes renv there. 
+Starts edgeTransport runs for all four standard policy scenarios and compares data with a previous version located in <refFolder> via compareScenarios.
+
+<folderName> : 	name of the new folder to be generated, ideally relating to a PR
+<refFolder> : 	optional, any unique substring of the folder name as identifier, 
+		runs from this folder are chosen for compScens, shares path with <folderName>
+<path> :	optional, path to <folderName> and <refFolder>, should end with "/"
+
+  -h, --help   show this text and exit
+'
+
+# handle missing input parameters
+if [ $# -lt 1 -o $# -gt 3 ] 
+then
+	echo -e "\e[0;31mERROR: wrong number of arguments\e[31m"
+	echo "$help"
+	exit 1
+fi
+
+# handle help
+if [ "-h" = $1 -o "--help" = $1 ]
+then
+	echo "$help"
+	exit 0
+fi
+
+# get path and folders
+current_date=$(date +"%Y%m%d")
+folder_name="${current_date}_${1}"
+
+if [ $# -eq 1 ] 
+then
+	working_path="$PWD/"
+fi
+
+if [ $# -eq 2 ] 
+then
+	if [[ $2 =~ ['/\'] ]]; then
+		working_path=${2}
+	else
+    		ref_folder=${2}
+		working_path="$PWD/"
+    	fi
+fi
+
+if [ $# -eq 3 ] 
+then
+	ref_folder=${2}
+	working_path=${3}
+fi
+
+echo -e "\e[0;32mOutput folder name: ${folder_name}\e[0m"
+echo -e "\e[0;32mReference folder name for plots: ${ref_folder}\e[0m"
+echo -e "\e[0;32mPath that will be used: ${working_path}\e[0m"
+
+mkdir ${working_path}${folder_name}
+
+# copy scripts for renv set-up and test run of scenarios
+cp /p/projects/edget/PRchangeLog/.helperTestStd/renvfromsource.R ${working_path}${folder_name}/
+cp /p/projects/edget/PRchangeLog/.helperTestStd/PRtestEDGET_ssp.R ${working_path}${folder_name}/
+
+# copy scripts for additional compScen's if needed
+cp /p/projects/edget/PRchangeLog/.helperTestStd/*cluster* ${working_path}${folder_name}/
+cp /p/projects/edget/PRchangeLog/.helperTestStd/submit_cl* ${working_path}${folder_name}/
+
+
+cd ${working_path}${folder_name}
+
+# interactive set-up of renv
+Rscript -e 'renv::init()'
+Rscript -e 'renv::install("renv@1.0.7")'
+Rscript -e '
+renv::record("renv@1.0.7")
+renv::install("madrat") 
+renv::install("mrdrivers")
+renv::install("mrremind")
+renv::install("mrtransport")
+renv::install("dplyr")
+renv::install("tidyr")
+renv::install("tidyverse")
+renv::install("edgeTransport")
+renv::install("reporttransport")
+renv::install("data.table")
+renv::snapshot(type = "all")'
+
+while true; do
+	read -p "Do you want to install (additional) repos from source?" yn
+    case $yn in
+        [Yy]* ) echo -e "\e[0;32mPlease provide your local repository without quotes.\e[0m"; echo -e "\e[0;32mAn absolute local path /p/projects/edget/some/repo or a branch on GitHub username/repo@branch is possible.\e[0m"; read repos;
+        Rscript renvfromsource.R ${repos};;
+        [Nn]* ) break;;
+        * ) echo -e "\e[0;31mPlease answer Y or N.\e[0m";;
+    esac
+done
+
+echo -e "\e[0;32mset up of renv finished\e[0m"
+
+# generate temporary sbatch scripts to sent jobs to slurm
+# Mix1
+cat <<EOL > tmp_submit_test1.sbatch
+#!/bin/bash
+#SBATCH --qos=short
+#SBATCH --job-name=testScen1_edgetPR
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=32000
+#SBATCH --time=05:00:00
+
+srun Rscript PRtestEDGET_ssp.R ${working_path}${folder_name} "1" ${ref_folder}
+EOL
+
+# Mix2 ICEban
+cat <<EOL > tmp_submit_test2.sbatch
+#!/bin/bash
+#SBATCH --qos=short
+#SBATCH --job-name=testScen2_edgetPR
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=32000
+#SBATCH --time=05:00:00
+
+srun Rscript PRtestEDGET_ssp.R ${working_path}${folder_name} "2" ${ref_folder}
+EOL
+
+# Mix3 ICEban
+cat <<EOL > tmp_submit_test3.sbatch
+#!/bin/bash
+#SBATCH --qos=short
+#SBATCH --job-name=testScen3_edgetPR
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=32000
+#SBATCH --time=05:00:00
+
+srun Rscript PRtestEDGET_ssp.R ${working_path}${folder_name} "3" ${ref_folder}
+EOL
+
+# Mix4 ICEban
+cat <<EOL > tmp_submit_test4.sbatch
+#!/bin/bash
+#SBATCH --qos=short
+#SBATCH --job-name=testScen4_edgetPR
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=32000
+#SBATCH --time=05:00:00
+
+srun Rscript PRtestEDGET_ssp.R ${working_path}${folder_name} "4" ${ref_folder}
+EOL
+
+sbatch tmp_submit_test1.sbatch
+sbatch tmp_submit_test2.sbatch
+sbatch tmp_submit_test3.sbatch
+sbatch tmp_submit_test4.sbatch
+
+#cleanup
+rm tmp_submit_test*.sbatch
+rm renvfromsource.R

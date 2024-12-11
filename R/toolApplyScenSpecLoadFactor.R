@@ -8,6 +8,8 @@
 #' @import data.table
 
 toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- univocalName <- NULL
 
   loadFactor <- copy(loadFactor)
   percentChange <- scenParLoadFactor$percentChange
@@ -21,7 +23,7 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policySta
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
       period >= policyStartYear &
       period <= targetYear,
-    value := value * (1 + percentChange * (period - policyStartYear)/(targetYear - policyStartYear))]
+    value := value * (1 + percentChange * (period - policyStartYear) / (targetYear - policyStartYear))]
 
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &

@@ -7,10 +7,12 @@
 
 
 toolCalculateAnnuity <- function(annuityCalc, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  FVvehvar <- serviceLife <- interestRate <- NULL
 
-annuity <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], annuityCalc, by = "FVvehvar", all.y = TRUE)[, FVvehvar := NULL]
-# Calculate annuity factor to annualize CAPEX
-annuity[, annuity := ((1 + interestRate) ^ serviceLife  * interestRate)/((1 + interestRate) ^ serviceLife - 1)][, c("interestRate", "serviceLife") := NULL]
+  annuity <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], annuityCalc, by = "FVvehvar", all.y = TRUE)[, FVvehvar := NULL]
+  # Calculate annuity factor to annualize CAPEX
+  annuity[, annuity := ((1 + interestRate)^serviceLife  * interestRate) / ((1 + interestRate)^serviceLife - 1)][, c("interestRate", "serviceLife") := NULL]
 
-return(annuity)
+  return(annuity)
 }

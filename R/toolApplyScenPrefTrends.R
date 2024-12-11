@@ -11,10 +11,12 @@
 #' @import data.table
 
 toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- region <- variable <- unit <- level <- vehicleType <- FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- NULL
 
-  #function to apply mitigation factors
-  applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1){
-    fct <- exp((year - ysymm)/speed)/(exp((year - ysymm)/speed) + 1)
+  # function to apply mitigation factors
+  applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1) {
+    fct <- exp((year - ysymm) / speed) / (exp((year - ysymm) / speed) + 1)
     initial + fct * (final - initial)
   }
 
