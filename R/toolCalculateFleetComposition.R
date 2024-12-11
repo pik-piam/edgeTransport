@@ -26,7 +26,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- share <- level <- variable <- unit <- univocalName <- subsectorL3 <- testSum <- NULL
-  allYears <- depreciationFactor <- indexUsagePeriod <- demandNewAdditions <- totalESdemand <- NULL
+  allYears <- depreciationFactor <- indexUsagePeriod <- demandNewAdditions <- totalESdemand <- . <- NULL
   vintagesDemand <- earlyRetirement <- earlyRetirementRate <- contribConstrYear <- constrYear <- NULL
 
   highTimeRes <- unique(helpers$dtTimeRes$period)

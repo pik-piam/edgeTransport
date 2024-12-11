@@ -10,14 +10,13 @@
 #' @return data.table containing all cost components on technology level and their respective FS3 shares
 #' @author Johanna Hoppe
 #' @import data.table
-#' @importFrom data.table .
 #' @export
 
 
 toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preferences, lambdas, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- type <- level <- vehicleType <- sector <- subsectorL1 <- subsectorL2 <- subsectorL3 <- vehicleType <- technology <- NULL
-  testShare <- totPrice <- lambda <- pref <- FS3share <- NULL
+  testShare <- totPrice <- lambda <- pref <- FS3share <- . <- NULL
 
   # time costs in [US$/pkm] for traveling with mode X in region Y
   timeValueCosts <- merge(timeValue, unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)

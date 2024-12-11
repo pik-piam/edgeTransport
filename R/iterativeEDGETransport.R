@@ -6,11 +6,11 @@
 #' @importFrom gdxrrw rgdx
 #' @importFrom gdx readGDX
 #' @importFrom gdxdt writegdx writegdx.parameter
-#' @importFrom data.table .
 #' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
 #' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @import data.table
 #' @export
+#'
 
 
 iterativeEdgeTransport <- function() {
@@ -52,7 +52,8 @@ iterativeEdgeTransport <- function() {
   inputFolder <- paste0("./")
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- value <- unit <- univocalName <- iteration <- type <- variable <- NULL
+  period <- value <- unit <- univocalName <- iteration <- type <- variable <- . <- NULL
+
 
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4

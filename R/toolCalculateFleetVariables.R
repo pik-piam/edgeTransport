@@ -1,5 +1,7 @@
 
 toolCalculateFleetVariables <- function(salesData, vehiclesConstrYears, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  value <- share <- . <- subsectorL3 <- NULL
 
   salesData <- merge(salesData, helpers$decisionTree, by = c(intersect(names(salesData), names(helpers$decisionTree))))
   vehiclesConstrYears <- vehiclesConstrYears[, sum := sum(value), by = c("region", "period", "sector", "subsectorL3", "subsectorL2", "subsectorL1", "vehicleType", "technology", "univocalName")]
