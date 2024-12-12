@@ -20,6 +20,7 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Settings
   #############################################################
+  cfg <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"
