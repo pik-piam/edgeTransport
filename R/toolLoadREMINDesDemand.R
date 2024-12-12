@@ -11,7 +11,8 @@
 #' @export
 
 toolLoadREMINDesDemand <- function(gdxPath, helpers) {
-  value <- unit <- variable <- NULL
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  value <- unit <- variable <- all_in <- sector <- NULL
 
   mapEdgeToREMIND <- merge(helpers$mapEdgeToREMIND, unique(helpers$decisionTree[, c("sector", "univocalName")]), by = "univocalName", allow.cartesian = TRUE, all.x = TRUE)
   mapEdgeToREMIND <- mapEdgeToREMIND[!is.na(all_in)]

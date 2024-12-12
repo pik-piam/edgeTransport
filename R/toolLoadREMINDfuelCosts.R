@@ -13,8 +13,10 @@
 #' @importFrom magrittr `%>%`
 #' @export
 
-toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
- value <- unit <- variable <- `Hybrid electric` <- fuel <- NULL
+toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
+  technology <- Liquids <- BEV <- period <- . <- NULL
 
    mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
    # active modes do not feed into all_enty
@@ -22,7 +24,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    decisionTree <- copy(helpers$decisionTree)
 
    # load prices from REMIND gdx
-   fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[,, "trans.ES", pmatch = TRUE]
+   fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
 
    ## smooth prices from REMIND gdx (over years) and convert to data.table
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
@@ -47,7 +49,7 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers){
    # prices before 2020 are often not plausible -> choose 2025 as a start date if previous years are provided
    test <- fuelCosts[period > 2020 & value <= 0.001]
    fuelCosts <- fuelCosts[period > 2020 & value >= 0.001]
-   if(nrow(test)){
+   if (nrow(test)) {
      print(paste("Fuel prices lower than 1$/GJ found. Regions:", paste(unique(test$region), collapse = ", ")))
      print("Values are filtered out and are interpolated from other timesteps.")
    }

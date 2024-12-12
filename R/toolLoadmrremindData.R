@@ -6,21 +6,23 @@
 #' @importFrom rmndt magpie2dt
 
 toolLoadmrremindData <- function(helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- subsectorL3 <- variable <- unit <- . <- NULL
 
   yrs <- unique(helpers$dtTimeRes$period)
 
   subsidies <- magpie2dt(readSource(type = "TransportSubsidies"))
   setnames(subsidies, "variable", "technology")
-  #average between legal and private entities
+  # average between legal and private entities
   subsidies <- subsidies[, .(value = mean(value)), by = c("region", "period", "technology")]
-  subsidies[, value := - value] # count subsidies negative
+  subsidies[, value := -value] # count subsidies negative
   completeSub <- unique(subsidies[, c("region", "technology")])[, temporal := "all"]
   temporal <- data.table(period = yrs)[, temporal := "all"]
   completeSub <- merge(completeSub, temporal, by = "temporal", allow.cartesian = TRUE)[, temporal := NULL]
   subsidies <- merge(subsidies, completeSub, all.y = TRUE, by = c("region", "technology", "period"))
 
   ## year where complete phase-out incentives occurs
-  yearOut = 2030
+  yearOut <- 2030
   ## attribute first (to the countries that have them) the same incentives value until the phase out year
   subsidies[, value := ifelse(period >= 2020 & period <= yearOut, value[period == 2020], 0),
         by = c("region", "technology")]
@@ -31,7 +33,7 @@ toolLoadmrremindData <- function(helpers) {
                      by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   monUnit <- gsub(".*?(\\d{4}).*", "US$\\1", mrdrivers::toolGetUnitDollar())
   subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := paste0(monUnit, "/veh")]
-  #Q: How to include phase out of the incentives? Is that needed at all?
+  # Q: How to include phase out of the incentives? Is that needed at all?
 
 return(list(
   subsidies = subsidies

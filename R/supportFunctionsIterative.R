@@ -7,16 +7,22 @@
 #' @param demScenario demand scenario
 #' @param transportPolScenario Transport policy scenario
 #' @import data.table
+#' @importFrom stats setNames
 #' @export
 
 # Loads the csv input files chooses the correct scenario and
   # converts the files into RDS local files
-  csv2RDS <- function(filename, inputPath, SSPscenario, demScenario, transportPolScenario) {
-    if (filename == "scenSpecPrefTrends") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen", "sector",
-                                                        "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology",
-                                                        "level", "variable", "unit", "value")
-    else if (filename == "initialIncoCosts") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName","technology","variable","unit","type","value")
-    else if (filename == "timeValueCosts") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen", "univocalName", "variable", "unit", "value")
+csv2RDS <- function(filename, inputPath, SSPscenario, demScenario, transportPolScenario) {
+    # bind variables locally to prevent NSE notes in R CMD CHECK
+    SSPscen <- demScen <- transportPolScen <- NULL
+
+    if (filename == "scenSpecPrefTrends") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen",
+                                                        "sector", "subsectorL1", "subsectorL2", "subsectorL3",
+                                                        "vehicleType", "technology", "level", "variable", "unit", "value")
+    else if (filename == "initialIncoCosts") colNames <- c("period", "region", "SSPscen", "demScen", "transportPolScen",
+                                                           "univocalName", "technology", "variable", "unit", "type", "value")
+    else if (filename == "timeValueCosts") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen",
+                                                          "univocalName", "variable", "unit", "value")
     else if (filename == "f29_trpdemand") colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen", "all_in", "value")
     else colNames <-  c("period", "region", "SSPscen", "demScen", "transportPolScen",
                         "univocalName", "technology", "variable", "unit", "value")
@@ -53,6 +59,8 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 #' @export
 
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  transportPolScen <- all_in <- period <- value <- unit <- sector <- variable <- . <- univocalName <- test <- SSPscen <- NULL
 
   # Model input parameters from the package
   ## Exponents discrete choice model
@@ -65,8 +73,9 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters, we can shift annuityCalc to the scenPar's
-  if  (gsub("ICEban", "", transportPolScenario) %in% annuityCalc$transportPolScen){
-    annuityCalc <- annuityCalc[transportPolScen == gsub("ICEban", "", transportPolScenario)][, transportPolScen := NULL]} else {
+  if  (gsub("ICEban", "", transportPolScenario) %in% annuityCalc$transportPolScen) {
+    annuityCalc <- annuityCalc[transportPolScen == gsub("ICEban", "", transportPolScenario)][, transportPolScen := NULL]
+} else {
     annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
   }
 
@@ -99,8 +108,9 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
 
   # Input from REMIND input data
   # In the first iteration input data needs to be loaded
-  if (!dir.exists(file.path(edgeTransportFolder)))  {
-    print("Loading csv data from input folder and creating RDS files...")}
+  if (!dir.exists(file.path(edgeTransportFolder))) {
+    print("Loading csv data from input folder and creating RDS files...")
+}
   RDSfiles <- list()
   for (filename in inputFiles) {
     if (length(list.files(file.path(".", edgeTransportFolder), paste0(filename, ".RDS"), recursive = TRUE, full.names = TRUE)) < 1) {

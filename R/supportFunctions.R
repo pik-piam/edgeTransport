@@ -7,16 +7,36 @@
 #' @export
 
 toolNormalizePreferences <- function(preferenceTab) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  level <- value <- NULL
+
+  # S1S: logit level: distances (e.g. short-medium, long)
   preferenceTab[level == "S1S", max := max(value), by = c("region", "period", "sector")]
-  preferenceTab[level == "S1S" & max != 0, value := value/max(value), by = c("region", "period", "sector")] # S1S: logit level: distances (e.g. short-medium, long)
-  preferenceTab[level == "S2S1", max := max(value), by = c("region", "period", "sector", "subsectorL1")]
-  preferenceTab[level == "S2S1" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1")] # S2S1: logit level: modes/categories (e.g. walk, road, rail)
+  preferenceTab[level == "S1S" & max != 0, value := value / max(value), by = c("region", "period", "sector")]
+
+  # S2S1: logit level: modes/categories (e.g. walk, road, rail)
   preferenceTab[level == "S3S2", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
-  preferenceTab[level == "S3S2" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2")] # S3S2: logit level: modes/technologies (e.g. LDV, bus, Liquids)
-  preferenceTab[level == "VS3", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
-  preferenceTab[level == "VS3" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")] # VS3: logit level: modes/technologies (e.g. cars, Liquids)
-  preferenceTab[level == "FV", max := max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
-  preferenceTab[level == "FV" & max != 0, value := value/max(value), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]  # FV: logit level: vehicle type (e.g. large car, moped)
+  preferenceTab[level == "S2S1", max := max(value), by = c("region", "period", "sector", "subsectorL1")]
+  preferenceTab[level == "S2S1" & max != 0, value := value / max(value),
+                by = c("region", "period", "sector", "subsectorL1")]
+
+  # S3S2: logit level: modes/technologies (e.g. LDV, bus, Liquids)
+  preferenceTab[level == "S3S2" & max != 0, value := value / max(value),
+                by = c("region", "period", "sector", "subsectorL1", "subsectorL2")]
+
+  # VS3: logit level: modes/technologies (e.g. cars, Liquids)
+  preferenceTab[level == "VS3", max := max(value),
+                by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
+  preferenceTab[level == "VS3" & max != 0, value := value / max(value),
+                by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
+
+
+  # FV: logit level: vehicle type (e.g. large car, moped)
+  preferenceTab[level == "FV", max := max(value),
+                by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+  preferenceTab[level == "FV" & max != 0, value := value / max(value),
+                by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")]
+
   preferenceTab[, max := NULL]
 
   if (anyNA(preferenceTab)) stop("Something went wrong with the normalization of the preference trends. Please check toolNormalizePreferences()")
@@ -34,10 +54,11 @@ toolNormalizePreferences <- function(preferenceTab) {
 #' @export
 
 toolLoadDecisionTree <- function(regionAggregation = "iso") {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  spatial <- present <- region <- sector <- subsectorL1 <- subsectorL2 <- subsectorL3 <- vehicleType <- technology <- univocalName <- NULL
 
   # decisionTree.csv contains all possible branches of the decision tree
-  decisionTree <- fread(system.file("extdata/helpersDecisionTree.csv",
-                                    package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  decisionTree <- fread(system.file("extdata/helpersDecisionTree.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   decisionTree[, spatial := "all"]
   # Not all countries feature the same branches of the decision tree - Some vehicleTypes and modes are not
   # available in certain countries
@@ -99,7 +120,7 @@ toolLoadDecisionTree <- function(regionAggregation = "iso") {
 
 getFilterEntriesUnivocalName <- function(categories, decisionTree) {
 
-  findEntries <- function(category, dt){
+  findEntries <- function(category, dt) {
     test <- dt[, lapply(.SD, function(x) grepl(category, x))]
     entries <- unique(dt[rowSums(test) > 0]$univocalName)
   }
@@ -130,10 +151,10 @@ calculateShares <- function(totPrice, lambda, pref = NULL) {
     if (sum(totPrice) == 0) {
       share <- 1 # e.g. for active modes with totPrice of zero on FV level
     } else {
-      share <- pref * totPrice ^ lambda / (sum(pref * totPrice ^ lambda))
+      share <- pref * totPrice^lambda / (sum(pref * totPrice^lambda))
     }
   } else {
-    share <- totPrice ^ lambda / (sum(totPrice ^ lambda))
+    share <- totPrice^lambda / (sum(totPrice^lambda))
   }
 
   return(share)
@@ -152,6 +173,7 @@ calculateShares <- function(totPrice, lambda, pref = NULL) {
 #' @export
 
 toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
+  share <- value <- . <- NULL
 
   decisionGroups <- names(decisionTree[, -c("region", "univocalName")])
   indexUpperLevel <- which(match(decisionGroups, upperLevel) == 1)
@@ -182,15 +204,17 @@ toolTraverseDecisionTree <- function(data, upperLevel, decisionTree) {
 #' @export
 
 toolApplyMixedTimeRes <- function(data, helpers, idcols = NULL) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- level <- test <- univocalName <- . <- NULL
 
   highRes <- unique(helpers$dtTimeRes$period)
   highResUnivocalNames <- copy(helpers$dtTimeRes)
   highResUnivocalNames <- highResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]
   highResUnivocalNames <- highResUnivocalNames[test == TRUE]$univocalName
 
-  if (c("level") %in% names(data)){
-    #in this data format there is no univocalName
-    #this needs to change temporarily
+  if (c("level") %in% names(data)) {
+    # in this data format there is no univocalName
+    # this needs to change temporarily
     dataFV <- merge(data[level == "FV"], helpers$decisionTree, by = intersect(names(data), names(helpers$decisionTree)))
     dataHighRes <- dataFV[univocalName %in% highResUnivocalNames][, univocalName := NULL]
     dataLowRes <- rbind(dataFV[!(univocalName %in% highResUnivocalNames)][, univocalName := NULL], data[!level == "FV"])
@@ -227,6 +251,8 @@ return(data)
 #' @export
 
 toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  level <- univocalName <- technology <- NULL
 
   decisionFV <- copy(decisionTree)
   decisionFV[, univocalName := NULL][, level := "FV"]
@@ -272,15 +298,17 @@ toolCheckAllLevelsComplete <- function(data, decisionTree, name) {
 #' @export
 
 toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness = FALSE, fleetVars = FALSE) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- subsectorL3 <- allyears <- NULL
 
   data <- merge(data, decisionTree, by = c(intersect(names(data), names(decisionTree))))
   allCols <- c(names(decisionTree), "variable", "unit", "period", "value")
   isComplete <- all(names(data) %in% allCols) && all(allCols %in% names(data))
   if (isComplete == FALSE) stop(paste0(deparse(substitute(data), " misses columns or has additional columns")))
   if (anyNA(data) == TRUE) stop(paste0(deparse(substitute(data), " contains NAs")))
-  data <- data[, ..allCols]
+  data <- data[, allCols, with = FALSE]
 
-  if (checkCompleteness == TRUE){
+  if (checkCompleteness == TRUE) {
     data <- data[period %in% yrs]
     if (fleetVars == TRUE) decisionTree <- decisionTree[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
     allTimesteps <- data.table(period = yrs)[, allyears := "All"]
