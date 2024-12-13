@@ -12,6 +12,8 @@
 #' @export
 
 toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- variable <- level <- unit <- NULL
 
   # Preparation of baseline preference trends -------------------------------------
   # change to long-format
@@ -52,7 +54,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes on energy intensity ----------------------------
   if (!is.null(scenModelPar$scenParEnergyIntensity)) {
     scenSpecEnIntensity <- toolApplyScenSpecEnInt(inputDataRaw$energyIntensityRaw,
-                                                  scenModelPar$scenParEnergyIntensity,policyStartYear, helpers)
+                                                  scenModelPar$scenParEnergyIntensity, policyStartYear, helpers)
     scenSpecEnIntensity[, variable := "Energy intensity sales"]
     print("Policy induced changes to the energy intensity were applied")
   } else {

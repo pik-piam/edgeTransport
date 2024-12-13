@@ -10,6 +10,7 @@
 #' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @import data.table
 #' @export
+#'
 
 
 iterativeEdgeTransport <- function() {
@@ -19,6 +20,7 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Settings
   #############################################################
+  cfg <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"
@@ -31,7 +33,7 @@ iterativeEdgeTransport <- function() {
 
   # Set gdx
   gdx <- "input.gdx"
-  if(file.exists("fulldata.gdx"))
+  if (file.exists("fulldata.gdx"))
     gdx <- "fulldata.gdx"
 
   # Load config
@@ -48,7 +50,12 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Load input data
   #############################################################
-  inputFolder = paste0("./")
+  inputFolder <- paste0("./")
+
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- unit <- univocalName <- iteration <- type <- variable <- . <- NULL
+
+
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
   numberOfRegions <- length(readGDX(gdx, "all_regi"))
@@ -70,7 +77,7 @@ iterativeEdgeTransport <- function() {
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
   RDSinputs <- inputs$RDSfiles
-  
+
 
 
   # Data from previous REMIND iteration
@@ -101,8 +108,8 @@ iterativeEdgeTransport <- function() {
     REMINDfuelCostIterations <- rbind(REMINDfuelCostIterations, copy(REMINDfuelCost)[, iteration := iterationNumber])
     storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
     averagePricesOverIterations <- TRUE
-    if(averagePricesOverIterations) {
-      if(max(unique(REMINDfuelCostIterations$iteration)) >= 20 &
+    if (averagePricesOverIterations) {
+      if (max(unique(REMINDfuelCostIterations$iteration)) >= 20 &&
          max(unique(REMINDfuelCostIterations$iteration)) <= 30) {
         ## apply moving avg
         byCols <- names(REMINDfuelCostIterations)
@@ -247,15 +254,15 @@ iterativeEdgeTransport <- function() {
 
     ## CapCosts
     writegdx.parameter("p35_esCapCost.gdx", f35_esCapCost, "p35_esCapCost",
-                       valcol="value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                       valcol = "value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
     ## Intensities
     writegdx.parameter("p35_fe2es.gdx", f35_fe2es, "p35_fe2es",
-                       valcol="value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
+                       valcol = "value", uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs"))
 
     ## Shares: demand can represent the shares since it is normalized
     writegdx.parameter("p35_shFeCes.gdx", f35_shFeCes, "p35_shFeCes",
-                       valcol="value",
+                       valcol = "value",
                        uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs"))
 
     print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))

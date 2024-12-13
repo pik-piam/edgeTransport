@@ -5,6 +5,8 @@
 #' @importFrom rmndt magpie2dt
 
 toolLoadmrtransportData <- function(SSPscen) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  variable <- technology <- NULL
 
   # Energy Service demand [billion (p|t)km/yr]
   histESdemandMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
@@ -12,7 +14,8 @@ toolLoadmrtransportData <- function(SSPscen) {
   histESdemand <- magpie2dt(histESdemandMagpieobj)
 
   # Energy Intensity after IEA harmonization [MJ/vehkm]
-  energyIntensityMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE, regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"), SSPscen = SSPscen)
+  energyIntensityMagpieobj <- calcOutput(type = "EdgeTransportSAinputs", aggregate = TRUE, warnNA = FALSE,
+                                         regionmapping = "regionmapping_21_EU11.csv", subtype = c("energyIntensity"), SSPscen = SSPscen)
   energyIntensityRaw <- magpie2dt(energyIntensityMagpieobj)[, variable := paste0(variable, " (raw)")]
 
   # Load Factor [(p|t)/veh]

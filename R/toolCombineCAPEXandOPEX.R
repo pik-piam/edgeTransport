@@ -27,6 +27,10 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet,
                                     annuity,
                                     helpers){
 
+
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- variable <- . <- unit <- univocalName <- technology <- NULL
+
   # Apply very random subsidy phase out from the old EDGE-T version -> Remove after reproduktion of old values
   subsidies[, value := ifelse(period >= 2020 & period <= 2030,
                               -(value * 1.14 * 0.78 * (1/15 * (period - 2020) - 1)),

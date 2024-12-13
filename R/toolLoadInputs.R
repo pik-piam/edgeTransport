@@ -10,6 +10,8 @@
 #' @export
 
 toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- univocalName <- test <- . <- NULL
 
   ### load inputs  ------------------------------------------------------------
 

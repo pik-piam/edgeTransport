@@ -13,6 +13,9 @@
 
 
 toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  type <- level <- vehicleType <- subsectorL1 <- pref <- lambda <- . <- value <- zeroTypes <- share <- NULL
+  totPrice <- testShares <- variable <- univocalName <- period <- technology <- subsectorL3 <- subsectorL2 <- unit <- NULL
 
   # calculate all FV shares --------------------------------------------------------------------
   CAPEXandOPEX <- copy(input$combinedCAPEXandOPEX)
@@ -28,8 +31,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   prefTrends[, c("variable", "unit") := NULL]
   prefTrendsFV <- prefTrends[level == "FV"][, level := NULL]
   FVshares <- merge(allCostsFV, prefTrendsFV, by = intersect(names(allCostsFV), names(prefTrends)), all.x = TRUE, allow.cartesian = TRUE)
-  # vehicleTypes with endogenous inconvenience costs have no preferences, which means that all preferences are set to 1 (equivalent expression)
-  # As there is no decision for cycling and walking, they have to receive 1 as well
+  # vehicleTypes with endogenous inconvenience costs have no preferences, which means that all preferences
+  # are set to 1 (equivalent expression) as there is no decision for cycling and walking, they have to receive 1 as well
   FVshares[vehicleType %in% unique(updatedEndoCosts$vehicleType) | subsectorL1 %in% c("Cycle", "Walk"), pref := 1]
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "FV"][, level := NULL]
   FVshares <- merge(FVshares, lambdas, by = intersect(names(FVshares), names(lambdas)), all.x = TRUE)
@@ -42,11 +45,12 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   FVsharesZero <-  FVshares[zeroTypes == 0][, share := 0][, c("totPrice", "lambda", "pref", "zeroTypes", "univocalName") := NULL]
   FVshares <- FVshares[!zeroTypes == 0][, c("univocalName", "zeroTypes") := NULL]
   FVshares[, share := calculateShares(totPrice, lambda, pref),
-          by = setdiff(names(FVshares), c("technology", "totPrice", "lambda", "pref", "unit"))][, c("totPrice", "lambda", "pref") := NULL]
-  FVshares[, test := sum(share), by = c("region", "period", "vehicleType")]
+         by = setdiff(names(FVshares), c("technology", "totPrice", "lambda", "pref", "unit"))][, c("totPrice", "lambda", "pref") := NULL]
+  FVshares[, testShares := sum(share), by = c("region", "period", "vehicleType")]
 
-  if (nrow(FVshares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(FVshares)) stop("FV shares in toolDiscreteChoice() were not calculated correctly")
-  FVshares[, c("test") := NULL]
+  if (nrow(FVshares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(FVshares))
+    stop("FV shares in toolDiscreteChoice() were not calculated correctly")
+  FVshares[, c("testShares") := NULL]
   FVshares <- rbind(FVshares, FVsharesZero)[, level := "FV"]
   # Discrete choice cost structure
   storeAllCostsFV <- copy(allCostsFV)
@@ -59,8 +63,9 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   # only FV level features detailed yearly resolution for some vehicle types. Set resolution back to years
   allCostsFV <- allCostsFV[period %in% helpers$lowTimeRes]
   allCostsVS3 <- toolTraverseDecisionTree(allCostsFV, "vehicleType", helpers$decisionTree)
-  # time value costs only need to be added starting from level VS3. If there is no decision in the level (only a single branch) the time value costs are kept
-  # and aggregated with a share of one to the upper level
+  # time value costs only need to be added starting from level VS3. If there is no decision in the level
+  # (only a single branch) the time value costs are kept and aggregated with a share of one
+  # to the upper level
   timeValueCosts <- merge(input$timeValueCosts[period %in% helpers$lowTimeRes], unique(helpers$decisionTree[, -c("technology")]), by = c("region", "univocalName"), all.x = TRUE)
   timeValueCosts[, type := "Travel time"][, univocalName := NULL]
   allCostsVS3 <- rbind(allCostsVS3, timeValueCosts)
@@ -70,7 +75,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "VS3"]
   lambdas <- lambdas[, c("subsectorL3", "lambda")]
   VS3shares <- merge(VS3shares, lambdas, by = intersect(names(VS3shares), names(lambdas)), all.x = TRUE)
-  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore get no lambda and pref as input. The share equals one with every lambda that is chosen.
+  # modes marked with a "tmp" have only a single branch in this level of the decision tree and
+  # therefore get no lambda and pref as input. The share equals one with every lambda that is chosen.
   VS3shares[grepl(".*tmp.*", vehicleType), lambda := -15]
   VS3shares[grepl(".*tmp.*", vehicleType), pref := 1]
   VS3shares[grepl(".*tmp.*", vehicleType), technology := ""]
@@ -84,9 +90,10 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   VS3shares[, share := calculateShares(totPrice, lambda, pref),
            by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")][, c("totPrice", "lambda", "pref") := NULL]
 
-  VS3shares[, test := sum(share), by = c("region", "period", "subsectorL3")]
-  if (nrow(VS3shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(VS3shares) | nrow(VS3shares) == 0) stop("VS3 shares in toolDiscreteChoice() were not calculated correctly")
-  VS3shares[, test := NULL]
+  VS3shares[, testShares := sum(share), by = c("region", "period", "subsectorL3")]
+  if (nrow(VS3shares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(VS3shares) || nrow(VS3shares) == 0)
+    stop("VS3 shares in toolDiscreteChoice() were not calculated correctly")
+  VS3shares[, testShares := NULL]
   VS3shares <- rbind(VS3shares, VS3sharesZero)[, level := "VS3"]
   storeAllCostsVS3 <- copy(allCostsVS3)
   storeAllCostsVS3[, variable := paste0("Logit cost|VS3|", variable)][, type := NULL]
@@ -101,7 +108,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S3S2"]
   lambdas <- lambdas[, c("subsectorL2", "lambda")]
   S3S2shares <- merge(S3S2shares, lambdas, by = intersect(names(S3S2shares), names(lambdas)), all.x = TRUE)
-  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore get no lambda as input. The share equals one with every lambda that is chosen.
+  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore
+  # get no lambda as input. The share equals one with every lambda that is chosen.
   S3S2shares[grepl(".*tmp.*", subsectorL3), lambda := -15]
   S3S2shares[grepl(".*tmp.*", subsectorL3), pref := 1]
   S3S2shares[grepl(".*tmp.*", subsectorL3), c("technology", "vehicleType") := ""]
@@ -111,9 +119,10 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S3S2shares[, share := calculateShares(totPrice, lambda, pref),
             by = c("region", "period", "sector", "subsectorL1", "subsectorL2")][, c("totPrice", "lambda", "pref") := NULL]
 
-  S3S2shares[, test := sum(share), by = c("region", "period", "subsectorL2")]
-  if (nrow(S3S2shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S3S2shares) | nrow(S3S2shares) == 0) stop("S3S2 shares in toolDiscreteChoice() were not calculated correctly")
-  S3S2shares[, test := NULL][, level := "S3S2"]
+  S3S2shares[, testShares := sum(share), by = c("region", "period", "subsectorL2")]
+  if (nrow(S3S2shares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(S3S2shares) || nrow(S3S2shares) == 0)
+    stop("S3S2 shares in toolDiscreteChoice() were not calculated correctly")
+  S3S2shares[, testShares := NULL][, level := "S3S2"]
   storeAllCostsS3S2 <- copy(allCostsS3S2)
   storeAllCostsS3S2[, variable := paste0("Logit cost|S3S2|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS3S2 = storeAllCostsS3S2))
@@ -127,7 +136,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S2S1"][, level := NULL]
   lambdas <- lambdas[, c("subsectorL1", "lambda")]
   S2S1shares <- merge(S2S1shares, lambdas, by = intersect(names(S2S1shares), names(lambdas)), all.x = TRUE)
-  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore get no lambda as input. The share equals one with every lambda that is chosen.
+  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore
+  # get no lambda as input. The share equals one with every lambda that is chosen.
   S2S1shares[grepl(".*tmp.*", subsectorL2), lambda := -15]
   S2S1shares[grepl(".*tmp.*", subsectorL2), pref := 1]
   S2S1shares[grepl(".*tmp.*", subsectorL2), c("technology", "vehicleType", "subsectorL3") := ""]
@@ -137,9 +147,10 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S2S1shares[, share := calculateShares(totPrice, lambda, pref),
              by = c("region", "period", "sector", "subsectorL1")][, c("totPrice", "lambda", "pref") := NULL]
 
-  S2S1shares[, test := sum(share), by = c("region", "period", "subsectorL1")]
-  if (nrow(S2S1shares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S2S1shares) | nrow(S2S1shares) == 0) stop("S2S1 shares in toolDiscreteChoice() were not calculated correctly")
-  S2S1shares[, test := NULL][, level := "S2S1"]
+  S2S1shares[, testShares := sum(share), by = c("region", "period", "subsectorL1")]
+  if (nrow(S2S1shares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(S2S1shares) || nrow(S2S1shares) == 0)
+    stop("S2S1 shares in toolDiscreteChoice() were not calculated correctly")
+  S2S1shares[, testShares := NULL][, level := "S2S1"]
   storeAllCostsS2S1 <- copy(allCostsS2S1)
   storeAllCostsS2S1[, variable := paste0("Logit cost|S2S1|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS2S1 = storeAllCostsS2S1))
@@ -153,7 +164,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S1S"][, level := NULL]
   lambdas <- lambdas[, c("sector", "lambda")]
   S1Sshares <- merge(S1Sshares, lambdas, by = intersect(names(S1Sshares), names(lambdas)), all.x = TRUE)
-  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore get no lambda as input. The share equals one with every lambda that is chosen.
+  # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore
+  # get no lambda as input. The share equals one with every lambda that is chosen.
   S1Sshares[grepl(".*tmp.*", subsectorL1), lambda := -15]
   S1Sshares[grepl(".*tmp.*", subsectorL1), pref := 1]
   S1Sshares[grepl(".*tmp.*", subsectorL1), c("technology", "vehicleType", "subsectorL3", "subsectorL2") := ""]
@@ -163,16 +175,17 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S1Sshares[, share := calculateShares(totPrice, lambda, pref),
              by = c("region", "period", "sector")][, c("totPrice", "lambda", "pref") := NULL]
 
-  S1Sshares[, test := sum(share), by = c("region", "period", "sector")]
-  if (nrow(S1Sshares[test < 0.9999 | test > 1.0001]) > 0 | anyNA(S1Sshares) | nrow(S1Sshares) == 0) stop("S1S shares in toolDiscreteChoice() were not calculated correctly")
-  S1Sshares[, test := NULL][, level := "S1S"]
+  S1Sshares[, testShares := sum(share), by = c("region", "period", "sector")]
+  if (nrow(S1Sshares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(S1Sshares) || nrow(S1Sshares) == 0)
+    stop("S1S shares in toolDiscreteChoice() were not calculated correctly")
+  S1Sshares[, testShares := NULL][, level := "S1S"]
   storeAllCostsS1S <- copy(allCostsS1S)
   storeAllCostsS1S[, variable := paste0("Logit cost|S1S|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS1S = storeAllCostsS1S))
 
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
-  #toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
+  # toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
 
   return(list(shares = shares,
               costsDiscreteChoice = costsDiscreteChoice))

@@ -11,6 +11,9 @@
 #' @returns data.table including initial inconvenience costs from 1990-2020 for LDV 4W US$/(p|t)km
 
 toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity, loadFactor, annualMileage, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- value <- variable <- region <- unit <- univocalName <- subsectorL3 <- . <- NULL
+  ratio <- average <- technology <- incoCostType <- FVvehvar <- regionCode12 <- NULL
 
   incoCostStartVal <- copy(incoCostStartVal)
   incoCostStartVal <- melt(incoCostStartVal, id.vars = c("region", "incoCostType", "FVvehvar", "technology", "unit"),

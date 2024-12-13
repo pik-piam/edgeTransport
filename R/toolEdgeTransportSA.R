@@ -19,6 +19,7 @@
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
 #' @import data.table
 #' @importFrom reporttransport reportEdgeTransport storeData
+#' @importFrom madrat getConfig
 #' @export
 
 toolEdgeTransportSA <- function(SSPscen,
@@ -32,6 +33,9 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE){
+
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  variable <- NULL
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 30800 # [constant 2017 US$MER]

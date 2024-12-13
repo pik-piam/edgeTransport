@@ -12,6 +12,8 @@
 
 
 toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, lambdas, helpers){
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- NULL
 
    ##==== functions ====
 
@@ -33,7 +35,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   # function that compares the shares you obtained with the calibrated preference and the theoretical shares, known
   checkShares = function(df , groupingValue){
-    shareCheck <- shareDiff <- NULL
+    shareCheck <- shareDiff <-  NULL
     tmp <- df[period <= 2010]
 
     tmp[, shareCheck := preference * totPrice ^ lambda / sum(preference * totPrice ^ lambda),
@@ -49,7 +51,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   # Returns the dt with the calculated preference, already normalized
 
   calculatePreferences <- function(dfPreference, groupingValue, expectedPrices){
-   fac <- preference <- NULL
+   fac <- shareDiff <- NULL
     # loops through all the initial points suggested
     for (expectedPrice in expectedPrices) {
       # if this is the first iteration, an empty column is needed

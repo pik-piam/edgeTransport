@@ -9,6 +9,8 @@
 #' @export
 
 toolPrepareDataEndogenousCosts <- function(inputData, lambdas, helpers) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  univocalName <- type <- . <- value <- region <- period <- technology <- unit <- variable <- NULL
 
   # format input data
   # merge input data with decision tree
