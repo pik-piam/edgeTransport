@@ -3,12 +3,13 @@
 #' @param SSPscen SSP or SDP scenario
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
+#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
 #' @returns list with different input data sets
 #' @import data.table
 #' @export
 
-toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) {
+toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare) {
 
   ### load inputs  ------------------------------------------------------------
 
@@ -47,7 +48,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) 
   mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
 
   ## from REMIND
-  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = NULL, hybridElecShare, helpers)
+  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
   # from mrremind (soon to be replaced by mrtransport data)
   mrremindData <- toolLoadmrremindData(helpers)

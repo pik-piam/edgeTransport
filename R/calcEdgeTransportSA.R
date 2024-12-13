@@ -8,6 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
+#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
 #' @param isTransportReported Optional transport reporting in MIF format
@@ -23,6 +24,7 @@ calcEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = FALSE,
                                 demScen = "default",
+                                gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = FALSE,
                                 isTransportReported = TRUE,
@@ -35,6 +37,7 @@ calcEdgeTransportSA <- function(SSPscen,
                             transportPolScen,
                             isICEban,
                             demScen,
+                            gdxPath,
                             outputFolder,
                             isStored,
                             isTransportReported,
