@@ -25,17 +25,17 @@ toolLoadmrremindData <- function(helpers) {
   yearOut <- 2030
   ## attribute first (to the countries that have them) the same incentives value until the phase out year
   subsidies[, value := ifelse(period >= 2020 & period <= yearOut, value[period == 2020], 0),
-        by = c("region", "technology")]
+            by = c("region", "technology")]
 
   # map on decision tree, apply only on 4 wheelers
   subsidies <- merge(unique(helpers$decisionTree[subsectorL3 == "trn_pass_road_LDV_4W",
-                                         c("region", "univocalName", "technology")]), subsidies,
+                                                 c("region", "univocalName", "technology")]), subsidies,
                      by = c("region", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   monUnit <- gsub(".*?(\\d{4}).*", "US$\\1", mrdrivers::toolGetUnitDollar())
   subsidies <- subsidies[!is.na(value)][, variable := "Capital costs subsidy"][, unit := paste0(monUnit, "/veh")]
   # Q: How to include phase out of the incentives? Is that needed at all?
 
-return(list(
-  subsidies = subsidies
-))
+  return(list(
+    subsidies = subsidies
+  ))
 }

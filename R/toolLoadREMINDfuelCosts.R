@@ -24,7 +24,11 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
    decisionTree <- copy(helpers$decisionTree)
 
    # load prices from REMIND gdx
-   fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
+   if (is.null(gdxPath)) {
+     fuelCosts <- readSource("REMINDinputForTransportStandalone", convert = FALSE)
+   } else {
+     fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
+   }
 
    ## smooth prices from REMIND gdx (over years) and convert to data.table
    fuelCosts <- fuelCosts %>% lowpass() %>% magpie2dt()
