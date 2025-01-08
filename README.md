@@ -54,7 +54,7 @@ A BibTeX entry for LaTeX users is
 @Misc{,
   title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Johanna Hoppe and Alois Dirnaichner and Marianna Rottoli and Jarusch Muessel},
-  date = {2024-12-18},
+  date = {2024-12-20},
   year = {2024},
   url = {https://github.com/pik-piam/edgeTransport},
   note = {Version: 2.12.3},
