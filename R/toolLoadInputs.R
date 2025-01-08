@@ -7,6 +7,7 @@
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
 #' @returns list with different input data sets
 #' @import data.table
+#' @importFrom mrtransport toolPrepareTransportSubsidies
 #' @export
 
 toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare) {
@@ -52,8 +53,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
-  # from mrremind (soon to be replaced by mrtransport data)
-  mrremindData <- toolLoadmrremindData(helpers)
+  # load and prepare transport subsidies from mrtransport
+  subsidies <- toolPrepareTransportSubsidies(helpers)
 
   ### structure inputs  ------------------------------------------------------------
 
@@ -89,7 +90,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     nonFuelOPEXother = mrtransportData$nonFuelOPEXother,
     REMINDfuelCosts = REMINDfuelCosts,
     timeValueCosts = mrtransportData$timeValueCosts,
-    subsidies = mrremindData$subsidies,
+    subsidies = subsidies,
     GDPMER = mrdriversData$GDPMER,
     GDPpcMER = mrdriversData$GDPpcMER,
     GDPppp = mrdriversData$GDPppp,
