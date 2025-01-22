@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 title: 'edgeTransport: Prepare EDGE Transport Data for the REMIND model'
-version: 2.12.4
-date-released: '2025-01-08'
+version: 2.13.0
+date-released: '2025-01-22'
 abstract: EDGE-T is a fork of the GCAM transport module https://jgcri.github.io/gcam-doc/energy.html#transportation
   with a high level of detail in its representation of technological and modal options.
   It is a partial equilibrium model with a nested multinomial logit structure and
@@ -24,6 +24,11 @@ authors:
 - family-names: Muessel
   given-names: Jarusch
   email: jarusch.muessel@pik-potsdam.de
+  orcid: https://orcid.org/0000-0002-1857-7866
+- family-names: Hagen
+  given-names: Alex K.
+  email: alex.hagen@pik-potsdam.de
+  orcid: https://orcid.org/0000-0003-4793-8664
 license: GPL-3.0
 repository-code: https://github.com/pik-piam/edgeTransport
 
