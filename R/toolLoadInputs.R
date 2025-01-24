@@ -17,7 +17,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   ### load inputs  ------------------------------------------------------------
 
   ## from mrtransport
-  mrtransportData <- toolLoadmrtransportData(SSPscen)
+  # ToDo temporary default to SSP2, to be removed again
+  mrtransportData <- toolLoadmrtransportData()
   # vehicle types that feature fleet tracking get a different temporal resolution
   dtTimeRes <- unique(mrtransportData$energyIntensityRaw[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)
@@ -27,7 +28,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   lowTimeRes <- unique(dtTimeRes[univocalName %in% lowResUnivocalNames]$period)
 
   ### edgeTransport package data
-  packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
+  ## ToDo Function now takes two scenario specifiers, fist one is temporarily fixed
+  packageData <- toolLoadPackageData(c("SSP2", SSPscen), c("Mix2", transportPolScen), demScen)
   # categories for filtering data
   categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
   filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)

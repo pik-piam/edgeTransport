@@ -30,7 +30,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
                                        "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
   basePrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
-  # Application of policy induced changes to baseline preference trends --------------
+  # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
                                                   inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban)
