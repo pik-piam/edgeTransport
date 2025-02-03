@@ -8,11 +8,10 @@
 #' @returns fuel costs on technology level
 #' @import data.table
 #' @importFrom rmndt approx_dt magpie2dt
-#' @importFrom gdx readGDX
 #' @importFrom magclass lowpass
 #' @importFrom magrittr `%>%`
 #' @export
-
+#'
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
@@ -27,7 +26,10 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
    if (is.null(gdxPath)) {
      fuelCosts <- readSource("REMINDinputForTransportStandalone", convert = FALSE)
    } else {
-     fuelCosts <- readGDX(gdxPath, "pm_FEPrice", format = "first_found", restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
+     fuelCosts <- gdx::readGDX(gdxPath,
+                               "pm_FEPrice",
+                               format = "first_found",
+                               restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
    }
 
    ## smooth prices from REMIND gdx (over years) and convert to data.table

@@ -12,11 +12,9 @@
 #' @param helpers list with helpers
 #' @returns Scenario specific energy service demand for all model years on CES level
 #' @author Johanna Hoppe
-#' @importFrom stats approxfun
-#' @importFrom zoo na.approx
 #' @import data.table
 #' @export
-
+#'
 toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genParDemRegression,
                                   scenParDemRegression, scenParRegionalDemRegression, scenParDemandFactors,
                                     baseYear, policyStartYear, helpers) {
@@ -35,7 +33,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
 
   approxElasticities <- function(category, elasticityGDPValues, GDPpc) {
     # creates a function to interpolate elasticitis for certain GDP values
-    appfun <- approxfun(
+    appfun <- stats::approxfun(
     x = elasticityGDPValues[sector == category, GDPpcPPP],
     y = elasticityGDPValues[sector == category, value], rule = 2)
 
@@ -107,7 +105,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
     # constant factors after support points
     demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
     demandData[period < policyStartYear, factor := 1]
-    demandData[, factor := na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
+    demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
     demandData[, value := factor * value]
     print(paste0("Demand scenario specific changes were applied on energy service demand"))
   } else {
