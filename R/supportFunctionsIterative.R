@@ -7,11 +7,9 @@
 #' @param demScenario demand scenario
 #' @param transportPolScenario Transport policy scenario
 #' @import data.table
-#' @importFrom stats setNames
 #' @export
-
 # Loads the csv input files chooses the correct scenario and
-  # converts the files into RDS local files
+# converts the files into RDS local files
 csv2RDS <- function(filename, inputPath, SSPscenario, demScenario, transportPolScenario) {
     # bind variables locally to prevent NSE notes in R CMD CHECK
     SSPscen <- demScen <- transportPolScen <- NULL
@@ -31,7 +29,7 @@ csv2RDS <- function(filename, inputPath, SSPscenario, demScenario, transportPolS
     tmp <- tmp[SSPscen == SSPscenario & demScen == demScenario & transportPolScen == transportPolScenario][, c("SSPscen", "demScen", "transportPolScen") := NULL]
     # magclass enforces the same temporal resolution for all vehicletypes -> get rid of the introduced NAs
     assign(filename, tmp[!is.na(tmp$value)])
-    tmp <- setNames(list(get(eval(filename))), filename)
+    tmp <- stats::setNames(list(get(eval(filename))), filename)
     return(tmp)
   }
 
@@ -68,7 +66,7 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
 
   ## Transport policy scenario inconvenience cost factors
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  scenParIncoCost <- scenParIncoCost[SSPscen == gsub("gdp_", "", SSPscenario) & transportPolScen == gsub("ICEban", "", transportPolScenario)][, c("SSPscen", "transportPolScen") := NULL]
+  scenParIncoCost <- scenParIncoCost[SSPscen == SSPscenario & transportPolScen == gsub("ICEban", "", transportPolScenario)][, c("SSPscen", "transportPolScen") := NULL]
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation
