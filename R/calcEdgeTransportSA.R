@@ -23,7 +23,7 @@
 calcEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = FALSE,
-                                demScen = "default",
+                                demScen = c("default", "default"),
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = FALSE,
@@ -31,7 +31,6 @@ calcEdgeTransportSA <- function(SSPscen,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE) {
-
   return(list(
     x = toolEdgeTransportSA(SSPscen,
                             transportPolScen,

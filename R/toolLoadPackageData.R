@@ -6,7 +6,7 @@
 #' @returns list of data.tables with the package input data
 #' @importFrom data.table fread
 
-toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
+toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", "default")) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- NULL
 
@@ -17,10 +17,11 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   # Exponents discrete choice model
   lambdasDiscreteChoice <- fread(system.file("extdata/genParLambdasDiscreteChoiceModel.csv",
                                              package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Baseline preference trends
+  # Baseline preference trends, SSP dependent, time res: 2020, 2030, 2050, 2100, 2150, ToDo: check what happens if SSP[1] == SSP[2]
   baselinePrefTrends <- fread(system.file("extdata/genParBaselinePrefTrends.csv",
                                           package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  baselinePrefTrends <- baselinePrefTrends[SSPscen == SSPs[1]][, SSPscen := NULL]
+  baselinePrefTrends[, "startYearCat" := fcase( SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
+  baselinePrefTrends <- baselinePrefTrends[!is.na(startYearCat)][, SSPscen := NULL]
   # Startparameter inconvenience costs
   incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv",
                                         package = "edgeTransport", mustWork = TRUE), header = TRUE)
@@ -61,12 +62,12 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
                                        package = "edgeTransport", mustWork = TRUE), header = TRUE)
   scenParIncoCost[, "startYearCat" := fcase( SSPscen == SSPs[1] & transportPolScen == transportPolS[1], "origin", SSPscen == SSPs[2] & transportPolScen == transportPolS[2], "final")]
   scenParIncoCost <- scenParIncoCost[!is.na(startYearCat)][, c("transportPolScen", "SSPscen") := NULL]
-
   # Transport policy scenario demand reduction factors
   scenParDemFactors <- fread(system.file("extdata/scenParDemFactors.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  if  (demScenario %in% scenParDemFactors$demScen) {
-   scenParDemFactors <- scenParDemFactors[demScen == demScenario][, demScen := NULL]
+  if  (demScenario[1] %in% scenParDemFactors$demScen | demScenario[2] %in% scenParDemFactors$demScen) {
+   scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase( demScen == demScenario[1], "origin", demScen == demScenario[2], "final")]
+   scenParDemFactors <- scenParDemFactors[!is.na(startYearCat)][, demScen := NULL]
 } else {
    scenParDemFactors <- NULL
 }
@@ -83,28 +84,23 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
     scenParEnergyIntensity <- NULL
     }
 
-  # ToDo SSPscen flex
   # SSP/SDP specific general regression factors
   scenParDemRegression <- fread(system.file("extdata/scenParDemRegression.csv",
                                             package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  scenParDemRegression <- scenParDemRegression[SSPscen == SSPs[1]][, SSPscen := NULL]
+  scenParDemRegression[, "startYearCat" := fcase(SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
+  scenParDemRegression <- scenParDemRegression[!is.na(startYearCat)][, SSPscen := NULL]
 
-  # SSP/SDP specific regional regression factors
+  # SSP/SDP specific regional regression factors, time res: 2015, 2030, 2050, 2100
   scenParRegionalDemRegression <- fread(system.file("extdata/scenParRegionalDemRegression.csv",
                                                     package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  scenParRegionalDemRegression <- scenParRegionalDemRegression[SSPscen == SSPs[1]][, SSPscen := NULL]
-
+  scenParRegionalDemRegression[, "startYearCat" := fcase(SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
+  scenParRegionalDemRegression <- scenParRegionalDemRegression[!is.na(startYearCat)][, SSPscen := NULL]
   # Transport scenario (demand scenario or SSP scenario) load factor changes
   scenParLoadFactor <- fread(system.file("extdata/scenParLoadFactor.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # ToDo demScen flex
   # Demand scenario exogenous demand changes
-  if  (SSPs[1] %in% unique(scenParLoadFactor[demScen == "default"]$SSPscen)) {
-    scenParLoadFactor <- scenParLoadFactor[SSPscen == SSPs[1]][, c("SSPscen", "demScen") := NULL]
-  } else {
-    scenParLoadFactor <- scenParLoadFactor[SSPscen == SSPs[1] & demScen == demScenario]
-    scenParLoadFactor[, c("SSPscen", "demScen") := NULL]
-  }
+  scenParLoadFactor[, "startYearCat" := fcase(SSPscen == SSPs[1] & demScen == demScenario[1], "origin", SSPscen == SSPs[2] & demScen == demScenario[2], "final")]
+  scenParLoadFactor <- scenParLoadFactor[!is.na(startYearCat)][, c("SSPscen", "demScen") := NULL]
   if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
 
   ## helpers

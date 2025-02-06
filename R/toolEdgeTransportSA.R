@@ -25,14 +25,15 @@
 toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = FALSE,
-                                demScen = "default",
+                                demScen = c("default", "default"),
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
-                                isAnalyticsReported = FALSE){
+                                isAnalyticsReported = FALSE,
+                                cm_startyear = 2025){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- NULL
@@ -49,8 +50,8 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   ## Load input data
   ########################################################
-  if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
 
+  if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
 
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
@@ -226,7 +227,7 @@ toolEdgeTransportSA <- function(SSPscen,
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen))
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", cm_startyear))
   demScen <- paste0("gdp_", demScen)
   SSPscen <- paste0("gdp_", SSPscen)
 
@@ -252,7 +253,6 @@ toolEdgeTransportSA <- function(SSPscen,
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
                                                                costsDiscreteChoiceIterations = costsDiscreteChoiceIterations,
                                                                fleetVehNumbersIterations = fleetVehNumbersIterations))
-
   if (isStored) storeData(outputFolder = outputFolder, varsList = outputRaw)
 
   output <- reportEdgeTransport(outputFolder,

@@ -1,7 +1,7 @@
 #' Load all inputs that are required to run the model
 #' @author Johanna Hoppe
-#' @param SSPscen SSP or SDP scenario
-#' @param transportPolScen EDGE-T transport policy scenario
+#' @param SSPscen SSP or SDP scenarios
+#' @param transportPolScen EDGE-T transport policy scenarios
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
