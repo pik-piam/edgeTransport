@@ -28,7 +28,8 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                                       lambdas,
                                       helpers,
                                       isICEban,
-                                      vehiclesPerTech = NULL) {
+                                      vehiclesPerTech = NULL,
+                                      cm_startYear = 2025) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
@@ -51,7 +52,6 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   }
 
   # calculate policy mask from scenParIncoCost ---------------------------------------------------
-
   linFunc <- function(year, startYear, startValue, targetYear, targetValue) {
     if (year < startYear) {
       return(startValue)
@@ -87,7 +87,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   tempAndregions <- CJ(region = regions, period = policyYears)
   tempAndregions[, all := "All"]
   policyMask[, all := "All"]
-  policyMask <- merge(policyMask, tempAndregions, by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskO <- merge(policyMask[startYearCat == "origin"], tempAndregions[period <= cm_startYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskF <- merge(policyMask[startYearCat == "final"], tempAndregions[period > cm_startYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMask <- rbind(policyMaskO, policyMaskF)
+  policyMask[, "startYearCat" := NULL]
   # Hybrid electric vehicles get a different policy parameter than BEV and ICE
   policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
   setnames(policyMaskPHEV, "value", "policyMask")
