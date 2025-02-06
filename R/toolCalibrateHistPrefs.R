@@ -7,10 +7,6 @@
 #' @param helpers list with helpers
 #' @returns data.table with calibrated historical preferences
 #'
-#' @importFrom rootSolve multiroot
-#' @importFrom utils capture.output
-
-
 toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, lambdas, helpers){
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- NULL
@@ -28,8 +24,8 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   # applies optFunction, and to help the solver uses a factor as starting point
   rootFunction <- function(prices, shares, lambda, factor){
-    results <- suppressWarnings(multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
-                                          lamb = lambda, positive = T, jacfunc = jacobian))
+    results <- suppressWarnings(rootSolve::multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
+                                                     lamb = lambda, positive = T, jacfunc = jacobian))
     return(results$root)
   }
 
@@ -96,7 +92,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   }
 
   calibrationNotes <- character()
-  calibrationNotes <- capture.output({
+  calibrationNotes <- utils::capture.output({
 
   dataStructureDummy <- names(helpers$decisionTree)
   dataStructureDummy <- dataStructureDummy[!dataStructureDummy %in% c("univocalName")]

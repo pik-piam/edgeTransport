@@ -7,9 +7,8 @@
 #' @param helpers list of helpers
 #'
 #' @import data.table
-#' @importFrom gdx readGDX
 #' @export
-
+#'
 toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- all_in <- sector <- NULL
@@ -18,7 +17,7 @@ toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   mapEdgeToREMIND <- mapEdgeToREMIND[!is.na(all_in)]
   mapEdgeToREMIND <- unique(mapEdgeToREMIND[, c("all_in", "sector")])
 
-  ESdemand <- readGDX(gdxPath, c("vm_cesIO"), field = "l", restore_zeros = FALSE)
+  ESdemand <- gdx::readGDX(gdxPath, c("vm_cesIO"), field = "l", restore_zeros = FALSE)
   ESdemand <- ESdemand[, , c("entrp_pass_sm", "entrp_pass_lo", "entrp_frgt_sm", "entrp_frgt_lo")]
   ESdemand <- magpie2dt(ESdemand, regioncol = "region",
                    yearcol = "period", datacols = "all_in")
