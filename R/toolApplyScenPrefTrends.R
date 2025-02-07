@@ -22,7 +22,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
 
   # Check if a transportPol or SSPscen change is introduced with cm_startYear
   # If both stay the same, set cm_startYear out of bounds such that it does not affect the calculation here
-  if (unique(scenParPrefTrends$startYearCat) == "origin"){
+  if (!"final" %in% scenParPrefTrends$startYearCat){
     cm_startYear <- 2200
   }
 

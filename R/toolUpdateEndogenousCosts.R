@@ -64,7 +64,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
   ## Check if transportPol or SSPscen change is introduced with cm_startYear
   # If both stay the same, set cm_startYear out of bounds such that it does not affect the calculation here
-  if (unique(scenParIncoCost$startYearCat) == "origin"){
+  if (!"final" %in% scenParIncoCost$startYearCat){
     cm_startYear <- 2200
   }
 
