@@ -11,7 +11,7 @@
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban, cm_startyear = 2025) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban, cm_startYear = 2025) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- variable <- level <- unit <- NULL
 
@@ -25,7 +25,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   basePrefTrends[, period := as.numeric(as.character(period))]
   basePrefTrends <- toolApplyMixedTimeRes(basePrefTrends, helpers)
   if ("final" %in% unique(basePrefTrends$startYearCat)) {
-    basePrefTrends <- basePrefTrends[(period >= 2020 & period <= cm_startyear & startYearCat == 'origin')|(period > cm_startyear & startYearCat == 'final')][, startYearCat := NULL]
+    basePrefTrends <- basePrefTrends[(period >= 2020 & period <= cm_startYear & startYearCat == 'origin')|(period > cm_startYear & startYearCat == 'final')][, startYearCat := NULL]
   } else {
     basePrefTrends <- basePrefTrends[period >= 2020][, startYearCat := NULL]
   }
@@ -33,10 +33,11 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
                                        "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
   basePrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
+
   # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
-                                                  inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban)
+                                                    inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends

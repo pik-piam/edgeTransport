@@ -33,7 +33,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE,
-                                cm_startyear = 2025){
+                                cm_startYear = 2025){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- NULL
@@ -227,7 +227,7 @@ toolEdgeTransportSA <- function(SSPscen,
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", cm_startyear))
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", cm_startYear))
 
   outputRaw <- list(
     SSPscen = SSPscen,

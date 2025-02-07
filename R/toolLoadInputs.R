@@ -50,7 +50,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   )
 
   ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
+  mrdriversData <- toolLoadmrdriversData(c("SSP2", SSPscen), helpers)
 
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)

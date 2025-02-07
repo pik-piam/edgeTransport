@@ -20,11 +20,16 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
     initial + fct * (final - initial)
   }
 
+  # Check if a transportPol or SSPscen change is introduced with cm_startYear
+  # If both stay the same, set cm_startYear out of bounds such that it does not affect the calculation here
+  if (unique(scenParPrefTrends$startYearCat) == "origin"){
+    cm_startYear <- 2200
+  }
+
   # restructure mitigation factors provided in scenParPrefTrends
   # resolve techmap
   GDPpcMER <- copy(GDPpcMER)[, c("variable", "unit") := NULL]
   mitigationFactors <- merge(helpers$mitigationTechMap[, c("vehicleType", "FVvehvar")], scenParPrefTrends, by = "FVvehvar", all.y = TRUE, allow.cartesian = TRUE)
- # ToDo: 7004 lines with startYearCat
   mitigationFactors[is.na(vehicleType), vehicleType := ""][, FVvehvar := NULL]
   # implement differentiation by GDP and treatment of single region entries
   GDPpcMER <- GDPpcMER[period == 2020][, period := NULL]
@@ -38,7 +43,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   checkMitigation <- copy(baselinePrefTrends)
   setnames(checkMitigation, "value", "old")
 
-  # Adjust Pref trends according to startYear category
+  # Assemble PrefTrends according to scenario before and after the startyear
   PrefTrends <- merge(baselinePrefTrends[period <= cm_startYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrendsF <- merge(baselinePrefTrends[period > cm_startYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends <- rbind(PrefTrends, PrefTrendsF)

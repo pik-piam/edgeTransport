@@ -17,7 +17,7 @@
 #'
 toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genParDemRegression,
                                   scenParDemRegression, scenParRegionalDemRegression, scenParDemandFactors,
-                                    baseYear, policyStartYear, helpers, cm_startyear = 2025) {
+                                    baseYear, policyStartYear, helpers, cm_startYear = 2025) {
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- sector <- value <- GDPpcPPP <- regionGDPpcPPP <- regionGDPppp <- regionalSummand <- NULL
@@ -50,8 +50,8 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   # apply change of SSPscen with startyear
   if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
     scenSpecRegionalIncomeElasticitiesF <- rbindlist(lapply(categories, approxElasticities,
-                                                            scenParDemRegression[startYearCat == "final"], GDPperCapitaPPP[period > cm_startyear]))
-    scenSpecRegionalIncomeElasticities <- rbind(scenSpecRegionalIncomeElasticities[period <= cm_startyear], scenSpecRegionalIncomeElasticitiesF)
+                                                            scenParDemRegression[startYearCat == "final"], GDPperCapitaPPP[period > cm_startYear]))
+    scenSpecRegionalIncomeElasticities <- rbind(scenSpecRegionalIncomeElasticities[period <= cm_startYear], scenSpecRegionalIncomeElasticitiesF)
   }
   regionalIncomeElasticities <- rbind(regionalIncomeElasticities, scenSpecRegionalIncomeElasticities)
 
@@ -65,10 +65,10 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                                       "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
     # check if SSP changes with startyear
     if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
-      scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= cm_startyear][, startYearCat := NULL]
+      scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= cm_startYear][, startYearCat := NULL]
       scenParRegionalDemRegressionF <- approx_dt(scenParRegionalDemRegression[startYearCat == "final"], unique(regionalIncomeElasticities$period),
                                                  "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
-      scenParRegionalDemRegressionF <- scenParRegionalDemRegressionF[period > cm_startyear][, startYearCat := NULL]
+      scenParRegionalDemRegressionF <- scenParRegionalDemRegressionF[period > cm_startYear][, startYearCat := NULL]
       scenParRegionalDemRegression <- rbind(scenParRegionalDemRegressionO, scenParRegionalDemRegressionF)
     } else {
       scenParRegionalDemRegression <- scenParRegionalDemRegressionO[, startYearCat := NULL]
@@ -118,12 +118,12 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
     # ToDo: startyear adjustment
     # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
     # default values from demand regression
-    # Application: linear regression to given support points for the factors starting from policyStartYear(cm_startyear) but not earlier as 2020
+    # Application: linear regression to given support points for the factors starting from policyStartYear(cm_startYear) but not earlier as 2020
     # constant factors after support points
-    # atm adjustment of demand can only have a later switch-on with cm_startyear
+    # atm adjustment of demand can only have a later switch-on with cm_startYear
     if (unique(scenParDemandFactors$startYearCat) == "final"){
       demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
-      demandData[period <= max(cm_startyear, 2020), factor := 1][, startYearCat := NULL]
+      demandData[period <= max(cm_startYear, 2020), factor := 1][, startYearCat := NULL]
       demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
       demandData[, value := factor * value]
       print(paste0("Demand scenario specific changes were applied on energy service demand"))

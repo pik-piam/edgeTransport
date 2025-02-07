@@ -62,6 +62,12 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     }
   }
 
+  ## Check if transportPol or SSPscen change is introduced with cm_startYear
+  # If both stay the same, set cm_startYear out of bounds such that it does not affect the calculation here
+  if (unique(scenParIncoCost$startYearCat) == "origin"){
+    cm_startYear <- 2200
+  }
+
   ## the policymaker bans ICEs increasingly more strictly
   strangeICEbanFunction <- function(x, x0, y0, x1, y1) {
     return(min(y1, max(y0, (y1 - y0) / (x1 - x0) * (x - x0) + y0)))

@@ -57,9 +57,9 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
                 by = c("region", "univocalName", "technology")]
 
   # Apply factors only for period > cm_startYear for fix on reference run in REMIND
-  # this equals a 'hot-start' of the EnInt adjustments with cm_startyear,
-  # i.e. no phase-in from that point but a jump to the cumulative factor in cm_startyear
-  # assume startYearCat is 'final', i.e. cm_startyear enables a later switch-on of the mask
+  # this equals a 'hot-start' of the EnInt adjustments with cm_startYear,
+  # i.e. no phase-in from that point but a jump to the cumulative factor in cm_startYear
+  # assume startYearCat is 'final', i.e. cm_startYear enables a later switch-on of the mask
   if (unique(enIntNew$startYearCat) == "final"){
     enIntNew <- enIntNew[ period > cm_startYear]
   } else {
