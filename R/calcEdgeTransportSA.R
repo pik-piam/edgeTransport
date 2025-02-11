@@ -32,12 +32,12 @@ calcEdgeTransportSA <- function(SSPscen,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE) {
-  # ToDo: Hard code demScen here for a sec for compatibility
+
   return(list(
     x = toolEdgeTransportSA(SSPscen,
                             transportPolScen,
                             isICEban,
-                            c("default", "default"),
+                            demScen,
                             policyStartYear,
                             gdxPath,
                             outputFolder,

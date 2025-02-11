@@ -61,8 +61,9 @@ toolEdgeTransportSA <- function(SSPscen,
   scenModelPar <- inputs$scenModelPar
   inputDataRaw <- inputs$inputDataRaw
 
+  # ToDo: adjust when SSPscen call is changed
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
+  if (is.null(scenModelPar$scenParDemFactors)) demScen[2] <- SSPscen
 
   ########################################################
   ## Prepare input data and apply scenario specific changes
@@ -223,6 +224,7 @@ toolEdgeTransportSA <- function(SSPscen,
 
   print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
 
+  browser()
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", policyStartYear))
