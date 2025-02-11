@@ -11,7 +11,7 @@
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban, cm_startYear = 2025) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- variable <- level <- unit <- NULL
 
@@ -24,10 +24,10 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # get rid of levels as period is treated as a factor after using melt (not supported by approx_dt)
   basePrefTrends[, period := as.numeric(as.character(period))]
   basePrefTrends <- toolApplyMixedTimeRes(basePrefTrends, helpers)
-  if ("final" %in% unique(basePrefTrends$startYearCat)) {
-    basePrefTrends <- basePrefTrends[(period >= 2020 & period <= cm_startYear & startYearCat == 'origin')|(period > cm_startYear & startYearCat == 'final')][, startYearCat := NULL]
+  if ("final" %in% basePrefTrends$startYearCat) {
+    basePrefTrends <- basePrefTrends[(period > 2020 & period <= policyStartYear & startYearCat == 'origin')|(period > policyStartYear & startYearCat == 'final')][, startYearCat := NULL]
   } else {
-    basePrefTrends <- basePrefTrends[period >= 2020][, startYearCat := NULL]
+    basePrefTrends <- basePrefTrends[period > 2020][, startYearCat := NULL]
   }
   # order
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",

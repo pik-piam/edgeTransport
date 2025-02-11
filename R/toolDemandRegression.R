@@ -17,7 +17,7 @@
 #'
 toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genParDemRegression,
                                   scenParDemRegression, scenParRegionalDemRegression, scenParDemandFactors,
-                                    baseYear, policyStartYear, helpers, cm_startYear = 2025) {
+                                    baseYear, policyStartYear, helpers) {
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- sector <- value <- GDPpcPPP <- regionGDPpcPPP <- regionGDPppp <- regionalSummand <- NULL
@@ -42,16 +42,16 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   }
 
   categories <- unique(scenParDemRegression$sector)
-  # Regional elasticities until policyStartYear
-  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, genParDemRegression, GDPperCapitaPPP[period < policyStartYear]))
+  # Regional elasticities until 2020
+  regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, genParDemRegression, GDPperCapitaPPP[period <= 2020]))
   # apply SSP specific global changes
   scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
-                                                         scenParDemRegression[startYearCat == "origin"], GDPperCapitaPPP[period >= policyStartYear]))
+                                                         scenParDemRegression[startYearCat == "origin"], GDPperCapitaPPP[period > 2020]))
   # apply change of SSPscen with startyear
   if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
     scenSpecRegionalIncomeElasticitiesF <- rbindlist(lapply(categories, approxElasticities,
-                                                            scenParDemRegression[startYearCat == "final"], GDPperCapitaPPP[period > cm_startYear]))
-    scenSpecRegionalIncomeElasticities <- rbind(scenSpecRegionalIncomeElasticities[period <= cm_startYear], scenSpecRegionalIncomeElasticitiesF)
+                                                            scenParDemRegression[startYearCat == "final"], GDPperCapitaPPP[period > policyStartYear]))
+    scenSpecRegionalIncomeElasticities <- rbind(scenSpecRegionalIncomeElasticities[period <= policyStartYear], scenSpecRegionalIncomeElasticitiesF)
   }
   regionalIncomeElasticities <- rbind(regionalIncomeElasticities, scenSpecRegionalIncomeElasticities)
 
@@ -65,10 +65,10 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                                       "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
     # check if SSP changes with startyear
     if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
-      scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= cm_startYear][, startYearCat := NULL]
+      scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= policyStartYear][, startYearCat := NULL]
       scenParRegionalDemRegressionF <- approx_dt(scenParRegionalDemRegression[startYearCat == "final"], unique(regionalIncomeElasticities$period),
                                                  "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
-      scenParRegionalDemRegressionF <- scenParRegionalDemRegressionF[period > cm_startYear][, startYearCat := NULL]
+      scenParRegionalDemRegressionF <- scenParRegionalDemRegressionF[period > policyStartYear][, startYearCat := NULL]
       scenParRegionalDemRegression <- rbind(scenParRegionalDemRegressionO, scenParRegionalDemRegressionF)
     } else {
       scenParRegionalDemRegression <- scenParRegionalDemRegressionO[, startYearCat := NULL]
@@ -118,17 +118,17 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
     # ToDo: startyear adjustment
     # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
     # default values from demand regression
-    # Application: linear regression to given support points for the factors starting from policyStartYear(cm_startYear) but not earlier as 2020
+    # Application: linear regression to given support points for the factors starting from policyStartYear but not earlier as 2020
     # constant factors after support points
-    # atm adjustment of demand can only have a later switch-on with cm_startYear
+    # atm adjustment of demand can only have a later switch-on with policyStartYear
     if (unique(scenParDemandFactors$startYearCat) == "final"){
       demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
-      demandData[period <= max(cm_startYear, 2020), factor := 1][, startYearCat := NULL]
+      demandData[period <= max(policyStartYear, 2020), factor := 1][, startYearCat := NULL]
       demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
       demandData[, value := factor * value]
       print(paste0("Demand scenario specific changes were applied on energy service demand"))
     } else {
-      stop("Error in demand scenario specific changes: only delayed switch-on with cm_startYear possible. Please check toolDemandRegression()")
+      stop("Error in demand scenario specific changes: only delayed switch-on with policyStartYear possible. Please check toolDemandRegression()")
     }
  } else {
     print(paste0("No demand scenario specific changes were applied on energy service demand"))

@@ -8,14 +8,14 @@
 #' @import data.table
 
 
-toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYear, helpers, cm_startYear = 2025) {
+toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYear, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- univocalName <- technology <- FVvehvar <- startYear <- startFade <- endFade <- endYear <- NULL
   value.x <- value.y <- annualFactor <- annualImprovementRate <- NULL
 
   # get yearly resolution
   enIntYearly <- copy(enInt)
-  enIntYearly <- enIntYearly[period >= policyStartYear]
+  enIntYearly <- enIntYearly[period > 2020]
   enIntYearly <- approx_dt(enIntYearly,
                              xdata = unique(enIntYearly$period),
                              xcol = "period",
@@ -25,10 +25,8 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
   enIntNew <- merge(helpers$mitigationTechMap[, c("FVvehvar", "univocalName")], enIntYearly, by = "univocalName", all.y = TRUE)
   enIntNew <- merge(enIntNew, scenParEnergyIntensity, by = c("FVvehvar", "technology"))[, FVvehvar := NULL]
 
-  # ToDo: apply cm_startYear switch, either update startYear here and start later phase-in, or only apply factor after startYear in ln 62
-
   # Apply efficiency improvement factors provided in scenParEnergyIntensity only after year 2020
-  enIntNew[, startYear := ifelse(startYear < policyStartYear, policyStartYear, startYear)]
+  enIntNew[, startYear := ifelse(startYear <= 2020, 2020, startYear)]
   # fade in and fade out time period
   fadeInOutPeriod <- 15
   # Define start of fade in and end of fade out period, fade in period delays the improvement from the defined start year
@@ -56,21 +54,21 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
   enIntNew[, factor := cumprod(annualFactor),
                 by = c("region", "univocalName", "technology")]
 
-  # Apply factors only for period > cm_startYear for fix on reference run in REMIND
-  # this equals a 'hot-start' of the EnInt adjustments with cm_startYear,
-  # i.e. no phase-in from that point but a jump to the cumulative factor in cm_startYear
-  # assume startYearCat is 'final', i.e. cm_startYear enables a later switch-on of the mask
+  # Apply factors only for period > policyStartYear for fix on reference run in REMIND
+  # this equals a 'hot-start' of the EnInt adjustments with policyStartYear,
+  # i.e. no phase-in from that point but a jump to the cumulative factor in policyStartYear
+  # assume startYearCat is 'final', i.e. policyStartYear enables a later switch-on of the mask
   if (unique(enIntNew$startYearCat) == "final"){
-    enIntNew <- enIntNew[ period > cm_startYear]
+    enIntNew <- enIntNew[ period > policyStartYear]
   } else {
-    stop("Error in application of cm_startYear. Please check toolApplyScenSpecEnInt()")
+    stop("Error in application of policyStartYear. Please check toolApplyScenSpecEnInt()")
     }
 
   enIntNew[period >= startFade & period <= endFade, value := value * factor,
            by = c("region", "univocalName", "technology")][, c("factor", "startYear", "startFade", "endYear", "endFade", "annualImprovementRate", "annualFactor", "startYearCat") := NULL]
   # Remove yearly resolution for vehicle types that do not feature fleet tracking and extrapolate the timeSteps after the fadeout year to be constant
   enIntNew <- toolApplyMixedTimeRes(enIntNew, helpers)
-  enIntNew <- enIntNew[period >= policyStartYear]
+  enIntNew <- enIntNew[period > 2020]
 
   # Merge with unaffected enInt data
   cols <- intersect(names(enInt), names(enIntNew))

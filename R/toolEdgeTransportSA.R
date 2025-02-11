@@ -4,10 +4,10 @@
 #' a choice model to determine transport mode and technology shares, a demand regression
 #' and a fleet tracking for cars, busses and trucks
 #'
-#' @param SSPscen SSP or SDP scenario
-#' @param transportPolScen EDGE-T transport policy scenario
+#' @param SSPscen SSP or SDP scenarios
+#' @param transportPolScen EDGE-T transport policy scenarios
 #' @param isICEban optional enabling of ICE ban
-#' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
+#' @param demScen Demand scenarios, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -26,22 +26,20 @@ toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = FALSE,
                                 demScen = c("default", "default"),
+                                policyStartYear = 2025,
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
-                                isAnalyticsReported = FALSE,
-                                cm_startYear = 2025){
+                                isAnalyticsReported = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- NULL
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 30800 # [constant 2017 US$MER]
-  # Year when scenario differentiation sets in
-  policyStartYear <- 2021
   # last time step of historical data
   baseYear <- 2010
   # share of electricity in Hybrid electric vehicles
@@ -52,7 +50,7 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
 
   if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare, policyStartYear)
 
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
                                               "REMINDinputForTransportStandalone", "v1.2", "fulldata.gdx")}
@@ -227,7 +225,7 @@ toolEdgeTransportSA <- function(SSPscen,
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", cm_startYear))
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", policyStartYear))
 
   outputRaw <- list(
     SSPscen = SSPscen,

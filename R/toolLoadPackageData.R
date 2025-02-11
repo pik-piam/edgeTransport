@@ -35,7 +35,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters,
   # we can shift annuityCalc to the scenPar's
   if  (transportPolS[1] %in% annuityCalc$transportPolScen) {
-    # once this is used, scenario switching with cm_startYear needs to be checked
+    # once this is used, scenario switching with policyStartYear needs to be checked
     annuityCalc[, "startYearCat" := fcase( transportPolScen == transportPolS[1], "origin", transportPolScen == transportPolS[2], "final")]
     annuityCalc <- annuityCalc[!is.na(startYearCat)][, transportPolScen := NULL]
 } else {

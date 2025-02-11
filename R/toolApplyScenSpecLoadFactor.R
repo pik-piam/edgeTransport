@@ -7,7 +7,7 @@
 #' @returns Scenario specific load factor
 #' @import data.table
 
-toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers, cm_startYear = 2025) {
+toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policyStartYear, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- univocalName <- NULL
 
@@ -19,21 +19,21 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policySta
     stop("Scenario specific load factor changes are not unambiguously defined")
   }
   if ("origin" %in% scenParLoadFactor$startYearCat) {
-    stop("Error in demand scenario specific changes: only delayed switch-on with cm_startYear possible. Please check toolApplyScenSpecLoadFactor()")
+    stop("Error in demand scenario specific changes: only delayed switch-on with policyStartYear possible. Please check toolApplyScenSpecLoadFactor()")
   }
 
   # apply scenario specific load factor adjustments for LDW 4W
-  # linear phase-in of percentage factor between max(2020, cm_startYear) and targetYear
+  # linear phase-in of percentage factor between max(2020, policyStartYear) and targetYear
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period > max(policyStartYear, cm_startYear) &
+      period > max(2020, policyStartYear) &
       period <= targetYear,
-    value := value * (1 + percentChange * (period - policyStartYear) / (targetYear - policyStartYear))]
+    value := value * (1 + percentChange * (period - 2021) / (targetYear - 2021))]
 
   # constant application of percentage factor after targetYear
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period > max(policyStartYear, cm_startYear) &
+      period > max(2020, policyStartYear) &
       period >= targetYear,
     value := value * (1 + percentChange)]
 

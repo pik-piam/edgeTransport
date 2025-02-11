@@ -10,7 +10,7 @@
 #' @importFrom mrtransport toolPrepareTransportSubsidies
 #' @export
 
-toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare) {
+toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare, policyStartYear) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- univocalName <- test <- . <- NULL
 
@@ -50,7 +50,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   )
 
   ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(c("SSP2", SSPscen), helpers)
+  mrdriversData <- toolLoadmrdriversData(c("SSP2", SSPscen), helpers, policyStartYear)
 
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
