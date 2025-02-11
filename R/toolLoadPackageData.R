@@ -10,6 +10,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- NULL
 
+  if (SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){SSPscenario <- "SSP2"}
   ## General model parameters from the package
 
   # Decision tree discrete choice model
