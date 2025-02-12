@@ -16,7 +16,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   years <- unique(helpers$dtTimeRes$period)
 
   GDPMERmag <- calcOutput("GDP",
-                          scenario = c("SSPs", "SDPs"),
+                          scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                           naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv",
                           unit = mrdrivers::toolGetUnitDollar())
@@ -25,7 +25,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   GDPMER <- magpie2dt(GDPMERmag, yearcol = "period", regioncol = "region")[, variable := "GDP|MER"][, unit := unitGDP]
 
   GDPpcMERmag <- calcOutput("GDPpc",
-                            scenario = c("SSPs", "SDPs"),
+                            scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                             naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv",
                             unit = mrdrivers::toolGetUnitDollar())
@@ -34,7 +34,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   GDPpcMER <- magpie2dt(GDPpcMERmag, yearcol = "period", regioncol = "region")[, variable := "GDPpc|MER"][, unit := unitGDP]
 
   GDPpppMag <- calcOutput("GDP",
-                          scenario = c("SSPs", "SDPs"),
+                          scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                           naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv")
   unitGDP <- gsub(" unit: ", "", getComment(GDPpppMag)[2])
@@ -42,7 +42,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   GDPppp <- magpie2dt(GDPpppMag, yearcol = "period", regioncol = "region")[, variable := "GDP|PPP"][, unit := unitGDP]
 
   GDPpcPPPmag <- calcOutput("GDPpc",
-                            scenario = c("SSPs", "SDPs"),
+                            scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                             naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv")
   unitGDP <- gsub(" unit: ", "", getComment(GDPpcPPPmag)[2])
@@ -50,7 +50,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
   GDPpcPPP <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := "GDPpc|PPP"][, unit := unitGDP]
 
   POPmag <- calcOutput("Population",
-                       scenario = c("SSPs", "SDPs"),
+                       scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                        naming = "scenario",
                        regionmapping = "regionmapping_21_EU11.csv")[, , SSPscen] |> time_interpolate(years)
   POP <- magpie2dt(POPmag, yearcol = "period", regioncol = "region")[, variable := "Population"][, unit := "million"]
