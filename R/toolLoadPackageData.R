@@ -46,16 +46,14 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   # Transport policy scenario preference factors
   scenParPrefTrends <- fread(system.file("extdata/scenParPrefTrends.csv", package = "edgeTransport", mustWork = TRUE),
                              header = TRUE)
-  # Option A) adds 1200 lines in upstream toolApply, but includes case handling for SSPs[1] == SSPs[2]
-   scenParPrefTrends[, "startYearCat" := fcase( SSPscen == SSPs[1] & transportPolScen == transportPolS[1], "origin", SSPscen == SSPs[2] & transportPolScen == transportPolS[2], "final")]
-   scenParPrefTrends <- scenParPrefTrends[!is.na(startYearCat)][, c("transportPolScen", "SSPscen") := NULL]
-  # Option B) cannot be done inplace, renaming is ugly, different option? no case handling for SSPs[1] == SSPs[2] so far
-  # scenParPrefTrendsO <- scenParPrefTrends[(SSPscen == SSPs[1] & transportPolScen == transportPolS[1])][, c("transportPolScen", "SSPscen") := NULL]
-  # scenParPrefTrendsF <- scenParPrefTrends[(SSPscen == SSPs[2] & transportPolScen == transportPolS[2])][, c("transportPolScen", "SSPscen") := NULL]
-  # setnames(scenParPrefTrendsF, (ncol(scenParPrefTrendsF)-2):ncol(scenParPrefTrendsF), c("targetF", "symmyrF", "speedF"))
-  # scenParPrefTrends <- merge(scenParPrefTrendsO, scenParPrefTrendsF, by = intersect(names(scenParPrefTrendsO), names(scenParPrefTrendsF)))
+  scenParPrefTrends[, startYearCat := fcase( SSPscen == SSPs[1] & transportPolScen == transportPolS[1], "origin", SSPscen == SSPs[2] & transportPolScen == transportPolS[2], "final")]
+  scenParPrefTrends <- scenParPrefTrends[!is.na(startYearCat)][, c("transportPolScen", "SSPscen") := NULL]
+  # Check if before and after startyear scenario stays the same
+  if (transportPolS[1] == transportPolS[2] & SSPs[1] == SSPs[2]) {
+    scenParPrefTrends[, startYearCat := "full"]
+  }
 
-   if (nrow(scenParPrefTrends) == 0) scenParPrefTrends <- NULL
+  if (nrow(scenParPrefTrends) == 0) scenParPrefTrends <- NULL
 
   # Transport policy scenario inconvenience cost factors
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv",

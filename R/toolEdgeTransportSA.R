@@ -63,7 +63,7 @@ toolEdgeTransportSA <- function(SSPscen,
 
   # ToDo: adjust when SSPscen call is changed
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  if (is.null(scenModelPar$scenParDemFactors)) demScen[2] <- SSPscen
+  if (is.null(scenModelPar$scenParDemFactors)) demScen[1] <- demScen[2] <- SSPscen
 
   ########################################################
   ## Prepare input data and apply scenario specific changes
@@ -222,16 +222,18 @@ toolEdgeTransportSA <- function(SSPscen,
   # Rename transportPolScen if ICE ban is activated
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
 
+  demScen <- demScen[2]
+
   print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", policyStartYear))
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen, "-", policyStartYear))
 
   outputRaw <- list(
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
-    demScen = demScen,
+    demScen = demScen[2],
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,
