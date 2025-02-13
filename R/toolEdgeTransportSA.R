@@ -224,7 +224,6 @@ toolEdgeTransportSA <- function(SSPscen,
 
   print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
 
-  browser()
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen[2], "-", policyStartYear))
