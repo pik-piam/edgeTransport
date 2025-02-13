@@ -81,11 +81,11 @@ toolLoadmrdriversData <- function(SSPscen, helpers, policyStartYear) {
     GDPpcMER <- rbind(GDPpcMERO, GDPpcMER[period > policyStartYear])
 
     GDPpppMagO <- GDPpppMag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
-    GDPpppO <- magpie2dt(GDPpppMag, yearcol = "period", regioncol = "region")[, variable := "GDP|PPP"][, unit := unitGDPppp]
+    GDPpppO <- magpie2dt(GDPpppMagO, yearcol = "period", regioncol = "region")[, variable := "GDP|PPP"][, unit := unitGDPppp]
     GDPppp <- rbind(GDPpppO, GDPppp[period > policyStartYear])
 
     GDPpcPPPmagO <- GDPpcPPPmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
-    GDPpcPPPO <- magpie2dt(GDPpcPPPmag, yearcol = "period", regioncol = "region")[, variable := "GDPpc|PPP"][, unit := unitGDPpcPPP]
+    GDPpcPPPO <- magpie2dt(GDPpcPPPmagO, yearcol = "period", regioncol = "region")[, variable := "GDPpc|PPP"][, unit := unitGDPpcPPP]
     GDPpcPPP <- rbind(GDPpcPPPO, GDPpcPPP[period > policyStartYear])
 
     POPmagO <- POPmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])

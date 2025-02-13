@@ -28,6 +28,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                                       lambdas,
                                       helpers,
                                       isICEban,
+                                      ICEbanYears,
                                       vehiclesPerTech = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
@@ -124,7 +125,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     dt <- policyMask
     after <- policyMask
 
-    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
+    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions & period %in% ICEbanYears,
                policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
 
@@ -215,7 +216,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     ratioPhev <- unique(policyMaskPHEV$policyMask)
     # Model availability for Hybrid electric
-    if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 &
+    if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 & period %in% ICEbanYears &
                       region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
                                 by = c("region", "technology", "vehicleType", "univocalName")]
 
@@ -229,7 +230,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
                     value := pmax(value[period == 2020], endoCostRaw),
                       by = c("region", "technology", "vehicleType", "univocalName")]
-    if (isICEban) dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
+    if (isICEban) dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t & period %in% ICEbanYears,
                                 value := pmax(policyMask, endoCostRaw),
                                 by = c("region", "technology", "vehicleType", "univocalName")]
 

@@ -6,11 +6,10 @@
 #' @param policyStartYear Year from which the scenario parameters are applied on the baseline preference trends
 #' @param GDPcutoff Threshold used to categorize countries into different mitigation groups based on their GDP
 #' @param helpers List containing several helpers used throughout the model
-#' @param isICEban Switch to turn on ICE phase out policies
 #' @returns Scenario specific preference trends
 #' @import data.table
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- variable <- unit <- level <- vehicleType <- FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- NULL
 

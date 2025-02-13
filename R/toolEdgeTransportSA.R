@@ -24,7 +24,7 @@
 
 toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
-                                isICEban = FALSE,
+                                isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
                                 policyStartYear = 2025,
                                 gdxPath = NULL,
@@ -45,6 +45,24 @@ toolEdgeTransportSA <- function(SSPscen,
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
 
+  # find years in which ICEban is used
+  ICEbanYears1 <- seq(2021, policyStartYear, 1)
+  ICEbanYears2 <- c(seq(policyStartYear, 2100, 1), 2110, 2130, 2150)
+  if (isICEban[1] & isICEban[2]) {
+    ICEbanYears <- c(ICEbanYears1, ICEbanYears2)
+    isICEban <- TRUE
+  } else if (isICEban[1]) {
+    ICEbanYears <- ICEbanYears1
+    isICEban <- TRUE
+  } else if (isICEban[2]){
+    ICEbanYears <- ICEbanYears2
+    isICEban <- TRUE
+  } else {
+    ICEbanYears <- NULL
+    isICEban <- NULL
+  }
+
+
   ########################################################
   ## Load input data
   ########################################################
@@ -61,9 +79,8 @@ toolEdgeTransportSA <- function(SSPscen,
   scenModelPar <- inputs$scenModelPar
   inputDataRaw <- inputs$inputDataRaw
 
-  # ToDo: adjust when SSPscen call is changed
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  if (is.null(scenModelPar$scenParDemFactors)) demScen[1] <- demScen[2] <- SSPscen
+  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
   ########################################################
   ## Prepare input data and apply scenario specific changes
@@ -74,8 +91,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                 inputDataRaw,
                                                 policyStartYear,
                                                 GDPcutoff,
-                                                helpers,
-                                                isICEban)
+                                                helpers)
 
   ########################################################
   ## Calibrate historical preferences
@@ -90,7 +106,9 @@ toolEdgeTransportSA <- function(SSPscen,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
-  if (isICEban) scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers)
+  if (isICEban) {
+   scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
+  }
   scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
 
   #-------------------------------------------------------
@@ -121,7 +139,6 @@ toolEdgeTransportSA <- function(SSPscen,
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
                                                         genModelPar$lambdasDiscreteChoice,
                                                         helpers)
-
   #################################################
   ## Demand regression module
   #################################################
@@ -167,6 +184,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                  genModelPar$lambdasDiscreteChoice,
                                                  helpers,
                                                  isICEban,
+                                                 ICEbanYears,
                                                  fleetVehiclesPerTech)
 
     if (isAnalyticsReported) {
@@ -219,16 +237,19 @@ toolEdgeTransportSA <- function(SSPscen,
   #################################################
   ## Reporting
   #################################################
+  SSPscen <- SSPscen[2]
+  transportPolScen <- transportPolScen[2]
+  demScen <- demScen[2]
+
   # Rename transportPolScen if ICE ban is activated
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
 
-  demScen <- demScen[2]
-
-  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
+  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "with startyear", policyStartYear, "finished"))
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen, "-", policyStartYear))
+
 
   outputRaw <- list(
     SSPscen = SSPscen,

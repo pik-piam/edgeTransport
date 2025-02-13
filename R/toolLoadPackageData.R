@@ -21,6 +21,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   baselinePrefTrends <- fread(system.file("extdata/genParBaselinePrefTrends.csv",
                                           package = "edgeTransport", mustWork = TRUE), header = TRUE)
   baselinePrefTrends[, "startYearCat" := fcase( SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
+  # ToDo: 1417 lns for SSP[1]=SSP[2], 2834 otherwise
   baselinePrefTrends <- baselinePrefTrends[!is.na(startYearCat)][, SSPscen := NULL]
   # Startparameter inconvenience costs
   incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv",

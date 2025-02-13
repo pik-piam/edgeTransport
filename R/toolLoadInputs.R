@@ -29,7 +29,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
 
   ### edgeTransport package data
   ## ToDo Function now takes two scenario specifiers, fist one is temporarily fixed
-  packageData <- toolLoadPackageData(c("SSP2", SSPscen), c("Mix2", transportPolScen), demScen)
+  packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
   # categories for filtering data
   categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
   filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
@@ -50,7 +50,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   )
 
   ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(c("SSP2", SSPscen), helpers, policyStartYear)
+  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, policyStartYear)
 
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)

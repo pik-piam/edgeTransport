@@ -6,12 +6,11 @@
 #' @param policyStartYear Year when scenario differentiation sets in
 #' @param GDPcutoff GDP cutoff to differentiate between regions
 #' @param helpers List with helpers
-#' @param isICEban optional enabling of ICE ban
 #' @returns List of data.tables with scenario specific input data
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- variable <- level <- unit <- NULL
 
@@ -36,7 +35,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
-                                                    inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban)
+                                                    inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends
