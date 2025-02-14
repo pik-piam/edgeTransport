@@ -6,12 +6,11 @@
 #' @param policyStartYear Year when scenario differentiation sets in
 #' @param GDPcutoff GDP cutoff to differentiate between regions
 #' @param helpers List with helpers
-#' @param isICEban optional enabling of ICE ban
 #' @returns List of data.tables with scenario specific input data
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers, isICEban) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- variable <- level <- unit <- NULL
 
@@ -19,21 +18,24 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # change to long-format
   basePrefTrends <- melt(genModelPar$baselinePrefTrends, variable.name = "period",
                          id.vars = c("region", "level", "sector", "subsectorL1",
-                                     "subsectorL2", "subsectorL3", "vehicleType", "technology"))
+                                     "subsectorL2", "subsectorL3", "vehicleType", "technology", "startYearCat"))
   # interpolate all timesteps
   # get rid of levels as period is treated as a factor after using melt (not supported by approx_dt)
   basePrefTrends[, period := as.numeric(as.character(period))]
   basePrefTrends <- toolApplyMixedTimeRes(basePrefTrends, helpers)
-  basePrefTrends <- basePrefTrends[period >= 2020]
-
+  if ("final" %in% basePrefTrends$startYearCat) {
+    basePrefTrends <- basePrefTrends[(period > 2020 & period <= policyStartYear & startYearCat == 'origin')|(period > policyStartYear & startYearCat == 'final')][, startYearCat := NULL]
+  } else {
+    basePrefTrends <- basePrefTrends[period > 2020][, startYearCat := NULL]
+  }
   # order
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
                                        "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
   basePrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
-  # Application of policy induced changes to baseline preference trends --------------
+  # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
-                                                  inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban)
+                                                    inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends
