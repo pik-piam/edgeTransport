@@ -23,33 +23,33 @@ toolLoadmrdriversData <- function(SSPscen, helpers, policyStartYear) {
 
   # calculate output for magclass objects: GDPMER, GDPpcMER, GDPppp, GDPpcPPP, POP
   GDPMERmag <- calcOutput("GDP",
-                          scenario = c("SSPs", "SDPs"),
+                          scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                           naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv",
                           unit = mrdrivers::toolGetUnitDollar())
   unitGDPMER <- getUnitGDP(GDPMERmag)
 
   GDPpcMERmag <- calcOutput("GDPpc",
-                            scenario = c("SSPs", "SDPs"),
+                            scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                             naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv",
                             unit = mrdrivers::toolGetUnitDollar())
   unitGDPpcMER <- getUnitGDP(GDPpcMERmag)
 
   GDPpppMag <- calcOutput("GDP",
-                          scenario = c("SSPs", "SDPs"),
+                          scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                           naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv")
   unitGDPppp <- getUnitGDP(GDPpppMag)
 
   GDPpcPPPmag <- calcOutput("GDPpc",
-                            scenario = c("SSPs", "SDPs"),
+                            scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                             naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv")
   unitGDPpcPPP <- getUnitGDP(GDPpcPPPmag)
 
   POPmag <- calcOutput("Population",
-                       scenario = c("SSPs", "SDPs"),
+                       scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
                        naming = "scenario",
                        regionmapping = "regionmapping_21_EU11.csv")
 
