@@ -5,6 +5,7 @@
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
+#' @param policyStartYear Year after which policy differentiation sets in
 #' @returns list with different input data sets
 #' @import data.table
 #' @importFrom mrtransport toolPrepareTransportSubsidies

@@ -7,8 +7,9 @@
 calcEdgeTransportSA(
   SSPscen,
   transportPolScen,
-  isICEban = FALSE,
-  demScen = "default",
+  isICEban = c(FALSE, FALSE),
+  demScen = c("default", "default"),
+  policyStartYear = 2025,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = FALSE,
@@ -26,6 +27,8 @@ calcEdgeTransportSA(
 \item{isICEban}{optional enabling of ICE ban}
 
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
+
+\item{policyStartYear}{Year after which policy differentiation sets in}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
@@ -49,5 +52,5 @@ Transport input data for REMIND
 madrat caching.
 }
 \author{
-Jarusch Muessel, Johanna Hoppe
+Jarusch Muessel, Johanna Hoppe, Alex K. Hagen
 }

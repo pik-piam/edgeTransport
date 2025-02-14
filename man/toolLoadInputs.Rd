@@ -4,18 +4,27 @@
 \alias{toolLoadInputs}
 \title{Load all inputs that are required to run the model}
 \usage{
-toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare)
+toolLoadInputs(
+  SSPscen,
+  transportPolScen,
+  demScen,
+  gdxPath,
+  hybridElecShare,
+  policyStartYear
+)
 }
 \arguments{
-\item{SSPscen}{SSP or SDP scenario}
+\item{SSPscen}{SSP or SDP scenarios}
 
-\item{transportPolScen}{EDGE-T transport policy scenario}
+\item{transportPolScen}{EDGE-T transport policy scenarios}
 
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
 \item{hybridElecShare}{Share of electricity in Hybrid electric vehicles}
+
+\item{policyStartYear}{Year after which policy differentiation sets in}
 }
 \value{
 list with different input data sets

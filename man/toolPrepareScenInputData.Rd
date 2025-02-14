@@ -10,8 +10,7 @@ toolPrepareScenInputData(
   inputDataRaw,
   policyStartYear,
   GDPcutoff,
-  helpers,
-  isICEban
+  helpers
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ toolPrepareScenInputData(
 \item{GDPcutoff}{GDP cutoff to differentiate between regions}
 
 \item{helpers}{List with helpers}
-
-\item{isICEban}{optional enabling of ICE ban}
 }
 \value{
 List of data.tables with scenario specific input data

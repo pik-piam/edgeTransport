@@ -8,6 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
+#' @param policyStartYear Year after which policy differentiation sets in
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -16,13 +17,13 @@
 #' @param isREMINDinputReported Optional reporting of REMIND input data
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
 #' @returns Transport input data for REMIND
-#' @author Jarusch Muessel, Johanna Hoppe
+#' @author Jarusch Muessel, Johanna Hoppe, Alex K. Hagen
 #' @export
 #' @rdname EdgeTransportSA
 
 calcEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
-                                isICEban = FALSE,
+                                isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
                                 policyStartYear = 2025,
                                 gdxPath = NULL,
@@ -32,6 +33,20 @@ calcEdgeTransportSA <- function(SSPscen,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE) {
+
+  # for backwards compatibility with function calls before startyear
+  if (length(SSPscen) == 1){
+    SSPscen <- c("SSP2", SSPscen)
+  }
+  if (length(transportPolScen) == 1){
+    transportPolScen <- c("Mix2", transportPolScen)
+  }
+  if (length(isICEban) == 1){
+    isICEban <- c(TRUE, isICEban)
+  }
+  if (length(demScen) == 1){
+    demScen <- c("default", demScen)
+  }
 
   return(list(
     x = toolEdgeTransportSA(SSPscen,

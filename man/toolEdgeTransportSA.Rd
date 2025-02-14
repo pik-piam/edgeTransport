@@ -7,8 +7,9 @@
 toolEdgeTransportSA(
   SSPscen,
   transportPolScen,
-  isICEban = FALSE,
-  demScen = "default",
+  isICEban = c(FALSE, FALSE),
+  demScen = c("default", "default"),
+  policyStartYear = 2025,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = TRUE,
@@ -19,13 +20,15 @@ toolEdgeTransportSA(
 )
 }
 \arguments{
-\item{SSPscen}{SSP or SDP scenario}
+\item{SSPscen}{SSP or SDP scenarios}
 
-\item{transportPolScen}{EDGE-T transport policy scenario}
+\item{transportPolScen}{EDGE-T transport policy scenarios}
 
 \item{isICEban}{optional enabling of ICE ban}
 
-\item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
+\item{demScen}{Demand scenarios, used to apply reduction factors on total demands from the regression}
+
+\item{policyStartYear}{Year after which policy differentiation sets in}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 

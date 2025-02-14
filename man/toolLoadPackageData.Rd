@@ -5,12 +5,12 @@
 \title{Load input data from the edgeTransport package and choose data
 according to SSP and transport policy scenario}
 \usage{
-toolLoadPackageData(SSPscenario, transportPolScenario, demScenario = NULL)
+toolLoadPackageData(SSPs, transportPolS, demScenario = c("default", "default"))
 }
 \arguments{
-\item{SSPscenario}{SSP scenario for which the package data should be loaded}
+\item{SSPs}{SSP scenarios for which the package data should be loaded}
 
-\item{transportPolScenario}{transport policy scenario for which the package data should be loaded}
+\item{transportPolS}{transport policy scenarios for which the package data should be loaded}
 
 \item{demScenario}{demand scenario for which the package input data should be loaded}
 }

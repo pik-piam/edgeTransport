@@ -14,7 +14,7 @@ toolApplyScenSpecLoadFactor(
 \arguments{
 \item{loadFactor}{load factor input data supplied by mrtransport}
 
-\item{scenParLoadFactor}{Scenario specific parameters to be applied don the baseline load factor}
+\item{scenParLoadFactor}{Scenario specific parameters to be applied on the baseline load factor}
 
 \item{policyStartYear}{Year when scenario differentiation sets in}
 

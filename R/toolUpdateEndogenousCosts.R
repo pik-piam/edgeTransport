@@ -12,6 +12,7 @@
 #' @param lambdas data.table containing exponents for discrete choice calculation
 #' @param helpers list containing helpers like mappings, decisionTree etc.
 #' @param isICEban optional enabling of ICE ban
+#' @param ICEbanYears sequence of years in which ICEban is applied
 #' @param vehiclesPerTech data.table containing total number of vehicles for all years and regions
 #' @return list containing data.table with endogenous cost components over the full time span and additional data.tables
 #'         for model behavior analysis

@@ -8,6 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenarios, used to apply reduction factors on total demands from the regression
+#' @param policyStartYear Year after which policy differentiation sets in
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -44,6 +45,10 @@ toolEdgeTransportSA <- function(SSPscen,
   baseYear <- 2010
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
+  # adjust policyStartYear according to edgeTransport min
+  if (policyStartYear < 2020){
+    policyStartYear <- 2020
+  }
 
   # find years in which ICEban is used
   ICEbanYears1 <- seq(2021, policyStartYear, 1)

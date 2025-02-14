@@ -10,8 +10,7 @@ toolApplyScenPrefTrends(
   GDPpcMER,
   policyStartYear,
   GDPcutoff,
-  helpers,
-  isICEban
+  helpers
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ toolApplyScenPrefTrends(
 \item{GDPcutoff}{Threshold used to categorize countries into different mitigation groups based on their GDP}
 
 \item{helpers}{List containing several helpers used throughout the model}
-
-\item{isICEban}{Switch to turn on ICE phase out policies}
 }
 \value{
 Scenario specific preference trends
