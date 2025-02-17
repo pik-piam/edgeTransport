@@ -51,20 +51,18 @@ toolEdgeTransportSA <- function(SSPscen,
   }
 
   # find years in which ICEban is used
-  ICEbanYears1 <- seq(2021, policyStartYear, 1)
-  ICEbanYears2 <- c(seq(policyStartYear, 2100, 1), 2110, 2130, 2150)
   if (isICEban[1] & isICEban[2]) {
-    ICEbanYears <- c(ICEbanYears1, ICEbanYears2)
+    ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
     isICEban <- TRUE
-  } else if (isICEban[1]) {
-    ICEbanYears <- ICEbanYears1
+  } else if (isICEban[1] & policyStartYear > 2020) {
+    ICEbanYears  <- seq(2021, policyStartYear, 1)
     isICEban <- TRUE
   } else if (isICEban[2]){
-    ICEbanYears <- ICEbanYears2
+    ICEbanYears <-  c(seq(policyStartYear, 2100, 1), 2110, 2130, 2150)
     isICEban <- TRUE
   } else {
     ICEbanYears <- NULL
-    isICEban <- NULL
+    isICEban <- FALSE
   }
 
 

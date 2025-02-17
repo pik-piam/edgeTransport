@@ -11,7 +11,12 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   SSPscen <- transportPolScen <- demScen <- NULL
 
   #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
-  if (SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){SSPscenario <- "SSP2"}
+  if (SSPs[1] %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){
+    SSPs[1] <- "SSP2"
+  } else if (SSPs[2] %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")) {
+    SSPs[2] <- "SSP2"
+  }
+
   ## General model parameters from the package
 
   # Decision tree discrete choice model
