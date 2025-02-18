@@ -36,13 +36,13 @@ calcEdgeTransportSA <- function(SSPscen,
 
   # for backwards compatibility with function calls before startyear
   if (length(SSPscen) == 1){
-    SSPscen <- c("SSP2", SSPscen)
+    SSPscen <- c(SSPscen, SSPscen)
   }
   if (length(transportPolScen) == 1){
-    transportPolScen <- c("Mix2", transportPolScen)
+    transportPolScen <- c(transportPolScen, transportPolScen)
   }
   if (length(isICEban) == 1){
-    isICEban <- c(TRUE, isICEban)
+    isICEban <- c(isICEban, isICEban)
   }
   if (length(demScen) == 1){
     demScen <- c("default", demScen)

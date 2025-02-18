@@ -26,12 +26,14 @@ iterativeEdgeTransport <- function() {
     file.path("../../", fname)
   }
 
-  # Set gdx
+  # Set gdx in the current REMIND folder
   gdx <- "input.gdx"
   if (file.exists("fulldata.gdx"))
     gdx <- "fulldata.gdx"
 
   # Load config
+  # ToDo: load start scenario information from somewhere
+  # ToDo: load startyear from config
   load("config.Rdata")
   SSPscen <- cfg$gms$cm_GDPpopScen
   transportPolScen <- cfg$gms$cm_EDGEtr_scen
@@ -40,6 +42,7 @@ iterativeEdgeTransport <- function() {
   isICEban <- FALSE
   if (length(grep(".*ban$", transportPolScen)) == 1) isICEban <- TRUE
 
+  # for ES regression
   baseYear <- 2010
 
   #############################################################
@@ -56,6 +59,7 @@ iterativeEdgeTransport <- function() {
   numberOfRegions <- length(gdx::readGDX(gdx, "all_regi"))
   iterationNumber <- as.vector(gdxrrw::rgdx(gdx, list(name = "o_iterationNumber"))$val)
 
+  # ToDo
   inputFiles <- c("CAPEXandNonFuelOPEX",
                   "scenSpecPrefTrends",
                   "scenSpecLoadFactor",
@@ -106,6 +110,7 @@ iterativeEdgeTransport <- function() {
     REMINDfuelCostIterations <- readRDS(list.files(file.path(".", edgeTransportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE))
     REMINDfuelCostIterations <- rbind(REMINDfuelCostIterations, copy(REMINDfuelCost)[, iteration := iterationNumber])
     storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
+    # average fuel costs over REMIND iterations
     averagePricesOverIterations <- TRUE
     if (averagePricesOverIterations) {
       if (max(unique(REMINDfuelCostIterations$iteration)) >= 20 &&
