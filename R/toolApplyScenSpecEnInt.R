@@ -2,13 +2,13 @@
 #' @author Johanna Hoppe
 #' @param enInt Energy intensity input data supplied by mrtransport
 #' @param scenParEnergyIntensity Transport policy scenario specific energy intensity improvement factors
-#' @param policyStartYear Year from which scenario specific transport policies are applied
+#' @param allEqYear Year after which scenario differentiation sets in
 #' @param helpers List with helpers
 #' @returns data.table with scenario specific energy intensity input data
 #' @import data.table
 
 
-toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYear, helpers) {
+toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, allEqYear, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- univocalName <- technology <- FVvehvar <- startYear <- startFade <- endFade <- endYear <- NULL
   value.x <- value.y <- annualFactor <- annualImprovementRate <- NULL
@@ -54,14 +54,14 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, policyStartYea
   enIntNew[, factor := cumprod(annualFactor),
                 by = c("region", "univocalName", "technology")]
 
-  # Apply factors only for period > policyStartYear for fix on reference run in REMIND
-  # this equals a 'hot-start' of the EnInt adjustments with policyStartYear,
-  # i.e. no phase-in from that point but a jump to the cumulative factor in policyStartYear
-  # assume startYearCat is 'final', i.e. policyStartYear enables a later switch-on of the mask
+  # Apply factors only for period > allEqYear for fix on reference run in REMIND
+  # this equals a 'hot-start' of the EnInt adjustments with allEqYear,
+  # i.e. no phase-in from that point but a jump to the cumulative factor in allEqYear
+  # assume startYearCat is 'final', i.e. allEqYear enables a later switch-on of the mask
   if (unique(enIntNew$startYearCat) == "final"){
-    enIntNew <- enIntNew[ period > policyStartYear]
+    enIntNew <- enIntNew[ period > allEqYear]
   } else {
-    stop("Error in application of policyStartYear. Please check toolApplyScenSpecEnInt()")
+    stop("Error in application of allEqYear. Please check toolApplyScenSpecEnInt()")
     }
 
   enIntNew[period >= startFade & period <= endFade, value := value * factor,

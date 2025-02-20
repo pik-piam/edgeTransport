@@ -2,7 +2,7 @@
 #'
 #' Run in the REMIND output folder in between iterations
 #'
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
 #' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @import data.table
@@ -31,16 +31,59 @@ iterativeEdgeTransport <- function() {
   if (file.exists("fulldata.gdx"))
     gdx <- "fulldata.gdx"
 
-  # Load config
-  # ToDo: load start scenario information from somewhere
-  # ToDo: load startyear from config
-  load("config.Rdata")
-  SSPscen <- cfg$gms$cm_GDPpopScen
-  transportPolScen <- cfg$gms$cm_EDGEtr_scen
-  demScen <- cfg$gms$cm_demScen
+  # Load config of REMIND reference run for fixing before startyear
+  if (!is.na(cfg$files2export$start["input_ref.gdx"])) {
+    load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
+    startyear <- cfg$gms$cm_startyear
+    # REMIND startyear is the year in which differences are observed
+    # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
+    allEqYear <- startyear - 5
+    if (allEqYear < 2020){
+      allEqYear <- 2020
+    }
+    SSPscen <- cfg$gms$cm_GDPpopScen
+    transportPolScen <- cfg$gms$cm_EDGEtr_scen
+    demSce <- cfg$gms$cm_demScen
+    cfg <- NULL
+  } else {
+    # default start scenario as placeholder but no scenario differentiation before 2020
+    SSPscen <- "SSP2"
+    transportPolScen <- "Mix2"
+    demScen <- "default"
+    allEqYear <- 2020
+  }
 
-  isICEban <- FALSE
-  if (length(grep(".*ban$", transportPolScen)) == 1) isICEban <- TRUE
+  # Load config
+  load("config.Rdata")
+  SSPscen[2] <- cfg$gms$cm_GDPpopScen
+  transportPolScen[2] <- cfg$gms$cm_EDGEtr_scen
+  demScen[2] <- cfg$gms$cm_demScen
+
+  isICEban <- c(FALSE, FALSE)
+  # Check if ICEban is on and isolate string before "ICEban" for transportPolScen
+  # ToDo: check if this is a problem later in the code
+  if (grepl(".*ban$", transportPolScen[1])) {
+    isICEban[1] <- TRUE
+    transportPolScen[1] <- gsub('ICEban','',transportPolScen[1])
+  } else if(grepl(".*ban$", transportPolScen[2])) {
+    isICEban[2] <- TRUE
+    transportPolScen[2] <- gsub('ICEban','',transportPolScen[2])
+  }
+
+  # find years in which ICEban is used
+  if (isICEban[1] & isICEban[2]) {
+    ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
+    isICEban <- TRUE
+  } else if (isICEban[1] & allEqYear > 2020) {
+    ICEbanYears  <- seq(2021, allEqYear, 1)
+    isICEban <- TRUE
+  } else if (isICEban[2]){
+    ICEbanYears <-  c(seq(allEqYear, 2100, 1), 2110, 2130, 2150)
+    isICEban <- TRUE
+  } else {
+    ICEbanYears <- NULL
+    isICEban <- FALSE
+  }
 
   # for ES regression
   baseYear <- 2010
@@ -53,13 +96,12 @@ iterativeEdgeTransport <- function() {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- unit <- univocalName <- iteration <- type <- variable <- . <- NULL
 
-
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
   numberOfRegions <- length(gdx::readGDX(gdx, "all_regi"))
   iterationNumber <- as.vector(gdxrrw::rgdx(gdx, list(name = "o_iterationNumber"))$val)
 
-  # ToDo
+  # ToDo: delete
   inputFiles <- c("CAPEXandNonFuelOPEX",
                   "scenSpecPrefTrends",
                   "scenSpecLoadFactor",
@@ -71,6 +113,7 @@ iterativeEdgeTransport <- function() {
 
   inputs <- toolLoadIterativeInputs(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions,
                                     SSPscen, transportPolScen, demScen)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
 
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
@@ -154,8 +197,11 @@ iterativeEdgeTransport <- function() {
   ## endogenous costs update
   ########################################################
 
-  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData, genModelPar$lambdasDiscreteChoice, helpers)
   vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc, helpers)
+
+  dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
+                                                        genModelPar$lambdasDiscreteChoice,
+                                                        helpers)
 
   #------------------------------------------------------
   # Start of iterative section
@@ -165,17 +211,18 @@ iterativeEdgeTransport <- function() {
   ## Cost module
   #################################################
   # provide endogenous updates to cost components -----------
-  # number of vehicles changes in the vehicle stock module and serves as new input for endogenous cost update
-  policyStartYear <- max(unique(dataEndogenousCosts[!is.na(value) & type == "Inconvenience costs"]$period)) + 1
+  # number of vehicles changes in the vehicle stock module and serves
+  # as new input for endogenous cost update
   endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts,
                                                vehicleDepreciationFactors,
                                                scenModelPar$scenParIncoCost,
-                                               policyStartYear,
+                                               allEqYear,
                                                inputData$timeValueCosts,
                                                inputData$scenSpecPrefTrends,
                                                genModelPar$lambdasDiscreteChoice,
                                                helpers,
                                                isICEban,
+                                               ICEbanYears,
                                                fleetVehiclesPerTech)
 
   print("Endogenous updates to cost components finished")

@@ -8,7 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
-#' @param policyStartYear Year after which policy differentiation sets in
+#' @param allEqYear Year after which policy differentiation sets in
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -25,7 +25,7 @@ calcEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
-                                policyStartYear = 2025,
+                                startyear = 2030,
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = FALSE,
@@ -34,7 +34,7 @@ calcEdgeTransportSA <- function(SSPscen,
                                 isREMINDinputReported = FALSE,
                                 isAnalyticsReported = FALSE) {
 
-  # for backwards compatibility with function calls before startyear
+  # for backwards compatibility with function calls before startyear implementation
   if (length(SSPscen) == 1){
     SSPscen <- c(SSPscen, SSPscen)
   }
@@ -53,7 +53,7 @@ calcEdgeTransportSA <- function(SSPscen,
                             transportPolScen,
                             isICEban,
                             demScen,
-                            policyStartYear,
+                            startyear,
                             gdxPath,
                             outputFolder,
                             isStored,

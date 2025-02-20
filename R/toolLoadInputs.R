@@ -3,15 +3,13 @@
 #' @param SSPscen SSP or SDP scenarios
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
-#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
-#' @param policyStartYear Year after which policy differentiation sets in
 #' @returns list with different input data sets
 #' @import data.table
 #' @importFrom mrtransport toolPrepareTransportSubsidies
 #' @export
 
-toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare, policyStartYear) {
+toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- univocalName <- test <- . <- NULL
 
@@ -29,7 +27,6 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   lowTimeRes <- unique(dtTimeRes[univocalName %in% lowResUnivocalNames]$period)
 
   ### edgeTransport package data
-  ## ToDo Function now takes two scenario specifiers, fist one is temporarily fixed
   packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
   # categories for filtering data
   categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
@@ -49,12 +46,6 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     reportingNames = packageData$reportingNames,
     reportingAggregation = packageData$reportingAggregation
   )
-
-  ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, policyStartYear)
-
-  ## from REMIND
-  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
 
   # load and prepare transport subsidies from mrtransport
   subsidies <- toolPrepareTransportSubsidies(helpers)
@@ -91,14 +82,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     nonFuelOPEXtrackedFleet = mrtransportData$nonFuelOPEXtrackedFleet,
     CAPEXother = mrtransportData$CAPEXother,
     nonFuelOPEXother = mrtransportData$nonFuelOPEXother,
-    REMINDfuelCosts = REMINDfuelCosts,
     timeValueCosts = mrtransportData$timeValueCosts,
-    subsidies = subsidies,
-    GDPMER = mrdriversData$GDPMER,
-    GDPpcMER = mrdriversData$GDPpcMER,
-    GDPppp = mrdriversData$GDPppp,
-    GDPpcPPP = mrdriversData$GDPpcPPP,
-    population = mrdriversData$population
+    subsidies = subsidies
   )
 
   input <- list(

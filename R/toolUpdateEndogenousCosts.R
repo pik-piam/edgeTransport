@@ -6,7 +6,7 @@
 #'                      Endogenous cost components and FS3 shares are provided until 2020. Rest is filled with NA.
 #' @param depreciationFactors data.table containing vehicle depreciation factor for each year of service Life
 #' @param scenParIncoCost data.table containing scenario specific parameters for inconvenience costs policy mask
-#' @param policyStartYear year from which scenario-specific differentiation begins
+#' @param allEqYear year from which scenario-specific differentiation begins
 #' @param timeValue data.table containing mode specific time value costs based on speed and gdp
 #' @param preferences preference factor trends
 #' @param lambdas data.table containing exponents for discrete choice calculation
@@ -23,7 +23,7 @@
 toolUpdateEndogenousCosts <- function(dataEndoCosts,
                                       depreciationFactors,
                                       scenParIncoCost,
-                                      policyStartYear,
+                                      allEqYear,
                                       timeValue,
                                       preferences,
                                       lambdas,
@@ -63,10 +63,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     }
   }
 
-  ## Check if transportPol or SSPscen change is introduced with policyStartYear
-  # If both stay the same, set policyStartYear out of bounds such that it does not affect the calculation here
+  ## Check if transportPol or SSPscen change is introduced with allEqYear
+  # If both stay the same, set allEqYear out of bounds such that it does not affect the calculation here
   if (!"final" %in% scenParIncoCost$startYearCat){
-    policyStartYear <- 2200
+    allEqYear <- 2200
   }
 
   ## the policymaker bans ICEs increasingly more strictly
@@ -94,8 +94,8 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   tempAndregions <- CJ(region = regions, period = policyYears)
   tempAndregions[, all := "All"]
   policyMask[, all := "All"]
-  policyMaskO <- merge(policyMask[startYearCat == "origin"], tempAndregions[period <= policyStartYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
-  policyMaskF <- merge(policyMask[startYearCat == "final"], tempAndregions[period > policyStartYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskO <- merge(policyMask[startYearCat == "origin"], tempAndregions[period <= allEqYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskF <- merge(policyMask[startYearCat == "final"], tempAndregions[period > allEqYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
   policyMask <- rbind(policyMaskO, policyMaskF)
   policyMask[, "startYearCat" := NULL]
   # Hybrid electric vehicles get a different policy parameter than BEV and ICE

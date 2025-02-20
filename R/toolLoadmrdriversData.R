@@ -3,13 +3,13 @@
 #' @param helpers list containg several helpers used throughout the model.
 #'          It includes dtTimeRes, a data.table containing the temporal
 #'          resolution for different univocalNames
-#' @param policyStartYear Year after which policy differentiation sets in
+#' @param allEqYear Year after which policy differentiation sets in
 #' @returns list of data.tables containing mrdrivers input data
 #' @importFrom rmndt magpie2dt
 #' @importFrom madrat readSource calcOutput
 #' @importFrom magclass getComment time_interpolate
 #'
-toolLoadmrdriversData <- function(SSPscen, helpers, policyStartYear) {
+toolLoadmrdriversData <- function(SSPscen, helpers, allEqYear) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- unit <- . <- value <- period <- subsectorL3 <- NULL
 
@@ -70,28 +70,28 @@ toolLoadmrdriversData <- function(SSPscen, helpers, policyStartYear) {
   POPmagF <- POPmag[, , SSPscen[2]] |> time_interpolate(years)
   POP <- magpie2dt(POPmagF, yearcol = "period", regioncol = "region")[, variable := "Population"][, unit := "million"]
 
-  # Check if a change of SSPscen with policyStartYear is performed
+  # Check if a change of SSPscen with allEqYear is performed
   # If so, assemble data from two different scenario sets
   if (SSPscen[1] != SSPscen[2]){
-    GDPMERmagO <- GDPMERmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
+    GDPMERmagO <- GDPMERmag[, , SSPscen[1]] |> time_interpolate(years[years <= allEqYear])
     GDPMERO <- magpie2dt(GDPMERmagO, yearcol = "period", regioncol = "region")[, variable := "GDP|MER"][, unit := unitGDPMER]
-    GDPMER <- rbind(GDPMERO, GDPMER[period > policyStartYear])
+    GDPMER <- rbind(GDPMERO, GDPMER[period > allEqYear])
 
-    GDPpcMERmagO <- GDPpcMERmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
+    GDPpcMERmagO <- GDPpcMERmag[, , SSPscen[1]] |> time_interpolate(years[years <= allEqYear])
     GDPpcMERO <- magpie2dt(GDPpcMERmagO, yearcol = "period", regioncol = "region")[, variable := "GDPpc|MER"][, unit := unitGDPpcMER]
-    GDPpcMER <- rbind(GDPpcMERO, GDPpcMER[period > policyStartYear])
+    GDPpcMER <- rbind(GDPpcMERO, GDPpcMER[period > allEqYear])
 
-    GDPpppMagO <- GDPpppMag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
+    GDPpppMagO <- GDPpppMag[, , SSPscen[1]] |> time_interpolate(years[years <= allEqYear])
     GDPpppO <- magpie2dt(GDPpppMagO, yearcol = "period", regioncol = "region")[, variable := "GDP|PPP"][, unit := unitGDPppp]
-    GDPppp <- rbind(GDPpppO, GDPppp[period > policyStartYear])
+    GDPppp <- rbind(GDPpppO, GDPppp[period > allEqYear])
 
-    GDPpcPPPmagO <- GDPpcPPPmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
+    GDPpcPPPmagO <- GDPpcPPPmag[, , SSPscen[1]] |> time_interpolate(years[years <= allEqYear])
     GDPpcPPPO <- magpie2dt(GDPpcPPPmagO, yearcol = "period", regioncol = "region")[, variable := "GDPpc|PPP"][, unit := unitGDPpcPPP]
-    GDPpcPPP <- rbind(GDPpcPPPO, GDPpcPPP[period > policyStartYear])
+    GDPpcPPP <- rbind(GDPpcPPPO, GDPpcPPP[period > allEqYear])
 
-    POPmagO <- POPmag[, , SSPscen[1]] |> time_interpolate(years[years <= policyStartYear])
+    POPmagO <- POPmag[, , SSPscen[1]] |> time_interpolate(years[years <= allEqYear])
     PopO <- magpie2dt(POPmagO, yearcol = "period", regioncol = "region")[, variable := "Population"][, unit := "million"]
-    POP <- rbind(PopO, POP[period > policyStartYear])
+    POP <- rbind(PopO, POP[period > allEqYear])
   }
 
   list(GDPMER = GDPMER,

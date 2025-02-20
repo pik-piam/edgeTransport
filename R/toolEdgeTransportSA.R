@@ -8,7 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenarios, used to apply reduction factors on total demands from the regression
-#' @param policyStartYear Year after which policy differentiation sets in
+#' @param allEqYear Year after which policy differentiation sets in
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -27,7 +27,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
-                                policyStartYear = 2025,
+                                startyear = 2030,
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
@@ -45,20 +45,23 @@ toolEdgeTransportSA <- function(SSPscen,
   baseYear <- 2010
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- 0.4
-  # adjust policyStartYear according to edgeTransport min
-  if (policyStartYear < 2020){
-    policyStartYear <- 2020
+
+  # cm_startyear in REMIND is first timepoint where differentiation is observed
+  # allEqYear in EDGET is last timepoint in which all scenarios are equal, earliest 2020
+  allEqYear <- startyear - 5
+  if (allEqYear < 2020){
+    allEqYear <- 2020
   }
 
   # find years in which ICEban is used
   if (isICEban[1] & isICEban[2]) {
     ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
     isICEban <- TRUE
-  } else if (isICEban[1] & policyStartYear > 2020) {
-    ICEbanYears  <- seq(2021, policyStartYear, 1)
+  } else if (isICEban[1] & allEqYear > 2020) {
+    ICEbanYears  <- seq(2021, allEqYear, 1)
     isICEban <- TRUE
   } else if (isICEban[2]){
-    ICEbanYears <-  c(seq(policyStartYear, 2100, 1), 2110, 2130, 2150)
+    ICEbanYears <-  c(seq(allEqYear, 2100, 1), 2110, 2130, 2150)
     isICEban <- TRUE
   } else {
     ICEbanYears <- NULL
@@ -71,16 +74,32 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
 
   if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare, policyStartYear)
+
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
 
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
                                               "REMINDinputForTransportStandalone", "v1.2", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
 
+  # Load standalone specific inputs
+  ## from mrdrivers
+  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, allEqYear)
+  ## from REMIND
+  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
+
+  inputDataStandalone <- list(
+    REMINDfuelCosts = REMINDfuelCosts,
+    GDPMER = mrdriversData$GDPMER,
+    GDPpcMER = mrdriversData$GDPpcMER,
+    GDPppp = mrdriversData$GDPppp,
+    GDPpcPPP = mrdriversData$GDPpcPPP,
+    population = mrdriversData$population
+  )
+
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
-  inputDataRaw <- inputs$inputDataRaw
+  inputDataRaw <- append(inputs$inputDataRaw, inputDataStandalone)
 
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
@@ -92,7 +111,7 @@ toolEdgeTransportSA <- function(SSPscen,
   scenSpecInputData <- toolPrepareScenInputData(genModelPar,
                                                 scenModelPar,
                                                 inputDataRaw,
-                                                policyStartYear,
+                                                allEqYear,
                                                 GDPcutoff,
                                                 helpers)
 
@@ -154,7 +173,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                          scenModelPar$scenParRegionalDemRegression,
                                          scenModelPar$scenParDemFactors,
                                          baseYear,
-                                         policyStartYear,
+                                         allEqYear,
                                          helpers)
 
   #------------------------------------------------------
@@ -181,7 +200,7 @@ toolEdgeTransportSA <- function(SSPscen,
     endogenousCosts <- toolUpdateEndogenousCosts(dataEndogenousCosts,
                                                  vehicleDepreciationFactors,
                                                  scenModelPar$scenParIncoCost,
-                                                 policyStartYear,
+                                                 allEqYear,
                                                  inputData$timeValueCosts,
                                                  inputData$scenSpecPrefTrends,
                                                  genModelPar$lambdasDiscreteChoice,
@@ -247,17 +266,17 @@ toolEdgeTransportSA <- function(SSPscen,
   # Rename transportPolScen if ICE ban is activated
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
 
-  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "with startyear", policyStartYear, "finished"))
+  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "with startyear", startyear, "finished"))
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen, "-", policyStartYear))
+                                                 "-", SSPscen, "-", transportPolScen, "-", demScen, "-", startyear))
 
 
   outputRaw <- list(
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
-    demScen = demScen[2],
+    demScen = demScen,
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,

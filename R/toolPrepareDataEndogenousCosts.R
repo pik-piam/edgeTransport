@@ -36,7 +36,6 @@ toolPrepareDataEndogenousCosts <- function(inputData, lambdas, helpers) {
   # (needed to calculate the vehicle sales depreciating in time
   # to get a proxy for the fleet share in the iterative section)
   timesteps <- unique(combinedCosts$period)
-  # policyStartYear <- max(unique(inconvenienceCosts[!is.na(value)]$period)) + 1
   FS3share <- toolCalculateFS3share(combinedCosts, timesteps[timesteps <= 2020], inputData$timeValueCosts,
                                     inputData$scenSpecPrefTrends, lambdas, helpers)
 

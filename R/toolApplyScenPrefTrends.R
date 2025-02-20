@@ -3,13 +3,13 @@
 #' @param baselinePrefTrends Baseline preference trends
 #' @param scenParPrefTrends Scenario parameters to be applied on the preference trends
 #' @param GDPpcMER Per capita GDP based on market exchange rate
-#' @param policyStartYear Year from which the scenario parameters are applied on the baseline preference trends
+#' @param allEqYear Year after which scenario differentiation sets in
 #' @param GDPcutoff Threshold used to categorize countries into different mitigation groups based on their GDP
 #' @param helpers List containing several helpers used throughout the model
 #' @returns Scenario specific preference trends
 #' @import data.table
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, allEqYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- variable <- unit <- level <- vehicleType <- FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- NULL
 
@@ -38,8 +38,8 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
 
   # Assemble PrefTrends according to scenario before and after the startyear
   if (!"full" %in% scenParPrefTrends$startYearCat){
-  PrefTrends <- merge(baselinePrefTrends[period <= policyStartYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  PrefTrendsF <- merge(baselinePrefTrends[period > policyStartYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrends <- merge(baselinePrefTrends[period <= allEqYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrendsF <- merge(baselinePrefTrends[period > allEqYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends <- rbind(PrefTrends, PrefTrendsF)
   PrefTrends[, "startYearCat" := NULL]
   } else {

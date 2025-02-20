@@ -3,14 +3,14 @@
 #' @param genModelPar General model parameters
 #' @param scenModelPar Transport scenario (SSPscen + demScen + polScen) specific model parameters
 #' @param inputDataRaw Raw input data
-#' @param policyStartYear Year when scenario differentiation sets in
+#' @param allEqYear Year after which scenario differentiation sets in
 #' @param GDPcutoff GDP cutoff to differentiate between regions
 #' @param helpers List with helpers
 #' @returns List of data.tables with scenario specific input data
 #' @import data.table
 #' @export
 
-toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, policyStartYear, GDPcutoff, helpers) {
+toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, allEqYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- variable <- level <- unit <- NULL
 
@@ -24,7 +24,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   basePrefTrends[, period := as.numeric(as.character(period))]
   basePrefTrends <- toolApplyMixedTimeRes(basePrefTrends, helpers)
   if ("final" %in% basePrefTrends$startYearCat) {
-    basePrefTrends <- basePrefTrends[(period > 2020 & period <= policyStartYear & startYearCat == 'origin')|(period > policyStartYear & startYearCat == 'final')][, startYearCat := NULL]
+    basePrefTrends <- basePrefTrends[(period > 2020 & period <= allEqYear & startYearCat == 'origin')|(period > allEqYear & startYearCat == 'final')][, startYearCat := NULL]
   } else {
     basePrefTrends <- basePrefTrends[period > 2020][, startYearCat := NULL]
   }
@@ -35,7 +35,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
-                                                    inputDataRaw$GDPpcMER, policyStartYear, GDPcutoff, helpers)
+                                                    inputDataRaw$GDPpcMER, allEqYear, GDPcutoff, helpers)
     print("Policy induced changes to baseline preference trends were applied")
   } else {
     scenSpecPrefTrends <- basePrefTrends
@@ -45,7 +45,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes on load factor ----------------------------
   if (!is.null(scenModelPar$scenParLoadFactor)) {
     scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(inputDataRaw$loadFactorRaw, scenModelPar$scenParLoadFactor,
-                                                      policyStartYear, helpers)
+                                                      allEqYear, helpers)
     scenSpecLoadFactor[, variable := "Load factor"]
     print("Policy induced changes to the loadfactor were applied")
   } else {
@@ -56,7 +56,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   # Application of policy induced changes on energy intensity ----------------------------
   if (!is.null(scenModelPar$scenParEnergyIntensity)) {
     scenSpecEnIntensity <- toolApplyScenSpecEnInt(inputDataRaw$energyIntensityRaw,
-                                                  scenModelPar$scenParEnergyIntensity, policyStartYear, helpers)
+                                                  scenModelPar$scenParEnergyIntensity, allEqYear, helpers)
     scenSpecEnIntensity[, variable := "Energy intensity sales"]
     print("Policy induced changes to the energy intensity were applied")
   } else {
