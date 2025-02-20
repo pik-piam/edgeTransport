@@ -83,9 +83,9 @@ toolEdgeTransportSA <- function(SSPscen,
 
   # Load standalone specific inputs
   ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, allEqYear)
+  mrdriversData <- toolLoadmrdriversData(SSPscen, inputs$helpers, allEqYear)
   ## from REMIND
-  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
+  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, inputs$helpers)
 
   inputDataStandalone <- list(
     REMINDfuelCosts = REMINDfuelCosts,
