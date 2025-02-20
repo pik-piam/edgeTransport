@@ -289,11 +289,36 @@ iterativeEdgeTransport <- function() {
                                     outputRaw,
                                     isTransportReported = FALSE)
 
-  f35_esCapCost <- reportToREMINDcapitalCosts(baseOutput$int$fleetCost[variable == "Capital costs"],
-                                              baseOutput$ext$fleetESdemand, hybridElecShare, timeResReporting,
+  esCapCost <- baseOutput$int$fleetCost[variable == "Capital costs"]
+  fleetESdemand <- baseOutput$ext$fleetESdemand
+  fleetFEdemand <- baseOutput$ext$fleetFEdemand
+
+  #-- Variables that are reported back to REMIND must be offered in the correct regional resolution
+  # Currently EDGE-T always runs on 21 regions, but REMIND potentially runs only on 12 regions
+  if (numberOfRegions == 12) {
+    ESweight <- copy(fleetESdemand)[, c("unit", "variable") := NULL]
+    setnames(ESweight, c("region", "value"), c("regionCode21", "weight"))
+    dataColumns <- names(esCapCost)[!names(esCapCost) %in% c("region", "period", "value")]
+    setnames(esCapCost, "region", "regionCode21")
+
+
+    esCapCost <- rmndt::aggregate_dt(esCapCost, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
+                                     datacol = dataColumns, weights = ESweight, yearcol = "period")
+    setnames(esCapCost, "regionCode12", "region")
+    setnames(fleetESdemand, "region", "regionCode21")
+    fleetESdemand <- rmndt::aggregate_dt(fleetESdemand, helpers$regionmappingISOto21to12, datacol = dataColumns, fewcol = "regionCode12", manycol = "regionCode21", yearcol = "period")
+    setnames(fleetESdemand, "regionCode12", "region")
+    setnames(fleetFEdemand, "region", "regionCode21")
+    fleetFEdemand <- rmndt::aggregate_dt(fleetFEdemand, helpers$regionmappingISOto21to12, datacol = dataColumns, fewcol = "regionCode12", manycol = "regionCode21", yearcol = "period")
+    setnames(fleetFEdemand, "regionCode12", "region")
+  }
+
+
+  f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
-  f35_fe2es <- reportToREMINDenergyEfficiency(baseOutput$ext$fleetFEdemand,
-                                              baseOutput$ext$fleetESdemand,
+
+  f35_fe2es <- reportToREMINDenergyEfficiency(fleetFEdemand,
+                                              fleetESdemand,
                                               hybridElecShare,
                                               timeResReporting,
                                               demScen,
@@ -301,7 +326,7 @@ iterativeEdgeTransport <- function() {
                                               transportPolScen,
                                               helpers)
 
-  f35_shFeCes <- reportToREMINDfinalEnergyShares(baseOutput$ext$fleetFEdemand,
+  f35_shFeCes <- reportToREMINDfinalEnergyShares(fleetFEdemand,
                                                  timeResReporting,
                                                  demScen,
                                                  SSPscen,
