@@ -8,7 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenarios, used to apply reduction factors on total demands from the regression
-#' @param allEqYear Year after which policy differentiation sets in
+#' @param startyear First time point in which policy differentiation sets in, cm_startyear in REMIND
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
@@ -259,24 +259,25 @@ toolEdgeTransportSA <- function(SSPscen,
   #################################################
   ## Reporting
   #################################################
-  SSPscen <- SSPscen[2]
-  transportPolScen <- transportPolScen[2]
-  demScen <- demScen[2]
+  # SSPscen <- SSPscen[2]
+  # transportPolScen <- transportPolScen[2]
+  # demScen <- demScen[2]
 
   # Rename transportPolScen if ICE ban is activated
-  if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
+  # ToDo: no more information about isICEban for first scenario set here
+  if (isICEban & (transportPolScen[2] %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen[2] <- paste0(transportPolScen[2], "ICEban")
 
-  print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "with startyear", startyear, "finished"))
+  print(paste("Run", SSPscen[2], transportPolScen[2], "demand scenario", demScen[2], "with startyear", startyear, "finished"))
 
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-", SSPscen, "-", transportPolScen, "-", demScen, "-", startyear))
-
+                                                 "-sy", startyear, "-", SSPscen[2], "-", transportPolScen[2], "-", demScen[2]))
 
   outputRaw <- list(
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
+    startyear = startyear,
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,
