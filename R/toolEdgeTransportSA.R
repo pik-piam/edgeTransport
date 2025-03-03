@@ -56,16 +56,12 @@ toolEdgeTransportSA <- function(SSPscen,
   # find years in which ICEban is used
   if (isICEban[1] & isICEban[2]) {
     ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
-    isICEban <- TRUE
   } else if (isICEban[1] & allEqYear > 2020) {
     ICEbanYears  <- seq(2021, allEqYear, 1)
-    isICEban <- TRUE
   } else if (isICEban[2]){
     ICEbanYears <-  c(seq(allEqYear, 2100, 1), 2110, 2130, 2150)
-    isICEban <- TRUE
   } else {
     ICEbanYears <- NULL
-    isICEban <- FALSE
   }
 
 
@@ -128,7 +124,7 @@ toolEdgeTransportSA <- function(SSPscen,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
-  if (isICEban) {
+  if (isICEban[1] | isICEban[2]) {
    scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
   }
   scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
@@ -205,7 +201,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                  inputData$scenSpecPrefTrends,
                                                  genModelPar$lambdasDiscreteChoice,
                                                  helpers,
-                                                 isICEban,
+                                                 (isICEban[1] | isICEban[2]),
                                                  ICEbanYears,
                                                  fleetVehiclesPerTech)
 
@@ -264,8 +260,8 @@ toolEdgeTransportSA <- function(SSPscen,
   # demScen <- demScen[2]
 
   # Rename transportPolScen if ICE ban is activated
-  # ToDo: no more information about isICEban for first scenario set here
-  if (isICEban & (transportPolScen[2] %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen[2] <- paste0(transportPolScen[2], "ICEban")
+  if (isICEban[1] & (transportPolScen[1] %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen[1] <- paste0(transportPolScen[1], "ICEban")
+  if (isICEban[2] & (transportPolScen[2] %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen[2] <- paste0(transportPolScen[2], "ICEban")
 
   print(paste("Run", SSPscen[2], transportPolScen[2], "demand scenario", demScen[2], "with startyear", startyear, "finished"))
 
