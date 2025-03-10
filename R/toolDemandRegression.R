@@ -19,7 +19,6 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                                   scenParDemRegression, scenParRegionalDemRegression, scenParDemandFactors,
                                     baseYear, policyStartYear, helpers) {
 
-  browser()
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- sector <- value <- GDPpcPPP <- regionGDPpcPPP <- regionGDPppp <- regionalSummand <- NULL
   population <- GDPgrowthRate <- incomeElasticity <- GDPpcgrowthRate <- unit <- GDPpcterm <- NULL
