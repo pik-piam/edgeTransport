@@ -59,6 +59,9 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   transportPolScen <- all_in <- period <- value <- unit <- sector <- variable <- . <- univocalName <- test <- SSPscen <- NULL
+  
+  #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
+  if (SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){SSPscenario <- "SSP2"}
 
   # Model input parameters from the package
   ## Exponents discrete choice model
