@@ -74,7 +74,6 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # Initialize columns for fleet tracking (to have them in the data.table before the construction year columns)
   fleetESdemand[, c("vintagesDemand", "earlyRetirement", "earlyRetirementRate") := 0]
-
   for (i in constructionYears) {
     for (j in contributionYears) {
       vehDepreciation <- copy(vehDepreciationFactors)[, period := i + indexUsagePeriod][, indexUsagePeriod := NULL]
