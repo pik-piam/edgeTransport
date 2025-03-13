@@ -58,10 +58,11 @@ toolLoadRDSinputs <- function(edgeTransportFolder, inputFiles) {
 
 toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles, numberOfRegions, SSPscenario, transportPolScenario, demScenario) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  transportPolScen <- all_in <- period <- value <- unit <- sector <- variable <- . <- univocalName <- test <- SSPscen <- NULL
-  
+  transportPolScen <- all_in <- period <- value <- unit <- sector <- variable <- . <- univocalName <- test <- SSPscen <- sspOld <- NULL
+
   #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
-  if (SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){SSPscenario <- "SSP2"}
+  sspOld <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), SSPscenario, NULL)
+  SSPscenario <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), "SSP2", SSPscenario)
 
   # Model input parameters from the package
   ## Exponents discrete choice model
@@ -71,12 +72,15 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   scenParIncoCost <- scenParIncoCost[SSPscen == SSPscenario & transportPolScen == gsub("ICEban", "", transportPolScenario)][, c("SSPscen", "transportPolScen") := NULL]
 
+  #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
+  SSPscenario <- ifelse(sspOld %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), sspOld, SSPscenario)
+
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv", package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters, we can shift annuityCalc to the scenPar's
   if  (gsub("ICEban", "", transportPolScenario) %in% annuityCalc$transportPolScen) {
     annuityCalc <- annuityCalc[transportPolScen == gsub("ICEban", "", transportPolScenario)][, transportPolScen := NULL]
-} else {
+  } else {
     annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
   }
 
