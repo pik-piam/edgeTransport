@@ -39,8 +39,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # calculate distribution of total demand on construction years -----------------------------------------
   # change to yearly resolution
-  startY <- 2005 - max(vehDepreciationFactors$serviceLife)
-  timesteps <- seq(startY, 2100, by = 1)
+  timesteps <- seq(1990, 2100, by = 1)
   fleetESdemand <- approx_dt(fleetESdemand, timesteps, "period", "totalESdemand",
                              c("region", "subsectorL3"),
                              extrapolate = TRUE)
@@ -75,6 +74,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # Initialize columns for fleet tracking (to have them in the data.table before the construction year columns)
   fleetESdemand[, c("vintagesDemand", "earlyRetirement", "earlyRetirementRate") := 0]
+
   for (i in constructionYears) {
     for (j in contributionYears) {
       vehDepreciation <- copy(vehDepreciationFactors)[, period := i + indexUsagePeriod][, indexUsagePeriod := NULL]
