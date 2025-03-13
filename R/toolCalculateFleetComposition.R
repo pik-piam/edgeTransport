@@ -39,7 +39,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # calculate distribution of total demand on construction years -----------------------------------------
   # change to yearly resolution
-  timesteps <- seq(1990, 2100, by = 1)
+  timesteps <- seq(1985, 2100, by = 1)
   fleetESdemand <- approx_dt(fleetESdemand, timesteps, "period", "totalESdemand",
                              c("region", "subsectorL3"),
                              extrapolate = TRUE)
