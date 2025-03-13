@@ -30,35 +30,38 @@ iterativeEdgeTransport <- function() {
   gdxPath <- "input.gdx"
   if (file.exists("fulldata.gdx"))
     gdxPath <- "fulldata.gdx"
-  # Load config
-  load("config.Rdata")
 
-  # Load config of REMIND reference run for fixing before startyear
-  if (!is.na(cfg$files2export$start["input_ref.gdx"])) {
+  #initialize scenario Parameter
+  SSPscen <- ""
+  transportPolScen <- ""
+  demScen <- ""
+  i <- 1
+
+  # config from current run contains information about possible reference run
+  load("config.Rdata")
+  cfgCurrentRun <- copy(cfg)
+  cfg <- NULL
+  # If there is a reference run, load config of REMIND reference run for fixing before startyear
+  if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
     load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
-    startyear <- cfg$gms$cm_startyear
-    # REMIND startyear is the year in which differences are observed
-    # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
-    allEqYear <- startyear - 5
-    if (allEqYear < 2020){
-      allEqYear <- 2020
-    }
-    SSPscen <- cfg$gms$cm_GDPpopScen
-    transportPolScen <- cfg$gms$cm_EDGEtr_scen
-    demScen <- cfg$gms$cm_demScen
+    cfgReferenceRun <- copy(cfg)
     cfg <- NULL
-  } else {
-    # default start scenario as placeholder but no scenario differentiation before 2020
-    SSPscen <- "SSP2"
-    transportPolScen <- "Mix2ICEban"
-    demScen <- "SSP2"
+    SSPscen[i] <- cfgReferenceRun$gms$cm_GDPpopScen
+    transportPolScen[i] <- cfgReferenceRun$gms$cm_EDGEtr_scen
+    demScen[i] <- cfgReferenceRun$gms$cm_demScen
+    i <- 2
+  }
+  startyear <- cfgCurrentRun$gms$cm_startyear
+  # REMIND startyear is the year in which differences are observed
+  # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
+  allEqYear <- startyear - 5
+  if (allEqYear < 2020){
     allEqYear <- 2020
   }
-
-
-  SSPscen[2] <- cfg$gms$cm_GDPpopScen
-  transportPolScen[2] <- cfg$gms$cm_EDGEtr_scen
-  demScen[2] <- cfg$gms$cm_demScen
+  # default start scenario as placeholder but no scenario differentiation before 2020
+  SSPscen[i] <- cfgCurrentRun$gms$cm_GDPpopScen
+  transportPolScen[i] <- cfgCurrentRun$gms$cm_EDGEtr_scen
+  demScen[i] <- cfgCurrentRun$gms$cm_demScen
 
   isICEban <- c(FALSE, FALSE)
 
@@ -203,8 +206,12 @@ iterativeEdgeTransport <- function() {
     # disaggregate_dt produces duplicates right now - Todo: Check fucntion
     #REMINDsectorESdemand <- rmndt::disaggregate_dt(REMINDsectorESdemand, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
                                                    #datacol = dataColumns, weights = weightEs)
-    REMINDsectorESdemand <- merge(REMINDsectorESdemand, helpers$regionmappingISOto21to12[, c("regionCode12", )], by = "regionCode12")
-    setnames(REMINDsectorESdemand, "regionCode12", "region")
+    REMINDsectorESdemand <- merge(REMINDsectorESdemand, unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
+                                  by = "regionCode12", allow.cartesian = TRUE)
+    REMINDsectorESdemand <- merge(REMINDsectorESdemand, weightEs, intersect(names(REMINDsectorESdemand), names(weightEs)))
+    REMINDsectorESdemand[, sumWeight := sum(weight), by = c("period", "sector", "regionCode12")]
+    REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
+    setnames(REMINDsectorESdemand, "regionCode21", "region")
   }
 
   inputData <- list(
@@ -297,7 +304,10 @@ iterativeEdgeTransport <- function() {
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
-    startyear = startyear,
+    # startyear is defined inthe standalone version as follows "First time point in which policy differentiation sets in, cm_startyear in REMIND"
+    # Here the same is used as allEqYear and startyear is cm_startyear in REMIND
+    # Can we unify that somehow?
+    startyear = allEqYear,
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,
@@ -310,7 +320,7 @@ iterativeEdgeTransport <- function() {
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
   add <- append(inputDataRaw,
-                inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+                inputData[!names(inputData) %in% c("histESdemand", "REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
 
@@ -331,18 +341,28 @@ iterativeEdgeTransport <- function() {
     setnames(ESweight, c("region", "value"), c("regionCode21", "weight"))
     dataColumns <- names(esCapCost)[!names(esCapCost) %in% c("region", "period", "value")]
     setnames(esCapCost, "region", "regionCode21")
-
-    esCapCost <- rmndt::aggregate_dt(esCapCost, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
+    regionMap <- unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")])
+    esCapCost <- rmndt::aggregate_dt(esCapCost, regionMap,
+                                     fewcol = "regionCode12", manycol = "regionCode21",
                                      datacol = dataColumns, weights = ESweight, yearcol = "period")
     setnames(esCapCost, "regionCode12", "region")
     setnames(fleetESdemand, "region", "regionCode21")
-    fleetESdemand <- rmndt::aggregate_dt(fleetESdemand, helpers$regionmappingISOto21to12, datacol = dataColumns, fewcol = "regionCode12", manycol = "regionCode21", yearcol = "period")
+    fleetESdemand <- rmndt::aggregate_dt(fleetESdemand, regionMap,
+                                         fewcol = "regionCode12", manycol = "regionCode21",
+                                         datacol = dataColumns, yearcol = "period")
+
     setnames(fleetESdemand, "regionCode12", "region")
     setnames(fleetFEdemand, "region", "regionCode21")
-    fleetFEdemand <- rmndt::aggregate_dt(fleetFEdemand, helpers$regionmappingISOto21to12, datacol = dataColumns, fewcol = "regionCode12", manycol = "regionCode21", yearcol = "period")
+    fleetFEdemand <- rmndt::aggregate_dt(fleetFEdemand, regionMap,
+                                         fewcol = "regionCode12", manycol = "regionCode21",
+                                         datacol = dataColumns, yearcol = "period")
     setnames(fleetFEdemand, "regionCode12", "region")
   }
 
+  # Keep only final SSPscen, demScen, transportPolScen
+  demScen <- demScen[length(demScen)]
+  SSPscen <- SSPscen[length(SSPscen)]
+  transportPolScen <- transportPolScen[length(transportPolScen)]
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)

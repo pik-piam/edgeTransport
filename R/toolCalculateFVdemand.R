@@ -31,8 +31,7 @@ toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, h
   }
   FVSshares[, FVSshare := shareS1S * shareS2S1 * shareS3S2 * shareVS3 * shareFV]
   FVSshares <- FVSshares[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "period", "FVSshare")]
-browser()
-# Apply shares on demand --------------------------------------------
+  # Apply shares on demand --------------------------------------------
   fuelVehicleESdemand <- merge(sectorESdemand, FVSshares, by = intersect(names(sectorESdemand), names(FVSshares)), all.y = TRUE)
   fuelVehicleESdemand[, value := value * FVSshare][, FVSshare := NULL]
 
