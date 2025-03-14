@@ -108,7 +108,11 @@ iterativeEdgeTransport <- function() {
   ## from mrdrivers
   mrdriversData <- toolLoadmrdriversData(SSPscen, inputs$helpers, allEqYear)
   ## from REMIND
-  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, file.path(".", edgeTransportFolder), iterationNumber, inputs$helpers)
+  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
+                                             hybridElecShare = hybridElecShare,
+                                             helpers = inputs$helpers,
+                                             transportFolder = file.path(".", edgeTransportFolder),
+                                             iterationNumber = iterationNumber)
 
   inputDataIterative <- list(
     REMINDfuelCosts = REMINDfuelCosts,
