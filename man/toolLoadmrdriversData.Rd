@@ -4,7 +4,7 @@
 \alias{toolLoadmrdriversData}
 \title{Load GDP and Population data from mrdrivers}
 \usage{
-toolLoadmrdriversData(SSPscen, helpers, policyStartYear)
+toolLoadmrdriversData(SSPscen, helpers, allEqYear)
 }
 \arguments{
 \item{SSPscen}{SSP scenarios for which the mrdrivers input data shall be loaded}
@@ -13,7 +13,7 @@ toolLoadmrdriversData(SSPscen, helpers, policyStartYear)
 It includes dtTimeRes, a data.table containing the temporal
 resolution for different univocalNames}
 
-\item{policyStartYear}{Year after which policy differentiation sets in}
+\item{allEqYear}{Year after which policy differentiation sets in}
 }
 \value{
 list of data.tables containing mrdrivers input data

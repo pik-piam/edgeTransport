@@ -5,6 +5,8 @@
 #' @param gdxPath path to REMIND fulldata.gdx
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
 #' @param helpers list with helpers
+#' @param transportFolder folder to search for fuel prices from previous iterations for averaging
+#' @param iterationNumber iteration number to store fuel costs for later iterations
 #' @returns fuel costs on technology level
 #' @import data.table
 #' @importFrom rmndt approx_dt magpie2dt

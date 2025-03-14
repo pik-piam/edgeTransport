@@ -8,7 +8,7 @@ toolPrepareScenInputData(
   genModelPar,
   scenModelPar,
   inputDataRaw,
-  policyStartYear,
+  allEqYear,
   GDPcutoff,
   helpers
 )
@@ -20,7 +20,7 @@ toolPrepareScenInputData(
 
 \item{inputDataRaw}{Raw input data}
 
-\item{policyStartYear}{Year when scenario differentiation sets in}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{GDPcutoff}{GDP cutoff to differentiate between regions}
 

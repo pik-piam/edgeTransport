@@ -8,7 +8,7 @@ toolApplyScenPrefTrends(
   baselinePrefTrends,
   scenParPrefTrends,
   GDPpcMER,
-  policyStartYear,
+  allEqYear,
   GDPcutoff,
   helpers
 )
@@ -20,7 +20,7 @@ toolApplyScenPrefTrends(
 
 \item{GDPpcMER}{Per capita GDP based on market exchange rate}
 
-\item{policyStartYear}{Year from which the scenario parameters are applied on the baseline preference trends}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{GDPcutoff}{Threshold used to categorize countries into different mitigation groups based on their GDP}
 

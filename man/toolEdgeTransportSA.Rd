@@ -9,7 +9,7 @@ toolEdgeTransportSA(
   transportPolScen,
   isICEban = c(FALSE, FALSE),
   demScen = c("default", "default"),
-  policyStartYear = 2025,
+  startyear = 2030,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = TRUE,
@@ -28,7 +28,7 @@ toolEdgeTransportSA(
 
 \item{demScen}{Demand scenarios, used to apply reduction factors on total demands from the regression}
 
-\item{policyStartYear}{Year after which policy differentiation sets in}
+\item{startyear}{First time point in which policy differentiation sets in, cm_startyear in REMIND}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 

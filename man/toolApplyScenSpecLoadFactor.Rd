@@ -4,19 +4,14 @@
 \alias{toolApplyScenSpecLoadFactor}
 \title{Apply demand scenario specific adjustments to the load Factor}
 \usage{
-toolApplyScenSpecLoadFactor(
-  loadFactor,
-  scenParLoadFactor,
-  policyStartYear,
-  helpers
-)
+toolApplyScenSpecLoadFactor(loadFactor, scenParLoadFactor, allEqYear, helpers)
 }
 \arguments{
 \item{loadFactor}{load factor input data supplied by mrtransport}
 
 \item{scenParLoadFactor}{Scenario specific parameters to be applied on the baseline load factor}
 
-\item{policyStartYear}{Year when scenario differentiation sets in}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{helpers}{List with helpers}
 }
