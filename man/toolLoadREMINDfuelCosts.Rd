@@ -9,9 +9,9 @@ as the transferred gdx file and the temporal resolution is set according to the 
 toolLoadREMINDfuelCosts(
   gdxPath,
   hybridElecShare,
+  helpers,
   transportFolder = ".",
-  iterationNumber = NULL,
-  helpers
+  iterationNumber = NULL
 )
 }
 \arguments{
@@ -19,11 +19,11 @@ toolLoadREMINDfuelCosts(
 
 \item{hybridElecShare}{Share of electricity in Hybrid electric vehicles}
 
+\item{helpers}{list with helpers}
+
 \item{transportFolder}{folder to search for fuel prices from previous iterations for averaging}
 
 \item{iterationNumber}{iteration number to store fuel costs for later iterations}
-
-\item{helpers}{list with helpers}
 }
 \value{
 fuel costs on technology level
