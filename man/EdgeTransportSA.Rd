@@ -28,6 +28,8 @@ calcEdgeTransportSA(
 
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
 
+\item{startyear}{Year after which policy differentiation sets in}
+
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
 \item{outputFolder}{Path to folder for storing output data}
@@ -41,8 +43,6 @@ calcEdgeTransportSA(
 \item{isREMINDinputReported}{Optional reporting of REMIND input data}
 
 \item{isAnalyticsReported}{Optional reporting of analytics data (e.g. variables over iterations)}
-
-\item{allEqYear}{Year after which policy differentiation sets in}
 }
 \value{
 Transport input data for REMIND
