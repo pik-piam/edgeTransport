@@ -61,7 +61,7 @@ toolLoadIterativeInputs <- function(edgeTransportFolder, inputFolder, inputFiles
   transportPolScen <- all_in <- period <- value <- unit <- sector <- variable <- . <- univocalName <- test <- SSPscen <- sspOld <- NULL
 
   #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
-  sspOld <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), SSPscenario, NULL)
+  sspOld <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), SSPscenario, "old")
   SSPscenario <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), "SSP2", SSPscenario)
 
   # Model input parameters from the package
