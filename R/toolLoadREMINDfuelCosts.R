@@ -14,7 +14,7 @@
 #' @importFrom magrittr `%>%`
 #' @export
 #'
-toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, transportFolder = ".", iterationNumber = NULL, helpers) {
+toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transportFolder = ".", iterationNumber = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
   technology <- Liquids <- BEV <- period <- . <- NULL
