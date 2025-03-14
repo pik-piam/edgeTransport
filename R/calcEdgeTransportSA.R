@@ -8,7 +8,7 @@
 #' @param transportPolScen EDGE-T transport policy scenario
 #' @param isICEban optional enabling of ICE ban
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
-#' @param allEqYear Year after which policy differentiation sets in
+#' @param startyear Year after which policy differentiation sets in
 #' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param outputFolder Path to folder for storing output data
 #' @param isStored Optional saving of intermediate RDS files
