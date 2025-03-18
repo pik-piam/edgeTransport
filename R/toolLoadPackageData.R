@@ -9,9 +9,12 @@
 toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- NULL
+  demScenario == "SSP2_sharedMobility"
 
   #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
-  if (SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){SSPscenario <- "SSP2"}
+  sspOld <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), SSPscenario, "old")
+  SSPscenario <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), "SSP2", SSPscenario)
+
   ## General model parameters from the package
 
   # Decision tree discrete choice model
@@ -45,7 +48,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # Transport policy scenario preference factors
   scenParPrefTrends <- fread(system.file("extdata/scenParPrefTrends.csv", package = "edgeTransport", mustWork = TRUE),
                              header = TRUE)
-  scenParPrefTrends <- scenParPrefTrends[SSPscenario == SSPscen & transportPolScen == transportPolScenario]
+  scenParPrefTrends <- scenParPrefTrends[SSPscen == SSPscenario & transportPolScen == transportPolScenario]
   scenParPrefTrends[, c("SSPscen", "transportPolScen") := NULL]
   if (nrow(scenParPrefTrends) == 0) scenParPrefTrends <- NULL
 
@@ -92,6 +95,19 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
     scenParLoadFactor[, c("SSPscen", "demScen") := NULL]
   }
   if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
+  
+  # Transport scenario (demand scenario or SSP scenario) annual mileage changes
+  scenParAnnualMileage <- fread(system.file("extdata/scenParAnnualMileage.csv",
+                                         package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  demScenario = "SSP2_sharedMobility" 
+  # Demand scenario exogenous annual mileage changes
+if  (SSPscenario %in% unique(scenParAnnualMileage[demScen == "default"]$SSPscen)) {
+    scenParAnnualMileage <- scenParAnnualMileage[SSPscen == SSPscenario][, c("SSPscen", "demScen") := NULL]
+} else {
+    scenParAnnualMileage <- scenParAnnualMileage[SSPscen == SSPscenario & demScen == demScenario]
+    scenParAnnualMileage[, c("SSPscen", "demScen") := NULL]
+}
+  if (nrow(scenParAnnualMileage) == 0) scenParAnnualMileage <- NULL
 
   ## helpers
   mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
@@ -120,6 +136,7 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
       scenParDemFactors = scenParDemFactors,
       scenParEnergyIntensity = scenParEnergyIntensity,
       scenParLoadFactor = scenParLoadFactor,
+      scenParAnnualMileage = scenParAnnualMileage,
       mitigationTechMap = mitigationTechMap,
       regionmappingISOto21to12 = regionmappingISOto21to12,
       mapEdgeToREMIND = mapEdgeToREMIND,

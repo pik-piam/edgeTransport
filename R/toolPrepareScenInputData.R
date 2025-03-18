@@ -50,7 +50,17 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
     scenSpecLoadFactor <- copy(inputDataRaw$loadFactorRaw)[, variable := "Load factor"]
     print("No policy induced changes to the loadfactor")
   }
-
+  
+  # Application of policy induced changes on load factor ----------------------------
+  if (!is.null(scenModelPar$scenParAnnualMileage)) {
+    scenSpecAnnualMileage <- toolApplyScenSpecAnnualMileage(inputDataRaw$annualMileage, scenModelPar$scenParAnnualMileage,
+                                                      policyStartYear, helpers)
+    scenSpecAnnualMileage[, variable := "Annual mileage"]
+    print("Policy induced changes to the annual mileage were applied")
+  } else {
+    scenSpecAnnualMileage <- copy(inputDataRaw$annualMileage)[, variable := "Annual mileage"]
+    print("No policy induced changes to the annualMileage")
+  }
   # Application of policy induced changes on energy intensity ----------------------------
   if (!is.null(scenModelPar$scenParEnergyIntensity)) {
     scenSpecEnIntensity <- toolApplyScenSpecEnInt(inputDataRaw$energyIntensityRaw,
@@ -72,22 +82,24 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
                                             inputDataRaw$subsidies,
                                             scenSpecEnIntensity,
                                             scenSpecLoadFactor,
-                                            inputDataRaw$annualMileage,
+                                            scenSpecAnnualMileage,
                                             annuity,
                                             helpers)
 
   # Annualization and formatting of non-monetary costs -------------------------------------------------
   initialIncoCosts <- toolCalculateInitialIncoCost(transportCosts$combinedCAPEXandOPEX,
                                                    genModelPar$incoCostStartVal, annuity, scenSpecLoadFactor,
-                                                   inputDataRaw$annualMileage, helpers)
+                                                   scenSpecAnnualMileage, helpers)
 
   scenSpecInputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecLoadFactor,
+    scenSpecAnnualMileage = scenSpecAnnualMileage,
     scenSpecEnIntensity = scenSpecEnIntensity,
     combinedCAPEXandOPEX = transportCosts$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = transportCosts$upfrontCAPEXtrackedFleet,
-    initialIncoCosts = initialIncoCosts)
+    initialIncoCosts = initialIncoCosts
+    )
 
   return(scenSpecInputData)
 }

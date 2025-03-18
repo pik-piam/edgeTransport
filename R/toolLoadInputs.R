@@ -75,7 +75,8 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     scenParIncoCost = packageData$scenParIncoCost,
     scenParDemRegression = packageData$scenParDemRegression,
     scenParRegionalDemRegression = packageData$scenParRegionalDemRegression,
-    scenParDemFactors = packageData$scenParDemFactors
+    scenParDemFactors = packageData$scenParDemFactors,
+    scenParAnnualMileage = packageData$scenParAnnualMileage
   )
 
   # raw input data
