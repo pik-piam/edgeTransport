@@ -8,7 +8,7 @@ toolUpdateEndogenousCosts(
   dataEndoCosts,
   depreciationFactors,
   scenParIncoCost,
-  policyStartYear,
+  allEqYear,
   timeValue,
   preferences,
   lambdas,
@@ -27,7 +27,7 @@ Endogenous cost components and FS3 shares are provided until 2020. Rest is fille
 
 \item{scenParIncoCost}{data.table containing scenario specific parameters for inconvenience costs policy mask}
 
-\item{policyStartYear}{year from which scenario-specific differentiation begins}
+\item{allEqYear}{year from which scenario-specific differentiation begins}
 
 \item{timeValue}{data.table containing mode specific time value costs based on speed and gdp}
 

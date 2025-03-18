@@ -6,15 +6,24 @@
 #' @returns list of data.tables with the package input data
 #' @importFrom data.table fread
 
-toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", "default")) {
+toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- NULL
 
-  #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
-  if (SSPs[1] %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")){
-    SSPs[1] <- "SSP2"
-  } else if (SSPs[2] %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")) {
-    SSPs[2] <- "SSP2"
+  # set demand scenario to default when not supplied
+  if (is.null(demScenario)) {
+    demScenario <- "default"
+    for (i in 1:length(SSPs)) {
+        paste(i)
+        demScenario[i] <- SSPs[i]
+      }
+  }
+
+  # Replace IND SSP scenarios, as they get the same package data as SSP2 for now
+  for (i in 1:length(SSPs)) {
+    if (SSPs[i] %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium")) {
+      SSPs[i] <- "SSP2"
+    }
   }
 
   ## General model parameters from the package
@@ -24,11 +33,11 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   # Exponents discrete choice model
   lambdasDiscreteChoice <- fread(system.file("extdata/genParLambdasDiscreteChoiceModel.csv",
                                              package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Baseline preference trends, SSP dependent, time res: 2020, 2030, 2050, 2100, 2150, ToDo: check what happens if SSP[1] == SSP[2]
+  # Baseline preference trends, SSP dependent, time res: 2020, 2030, 2050, 2100, 2150
+  # Keep data for all used SSPs
   baselinePrefTrends <- fread(system.file("extdata/genParBaselinePrefTrends.csv",
                                           package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  baselinePrefTrends[, "startYearCat" := fcase( SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
-  # ToDo: 1417 lns for SSP[1]=SSP[2], 2834 otherwise
+  baselinePrefTrends[, "startYearCat" := fcase(SSPscen == SSPs[1], "origin", SSPscen == SSPs[2], "final")]
   baselinePrefTrends <- baselinePrefTrends[!is.na(startYearCat)][, SSPscen := NULL]
   # Startparameter inconvenience costs
   incoCostStartVal <- fread(system.file("extdata/genParIncoCostStartVal.csv",
@@ -46,7 +55,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
     # once this is used, scenario switching with allEqYear needs to be checked
     annuityCalc[, "startYearCat" := fcase( transportPolScen == transportPolS[1], "origin", transportPolScen == transportPolS[2], "final")]
     annuityCalc <- annuityCalc[!is.na(startYearCat)][, transportPolScen := NULL]
-} else {
+  } else {
     annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
   }
 
@@ -72,11 +81,11 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
   scenParDemFactors <- fread(system.file("extdata/scenParDemFactors.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
   if  (demScenario[1] %in% scenParDemFactors$demScen | demScenario[2] %in% scenParDemFactors$demScen) {
-   scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase( demScen == demScenario[1], "origin", demScen == demScenario[2], "final")]
-   scenParDemFactors <- scenParDemFactors[!is.na(startYearCat)][, demScen := NULL]
-} else {
-   scenParDemFactors <- NULL
-}
+    scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase( demScen == demScenario[1], "origin", demScen == demScenario[2], "final")]
+    scenParDemFactors <- scenParDemFactors[!is.na(startYearCat)][, demScen := NULL]
+  } else {
+    scenParDemFactors <- NULL
+  }
 
   # Transport policy scenario energy intensity reduction factors, only for very specific scenarios
   scenParEnergyIntensity <- fread(system.file("extdata/scenParEnergyIntensity.csv",
@@ -88,7 +97,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = c("default", 
     scenParEnergyIntensity <- scenParEnergyIntensity[!is.na(startYearCat)][, c("transportPolScen", "SSPscen") := NULL]
   } else {
     scenParEnergyIntensity <- NULL
-    }
+  }
 
   # SSP/SDP specific general regression factors
   scenParDemRegression <- fread(system.file("extdata/scenParDemRegression.csv",

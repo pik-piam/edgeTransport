@@ -13,7 +13,7 @@ toolDemandRegression(
   scenParRegionalDemRegression,
   scenParDemandFactors,
   baseYear,
-  policyStartYear,
+  allEqYear,
   helpers
 )
 }
@@ -34,7 +34,7 @@ toolDemandRegression(
 
 \item{baseYear}{End year of historical energy service demand data}
 
-\item{policyStartYear}{Start year of scenario differentiation}
+\item{allEqYear}{Start year of scenario differentiation}
 
 \item{helpers}{list with helpers}
 }
