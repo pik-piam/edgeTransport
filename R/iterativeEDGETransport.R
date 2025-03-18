@@ -32,10 +32,9 @@ iterativeEdgeTransport <- function() {
     gdxPath <- "fulldata.gdx"
 
   #initialize scenario Parameter
-  SSPscen <- ""
-  transportPolScen <- ""
-  demScen <- ""
-  i <- 1
+  SSPscen <- c("","")
+  transportPolScen <- c("","")
+  demScen <- c("","")
 
   # config from current run contains information about possible reference run
   load("config.Rdata")
@@ -46,11 +45,11 @@ iterativeEdgeTransport <- function() {
     load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
-    SSPscen[i] <- cfgReferenceRun$gms$cm_GDPpopScen
-    transportPolScen[i] <- cfgReferenceRun$gms$cm_EDGEtr_scen
-    demScen[i] <- cfgReferenceRun$gms$cm_demScen
-    i <- 2
+    SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
+    transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
+    demScen[1] <- cfgReferenceRun$gms$cm_demScen
   }
+
   startyear <- cfgCurrentRun$gms$cm_startyear
   # REMIND startyear is the year in which differences are observed
   # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
@@ -58,10 +57,11 @@ iterativeEdgeTransport <- function() {
   if (allEqYear < 2020){
     allEqYear <- 2020
   }
-  # default start scenario as placeholder but no scenario differentiation before 2020
-  SSPscen[i] <- cfgCurrentRun$gms$cm_GDPpopScen
-  transportPolScen[i] <- cfgCurrentRun$gms$cm_EDGEtr_scen
-  demScen[i] <- cfgCurrentRun$gms$cm_demScen
+
+  #  scenario after startyear but no earlier than 2020 from current REMIND config
+  SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
+  transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
+  demScen[2] <- cfgCurrentRun$gms$cm_demScen
 
   isICEban <- c(FALSE, FALSE)
 
@@ -308,10 +308,8 @@ iterativeEdgeTransport <- function() {
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
-    # startyear is defined inthe standalone version as follows "First time point in which policy differentiation sets in, cm_startyear in REMIND"
-    # Here the same is used as allEqYear and startyear is cm_startyear in REMIND
-    # Can we unify that somehow?
-    startyear = allEqYear,
+    # EDGET internally uses allEqYear but startyear is the important variable for iterativeEDGETransport() call and comparison with REMIND cm_startyear
+    startyear = startyear,
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     histPrefs = histPrefs,
