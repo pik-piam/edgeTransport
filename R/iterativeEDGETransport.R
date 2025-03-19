@@ -311,26 +311,19 @@ iterativeEdgeTransport <- function() {
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
   outputRaw <- list(
+    combinedCAPEXandOPEX = inputData$combinedCAPEXandOPEX,
+    scenSpecEnIntensity = inputData$scenSpecEnIntensity,
+    scenSpecLoadFactor = inputData$scenSpecLoadFactor,
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
-    # EDGET internally uses allEqYear but startyear is the important variable for iterativeEDGETransport() call and comparison with REMIND cm_startyear
-    startyear = startyear,
-    gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
-    histPrefs = histPrefs,
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
     vehSalesAndModeShares = vehSalesAndModeShares$shares,
-    sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
     helpers = helpers
   )
-  # not all data from inputdataRaw and inputdata is needed for the reporting
-  add <- append(inputDataRaw,
-                inputData[!names(inputData) %in% c("histESdemand", "REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
-  outputRaw <- append(outputRaw, add)
-
 
   storeData(edgeTransportFolder, outputRaw)
 

@@ -9,7 +9,7 @@ toolLoadmrdriversData(SSPscen, helpers, allEqYear)
 \arguments{
 \item{SSPscen}{SSP scenarios for which the mrdrivers input data shall be loaded}
 
-\item{helpers}{list containg several helpers used throughout the model.
+\item{helpers}{list containing several helpers used throughout the model.
 It includes dtTimeRes, a data.table containing the temporal
 resolution for different univocalNames}
 

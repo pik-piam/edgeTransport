@@ -1,6 +1,6 @@
 #' Load GDP and Population data from mrdrivers
 #' @param SSPscen SSP scenarios for which the mrdrivers input data shall be loaded
-#' @param helpers list containg several helpers used throughout the model.
+#' @param helpers list containing several helpers used throughout the model.
 #'          It includes dtTimeRes, a data.table containing the temporal
 #'          resolution for different univocalNames
 #' @param allEqYear Year after which policy differentiation sets in
