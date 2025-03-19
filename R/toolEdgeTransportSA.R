@@ -60,7 +60,7 @@ toolEdgeTransportSA <- function(SSPscen,
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
   inputDataRaw <- inputs$inputDataRaw
-
+  
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
@@ -96,11 +96,11 @@ toolEdgeTransportSA <- function(SSPscen,
   inputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecInputData$scenSpecLoadFactor,
+    scenSpecAnnualMileage = scenSpecInputData$scenSpecAnnualMileage,
     scenSpecEnIntensity = scenSpecInputData$scenSpecEnIntensity,
     combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
     initialIncoCosts = scenSpecInputData$initialIncoCosts,
-    annualMileage = inputDataRaw$annualMileage,
     timeValueCosts = inputDataRaw$timeValueCosts,
     histESdemand = inputDataRaw$histESdemand,
     GDPMER = inputDataRaw$GDPMER,
@@ -108,7 +108,7 @@ toolEdgeTransportSA <- function(SSPscen,
     GDPpcPPP = inputDataRaw$GDPpcPPP,
     population = inputDataRaw$population
   )
-
+  
   print("Input data preparation finished")
   ########################################################
   ## Prepare data for

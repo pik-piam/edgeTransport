@@ -25,7 +25,7 @@ toolApplyScenSpecAnnualMileage <- function(annualMileage, scenParAnnualMileage, 
       period >= policyStartYear &
       period <= targetYear & 
       region == "IND",
-    value := value * (1 + percentChange * (period - policyStartYear) / (targetYear - policyStartYear))]
+      value := value * (1 + percentChange * (period - policyStartYear) / (targetYear - policyStartYear))]
 
   annualMileage[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &

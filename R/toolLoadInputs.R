@@ -71,12 +71,12 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   scenModelPar <- list(
     scenParEnergyIntensity = packageData$scenParEnergyIntensity,
     scenParLoadFactor = packageData$scenParLoadFactor,
+    scenParAnnualMileage = packageData$scenParAnnualMileage,
     scenParPrefTrends = packageData$scenParPrefTrends,
     scenParIncoCost = packageData$scenParIncoCost,
     scenParDemRegression = packageData$scenParDemRegression,
     scenParRegionalDemRegression = packageData$scenParRegionalDemRegression,
-    scenParDemFactors = packageData$scenParDemFactors,
-    scenParAnnualMileage = packageData$scenParAnnualMileage
+    scenParDemFactors = packageData$scenParDemFactors
   )
 
   # raw input data
@@ -84,7 +84,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     histESdemand = mrtransportData$histESdemand,
     energyIntensityRaw = mrtransportData$energyIntensityRaw,
     loadFactorRaw = mrtransportData$loadFactorRaw,
-    annualMileage = mrtransportData$annualMileage,
+    annualMileageRaw = mrtransportData$annualMileage,
     CAPEXtrackedFleet = mrtransportData$CAPEXtrackedFleet,
     nonFuelOPEXtrackedFleet = mrtransportData$nonFuelOPEXtrackedFleet,
     CAPEXother = mrtransportData$CAPEXother,

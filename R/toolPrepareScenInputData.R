@@ -53,12 +53,12 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
   
   # Application of policy induced changes on load factor ----------------------------
   if (!is.null(scenModelPar$scenParAnnualMileage)) {
-    scenSpecAnnualMileage <- toolApplyScenSpecAnnualMileage(inputDataRaw$annualMileage, scenModelPar$scenParAnnualMileage,
+    scenSpecAnnualMileage <- toolApplyScenSpecAnnualMileage(inputDataRaw$annualMileageRaw, scenModelPar$scenParAnnualMileage,
                                                       policyStartYear, helpers)
     scenSpecAnnualMileage[, variable := "Annual mileage"]
     print("Policy induced changes to the annual mileage were applied")
   } else {
-    scenSpecAnnualMileage <- copy(inputDataRaw$annualMileage)[, variable := "Annual mileage"]
+    scenSpecAnnualMileage <- copy(inputDataRaw$annualMileageRaw)[, variable := "Annual mileage"]
     print("No policy induced changes to the annualMileage")
   }
   # Application of policy induced changes on energy intensity ----------------------------
@@ -71,7 +71,6 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, po
     scenSpecEnIntensity <- copy(inputDataRaw$energyIntensityRaw)[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
-
   # Annualization and formatting of monetary costs ---------------------------------------------------
   annuity <- toolCalculateAnnuity(genModelPar$annuityCalc, helpers)
   transportCosts <- toolCombineCAPEXandOPEX(inputDataRaw$CAPEXtrackedFleet,
