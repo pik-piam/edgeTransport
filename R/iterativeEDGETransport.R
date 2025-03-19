@@ -40,15 +40,11 @@ iterativeEdgeTransport <- function() {
   load("config.Rdata")
   cfgCurrentRun <- copy(cfg)
   cfg <- NULL
-  # If there is a reference run, load config of REMIND reference run for fixing before startyear
-  if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
-    load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
-    cfgReferenceRun <- copy(cfg)
-    cfg <- NULL
-    SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
-    transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
-    demScen[1] <- cfgReferenceRun$gms$cm_demScen
-  }
+
+  #  scenario after startyear (if given) but no earlier than 2020 from current REMIND config
+  SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
+  transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
+  demScen[2] <- cfgCurrentRun$gms$cm_demScen
 
   startyear <- cfgCurrentRun$gms$cm_startyear
   # REMIND startyear is the year in which differences are observed
@@ -58,10 +54,20 @@ iterativeEdgeTransport <- function() {
     allEqYear <- 2020
   }
 
-  #  scenario after startyear but no earlier than 2020 from current REMIND config
-  SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
-  transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
-  demScen[2] <- cfgCurrentRun$gms$cm_demScen
+  # If there is a reference run, load config of REMIND reference run for fixing before startyear
+  # if not: duplicate scenario from current config in analogy of solution in standalone
+  if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
+    load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
+    cfgReferenceRun <- copy(cfg)
+    cfg <- NULL
+    SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
+    transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
+    demScen[1] <- cfgReferenceRun$gms$cm_demScen
+  } else {
+    SSPscen[1] <- SSPscen[2]
+    transportPolScen[1] <- transportPolScen[2]
+    demScen[1] <- "default"
+  }
 
   isICEban <- c(FALSE, FALSE)
 
