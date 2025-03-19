@@ -4,12 +4,14 @@
 \alias{toolApplyICEbanOnPreferences}
 \title{Apply ICE ban on vehicle types that feature preference factors}
 \usage{
-toolApplyICEbanOnPreferences(preferenceTab, helpers)
+toolApplyICEbanOnPreferences(preferenceTab, helpers, ICEbanYears)
 }
 \arguments{
 \item{preferenceTab}{data.table including preferences for all levels of the decision tree}
 
 \item{helpers}{list of helpers}
+
+\item{ICEbanYears}{sequence of years in which ICEban is applied}
 }
 \value{
 Preferences in accordance to the ICE ban policy
@@ -18,5 +20,5 @@ Preferences in accordance to the ICE ban policy
 Apply ICE ban on vehicle types that feature preference factors
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

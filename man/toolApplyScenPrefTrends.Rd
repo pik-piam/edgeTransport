@@ -8,10 +8,9 @@ toolApplyScenPrefTrends(
   baselinePrefTrends,
   scenParPrefTrends,
   GDPpcMER,
-  policyStartYear,
+  allEqYear,
   GDPcutoff,
-  helpers,
-  isICEban
+  helpers
 )
 }
 \arguments{
@@ -21,13 +20,11 @@ toolApplyScenPrefTrends(
 
 \item{GDPpcMER}{Per capita GDP based on market exchange rate}
 
-\item{policyStartYear}{Year from which the scenario parameters are applied on the baseline preference trends}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{GDPcutoff}{Threshold used to categorize countries into different mitigation groups based on their GDP}
 
 \item{helpers}{List containing several helpers used throughout the model}
-
-\item{isICEban}{Switch to turn on ICE phase out policies}
 }
 \value{
 Scenario specific preference trends
