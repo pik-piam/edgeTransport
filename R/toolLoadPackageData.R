@@ -93,7 +93,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
 
   # How can a switch from no to some scenario be achieved? -> modify startYear and endYear directly in the mask?!
   if  ((transportPolS[1] %in% scenParEnergyIntensity$transportPolScen)|(transportPolS[2] %in% scenParEnergyIntensity$transportPolScen)) {
-    scenParEnergyIntensity[, "startYearCat" := fcase( SSPscen == SSPs[1] & transportPolScen == transportPolS[1], "origin", SSPscen == SSPs[2] & transportPolScen == transportPolS[2], "final")]
+    scenParEnergyIntensity[, "startYearCat" := fcase(SSPscen == SSPs[2] & transportPolScen == transportPolS[2], "final", SSPscen == SSPs[1] & transportPolScen == transportPolS[1], "origin")]
     scenParEnergyIntensity <- scenParEnergyIntensity[!is.na(startYearCat)][, c("transportPolScen", "SSPscen") := NULL]
   } else {
     scenParEnergyIntensity <- NULL
@@ -114,7 +114,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   scenParLoadFactor <- fread(system.file("extdata/scenParLoadFactor.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
   # Demand scenario exogenous demand changes
-  scenParLoadFactor[, "startYearCat" := fcase(SSPscen == SSPs[1] & demScen == demScenario[1], "origin", SSPscen == SSPs[2] & demScen == demScenario[2], "final")]
+  scenParLoadFactor[, "startYearCat" := fcase(SSPscen == SSPs[2] & demScen == demScenario[2], "final", SSPscen == SSPs[1] & demScen == demScenario[1], "origin")]
   scenParLoadFactor <- scenParLoadFactor[!is.na(startYearCat)][, c("SSPscen", "demScen") := NULL]
   if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
 

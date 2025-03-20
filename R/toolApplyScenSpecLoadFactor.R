@@ -19,7 +19,7 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, allEqYear
     stop("Scenario specific load factor changes are not unambiguously defined")
   }
   if ("origin" %in% scenParLoadFactor$startYearCat) {
-    warning("Error in demand scenario specific changes: only delayed switch-on with allEqYear possible. Please check toolApplyScenSpecLoadFactor()")
+    stop("Error in demand scenario specific changes: only delayed switch-on with allEqYear possible. Please check toolApplyScenSpecLoadFactor()")
   }
 
   # apply scenario specific load factor adjustments for LDW 4W

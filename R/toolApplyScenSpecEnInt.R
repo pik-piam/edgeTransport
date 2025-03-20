@@ -61,7 +61,7 @@ toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, allEqYear, hel
   if (unique(enIntNew$startYearCat) == "final"){
     enIntNew <- enIntNew[ period > allEqYear]
   } else {
-    warning("Error in application of allEqYear. Please check toolApplyScenSpecEnInt()")
+    stop("Error in application of allEqYear. Please check toolApplyScenSpecEnInt()")
     }
 
   enIntNew[period >= startFade & period <= endFade, value := value * factor,
