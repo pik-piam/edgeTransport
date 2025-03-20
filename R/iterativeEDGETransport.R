@@ -317,6 +317,7 @@ iterativeEdgeTransport <- function() {
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
+    gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
