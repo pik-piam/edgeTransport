@@ -114,7 +114,6 @@ toolEdgeTransportSA <- function(SSPscen,
   ## Prepare data for
   ## endogenous costs update
   ########################################################
-
   vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc,
                                                                         helpers)
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
@@ -199,7 +198,7 @@ toolEdgeTransportSA <- function(SSPscen,
     fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
                                                              vehicleDepreciationFactors,
                                                              vehSalesAndModeShares$shares,
-                                                             inputData$annualMileage,
+                                                             inputData$scenSpecAnnualMileage,
                                                              inputData$scenSpecLoadFactor,
                                                              helpers)
 
@@ -222,7 +221,6 @@ toolEdgeTransportSA <- function(SSPscen,
   if (isICEban & (transportPolScen %in% c("Mix1", "Mix2", "Mix3", "Mix4"))) transportPolScen <- paste0(transportPolScen, "ICEban")
 
   print(paste("Run", SSPscen, transportPolScen, "demand scenario", demScen, "finished"))
-
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-", SSPscen, "-", transportPolScen, "-", demScen))
