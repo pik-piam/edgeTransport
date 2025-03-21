@@ -22,5 +22,5 @@ data.table with scenario specific energy intensity input data
 Apply demand scenario specific adjustments to the energy intensity
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

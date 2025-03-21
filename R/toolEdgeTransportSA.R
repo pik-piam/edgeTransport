@@ -17,7 +17,7 @@
 #' @param isREMINDinputReported Optional reporting of REMIND input data
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
 #' @returns Transport input data for REMIND
-#' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
+#' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli, Alex K. Hagen
 #' @import data.table
 #' @importFrom reporttransport reportEdgeTransport storeData
 #' @importFrom madrat getConfig

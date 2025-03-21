@@ -1,5 +1,5 @@
 #' Apply demand scenario specific adjustments to the load Factor
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @param loadFactor load factor input data supplied by mrtransport
 #' @param scenParLoadFactor Scenario specific parameters to be applied on the baseline load factor
 #' @param allEqYear Year after which scenario differentiation sets in

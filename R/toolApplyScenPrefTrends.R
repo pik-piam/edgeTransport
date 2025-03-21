@@ -1,5 +1,5 @@
 #' Apply scenario specific adjustments to the preference trends
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @param baselinePrefTrends Baseline preference trends
 #' @param scenParPrefTrends Scenario parameters to be applied on the preference trends
 #' @param GDPpcMER Per capita GDP based on market exchange rate
@@ -11,7 +11,8 @@
 
 toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, allEqYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- value <- region <- variable <- unit <- level <- vehicleType <- FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- NULL
+  period <- value <- region <- variable <- unit <- level <- vehicleType <- NULL
+  FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- startYearCat <- NULL
 
   # function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1) {

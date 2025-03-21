@@ -33,5 +33,5 @@ Scenario specific preference trends
 Apply scenario specific adjustments to the preference trends
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

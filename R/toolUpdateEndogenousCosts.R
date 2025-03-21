@@ -34,7 +34,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- NULL
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- startYearCat <- NULL
 
   # parameters of endogenous cost trends
   bfuelav <- -20    ## value based on Greene 2001

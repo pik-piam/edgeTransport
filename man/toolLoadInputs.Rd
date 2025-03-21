@@ -22,5 +22,5 @@ list with different input data sets
 Load all inputs that are required to run the model
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

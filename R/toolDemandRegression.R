@@ -22,7 +22,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- sector <- value <- GDPpcPPP <- regionGDPpcPPP <- regionGDPppp <- regionalSummand <- NULL
   population <- GDPgrowthRate <- incomeElasticity <- GDPpcgrowthRate <- unit <- GDPpcterm <- NULL
-  GDPterm <- POPgrowthRate <- . <- NULL
+  GDPterm <- POPgrowthRate <- . <- startYearCat <- NULL
 
   # interpolate SSP specific elasticities based on GDP PPP per capita ----------------------------
   GDPperCapitaPPP <- copy(GDPperCapitaPPP)[, c("variable", "unit") := NULL]

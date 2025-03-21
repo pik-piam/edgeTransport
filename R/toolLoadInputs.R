@@ -1,5 +1,5 @@
 #' Load all inputs that are required to run the model
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @param SSPscen SSP or SDP scenarios
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression

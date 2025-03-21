@@ -17,7 +17,7 @@
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transportFolder = ".", iterationNumber = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
-  technology <- Liquids <- BEV <- period <- . <- NULL
+  technology <- Liquids <- BEV <- period <- . <- edgeTransportFolder <- iteration <- NULL
 
    mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
    # active modes do not feed into all_enty

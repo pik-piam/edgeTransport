@@ -53,5 +53,5 @@ a choice model to determine transport mode and technology shares, a demand regre
 and a fleet tracking for cars, busses and trucks
 }
 \author{
-Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
+Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli, Alex K. Hagen
 }

@@ -15,7 +15,7 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Settings
   #############################################################
-  cfg <- NULL
+  cfg <- sumWeight <- weight <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"
@@ -34,7 +34,7 @@ iterativeEdgeTransport <- function() {
   #initialize scenario Parameter
   SSPscen <- c("","")
   transportPolScen <- c("","")
-  demScen <- c("","")
+  demScen <- c("default","")
 
   # config from current run contains information about possible reference run
   load("config.Rdata")
@@ -66,7 +66,6 @@ iterativeEdgeTransport <- function() {
   } else {
     SSPscen[1] <- SSPscen[2]
     transportPolScen[1] <- transportPolScen[2]
-    demScen[1] <- "default"
   }
 
   isICEban <- c(FALSE, FALSE)
@@ -77,7 +76,6 @@ iterativeEdgeTransport <- function() {
       transportPolScen[i] <- gsub('ICEban','', transportPolScen[i])
     }
   }
-
 
   # find years in which ICEban is used
   if (isICEban[1] & isICEban[2]) {
@@ -317,11 +315,14 @@ iterativeEdgeTransport <- function() {
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
+    startyear = startyear,
     gdxPath = gdxPath,
     hybridElecShare = hybridElecShare,
+    histPrefs = histPrefs,
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
     vehSalesAndModeShares = vehSalesAndModeShares$shares,
+    sectorESdemand = REMINDsectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
     helpers = helpers
   )
@@ -365,6 +366,11 @@ iterativeEdgeTransport <- function() {
   demScen <- demScen[length(demScen)]
   SSPscen <- SSPscen[length(SSPscen)]
   transportPolScen <- transportPolScen[length(transportPolScen)]
+
+  # For reporting to REMIND add ICEban info to transportPolScen again
+  if (isICEban[2]) {
+    transportPolScen <- paste0(transportPolScen, "ICEban")
+  }
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)

@@ -1,5 +1,5 @@
 #' Apply demand scenario specific adjustments to the energy intensity
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @param enInt Energy intensity input data supplied by mrtransport
 #' @param scenParEnergyIntensity Transport policy scenario specific energy intensity improvement factors
 #' @param allEqYear Year after which scenario differentiation sets in
@@ -11,7 +11,7 @@
 toolApplyScenSpecEnInt <- function(enInt, scenParEnergyIntensity, allEqYear, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- univocalName <- technology <- FVvehvar <- startYear <- startFade <- endFade <- endYear <- NULL
-  value.x <- value.y <- annualFactor <- annualImprovementRate <- NULL
+  value.x <- value.y <- annualFactor <- annualImprovementRate <- startYearCat <- NULL
 
   # get yearly resolution
   enIntYearly <- copy(enInt)

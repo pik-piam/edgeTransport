@@ -22,5 +22,5 @@ Scenario specific load factor
 Apply demand scenario specific adjustments to the load Factor
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

@@ -8,7 +8,7 @@
 
 toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  SSPscen <- transportPolScen <- demScen <- NULL
+  SSPscen <- transportPolScen <- demScen <- startYearCat <- NULL
 
   # set demand scenario to default when not supplied
   if (is.null(demScenario)) {

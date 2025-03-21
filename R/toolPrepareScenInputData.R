@@ -12,7 +12,7 @@
 
 toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, allEqYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- variable <- level <- unit <- NULL
+  period <- variable <- level <- unit <- startYearCat <- NULL
 
   # Preparation of baseline preference trends -------------------------------------
   # change to long-format
