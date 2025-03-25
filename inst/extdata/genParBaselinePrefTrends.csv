@@ -7185,11 +7185,11 @@ SSP2;CHA;BEV;Bus_tmp_vehicletype;Bus_tmp_subsectorL3;Bus;trn_pass_road;trn_pass;
 SSP2;CHA;BEV;Moped;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.6;1;1;1
 SSP2;CHA;BEV;Motorcycle (50-250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0.06;0.6;1;1;1
 SSP2;CHA;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.6;1;1;1
-SSP2;CHA;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.048024;0.447;1.05216;1.05216
-SSP2;CHA;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.019104;0.24048;1.0206;1.0206
-SSP2;CHA;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.11904;0.40296;0.894;1.07136;1.07136
-SSP2;CHA;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.11904;0.40296;0.894;1.07136;1.07136
-SSP2;CHA;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.048024;0.447;1.05216;1.05216
+SSP2;CHA;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.162081;1.00575;2.36736;2.36736
+SSP2;CHA;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.064476;0.54108;2.29635;2.29635
+SSP2;CHA;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.40176;1.35999;2.0115;2.41056;2.41056
+SSP2;CHA;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.40176;1.35999;2.0115;2.41056;2.41056
+SSP2;CHA;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0;0.162081;1.00575;2.36736;2.36736
 SSP2;CHA;Electric;Freight Rail_tmp_vehicletype;Freight Rail_tmp_subsectorL3;Freight Rail_tmp_subsectorL2;Freight Rail;trn_freight;FV;0.4553;0.5234;0.6595;0.9319;0.9319
 SSP2;CHA;Electric;HSR_tmp_vehicletype;HSR_tmp_subsectorL3;HSR_tmp_subsectorL2;HSR;trn_pass;FV;1;1;1;1;1
 SSP2;CHA;Electric;Passenger Rail_tmp_vehicletype;Passenger Rail_tmp_subsectorL3;Passenger Rail_tmp_subsectorL2;Passenger Rail;trn_pass;FV;0.4158;0.4888;0.6349;0.927;0.927
