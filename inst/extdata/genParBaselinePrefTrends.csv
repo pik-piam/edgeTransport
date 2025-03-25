@@ -7181,7 +7181,7 @@ SSP2;CHA;;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subs
 SSP2;CHA;;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.4022;0.3352;0.3016;0.3352;0.3352
 SSP2;CHA;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.4022;0.3352;0.3016;0.3352;0.3352
 SSP2;CHA;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.1657;0.1657;0.1657;0.1657;0.1657
-SSP2;CHA;BEV;Bus_tmp_vehicletype;Bus_tmp_subsectorL3;Bus;trn_pass_road;trn_pass;FV;0;0.36228;1.2;1.2;1.2
+SSP2;CHA;BEV;Bus_tmp_vehicletype;Bus_tmp_subsectorL3;Bus;trn_pass_road;trn_pass;FV;0.15;0.81513;1.8;1.8;1.8
 SSP2;CHA;BEV;Moped;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.6;1;1;1
 SSP2;CHA;BEV;Motorcycle (50-250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0.06;0.6;1;1;1
 SSP2;CHA;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.6;1;1;1
