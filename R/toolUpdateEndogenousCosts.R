@@ -35,7 +35,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- NULL
 
   # parameters of endogenous cost trends
-  bfuelav <- -5    ## value based on Greene 2001
+  bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
   bmodelav <- -12   ## value based on Greene 2001
   coeffrisk <- 3800 ## value based on Pettifor 2017
 
@@ -72,7 +72,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     if (year < 2021) {
       floorCosts <- currentMask
     } else if (year >= 2021 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2021, 0.1, 2030, 0.1)
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.05)
     } else if (year > 2030 && year <= 2035) {
       floorCosts <- strangeICEbanFunction(year, 2031, 0.1, 2035, 0.2)
     } else if  (year > 2035) {
@@ -202,7 +202,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # and should be reworked)
     dataEndoCosts[variable == "Range anxiety" & period == t,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
-                     by = c("region", "technology", "vehicleType", "univocalName", "period")]
+                     by = c("region", "technology", "vehicleType", "univocalName")] 
 
     ratioPhev <- unique(policyMaskPHEV$policyMask)
     # Model availability for Hybrid electric
