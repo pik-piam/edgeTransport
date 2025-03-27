@@ -32,7 +32,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- NULL
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- NULL
 
   # parameters of endogenous cost trends
   bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
@@ -97,6 +97,12 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   policyMask[, lateStart := FALSE]
   policyMask[technology == "Liquids", startValue := ifelse(!is.na(startValue), startValue, 0)]
   policyMask[technology == "Liquids" & startValue >0 , lateStart := TRUE]
+  policyMask[, `:=`(
+    startYear = as.numeric(startYear),
+    startValue = as.numeric(startValue),
+    targetYear = as.numeric(targetYear),
+    targetValue = as.numeric(targetValue)
+  )]
   policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue, lateStart), by = c("region", "period", "technology")]
   policyMask <- policyMask[, c("region", "period", "FVvehvar", "technology", "policyMask")]
   policyMask <- rbind(policyMask, policyMaskPHEV)
@@ -118,6 +124,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
                policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
+  policyMask[, policyMask := as.numeric(policyMask)]
 
   # check whether policy mask is calculated correctly for respective technologys
   if (anyNA(policyMask)) {
@@ -137,6 +144,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # to get a proxy for total vehicles of one technology in the fleet
     dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
                   by = c("region", "univocalName", "technology", "variable")]
+
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
@@ -202,9 +210,9 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # and should be reworked)
     dataEndoCosts[variable == "Range anxiety" & period == t,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
-                     by = c("region", "technology", "vehicleType", "univocalName")] 
+                     by = c("region", "technology", "vehicleType", "univocalName")]
 
-    ratioPhev <- unique(policyMaskPHEV$policyMask)
+    ratioPhev <- as.numeric(unique(policyMaskPHEV$policyMask))
     # Model availability for Hybrid electric
     if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 &
                       region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
