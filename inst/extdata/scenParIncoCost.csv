@@ -239,25 +239,25 @@ SSP2;Mix1;LDV|4W;BEV;targetValue;0.8
 SSP2;Mix1;LDV|4W;Liquids;startYear;2025
 SSP2;Mix1;LDV|4W;Liquids;startValue;0
 SSP2;Mix1;LDV|4W;Liquids;targetYear;2080
-SSP2;Mix1;LDV|4W;Liquids;targetValue;0.3
+SSP2;Mix1;LDV|4W;Liquids;targetValue;0.25
 SSP2;Mix1;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SSP2;Mix2;LDV|4W;BEV;startYear;2025
 SSP2;Mix2;LDV|4W;BEV;startValue;0.8
 SSP2;Mix2;LDV|4W;BEV;targetYear;2060
 SSP2;Mix2;LDV|4W;BEV;targetValue;0.8
 SSP2;Mix2;LDV|4W;Liquids;startYear;2025
-SSP2;Mix2;LDV|4W;Liquids;startValue;0.15
+SSP2;Mix2;LDV|4W;Liquids;startValue;0.16
 SSP2;Mix2;LDV|4W;Liquids;targetYear;2080
-SSP2;Mix2;LDV|4W;Liquids;targetValue;0.4
+SSP2;Mix2;LDV|4W;Liquids;targetValue;0.25
 SSP2;Mix2;LDV|4W;Hybrid electric;ratioPHEV;0.5
 SSP2;Mix3;LDV|4W;BEV;startYear;2025
 SSP2;Mix3;LDV|4W;BEV;startValue;0.8
 SSP2;Mix3;LDV|4W;BEV;targetYear;2060
 SSP2;Mix3;LDV|4W;BEV;targetValue;0.8
 SSP2;Mix3;LDV|4W;Liquids;startYear;2025
-SSP2;Mix3;LDV|4W;Liquids;startValue;0.17
+SSP2;Mix3;LDV|4W;Liquids;startValue;0.16
 SSP2;Mix3;LDV|4W;Liquids;targetYear;2080
-SSP2;Mix3;LDV|4W;Liquids;targetValue;0.5
+SSP2;Mix3;LDV|4W;Liquids;targetValue;0.0.3
 SSP2;Mix3;LDV|4W;Hybrid electric;ratioPHEV;1
 SSP2;Mix4;LDV|4W;BEV;startYear;2025
 SSP2;Mix4;LDV|4W;BEV;startValue;0.8
