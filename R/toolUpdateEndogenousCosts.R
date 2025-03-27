@@ -32,7 +32,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- NULL
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- NULL
 
   # parameters of endogenous cost trends
   bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
@@ -97,6 +97,12 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   policyMask[, lateStart := FALSE]
   policyMask[technology == "Liquids", startValue := ifelse(!is.na(startValue), startValue, 0)]
   policyMask[technology == "Liquids" & startValue >0 , lateStart := TRUE]
+  policyMask[, `:=`(
+    startYear = as.numeric(startYear),
+    startValue = as.numeric(startValue),
+    targetYear = as.numeric(targetYear),
+    targetValue = as.numeric(targetValue)
+  )]
   policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue, lateStart), by = c("region", "period", "technology")]
   policyMask <- policyMask[, c("region", "period", "FVvehvar", "technology", "policyMask")]
   policyMask <- rbind(policyMask, policyMaskPHEV)
@@ -202,7 +208,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # and should be reworked)
     dataEndoCosts[variable == "Range anxiety" & period == t,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
-                     by = c("region", "technology", "vehicleType", "univocalName")] 
+                     by = c("region", "technology", "vehicleType", "univocalName")]
 
     ratioPhev <- unique(policyMaskPHEV$policyMask)
     # Model availability for Hybrid electric
