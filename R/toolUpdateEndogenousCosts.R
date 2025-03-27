@@ -124,6 +124,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
                policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
+  policyMask[, policyMask := as.numeric(policyMask)]
 
   # check whether policy mask is calculated correctly for respective technologys
   if (anyNA(policyMask)) {
@@ -143,6 +144,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # to get a proxy for total vehicles of one technology in the fleet
     dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
                   by = c("region", "univocalName", "technology", "variable")]
+
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
@@ -210,7 +212,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                    value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
                      by = c("region", "technology", "vehicleType", "univocalName")]
 
-    ratioPhev <- unique(policyMaskPHEV$policyMask)
+    ratioPhev <- as.numeric(unique(policyMaskPHEV$policyMask))
     # Model availability for Hybrid electric
     if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 &
                       region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
