@@ -1769,7 +1769,7 @@ SSP2,Mix3,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn
 SSP2,Mix3,above GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,10
 SSP2,Mix3,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2035,10
 SSP2,Mix3,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,7,2035,10
-SSP2,Mix3,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,10
+SSP2,Mix3,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,3
 SSP2,Mix3,below GDP cutoff,BEV,Bus,Bus,trn_pass_road,FV,3.5,2035,10
 SSP2,Mix3,below GDP cutoff,FCEV,Bus,Bus,trn_pass_road,FV,3.5,2035,10
 SSP2,Mix3,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,10
@@ -1787,10 +1787,10 @@ SSP2,Mix3,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenge
 SSP2,Mix3,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,10
 SSP2,Mix4,below GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,70,2045,15
 SSP2,Mix3,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,3,2035,10
-SSP2,Mix3,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,10
+SSP2,Mix3,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,3
 SSP2,Mix2,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,6,2040,10
 SSP2,Mix3,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,7,2035,10
-SSP2,Mix3,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,10
+SSP2,Mix3,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,3
 SSP2,Mix4,above GDP cutoff,,,,Cycle,S1S,1,2050,10
 SSP2,Mix4,above GDP cutoff,,,,Domestic Aviation,S1S,0.25,2035,10
 SSP2,Mix4,above GDP cutoff,,,,Domestic Ship,S1S,1,2050,10
