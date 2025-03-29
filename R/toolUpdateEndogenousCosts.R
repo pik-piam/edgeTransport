@@ -34,10 +34,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- startYearCat <- NULL
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL 
 
   # parameters of endogenous cost trends
-  bfuelav <- -20    ## value based on Greene 2001
+  bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
   bmodelav <- -12   ## value based on Greene 2001
   coeffrisk <- 3800 ## value based on Pettifor 2017
 
@@ -53,9 +53,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   }
 
   # calculate policy mask from scenParIncoCost ---------------------------------------------------
-  linFunc <- function(year, startYear, startValue, targetYear, targetValue) {
+
+  linFunc <- function(year, startYear, startValue, targetYear, targetValue, lateStart = FALSE) {
     if (year < startYear) {
-      return(startValue)
+      if (lateStart) return(0)
+      else return(startValue)
     } else if (year < targetYear) {
       return(startValue + ((targetValue - startValue) / (targetYear - startYear)) * (year - startYear))
     } else {
@@ -78,13 +80,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     if (year < 2021) {
       floorCosts <- currentMask
     } else if (year >= 2021 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2025, 0.08, 2030, 0.19)
-    } else if (year > 2030 && year < 2035) {
-      floorCosts <- strangeICEbanFunction(year, 2031, 0.2, 2034, 0.6)
-    } else if (year == 2035) {
-      floorCosts <- 1
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.05)
+    } else if (year > 2030 && year <= 2035) {
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.1, 2035, 0.2)
     } else if  (year > 2035) {
-      floorCosts <- 2
+      floorCosts <- 3
     }
     return(floorCosts)
   }
@@ -105,8 +105,16 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   policyMask <- policyMask[!technology == "Hybrid electric"]
   policyMask <- dcast(policyMask, region + period + FVvehvar + technology ~ param, value.var = "value")
   # At the start of the policy intervention, the inconvenience costs for ICEs are zero, as they are the predominant and well-established technology.
-  policyMask[technology == "Liquids", startValue := 0]
-  policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue), by = c("region", "period", "technology")]
+  policyMask[, lateStart := FALSE]
+  policyMask[technology == "Liquids", startValue := ifelse(!is.na(startValue), startValue, 0)]
+  policyMask[technology == "Liquids" & startValue >0 , lateStart := TRUE]
+  policyMask[, `:=`(
+    startYear = as.numeric(startYear),
+    startValue = as.numeric(startValue),
+    targetYear = as.numeric(targetYear),
+    targetValue = as.numeric(targetValue)
+  )]
+  policyMask[, policyMask := linFunc(period, startYear, startValue, targetYear, targetValue, lateStart), by = c("region", "period", "technology")]
   policyMask <- policyMask[, c("region", "period", "FVvehvar", "technology", "policyMask")]
   policyMask <- rbind(policyMask, policyMaskPHEV)
   policyMask <- merge(policyMask, helpers$mitigationTechMap[, c("univocalName", "FVvehvar")], all.x = TRUE, allow.cartesian = TRUE)[, FVvehvar := NULL]
@@ -123,12 +131,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     policyMask <- rbind(policyMask[!(technology %in% c("Gases", "Hybrid electric") & region %in% affectedRegions)],
                         copy(policyMaskICEban)[, technology := "Hybrid electric"], copy(policyMaskICEban)[, technology := "Gases"])
     setkey(policyMask, region, period, technology)
-    dt <- policyMask
-    after <- policyMask
 
     policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions & period %in% ICEbanYears,
                policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
+  policyMask[, policyMask := as.numeric(policyMask)]
 
   # check whether policy mask is calculated correctly for respective technologys
   if (anyNA(policyMask)) {
@@ -148,6 +155,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # to get a proxy for total vehicles of one technology in the fleet
     dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
                   by = c("region", "univocalName", "technology", "variable")]
+
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
@@ -215,7 +223,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                    value := pmax(value[period == 2020] * policyMask, endoCostRaw),
                      by = c("region", "technology", "vehicleType", "univocalName")]
 
-    ratioPhev <- unique(policyMaskPHEV$policyMask)
+    ratioPhev <- as.numeric(unique(policyMaskPHEV$policyMask))
     # Model availability for Hybrid electric
     if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 & period %in% ICEbanYears &
                       region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
@@ -224,7 +232,6 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t,
                   value := pmax(value[period == 2020] * ratioPhev, endoCostRaw),
                     by = c("region", "technology", "vehicleType", "univocalName")]
-
 
     # Stations availability for NG vehicles is fixed to 2020 values (due to very low costs for NG in CHA). Maybe this fix can be removed nowadays?
     # For PhOP scenario NG and Hybrid electrics needs to be phased out like ICEs: Not implemented yet
