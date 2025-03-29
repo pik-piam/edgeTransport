@@ -57,7 +57,7 @@ iterativeEdgeTransport <- function() {
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
   if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
-    load(file.path(dirname(cfg$files2export$start["input_ref.gdx"]), "config.Rdata"))
+    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
