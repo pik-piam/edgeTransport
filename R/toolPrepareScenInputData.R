@@ -24,9 +24,9 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
   basePrefTrends[, period := as.numeric(as.character(period))]
   basePrefTrends <- toolApplyMixedTimeRes(basePrefTrends, helpers)
   if ("final" %in% basePrefTrends$startYearCat) {
-    basePrefTrends <- basePrefTrends[(period > 2020 & period <= allEqYear & startYearCat == 'origin')|(period > allEqYear & startYearCat == 'final')][, startYearCat := NULL]
+    basePrefTrends <- basePrefTrends[(period >= 2020 & period <= allEqYear & startYearCat == 'origin')|(period > allEqYear & startYearCat == 'final')][, startYearCat := NULL]
   } else {
-    basePrefTrends <- basePrefTrends[period > 2020][, startYearCat := NULL]
+    basePrefTrends <- basePrefTrends[period >= 2020][, startYearCat := NULL]
   }
   # order
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
