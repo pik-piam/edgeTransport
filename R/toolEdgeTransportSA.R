@@ -38,7 +38,7 @@ toolEdgeTransportSA <- function(SSPscen,
   variable <- version <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
-  version <- "2.17.0"
+  version <- "2.17.1"
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 30800 # [constant 2017 US$MER]
