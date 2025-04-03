@@ -71,7 +71,7 @@ cd ${working_path}${folder_name}
 
 # interactive set-up of renv
 Rscript -e 'renv::init()'
-Rscript -e 'renv::install("renv@1.0.7")'
+Rscript -e 'renv::install("renv@1.1.4")'
 Rscript -e '
 renv::record("renv@1.0.7")
 renv::install("madrat") 
