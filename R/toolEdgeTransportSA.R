@@ -35,7 +35,10 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isAnalyticsReported = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  variable <- NULL
+  variable <- version <- NULL
+
+  #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
+  version <- "2.17.0"
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- 30800 # [constant 2017 US$MER]
