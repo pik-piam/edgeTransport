@@ -182,9 +182,11 @@ iterativeEdgeTransport <- function() {
   ## Load REMIND energy service demand
   REMINDsectorESdemand <- toolLoadREMINDesDemand(gdxPath, helpers)
 
+  ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
-
-    # Demand from the standalone regression module as weight
+    # Demand from the standalone regression module
+    # This is only used as deaggregation weight in the iterative version
+    # The deaggregation weights used are static across all iterations
     filePath <- list.files(edgeTransportFolder, recursive = TRUE, full.names = TRUE)
     filePath <- filePath[grepl(".*sectorESdemand.RDS", filePath)]
 
@@ -192,7 +194,7 @@ iterativeEdgeTransport <- function() {
       # Load from folder after first iterative edge-t run
       sectorESdemand <- readRDS(filePath)
     } else {
-      # Create and store for first iterative edge-t run
+      # Create for first iterative edge-t run
       sectorESdemand <- toolDemandRegression(inputDataRaw$histESdemand,
                                              inputDataRaw$GDPpcPPP,
                                              inputDataRaw$population,
@@ -203,8 +205,6 @@ iterativeEdgeTransport <- function() {
                                              baseYear,
                                              allEqYear,
                                              helpers)
-
-      storeData(outputFolder = edgeTransportFolder, list(sectorESdemand = sectorESdemand))
     }
 
     weightEs <- copy(sectorESdemand)[, "unit" := NULL]
@@ -308,10 +308,10 @@ iterativeEdgeTransport <- function() {
   # interpolation step in toolCalculateOutputVariables()
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
+  # in the iterative version sectorESdemand comes from REMIND
+  sectorESdemand <- REMINDsectorESdemand
+
   outputRaw <- list(
-    combinedCAPEXandOPEX = inputData$combinedCAPEXandOPEX,
-    scenSpecEnIntensity = inputData$scenSpecEnIntensity,
-    scenSpecLoadFactor = inputData$scenSpecLoadFactor,
     SSPscen = SSPscen,
     transportPolScen = transportPolScen,
     demScen = demScen,
@@ -322,10 +322,17 @@ iterativeEdgeTransport <- function() {
     fleetSizeAndComposition = fleetSizeAndComposition,
     endogenousCosts = endogenousCosts,
     vehSalesAndModeShares = vehSalesAndModeShares$shares,
-    sectorESdemand = REMINDsectorESdemand,
+    sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
     helpers = helpers
   )
+
+  # not all data from inputdataRaw and inputdata is needed for the reporting,
+  # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
+  # REMINDsectorESdemand is already covered by sectorESdemand
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
+                inputData[!names(inputData) %in% c("REMINDsectorESdemand","histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+  outputRaw <- append(outputRaw, add)
 
   storeData(edgeTransportFolder, outputRaw)
 
