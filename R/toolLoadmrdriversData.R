@@ -17,7 +17,6 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
 
   GDPMERmag <- calcOutput("GDP",
                           scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
-                          naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv",
                           unit = mrdrivers::toolGetUnitDollar())
   unitGDP <- gsub(" unit: ", "", getComment(GDPMERmag)[2])
@@ -26,7 +25,6 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
 
   GDPpcMERmag <- calcOutput("GDPpc",
                             scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
-                            naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv",
                             unit = mrdrivers::toolGetUnitDollar())
   unitGDP <- gsub(" unit: ", "", getComment(GDPpcMERmag)[2])
@@ -35,7 +33,6 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
 
   GDPpppMag <- calcOutput("GDP",
                           scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
-                          naming = "scenario",
                           regionmapping = "regionmapping_21_EU11.csv")
   unitGDP <- gsub(" unit: ", "", getComment(GDPpppMag)[2])
   GDPpppMag <- GDPpppMag[, , SSPscen] |> time_interpolate(years)
@@ -43,7 +40,6 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
 
   GDPpcPPPmag <- calcOutput("GDPpc",
                             scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
-                            naming = "scenario",
                             regionmapping = "regionmapping_21_EU11.csv")
   unitGDP <- gsub(" unit: ", "", getComment(GDPpcPPPmag)[2])
   GDPpcPPPmag <- GDPpcPPPmag[, , SSPscen] |> time_interpolate(years)
@@ -51,7 +47,6 @@ toolLoadmrdriversData <- function(SSPscen, helpers) {
 
   POPmag <- calcOutput("Population",
                        scenario = c("SSPs", "SDPs", "SSP2IndiaDEAs"),
-                       naming = "scenario",
                        regionmapping = "regionmapping_21_EU11.csv")[, , SSPscen] |> time_interpolate(years)
   POP <- magpie2dt(POPmag, yearcol = "period", regioncol = "region")[, variable := "Population"][, unit := "million"]
 
