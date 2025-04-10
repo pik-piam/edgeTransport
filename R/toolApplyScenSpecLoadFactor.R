@@ -21,14 +21,15 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, policySta
 
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period >= policyStartYear &
-      period <= targetYear,
+    region == "IND" &
+    period >= policyStartYear &
+    period <= targetYear,
     value := value * (1 + percentChange * (period - policyStartYear) / (targetYear - policyStartYear))]
 
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period >= policyStartYear &
-      period >= targetYear,
+    region == "IND" &
+    period > targetYear,
     value := value * (1 + percentChange)]
 
   return(loadFactor)
