@@ -65,7 +65,8 @@ toolEdgeTransportSA <- function(SSPscen,
   inputDataRaw <- inputs$inputDataRaw
   
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
+  ####if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
+  if (demScen == "default") demScen <- SSPscen
 
   ########################################################
   ## Prepare input data and apply scenario specific changes

@@ -9,7 +9,6 @@
 toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- NULL
-  demScenario == "SSP2_sharedMobility"
 
   #As a starting point, we only use GDP and Population data from the IND-scenarios. Changes in transport policy scenarios to the SSP2 scenario are not considered.
   sspOld <- ifelse(SSPscenario %in% c("SSP2IndiaHigh", "SSP2IndiaDEAs", "SSP2IndiaMedium"), SSPscenario, "old")
@@ -99,7 +98,6 @@ toolLoadPackageData <- function(SSPscenario, transportPolScenario, demScenario =
   # Transport scenario (demand scenario or SSP scenario) annual mileage changes
   scenParAnnualMileage <- fread(system.file("extdata/scenParAnnualMileage.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  demScenario = "SSP2_sharedMobility" 
   # Demand scenario exogenous annual mileage changes
 if  (SSPscenario %in% unique(scenParAnnualMileage[demScen == "default"]$SSPscen)) {
     scenParAnnualMileage <- scenParAnnualMileage[SSPscen == SSPscenario][, c("SSPscen", "demScen") := NULL]

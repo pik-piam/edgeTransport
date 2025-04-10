@@ -3,3 +3,4 @@ SDP_RC;default;0.3;2060
 SSP2;SSP2_demRedWeak;0.2;2050
 SSP2;SSP2_demRedStrong;0.4;2050
 SSP2;SSP2_sharedMobility;0.4;2050
+SSP2;SSP2_loadFactor;0.4;2050
