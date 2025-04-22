@@ -16,6 +16,7 @@
 #' @param isTransportExtendedReported Optional extension of transport reporting providing more detailed variables
 #' @param isREMINDinputReported Optional reporting of REMIND input data
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
+#' @param testIterative development setting: make standalone and iterative scripts comparable, sets sectorESdemand = REMINDsectorESdemand and iterations = 1 (cost module)
 #' @returns Transport input data for REMIND
 #' @author Jarusch Muessel, Johanna Hoppe, Alex K. Hagen
 #' @export
@@ -32,7 +33,8 @@ calcEdgeTransportSA <- function(SSPscen,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
-                                isAnalyticsReported = FALSE) {
+                                isAnalyticsReported = FALSE,
+                                testIterative = FALSE) {
 
   # for backwards compatibility with function calls before startyear implementation
   if (length(SSPscen) == 1){
@@ -60,7 +62,8 @@ calcEdgeTransportSA <- function(SSPscen,
                             isTransportReported,
                             isTransportExtendedReported,
                             isREMINDinputReported,
-                            isAnalyticsReported),
+                            isAnalyticsReported,
+                            testIterative),
     class = 'list',
     unit = NA,
     description = NA))

@@ -118,6 +118,17 @@ iterativeEdgeTransport <- function() {
                                              transportFolder = file.path(".", edgeTransportFolder),
                                              iterationNumber = iterationNumber)
 
+  ## Check if REMINDfuelCosts needs region deaggregation
+  if (numberOfRegions == 12) {
+
+    setnames(REMINDfuelCosts, "region", "regionCode12")
+    REMINDfuelCosts <- merge(REMINDfuelCosts, unique(inputs$helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
+                                  by = "regionCode12", allow.cartesian = TRUE)
+    REMINDfuelCosts[, "regionCode12" := NULL]
+    setnames(REMINDfuelCosts, "regionCode21", "region")
+  }
+
+
   inputDataIterative <- list(
     REMINDfuelCosts = REMINDfuelCosts,
     #GDPMER = mrdriversData$GDPMER,
@@ -182,6 +193,9 @@ iterativeEdgeTransport <- function() {
   ## Load REMIND energy service demand
   REMINDsectorESdemand <- toolLoadREMINDesDemand(gdxPath, helpers)
 
+  ## just for testing
+  totalESdemand <- sum(REMINDsectorESdemand$value)
+
   ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
     # Demand from the standalone regression module
@@ -220,6 +234,11 @@ iterativeEdgeTransport <- function() {
     REMINDsectorESdemand[, sumWeight := sum(weight), by = c("period", "sector", "regionCode12")]
     REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
     setnames(REMINDsectorESdemand, "regionCode21", "region")
+
+    totalESdemand21 <- sum(REMINDsectorESdemand$value)
+    if (! totalESdemand == totalESdemand21) {
+      stop("Something went wrong with regional deaggregation of REMIND ES demand.")
+    }
   }
 
   inputData <- list(
@@ -263,7 +282,7 @@ iterativeEdgeTransport <- function() {
                                                inputData$scenSpecPrefTrends,
                                                genModelPar$lambdasDiscreteChoice,
                                                helpers,
-                                               isICEban[1] | isICEban[2],
+                                               (isICEban[1] | isICEban[2]),
                                                ICEbanYears,
                                                fleetVehiclesPerTech)
 
@@ -344,7 +363,7 @@ iterativeEdgeTransport <- function() {
   fleetESdemand <- baseOutput$ext$fleetESdemand
   fleetFEdemand <- baseOutput$ext$fleetFEdemand
 
-  #-- Variables that are reported back to REMIND must be offered in the correct regional resolution
+  # Variables that are reported back to REMIND must be offered in the correct regional resolution
   # Currently EDGE-T always runs on 21 regions, but REMIND potentially runs only on 12 regions
   if (numberOfRegions == 12) {
     ESweight <- copy(fleetESdemand)[, c("unit", "variable") := NULL]

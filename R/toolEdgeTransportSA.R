@@ -16,6 +16,7 @@
 #' @param isTransportExtendedReported Optional extension of transport reporting providing more detailed variables
 #' @param isREMINDinputReported Optional reporting of REMIND input data
 #' @param isAnalyticsReported Optional reporting of analytics data (e.g. variables over iterations)
+#' @param testIterative development setting: make standalone and iterative scripts comparable, sets sectorESdemand = REMINDsectorESdemand and iterations = 1 (cost module)
 #' @returns Transport input data for REMIND
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli, Alex K. Hagen
 #' @import data.table
@@ -34,7 +35,8 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isTransportReported = TRUE,
                                 isTransportExtendedReported = FALSE,
                                 isREMINDinputReported = FALSE,
-                                isAnalyticsReported = FALSE){
+                                isAnalyticsReported = FALSE,
+                                testIterative = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- NULL
@@ -87,9 +89,9 @@ toolEdgeTransportSA <- function(SSPscen,
 
   inputDataStandalone <- list(
     REMINDfuelCosts = REMINDfuelCosts,
-    GDPMER = mrdriversData$GDPMER,
+    #GDPMER = mrdriversData$GDPMER,
     GDPpcMER = mrdriversData$GDPpcMER,
-    GDPppp = mrdriversData$GDPppp,
+    #GDPppp = mrdriversData$GDPppp,
     GDPpcPPP = mrdriversData$GDPpcPPP,
     population = mrdriversData$population
   )
@@ -164,15 +166,22 @@ toolEdgeTransportSA <- function(SSPscen,
   #################################################
   ## demand in million km
   sectorESdemand <- toolDemandRegression(inputData$histESdemand,
-                                         inputData$GDPpcPPP,
-                                         inputData$population,
-                                         genModelPar$genParDemRegression,
-                                         scenModelPar$scenParDemRegression,
-                                         scenModelPar$scenParRegionalDemRegression,
-                                         scenModelPar$scenParDemFactors,
-                                         baseYear,
-                                         allEqYear,
-                                         helpers)
+                                           inputData$GDPpcPPP,
+                                           inputData$population,
+                                           genModelPar$genParDemRegression,
+                                           scenModelPar$scenParDemRegression,
+                                           scenModelPar$scenParRegionalDemRegression,
+                                           scenModelPar$scenParDemFactors,
+                                           baseYear,
+                                           allEqYear,
+                                           helpers)
+
+  if (testIterative) {
+    # development setting:
+    # to compare standalone calculations with iterative,
+    # get REMINDsectorESdemand from gdx
+    sectorESdemand <- toolLoadREMINDesDemand(gdxPath, helpers)
+  }
 
   #------------------------------------------------------
   # Start of iterative section
@@ -180,6 +189,12 @@ toolEdgeTransportSA <- function(SSPscen,
 
   fleetVehiclesPerTech <- NULL
   iterations <- 3
+
+  if (testIterative) {
+    # development setting:
+    # to compare standalone calculations with iterative, set iterations to 1
+    iterations <- 1
+  }
 
   if (isAnalyticsReported) {
     endogenousCostsIterations <- list()
@@ -270,6 +285,11 @@ toolEdgeTransportSA <- function(SSPscen,
   # Save data
   outputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
                                                  "-sy", startyear, "-", SSPscen[2], "-", transportPolScen[2], "-", demScen[2]))
+  if (testIterative) {
+    print("EDGET was running in development mode to enable comparison of results to the iterative script.")
+    otputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
+                                                 "-sy", startyear, "-", SSPscen[2], "-", transportPolScen[2], "-", demScen[2], "-develop"))
+  }
 
   outputRaw <- list(
     SSPscen = SSPscen,
