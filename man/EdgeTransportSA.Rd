@@ -16,7 +16,8 @@ calcEdgeTransportSA(
   isTransportReported = TRUE,
   isTransportExtendedReported = FALSE,
   isREMINDinputReported = FALSE,
-  isAnalyticsReported = FALSE
+  isAnalyticsReported = FALSE,
+  testIterative = FALSE
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ calcEdgeTransportSA(
 \item{isREMINDinputReported}{Optional reporting of REMIND input data}
 
 \item{isAnalyticsReported}{Optional reporting of analytics data (e.g. variables over iterations)}
+
+\item{testIterative}{development setting: make standalone and iterative scripts comparable, sets sectorESdemand = REMINDsectorESdemand and iterations = 1 (cost module)}
 }
 \value{
 Transport input data for REMIND
