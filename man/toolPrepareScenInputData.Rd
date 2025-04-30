@@ -8,10 +8,9 @@ toolPrepareScenInputData(
   genModelPar,
   scenModelPar,
   inputDataRaw,
-  policyStartYear,
+  allEqYear,
   GDPcutoff,
-  helpers,
-  isICEban
+  helpers
 )
 }
 \arguments{
@@ -21,13 +20,11 @@ toolPrepareScenInputData(
 
 \item{inputDataRaw}{Raw input data}
 
-\item{policyStartYear}{Year when scenario differentiation sets in}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{GDPcutoff}{GDP cutoff to differentiate between regions}
 
 \item{helpers}{List with helpers}
-
-\item{isICEban}{optional enabling of ICE ban}
 }
 \value{
 List of data.tables with scenario specific input data

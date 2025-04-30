@@ -4,7 +4,9 @@
 #' @importFrom madrat calcOutput
 #' @importFrom rmndt magpie2dt
 
-toolLoadmrtransportData <- function(SSPscen) {
+toolLoadmrtransportData <- function(SSPscen = "SSP2") {
+  # ToDo: SSP temporarily fixed to SSP2 for mrtransport input data
+
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- technology <- NULL
 

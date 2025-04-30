@@ -10,5 +10,5 @@ iterativeEdgeTransport()
 Run in the REMIND output folder in between iterations
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }

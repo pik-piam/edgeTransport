@@ -4,14 +4,14 @@
 \alias{toolApplyScenSpecEnInt}
 \title{Apply demand scenario specific adjustments to the energy intensity}
 \usage{
-toolApplyScenSpecEnInt(enInt, scenParEnergyIntensity, policyStartYear, helpers)
+toolApplyScenSpecEnInt(enInt, scenParEnergyIntensity, allEqYear, helpers)
 }
 \arguments{
 \item{enInt}{Energy intensity input data supplied by mrtransport}
 
 \item{scenParEnergyIntensity}{Transport policy scenario specific energy intensity improvement factors}
 
-\item{policyStartYear}{Year from which scenario specific transport policies are applied}
+\item{allEqYear}{Year after which scenario differentiation sets in}
 
 \item{helpers}{List with helpers}
 }
@@ -22,5 +22,5 @@ data.table with scenario specific energy intensity input data
 Apply demand scenario specific adjustments to the energy intensity
 }
 \author{
-Johanna Hoppe
+Johanna Hoppe, Alex K. Hagen
 }
