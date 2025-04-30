@@ -9,7 +9,6 @@
 #' @export
 #'
 iterativeEdgeTransport <- function() {
-
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
 
   #############################################################
@@ -127,7 +126,6 @@ iterativeEdgeTransport <- function() {
     REMINDfuelCosts[, "regionCode12" := NULL]
     setnames(REMINDfuelCosts, "regionCode21", "region")
   }
-
 
   inputDataIterative <- list(
     REMINDfuelCosts = REMINDfuelCosts,
@@ -323,6 +321,11 @@ iterativeEdgeTransport <- function() {
   #################################################
   ## Reporting
   #################################################
+  # For reporting add ICEban info to transportPolScen again
+  if (isICEban[2]) {
+    transportPolScen <- paste0(transportPolScen, "ICEban")
+  }
+
   # if you want to change timeResReporting to timesteps outside the modeleled timesteps, please add an
   # interpolation step in toolCalculateOutputVariables()
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
@@ -392,11 +395,6 @@ iterativeEdgeTransport <- function() {
   demScen <- demScen[length(demScen)]
   SSPscen <- SSPscen[length(SSPscen)]
   transportPolScen <- transportPolScen[length(transportPolScen)]
-
-  # For reporting to REMIND add ICEban info to transportPolScen again
-  if (isICEban[2]) {
-    transportPolScen <- paste0(transportPolScen, "ICEban")
-  }
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
