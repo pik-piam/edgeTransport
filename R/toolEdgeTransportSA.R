@@ -87,6 +87,13 @@ toolEdgeTransportSA <- function(SSPscen,
                                       inputDataRaw$timeValueCosts,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
+  filter <- function(d){
+    return(d[
+        region == "MEA" & grepl("Truck", vehicleType)  
+  ])}
+  path <- paste0("/extdata/SWs_ToBeDeleted/historicalPreferences_", transportPolScen, ".rds")
+  overwriteDt <- readRDS(system.file(path, package = "edgeTransport", mustWork = TRUE))
+  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- filter(overwriteDt) 
 
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
@@ -189,6 +196,7 @@ toolEdgeTransportSA <- function(SSPscen,
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
                                                function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
     }
+
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
                                                   vehSalesAndModeShares$shares,
                                                   helpers,
