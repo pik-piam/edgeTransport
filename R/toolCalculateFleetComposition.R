@@ -28,7 +28,6 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
   allYears <- depreciationFactor <- indexUsagePeriod <- demandNewAdditions <- totalESdemand <- . <- NULL
   vintagesDemand <- earlyRetirement <- earlyRetirementRate <- contribConstrYear <- constrYear <- NULL
 
-
   highTimeRes <- unique(helpers$dtTimeRes$period)
   # start fleet calc
   startYear <- 2005
@@ -36,17 +35,15 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
   # calculate total energy service demand for modes with tracked fleets ---------------------------------
   fleetESdemand <- copy(ESdemandFVsalesLevel)
   fleetESdemand <- fleetESdemand[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
-  #does this influence the reportTransport results? #fleetESdemand <- fleetESdemand[period >= startYear]
-  fleetESdemand <- fleetESdemand[, .(totalESdemand = sum(value)), by = c("region", "period", "subsectorL3")]
+  fleetESdemand <- fleetESdemand[, .(totalESdemand = sum(value[period >= 2005])), by = c("region", "period", "subsectorL3")]
 
   # calculate distribution of total demand on construction years -----------------------------------------
   # change to yearly resolution
-  startY <- startYear - max(vehDepreciationFactors$serviceLife)
+  startY <- 2005 - max(vehDepreciationFactors$serviceLife)
   timesteps <- seq(startY, 2100, by = 1)
   fleetESdemand <- approx_dt(fleetESdemand, timesteps, "period", "totalESdemand",
                              c("region", "subsectorL3"),
                              extrapolate = TRUE)
-                            
   vehDepreciationFactors <- copy(vehDepreciationFactors)
   vehDepreciationFactors <- merge(vehDepreciationFactors,
                                   unique(helpers$decisionTree[, c("univocalName", "subsectorL3")]), by = "univocalName")
@@ -71,6 +68,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
                                                                          totalESdemand[period == startYear] / sum(depreciationFactor),
                                                                          0),
                 by = c("region", "subsectorL3")][, depreciationFactor := NULL]
+  fleetESdemand <- fleetESdemand[period >= startYear]
 
   constructionYears <- seq(startYear - max(vehDepreciationFactors$indexUsagePeriod), startYear, 1)
   contributionYears <- seq(1, max(vehDepreciationFactors$indexUsagePeriod), 1)
@@ -142,8 +140,12 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
   FVshares[, constrYear := paste0("C", period)][, period := NULL]
   fleetESdemand <- merge(fleetESdemand, FVshares, by = c(intersect(names(fleetESdemand), names(FVshares))), all.x = TRUE, allow.cartesian = TRUE)
   fleetESdemand[, contribConstrYear := contribConstrYear * share][, share := NULL]
-  fleetESdemand[, test := sum(contribConstrYear) - totalESdemand, by = c("region", "period", "subsectorL3")]
 
+  fleetESdemand[, test := sum(contribConstrYear) - totalESdemand, by = c("region", "period", "subsectorL3")]
+  if (max(fleetESdemand$test) > 10^-5) {
+stop("The energy service demand of the different construction years does not add up to the total
+                                          energy service demand. Please check the fleet calculation in toolCalculateFleetComposition()")
+}
   # Delete data on subsectorL3 level to prevent confusion
   fleetESdemand[, c("totalESdemand", "demandNewAdditions", "vintagesDemand", "test") := NULL]
 
