@@ -88,12 +88,12 @@ toolEdgeTransportSA <- function(SSPscen,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
   filter <- function(d){
-    return(d[
+    return(d[region == "MEA" & 
         grepl("Truck", vehicleType)  
   ])}
   path <- paste0("/extdata/SWs_ToBeDeleted/historicalPreferences_", transportPolScen, ".rds")
   overwriteDt <- readRDS(system.file(path, package = "edgeTransport", mustWork = TRUE))
-  histPrefs$historicalPreferences[grepl("Truck", vehicleType)] <- filter(overwriteDt) 
+  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- filter(overwriteDt) 
 
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
