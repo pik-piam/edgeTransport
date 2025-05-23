@@ -1,4 +1,4 @@
-﻿region,sector,sectorL1,sectorL2,sectorL3,vehicleType,technology,period,value,level,variable,unit
+region,sector,sectorL1,sectorL2,sectorL3,vehicleType,technology,period,value,level,variable,unit
 USA,trn_freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (0-3_5t),,2005,0.5,VS3,Preference|VS3,-
 USA,trn_freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (18t),,2005,0.9,VS3,Preference|VS3,-
 USA,trn_freight,trn_freight_road,trn_freight_road_tmp_subsectorL2,trn_freight_road_tmp_subsectorL3,Truck (26t),,2005,0.1,VS3,Preference|VS3,-
