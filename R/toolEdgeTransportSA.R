@@ -87,7 +87,24 @@ toolEdgeTransportSA <- function(SSPscen,
                                       inputDataRaw$timeValueCosts,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
+  ##########################
+  # The following lines are supposed to be deleted: 
+  # overwrite historical preferences for trucks in MEA 
+  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".RDS")
+  paste(pathMEA)
+  paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
+  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
+  overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
+            header = TRUE,
+            na.strings = "NA",
+            colClasses = list(character = "technology"))
 
+  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
+  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
+  histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
+  
+  # end of temporary solution
+  ##########################
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
@@ -189,6 +206,7 @@ toolEdgeTransportSA <- function(SSPscen,
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
                                                function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
     }
+
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
                                                   vehSalesAndModeShares$shares,
                                                   helpers,

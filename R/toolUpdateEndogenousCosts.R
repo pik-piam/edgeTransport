@@ -64,19 +64,20 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   }
 
   ## the policymaker bans ICEs increasingly more strictly
+  ## this function returns a value that linearly increases from y0 in period x0 to y1 in period x1
   strangeICEbanFunction <- function(x, x0, y0, x1, y1) {
     return(min(y1, max(y0, (y1 - y0) / (x1 - x0) * (x - x0) + y0)))
   }
 
   applyICEban <- function(year, currentMask) {
-    if (year < 2021) {
+    if (year < 2020) {
       floorCosts <- currentMask
-    } else if (year >= 2021 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.05)
+    } else if (year >= 2020 && year <= 2030) {
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.3)
     } else if (year > 2030 && year <= 2035) {
-      floorCosts <- strangeICEbanFunction(year, 2031, 0.1, 2035, 0.2)
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.3, 2035, 0.6)
     } else if  (year > 2035) {
-      floorCosts <- 3
+      floorCosts <- 1
     }
     return(floorCosts)
   }
