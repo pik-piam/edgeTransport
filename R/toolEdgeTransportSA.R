@@ -90,7 +90,7 @@ toolEdgeTransportSA <- function(SSPscen,
   ##########################
   # The following lines are supposed to be deleted: 
   # overwrite historical preferences for trucks in MEA 
-  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".rds")
+  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".RDS")
   paste(pathMEA)
   paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   pathIND_CHA_USA <- "extdata/SWsToBeDeleted/2010values.csv"
