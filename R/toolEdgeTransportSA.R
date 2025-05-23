@@ -93,7 +93,7 @@ toolEdgeTransportSA <- function(SSPscen,
   pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".RDS")
   paste(pathMEA)
   paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/2010values.csv"
+  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
   overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
             header = TRUE,
             na.strings = "NA",
