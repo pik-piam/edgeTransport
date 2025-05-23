@@ -93,12 +93,13 @@ toolEdgeTransportSA <- function(SSPscen,
   pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".rds")
   paste(pathMEA)
   paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   pathIND_CHA_USA <- "extdata/SWsToBeDeleted/2010values.csv"
   overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
             header = TRUE,
             na.strings = "NA",
             colClasses = list(character = "technology"))
+
+  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
   histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
   
