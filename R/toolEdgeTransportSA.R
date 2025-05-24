@@ -88,9 +88,9 @@ toolEdgeTransportSA <- function(SSPscen,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
   ##########################
-  # The following lines are supposed to be deleted: 
-  # overwrite historical preferences for trucks in MEA 
-  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferences", transportPolScen, ".RDS")
+  # The following lines are supposed to be deleted:
+  # overwrite historical preferences for trucks in MEA
+  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferencesMix2.RDS")
   paste(pathMEA)
   paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
@@ -102,7 +102,7 @@ toolEdgeTransportSA <- function(SSPscen,
   overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
   histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
-  
+
   # end of temporary solution
   ##########################
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
