@@ -223,7 +223,7 @@ SSP2;IND;trn_freight;-0.7;-0.2;-0.5;0
 SSP2;USA;trn_freight;0;0.2;0.3;0.8
 SSP2;CAZ;trn_freight;0.3;0.1;0.2;0
 SSP2;OAS;trn_pass;0;0;-0.2;0.2
-SSP2;IND;trn_pass;-0.3;-0.4;-0.3;0.3
+SSP2;IND;trn_pass;-0.4;-0.45;-0.3;0.3
 SSP2;CHA;trn_pass;0;-0.2;0.3;-0.5
 SSP2;OAS;trn_aviation_intl;-0.5;-0.5;-0.2;0.7
 SSP2;MEA;trn_aviation_intl;0;-0.4;-0.2;0
