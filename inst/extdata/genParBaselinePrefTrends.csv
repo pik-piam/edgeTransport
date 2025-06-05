@@ -7760,10 +7760,10 @@ SSP2;FRA;Liquids;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_t
 SSP2;FRA;Liquids;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP2;FRA;Liquids;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1;1;1;1;1
 SSP2;IND;;;;;Cycle;trn_pass;S1S;0.01915;0.03175;0.0463;0.1;0.1
-SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;0.6;0.3;0.2;0.05;0.05
+SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;1.4;0.7575;0.4861;0.1909;0.1909
 SSP2;IND;;;;;Domestic Ship;trn_freight;S1S;0.02;0.01;0.01;0.01;0.01
 SSP2;IND;;;;;Freight Rail;trn_freight;S1S;0.35;0.2;0.15;0.1;0.1
-SSP2;IND;;;;;HSR;trn_pass;S1S;0;0.0003175;0.0005093;0.001;0.001
+SSP2;IND;;;;;HSR;trn_pass;S1S;0;0.0003175;0.0005093;0.0003;0.0003
 SSP2;IND;;;;;International Aviation;trn_aviation_intl;S1S;1;1;1;1;1
 SSP2;IND;;;;;International Ship;trn_shipping_intl;S1S;1;1;1;1;1
 SSP2;IND;;;;;Passenger Rail;trn_pass;S1S;0.004978;0.00582;0.005556;0.004;0.004
