@@ -209,7 +209,7 @@ SSP2;MEA;trn_shipping_intl;0.3;0;0;0
 SSP2;CHA;trn_shipping_intl;-0.4;0;-0.3;-2
 SSP2;JPN;trn_shipping_intl;0;0;-1;-2
 SSP2;REF;trn_aviation_intl;0;-0.3;0;0
-SSP2;IND;trn_aviation_intl;-1;0.3;0;1
+SSP2;IND;trn_aviation_intl;0;0.6;0;1
 SSP2;SSA;trn_aviation_intl;0;0;0.2;0.2
 SSP2;CHA;trn_aviation_intl;0;0.2;0.1;0
 SSP2;CAZ;trn_pass;-0.1;-0.1;-0.1;0.2
@@ -219,11 +219,11 @@ SSP2;MEA;trn_pass;0;-0.3;-0.3;0.1
 SSP2;REF;trn_pass;0;-0.2;-0.1;0
 SSP2;SSA;trn_pass;0;0;-0.2;0.2
 SSP2;SSA;trn_freight;0;0;0;0.2
-SSP2;IND;trn_freight;-0.7;-0.2;-0.5;0
+SSP2;IND;trn_freight;0;0;-0.5;0
 SSP2;USA;trn_freight;0;0.2;0.3;0.8
 SSP2;CAZ;trn_freight;0.3;0.1;0.2;0
 SSP2;OAS;trn_pass;0;0;-0.2;0.2
-SSP2;IND;trn_pass;-0.4;-0.45;-0.3;0.3
+SSP2;IND;trn_pass;0;-0.3;-0.3;0.3
 SSP2;CHA;trn_pass;0;-0.2;0.3;-0.5
 SSP2;OAS;trn_aviation_intl;-0.5;-0.5;-0.2;0.7
 SSP2;MEA;trn_aviation_intl;0;-0.4;-0.2;0
@@ -232,7 +232,7 @@ SSP2;MEA;trn_freight;0;0.2;0.4;1
 SSP2;REF;trn_freight;-0.8;-0.9;-0.2;0
 SSP2;CHA;trn_freight;-1;-0.4;0;-1
 SSP2;UKI;trn_freight;0;0.2;0.1;0
-SSP2;IND;trn_shipping_intl;-0.1;0.8;0.6;0.2
+SSP2;IND;trn_shipping_intl;0;1.1;0.6;0.2
 SSP2;SSA;trn_shipping_intl;0;0.3;0.4;0.2
 SSP2;REF;trn_shipping_intl;-0.3;-0.4;-0.4;-0.3
 SSP2;OAS;trn_shipping_intl;-0.3;-0.3;-0.2;-0.5
