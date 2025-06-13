@@ -6480,7 +6480,7 @@ SSP1;LAM;;;;;Cycle;trn_pass;S1S;0.01091;0.02182;0.05455;0.2728;0.2728
 SSP1;LAM;;;;;Domestic Aviation;trn_pass;S1S;0.008921;0.0119;0.007435;0.005575;0.005575
 SSP1;LAM;;;;;Domestic Ship;trn_freight;S1S;0.0097;0.0097;0.008908;0.006736;0.006736
 SSP1;LAM;;;;;Freight Rail;trn_freight;S1S;0.04782;0.04782;0.039522;0.05978;0.05978
-SSP1;LAM;;;;;HSR;trn_pass;S1S;0.005236;0.2905;0.1743;0.2905;0.2905
+SSP1;LAM;;;;;HSR;trn_pass;S1S;0.005236;0.2905;0.1743;0.24;0.24
 SSP1;LAM;;;;;International Aviation;trn_aviation_intl;S1S;1;1;1;1;1
 SSP1;LAM;;;;;International Ship;trn_shipping_intl;S1S;1;1;1;1;1
 SSP1;LAM;;;;;Passenger Rail;trn_pass;S1S;0.1499;0.1499;0.17988;0.1999;0.1999
@@ -6614,7 +6614,7 @@ SSP1;NEN;;;;;Cycle;trn_pass;S1S;0.003033;0.003024;0.002621;0.0182;0.0182
 SSP1;NEN;;;;;Domestic Aviation;trn_pass;S1S;7.5E-06;7.54E-06;6.12E-07;3.57E-07;3.57E-07
 SSP1;NEN;;;;;Domestic Ship;trn_freight;S1S;0.03175;0.03175;0.03175;0.03175;0.03175
 SSP1;NEN;;;;;Freight Rail;trn_freight;S1S;0.01925;0.01925;0.017328;0.02888;0.02888
-SSP1;NEN;;;;;HSR;trn_pass;S1S;2E-05;4.53E-05;4E-06;5.52E-06;5.52E-06
+SSP1;NEN;;;;;HSR;trn_pass;S1S;2E-05;4.53E-05;6E-06;5.52E-06;5.52E-06
 SSP1;NEN;;;;;International Aviation;trn_aviation_intl;S1S;1;1;1;1;1
 SSP1;NEN;;;;;International Ship;trn_shipping_intl;S1S;1;1;1;1;1
 SSP1;NEN;;;;;Passenger Rail;trn_pass;S1S;3E-06;2.97E-06;8E-07;1E-05;3E-05
@@ -6897,7 +6897,7 @@ SSP1;SSA;;;;;Passenger Rail;trn_pass;S1S;0.0006024;0.001725;0.003036;0.001139;0.
 SSP1;SSA;;;;;Walk;trn_pass;S1S;1;1;1;1;1
 SSP1;SSA;;;;;trn_freight_road;trn_freight;S1S;1;1;1;1;1
 SSP1;SSA;;;;;trn_pass_road;trn_pass;S1S;0.2622;0.326;0.1434;0.0239;0.0239
-SSP1;SSA;;;;Bus;trn_pass_road;trn_pass;S2S1;0.7568;0.3234;0.224;0.1455;0.1455
+SSP1;SSA;;;;Bus;trn_pass_road;trn_pass;S2S1;0.7568;0.3234;0.224;0.1455;0.16
 SSP1;SSA;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1;1;1.1;1;1
 SSP1;SSA;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.02619;0.02619;0.02619;0.03928;0.03928
 SSP1;SSA;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1;1;1;1;1
