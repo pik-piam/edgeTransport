@@ -44,31 +44,20 @@ toolEdgeTransportSA <- function(SSPscen,
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
   version <- "2.17.1"
 
-  # set GDP cutoff to differentiate between regions
-  GDPcutoff <- 30800 # [constant 2017 US$MER]
-  # last time step of historical data
-  baseYear <- 2010
-  # share of electricity in Hybrid electric vehicles
-  hybridElecShare <- 0.4
+  commonParams <- toolGetCommonParameters(startyear, isICEban[1], isICEban[2])
 
   # cm_startyear in REMIND is first timepoint where differentiation is observed
   # allEqYear in EDGET is last timepoint in which all scenarios are equal, earliest 2020
-  allEqYear <- startyear - 5
-  if (allEqYear < 2020){
-    allEqYear <- 2020
-  }
+  allEqYear <- commonParams$allEqYear
+  # Years in which ICEban is in effect
+  ICEbanYears <- commonParams$ICEbanYear
 
-  # find years in which ICEban is used
-  if (isICEban[1] & isICEban[2]) {
-    ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
-  } else if (isICEban[1] & allEqYear > 2020) {
-    ICEbanYears  <- seq(2021, allEqYear, 1)
-  } else if (isICEban[2]){
-    ICEbanYears <-  c(seq(allEqYear, 2100, 1), 2110, 2130, 2150)
-  } else {
-    ICEbanYears <- NULL
-  }
-
+  # set GDP cutoff to differentiate between regions
+  GDPcutoff <- commonParams$GDPcutoff
+  # last time step of historical data
+  baseYear <- commonParams$baseYear
+  # share of electricity in Hybrid electric vehicles
+  hybridElecShare <- commonParams$hybridElecShare
 
   ########################################################
   ## Load input data
@@ -76,33 +65,21 @@ toolEdgeTransportSA <- function(SSPscen,
 
   if (is.null(outputFolder) & isStored) stop("Please provide an outputfolder to store your results")
 
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
 
   if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
                                               "REMINDinputForTransportStandalone", "v1.2", "fulldata.gdx")}
   if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
 
-  # Load standalone specific inputs
-  ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, inputs$helpers, allEqYear)
-  ## from REMIND
+  ## Load fuel costs from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
                                              hybridElecShare = hybridElecShare,
                                              helpers = inputs$helpers)
 
-  inputDataStandalone <- list(
-    REMINDfuelCosts = REMINDfuelCosts,
-    #GDPMER = mrdriversData$GDPMER,
-    GDPpcMER = mrdriversData$GDPpcMER,
-    #GDPppp = mrdriversData$GDPppp,
-    GDPpcPPP = mrdriversData$GDPpcPPP,
-    population = mrdriversData$population
-  )
-
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
-  inputDataRaw <- append(inputs$inputDataRaw, inputDataStandalone)
+  inputDataRaw <- append(inputs$inputDataRaw, list(REMINDfuelCosts = REMINDfuelCosts))
 
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen

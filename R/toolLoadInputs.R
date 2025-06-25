@@ -9,7 +9,7 @@
 #' @importFrom mrtransport toolPrepareTransportSubsidies
 #' @export
 
-toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) {
+toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- univocalName <- test <- . <- NULL
 
@@ -47,6 +47,9 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) 
     reportingAggregation = packageData$reportingAggregation
   )
 
+  ## from mrdrivers
+  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, allEqYear)
+
   # load and prepare transport subsidies from mrtransport
   subsidies <- toolPrepareTransportSubsidies(helpers)
 
@@ -83,7 +86,12 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare) 
     CAPEXother = mrtransportData$CAPEXother,
     nonFuelOPEXother = mrtransportData$nonFuelOPEXother,
     timeValueCosts = mrtransportData$timeValueCosts,
-    subsidies = subsidies
+    subsidies = subsidies,
+    GDPMER = mrdriversData$GDPMER,
+    GDPpcMER = mrdriversData$GDPpcMER,
+    GDPppp = mrdriversData$GDPppp,
+    GDPpcPPP = mrdriversData$GDPpcPPP,
+    population = mrdriversData$population
   )
 
   input <- list(

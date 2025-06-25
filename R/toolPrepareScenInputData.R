@@ -32,6 +32,8 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
   basePrefTrends <- basePrefTrends[, c("region", "period", "technology", "vehicleType",
                                        "subsectorL3", "subsectorL2", "subsectorL1", "sector", "level", "value")]
   basePrefTrends[, variable := paste0("Preference|", level)][, unit := "-"]
+
+  save(list = ls(), file = "toolPrepareScenInputData_ln36.RData")
   # Application of policy induced changes to baseline preference trends, here scenSpecPrefTrends changes from a table of levers to actual time dependent PrefTrends --------------
   if (!is.null(scenModelPar$scenParPrefTrends)) {
     scenSpecPrefTrends <- toolApplyScenPrefTrends(basePrefTrends, scenModelPar$scenParPrefTrends,
@@ -41,7 +43,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     scenSpecPrefTrends <- basePrefTrends
     print("No policy induced changes to the baseline preference trends")
   }
-
+  save(list = ls(), file = "toolPrepareScenInputData_ln46.RData")
   # Application of policy induced changes on load factor ----------------------------
   if (!is.null(scenModelPar$scenParLoadFactor)) {
     scenSpecLoadFactor <- toolApplyScenSpecLoadFactor(inputDataRaw$loadFactorRaw, scenModelPar$scenParLoadFactor,
@@ -63,7 +65,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     scenSpecEnIntensity <- copy(inputDataRaw$energyIntensityRaw)[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
-
+  save(list = ls(), file = "toolPrepareScenInputData_ln68.RData")
   # Annualization and formatting of monetary costs ---------------------------------------------------
   annuity <- toolCalculateAnnuity(genModelPar$annuityCalc, helpers)
   transportCosts <- toolCombineCAPEXandOPEX(inputDataRaw$CAPEXtrackedFleet,
@@ -90,6 +92,6 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     combinedCAPEXandOPEX = transportCosts$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = transportCosts$upfrontCAPEXtrackedFleet,
     initialIncoCosts = initialIncoCosts)
-
+  save(list = ls(), file = "toolPrepareScenInputData_ln95.RData")
   return(scenSpecInputData)
 }

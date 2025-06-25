@@ -46,17 +46,13 @@ iterativeEdgeTransport <- function() {
   demScen[2] <- cfgCurrentRun$gms$cm_demScen
 
   startyear <- cfgCurrentRun$gms$cm_startyear
-  # REMIND startyear is the year in which differences are observed
-  # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
-  allEqYear <- startyear - 5
-  if (allEqYear < 2020){
-    allEqYear <- 2020
-  }
 
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
   if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
-    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
+#    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
+    #todo change back
+    load(file.path("..", basename(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"])), "config.Rdata"))
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
@@ -76,17 +72,20 @@ iterativeEdgeTransport <- function() {
     }
   }
 
-  # find years in which ICEban is used
-  if (isICEban[1] & isICEban[2]) {
-    ICEbanYears <- c(seq(2021, 2100, 1), 2110, 2130, 2150)
-  } else if (isICEban[1] & allEqYear > 2020) {
-    ICEbanYears  <- seq(2021, allEqYear, 1)
-  } else if (isICEban[2]){
-    ICEbanYears <-  c(seq(allEqYear, 2100, 1), 2110, 2130, 2150)
-  } else {
-    ICEbanYears <- NULL
-  }
+  commonParams <- toolGetCommonParameters(startyear, isICEban[1], isICEban[2])
 
+  # cm_startyear in REMIND is first timepoint where differentiation is observed
+  # allEqYear in EDGET is last timepoint in which all scenarios are equal, earliest 2020
+  allEqYear <- commonParams$allEqYear
+  # Years in which ICEban is in effect
+  ICEbanYears <- commonParams$ICEbanYear
+
+  # set GDP cutoff to differentiate between regions
+  GDPcutoff <- commonParams$GDPcutoff
+  # last time step of historical data
+  baseYear <- commonParams$baseYear
+  # share of electricity in Hybrid electric vehicles
+  hybridElecShare <- commonParams$hybridElecShare
 
   #############################################################
   ## Load input data via mrtransport
@@ -94,22 +93,15 @@ iterativeEdgeTransport <- function() {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- unit <- univocalName <- iteration <- type <- variable <- . <- NULL
 
-  # To do: How to get rid of these manually set parameters in the standalone and iterative script?
-  # set GDP cutoff to differentiate between regions
-  GDPcutoff <- 30800 # [constant 2017 US$MER]
-  # last time step of historical data
-  baseYear <- 2010
-  # share of electricity in Hybrid electric vehicles
-  hybridElecShare <- 0.4
 
   numberOfRegions <- length(gdx::readGDX(gdxPath, "all_regi"))
   iterationNumber <- as.vector(gdxrrw::rgdx(gdxPath, list(name = "o_iterationNumber"))$val)
 
-  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
+  inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
+
+  save(list = ls(), file = "ln112_Inputs.RData")
 
   # Can we sort that a little better? Both is needed for the standalone and the iterative version
-  ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, inputs$helpers, allEqYear)
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
                                              hybridElecShare = hybridElecShare,
@@ -119,7 +111,6 @@ iterativeEdgeTransport <- function() {
 
   ## Check if REMINDfuelCosts needs region deaggregation
   if (numberOfRegions == 12) {
-
     setnames(REMINDfuelCosts, "region", "regionCode12")
     REMINDfuelCosts <- merge(REMINDfuelCosts, unique(inputs$helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
                                   by = "regionCode12", allow.cartesian = TRUE)
@@ -127,19 +118,10 @@ iterativeEdgeTransport <- function() {
     setnames(REMINDfuelCosts, "regionCode21", "region")
   }
 
-  inputDataIterative <- list(
-    REMINDfuelCosts = REMINDfuelCosts,
-    #GDPMER = mrdriversData$GDPMER,
-    GDPpcMER = mrdriversData$GDPpcMER,
-    #GDPppp = mrdriversData$GDPppp,
-    GDPpcPPP = mrdriversData$GDPpcPPP,
-    population = mrdriversData$population
-  )
-
   helpers <- inputs$helpers
   genModelPar <- inputs$genModelPar
   scenModelPar <- inputs$scenModelPar
-  inputDataRaw <- append(inputs$inputDataRaw, inputDataIterative)
+  inputDataRaw <- append(inputs$inputDataRaw, list(REMINDfuelCosts = REMINDfuelCosts))
 
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
@@ -155,6 +137,7 @@ iterativeEdgeTransport <- function() {
                                                 GDPcutoff,
                                                 helpers)
 
+  save(list = ls(), file = "ln162_scenSpecInputs.RData")
   ########################################################
   ## Calibrate historical preferences
   ########################################################
@@ -164,16 +147,36 @@ iterativeEdgeTransport <- function() {
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
 
+  ##########################
+  # The following lines are supposed to be deleted:
+  # overwrite historical preferences for trucks in MEA
+  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferencesMix2.RDS")
+  paste(pathMEA)
+  paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
+  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
+  overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
+                                header = TRUE,
+                                na.strings = "NA",
+                                colClasses = list(character = "technology"))
+
+  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
+  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
+  histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
+
+  # end of temporary solution
+  ##########################
+
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
+
   if (isICEban[1] | isICEban[2]) {
     scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
   }
   scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
 
-
+  save(list = ls(), file = "ln182_scenSpecInputs.RData")
   #######################################################
   # Iterative specific Input data                       #
   #######################################################
@@ -190,9 +193,6 @@ iterativeEdgeTransport <- function() {
 
   ## Load REMIND energy service demand
   REMINDsectorESdemand <- toolLoadREMINDesDemand(gdxPath, helpers)
-
-  ## just for testing
-  totalESdemand <- sum(REMINDsectorESdemand$value)
 
   ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
@@ -219,6 +219,8 @@ iterativeEdgeTransport <- function() {
                                              helpers)
     }
 
+    ## store for testing
+    totalESdemand <- sum(REMINDsectorESdemand$value)
     weightEs <- copy(sectorESdemand)[, "unit" := NULL]
     setnames(weightEs, c("region", "value"), c("regionCode21", "weight"))
     dataColumns <- names(REMINDsectorESdemand)[!names(REMINDsectorESdemand) %in% c("region", "period", "value")]
@@ -251,6 +253,8 @@ iterativeEdgeTransport <- function() {
     REMINDsectorESdemand = REMINDsectorESdemand,
     histESdemand = inputDataRaw$histESdemand
   )
+
+  save(list = ls(), file = "ln261_readyInputs.RData")
   ########################################################
   ## Prepare data for
   ## endogenous costs update
@@ -261,7 +265,7 @@ iterativeEdgeTransport <- function() {
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
                                                         genModelPar$lambdasDiscreteChoice,
                                                         helpers)
-
+  save(list = ls(), file = "ln272_endoCostInputs.RData")
   #------------------------------------------------------
   # Start of iterative section
   #------------------------------------------------------
@@ -285,6 +289,7 @@ iterativeEdgeTransport <- function() {
                                                fleetVehiclesPerTech)
 
   print("Endogenous updates to cost components finished")
+  save(list = ls(), file = "ln296_endoCostUpdate.RData")
   #################################################
   ## Discrete choice module
   #################################################
@@ -300,6 +305,7 @@ iterativeEdgeTransport <- function() {
                                                 inputData$histESdemand,
                                                 baseYear)
   print("Calculation of vehicle sales and mode shares finished")
+  save(list = ls(), file = "ln312_discreteChoice.RData")
   #################################################
   ## Vehicle stock module
   #################################################
@@ -313,7 +319,7 @@ iterativeEdgeTransport <- function() {
   fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
   storeData(file.path(".", edgeTransportFolder), fleetVehiclesPerTech = fleetVehiclesPerTech)
   print("Calculation of vehicle stock finished")
-
+  save(list = ls(), file = "ln326_vehicleStock.RData")
   #------------------------------------------------------
   # End of iterative section
   #------------------------------------------------------
@@ -358,6 +364,7 @@ iterativeEdgeTransport <- function() {
 
   storeData(edgeTransportFolder, outputRaw)
 
+  browser()
   baseOutput <- reportEdgeTransport(edgeTransportFolder,
                                     outputRaw,
                                     isTransportReported = FALSE)

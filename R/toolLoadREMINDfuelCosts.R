@@ -17,7 +17,7 @@
 toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transportFolder = ".", iterationNumber = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
-  technology <- Liquids <- BEV <- period <- . <- edgeTransportFolder <- iteration <- NULL
+  technology <- Liquids <- BEV <- period <- . <- iteration <- NULL
 
    mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
    # active modes do not feed into all_enty
@@ -72,9 +72,9 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transport
    pathFuelCosts <- list.files(transportFolder, "REMINDfuelCostIterations.RDS", recursive = TRUE,
                                full.names = TRUE)
    if (length(pathFuelCosts) > 0 & !is.null(iterationNumber)) {
-     REMINDfuelCostIterations <- readRDS(list.files(file.path(".", edgeTransportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE))
+     REMINDfuelCostIterations <- readRDS(list.files(file.path(".", transportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE))
      REMINDfuelCostIterations <- rbind(REMINDfuelCostIterations, copy(fuelCosts)[, iteration := iterationNumber])
-     storeData(file.path(".", edgeTransportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
+     storeData(file.path(".", transportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
 
      if (max(unique(REMINDfuelCostIterations$iteration)) >= 20 &&
          max(unique(REMINDfuelCostIterations$iteration)) <= 30) {

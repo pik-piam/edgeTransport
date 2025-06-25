@@ -12,6 +12,7 @@ toolApplyICEbanOnPreferences <- function(preferenceTab, helpers, ICEbanYears) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   regionCode12 <- level <- region <- subsectorL1 <- subsectorL2 <- technology <- value <- period <- NULL
   # Ban is applied to EU28
+  testSet <- copy(preferenceTab)
   affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
   # affectedRegions <- affectedRegions[!affectedRegions == "UKI"] currently we apply the ban also to UK
   preferenceTab[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
@@ -28,6 +29,9 @@ toolApplyICEbanOnPreferences <- function(preferenceTab, helpers, ICEbanYears) {
              value := ifelse(period > 2045 & period %in% ICEbanYears, value * 0.1, value), by = c("region", "technology")]
 
   if (anyNA(preferenceTab)) stop("Something went wrong with the ICE ban application. Please check toolApplyICEbanOnPreferences()")
+
+  save(preferenceTab, file="applyICEbanAfter.RData")
+  save(testSet, file="applyICEbanBefore.RData")
 
   return(preferenceTab)
 }

@@ -42,11 +42,13 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   PrefTrends <- merge(baselinePrefTrends[period <= allEqYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrendsF <- merge(baselinePrefTrends[period > allEqYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends <- rbind(PrefTrends, PrefTrendsF)
+  setkey(PrefTrends, region, level, subsectorL1, subsectorL2, vehicleType, technology)
   PrefTrends[, "startYearCat" := NULL]
   } else {
     PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   }
-  PrefTrends[period  > 2020 & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
+  generalTransportPolicyOnset <- 2020
+  PrefTrends[period > generalTransportPolicyOnset & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
 
   check <- merge(checkMitigation, PrefTrends, by = intersect(names(checkMitigation), names(PrefTrends)), all = TRUE)
   check[, diff := abs(value - old)]
