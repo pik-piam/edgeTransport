@@ -795,14 +795,14 @@ SSP1,Mix2,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix2,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix2,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,4,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.6,2050,25
 SSP1,Mix2,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix2,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix2,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,4,2050,25
 SSP1,Mix2,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.6,2050,25
 SSP1,Mix2,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP1,Mix2,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,2,2050,25
@@ -816,14 +816,14 @@ SSP1,Mix2,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix2,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix2,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,2,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.8,2050,25
 SSP1,Mix2,below GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix2,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix2,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,2,2050,25
 SSP1,Mix2,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.8,2050,25
 SSP1,Mix2,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,6,2050,25
 SSP1,Mix2,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1.5,2050,25
@@ -859,20 +859,20 @@ SSP1,Mix3,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix3,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix3,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,6,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.4,2050,25
 SSP1,Mix3,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix3,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix3,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,6,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.4,2050,25
 SSP1,Mix3,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
 SSP1,Mix3,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,4,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix3,above GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
-SSP1,Mix3,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
+SSP1,Mix3,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP1,Mix3,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,BEV,Bus,Bus,trn_pass_road,FV,3.5,2050,25
 SSP1,Mix3,below GDP cutoff,FCEV,Bus,Bus,trn_pass_road,FV,1,2050,25
@@ -880,20 +880,20 @@ SSP1,Mix3,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix3,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix3,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,4,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.5,2050,25
 SSP1,Mix3,below GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix3,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix3,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,4,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.5,2050,25
 SSP1,Mix3,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP1,Mix3,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,3.5,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix3,below GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
-SSP1,Mix3,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,17,2050,25
+SSP1,Mix3,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,5,2050,25
 SSP1,Mix3,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,,,,Cycle,S1S,1,2050,25
 SSP1,Mix4,above GDP cutoff,,,,Domestic Aviation,S1S,0.25,2050,25
@@ -923,20 +923,20 @@ SSP1,Mix4,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix4,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix4,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,10,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.2,2050,25
 SSP1,Mix4,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix4,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix4,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,10,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.2,2050,25
 SSP1,Mix4,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,91,2050,25
 SSP1,Mix4,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,6,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix4,above GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,91,2050,25
-SSP1,Mix4,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,100,2050,25
+SSP1,Mix4,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,40,2050,25
 SSP1,Mix4,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,BEV,Bus,Bus,trn_pass_road,FV,13,2050,25
 SSP1,Mix4,below GDP cutoff,FCEV,Bus,Bus,trn_pass_road,FV,1,2050,25
@@ -944,20 +944,20 @@ SSP1,Mix4,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP1,Mix4,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP1,Mix4,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,7,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.3,2050,25
 SSP1,Mix4,below GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP1,Mix4,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP1,Mix4,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,7,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.3,2050,25
 SSP1,Mix4,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,90,2050,25
 SSP1,Mix4,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,5,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP1,Mix4,below GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,90,2050,25
-SSP1,Mix4,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,85,2050,25
+SSP1,Mix4,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,40,2050,25
 SSP1,Mix4,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,CAMP_lscStrong,CAZ,,,,Cycle,S1S,2.5,2040,10
 SSP2,CAMP_lscStrong,CAZ,,,,Domestic Aviation,S1S,0.3,2040,10
@@ -1691,14 +1691,14 @@ SSP2,Mix2,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP2,Mix2,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP2,Mix2,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,2,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.7,2050,25
 SSP2,Mix2,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP2,Mix2,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP2,Mix2,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,2,2050,25
 SSP2,Mix2,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.7,2050,25
 SSP2,Mix2,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP2,Mix2,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,2,2050,25
@@ -1755,20 +1755,20 @@ SSP2,Mix3,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP2,Mix3,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP2,Mix3,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,4,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.5,2050,25
 SSP2,Mix3,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP2,Mix3,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP2,Mix3,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,4,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.5,2050,25
 SSP2,Mix3,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
 SSP2,Mix3,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,4,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix3,above GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
-SSP2,Mix3,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,20,2050,25
+SSP2,Mix3,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP2,Mix3,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,BEV,Bus,Bus,trn_pass_road,FV,3.5,2050,25
 SSP2,Mix3,below GDP cutoff,FCEV,Bus,Bus,trn_pass_road,FV,1,2050,25
@@ -1776,20 +1776,20 @@ SSP2,Mix3,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP2,Mix3,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP2,Mix3,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,2,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.6,2050,25
 SSP2,Mix3,below GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP2,Mix3,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP2,Mix3,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,2,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.6,2050,25
 SSP2,Mix3,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
 SSP2,Mix3,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,3.5,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix3,below GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
-SSP2,Mix3,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,10,2050,25
+SSP2,Mix3,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,5,2050,25
 SSP2,Mix3,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,,,,Cycle,S1S,1,2050,25
 SSP2,Mix4,above GDP cutoff,,,,Domestic Aviation,S1S,0.45,2050,25
@@ -1819,20 +1819,20 @@ SSP2,Mix4,above GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP2,Mix4,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP2,Mix4,above GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,8,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.3,2050,25
 SSP2,Mix4,above GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP2,Mix4,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP2,Mix4,above GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,8,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.3,2050,25
 SSP2,Mix4,above GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,91,2050,25
 SSP2,Mix4,above GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,6,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix4,above GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,91,2050,25
-SSP2,Mix4,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,100,2050,25
+SSP2,Mix4,above GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,40,2050,25
 SSP2,Mix4,above GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,BEV,Bus,Bus,trn_pass_road,FV,13,2050,25
 SSP2,Mix4,below GDP cutoff,FCEV,Bus,Bus,trn_pass_road,FV,1,2050,25
@@ -1840,20 +1840,20 @@ SSP2,Mix4,below GDP cutoff,Liquids,Bus,Bus,trn_pass_road,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Hydrogen,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Aviation,Domestic Aviation_tmp_subsectorL2,Domestic Aviation,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Ship,Domestic Ship_tmp_subsectorL2,Domestic Ship,FV,1,2050,25
-SSP2,Mix4,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,1,2050,25
+SSP2,Mix4,below GDP cutoff,Electric,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,5,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Rail,Freight Rail_tmp_subsectorL2,Freight Rail,FV,0.4,2050,25
 SSP2,Mix4,below GDP cutoff,Electric,Rail,HSR_tmp_subsectorL2,HSR,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Aviation,International Aviation_tmp_subsectorL2,International Aviation,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Ship,International Ship_tmp_subsectorL2,International Ship,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,BEV,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,LDV|2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
-SSP2,Mix4,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,1,2050,25
+SSP2,Mix4,below GDP cutoff,Electric,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,5,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Rail,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.4,2050,25
 SSP2,Mix4,below GDP cutoff,BEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,90,2050,25
 SSP2,Mix4,below GDP cutoff,FCEV,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,5,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Truck|light,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix4,below GDP cutoff,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,90,2050,25
-SSP2,Mix4,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,85,2050,25
+SSP2,Mix4,below GDP cutoff,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,45,2050,25
 SSP2,Mix4,below GDP cutoff,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,NAV_act,CAZ,,,,Cycle,S1S,2.5,2040,10
 SSP2,NAV_act,CAZ,,,,Domestic Aviation,S1S,0.3,2040,10
