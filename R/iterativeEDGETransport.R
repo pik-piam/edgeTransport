@@ -51,7 +51,7 @@ iterativeEdgeTransport <- function() {
   # if not: duplicate scenario from current config in analogy of solution in standalone
   if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
 #    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
-    #todo change back
+    # todo: make path relative for local testing, change back before merging !
     load(file.path("..", basename(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"])), "config.Rdata"))
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
@@ -111,11 +111,26 @@ iterativeEdgeTransport <- function() {
 
   ## Check if REMINDfuelCosts needs region deaggregation
   if (numberOfRegions == 12) {
+    # store data of IND as an example of a non-aggregated region for testing
+    # reorder columns for comparison
+    TestIND <- copy(REMINDfuelCosts)[region == "IND"]
+
     setnames(REMINDfuelCosts, "region", "regionCode12")
     REMINDfuelCosts <- merge(REMINDfuelCosts, unique(inputs$helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
                                   by = "regionCode12", allow.cartesian = TRUE)
     REMINDfuelCosts[, "regionCode12" := NULL]
     setnames(REMINDfuelCosts, "regionCode21", "region")
+
+    # test: values for IND should stay unchanged
+    # bring in same order, use data.frame for comparison to ignore keys
+    cols <- names(REMINDfuelCosts)
+    TestIND <- TestIND[, ..cols]
+    TestIND <- as.data.frame(TestIND[do.call(order, TestIND)])
+    TestINDafter <- REMINDfuelCosts[region == "IND"]
+    TestINDafter <- as.data.frame(TestINDafter[do.call(order, TestINDafter)])
+    if(!isTRUE(all.equal(TestIND, TestINDafter))){
+      stop("Error in deaggregation of fuel costs in iterativeEDGETransport()")
+    }
   }
 
   helpers <- inputs$helpers
@@ -221,6 +236,8 @@ iterativeEdgeTransport <- function() {
 
     ## store for testing
     totalESdemand <- sum(REMINDsectorESdemand$value)
+    TestIND <- copy(REMINDsectorESdemand)[region == "IND"]
+
     weightEs <- copy(sectorESdemand)[, "unit" := NULL]
     setnames(weightEs, c("region", "value"), c("regionCode21", "weight"))
     dataColumns <- names(REMINDsectorESdemand)[!names(REMINDsectorESdemand) %in% c("region", "period", "value")]
@@ -235,9 +252,20 @@ iterativeEdgeTransport <- function() {
     REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
     setnames(REMINDsectorESdemand, "regionCode21", "region")
 
+    # test if total ES demand stayed the same and if demand in IND is unchanges
     totalESdemand21 <- sum(REMINDsectorESdemand$value)
     if (! totalESdemand == totalESdemand21) {
-      stop("Something went wrong with regional deaggregation of REMIND ES demand.")
+      stop("Error in regional deaggregation of REMIND ES demand. Total ES demand changed.")
+    }
+    browser()
+    # bring in same order
+    cols <- names(REMINDsectorESdemand)
+    TestIND <- TestIND[, ..cols]
+    TestIND <- as.data.frame(TestIND[do.call(order, TestIND)])
+    TestINDafter <- REMINDsectorESdemand[region == "IND"]
+    TestINDafter <- as.data.frame(TestINDafter[do.call(order, TestINDafter)])
+    if(!isTRUE(all.equal(TestIND, TestINDafter))){
+      stop("Error in regional deaggregation of REMIND ES demand. ES demand for non-aggregated region IND changed.")
     }
   }
 
@@ -364,7 +392,6 @@ iterativeEdgeTransport <- function() {
 
   storeData(edgeTransportFolder, outputRaw)
 
-  browser()
   baseOutput <- reportEdgeTransport(edgeTransportFolder,
                                     outputRaw,
                                     isTransportReported = FALSE)
