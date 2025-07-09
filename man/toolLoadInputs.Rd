@@ -4,7 +4,7 @@
 \alias{toolLoadInputs}
 \title{Load all inputs that are required to run the model}
 \usage{
-toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
+toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
 }
 \arguments{
 \item{SSPscen}{SSP or SDP scenarios}
@@ -14,6 +14,8 @@ toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare)
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
 
 \item{hybridElecShare}{Share of electricity in Hybrid electric vehicles}
+
+\item{allEqYear}{Year after which scenario differentiation sets in, last year in which scenarios are the same}
 }
 \value{
 list with different input data sets

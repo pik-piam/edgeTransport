@@ -4,6 +4,7 @@
 #' @param transportPolScen EDGE-T transport policy scenarios
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
+#' @param allEqYear Year after which scenario differentiation sets in, last year in which scenarios are the same
 #' @returns list with different input data sets
 #' @import data.table
 #' @importFrom mrtransport toolPrepareTransportSubsidies

@@ -6,9 +6,7 @@
 #' @param ICEbanAfter Boolean to determine if ICEban is in effect from startyear on
 #'
 #' @returns a list of parameters: allEqYear, ICEbanYears, GDPcutoff, baseYear, hybridElecShare
-#'
-#' @examples
-#'
+
 toolGetCommonParameters <- function(startyear, ICEbanBefore, ICEbanAfter){
   # REMIND startyear is the year in which differences are observed
   # allEqYear in EDGE-T is the last year of the previous scenario and differentiation sets in directly after that, earliest: 2020
