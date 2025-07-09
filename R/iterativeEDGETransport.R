@@ -50,9 +50,7 @@ iterativeEdgeTransport <- function() {
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
   if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
-#    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
-    # todo: make path relative for local testing, change back before merging !
-    load(file.path("..", basename(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"])), "config.Rdata"))
+    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
@@ -98,8 +96,6 @@ iterativeEdgeTransport <- function() {
   iterationNumber <- as.vector(gdxrrw::rgdx(gdxPath, list(name = "o_iterationNumber"))$val)
 
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
-
-  save(list = ls(), file = "ln112_Inputs.RData")
 
   # Can we sort that a little better? Both is needed for the standalone and the iterative version
   ## from REMIND
@@ -152,7 +148,6 @@ iterativeEdgeTransport <- function() {
                                                 GDPcutoff,
                                                 helpers)
 
-  save(list = ls(), file = "ln162_scenSpecInputs.RData")
   ########################################################
   ## Calibrate historical preferences
   ########################################################
@@ -191,7 +186,6 @@ iterativeEdgeTransport <- function() {
   }
   scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
 
-  save(list = ls(), file = "ln182_scenSpecInputs.RData")
   #######################################################
   # Iterative specific Input data                       #
   #######################################################
@@ -251,13 +245,12 @@ iterativeEdgeTransport <- function() {
     REMINDsectorESdemand[, sumWeight := sum(weight), by = c("period", "sector", "regionCode12")]
     REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
     setnames(REMINDsectorESdemand, "regionCode21", "region")
-
-    # test if total ES demand stayed the same and if demand in IND is unchanges
+    REMINDsectorESdemand <-  REMINDsectorESdemand[do.call(order, REMINDsectorESdemand)]
+    # test if total ES demand stayed the same and if demand in IND is unchanged
     totalESdemand21 <- sum(REMINDsectorESdemand$value)
     if (! totalESdemand == totalESdemand21) {
       stop("Error in regional deaggregation of REMIND ES demand. Total ES demand changed.")
     }
-    browser()
     # bring in same order
     cols <- names(REMINDsectorESdemand)
     TestIND <- TestIND[, ..cols]
@@ -282,7 +275,6 @@ iterativeEdgeTransport <- function() {
     histESdemand = inputDataRaw$histESdemand
   )
 
-  save(list = ls(), file = "ln261_readyInputs.RData")
   ########################################################
   ## Prepare data for
   ## endogenous costs update
@@ -293,7 +285,6 @@ iterativeEdgeTransport <- function() {
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
                                                         genModelPar$lambdasDiscreteChoice,
                                                         helpers)
-  save(list = ls(), file = "ln272_endoCostInputs.RData")
   #------------------------------------------------------
   # Start of iterative section
   #------------------------------------------------------
@@ -317,7 +308,7 @@ iterativeEdgeTransport <- function() {
                                                fleetVehiclesPerTech)
 
   print("Endogenous updates to cost components finished")
-  save(list = ls(), file = "ln296_endoCostUpdate.RData")
+
   #################################################
   ## Discrete choice module
   #################################################
@@ -333,7 +324,7 @@ iterativeEdgeTransport <- function() {
                                                 inputData$histESdemand,
                                                 baseYear)
   print("Calculation of vehicle sales and mode shares finished")
-  save(list = ls(), file = "ln312_discreteChoice.RData")
+
   #################################################
   ## Vehicle stock module
   #################################################
@@ -347,7 +338,7 @@ iterativeEdgeTransport <- function() {
   fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
   storeData(file.path(".", edgeTransportFolder), fleetVehiclesPerTech = fleetVehiclesPerTech)
   print("Calculation of vehicle stock finished")
-  save(list = ls(), file = "ln326_vehicleStock.RData")
+
   #------------------------------------------------------
   # End of iterative section
   #------------------------------------------------------
