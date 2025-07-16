@@ -7,25 +7,29 @@
 toolEdgeTransportSA(
   SSPscen,
   transportPolScen,
-  isICEban = FALSE,
-  demScen = "default",
+  isICEban = c(FALSE, FALSE),
+  demScen = c("default", "default"),
+  startyear = 2030,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = TRUE,
   isTransportReported = TRUE,
   isTransportExtendedReported = FALSE,
   isREMINDinputReported = FALSE,
-  isAnalyticsReported = FALSE
+  isAnalyticsReported = FALSE,
+  testIterative = FALSE
 )
 }
 \arguments{
-\item{SSPscen}{SSP or SDP scenario}
+\item{SSPscen}{SSP or SDP scenarios}
 
-\item{transportPolScen}{EDGE-T transport policy scenario}
+\item{transportPolScen}{EDGE-T transport policy scenarios}
 
 \item{isICEban}{optional enabling of ICE ban}
 
-\item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
+\item{demScen}{Demand scenarios, used to apply reduction factors on total demands from the regression}
+
+\item{startyear}{First time point in which policy differentiation sets in, cm_startyear in REMIND}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
@@ -40,6 +44,8 @@ toolEdgeTransportSA(
 \item{isREMINDinputReported}{Optional reporting of REMIND input data}
 
 \item{isAnalyticsReported}{Optional reporting of analytics data (e.g. variables over iterations)}
+
+\item{testIterative}{development setting: make standalone and iterative scripts comparable, sets sectorESdemand = REMINDsectorESdemand and iterations = 1 (cost module)}
 }
 \value{
 Transport input data for REMIND
@@ -50,5 +56,5 @@ a choice model to determine transport mode and technology shares, a demand regre
 and a fleet tracking for cars, busses and trucks
 }
 \author{
-Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli
+Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli, Alex K. Hagen
 }
