@@ -50,7 +50,7 @@ toolEdgeTransportSA <- function(SSPscen,
   # allEqYear in EDGET is last timepoint in which all scenarios are equal, earliest 2020
   allEqYear <- commonParams$allEqYear
   # Years in which ICEban is in effect
-  ICEbanYears <- commonParams$ICEbanYear
+  ICEbanYears <- commonParams$ICEbanYears
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- commonParams$GDPcutoff
