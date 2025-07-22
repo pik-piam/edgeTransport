@@ -76,7 +76,7 @@ iterativeEdgeTransport <- function() {
   # allEqYear in EDGET is last timepoint in which all scenarios are equal, earliest 2020
   allEqYear <- commonParams$allEqYear
   # Years in which ICEban is in effect
-  ICEbanYears <- commonParams$ICEbanYear
+  ICEbanYears <- commonParams$ICEbanYears
 
   # set GDP cutoff to differentiate between regions
   GDPcutoff <- commonParams$GDPcutoff
@@ -238,7 +238,7 @@ iterativeEdgeTransport <- function() {
     setnames(REMINDsectorESdemand, "region", "regionCode12")
     # disaggregate_dt produces duplicates right now - Todo: Check fucntion
     #REMINDsectorESdemand <- rmndt::disaggregate_dt(REMINDsectorESdemand, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
-                                                   #datacol = dataColumns, weights = weightEs)
+                                                   #datacols = dataColumns, weights = weightEs)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
                                   by = "regionCode12", allow.cartesian = TRUE)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, weightEs, intersect(names(REMINDsectorESdemand), names(weightEs)))
@@ -401,18 +401,18 @@ iterativeEdgeTransport <- function() {
     regionMap <- unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")])
     esCapCost <- rmndt::aggregate_dt(esCapCost, regionMap,
                                      fewcol = "regionCode12", manycol = "regionCode21",
-                                     datacol = dataColumns, weights = ESweight, yearcol = "period")
+                                     datacols = dataColumns, weights = ESweight, yearcol = "period")
     setnames(esCapCost, "regionCode12", "region")
     setnames(fleetESdemand, "region", "regionCode21")
     fleetESdemand <- rmndt::aggregate_dt(fleetESdemand, regionMap,
                                          fewcol = "regionCode12", manycol = "regionCode21",
-                                         datacol = dataColumns, yearcol = "period")
+                                         datacols = dataColumns, yearcol = "period")
 
     setnames(fleetESdemand, "regionCode12", "region")
     setnames(fleetFEdemand, "region", "regionCode21")
     fleetFEdemand <- rmndt::aggregate_dt(fleetFEdemand, regionMap,
                                          fewcol = "regionCode12", manycol = "regionCode21",
-                                         datacol = dataColumns, yearcol = "period")
+                                         datacols = dataColumns, yearcol = "period")
     setnames(fleetFEdemand, "regionCode12", "region")
   }
 
