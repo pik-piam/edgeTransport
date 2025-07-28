@@ -71,6 +71,10 @@ toolEdgeTransportSA <- function(SSPscen,
     stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
   }
 
+  if (is.null(gdxPath) && isTRUE(isTransportReported)) {
+    stop("Please provide a path to REMIND fulldata.gdx for transport reporting")
+  }
+
   ## Load fuel costs from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
                                              hybridElecShare = hybridElecShare,
