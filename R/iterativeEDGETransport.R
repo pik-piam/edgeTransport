@@ -49,8 +49,16 @@ iterativeEdgeTransport <- function() {
 
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
-  if (!is.na(cfgCurrentRun$files2export$start["input_ref.gdx"])) {
-    load(file.path(dirname(cfgCurrentRun$files2export$start["input_ref.gdx"]), "config.Rdata"))
+  reference <- cfgCurrentRun$files2export$start["input_ref.gdx"]
+  if (!is.na(reference)) {
+    isAbsolutePath <- grepl("^(?:/|~)", reference)
+    if (isAbsolutePath) {
+      referenceCfgPath <- file.path(dirname(reference), "config.Rdata")
+    } else {
+      # go back to remind folder and take relative path from there
+      referenceCfgPath <- file.path("../..", dirname(reference), "config.Rdata")
+    }
+    load(referenceCfgPath)
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
