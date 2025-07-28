@@ -38,8 +38,6 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isAnalyticsReported = FALSE,
                                 testIterative = FALSE){
 
-  browser()
-
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- version <- region <- vehicleType <- technology <- period <- NULL
 
