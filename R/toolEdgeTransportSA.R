@@ -67,9 +67,13 @@ toolEdgeTransportSA <- function(SSPscen,
 
   inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
 
-  if (is.null(gdxPath)) {gdxPath <- file.path(getConfig("sourcefolder"),
-                                              "REMINDinputForTransportStandalone", "v1.2", "fulldata.gdx")}
-  if (!file.exists(gdxPath)) stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
+  if (!is.null(gdxPath) && !file.exists(gdxPath)) {
+    stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
+  }
+
+  if (is.null(gdxPath) && isTRUE(isTransportReported)) {
+    stop("Please provide a path to REMIND fulldata.gdx for transport reporting")
+  }
 
   ## Load fuel costs from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
@@ -111,9 +115,9 @@ toolEdgeTransportSA <- function(SSPscen,
   paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
   overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
-            header = TRUE,
-            na.strings = "NA",
-            colClasses = list(character = "technology"))
+                                header = TRUE,
+                                na.strings = "NA",
+                                colClasses = list(character = "technology"))
 
   overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
   histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
@@ -126,7 +130,7 @@ toolEdgeTransportSA <- function(SSPscen,
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
   if (isICEban[1] | isICEban[2]) {
-   scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
+    scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
   }
   scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
 
@@ -163,15 +167,15 @@ toolEdgeTransportSA <- function(SSPscen,
   #################################################
   ## demand in million km
   sectorESdemand <- toolDemandRegression(inputData$histESdemand,
-                                           inputData$GDPpcPPP,
-                                           inputData$population,
-                                           genModelPar$genParDemRegression,
-                                           scenModelPar$scenParDemRegression,
-                                           scenModelPar$scenParRegionalDemRegression,
-                                           scenModelPar$scenParDemFactors,
-                                           baseYear,
-                                           allEqYear,
-                                           helpers)
+                                         inputData$GDPpcPPP,
+                                         inputData$population,
+                                         genModelPar$genParDemRegression,
+                                         scenModelPar$scenParDemRegression,
+                                         scenModelPar$scenParRegionalDemRegression,
+                                         scenModelPar$scenParDemFactors,
+                                         baseYear,
+                                         allEqYear,
+                                         helpers)
 
   if (testIterative) {
     # development setting:
@@ -235,7 +239,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                                 helpers)
     if (isAnalyticsReported) {
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
-                                               function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
+                                                   function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
     }
 
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
@@ -286,7 +290,7 @@ toolEdgeTransportSA <- function(SSPscen,
   if (testIterative) {
     print("EDGET was running in development mode to enable comparison of results to the iterative script.")
     otputFolder <- file.path(outputFolder, paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"),
-                                                 "-sy", startyear, "-", SSPscen[2], "-", transportPolScen[2], "-", demScen[2], "-develop"))
+                                                  "-sy", startyear, "-", SSPscen[2], "-", transportPolScen[2], "-", demScen[2], "-develop"))
   }
 
   outputRaw <- list(
@@ -322,5 +326,5 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isREMINDinputReported,
                                 isStored)
 
-return(output)
+  return(output)
 }

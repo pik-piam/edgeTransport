@@ -26,7 +26,8 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transport
 
    # load prices from REMIND gdx
    if (is.null(gdxPath)) {
-     fuelCosts <- readSource("REMINDinputForTransportStandalone", convert = FALSE)
+     fuelCosts <- readSource("REMINDinputForTransportStandalone", subtype = "fuelCosts",
+                             convert = FALSE)
    } else {
      fuelCosts <- gdx::readGDX(gdxPath,
                                "pm_FEPrice",
