@@ -46,7 +46,6 @@ testStandardScenarios <- function(folderNameD, defScenN){
                                              isREMINDinputReported = TRUE,
                                              isAnalyticsReported = TRUE,
                                              isStored = TRUE,
-                                             gdxPath = "/p/projects/rd3mod/inputdata/sources/REMINDinputForTransportStandalone/v1.2/fulldata.gdx",
                                              outputFolder = folderNameD)
 
   renv::snapshot(type = "all")

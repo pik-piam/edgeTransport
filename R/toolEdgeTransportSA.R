@@ -21,9 +21,7 @@
 #' @author Johanna Hoppe, Jarusch Müßel, Alois Dirnaichner, Marianna Rottoli, Alex K. Hagen
 #' @import data.table
 #' @importFrom reporttransport reportEdgeTransport storeData
-#' @importFrom madrat getConfig
 #' @export
-
 toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = c(FALSE, FALSE),
@@ -69,10 +67,6 @@ toolEdgeTransportSA <- function(SSPscen,
 
   if (!is.null(gdxPath) && !file.exists(gdxPath)) {
     stop("Please provide valid path to REMIND fulldata.gdx as input for fuel costs")
-  }
-
-  if (is.null(gdxPath) && isTRUE(isTransportReported)) {
-    stop("Please provide a path to REMIND fulldata.gdx for transport reporting")
   }
 
   ## Load fuel costs from REMIND
