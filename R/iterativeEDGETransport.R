@@ -45,7 +45,7 @@ iterativeEdgeTransport <- function() {
   transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
   demScen[2] <- cfgCurrentRun$gms$cm_demScen
 
-  startyear <- cfgCurrentRun$gms$cm_startyear
+  startyear <- as.numeric(cfgCurrentRun$gms$cm_startyear)
 
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
