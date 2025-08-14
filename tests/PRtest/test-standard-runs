@@ -63,7 +63,7 @@ latest_folder=$(find "$amt_dir" -maxdepth 1 -type d -printf "%f\n" \
 
 # Get full path to the latest SSP2-NPi2025-AMT folder
 if [[ -n "$latest_folder" ]]; then
-    amt_folder="$amt_dir/$latest_folder"
+    amt_folder="$amt_dir$latest_folder"
 else
     echo "No matching AMT folders found."
     exit 1
@@ -75,7 +75,7 @@ remind_dummy_folder="$(date '+%F_%H.%M.%S')-SSP2-NPi2025-dummy"
 echo -e "\e[0;32mOutput folder name: ${folder_name}\e[0m"
 echo -e "\e[0;32mReference folder name for plots: ${ref_folder}\e[0m"
 echo -e "\e[0;32mPath that will be used: ${working_path}\e[0m"
-echo -e "\e[0;32mREMIND AMT folder that war used: ${amt_folder}\e[0m"
+echo -e "\e[0;32mREMIND AMT folder that was used: ${amt_folder}\e[0m"
 
 ###############################
 # set-up of folder structure
