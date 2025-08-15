@@ -206,7 +206,7 @@ cat <<EOL > tmp_submit_test5.sbatch
 #SBATCH --mem=32000
 #SBATCH --time=02:00:00
 
-srun Rscript iterPRtestEDGET.R ${working_path}${folder_name}/${remind_dummy_folder}
+srun Rscript iterPRtestEDGET.R ${working_path}${folder_name}/${remind_dummy_folder} ${ref_folder}
 EOL
 
 sbatch tmp_submit_test1.sbatch
