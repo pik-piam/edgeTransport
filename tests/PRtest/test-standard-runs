@@ -17,7 +17,7 @@ Starts edgeTransport standalone runs for four standard policy scenarios (SSP2 Mi
 # handle missing input parameters
 if [ $# -lt 1 -o $# -gt 3 ] 
 then
-	echo -e "\e[0;31mERROR: wrong number of arguments\e[31m"
+	echo -e "\e[0;31mERROR: wrong number of arguments\e[0m"
 	echo "$help"
 	exit 1
 fi
@@ -206,7 +206,7 @@ cat <<EOL > tmp_submit_test5.sbatch
 #SBATCH --mem=32000
 #SBATCH --time=02:00:00
 
-srun Rscript iterPRtestEDGET.R ${working_path}${folder_name}/${remind_dummy_folder}
+srun Rscript iterPRtestEDGET.R ${working_path}${folder_name}/${remind_dummy_folder} ${ref_folder}
 EOL
 
 sbatch tmp_submit_test1.sbatch
