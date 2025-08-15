@@ -17,7 +17,7 @@ Starts edgeTransport standalone runs for four standard policy scenarios (SSP2 Mi
 # handle missing input parameters
 if [ $# -lt 1 -o $# -gt 3 ] 
 then
-	echo -e "\e[0;31mERROR: wrong number of arguments\e[31m"
+	echo -e "\e[0;31mERROR: wrong number of arguments\e[0m"
 	echo "$help"
 	exit 1
 fi
