@@ -13,6 +13,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- region <- variable <- unit <- level <- vehicleType <- NULL
   FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- startYearCat <- NULL
+  subsectorL1 <- subsectorL2 <- technology <- NULL
 
   # function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1) {
