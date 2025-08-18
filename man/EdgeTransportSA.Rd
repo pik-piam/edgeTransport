@@ -9,7 +9,7 @@ calcEdgeTransportSA(
   transportPolScen,
   isICEban = c(FALSE, FALSE),
   demScen = c("default", "default"),
-  startyear = 2030,
+  startyear = 2021,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = FALSE,
