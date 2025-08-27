@@ -8,6 +8,8 @@ trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_2W;Moped;BEV;Moped
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_2W;Moped;Liquids;Moped
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_2W;Motorcycle (>250cc);BEV;Motorcycle (>250cc)
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_2W;Motorcycle (>250cc);Liquids;Motorcycle (>250cc)
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_3W;Rickshaw;BEV;Rickshaw
+trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_3W;Rickshaw;Liquids;Rickshaw
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Compact Car;BEV;Compact Car
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Compact Car;FCEV;Compact Car
 trn_pass;trn_pass_road;trn_pass_road_LDV;trn_pass_road_LDV_4W;Compact Car;Liquids;Compact Car

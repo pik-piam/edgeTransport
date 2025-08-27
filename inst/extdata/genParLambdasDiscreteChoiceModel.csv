@@ -6,6 +6,7 @@ vehicleType	subsectorL3	subsectorL2	subsectorL1	sector	level	lambda
 			trn_pass_road	trn_pass	S2S1	-2
 		trn_pass_road_LDV	trn_pass_road	trn_pass	S3S2	-4
 	trn_pass_road_LDV_2W	trn_pass_road_LDV	trn_pass_road	trn_pass	VS3	-4
+	trn_pass_road_LDV_3W	trn_pass_road_LDV	trn_pass_road	trn_pass	VS3	-4
 	trn_pass_road_LDV_4W	trn_pass_road_LDV	trn_pass_road	trn_pass	VS3	-6
 	trn_freight_road_tmp_subsectorL3	trn_freight_road_tmp_subsectorL2	trn_freight_road	trn_freight	VS3	-1
 Compact Car	trn_pass_road_LDV_4W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	-4
@@ -19,6 +20,7 @@ Subcompact Car	trn_pass_road_LDV_4W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	
 Moped	trn_pass_road_LDV_2W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	-4
 Motorcycle (50-250cc)	trn_pass_road_LDV_2W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	-4
 Motorcycle (>250cc)	trn_pass_road_LDV_2W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	-4
+Rickshaw	trn_pass_road_LDV_3W	trn_pass_road_LDV	trn_pass_road	trn_pass	FV	-4
 Bus_tmp_vehicletype	Bus_tmp_subsectorL3	Bus	trn_pass_road	trn_pass	FV	-3
 Passenger Rail_tmp_vehicletype	Passenger Rail_tmp_subsectorL3	Passenger Rail_tmp_subsectorL2	Passenger Rail	trn_pass	FV	-1
 HSR_tmp_vehicletype	HSR_tmp_subsectorL3	HSR_tmp_subsectorL2	HSR	trn_pass	FV	-1
