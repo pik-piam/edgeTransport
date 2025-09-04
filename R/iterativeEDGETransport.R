@@ -14,7 +14,7 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Settings
   #############################################################
-  cfg <- sumWeight <- weight <- NULL
+  cfg <- sumWeight <- weight <- region <- ..cols <- vehicleType <- technology <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"
@@ -132,7 +132,7 @@ iterativeEdgeTransport <- function() {
     TestIND <- as.data.frame(TestIND[do.call(order, TestIND)])
     TestINDafter <- REMINDfuelCosts[region == "IND"]
     TestINDafter <- as.data.frame(TestINDafter[do.call(order, TestINDafter)])
-    if(!isTRUE(all.equal(TestIND, TestINDafter))){
+    if (!isTRUE(all.equal(TestIND, TestINDafter))) {
       stop("Error in deaggregation of fuel costs in iterativeEDGETransport()")
     }
   }
@@ -213,6 +213,7 @@ iterativeEdgeTransport <- function() {
 
   ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
+
     # Demand from the standalone regression module
     # This is only used as deaggregation weight in the iterative version
     # The deaggregation weights used are static across all iterations
@@ -256,7 +257,7 @@ iterativeEdgeTransport <- function() {
     REMINDsectorESdemand <-  REMINDsectorESdemand[do.call(order, REMINDsectorESdemand)]
     # test if total ES demand stayed the same and if demand in IND is unchanged
     totalESdemand21 <- sum(REMINDsectorESdemand$value)
-    if (! totalESdemand == totalESdemand21) {
+    if (!isTRUE(all.equal(totalESdemand, totalESdemand21))) {
       stop("Error in regional deaggregation of REMIND ES demand. Total ES demand changed.")
     }
     # bring in same order
@@ -265,7 +266,7 @@ iterativeEdgeTransport <- function() {
     TestIND <- as.data.frame(TestIND[do.call(order, TestIND)])
     TestINDafter <- REMINDsectorESdemand[region == "IND"]
     TestINDafter <- as.data.frame(TestINDafter[do.call(order, TestINDafter)])
-    if(!isTRUE(all.equal(TestIND, TestINDafter))){
+    if (!isTRUE(all.equal(TestIND, TestINDafter))) {
       stop("Error in regional deaggregation of REMIND ES demand. ES demand for non-aggregated region IND changed.")
     }
   }

@@ -4,7 +4,7 @@ help='
 Usage: ./test-standard-runs <folderName> <refFolder=lastFolder> <path=.> 
 
 Creates a new directory <folderName> in <path> and initializes renv there. 
-Starts edgeTransport runs for all four standard policy scenarios and compares data with a previous version located in <refFolder> via compareScenarios.
+Starts edgeTransport standalone runs for four standard policy scenarios (SSP2 Mix1-4) and compares data with a previous version located in <refFolder> via compareScenarios. Also starts a run with the iterative EDGE-Transport version based on a fulldata.gdx and config.Rdata of the latest SSP2-NPi2025 AMT.
 
 <folderName> : 	name of the new folder to be generated, ideally relating to a PR
 <refFolder> : 	optional, any unique substring of the folder name as identifier, 
@@ -17,7 +17,7 @@ Starts edgeTransport runs for all four standard policy scenarios and compares da
 # handle missing input parameters
 if [ $# -lt 1 -o $# -gt 3 ] 
 then
-	echo -e "\e[0;31mERROR: wrong number of arguments\e[31m"
+	echo -e "\e[0;31mERROR: wrong number of arguments\e[0m"
 	echo "$help"
 	exit 1
 fi
@@ -54,18 +54,55 @@ then
 	working_path=${3}
 fi
 
+# Find latest SSP2-NPi2025-AMT folder
+amt_dir="/p/projects/remind/modeltests/remind/output/"
+latest_folder=$(find "$amt_dir" -maxdepth 1 -type d -printf "%f\n" \
+    | grep -E '^SSP2-NPi2025-AMT_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}\.[0-9]{2}\.[0-9]{2}$' \
+    | sort -t_ -k2,2r \
+    | head -n 1)
+
+# Get full path to the latest SSP2-NPi2025-AMT folder
+if [[ -n "$latest_folder" ]]; then
+    amt_folder="$amt_dir$latest_folder"
+else
+    echo "No matching AMT folders found."
+    exit 1
+fi
+
+remind_dummy_folder="$(date '+%F_%H.%M.%S')-SSP2-NPi2025-dummy"
+
+# print path and folders to command line
 echo -e "\e[0;32mOutput folder name: ${folder_name}\e[0m"
 echo -e "\e[0;32mReference folder name for plots: ${ref_folder}\e[0m"
 echo -e "\e[0;32mPath that will be used: ${working_path}\e[0m"
+echo -e "\e[0;32mREMIND AMT folder that was used: ${amt_folder}\e[0m"
+
+###############################
+# set-up of folder structure
+###############################
 
 mkdir ${working_path}${folder_name}
 
 # copy scripts for renv set-up and test run of scenarios
 cp /p/projects/edget/PRchangeLog/.helperTestStd/renvfromsource.R ${working_path}${folder_name}/
 cp /p/projects/edget/PRchangeLog/.helperTestStd/PRtestEDGET.R ${working_path}${folder_name}/
+cp /p/projects/edget/PRchangeLog/.helperTestStd/iterPRtestEDGET.R ${working_path}${folder_name}/
 
 # copy scripts for additional compScen's if needed
 cp /p/projects/edget/PRchangeLog/.helperTestStd/*compScenPR* ${working_path}${folder_name}/
+
+#########################################################################
+# set-up of a dummy environment to test REMIND - EDGE-Transport coupling
+#########################################################################
+
+mkdir ${working_path}${folder_name}/${remind_dummy_folder}
+
+# copy REMIND output files
+cp ${amt_folder}/fulldata.gdx ${working_path}${folder_name}/${remind_dummy_folder}/
+cp ${amt_folder}/config.Rdata ${working_path}${folder_name}/${remind_dummy_folder}/
+
+##############################
+
 
 cd ${working_path}${folder_name}
 
@@ -73,7 +110,7 @@ cd ${working_path}${folder_name}
 Rscript -e 'renv::init()'
 Rscript -e 'renv::install("renv@1.1.4")'
 Rscript -e '
-renv::record("renv@1.0.7")
+renv::record("renv@1.1.4")
 renv::install("madrat") 
 renv::install("mrdrivers")
 renv::install("mrremind")
@@ -98,17 +135,20 @@ done
 
 echo -e "\e[0;32mset up of renv finished\e[0m"
 
-# generate temporary sbatch scripts to sent jobs to slurm
+##############################
+
+# generate temporary sbatch scripts to send jobs to slurm
+
 # Mix1
 cat <<EOL > tmp_submit_test1.sbatch
 #!/bin/bash
-#SBATCH --qos=short
+#SBATCH --qos=priority
 #SBATCH --job-name=testScen1_edgetPR
 #SBATCH --output=%x-%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32000
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 
 srun Rscript PRtestEDGET.R ${working_path}${folder_name} "1" ${ref_folder}
 EOL
@@ -116,13 +156,13 @@ EOL
 # Mix2 ICEban
 cat <<EOL > tmp_submit_test2.sbatch
 #!/bin/bash
-#SBATCH --qos=short
+#SBATCH --qos=priority
 #SBATCH --job-name=testScen2_edgetPR
 #SBATCH --output=%x-%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32000
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 
 srun Rscript PRtestEDGET.R ${working_path}${folder_name} "2" ${ref_folder}
 EOL
@@ -130,13 +170,13 @@ EOL
 # Mix3 ICEban
 cat <<EOL > tmp_submit_test3.sbatch
 #!/bin/bash
-#SBATCH --qos=short
+#SBATCH --qos=priority
 #SBATCH --job-name=testScen3_edgetPR
 #SBATCH --output=%x-%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32000
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 
 srun Rscript PRtestEDGET.R ${working_path}${folder_name} "3" ${ref_folder}
 EOL
@@ -144,21 +184,36 @@ EOL
 # Mix4 ICEban
 cat <<EOL > tmp_submit_test4.sbatch
 #!/bin/bash
-#SBATCH --qos=short
+#SBATCH --qos=priority
 #SBATCH --job-name=testScen4_edgetPR
 #SBATCH --output=%x-%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32000
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 
 srun Rscript PRtestEDGET.R ${working_path}${folder_name} "4" ${ref_folder}
+EOL
+
+# SSP2-NPi2025 dummy for testing of iterative script
+cat <<EOL > tmp_submit_test5.sbatch
+#!/bin/bash
+#SBATCH --qos=priority
+#SBATCH --job-name=testIter_edgetPR
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=32000
+#SBATCH --time=02:00:00
+
+srun Rscript iterPRtestEDGET.R ${working_path}${folder_name}/${remind_dummy_folder} ${ref_folder}
 EOL
 
 sbatch tmp_submit_test1.sbatch
 sbatch tmp_submit_test2.sbatch
 sbatch tmp_submit_test3.sbatch
 sbatch tmp_submit_test4.sbatch
+sbatch tmp_submit_test5.sbatch
 
 #cleanup
 rm tmp_submit_test*.sbatch
