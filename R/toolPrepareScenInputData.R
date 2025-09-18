@@ -53,11 +53,11 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     scenSpecLoadFactor <- copy(inputDataRaw$loadFactorRaw)[, variable := "Load factor"]
     print("No policy induced changes to the loadfactor")
   }
-  
+
   # Application of policy induced changes on load factor ----------------------------
   if (!is.null(scenModelPar$scenParAnnualMileage)) {
     scenSpecAnnualMileage <- toolApplyScenSpecAnnualMileage(inputDataRaw$annualMileageRaw, scenModelPar$scenParAnnualMileage,
-                                                      policyStartYear, helpers)
+                                                      allEqYear, helpers)
     scenSpecAnnualMileage[, variable := "Annual mileage"]
     print("Policy induced changes to the annual mileage were applied")
   } else {

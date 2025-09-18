@@ -80,13 +80,15 @@ toolEdgeTransportSA <- function(SSPscen,
   inputDataRaw <- append(inputs$inputDataRaw, list(REMINDfuelCosts = REMINDfuelCosts))
 
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  ####if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
-  if (demScen == "default") demScen <- SSPscen
+  if (demScen[1]  == "default") {
+    demScen[1] <- SSPscen[1]
+  } else if (demScen[2]  == "default") {
+    demScen[2] <- SSPscen[2]
+  }
 
   ########################################################
   ## Prepare input data and apply scenario specific changes
   ########################################################
-
   scenSpecInputData <- toolPrepareScenInputData(genModelPar,
                                                 scenModelPar,
                                                 inputDataRaw,

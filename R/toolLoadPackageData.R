@@ -9,7 +9,7 @@
 toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- startYearCat <- NULL
-
+  
   # set demand scenario to default when not supplied
   if (is.null(demScenario)) {
     demScenario <- "default"
@@ -117,18 +117,17 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   scenParLoadFactor[, "startYearCat" := fcase(SSPscen == SSPs[2] & demScen == demScenario[2], "final", SSPscen == SSPs[1] & demScen == demScenario[1], "origin")]
   scenParLoadFactor <- scenParLoadFactor[!is.na(startYearCat)][, c("SSPscen", "demScen") := NULL]
   if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
-  
   # Transport scenario (demand scenario or SSP scenario) annual mileage changes
   scenParAnnualMileage <- fread(system.file("extdata/scenParAnnualMileage.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Demand scenario exogenous annual mileage changes
-if  (SSPscenario %in% unique(scenParAnnualMileage[demScen == "default"]$SSPscen)) {
-    scenParAnnualMileage <- scenParAnnualMileage[SSPscen == SSPscenario][, c("SSPscen", "demScen") := NULL]
-} else {
-    scenParAnnualMileage <- scenParAnnualMileage[SSPscen == SSPscenario & demScen == demScenario]
-    scenParAnnualMileage[, c("SSPscen", "demScen") := NULL]
-}
-  if (nrow(scenParAnnualMileage) == 0) scenParAnnualMileage <- NULL
+  # Demand scenario introduces exogenous annual mileage changes
+  if  (demScenario[1] %in% scenParAnnualMileage$demScen | demScenario[2] %in% scenParAnnualMileage$demScen) {
+
+    scenParAnnualMileage[, "startYearCat" := fcase(SSPscen == SSPs[2] & demScen == demScenario[2], "final", SSPscen == SSPs[1] & demScen == demScenario[1], "origin")]
+    scenParAnnualMileage <- scenParAnnualMileage[!is.na(startYearCat)]
+  } else {
+     scenParAnnualMileage <- NULL
+  }
 
   ## helpers
   mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
