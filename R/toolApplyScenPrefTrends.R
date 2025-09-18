@@ -1,18 +1,19 @@
 #' Apply scenario specific adjustments to the preference trends
-#' @author Johanna Hoppe
+#' @author Johanna Hoppe, Alex K. Hagen
 #' @param baselinePrefTrends Baseline preference trends
 #' @param scenParPrefTrends Scenario parameters to be applied on the preference trends
 #' @param GDPpcMER Per capita GDP based on market exchange rate
-#' @param policyStartYear Year from which the scenario parameters are applied on the baseline preference trends
+#' @param allEqYear Year after which scenario differentiation sets in
 #' @param GDPcutoff Threshold used to categorize countries into different mitigation groups based on their GDP
 #' @param helpers List containing several helpers used throughout the model
-#' @param isICEban Switch to turn on ICE phase out policies
 #' @returns Scenario specific preference trends
 #' @import data.table
 
-toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, policyStartYear, GDPcutoff, helpers, isICEban) {
+toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpcMER, allEqYear, GDPcutoff, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- value <- region <- variable <- unit <- level <- vehicleType <- FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- NULL
+  period <- value <- region <- variable <- unit <- level <- vehicleType <- NULL
+  FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- startYearCat <- NULL
+  subsectorL1 <- subsectorL2 <- technology <- NULL
 
   # function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1) {
@@ -36,8 +37,20 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   # apply mitigation factors
   checkMitigation <- copy(baselinePrefTrends)
   setnames(checkMitigation, "value", "old")
-  PrefTrends <- merge(baselinePrefTrends, mitigationFactors, by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  PrefTrends[period  >= policyStartYear & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
+
+  # Assemble PrefTrends according to scenario before and after the startyear
+  if (!"full" %in% scenParPrefTrends$startYearCat){
+  PrefTrends <- merge(baselinePrefTrends[period <= allEqYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrendsF <- merge(baselinePrefTrends[period > allEqYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrends <- rbind(PrefTrends, PrefTrendsF)
+  setkey(PrefTrends, region, level, subsectorL1, subsectorL2, vehicleType, technology)
+  PrefTrends[, "startYearCat" := NULL]
+  } else {
+    PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  }
+  generalTransportPolicyOnset <- 2020
+  PrefTrends[period > generalTransportPolicyOnset & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
+
   check <- merge(checkMitigation, PrefTrends, by = intersect(names(checkMitigation), names(PrefTrends)), all = TRUE)
   check[, diff := abs(value - old)]
   if (max(check$diff) < 0.001) stop("Mitigation preference factors have not been applied correctly. Please check toolApplyScenPrefTrends()")

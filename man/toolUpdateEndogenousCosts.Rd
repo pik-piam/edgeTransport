@@ -8,25 +8,26 @@ toolUpdateEndogenousCosts(
   dataEndoCosts,
   depreciationFactors,
   scenParIncoCost,
-  policyStartYear,
+  allEqYear,
   timeValue,
   preferences,
   lambdas,
   helpers,
   isICEban,
+  ICEbanYears,
   vehiclesPerTech = NULL
 )
 }
 \arguments{
 \item{dataEndoCosts}{data.table containing all cost components for cars over the full range
 of policy years in a yearly resolution. Exogenous CAPEX and OPEX are provided over the full range.
-Endogenous cost components and FS3 shares are provided until policyStartYear. Rest is filled with NA.}
+Endogenous cost components and FS3 shares are provided until 2020. Rest is filled with NA.}
 
 \item{depreciationFactors}{data.table containing vehicle depreciation factor for each year of service Life}
 
 \item{scenParIncoCost}{data.table containing scenario specific parameters for inconvenience costs policy mask}
 
-\item{policyStartYear}{year from which scenario-specific differentiation begins}
+\item{allEqYear}{year from which scenario-specific differentiation begins}
 
 \item{timeValue}{data.table containing mode specific time value costs based on speed and gdp}
 
@@ -37,6 +38,8 @@ Endogenous cost components and FS3 shares are provided until policyStartYear. Re
 \item{helpers}{list containing helpers like mappings, decisionTree etc.}
 
 \item{isICEban}{optional enabling of ICE ban}
+
+\item{ICEbanYears}{sequence of years in which ICEban is applied}
 
 \item{vehiclesPerTech}{data.table containing total number of vehicles for all years and regions}
 }

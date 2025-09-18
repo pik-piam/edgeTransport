@@ -3,15 +3,16 @@
 #'
 #' @param dataEndoCosts data.table containing all cost components for cars over the full range
 #'                      of policy years in a yearly resolution. Exogenous CAPEX and OPEX are provided over the full range.
-#'                      Endogenous cost components and FS3 shares are provided until policyStartYear. Rest is filled with NA.
+#'                      Endogenous cost components and FS3 shares are provided until 2020. Rest is filled with NA.
 #' @param depreciationFactors data.table containing vehicle depreciation factor for each year of service Life
 #' @param scenParIncoCost data.table containing scenario specific parameters for inconvenience costs policy mask
-#' @param policyStartYear year from which scenario-specific differentiation begins
+#' @param allEqYear year from which scenario-specific differentiation begins
 #' @param timeValue data.table containing mode specific time value costs based on speed and gdp
 #' @param preferences preference factor trends
 #' @param lambdas data.table containing exponents for discrete choice calculation
 #' @param helpers list containing helpers like mappings, decisionTree etc.
 #' @param isICEban optional enabling of ICE ban
+#' @param ICEbanYears sequence of years in which ICEban is applied
 #' @param vehiclesPerTech data.table containing total number of vehicles for all years and regions
 #' @return list containing data.table with endogenous cost components over the full time span and additional data.tables
 #'         for model behavior analysis
@@ -22,24 +23,25 @@
 toolUpdateEndogenousCosts <- function(dataEndoCosts,
                                       depreciationFactors,
                                       scenParIncoCost,
-                                      policyStartYear,
+                                      allEqYear,
                                       timeValue,
                                       preferences,
                                       lambdas,
                                       helpers,
                                       isICEban,
+                                      ICEbanYears,
                                       vehiclesPerTech = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- NULL
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL 
 
   # parameters of endogenous cost trends
   bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
   bmodelav <- -12   ## value based on Greene 2001
   coeffrisk <- 3800 ## value based on Pettifor 2017
 
-  policyYears <- seq(policyStartYear, 2100, 1)
+  policyYears <- seq(2021, 2100, 1)
   # preventing dataEndoCosts to be updated outside of the function
   dataEndoCosts <- copy(dataEndoCosts)
 
@@ -63,20 +65,27 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     }
   }
 
+  ## Check if transportPol or SSPscen change is introduced with allEqYear
+  # If both stay the same, set allEqYear out of bounds such that it does not affect the calculation here
+  if (!"final" %in% scenParIncoCost$startYearCat){
+    allEqYear <- 2200
+  }
+
   ## the policymaker bans ICEs increasingly more strictly
+  ## this function returns a value that linearly increases from y0 in period x0 to y1 in period x1
   strangeICEbanFunction <- function(x, x0, y0, x1, y1) {
     return(min(y1, max(y0, (y1 - y0) / (x1 - x0) * (x - x0) + y0)))
   }
 
   applyICEban <- function(year, currentMask) {
-    if (year < 2021) {
+    if (year < 2020) {
       floorCosts <- currentMask
-    } else if (year >= 2021 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.05)
+    } else if (year >= 2020 && year <= 2030) {
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.3)
     } else if (year > 2030 && year <= 2035) {
-      floorCosts <- strangeICEbanFunction(year, 2031, 0.1, 2035, 0.2)
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.3, 2035, 0.6)
     } else if  (year > 2035) {
-      floorCosts <- 3
+      floorCosts <- 1
     }
     return(floorCosts)
   }
@@ -86,7 +95,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   tempAndregions <- CJ(region = regions, period = policyYears)
   tempAndregions[, all := "All"]
   policyMask[, all := "All"]
-  policyMask <- merge(policyMask, tempAndregions, by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskO <- merge(policyMask[startYearCat == "origin"], tempAndregions[period <= allEqYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMaskF <- merge(policyMask[startYearCat == "final"], tempAndregions[period > allEqYear], by = "all", allow.cartesian = TRUE)[, all := NULL]
+  policyMask <- rbind(policyMaskO, policyMaskF)
+  policyMask[, "startYearCat" := NULL]
   # Hybrid electric vehicles get a different policy parameter than BEV and ICE
   policyMaskPHEV <- policyMask[technology == "Hybrid electric"]
   setnames(policyMaskPHEV, "value", "policyMask")
@@ -121,7 +133,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
                         copy(policyMaskICEban)[, technology := "Hybrid electric"], copy(policyMaskICEban)[, technology := "Gases"])
     setkey(policyMask, region, period, technology)
 
-    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions,
+    policyMask[technology %in% c("Liquids", "Gases", "Hybrid electric") & region %in% affectedRegions & period %in% ICEbanYears,
                policyMask := max(policyMask, applyICEban(period, policyMask)), by = c("period")]
   }
   policyMask[, policyMask := as.numeric(policyMask)]
@@ -149,11 +161,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
     dataEndoCosts[variable == "Stations availability" & technology %in% c("Gases"), endoCostRaw := ifelse(period == t,
-                                                                                                          pmax(value[period == (policyStartYear - 1)], value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav)),
+                                                                                                          pmax(value[period == 2020], value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav)),
                                                                                                           endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV", "Gases"), endoCostRaw := ifelse(period == t,
-                                                                                                         value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                                                                                                         value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
                                                                                                          endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("BEV", "Hybrid electric"), endoCostRaw := ifelse(period == t,
@@ -165,17 +177,17 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     ## Risk aversion featured by BEV, FCEV, Hybrid electric, Gases
     # HOW IT SHOULD BE (check in Pettifor 2017)
     # dataEndoCosts[variable == "Risk aversion", endoCostRaw := ifelse(period == t,
-                #      pmax(value[period == (policyStartYear - 1)] - coeffrisk * techFleetProxy[period == (t - 1)], 0),
+                #      pmax(value[period == 2020] - coeffrisk * techFleetProxy[period == (t - 1)], 0),
                 #       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
     # HOW ACTUALLY IS -> Risk aversion stays constant on 2020 value. Change may make it necessary to rework the scenarios parameters.
     dataEndoCosts[variable == "Risk aversion", endoCostRaw := ifelse(period == t,
-                    value[period == (policyStartYear - 1)],
+                    value[period == 2020],
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
 
     ## Model availability featured by BEV, FCEV, Hybrid electric, Gases
     dataEndoCosts[variable == "Model availability"  &  technology == "Hybrid electric", endoCostRaw := ifelse(period == t,
-                   value[period == (policyStartYear - 1)],
+                   value[period == 2020],
                     endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     # Model availability of BEV, FCEV, Gases is not updated
@@ -185,7 +197,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # Range anxiety featured by BEV (Does it make sense, that Range anxiety behaves exactly like stations availability?)
     dataEndoCosts[variable == "Range anxiety", endoCostRaw := ifelse(period == t,
-                    value[period == (policyStartYear - 1)] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                    value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     # ICE inconvenience featured by ICE (Why 0.5?)
@@ -209,25 +221,25 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # Range anxiety featured by BEV (right now, the policy masks ensures that BEVs are phased-in not too quickly, therefore pmax is used. This is a result from poor parameterization
     # and should be reworked)
     dataEndoCosts[variable == "Range anxiety" & period == t,
-                   value := pmax(value[period == (policyStartYear - 1)] * policyMask, endoCostRaw),
+                   value := pmax(value[period == 2020] * policyMask, endoCostRaw),
                      by = c("region", "technology", "vehicleType", "univocalName")]
 
     ratioPhev <- as.numeric(unique(policyMaskPHEV$policyMask))
     # Model availability for Hybrid electric
-    if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 &
+    if (isICEban) dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t & period >= 2030 & period %in% ICEbanYears &
                       region %in% affectedRegions, endoCostRaw := pmax(policyMask, endoCostRaw),
                                 by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Model availability" & technology == "Hybrid electric" & period == t,
-                  value := pmax(value[period == (policyStartYear - 1)] * ratioPhev, endoCostRaw),
+                  value := pmax(value[period == 2020] * ratioPhev, endoCostRaw),
                     by = c("region", "technology", "vehicleType", "univocalName")]
 
     # Stations availability for NG vehicles is fixed to 2020 values (due to very low costs for NG in CHA). Maybe this fix can be removed nowadays?
     # For PhOP scenario NG and Hybrid electrics needs to be phased out like ICEs: Not implemented yet
     dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
-                    value := pmax(value[period == (policyStartYear - 1)], endoCostRaw),
+                    value := pmax(value[period == 2020], endoCostRaw),
                       by = c("region", "technology", "vehicleType", "univocalName")]
-    if (isICEban) dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t,
+    if (isICEban) dataEndoCosts[variable == "Stations availability" & technology == "Gases" & period == t & period %in% ICEbanYears,
                                 value := pmax(policyMask, endoCostRaw),
                                 by = c("region", "technology", "vehicleType", "univocalName")]
 

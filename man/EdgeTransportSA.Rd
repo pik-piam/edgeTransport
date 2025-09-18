@@ -7,15 +7,17 @@
 calcEdgeTransportSA(
   SSPscen,
   transportPolScen,
-  isICEban = FALSE,
-  demScen = "default",
+  isICEban = c(FALSE, FALSE),
+  demScen = c("default", "default"),
+  startyear = 2021,
   gdxPath = NULL,
   outputFolder = NULL,
   isStored = FALSE,
   isTransportReported = TRUE,
   isTransportExtendedReported = FALSE,
   isREMINDinputReported = FALSE,
-  isAnalyticsReported = FALSE
+  isAnalyticsReported = FALSE,
+  testIterative = FALSE
 )
 }
 \arguments{
@@ -26,6 +28,8 @@ calcEdgeTransportSA(
 \item{isICEban}{optional enabling of ICE ban}
 
 \item{demScen}{Demand scenario, used to apply reduction factors on total demands from the regression}
+
+\item{startyear}{Year after which policy differentiation sets in}
 
 \item{gdxPath}{Path to a GDX file to load price signals from a REMIND run}
 
@@ -40,6 +44,8 @@ calcEdgeTransportSA(
 \item{isREMINDinputReported}{Optional reporting of REMIND input data}
 
 \item{isAnalyticsReported}{Optional reporting of analytics data (e.g. variables over iterations)}
+
+\item{testIterative}{development setting: make standalone and iterative scripts comparable, sets sectorESdemand = REMINDsectorESdemand and iterations = 1 (cost module)}
 }
 \value{
 Transport input data for REMIND
@@ -49,5 +55,5 @@ Transport input data for REMIND
 madrat caching.
 }
 \author{
-Jarusch Muessel, Johanna Hoppe
+Jarusch Muessel, Johanna Hoppe, Alex K. Hagen
 }

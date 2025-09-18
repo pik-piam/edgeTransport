@@ -1,23 +1,24 @@
 #' Load all inputs that are required to run the model
-#' @author Johanna Hoppe
-#' @param SSPscen SSP or SDP scenario
-#' @param transportPolScen EDGE-T transport policy scenario
+#' @author Johanna Hoppe, Alex K. Hagen
+#' @param SSPscen SSP or SDP scenarios
+#' @param transportPolScen EDGE-T transport policy scenarios
 #' @param demScen Demand scenario, used to apply reduction factors on total demands from the regression
-#' @param gdxPath Path to a GDX file to load price signals from a REMIND run
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
+#' @param allEqYear Year after which scenario differentiation sets in, last year in which scenarios are the same
 #' @returns list with different input data sets
 #' @import data.table
 #' @importFrom mrtransport toolPrepareTransportSubsidies
 #' @export
 
-toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridElecShare) {
+toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- univocalName <- test <- . <- NULL
 
   ### load inputs  ------------------------------------------------------------
 
   ## from mrtransport
-  mrtransportData <- toolLoadmrtransportData(SSPscen)
+  # ToDo temporary default to SSP2, to be removed again
+  mrtransportData <- toolLoadmrtransportData()
   # vehicle types that feature fleet tracking get a different temporal resolution
   dtTimeRes <- unique(mrtransportData$energyIntensityRaw[, c("univocalName", "period")])
   highRes <- unique(dtTimeRes$period)
@@ -48,10 +49,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
   )
 
   ## from mrdrivers
-  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers)
-
-  ## from REMIND
-  REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath, hybridElecShare, helpers)
+  mrdriversData <- toolLoadmrdriversData(SSPscen, helpers, allEqYear)
 
   # load and prepare transport subsidies from mrtransport
   subsidies <- toolPrepareTransportSubsidies(helpers)
@@ -89,7 +87,6 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, gdxPath, hybridEl
     nonFuelOPEXtrackedFleet = mrtransportData$nonFuelOPEXtrackedFleet,
     CAPEXother = mrtransportData$CAPEXother,
     nonFuelOPEXother = mrtransportData$nonFuelOPEXother,
-    REMINDfuelCosts = REMINDfuelCosts,
     timeValueCosts = mrtransportData$timeValueCosts,
     subsidies = subsidies,
     GDPMER = mrdriversData$GDPMER,

@@ -5,6 +5,8 @@
 #' @param gdxPath path to REMIND fulldata.gdx
 #' @param hybridElecShare Share of electricity in Hybrid electric vehicles
 #' @param helpers list with helpers
+#' @param transportFolder folder to search for fuel prices from previous iterations for averaging
+#' @param iterationNumber iteration number to store fuel costs for later iterations
 #' @returns fuel costs on technology level
 #' @import data.table
 #' @importFrom rmndt approx_dt magpie2dt
@@ -12,10 +14,10 @@
 #' @importFrom magrittr `%>%`
 #' @export
 #'
-toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
+toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transportFolder = ".", iterationNumber = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   value <- unit <- variable <- `Hybrid electric` <- fuel <- all_enty <- univocalName <- NULL
-  technology <- Liquids <- BEV <- period <- . <- NULL
+  technology <- Liquids <- BEV <- period <- . <- iteration <- NULL
 
    mapEdgeToREMIND <- unique(helpers$mapEdgeToREMIND[, c("all_enty", "univocalName", "technology")])
    # active modes do not feed into all_enty
@@ -24,7 +26,8 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
 
    # load prices from REMIND gdx
    if (is.null(gdxPath)) {
-     fuelCosts <- readSource("REMINDinputForTransportStandalone", convert = FALSE)
+     fuelCosts <- readSource("REMINDinputForTransportStandalone", subtype = "fuelCosts",
+                             convert = FALSE)
    } else {
      fuelCosts <- gdx::readGDX(gdxPath,
                                "pm_FEPrice",
@@ -65,6 +68,24 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers) {
 
    # get right temporal resolution
    fuelCosts <- toolApplyMixedTimeRes(fuelCosts, helpers)
+
+   # average fuel costs over REMIND iterations if available
+   pathFuelCosts <- list.files(transportFolder, "REMINDfuelCostIterations.RDS", recursive = TRUE,
+                               full.names = TRUE)
+   if (length(pathFuelCosts) > 0 & !is.null(iterationNumber)) {
+     REMINDfuelCostIterations <- readRDS(list.files(file.path(".", transportFolder), "REMINDfuelCostIterations.RDS", recursive = TRUE, full.names = TRUE))
+     REMINDfuelCostIterations <- rbind(REMINDfuelCostIterations, copy(fuelCosts)[, iteration := iterationNumber])
+     storeData(file.path(".", transportFolder), REMINDfuelCostIterations = REMINDfuelCostIterations)
+
+     if (max(unique(REMINDfuelCostIterations$iteration)) >= 20 &&
+         max(unique(REMINDfuelCostIterations$iteration)) <= 30) {
+       ## apply moving avg
+       byCols <- names(REMINDfuelCostIterations)
+       byCols <- byCols[!byCols %in% c("value", "iteration")]
+       fuelCosts <- copy(REMINDfuelCostIterations[iteration >= 20])
+       fuelCosts <- fuelCosts[, .(value = mean(value)), by = eval(byCols)]
+     }
+   }
 
    if (anyNA(fuelCosts) == TRUE) {
      stop("Fuel costs contain NAs")
