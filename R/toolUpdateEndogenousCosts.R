@@ -37,7 +37,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL 
 
   # parameters of endogenous cost trends
-  bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
+  bfuelav <- -20    ## value based on Greene 2001 the original value was "-20"
   bmodelav <- -12   ## value based on Greene 2001
   coeffrisk <- 3800 ## value based on Pettifor 2017
 

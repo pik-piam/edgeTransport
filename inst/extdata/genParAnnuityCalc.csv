@@ -1,5 +1,9 @@
-transportPolScen;FVvehvar;interestRate;serviceLife
-default;LDV|4W;0.1;20
+demScen;FVvehvar;interestRate;serviceLife
+default;LDV|4W;0.20;20
 default;Bus;0.05;15
 default;Truck|light;0.05;15
 default;Truck|heavy;0.05;15
+sharedMobility;LDV|4W;0.05;15
+sharedMobility;Bus;0.05;15
+sharedMobility;Truck|light;0.05;15
+sharedMobility;Truck|heavy;0.05;15

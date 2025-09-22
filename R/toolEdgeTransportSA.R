@@ -116,9 +116,9 @@ toolEdgeTransportSA <- function(SSPscen,
                                 na.strings = "NA",
                                 colClasses = list(character = "technology"))
 
-  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
-  histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
+  #overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
+  #histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
+  #histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
 
   # end of temporary solution
   ##########################

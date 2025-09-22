@@ -48,15 +48,18 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv",
                                    package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Interest Rate and vehicle service life for annuity calculation
+    # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters,
   # we can shift annuityCalc to the scenPar's
-  if  (transportPolS[1] %in% annuityCalc$transportPolScen) {
+  demS1 <- strsplit(demScenario[1], "_")[[1]][2]
+  if  (demS1 %in% annuityCalc$demScen) {
     # once this is used, scenario switching with allEqYear needs to be checked
-    annuityCalc[, "startYearCat" := fcase( transportPolScen == transportPolS[1], "origin", transportPolScen == transportPolS[2], "final")]
-    annuityCalc <- annuityCalc[!is.na(startYearCat)][, transportPolScen := NULL]
+    annuityCalc[, "startYearCat" := fcase( demScen == demS1, "origin", demScen == strsplit(demScenario[2], "_")[[1]][2], "final")]
+    annuityCalc <- annuityCalc[!is.na(startYearCat)][, demScen := NULL]
+    #I think we don't need this here unless if we connect if to the demScen 
+    annuityCalc[, startYearCat := NULL]
   } else {
-    annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
+    annuityCalc <- annuityCalc[demScen == "default"][, demScen := NULL]
   }
 
   ## scenario specific levers
