@@ -8,6 +8,8 @@ Moped;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
 Moped;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
 Motorcycle (>250cc);BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
 Motorcycle (>250cc);Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
+Rickshaw;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
+Rickshaw;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm
 Compact Car;BEV;feelt;te_eselt_pass_sm;entrp_pass_sm
 Compact Car;FCEV;feh2t;te_esh2t_pass_sm;entrp_pass_sm
 Compact Car;Liquids;fepet;te_espet_pass_sm;entrp_pass_sm

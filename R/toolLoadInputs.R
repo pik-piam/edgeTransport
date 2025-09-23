@@ -30,7 +30,7 @@ toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare, 
   ### edgeTransport package data
   packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
   # categories for filtering data
-  categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
+  categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_3W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
   filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
   filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]],
                                        getFilterEntriesUnivocalName("Bus", packageData$decisionTree)[["Bus"]])

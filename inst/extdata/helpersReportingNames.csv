@@ -8,6 +8,7 @@ trn_pass_road;Road
 trn_freight_road;Road
 trn_pass_road_LDV;LDV
 trn_pass_road_LDV_2W;Two Wheelers
+trn_pass_road_LDV_3W;Three Wheelers
 trn_pass_road_LDV_4W;Four Wheelers
 Passenger Rail;non-HSR
 Freight Rail;Rail
