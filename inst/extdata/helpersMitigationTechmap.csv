@@ -4,6 +4,7 @@ Domestic Aviation;Domestic Aviation_tmp_vehicletype;Aviation
 Motorcycle (50-250cc);Motorcycle (50-250cc);LDV|2W
 Moped;Moped;LDV|2W
 Motorcycle (>250cc);Motorcycle (>250cc);LDV|2W
+Rickshaw;Rickshaw;LDV|3W
 Bus;Bus_tmp_vehicletype;Bus
 Truck (0-3_5t);Truck (0-3_5t);Truck|light
 Truck (18t);Truck (18t);Truck|light

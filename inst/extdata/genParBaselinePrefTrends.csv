@@ -434,7 +434,7 @@ SSP2;ESC;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass
 SSP2;ESW;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.25;1;1;1
 SSP2;EWN;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0.001;0.25;1;1;1
 SSP2;FRA;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.25;1;1;1
-SSP2;IND;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0.2;0.6;1;1;1
+SSP2;IND;BEV;Rickshaw;trn_pass_road_LDV_3W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0.2;0.6;1;1;1
 SSP2;JPN;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.25;1;1;1
 SSP2;LAM;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.25;1;1;1
 SSP2;MEA;BEV;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;0;0.25;1;1;1
@@ -5450,7 +5450,7 @@ SSP2;ESC;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_
 SSP2;ESW;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
 SSP2;EWN;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
 SSP2;FRA;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
-SSP2;IND;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.4;0.1;0.1
+SSP2;IND;Liquids;Rickshaw;trn_pass_road_LDV_3W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.4;0.1;0.1
 SSP2;JPN;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
 SSP2;LAM;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
 SSP2;MEA;Liquids;Motorcycle (>250cc);trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;FV;1;1;0.7;0.1;0.1
