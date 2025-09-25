@@ -232,7 +232,8 @@ toolEdgeTransportSA <- function(SSPscen,
     vehSalesAndModeShares <- toolDiscreteChoice(inputData,
                                                 genModelPar,
                                                 endogenousCosts$updatedEndogenousCosts,
-                                                helpers)
+                                                helpers, 
+                                                demScen[1])
     if (isAnalyticsReported) {
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
                                                    function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})

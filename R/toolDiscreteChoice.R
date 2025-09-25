@@ -12,7 +12,7 @@
 #' @export
 
 
-toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers) {
+toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers, demScenario = "default") {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   type <- level <- vehicleType <- subsectorL1 <- pref <- lambda <- . <- value <- zeroTypes <- share <- NULL
   totPrice <- testShares <- variable <- univocalName <- period <- technology <- subsectorL3 <- subsectorL2 <- unit <- NULL
@@ -62,7 +62,15 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   allCostsFV <- merge(allCostsFV, FVshares[, -c("level")],  by = intersect(names(allCostsFV), names(FVshares)))
   # only FV level features detailed yearly resolution for some vehicle types. Set resolution back to years
   allCostsFV <- allCostsFV[period %in% helpers$lowTimeRes]
-  #allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & variable == "Fuel costs", value := value + 0.05]
+
+  costsCarSharing <- fread(system.file("extdata", "incoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
+  costsCarSharing <- costsCarSharing[demScen == demScenario]
+  browser()
+  if (nrow(costsCarSharing) > 0) {
+    costTimeSeries <- data.table[, `=`(period = unqiue(allCostsFV$period), costs = 0)][period == costsCarSharing$period, costs := costsCarSharing$costs]
+    
+    #allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & period >= value := value + 0.05]
+  }
   allCostsVS3 <- toolTraverseDecisionTree(allCostsFV, "vehicleType", helpers$decisionTree)
   # time value costs only need to be added starting from level VS3. If there is no decision in the level
   # (only a single branch) the time value costs are kept and aggregated with a share of one
@@ -119,7 +127,6 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S3S2shares <- S3S2shares[, .(totPrice = sum(value)), by = setdiff(names(S3S2shares), c("variable", "type", "value"))]
   S3S2shares[, share := calculateShares(totPrice, lambda, pref),
             by = c("region", "period", "sector", "subsectorL1", "subsectorL2")][, c("totPrice", "lambda", "pref") := NULL]
-  S3S2shares[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & period == 2050 ]
 
   S3S2shares[, testShares := sum(share), by = c("region", "period", "subsectorL2")]
   if (nrow(S3S2shares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(S3S2shares) || nrow(S3S2shares) == 0)
