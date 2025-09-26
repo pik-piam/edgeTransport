@@ -62,14 +62,23 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   # only FV level features detailed yearly resolution for some vehicle types. Set resolution back to years
   allCostsFV <- allCostsFV[period %in% helpers$lowTimeRes]
 
-  costsCarSharing <- fread(system.file("extdata", "incoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
+  costsCarSharing <- fread(system.file("extdata", "scenParIncoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
   costsCarSharing <- costsCarSharing[demScen == demScenario]
-  browser()
   if (nrow(costsCarSharing) > 0) {
-    costTimeSeries <- data.table[, `=`(period = unqiue(allCostsFV$period), costs = 0)][period == costsCarSharing$period, costs := costsCarSharing$costs]
-    
-    #allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & period >= value := value + 0.05]
+    costTimeSeries <- data.table(period = unique(allCostsFV$period), costs = 0)
+    known_periods <- c(min(costTimeSeries$period), costsCarSharing$period)
+    known_costs   <- c(0, costsCarSharing$costs)
+    costTimeSeries[, costs := approx(x = known_periods, y = known_costs, xout = period, method="linear")$y]
+    costTimeSeries[period >= costsCarSharing$period, costs := costsCarSharing$costs]
+
+    incoCarSharing <- copy(allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & variable == "Fuel costs"])
+    incoCarSharing[, variable := "Inconvenience costs"]
+    incoCarSharing <- costTimeSeries[incoCarSharing, on = "period"]
+    incoCarSharing[, value := costs][, costs := NULL]
+
+    allCostsFV <- rbind(allCostsFV, incoCarSharing)
   }
+
   allCostsVS3 <- toolTraverseDecisionTree(allCostsFV, "vehicleType", helpers$decisionTree)
   # time value costs only need to be added starting from level VS3. If there is no decision in the level
   # (only a single branch) the time value costs are kept and aggregated with a share of one
