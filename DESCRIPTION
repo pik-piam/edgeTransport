@@ -14,7 +14,7 @@ Description: EDGE-T is a fork of the GCAM transport module https://jgcri.github.
 Depends:
     R (>= 3.5.0),
     data.table (>= 1.11.0),
-    mrtransport (>= 0.10.5)
+    mrtransport (>= 0.12)
 License: GPL-3
 URL: https://github.com/pik-piam/edgeTransport
 Encoding: UTF-8
@@ -34,7 +34,7 @@ Imports:
     zoo,
     gdxdt,
     mrdrivers,
-    reporttransport (>= 1.0.0)
+    reporttransport (>= 1.1.0)
 Suggests:
     testthat (>= 3.0.0),
     knitr,
