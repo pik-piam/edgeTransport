@@ -56,11 +56,16 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsFV[, variable := paste0("Logit cost|FV|", variable)][, type := NULL]
   costsDiscreteChoice <- list(allCostsFV = storeAllCostsFV)
 
+  #browser()
+  #FVshares[region == "IND" & period %in% c(2025, 2030, 2040, 2045, 2050) & vehicleType == "Subcompact Car" & technology == "BEV"]
+
   # calculate all VS3 shares --------------------------------------------------------------------
   allCostsFV <- allCostsFV[type == "Monetary Costs"][, univocalName := NULL]
   allCostsFV <- merge(allCostsFV, FVshares[, -c("level")],  by = intersect(names(allCostsFV), names(FVshares)))
   # only FV level features detailed yearly resolution for some vehicle types. Set resolution back to years
   allCostsFV <- allCostsFV[period %in% helpers$lowTimeRes]
+  old <- copy(allCostsFV)
+  allCostsFV <- old
 
   costsCarSharing <- fread(system.file("extdata", "scenParIncoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
   costsCarSharing <- costsCarSharing[demScen == demScenario]
@@ -69,7 +74,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
     known_periods <- c(min(costTimeSeries$period), costsCarSharing$period)
     known_costs   <- c(0, costsCarSharing$costs)
     costTimeSeries[, costs := approx(x = known_periods, y = known_costs, xout = period, method="linear")$y]
-    costTimeSeries[period >= costsCarSharing$period, costs := costsCarSharing$costs]
+    costTimeSeries[period >= costsCarSharing$period[length(costsCarSharing$period)], costs := costsCarSharing$costs[length(costsCarSharing$period)]]
 
     incoCarSharing <- copy(allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & variable == "Fuel costs"])
     incoCarSharing[, variable := "Inconvenience costs"]
@@ -115,11 +120,11 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsVS3 <- copy(allCostsVS3)
   storeAllCostsVS3[, variable := paste0("Logit cost|VS3|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsVS3 = storeAllCostsVS3))
-
+  #browser()
+  ##VS3shares[region == "IND" & period %in% c(2020, 2070) & grepl("trn_pass_road_LDV_4W", subsectorL3)]#,.(period, share)]
   # calculate all S3S2 shares --------------------------------------------------------------------
   allCostsVS3 <- merge(allCostsVS3, VS3shares[, -c("level")],  by = intersect(names(allCostsVS3), names(VS3shares)))
   allCostsS3S2 <- toolTraverseDecisionTree(allCostsVS3, "subsectorL3", helpers$decisionTree)
-
   prefTrendsS3S <- prefTrends[level == "S3S2"][, level := NULL]
   S3S2shares <- merge(allCostsS3S2, prefTrendsS3S, by = intersect(names(allCostsS3S2), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S3S2"]
@@ -131,7 +136,16 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S3S2shares[grepl(".*tmp.*", subsectorL3), pref := 1]
   S3S2shares[grepl(".*tmp.*", subsectorL3), c("technology", "vehicleType") := ""]
   if (anyNA(S3S2shares)) stop("S3S2 preferences are missing in toolDiscreteChoice()")
+  #browser()
 
+  
+  #S3S2shares <- updateIncoCosts(S3S2shares)
+  #incoCosts <- old[variable == "Inconvenience costs", .SD, .SDcols = names(allCostsS3S2)]
+
+  #incoCosts <- S3S2shares[variable == "Inconvenience costs", .SD, .SDcols = names(allCostsS3S2)]
+  #incoCostsNeg <- copy(incoCosts)[, value := value * -1]
+  #allCostsS3S2 <- rbind(allCostsS3S2, incoCostsNeg)
+  
   S3S2shares <- S3S2shares[, .(totPrice = sum(value)), by = setdiff(names(S3S2shares), c("variable", "type", "value"))]
   S3S2shares[, share := calculateShares(totPrice, lambda, pref),
             by = c("region", "period", "sector", "subsectorL1", "subsectorL2")][, c("totPrice", "lambda", "pref") := NULL]
@@ -143,11 +157,13 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsS3S2 <- copy(allCostsS3S2)
   storeAllCostsS3S2[, variable := paste0("Logit cost|S3S2|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS3S2 = storeAllCostsS3S2))
-
+  #browser()
+  S3S2shares[region == "IND" & period %in% c(2040) & grepl("LDV", subsectorL2),.(period, subsectorL3, share)]
+ 
   # calculate all S2S1 shares --------------------------------------------------------------------
   allCostsS3S2 <- merge(allCostsS3S2, S3S2shares[, -c("level")],  by = intersect(names(allCostsS3S2), names(S3S2shares)))
   allCostsS2S1 <- toolTraverseDecisionTree(allCostsS3S2, "subsectorL2", helpers$decisionTree)
-
+  
   prefTrendsS2S1 <- prefTrends[level == "S2S1"][, level := NULL]
   S2S1shares <- merge(allCostsS2S1, prefTrendsS2S1, by = intersect(names(allCostsS2S1), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S2S1"][, level := NULL]
@@ -163,7 +179,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   S2S1shares <- S2S1shares[, .(totPrice = sum(value)), by = setdiff(names(S2S1shares), c("variable", "type", "value"))]
   S2S1shares[, share := calculateShares(totPrice, lambda, pref),
              by = c("region", "period", "sector", "subsectorL1")][, c("totPrice", "lambda", "pref") := NULL]
-
+  S2S1shares[region == "IND" & period %in% c(2050) & grepl("trn_pass_road_LDV", subsectorL2)]
   S2S1shares[, testShares := sum(share), by = c("region", "period", "subsectorL1")]
   if (nrow(S2S1shares[testShares < 0.9999 | testShares > 1.0001]) > 0 || anyNA(S2S1shares) || nrow(S2S1shares) == 0)
     stop("S2S1 shares in toolDiscreteChoice() were not calculated correctly")
@@ -199,7 +215,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsS1S <- copy(allCostsS1S)
   storeAllCostsS1S[, variable := paste0("Logit cost|S1S|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS1S = storeAllCostsS1S))
-
+  ##S1Sshares[region == "IND" & period %in% c(2025, 2040, 2050) & grepl("trn_pass_road", subsectorL1)]
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
   # toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
