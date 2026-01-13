@@ -18,18 +18,13 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
     sha * sum(x * pri ^ lamb) / min(pri ^ lamb) - x * pri ^ lamb / min(pri ^ lamb)
   }
 
-  # The Jacobian is the matrix of partial derivatives of those equations with respect to x, which helps the numerical root finder
-  jacobian <- function(x, pri, sha, lamb){
-    matrix(sha) %*% t(matrix(pri)) / min(pri ^ lamb) - pri * diag(length(pri)) / min(pri ^ lamb)
-  }
-
   # rootFunction wraps a multivariate root solver (rootSolve::multiroot) that:
   # - Starts from an initial guess factor (vector of starting values for preferences).
   # - Solves optFunction(...) = 0 for x, subject to positivity.
   # - Returns results$root, the calibrated preferences for that node.
   rootFunction <- function(prices, shares, lambda, factor){
     results <- rootSolve::multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
-                                    lamb = lambda, positive = T, jacfunc = jacobian)
+                                    lamb = lambda, positive = T)
     return(results$root)
   }
 
@@ -47,7 +42,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   # The function stops when all the preference have been successfully calculated
   # Returns the dt with the calculated preference, already normalized
 
-  calculatePreferences <- function(dfPreference, groupingValue, varyGuess){
+  calculatePreferences <- function(dfPreference, groupingValue, varyGuess, tol = 0.01){
     fac <- shareDiff <- NULL
 
     # loops through all the initial points suggested until suitable preferences are found
@@ -80,13 +75,17 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
       dfPreference[,
                    preference := preference / max(preference),
                    by = c("region", "period",groupingValue)]
+
+      # Check solutions
+      checkShares(dfPreference, groupingValue)
+      # Don't accept bad solutions
+      dfPreference[shareDiff >= tol, preference := NaN]
+
       # exit the loop if all the preference are calculated and there are no NaNs
       if (!any(is.nan(dfPreference$preference)) & !is.null(dfPreference$preference)) {
         break
       }
     }
-
-    checkShares(dfPreference, groupingValue)
     return(dfPreference)
   }
 
@@ -114,7 +113,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   FVpreference  <- rbind(FVpreference, prefFVzero, prefFVactive)
   VS3preference <- copy(FVpreference)
-  FVpreference <- FVpreference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff"), with = FALSE][, level := "FV"]
+  FVpreference <- FVpreference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "FV"]
 
   ## -----------------------------------------------------------------------------------------
   VS3preference <- VS3preference[period %in% helpers$lowTimeRes]
@@ -137,14 +136,14 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   VS3preference[is.na(lambda), lambda := -10]
 
   VS3preference <-  VS3preference[!(share == 0 & histESdemand == 0)]
-  VS3preference <- calculatePreferences(dfPreference = VS3preference, varyGuess =  c(7, 1, 2, 6, 5, 3),
+  VS3preference <- calculatePreferences(dfPreference = VS3preference, varyGuess =  c(15, 10, 1, 0, 2, 6, 5, 3),
                                         groupingValue = "subsectorL3")
   VS3preference[, c("fac", "lambda") := NULL]
 
   VS3preference  <- rbind(VS3preference, prefVS3zero)
   S3S2preference <- copy(VS3preference)
   VS3preference[, dataStructureDummy[!dataStructureDummy %in% names(VS3preference)] := ""]
-  VS3preference <- VS3preference[,  c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff"), with = FALSE][, level := "VS3"]
+  VS3preference <- VS3preference[,  c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "VS3"]
 
   ## -----------------------------------------------------------------------------------------
   S3S2preference <- S3S2preference[, .(totPrice = sum(share * totPrice), histESdemand = sum(histESdemand)),
@@ -166,7 +165,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S3S2preference  <- rbind(S3S2preference, prefS3S2zero)
   S2S1preference <- copy(S3S2preference)
   S3S2preference[, dataStructureDummy[!dataStructureDummy %in% names(S3S2preference)] := ""]
-  S3S2preference <- S3S2preference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff"), with = FALSE][, level := "S3S2"]
+  S3S2preference <- S3S2preference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "S3S2"]
 
   ## -----------------------------------------------------------------------------------------
   S2S1preference <- S2S1preference[, .(totPrice = sum(share * totPrice), histESdemand = sum(histESdemand)),
@@ -186,7 +185,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S2S1preference  <- rbind(S2S1preference, prefS2S1zero)
   S1Spreference <- copy(S2S1preference)
   S2S1preference[, dataStructureDummy[!dataStructureDummy %in% names(S2S1preference)] := ""]
-  S2S1preference <- S2S1preference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff"), with = FALSE][, level := "S2S1"]
+  S2S1preference <- S2S1preference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "S2S1"]
 
   ## -----------------------------------------------------------------------------------------
   S1Spreference <- S1Spreference[, .(totPrice = sum(share * totPrice), histESdemand = sum(histESdemand)),
@@ -200,21 +199,26 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   S1Spreference <-  S1Spreference[!(share == 0 & histESdemand == 0)]
   S1Spreference <- calculatePreferences(dfPreference = S1Spreference,
-                                        varyGuess =  c(1, 2, 5, 3, 1, 4), groupingValue = "sector")
+                                        varyGuess =  c(10, 5, 0, 1, 2, 7, 3, 4, 20, 15), groupingValue = "sector")
   S1Spreference[, c("fac", "lambda") := NULL]
   S1Spreference  <- rbind(S1Spreference, prefS1Szero)
   S1Spreference[, dataStructureDummy[!dataStructureDummy %in% names(S1Spreference)] := ""]
-  S1Spreference <- S1Spreference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff"), with = FALSE][, level := "S1S"]
+  S1Spreference <- S1Spreference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "S1S"]
 
   historicalPreferences <- rbind(FVpreference, VS3preference, S3S2preference, S2S1preference, S1Spreference)
   calibrationReport <- copy(historicalPreferences)
-  historicalPreferences[, c("shareCheck", "shareDiff") := NULL]
+  historicalPreferences[, c("shareCheck", "shareDiff", "share") := NULL]
   toolCheckAllLevelsComplete(historicalPreferences, helpers$decisionTree, "Historical preferences")
 
   historicalPreferences <-  historicalPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
   historicalPreferences[, variable := paste0("Preference|", level)][, unit := "-"]
   setnames(historicalPreferences, "preference", "value")
+langfristig
+
+  if (nrow(calibrationReport[shareDiff >= 0.01]) >= 1) stop(paste0("Calibrated shares differ
+                                                      by more than 0.01 from historical data. Please provide better guesses for the calibration.
+                                                      Affected levels:", unique(calibrationReport$levels)))
 
   result <- list(historicalPreferences = historicalPreferences,
                  calibrationReport = calibrationReport)
