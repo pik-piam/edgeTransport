@@ -11,7 +11,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- NULL
 
-  # Optimization function: Non-linear set of equations to solve. Sha are the calculated shares from empirical data the preferences x are calibrated against.
+  # Optimization function: Non-linear set of equations to solve. Sha are the calculated shares from empirical data used to calibrate preferences x.
   # Equations are derived by solving logit function to caluclate shares (Rottoli et al.) for zero.
   # (1/min(pri ^ lamb)) is a factor applied to both sides of the equation to keep it closer to one
   optFunction <- function(x, pri, sha, lamb){
@@ -23,8 +23,8 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   # - Solves optFunction(...) = 0 for x, subject to positivity.
   # - Returns results$root, the calibrated preferences for that node.
   rootFunction <- function(prices, shares, lambda, factor){
-    results <- rootSolve::multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
-                                    lamb = lambda, positive = T)
+    results <- suppressWarnings(rootSolve::multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
+                                    lamb = lambda, positive = T))
     return(results$root)
   }
 
@@ -62,11 +62,11 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
                      # cheap price (compared to maximum in branch) lowers guess:
                      # Final share is suspected to be more price driven and less preference driven
                      # Expensive options can be chosen due to high preferences (luxury cars, more comfort) despite higher prices
-                     fac := share / max(share) * (totPrice / max(totPrice)) ^ variation,
+                     guess := share / max(share) * (totPrice / max(totPrice)) ^ variation,
                      by = c("region", "period", groupingValue)]
         # apply the root function
         dfPreference[lambda == lamb  & is.nan(preference),
-                     preference := rootFunction(totPrice, share, lamb, fac),
+                     preference := rootFunction(totPrice, share, lamb, guess),
                      by = c("region", "period", groupingValue)]
       }
 
@@ -107,9 +107,12 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   FVpreference <- merge(FVpreference, lambdas[level == "FV"],
                         by = c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType"),
                         all.x = TRUE)[, level := NULL]
+  # varyGuess inluences the impact of the price on the heuristic that determines the guesses for the solver.
+  # The entries in the varyGuess vector are independent of each other and are applied to the heuristic/
+  # tried out with the solver one after the other (without influencing the subsequent guess)
   FVpreference <- suppressMessages(calculatePreferences(dfPreference = FVpreference,
                                                         varyGuess = c(2, 1, 3, 4, 5, 6, 7), groupingValue = "vehicleType"))
-  FVpreference[, c("fac", "lambda") := NULL]
+  FVpreference[, c("guess", "lambda") := NULL]
 
   FVpreference  <- rbind(FVpreference, prefFVzero, prefFVactive)
   VS3preference <- copy(FVpreference)
@@ -138,7 +141,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   VS3preference <-  VS3preference[!(share == 0 & histESdemand == 0)]
   VS3preference <- calculatePreferences(dfPreference = VS3preference, varyGuess =  c(15, 10, 1, 0, 2, 6, 5, 3),
                                         groupingValue = "subsectorL3")
-  VS3preference[, c("fac", "lambda") := NULL]
+  VS3preference[, c("guess", "lambda") := NULL]
 
   VS3preference  <- rbind(VS3preference, prefVS3zero)
   S3S2preference <- copy(VS3preference)
@@ -160,7 +163,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S3S2preference <-  S3S2preference[!(share == 0 & histESdemand == 0)]
   S3S2preference <- calculatePreferences(dfPreference = S3S2preference,
                                          varyGuess =  c(1, 0.5, 2, 3, 1, 4), groupingValue = "subsectorL2")
-  S3S2preference[, c("fac", "lambda") := NULL]
+  S3S2preference[, c("guess", "lambda") := NULL]
 
   S3S2preference  <- rbind(S3S2preference, prefS3S2zero)
   S2S1preference <- copy(S3S2preference)
@@ -180,7 +183,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S2S1preference <-  S2S1preference[!(share == 0 & histESdemand == 0)]
   S2S1preference <- calculatePreferences(dfPreference = S2S1preference,
                                          varyGuess =  c(2, 3, 4, 2, 1), groupingValue = "subsectorL1")
-  S2S1preference[, c("fac", "lambda") := NULL]
+  S2S1preference[, c("guess", "lambda") := NULL]
 
   S2S1preference  <- rbind(S2S1preference, prefS2S1zero)
   S1Spreference <- copy(S2S1preference)
@@ -200,7 +203,7 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S1Spreference <-  S1Spreference[!(share == 0 & histESdemand == 0)]
   S1Spreference <- calculatePreferences(dfPreference = S1Spreference,
                                         varyGuess =  c(10, 5, 0, 1, 2, 7, 3, 4, 20, 15), groupingValue = "sector")
-  S1Spreference[, c("fac", "lambda") := NULL]
+  S1Spreference[, c("guess", "lambda") := NULL]
   S1Spreference  <- rbind(S1Spreference, prefS1Szero)
   S1Spreference[, dataStructureDummy[!dataStructureDummy %in% names(S1Spreference)] := ""]
   S1Spreference <- S1Spreference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "S1S"]
@@ -214,7 +217,6 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
 
   historicalPreferences[, variable := paste0("Preference|", level)][, unit := "-"]
   setnames(historicalPreferences, "preference", "value")
-langfristig
 
   if (nrow(calibrationReport[shareDiff >= 0.01]) >= 1) stop(paste0("Calibrated shares differ
                                                       by more than 0.01 from historical data. Please provide better guesses for the calibration.
