@@ -23,8 +23,18 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   # - Solves optFunction(...) = 0 for x, subject to positivity.
   # - Returns results$root, the calibrated preferences for that node.
   rootFunction <- function(prices, shares, lambda, factor){
-    results <- suppressWarnings(rootSolve::multiroot(f = optFunction, start = factor, pri = prices, sha = shares,
-                                    lamb = lambda, positive = T))
+     invisible(capture.output(
+      suppressWarnings(
+        suppressMessages({
+          results <- rootSolve::multiroot(
+            f = optFunction,
+            start = factor,
+            pri = prices,
+            sha = shares,
+            lamb = lambda, positive = T)
+        })
+      )
+    ))
     return(results$root)
   }
 
@@ -191,13 +201,14 @@ toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, l
   S2S1preference <- S2S1preference[, c(dataStructureDummy, "period", "preference", "shareCheck", "shareDiff", "share"), with = FALSE][, level := "S2S1"]
 
   ## -----------------------------------------------------------------------------------------
+
   S1Spreference <- S1Spreference[, .(totPrice = sum(share * totPrice), histESdemand = sum(histESdemand)),
                                  by = c("region", "period", "sector", "subsectorL1")]
   S1Spreference[, share := histESdemand / sum(histESdemand),  by = c("region", "period", "sector")]
   S1Spreference[is.nan(share) & histESdemand == 0, share := 0]
   prefS1Szero <- S1Spreference[share == 0 & histESdemand == 0][, preference := 0][, shareCheck := 0][, shareDiff := 0]
 
-  S1Spreference <- merge(S1Spreference, lambdas[level == "S3S2", c("sector", "lambda")], by = c("sector"), all.x = TRUE)
+  S1Spreference <- merge(S1Spreference, lambdas[level == "S1S", c("sector", "lambda")], by = c("sector"), all.x = TRUE)
   S1Spreference[is.na(lambda), lambda := -10]
 
   S1Spreference <-  S1Spreference[!(share == 0 & histESdemand == 0)]
