@@ -40,7 +40,7 @@ toolEdgeTransportSA <- function(SSPscen,
   variable <- version <- region <- vehicleType <- technology <- period <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
-  version <- "3.0.0"
+  version <- "3.2.0"
 
   commonParams <- toolGetCommonParameters(startyear, isICEban[1], isICEban[2])
 
@@ -101,24 +101,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                       inputDataRaw$timeValueCosts,
                                       genModelPar$lambdasDiscreteChoice,
                                       helpers)
-  ##########################
-  # The following lines are supposed to be deleted:
-  # overwrite historical preferences for trucks in MEA
-  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferencesMix2.RDS")
-  paste(pathMEA)
-  paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
-  overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
-                                header = TRUE,
-                                na.strings = "NA",
-                                colClasses = list(character = "technology"))
 
-  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
-  histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
-
-  # end of temporary solution
-  ##########################
   scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
@@ -239,7 +222,7 @@ toolEdgeTransportSA <- function(SSPscen,
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
                                                   vehSalesAndModeShares$shares,
                                                   helpers,
-                                                  inputData$histESdemand,
+                                                  NULL,
                                                   baseYear)
     print("Calculation of vehicle sales and mode shares finished")
     #################################################

@@ -29,22 +29,21 @@ toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, h
   for (i in seq(1, (length(shares) - 1), 1)) {
     FVSshares <- merge(FVSshares, shares[[i + 1]], by = intersect(names(FVSshares), names(shares[[i + 1]])))
   }
+
   FVSshares[, FVSshare := shareS1S * shareS2S1 * shareS3S2 * shareVS3 * shareFV]
   FVSshares <- FVSshares[, c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology", "period", "FVSshare")]
   # Apply shares on demand --------------------------------------------
+  sectorESdemand[, variable := "ES"]
+  if (!is.null(histESdemand)) {
+    # REMIND energy service demand starts in 2005 -> get 1990 value from historical demand
+    # Check whether this is really necessary
+    histESdemand <- merge(histESdemand, helpers$decisionTree, by = intersect(names(histESdemand), names(helpers$decisionTree)))
+    histESdemand <- histESdemand[, .(value = sum(value)), by = c("region", "period", "sector", "variable", "unit")]
+    histESdemand <- histESdemand[period == 1990]
+    sectorESdemand <- rbind(sectorESdemand, histESdemand[!period %in% unique(sectorESdemand$period)])
+  }
   fuelVehicleESdemand <- merge(sectorESdemand, FVSshares, by = intersect(names(sectorESdemand), names(FVSshares)), all.y = TRUE)
   fuelVehicleESdemand[, value := value * FVSshare][, FVSshare := NULL]
-
-  if (!is.null(histESdemand)) {
-    fuelVehicleESdemand <- fuelVehicleESdemand[period > baseYear,
-                                               c("region", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType",
-                                                 "technology", "unit", "period", "value")]
-    fuelVehicleESdemand[, variable := "ES"]
-    fuelVehicleESdemand <- merge(fuelVehicleESdemand, helpers$decisionTree, by = intersect(names(fuelVehicleESdemand), names(helpers$decisionTree)))
-    histESdemand <- merge(histESdemand, helpers$decisionTree, by = intersect(names(histESdemand), names(helpers$decisionTree)))
-    fuelVehicleESdemand <- rbind(fuelVehicleESdemand, histESdemand)
-  }
-
   fuelVehicleESdemand <- toolOrderandCheck(fuelVehicleESdemand, helpers$decisionTree)
 
   return(fuelVehicleESdemand)
