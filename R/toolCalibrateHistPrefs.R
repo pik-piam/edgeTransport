@@ -6,7 +6,8 @@
 #' @param lambdas Exponents for discrete choice function
 #' @param helpers list with helpers
 #' @returns data.table with calibrated historical preferences
-#'
+#' @export
+
 toolCalibrateHistPrefs <- function(combinedCosts, histESdemand, timeValueCost, lambdas, helpers){
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- NULL
