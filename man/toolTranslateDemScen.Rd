@@ -8,16 +8,14 @@ It is used at the interfaces REMIND-EDGETiterative, EDGETiterative-REMIND}
 toolTranslateDemScen(
   demScen,
   transportPolScen = NULL,
-  isICEban = NULL,
   direction = c("EDGEtoREMIND", "REMINDtoEDGE")
 )
 }
 \arguments{
-\item{demScen}{demand scenario, to be renamed}
+\item{demScen}{demand scenario,
+if demScen is in mapping it will be translated otherwise returned unchanged}
 
 \item{transportPolScen}{transport policy scenario as it is used in EDGET}
-
-\item{isICEban}{boolean indicationg if ICEban is on or off}
 
 \item{direction}{one of two labels indicating the direction of the translation}
 }

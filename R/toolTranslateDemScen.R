@@ -4,7 +4,6 @@
 #' @param demScen demand scenario,
 #'                if demScen is in mapping it will be translated otherwise returned unchanged
 #' @param transportPolScen transport policy scenario as it is used in EDGET
-#' @param isICEban boolean indicationg if ICEban is on or off
 #' @param direction one of two labels indicating the direction of the translation
 #' @returns demScen in the desired model name logic
 #' @author Alex K. Hagen
