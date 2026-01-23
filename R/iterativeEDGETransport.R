@@ -43,7 +43,7 @@ iterativeEdgeTransport <- function() {
   #  scenario after startyear (if given) but no earlier than 2020 from current REMIND config
   SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
   transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
-  demScen[2] <- cfgCurrentRun$gms$cm_demScen
+  demScen[2] <- toolTranslateDemScen(cfgCurrentRun$gms$cm_demScen, direction = "REMINDtoEDGE")
 
   startyear <- as.numeric(cfgCurrentRun$gms$cm_startyear)
 
@@ -63,7 +63,7 @@ iterativeEdgeTransport <- function() {
     cfg <- NULL
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
     transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
-    demScen[1] <- cfgReferenceRun$gms$cm_demScen
+    demScen[1] <- toolTranslateDemScen(cfgReferenceRun$gms$cm_demScen, direction = "REMINDtoEDGE")
   } else {
     SSPscen[1] <- SSPscen[2]
     transportPolScen[1] <- transportPolScen[2]
@@ -407,9 +407,9 @@ iterativeEdgeTransport <- function() {
   }
 
   # Keep only final SSPscen, demScen, transportPolScen
-  demScen <- demScen[length(demScen)]
   SSPscen <- SSPscen[length(SSPscen)]
   transportPolScen <- transportPolScen[length(transportPolScen)]
+  demScen <- toolTranslateDemScen(demScen[length(demScen)], transportPolScen, direction = "EDGEtoREMIND")
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
