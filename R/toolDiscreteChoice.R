@@ -71,6 +71,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   allCostsVS3 <- rbind(allCostsVS3, timeValueCosts)
 
   prefTrendsVS3 <- prefTrends[level == "VS3"][, "level" := NULL]
+
   VS3shares <- merge(allCostsVS3, prefTrendsVS3, by = intersect(names(allCostsVS3), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "VS3"]
   lambdas <- lambdas[, c("subsectorL3", "lambda")]
