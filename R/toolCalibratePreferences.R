@@ -1,6 +1,6 @@
 #' Calibrate the logit share weights to historical data.
 #'
-#' @param sharesToBecalibrated Shares at each level of the decision tree for which preferences are to be calibrated
+#' @param sharesToBeCalibrated Shares at each level of the decision tree for which preferences are to be calibrated
 #' @param combinedCosts Annualized total cost of ownership
 #' @param timeValueCost Time value cost for passenger transport modes
 #' @param lambdas Exponents for discrete choice function
@@ -52,6 +52,8 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
   # for loop that tries multiple initial points for the preference calibration.
   # The function stops when all the preference have been successfully calculated
   # Returns the dt with the calculated preference, already normalized
+  # Only accepts solutions, when the absolute difference between shares
+  # calculated using the calibrated preferences and transferred shares to be calibrated < tol
 
   calculatePreferences <- function(dfPreference, groupingValue, varyGuess, tol = 0.01){
     fac <- shareDiff <- NULL
@@ -119,6 +121,7 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
     variationOfGuesses <- copy(variationOfGuesses)[[eval(levelToCalibrate)]]
 
     decisionFunctionData <- merge(totPrice, shares, by = intersect(names(totPrice), names(shares)), all.x = TRUE)
+    # Treat zero entries outside the optimization
     prefZero <- decisionFunctionData[share == 0][, preference := 0][, shareCheck := 0][, shareDiff := 0]
     decisionFunctionData <- decisionFunctionData[!share == 0]
     # On fuel vehilce level (before time value price is applied, active modes have prices of zero and need to be treated separately)
@@ -150,9 +153,6 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
   colsDecisionTRee <- colsDecisionTRee[!colsDecisionTRee %in% c("univocalName")]
   levelsDecisionTree <- data.table(groupValue = c("vehicleType", "subsectorL3", "subsectorL2", "subsectorL1", "sector"),
                                    level = c("FV", "VS3", "S3S2", "S2S1", "S1S"))
-  # # Only keep low time resolution
-  # sharesToBeCalibrated <- copy(sharesToBeCalibrated)[period %in% helpers$lowTimeRes]
-  # combinedCosts <- copy(combinedCosts)[period %in% helpers$lowTimeRes]
 
   # Sum up different cost variables
   totPrice <- merge(combinedCosts, helpers$decisionTree, by = intersect(names(combinedCosts), names(helpers$decisionTree)))
@@ -165,7 +165,7 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
 
   # guesses
   # Note: The guesses are provided to vary the influence of the prices in the heuristic for the algorithm
-  # They do not follow any structured approach and are tested one after antother
+  # They do not follow any structured approach and are tested one after another
   # (entries do not interact with each other; the order is only important for what is tested first)
   # Please make sure to provide sufficient guesses - if no solution within the tolerance is found the function will throw an error
   variationOfGuesses <- list(
