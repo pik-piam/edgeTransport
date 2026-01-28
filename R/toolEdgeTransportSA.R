@@ -172,7 +172,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                          baseYear,
                                          allEqYear,
                                          helpers)
-
+  
   if (testIterative) {
     # development setting:
     # to compare standalone calculations with iterative,
@@ -246,6 +246,9 @@ toolEdgeTransportSA <- function(SSPscen,
                                                   helpers,
                                                   inputData$histESdemand,
                                                   baseYear)
+    #browser()
+    #ESdemandFVsalesLevel[region == "IND" & period %in% c(2020, 2030, 2050) & grepl("reight", subsectorL1)]
+    
     print("Calculation of vehicle sales and mode shares finished")
     #################################################
     ## Vehicle stock module
@@ -324,6 +327,8 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isAnalyticsReported,
                                 isREMINDinputReported,
                                 isStored)
+  #browser()
+  output[region == "IND" & period %in% c(2020, 2030, 2050, 2070) & variable == "ES|Transport|Freight|Rail"]
 
   return(output)
 }

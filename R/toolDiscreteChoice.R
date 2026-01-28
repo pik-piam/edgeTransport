@@ -157,9 +157,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsS3S2 <- copy(allCostsS3S2)
   storeAllCostsS3S2[, variable := paste0("Logit cost|S3S2|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS3S2 = storeAllCostsS3S2))
-  #browser()
-  S3S2shares[region == "IND" & period %in% c(2040) & grepl("LDV", subsectorL2),.(period, subsectorL3, share)]
- 
+  
   # calculate all S2S1 shares --------------------------------------------------------------------
   allCostsS3S2 <- merge(allCostsS3S2, S3S2shares[, -c("level")],  by = intersect(names(allCostsS3S2), names(S3S2shares)))
   allCostsS2S1 <- toolTraverseDecisionTree(allCostsS3S2, "subsectorL2", helpers$decisionTree)
@@ -215,7 +213,8 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   storeAllCostsS1S <- copy(allCostsS1S)
   storeAllCostsS1S[, variable := paste0("Logit cost|S1S|", variable)][, type := NULL]
   costsDiscreteChoice <- c(costsDiscreteChoice, list(allCostsS1S = storeAllCostsS1S))
-  ##S1Sshares[region == "IND" & period %in% c(2025, 2040, 2050) & grepl("trn_pass_road", subsectorL1)]
+  #browser()
+  S1Sshares[region == "IND" & period %in% c(2025, 2040, 2050) & grepl("Rai", subsectorL1)]
   # format --------------------------------------------------------------------
   shares <- rbind(FVshares, VS3shares, S3S2shares, S2S1shares, S1Sshares)[, unit := "-"]
   # toolCheckAllLevelsComplete(shares, helpers$decisionTree, "vehicle sales and mode shares")
