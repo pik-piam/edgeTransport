@@ -81,7 +81,11 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   scenParDemFactors <- fread(system.file("extdata/scenParDemFactors.csv",
                                          package = "edgeTransport", mustWork = TRUE), header = TRUE)
   if  (demScenario[1] %in% scenParDemFactors$demScen | demScenario[2] %in% scenParDemFactors$demScen) {
-    scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase( demScen == demScenario[1], "origin", demScen == demScenario[2], "final")]
+    if (demScenario[1] == demScenario[2]) {
+      scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase(demScen == demScenario[2], "full")]
+    } else {
+      scenParDemFactors <- scenParDemFactors[, "startYearCat" := fcase(demScen == demScenario[1], "origin", demScen == demScenario[2], "final")]
+    }
     scenParDemFactors <- scenParDemFactors[!is.na(startYearCat)][, demScen := NULL]
   } else {
     scenParDemFactors <- NULL

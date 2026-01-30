@@ -118,21 +118,22 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   }
 
   if (!is.null(scenParDemandFactors)) {
-    # ToDo: startyear adjustment
-    # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
-    # default values from demand regression
-    # Application: linear regression to given support points for the factors starting from allEqYear but not earlier as 2020
-    # constant factors after support points
-    # atm adjustment of demand can only have a later switch-on with allEqYear
-    if (unique(scenParDemandFactors$startYearCat) == "final"){
-      demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
-      demandData[period <= max(allEqYear, 2020), factor := 1][, startYearCat := NULL]
-      demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
-      demandData[, value := factor * value]
-      print(paste0("Demand scenario specific changes were applied on energy service demand"))
-    } else {
+    # Apply factors for specific demand scenario on output of demand regression if given
+    # Application: linear regression to given support points for the factors
+    # starting from 2021 or from startyear
+    # constant factors after last support point
+    if ("full" %in% scenParDemandFactors$startYearCat) {
+      cutoff <- 2020
+    } else if (("final" %in% scenParDemandFactors$startYearCat)) {
+      cutoff <- max(allEqYear, 2020)
+    } else { # "origin" %in% scenParDemandFactors$startYearCat
       stop("Error in demand scenario specific changes: only delayed switch-on with allEqYear possible. Please check toolDemandRegression()")
     }
+    demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
+    demandData[period <= cutoff, factor := 1][, startYearCat := NULL]
+    demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
+    demandData[, value := factor * value]
+    print(paste0("Demand scenario specific changes were applied on energy service demand"))
  } else {
     print(paste0("No demand scenario specific changes were applied on energy service demand"))
   }
