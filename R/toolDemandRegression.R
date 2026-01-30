@@ -44,7 +44,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   categories <- unique(scenParDemRegression$sector)
   # Regional elasticities until 2020
   regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, genParDemRegression, GDPperCapitaPPP[period <= 2020]))
-  # apply SSP specific global changes
+  # apply SSP specific global changes from 2025 till 2150
   scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
                                                          scenParDemRegression[startYearCat == "origin"], GDPperCapitaPPP[period > 2020]))
   # apply change of SSPscen with startyear
@@ -57,12 +57,15 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
 
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
+    # reshape data in long format( period = [2015, ])
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,
                                                id.vars = c("region", "sector", "startYearCat"), variable.name = "period",
                                                   value.name = "regionalSummand")
     scenParRegionalDemRegression[, period := as.numeric(as.character(period))]
+    # linear interpolation of factors in time
     scenParRegionalDemRegressionO <- approx_dt(scenParRegionalDemRegression[startYearCat == "origin"], unique(regionalIncomeElasticities$period),
                                       "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
+
     # check if SSP changes with startyear
     if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
       scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= allEqYear][, startYearCat := NULL]
