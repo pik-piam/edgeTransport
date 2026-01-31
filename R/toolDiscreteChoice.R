@@ -67,22 +67,22 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   old <- copy(allCostsFV)
   allCostsFV <- old
 
-  costsCarSharing <- fread(system.file("extdata", "scenParIncoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
-  costsCarSharing <- costsCarSharing[demScen == demScenario]
-  if (nrow(costsCarSharing) > 0) {
-    costTimeSeries <- data.table(period = unique(allCostsFV$period), costs = 0)
-    known_periods <- c(min(costTimeSeries$period), costsCarSharing$period)
-    known_costs   <- c(0, costsCarSharing$costs)
-    costTimeSeries[, costs := approx(x = known_periods, y = known_costs, xout = period, method="linear")$y]
-    costTimeSeries[period >= costsCarSharing$period[length(costsCarSharing$period)], costs := costsCarSharing$costs[length(costsCarSharing$period)]]
+  #costsCarSharing <- fread(system.file("extdata", "scenParIncoCostCarSharing.csv", package = "edgeTransport"), stringsAsFactors = FALSE)
+  #costsCarSharing <- costsCarSharing[demScen == demScenario]
+  #if (nrow(costsCarSharing) > 0) {
+  #  costTimeSeries <- data.table(period = unique(allCostsFV$period), costs = 0)
+  #  known_periods <- c(min(costTimeSeries$period), costsCarSharing$period)
+  #  known_costs   <- c(0, costsCarSharing$costs)
+  #  costTimeSeries[, costs := approx(x = known_periods, y = known_costs, xout = period, method="linear")$y]
+  #  costTimeSeries[period >= costsCarSharing$period[length(costsCarSharing$period)], costs := costsCarSharing$costs[length(costsCarSharing$period)]]
 
-    incoCarSharing <- copy(allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & variable == "Fuel costs"])
-    incoCarSharing[, variable := "Inconvenience costs"]
-    incoCarSharing <- costTimeSeries[incoCarSharing, on = "period"]
-    incoCarSharing[, value := costs][, costs := NULL]
+  #  incoCarSharing <- copy(allCostsFV[region == "IND" & subsectorL3 == "trn_pass_road_LDV_4W" & variable == "Fuel costs"])
+  #  incoCarSharing[, variable := "Inconvenience costs"]
+  #  incoCarSharing <- costTimeSeries[incoCarSharing, on = "period"]
+  #  incoCarSharing[, value := costs][, costs := NULL]
 
-    allCostsFV <- rbind(allCostsFV, incoCarSharing)
-  }
+  #  allCostsFV <- rbind(allCostsFV, incoCarSharing)
+  #}
 
   allCostsVS3 <- toolTraverseDecisionTree(allCostsFV, "vehicleType", helpers$decisionTree)
   # time value costs only need to be added starting from level VS3. If there is no decision in the level
