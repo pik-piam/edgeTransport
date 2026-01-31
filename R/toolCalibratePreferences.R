@@ -266,15 +266,15 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
   calibratedPreferences <- rbind(FVpreferences, VS3preferences, S3S2preferences, S2S1preferences, S1Spreferences)
   # Keep data and share differences in calibrationReport for later assessment
   calibrationReport <- copy(calibratedPreferences)
-  calibratedPreferences[, c("shareCheck", "shareDiff", "share") := NULL]
-  toolCheckAllLevelsComplete(calibratedPreferences, helpers$decisionTree, "calibratedPreferences")
-
-  calibratedPreferences[, variable := paste0("Preference|", level)][, unit := "-"]
-  setnames(calibratedPreferences, "preference", "value")
-
   if (nrow(calibrationReport[shareDiff >= 0.01]) >= 1) stop(paste0("Calibrated shares differ
                                                       by more than 0.01 from provided shares. Please provide better guesses for the calibration.
                                                       Affected levels:", unique(calibrationReport$levels)))
+
+
+  calibratedPreferences[, c("shareCheck", "shareDiff", "share") := NULL]
+  toolCheckAllLevelsComplete(calibratedPreferences, helpers$decisionTree, "calibratedPreferences")
+  calibratedPreferences[, variable := paste0("Preference|", level)][, unit := "-"]
+  setnames(calibratedPreferences, "preference", "value")
 
   result <- list(calibratedPreferences = calibratedPreferences,
                  calibrationReport = calibrationReport)
