@@ -89,6 +89,7 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   ## Prepare input data and apply scenario specific changes
   ########################################################
+  
   scenSpecInputData <- toolPrepareScenInputData(genModelPar,
                                                 scenModelPar,
                                                 inputDataRaw,
@@ -238,8 +239,6 @@ toolEdgeTransportSA <- function(SSPscen,
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
                                                    function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
     }
-    #if (i == 3){browser()}
-    vehSalesAndModeShares$shares[region == "IND" & period == 2050 & level == "FV" & vehicleType== "Subcompact Car"]
 
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
                                                   vehSalesAndModeShares$shares,
