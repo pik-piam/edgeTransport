@@ -9,7 +9,7 @@
 toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   SSPscen <- transportPolScen <- demScen <- startYearCat <- NULL
-
+  
   # set demand scenario to default when not supplied
   if (is.null(demScenario)) {
     demScenario <- "default"
@@ -48,15 +48,18 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
 
   annuityCalc <- fread(system.file("extdata/genParAnnuityCalc.csv",
                                    package = "edgeTransport", mustWork = TRUE), header = TRUE)
-  # Interest Rate and vehicle service life for annuity calculation
+    # Interest Rate and vehicle service life for annuity calculation
   # NOTE: right now there is only "default". If we add scenario specific annuity parameters,
   # we can shift annuityCalc to the scenPar's
-  if  (transportPolS[1] %in% annuityCalc$transportPolScen) {
+  demS1 <- strsplit(demScenario[1], "_")[[1]][2]
+  if  (demS1 %in% annuityCalc$demScen) {
     # once this is used, scenario switching with allEqYear needs to be checked
-    annuityCalc[, "startYearCat" := fcase( transportPolScen == transportPolS[1], "origin", transportPolScen == transportPolS[2], "final")]
-    annuityCalc <- annuityCalc[!is.na(startYearCat)][, transportPolScen := NULL]
+    annuityCalc[, "startYearCat" := fcase( demScen == demS1, "origin", demScen == strsplit(demScenario[2], "_")[[1]][2], "final")]
+    annuityCalc <- annuityCalc[!is.na(startYearCat)][, demScen := NULL]
+    #I think we don't need this here unless if we connect if to the demScen 
+    annuityCalc[, startYearCat := NULL]
   } else {
-    annuityCalc <- annuityCalc[transportPolScen == "default"][, transportPolScen := NULL]
+    annuityCalc <- annuityCalc[demScen == "default"][, demScen := NULL]
   }
 
   ## scenario specific levers
@@ -117,6 +120,17 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
   scenParLoadFactor[, "startYearCat" := fcase(SSPscen == SSPs[2] & demScen == demScenario[2], "final", SSPscen == SSPs[1] & demScen == demScenario[1], "origin")]
   scenParLoadFactor <- scenParLoadFactor[!is.na(startYearCat)][, c("SSPscen", "demScen") := NULL]
   if (nrow(scenParLoadFactor) == 0) scenParLoadFactor <- NULL
+  # Transport scenario (demand scenario or SSP scenario) annual mileage changes
+  scenParAnnualMileage <- fread(system.file("extdata/scenParAnnualMileage.csv",
+                                         package = "edgeTransport", mustWork = TRUE), header = TRUE)
+  # Demand scenario introduces exogenous annual mileage changes
+  if  (demScenario[1] %in% scenParAnnualMileage$demScen | demScenario[2] %in% scenParAnnualMileage$demScen) {
+
+    scenParAnnualMileage[, "startYearCat" := fcase(SSPscen == SSPs[2] & demScen == demScenario[2], "final", SSPscen == SSPs[1] & demScen == demScenario[1], "origin")]
+    scenParAnnualMileage <- scenParAnnualMileage[!is.na(startYearCat)]
+  } else {
+     scenParAnnualMileage <- NULL
+  }
 
   ## helpers
   mitigationTechMap <- fread(system.file("extdata", "helpersMitigationTechmap.csv",
@@ -145,6 +159,7 @@ toolLoadPackageData <- function(SSPs, transportPolS, demScenario = NULL) {
       scenParDemFactors = scenParDemFactors,
       scenParEnergyIntensity = scenParEnergyIntensity,
       scenParLoadFactor = scenParLoadFactor,
+      scenParAnnualMileage = scenParAnnualMileage,
       mitigationTechMap = mitigationTechMap,
       regionmappingISOto21to12 = regionmappingISOto21to12,
       mapEdgeToREMIND = mapEdgeToREMIND,

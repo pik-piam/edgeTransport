@@ -15,6 +15,10 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   FVvehvar <- regionCat <- symmyr <- speed <- target <- old <- startYearCat <- NULL
   subsectorL1 <- subsectorL2 <- technology <- NULL
 
+#baselinePrefTrends <- basePrefTrends
+#scenParPrefTrends <- scenModelPar$scenParPrefTrends
+#GDPpcMER <- inputDataRaw$GDPpcMER
+
   # function to apply mitigation factors
   applyLogisticTrend <- function(year, final, ysymm, speed, initial = 1) {
     fct <- exp((year - ysymm) / speed) / (exp((year - ysymm) / speed) + 1)
@@ -46,7 +50,7 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
   setkey(PrefTrends, region, level, subsectorL1, subsectorL2, vehicleType, technology)
   PrefTrends[, "startYearCat" := NULL]
   } else {
-    PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+    PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   }
   generalTransportPolicyOnset <- 2020
   PrefTrends[period > generalTransportPolicyOnset & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
