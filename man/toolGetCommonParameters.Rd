@@ -4,7 +4,7 @@
 \alias{toolGetCommonParameters}
 \title{Distribute common parameters to standalone and iterative EDGET script}
 \usage{
-toolGetCommonParameters(startyear, ICEbanBefore, ICEbanAfter)
+toolGetCommonParameters(startyear, ICEbanBefore = FALSE, ICEbanAfter = FALSE)
 }
 \arguments{
 \item{startyear}{First time point in which policy differentiation sets in, cm_startyear in REMIND}
