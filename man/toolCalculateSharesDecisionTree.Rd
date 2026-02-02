@@ -7,9 +7,9 @@
 toolCalculateSharesDecisionTree(dtVariable, helpers)
 }
 \arguments{
-\item{dtVariable}{transport variable e.g. energy service demand on the most granular level fuel-vehicle (FV)}
+\item{dtVariable}{data.table of a transport variable, e.g., energy service demand with data at the most detailed level of of the decision tree (FV = fuel-vehicle)}
 
-\item{helpers}{description}
+\item{helpers}{list of helpers}
 }
 \value{
 data.table including shares of the variable for all levels of the decision tree

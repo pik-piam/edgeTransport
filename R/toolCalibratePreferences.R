@@ -40,12 +40,10 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
   }
 
   # function that compares the shares you obtained with the calibrated preference and the theoretical shares, known
-  checkShares = function(df , groupingValue){
+  checkShares <- function(df, groupingValue){
     shareCheck <- shareDiff <-  NULL
-
-    df[, shareCheck := preference * totPrice ^ lambda / sum(preference * totPrice ^ lambda),
+    df[, shareCheck := calculateSharesDiscreteChoice(totPrice, lambda, preference),
        by = c("region", "period", groupingValue)]
-
     df[, shareDiff := (shareCheck - share) ^ 2]
   }
 

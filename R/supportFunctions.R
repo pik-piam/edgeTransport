@@ -145,7 +145,7 @@ getFilterEntriesUnivocalName <- function(categories, decisionTree) {
 #' @import data.table
 #' @export
 
-calculateShares <- function(totPrice, lambda, pref = NULL) {
+calculateSharesDiscreteChoice <- function(totPrice, lambda, pref = NULL) {
 
   if (!is.null(pref)) {
     if (sum(totPrice) == 0) {
