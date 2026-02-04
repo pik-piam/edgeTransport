@@ -96,13 +96,16 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   ## Calibrate historical preferences
   ########################################################
-  histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX,
-                                      inputDataRaw$histESdemand,
-                                      inputDataRaw$timeValueCosts,
-                                      genModelPar$lambdasDiscreteChoice,
-                                      helpers)
+  sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
+  histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
+                                        scenSpecInputData$combinedCAPEXandOPEX,
+                                        inputDataRaw$timeValueCosts,
+                                        genModelPar$lambdasDiscreteChoice,
+                                        helpers)
+  # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
+  histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
-  scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
+  scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)

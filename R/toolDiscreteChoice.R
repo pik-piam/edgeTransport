@@ -44,7 +44,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   FVshares[, zeroTypes := sum(pref), by = c("region", "period", "vehicleType")]
   FVsharesZero <-  FVshares[zeroTypes == 0][, share := 0][, c("totPrice", "lambda", "pref", "zeroTypes", "univocalName") := NULL]
   FVshares <- FVshares[!zeroTypes == 0][, c("univocalName", "zeroTypes") := NULL]
-  FVshares[, share := calculateShares(totPrice, lambda, pref),
+  FVshares[, share := calculateSharesDiscreteChoice(totPrice, lambda, pref),
          by = setdiff(names(FVshares), c("technology", "totPrice", "lambda", "pref", "unit"))][, c("totPrice", "lambda", "pref") := NULL]
   FVshares[, testShares := sum(share), by = c("region", "period", "vehicleType")]
 
@@ -71,6 +71,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   allCostsVS3 <- rbind(allCostsVS3, timeValueCosts)
 
   prefTrendsVS3 <- prefTrends[level == "VS3"][, "level" := NULL]
+
   VS3shares <- merge(allCostsVS3, prefTrendsVS3, by = intersect(names(allCostsVS3), names(prefTrends)), all.x = TRUE)
   lambdas <- generalModelPar$lambdasDiscreteChoice[level == "VS3"]
   lambdas <- lambdas[, c("subsectorL3", "lambda")]
@@ -87,7 +88,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   # They have to be filtered out and get a share of zero
   VS3sharesZero <-  VS3shares[totPrice == 0 | pref == 0][, share := 0][, c("totPrice", "lambda", "pref") := NULL]
   VS3shares <- VS3shares[!(totPrice == 0 | pref == 0)]
-  VS3shares[, share := calculateShares(totPrice, lambda, pref),
+  VS3shares[, share := calculateSharesDiscreteChoice(totPrice, lambda, pref),
            by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")][, c("totPrice", "lambda", "pref") := NULL]
 
   VS3shares[, testShares := sum(share), by = c("region", "period", "subsectorL3")]
@@ -116,7 +117,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   if (anyNA(S3S2shares)) stop("S3S2 preferences are missing in toolDiscreteChoice()")
 
   S3S2shares <- S3S2shares[, .(totPrice = sum(value)), by = setdiff(names(S3S2shares), c("variable", "type", "value"))]
-  S3S2shares[, share := calculateShares(totPrice, lambda, pref),
+  S3S2shares[, share := calculateSharesDiscreteChoice(totPrice, lambda, pref),
             by = c("region", "period", "sector", "subsectorL1", "subsectorL2")][, c("totPrice", "lambda", "pref") := NULL]
 
   S3S2shares[, testShares := sum(share), by = c("region", "period", "subsectorL2")]
@@ -144,7 +145,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   if (anyNA(S2S1shares)) stop("S2S1 preferences are missing in toolDiscreteChoice()")
 
   S2S1shares <- S2S1shares[, .(totPrice = sum(value)), by = setdiff(names(S2S1shares), c("variable", "type", "value"))]
-  S2S1shares[, share := calculateShares(totPrice, lambda, pref),
+  S2S1shares[, share := calculateSharesDiscreteChoice(totPrice, lambda, pref),
              by = c("region", "period", "sector", "subsectorL1")][, c("totPrice", "lambda", "pref") := NULL]
 
   S2S1shares[, testShares := sum(share), by = c("region", "period", "subsectorL1")]
@@ -172,7 +173,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   if (anyNA(S2S1shares)) stop("S1S preferences are missing in toolDiscreteChoice()")
 
   S1Sshares <- S1Sshares[, .(totPrice = sum(value)), by = setdiff(names(S1Sshares), c("variable", "type", "value"))]
-  S1Sshares[, share := calculateShares(totPrice, lambda, pref),
+  S1Sshares[, share := calculateSharesDiscreteChoice(totPrice, lambda, pref),
              by = c("region", "period", "sector")][, c("totPrice", "lambda", "pref") := NULL]
 
   S1Sshares[, testShares := sum(share), by = c("region", "period", "sector")]

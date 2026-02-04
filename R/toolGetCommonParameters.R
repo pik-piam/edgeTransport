@@ -6,6 +6,7 @@
 #' @param ICEbanAfter Boolean to determine if ICEban is in effect from startyear on
 #' @export
 #' @returns a list of parameters: allEqYear, ICEbanYears, GDPcutoff, baseYear, hybridElecShare
+#' @export
 
 toolGetCommonParameters <- function(startyear, ICEbanBefore = FALSE, ICEbanAfter = FALSE) {
   # REMIND startyear is the year in which differences are observed
