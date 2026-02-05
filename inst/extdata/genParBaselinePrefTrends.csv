@@ -10540,11 +10540,11 @@ SSP2;FRA;;;;;Passenger Rail;trn_pass;S1S;0.003972;0.002979;0.0023832;0.003;0.003
 SSP2;FRA;;;;;trn_freight_road;trn_freight;S1S;1;1;1;1.1;1.1
 SSP2;FRA;;;;;trn_pass_road;trn_pass;S1S;0.09055;0.06;0.04;0.04;0.04
 SSP2;FRA;;;;;Walk;trn_pass;S1S;1;1;1;1;1
-SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.072;0.06;0.05108;0.05108;0.05108
-SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.1;1.1;1.1;1.1;1.1
-SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;1;0.3638;0.16;0.03;0.03
+SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.0864;0.072;0.061296;0.061296;0.061296
+SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.32;1.32;1.32;1.32;1.32
+SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;0.9;0.32742;0.144;0.027;0.027
 SSP2;IND;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;0.7344;1;1;1;1
-SSP2;IND;;;;;Cycle;trn_pass;S1S;0.01915;0.03175;0.075;0.13;0.13
+SSP2;IND;;;;;Cycle;trn_pass;S1S;0.01149;0.01905;0.045;0.078;0.078
 SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;1.4;0.7575;0.4;0.25;0.25
 SSP2;IND;;;;;Domestic Ship;trn_freight;S1S;0.02;0.01;0.01;0.01;0.01
 SSP2;IND;;;;;Freight Rail;trn_freight;S1S;0.35;0.2;0.132;0.08;0.08
