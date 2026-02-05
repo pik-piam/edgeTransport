@@ -102,7 +102,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                         inputDataRaw$timeValueCosts,
                                         genModelPar$lambdasDiscreteChoice,
                                         helpers)
-  # Don't use calibrated shareweights for LDV 4w for now, as they receive inconvenience costs
+  # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
   histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
   scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
