@@ -26,15 +26,17 @@ toolApplyScenSpecLoadFactor <- function(loadFactor, scenParLoadFactor, allEqYear
   # linear phase-in of percentage factor between max(2020, allEqYear) and targetYear
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period > max(2020, allEqYear) &
-      period <= targetYear,
+    region == "IND" &
+    period > max(2020, allEqYear) &
+    period <= targetYear,
     value := value * (1 + percentChange * (period - 2021) / (targetYear - 2021))]
 
   # constant application of percentage factor after targetYear
   loadFactor[
     univocalName %in% helpers$filterEntries$trn_pass_road_LDV_4W &
-      period > max(2020, allEqYear) &
-      period >= targetYear,
+    region == "IND" &
+    period > max(2020, allEqYear) &
+    period >= targetYear,
     value := value * (1 + percentChange)]
 
     return(loadFactor)

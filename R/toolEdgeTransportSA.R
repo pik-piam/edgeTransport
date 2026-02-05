@@ -80,12 +80,16 @@ toolEdgeTransportSA <- function(SSPscen,
   inputDataRaw <- append(inputs$inputDataRaw, list(REMINDfuelCosts = REMINDfuelCosts))
 
   # If no demand scenario specific factors are applied, the demScen equals the SSPscen
-  if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
+  if (demScen[1]  == "default") {
+    demScen[1] <- SSPscen[1]
+  } else if (demScen[2]  == "default") {
+    demScen[2] <- SSPscen[2]
+  }
 
   ########################################################
   ## Prepare input data and apply scenario specific changes
   ########################################################
-
+  
   scenSpecInputData <- toolPrepareScenInputData(genModelPar,
                                                 scenModelPar,
                                                 inputDataRaw,
@@ -118,11 +122,11 @@ toolEdgeTransportSA <- function(SSPscen,
   inputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecInputData$scenSpecLoadFactor,
+    scenSpecAnnualMileage = scenSpecInputData$scenSpecAnnualMileage,
     scenSpecEnIntensity = scenSpecInputData$scenSpecEnIntensity,
     combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
     initialIncoCosts = scenSpecInputData$initialIncoCosts,
-    annualMileage = inputDataRaw$annualMileage,
     timeValueCosts = inputDataRaw$timeValueCosts,
     histESdemand = inputDataRaw$histESdemand,
     GDPMER = inputDataRaw$GDPMER,
@@ -130,13 +134,12 @@ toolEdgeTransportSA <- function(SSPscen,
     GDPpcPPP = inputDataRaw$GDPpcPPP,
     population = inputDataRaw$population
   )
-
+  
   print("Input data preparation finished")
   ########################################################
   ## Prepare data for
   ## endogenous costs update
   ########################################################
-
   vehicleDepreciationFactors <- toolCalculateVehicleDepreciationFactors(genModelPar$annuityCalc,
                                                                         helpers)
   dataEndogenousCosts <- toolPrepareDataEndogenousCosts(inputData,
@@ -156,7 +159,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                          baseYear,
                                          allEqYear,
                                          helpers)
-
+  
   if (testIterative) {
     # development setting:
     # to compare standalone calculations with iterative,
@@ -216,7 +219,8 @@ toolEdgeTransportSA <- function(SSPscen,
     vehSalesAndModeShares <- toolDiscreteChoice(inputData,
                                                 genModelPar,
                                                 endogenousCosts$updatedEndogenousCosts,
-                                                helpers)
+                                                helpers, 
+                                                demScen[1])
     if (isAnalyticsReported) {
       costsDiscreteChoiceIterations[[i]] <- lapply(copy(vehSalesAndModeShares$costsDiscreteChoice),
                                                    function(x){ x[, variable := paste0(variable, "|Iteration ", i)]})
@@ -227,6 +231,9 @@ toolEdgeTransportSA <- function(SSPscen,
                                                   helpers,
                                                   NULL,
                                                   baseYear)
+    #browser()
+    #ESdemandFVsalesLevel[region == "IND" & period %in% c(2020, 2030, 2050) & grepl("reight", subsectorL1)]
+    
     print("Calculation of vehicle sales and mode shares finished")
     #################################################
     ## Vehicle stock module
@@ -235,7 +242,7 @@ toolEdgeTransportSA <- function(SSPscen,
     fleetSizeAndComposition <- toolCalculateFleetComposition(ESdemandFVsalesLevel,
                                                              vehicleDepreciationFactors,
                                                              vehSalesAndModeShares$shares,
-                                                             inputData$annualMileage,
+                                                             inputData$scenSpecAnnualMileage,
                                                              inputData$scenSpecLoadFactor,
                                                              helpers)
 
@@ -305,6 +312,8 @@ toolEdgeTransportSA <- function(SSPscen,
                                 isAnalyticsReported,
                                 isREMINDinputReported,
                                 isStored)
+  #browser()
+  output[region == "IND" & period %in% c(2020, 2030, 2050, 2070) & variable == "ES|Transport|Freight|Rail"]
 
   return(output)
 }

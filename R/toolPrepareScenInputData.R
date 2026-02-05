@@ -54,6 +54,16 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     print("No policy induced changes to the loadfactor")
   }
 
+  # Application of policy induced changes on load factor ----------------------------
+  if (!is.null(scenModelPar$scenParAnnualMileage)) {
+    scenSpecAnnualMileage <- toolApplyScenSpecAnnualMileage(inputDataRaw$annualMileageRaw, scenModelPar$scenParAnnualMileage,
+                                                      allEqYear, helpers)
+    scenSpecAnnualMileage[, variable := "Annual mileage"]
+    print("Policy induced changes to the annual mileage were applied")
+  } else {
+    scenSpecAnnualMileage <- copy(inputDataRaw$annualMileageRaw)[, variable := "Annual mileage"]
+    print("No policy induced changes to the annualMileage")
+  }
   # Application of policy induced changes on energy intensity ----------------------------
   if (!is.null(scenModelPar$scenParEnergyIntensity)) {
     scenSpecEnIntensity <- toolApplyScenSpecEnInt(inputDataRaw$energyIntensityRaw,
@@ -64,7 +74,6 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     scenSpecEnIntensity <- copy(inputDataRaw$energyIntensityRaw)[, variable := "Energy intensity sales"]
     print("No policy induced changes to the energyIntensity")
   }
-
   # Annualization and formatting of monetary costs ---------------------------------------------------
   annuity <- toolCalculateAnnuity(genModelPar$annuityCalc, helpers)
   transportCosts <- toolCombineCAPEXandOPEX(inputDataRaw$CAPEXtrackedFleet,
@@ -75,22 +84,24 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
                                             inputDataRaw$subsidies,
                                             scenSpecEnIntensity,
                                             scenSpecLoadFactor,
-                                            inputDataRaw$annualMileage,
+                                            scenSpecAnnualMileage,
                                             annuity,
                                             helpers)
 
   # Annualization and formatting of non-monetary costs -------------------------------------------------
   initialIncoCosts <- toolCalculateInitialIncoCost(transportCosts$combinedCAPEXandOPEX,
                                                    genModelPar$incoCostStartVal, annuity, scenSpecLoadFactor,
-                                                   inputDataRaw$annualMileage, helpers)
+                                                   scenSpecAnnualMileage, helpers)
 
   scenSpecInputData <- list(
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecLoadFactor,
+    scenSpecAnnualMileage = scenSpecAnnualMileage,
     scenSpecEnIntensity = scenSpecEnIntensity,
     combinedCAPEXandOPEX = transportCosts$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = transportCosts$upfrontCAPEXtrackedFleet,
-    initialIncoCosts = initialIncoCosts)
+    initialIncoCosts = initialIncoCosts
+    )
 
   return(scenSpecInputData)
 }

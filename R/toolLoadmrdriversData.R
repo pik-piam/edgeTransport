@@ -13,6 +13,9 @@ toolLoadmrdriversData <- function(SSPscen, helpers, allEqYear) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   variable <- unit <- . <- value <- period <- subsectorL3 <- NULL
 
+  SSPscenOld <- copy(SSPscen)
+  SSPscen <- c("SSP2", "SSP2")
+
   # choose highest resolution for GDP
   years <- unique(helpers$dtTimeRes$period)
 
@@ -88,6 +91,7 @@ toolLoadmrdriversData <- function(SSPscen, helpers, allEqYear) {
     PopO <- magpie2dt(POPmagO, yearcol = "period", regioncol = "region")[, variable := "Population"][, unit := "million"]
     POP <- rbind(PopO, POP[period > allEqYear])
   }
+
 
   list(GDPMER = GDPMER,
        GDPpcMER = GDPpcMER,

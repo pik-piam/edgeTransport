@@ -45,6 +45,7 @@ toolCalculateInitialIncoCost <- function(combinedCost, incoCostStartVal, annuity
   reference <- reference[, .(average = mean(value)), by = c("region", "technology")]
 
   reference[, ratio := average / average[technology == "Liquids" & region == "DEU"]][, average := NULL]
+  reference[ region == "IND", ratio := 1]
   incoCostStartValReg <- merge(incoCostStartValReg, reference, by = c("region", "technology"), allow.cartesian = TRUE)
   # Q: The application of the ratio is also a bit weird
   incoCostStartValReg[!region %in% EUreg & period == 2020 & incoCostType %in% c("modelAvailability", "rangeAnxiety"),
