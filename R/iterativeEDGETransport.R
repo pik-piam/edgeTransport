@@ -42,15 +42,23 @@ iterativeEdgeTransport <- function() {
 
   #  scenario after startyear (if given) but no earlier than 2020 from current REMIND config
   SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
-  transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
-  demScen[2] <- toolTranslateDemScen(cfgCurrentRun$gms$cm_demScen, direction = "REMINDtoEDGE")
+  # translate scenario labels between REMIND and EDGET
+  edgeTransportScenario <- toolTranslateTransportScenario(
+    cfgCurrentRun$gms$cm_demScen,
+    cfgCurrentRun$gms$cm_EDGEtr_scen,
+    direction = "REMINDtoEDGE")
+  demScen[2] <- edgeTransportScenario$demScen
+  transportPolScen[2] <- edgeTransportScenario$transportPolScen
+
 
   startyear <- as.numeric(cfgCurrentRun$gms$cm_startyear)
 
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
   reference <- cfgCurrentRun$files2export$start["input_ref.gdx"]
+
   if (!is.na(reference)) {
+
     isAbsolutePath <- grepl("^(?:/|~)", reference)
     if (isAbsolutePath) {
       referenceCfgPath <- file.path(dirname(reference), "config.Rdata")
@@ -58,19 +66,26 @@ iterativeEdgeTransport <- function() {
       # go back to remind folder and take relative path from there
       referenceCfgPath <- file.path("../..", dirname(reference), "config.Rdata")
     }
+
     load(referenceCfgPath)
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
+    # load scenarios from cfgReferenceRun
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
-    transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
-    demScen[1] <- toolTranslateDemScen(cfgReferenceRun$gms$cm_demScen, direction = "REMINDtoEDGE")
+    edgeTransportScenarioRef <- toolTranslateTransportScenario(
+      cfgReferenceRun$gms$cm_demScen,
+      cfgReferenceRun$gms$cm_EDGEtr_scen,
+      direction = "REMINDtoEDGE")
+    demScen[1] <- edgeTransportScenarioRef$demScen
+    transportPolScen[1] <- edgeTransportScenarioRef$transportPolScen
+
   } else {
     SSPscen[1] <- SSPscen[2]
     transportPolScen[1] <- transportPolScen[2]
   }
 
+  # get ICEban information
   isICEban <- c(FALSE, FALSE)
-
   for (i in 1:length(transportPolScen)) {
     if (grepl(".*ban$", transportPolScen[i])) {
       isICEban[i] <- TRUE
@@ -412,7 +427,12 @@ iterativeEdgeTransport <- function() {
   # Keep only final SSPscen, demScen, transportPolScen
   SSPscen <- SSPscen[length(SSPscen)]
   transportPolScen <- transportPolScen[length(transportPolScen)]
-  demScen <- toolTranslateDemScen(demScen[length(demScen)], transportPolScen, direction = "EDGEtoREMIND")
+  demScen <- demScen[length(demScen)]
+
+  # translate scenario labels from EDGET to REMIND labels
+  remindScenario <- toolTranslateTransportScenario(demScen, transportPolScen, direction = "EDGEtoREMIND")
+  transportPolScen <- remindScenario$transportPolScen
+  demScen <- remindScenario$demScen
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
