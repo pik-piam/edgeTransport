@@ -30,10 +30,10 @@ iterativeEdgeTransport <- function() {
   if (file.exists("fulldata.gdx"))
     gdxPath <- "fulldata.gdx"
 
-  #initialize scenario Parameter
-  SSPscen <- c("","")
-  transportPolScen <- c("","")
-  demScen <- c("default","")
+  # initialize scenario Parameter
+  SSPscen <- c("", "")
+  transportPolScen <- c("", "")
+  demScen <- c("default", "")
 
   # config from current run contains information about possible reference run
   load("config.Rdata")
@@ -44,9 +44,9 @@ iterativeEdgeTransport <- function() {
   SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
   # translate scenario labels between REMIND and EDGET
   edgeTransportScenario <- toolTranslateTransportScenario(
-    cfgCurrentRun$gms$cm_demScen,
-    cfgCurrentRun$gms$cm_EDGEtr_scen,
-    direction = "REMINDtoEDGE")
+                                                          cfgCurrentRun$gms$cm_demScen,
+                                                          cfgCurrentRun$gms$cm_EDGEtr_scen,
+                                                          direction = "REMINDtoEDGE")
   demScen[2] <- edgeTransportScenario$demScen
   transportPolScen[2] <- edgeTransportScenario$transportPolScen
 
@@ -73,9 +73,9 @@ iterativeEdgeTransport <- function() {
     # load scenarios from cfgReferenceRun
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
     edgeTransportScenarioRef <- toolTranslateTransportScenario(
-      cfgReferenceRun$gms$cm_demScen,
-      cfgReferenceRun$gms$cm_EDGEtr_scen,
-      direction = "REMINDtoEDGE")
+                                                               cfgReferenceRun$gms$cm_demScen,
+                                                               cfgReferenceRun$gms$cm_EDGEtr_scen,
+                                                               direction = "REMINDtoEDGE")
     demScen[1] <- edgeTransportScenarioRef$demScen
     transportPolScen[1] <- edgeTransportScenarioRef$transportPolScen
 
@@ -89,7 +89,7 @@ iterativeEdgeTransport <- function() {
   for (i in 1:length(transportPolScen)) {
     if (grepl(".*ban$", transportPolScen[i])) {
       isICEban[i] <- TRUE
-      transportPolScen[i] <- gsub('ICEban','', transportPolScen[i])
+      transportPolScen[i] <- gsub("ICEban", "", transportPolScen[i])
     }
   }
 
@@ -135,8 +135,10 @@ iterativeEdgeTransport <- function() {
     TestIND <- copy(REMINDfuelCosts)[region == "IND"]
 
     setnames(REMINDfuelCosts, "region", "regionCode12")
-    REMINDfuelCosts <- merge(REMINDfuelCosts, unique(inputs$helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
-                                  by = "regionCode12", allow.cartesian = TRUE)
+    REMINDfuelCosts <- merge(REMINDfuelCosts,
+                             unique(inputs$helpers$regionmappingISOto21to12[
+                               , c("regionCode12", "regionCode21")]),
+                             by = "regionCode12", allow.cartesian = TRUE)
     REMINDfuelCosts[, "regionCode12" := NULL]
     setnames(REMINDfuelCosts, "regionCode21", "region")
 
@@ -212,7 +214,6 @@ iterativeEdgeTransport <- function() {
 
   ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
-
     # Demand from the standalone regression module
     # This is only used as deaggregation weight in the iterative version
     # The deaggregation weights used are static across all iterations
@@ -244,14 +245,11 @@ iterativeEdgeTransport <- function() {
     setnames(weightEs, c("region", "value"), c("regionCode21", "weight"))
     dataColumns <- names(REMINDsectorESdemand)[!names(REMINDsectorESdemand) %in% c("region", "period", "value")]
     setnames(REMINDsectorESdemand, "region", "regionCode12")
-    # disaggregate_dt produces duplicates right now - Todo: Check fucntion
-    #REMINDsectorESdemand <- rmndt::disaggregate_dt(REMINDsectorESdemand, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
-                                                   #datacols = dataColumns, weights = weightEs)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
                                   by = "regionCode12", allow.cartesian = TRUE)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, weightEs, intersect(names(REMINDsectorESdemand), names(weightEs)))
     REMINDsectorESdemand[, sumWeight := sum(weight), by = c("period", "sector", "regionCode12")]
-    REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
+    REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight / sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
     setnames(REMINDsectorESdemand, "regionCode21", "region")
     REMINDsectorESdemand <-  REMINDsectorESdemand[do.call(order, REMINDsectorESdemand)]
     # test if total ES demand stayed the same and if demand in IND is unchanged
@@ -385,8 +383,8 @@ iterativeEdgeTransport <- function() {
   # not all data from inputdataRaw and inputdata is needed for the reporting,
   # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
   # REMINDsectorESdemand is already covered by sectorESdemand
-  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
-                inputData[!names(inputData) %in% c("REMINDsectorESdemand","histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+  add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")],
+                inputData[!names(inputData) %in% c("REMINDsectorESdemand", "histESdemand", "GDPMER", "GDPpcMER", "GDPpcPPP", "population")])
   outputRaw <- append(outputRaw, add)
 
   storeData(edgeTransportFolder, outputRaw)

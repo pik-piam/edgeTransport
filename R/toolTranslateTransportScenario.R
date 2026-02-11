@@ -15,6 +15,8 @@ toolTranslateTransportScenario <- function(demScen,
                                            transportPolScen,
                                            direction = c("EDGEtoREMIND", "REMINDtoEDGE")) {
 
+  DEM_edge <- EDGE_scenario <- DEM_remind <- EDGEtr_scen_remind <- NULL
+
   direction <- match.arg(direction, c("EDGEtoREMIND", "REMINDtoEDGE"))
 
   # ------------------------------------------------------------
@@ -54,7 +56,6 @@ toolTranslateTransportScenario <- function(demScen,
   # Perform lookup
   # ------------------------------------------------------------
   if (direction == "EDGEtoREMIND") {
-
     # Optional filtering by transport scenario
     scenSelection <- scenarioMapping[
       DEM_edge == demScen & EDGE_scenario == transportPolScen
@@ -69,8 +70,8 @@ toolTranslateTransportScenario <- function(demScen,
       DEM_remind == demScen & EDGEtr_scen_remind == transportPolScen
     ]
 
-    translatedDemScen <- unique(sel$DEM_edge)
-    translatedPolScen <- unique(sel$EDGE_scenario)
+    translatedDemScen <- unique(scenSelection$DEM_edge)
+    translatedPolScen <- unique(scenSelection$EDGE_scenario)
   }
 
   # ------------------------------------------------------------
@@ -80,7 +81,8 @@ toolTranslateTransportScenario <- function(demScen,
     message("demScen ", demScen, " was adopted without translation")
     translatedDemScen <- demScen
   } else if (length(translatedDemScen) > 1) {
-    stop("Ambiguous mapping for demScen '", demScen, "' in direction ", direction, " in toolTranslateTransportScenario.")
+    stop("Ambiguous mapping for demScen '", demScen, "' in direction ",
+         direction, " in toolTranslateTransportScenario.")
   }
 
   if (length(translatedPolScen) == 0) {
