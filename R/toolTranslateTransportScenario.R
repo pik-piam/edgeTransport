@@ -15,7 +15,7 @@ toolTranslateTransportScenario <- function(demScen,
                                            transportPolScen,
                                            direction = c("EDGEtoREMIND", "REMINDtoEDGE")) {
 
-  DEM_edge <- EDGE_scenario <- DEM_remind <- EDGEtr_scen_remind <- NULL
+  demScen_edge <- transportPolScen_edge <- demScen_remind <- EDGEtr_scen_remind <- NULL
 
   direction <- match.arg(direction, c("EDGEtoREMIND", "REMINDtoEDGE"))
 
@@ -29,10 +29,10 @@ toolTranslateTransportScenario <- function(demScen,
   # Determine valid inputs based on direction
   # ------------------------------------------------------------
   if (direction == "EDGEtoREMIND") {
-    validDemScens <- unique(scenarioMapping$DEM_edge)
-    validTransPolScens <- unique(scenarioMapping$EDGE_scenario)
+    validDemScens <- unique(scenarioMapping$demScen_edge)
+    validTransPolScens <- unique(scenarioMapping$transportPolScen_edge)
   } else {
-    validDemScens <- unique(scenarioMapping$DEM_remind)
+    validDemScens <- unique(scenarioMapping$demScen_remind)
     validTransPolScens <- unique(scenarioMapping$EDGEtr_scen_remind)
   }
 
@@ -58,20 +58,20 @@ toolTranslateTransportScenario <- function(demScen,
   if (direction == "EDGEtoREMIND") {
     # Optional filtering by transport scenario
     scenSelection <- scenarioMapping[
-      DEM_edge == demScen & EDGE_scenario == transportPolScen
+      demScen_edge == demScen & transportPolScen_edge == transportPolScen
     ]
 
-    translatedDemScen <- unique(scenSelection$DEM_remind)
+    translatedDemScen <- unique(scenSelection$demScen_remind)
     translatedPolScen <- unique(scenSelection$EDGEtr_scen_remind)
 
   } else { # REMINDtoEDGE
 
     scenSelection <- scenarioMapping[
-      DEM_remind == demScen & EDGEtr_scen_remind == transportPolScen
+      demScen_remind == demScen & EDGEtr_scen_remind == transportPolScen
     ]
 
-    translatedDemScen <- unique(scenSelection$DEM_edge)
-    translatedPolScen <- unique(scenSelection$EDGE_scenario)
+    translatedDemScen <- unique(scenSelection$demScen_edge)
+    translatedPolScen <- unique(scenSelection$transportPolScen_edge)
   }
 
   # ------------------------------------------------------------
@@ -98,7 +98,7 @@ toolTranslateTransportScenario <- function(demScen,
   # ------------------------------------------------------------
   # add logging/console output of translation results
   demInfo   <- sprintf("%-14s %-20s %-4s %-20s", "demScen:", demScen, "->", translatedDemScen)
-  polInfo   <- sprintf("%-14s %-20s %-4s %-20s", "transportPol:", transportPolScen, "->", translatedPolScen)
+  polInfo   <- sprintf("%-14s %-20s %-4s %-20s", "transportScen:", transportPolScen, "->", translatedPolScen)
 
   message(
     "\nTransport scenario translation ", direction, ":\n\n",
