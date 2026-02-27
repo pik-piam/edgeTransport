@@ -117,6 +117,10 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                by = c("region", "sector")]
   }
 
+  # Adjust for covid dip
+  # by shifting dem regression by a value determined by differences to IEA data in 2020
+  demandData <- toolAdjustDemandCovid(demandData)
+
   if (!is.null(scenParDemandFactors)) {
     # Apply factors for specific demand scenario on output of demand regression if given
     # Application: linear regression to given support points for the factors
