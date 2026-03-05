@@ -40,13 +40,13 @@ toolApplyScenPrefTrends <- function(baselinePrefTrends, scenParPrefTrends, GDPpc
 
   # Assemble PrefTrends according to scenario before and after the startyear
   if (!"full" %in% scenParPrefTrends$startYearCat){
-  PrefTrends <- merge(baselinePrefTrends[period <= allEqYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
-  PrefTrendsF <- merge(baselinePrefTrends[period > allEqYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrends <- merge(baselinePrefTrends[period <= allEqYear], mitigationFactors[startYearCat == "origin"], by = c("region", "level", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+  PrefTrendsF <- merge(baselinePrefTrends[period > allEqYear], mitigationFactors[startYearCat == "final"], by = c("region", "level", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   PrefTrends <- rbind(PrefTrends, PrefTrendsF)
   setkey(PrefTrends, region, level, subsectorL1, subsectorL2, vehicleType, technology)
   PrefTrends[, "startYearCat" := NULL]
   } else {
-    PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
+    PrefTrends <- merge(baselinePrefTrends, mitigationFactors[startYearCat == "full"], by = c("region", "level", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType", "technology"), all.x = TRUE, allow.cartesian = TRUE)
   }
   generalTransportPolicyOnset <- 2020
   PrefTrends[period > generalTransportPolicyOnset & !is.na(target), value := value * applyLogisticTrend(period, target, symmyr, speed)][, c("target", "symmyr", "speed") := NULL]
