@@ -22,7 +22,8 @@ toolTranslateTransportScenario <- function(demScen,
   # ------------------------------------------------------------
   # Load mapping
   # ------------------------------------------------------------
-  scenarioMapping  <-  madrat::toolGetMapping("helpersMappingEdgeTtoREMINDscen.csv", where = "edgeTransport")
+  scenarioMapping <- madrat::toolGetMapping("helpersMappingEdgeTtoREMINDscen.csv", where = "edgeTransport")
+  scenarioMapping <- setDT(scenarioMapping)
 
   # ------------------------------------------------------------
   # Determine valid inputs based on direction
