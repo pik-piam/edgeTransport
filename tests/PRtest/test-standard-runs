@@ -101,6 +101,9 @@ mkdir ${working_path}${folder_name}/${remind_dummy_folder}
 cp ${amt_folder}/fulldata.gdx ${working_path}${folder_name}/${remind_dummy_folder}/
 cp ${amt_folder}/config.Rdata ${working_path}${folder_name}/${remind_dummy_folder}/
 
+# write AMT folder reference to file
+echo "$latest_folder" > ${working_path}${folder_name}/${remind_dummy_folder}/AMTfolder_used.info
+
 ##############################
 
 
