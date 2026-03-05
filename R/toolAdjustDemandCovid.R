@@ -1,9 +1,14 @@
 #' Function to adjust the sector ES demand on CES level to the covid decrease in 2020
 #'
-#' The adjustment is based on the relative differences of our model projections
-#' in 2020 to the IEA data from 2020, as stored in inst/extdata/IEAdemandDifferencesCovid.csv
+#' The adjustment is based on the relative differences of our FE model projections
+#' in 2020 to the FE IEA data averaged over five years.
+#' In addition, the deviation in 2020 is corrected for earlier diferences between IEA data and model projections,
+#' such that only the decrease in deviation due to covid is regarded here. 
+#' The final differences used for this correction are  stored in inst/extdata/IEAdemandDifferencesCovid.csv
+#' For more context, the full data and calculations can be found 
+#' in /p/projects/edget/adjustmentDataFiles/IEAdemandDifferencesCovid_compHistoricREMIND.xlsx
 #'
-#' The demand projections are constantly shifted by this absolute difference from 2020 onwards
+#' The demand projections are constantly shifted by an absolute difference from 2020 onwards
 #'
 #' This function is applied in toolDemandRegression() directly after the regression calculation as a default
 #'
@@ -25,7 +30,7 @@ toolAdjustDemandCovid <- function(demandData) {
 
   demandData <- merge(demandData, IEAdemandDiffCovid, by = c("region", "period", "sector"), all.x = TRUE)
 
-  # get absolute deviation in 2020
+  # get absolute ES deviation in 2020 based on relative difference
   demandData[, covidDecrease := (value * covidDecrease)]
 
   # no adjustments prior to 2020
