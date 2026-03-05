@@ -14,7 +14,7 @@ iterativeEdgeTransport <- function() {
   #############################################################
   ## Settings
   #############################################################
-  cfg <- sumWeight <- weight <- region <- ..cols <- vehicleType <- technology <- NULL
+  level <- subsectorL3 <- cfg <- sumWeight <- weight <- region <- ..cols <- vehicleType <- technology <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"

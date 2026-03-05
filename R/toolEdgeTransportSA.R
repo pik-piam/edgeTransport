@@ -37,7 +37,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 testIterative = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  variable <- version <- region <- vehicleType <- technology <- period <- NULL
+  level <- subsectorL3 <- variable <- version <- region <- vehicleType <- technology <- period <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
   version <- "3.2.0"
