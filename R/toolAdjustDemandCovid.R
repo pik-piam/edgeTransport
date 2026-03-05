@@ -20,6 +20,7 @@
 #'
 
 toolAdjustDemandCovid <- function(demandData) {
+  covidDecrease <- value <- period <- NULL
 
   # read in data for decrease in 2020 demand in IEA data in comparison to EDGET-REMIND projections
   IEAdemandDiffCovid <- fread(system.file("extdata/IEAdemandDifferencesCovid.csv",
