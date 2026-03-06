@@ -145,6 +145,30 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   dataEndoCosts <- merge(dataEndoCosts, policyMask, by = c("region", "period", "univocalName", "technology"), all.x = TRUE)
   dataEndoCosts[type == "Inconvenience costs", endoCostRaw := value]
 
+  # Previously, techFleetProxy was only calculated for the policy years, so from 2020 onwards. To be able to access techFleetProxy from earlier years, we first need to do a spinup and calculate the values until 2019
+
+  yearsSpinup <- seq(2010,2020,1)
+
+  for (t in yearsSpinup) {
+    # calculate proxy for total vehicles of one technology in the fleet ----------------------------
+
+    vehDepreciation <- copy(depreciationFactors)
+    vehDepreciation <- vehDepreciation[!indexUsagePeriod == 0]
+    vehDepreciation[, period := t - indexUsagePeriod]
+    dataEndoCosts <- merge(dataEndoCosts, vehDepreciation[, c("period", "univocalName", "depreciationFactor")], by = c("period", "univocalName"), all.x = TRUE)
+    # calculate weighted average of the market sales multiplied with total vehicle number depreciating in time
+    # to get a proxy for total vehicles of one technology in the fleet
+
+    dataEndoCostsCopyForCalc <- copy(dataEndoCosts)
+    dataEndoCostsCopyForCalc[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+                             by = c("region", "univocalName", "technology", "variable")]
+
+    setnames(dataEndoCostsCopyForCalc, "techFleetProxy", "techFleetProxyNew")
+    dataEndoCosts <- merge(dataEndoCosts, dataEndoCostsCopyForCalc, by = intersect(names(dataEndoCosts), names(dataEndoCostsCopyForCalc)), all.x = TRUE)
+    dataEndoCosts[period == t-1, techFleetProxy  := techFleetProxyNew][, techFleetProxyNew := NULL]
+    dataEndoCosts[, c("depreciationFactor") := NULL]
+  }
+
   for (t in policyYears) {
     # calculate proxy for total vehicles of one technology in the fleet ----------------------------
 
@@ -154,9 +178,20 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     dataEndoCosts <- merge(dataEndoCosts, vehDepreciation[, c("period", "univocalName", "depreciationFactor")], by = c("period", "univocalName"), all.x = TRUE)
     # calculate weighted average of the market sales multiplied with total vehicle number depreciating in time
     # to get a proxy for total vehicles of one technology in the fleet
-    dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
-                  by = c("region", "univocalName", "technology", "variable")]
 
+    # dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+    #              by = c("region", "univocalName", "technology", "variable")]
+
+    # The problem with the original calculation is that it overwrites  techFleetProxy for ALL timesteps with the same new value. It is thus impossible to 
+    # use the techFleetProxy for previous years.
+    # The workaround is to calculate the new techFleetProxy inside a new data table, and then copy only the value for the current time step back
+    dataEndoCostsCopyForCalc <- copy(dataEndoCosts)
+    dataEndoCostsCopyForCalc[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+                             by = c("region", "univocalName", "technology", "variable")]
+
+    setnames(dataEndoCostsCopyForCalc, "techFleetProxy", "techFleetProxyNew")
+    dataEndoCosts <- merge(dataEndoCosts, dataEndoCostsCopyForCalc, by = intersect(names(dataEndoCosts), names(dataEndoCostsCopyForCalc)), all.x = TRUE)
+    dataEndoCosts[period == t-1, techFleetProxy  := techFleetProxyNew][, techFleetProxyNew := NULL]
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
