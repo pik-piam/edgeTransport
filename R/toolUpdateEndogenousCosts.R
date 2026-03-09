@@ -237,7 +237,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # ICE inconvenience featured by ICE (Why 0.5?)
     dataEndoCosts[variable == "ICE inconvenience", endoCostRaw := ifelse(period == t,
-                    0.5 * exp(techFleetProxy[period == (t - 3)] * bmodelav),
+                    value[period == 2020] * exp(techFleetProxy[period == (t - 3)] * bmodelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
     # check whether all inconvenience cost types were updated
     if (anyNA(dataEndoCosts[period == t & type == "Inconvenience costs"]$endoCostRaw)) {
