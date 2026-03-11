@@ -10392,11 +10392,11 @@ SSP2;CAZ;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.05E+00;1.10E+0
 SSP2;CAZ;;;;;trn_pass_road;trn_pass;S1S;1.50E-01;1.10E-01;9.25E-02;7.50E-02;7.55E-02;7.55E-02
 SSP2;CAZ;;;;;Walk;trn_pass;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;CHA;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;2.70E-01;1.20E-01;1.10E-01;1.00E-01;1.00E-01;1.00E-01
-SSP2;CHA;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.98E+00;1.98E+00;1.98E+00;1.98E+00;1.98E+00;1.98E+00
+SSP2;CHA;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;3.0E+00;4.0E+00;3.0E+00;3.0E+00;2.5E+00;2.5E+00
 SSP2;CHA;;;;Bus;trn_pass_road;trn_pass;S2S1;6.61E-01;3.00E-01;2.40E-01;1.80E-01;6.50E-02;6.50E-02
 SSP2;CHA;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1.00E+00;1.00E+00;1.05E+00;1.10E+00;1.00E+00;1.00E+00
 SSP2;CHA;;;;;Cycle;trn_pass;S1S;9.45E-02;4.80E-02;4.40E-02;4.00E-02;6.50E-02;6.50E-02
-SSP2;CHA;;;;;Domestic Aviation;trn_pass;S1S;1.20E-01;2.71E-02;1.86E-02;1.00E-02;5.00E-03;5.00E-03
+SSP2;CHA;;;;;Domestic Aviation;trn_pass;S1S;0.5E-01;1.0E-02;1.0E-02;0.7E-02;4.00E-03;5.00E-03
 SSP2;CHA;;;;;Domestic Ship;trn_freight;S1S;3.00E-02;3.00E-02;3.00E-02;3.00E-02;3.00E-02;3.00E-02
 SSP2;CHA;;;;;Freight Rail;trn_freight;S1S;9.00E-02;6.00E-02;5.00E-02;4.00E-02;2.00E-02;2.00E-02
 SSP2;CHA;;;;;HSR;trn_pass;S1S;2.40E-01;4.00E-02;2.50E-02;1.00E-02;4.00E-03;4.00E-03
@@ -10404,7 +10404,7 @@ SSP2;CHA;;;;;International Aviation;trn_aviation_intl;S1S;1.00E+00;1.00E+00;1.00
 SSP2;CHA;;;;;International Ship;trn_shipping_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;CHA;;;;;Passenger Rail;trn_pass;S1S;6.22E-03;3.11E-03;2.31E-03;1.50E-03;1.50E-03;1.50E-03
 SSP2;CHA;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;CHA;;;;;trn_pass_road;trn_pass;S1S;6.71E-01;2.68E-01;1.99E-01;1.30E-01;8.00E-02;8.00E-02
+SSP2;CHA;;;;;trn_pass_road;trn_pass;S1S;9.0E-01;5.0E-01;3.0E-01;2.0E-01;1.0E-01;8.00E-02
 SSP2;CHA;;;;;Walk;trn_pass;S1S;1.00E+00;8.00E-01;8.00E-01;8.00E-01;1.00E+00;1.00E+00
 SSP2;DEU;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;6.00E-02;6.00E-02;6.00E-02;6.00E-02;6.00E-02;6.00E-02
 SSP2;DEU;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
