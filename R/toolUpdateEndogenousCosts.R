@@ -34,7 +34,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL 
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL
 
   # parameters of endogenous cost trends
   bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
@@ -182,7 +182,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
     #              by = c("region", "univocalName", "technology", "variable")]
 
-    # The problem with the original calculation is that it overwrites  techFleetProxy for ALL timesteps with the same new value. It is thus impossible to 
+    # The problem with the original calculation is that it overwrites  techFleetProxy for ALL timesteps with the same new value. It is thus impossible to
     # use the techFleetProxy for previous years.
     # The workaround is to calculate the new techFleetProxy inside a new data table, and then copy only the value for the current time step back
     dataEndoCostsCopyForCalc <- copy(dataEndoCosts)
