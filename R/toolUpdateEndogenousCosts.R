@@ -145,6 +145,29 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   dataEndoCosts <- merge(dataEndoCosts, policyMask, by = c("region", "period", "univocalName", "technology"), all.x = TRUE)
   dataEndoCosts[type == "Inconvenience costs", endoCostRaw := value]
 
+  # initialize techFleetProxy so the ifelse statement below works
+  dataEndoCosts[, techFleetProxy := 0]
+
+  # calculate the techFleetProxy values also for "historic years", where the shares are fixed
+  yearsSpinup <- seq(2010,2020,1)
+
+  for (t in yearsSpinup) {
+    # calculate proxy for total vehicles of one technology in the fleet ----------------------------
+
+    vehDepreciation <- copy(depreciationFactors)
+    vehDepreciation <- vehDepreciation[!indexUsagePeriod == 0]
+    vehDepreciation[, period := t - indexUsagePeriod]
+    dataEndoCosts <- merge(dataEndoCosts, vehDepreciation[, c("period", "univocalName", "depreciationFactor")], by = c("period", "univocalName"), all.x = TRUE)
+    # calculate weighted average of the market sales multiplied with total vehicle number depreciating in time
+    # to get a proxy for total vehicles of one technology in the fleet
+
+    dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := ifelse(period == t-1,
+                                                                       sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+                                                                       techFleetProxy),
+                  by = c("region", "univocalName", "technology", "variable")]
+    dataEndoCosts[, c("depreciationFactor") := NULL]
+  }
+
   for (t in policyYears) {
     # calculate proxy for total vehicles of one technology in the fleet ----------------------------
 
@@ -154,9 +177,10 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     dataEndoCosts <- merge(dataEndoCosts, vehDepreciation[, c("period", "univocalName", "depreciationFactor")], by = c("period", "univocalName"), all.x = TRUE)
     # calculate weighted average of the market sales multiplied with total vehicle number depreciating in time
     # to get a proxy for total vehicles of one technology in the fleet
-    dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+    dataEndoCosts[!is.na(depreciationFactor), techFleetProxy := ifelse(period == t-1,
+                                                                       sum(FS3share * totVeh * depreciationFactor) / sum(totVeh * depreciationFactor),
+                                                                       techFleetProxy),
                   by = c("region", "univocalName", "technology", "variable")]
-
 
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
