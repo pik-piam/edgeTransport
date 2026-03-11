@@ -149,7 +149,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   dataEndoCosts[, techFleetProxy := 0]
 
   # calculate the techFleetProxy values also for "historic years", where the shares are fixed
-  yearsSpinup <- seq(2010,2020,1)
+  yearsSpinup <- seq(2010,policyYears[1]-1,1)
 
   for (t in yearsSpinup) {
     # calculate proxy for total vehicles of one technology in the fleet ----------------------------
