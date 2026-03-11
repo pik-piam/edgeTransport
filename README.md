@@ -46,15 +46,17 @@ In case of questions / problems please contact Johanna Hoppe <johanna.hoppe@pik-
 
 To cite package **edgeTransport** in publications use:
 
-Hoppe J, Dirnaichner A, Rottoli M, Muessel J, Hagen A, Pietzcker R (2026). "edgeTransport: Prepare EDGE Transport Data for the REMIND model - Version 3.7.1."
+Hoppe J, Dirnaichner A, Rottoli M, Muessel J, Hagen A, Pietzcker R (2026). "edgeTransport: Prepare EDGE Transport Data for the REMIND model." Version: 3.7.1, <https://github.com/pik-piam/edgeTransport>.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Misc{,
-  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model - Version 3.7.1},
+  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Johanna Hoppe and Alois Dirnaichner and Marianna Rottoli and Jarusch Muessel and Alex K. Hagen and Robert P. Pietzcker},
-  date = {2026-03-12},
+  date = {2026-03-11},
   year = {2026},
+  url = {https://github.com/pik-piam/edgeTransport},
+  note = {Version: 3.7.1},
 }
 ```
