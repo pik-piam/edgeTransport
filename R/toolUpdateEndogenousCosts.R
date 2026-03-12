@@ -185,11 +185,11 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     # update raw endogenous costs-------------------------------------------------------------------
     ## Stations availability featured by BEV, FCEV, Hybrid electric, Gases
     dataEndoCosts[variable == "Stations availability" & technology %in% c("Gases"), endoCostRaw := ifelse(period == t,
-                                                                                                          pmax(value[period == 2020], value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav)),
+                                                                                                          pmax(value[period == 2020], value[period == 2020] * exp(techFleetProxy[period == (t - 3)] * bfuelav)),
                                                                                                           endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("FCEV", "Gases"), endoCostRaw := ifelse(period == t,
-                                                                                                         value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                                                                                                         value[period == 2020] * exp(techFleetProxy[period == (t - 3)] * bfuelav),
                                                                                                          endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     dataEndoCosts[variable == "Stations availability" & technology %in% c("BEV", "Hybrid electric"), endoCostRaw := ifelse(period == t,
@@ -221,12 +221,12 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
 
     # Range anxiety featured by BEV (Does it make sense, that Range anxiety behaves exactly like stations availability?)
     dataEndoCosts[variable == "Range anxiety", endoCostRaw := ifelse(period == t,
-                    value[period == 2020] * exp(techFleetProxy[period == (t - 1)] * bfuelav),
+                    value[period == 2020] * exp(techFleetProxy[period == (t - 3)] * bfuelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
 
     # ICE inconvenience featured by ICE (Why 0.5?)
     dataEndoCosts[variable == "ICE inconvenience", endoCostRaw := ifelse(period == t,
-                    0.5 * exp(techFleetProxy[period == (t - 1)] * bmodelav),
+                    0.5 * exp(techFleetProxy[period == (t - 3)] * bmodelav),
                       endoCostRaw), by = c("region", "technology", "vehicleType", "univocalName")]
     # check whether all inconvenience cost types were updated
     if (anyNA(dataEndoCosts[period == t & type == "Inconvenience costs"]$endoCostRaw)) {
