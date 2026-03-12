@@ -10405,7 +10405,7 @@ SSP2;CHA;;;;;International Aviation;trn_aviation_intl;S1S;1.00E+00;1.00E+00;1.00
 SSP2;CHA;;;;;International Ship;trn_shipping_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;CHA;;;;;Passenger Rail;trn_pass;S1S;6.22E-03;3.11E-03;2.31E-03;1.50E-03;1.50E-03;1.50E-03
 SSP2;CHA;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;CHA;;;;;trn_pass_road;trn_pass;S1S;9.0E-01;5.0E-01;3.0E-01;2.0E-01;1.0E-01;8.00E-02
+SSP2;CHA;;;;;trn_pass_road;trn_pass;S1S;9.00E-01;5.00E-01;3.00E-01;2.00E-01;1.00E-01;8.00E-02
 SSP2;CHA;;;;;Walk;trn_pass;S1S;1.00E+00;8.00E-01;8.00E-01;8.00E-01;1.00E+00;1.00E+00
 SSP2;DEU;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;6.00E-02;6.00E-02;6.00E-02;6.00E-02;6.00E-02;6.00E-02
 SSP2;DEU;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
