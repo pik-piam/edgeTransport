@@ -52,7 +52,7 @@ A BibTeX entry for LaTeX users is
 
  ```latex
 @Misc{,
-  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
+  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model - Version 3.9.1},
   author = {Johanna Hoppe and Alois Dirnaichner and Marianna Rottoli and Jarusch Muessel and Alex K. Hagen and Robert P. Pietzcker},
   date = {2026-03-12},
   year = {2026},
