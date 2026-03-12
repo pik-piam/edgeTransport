@@ -10527,21 +10527,21 @@ SSP2;FRA;;;;;Passenger Rail;trn_pass;S1S;3.97E-03;2.98E-03;2.68E-03;2.38E-03;3.0
 SSP2;FRA;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.10E+00;1.10E+00
 SSP2;FRA;;;;;trn_pass_road;trn_pass;S1S;9.06E-02;6.00E-02;5.00E-02;4.00E-02;4.00E-02;4.00E-02
 SSP2;FRA;;;;;Walk;trn_pass;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;7.20E-02;6.00E-02;5.55E-02;5.11E-02;5.11E-02;5.11E-02
-SSP2;IND;;;trn_pass_road_LDV_3W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1;1;1;1;1;1
-SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;1.00E+00;3.64E-01;2.62E-01;1.60E-01;3.00E-02;3.00E-02
+SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.1;8E-02;8E-02;0.08;0.12;0.12
+SSP2;IND;;;trn_pass_road_LDV_3W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.013;0.01;0.03;0.003;0.002;0.002
+SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.2;1.2;1.2;0.9;0.9;0.9
+SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;0.15;0.2;2.62E-01;1.60E-01;3.00E-02;3.00E-02
 SSP2;IND;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;7.34E-01;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;IND;;;;;Cycle;trn_pass;S1S;1.92E-02;3.18E-02;5.34E-02;7.50E-02;1.30E-01;1.30E-01
 SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;1.40E+00;7.57E-01;5.79E-01;4.00E-01;2.50E-01;2.50E-01
 SSP2;IND;;;;;Domestic Ship;trn_freight;S1S;2.00E-02;1.00E-02;1.00E-02;1.00E-02;1.00E-02;1.00E-02
-SSP2;IND;;;;;Freight Rail;trn_freight;S1S;3.50E-01;2.00E-01;1.66E-01;1.32E-01;8.00E-02;8.00E-02
-SSP2;IND;;;;;HSR;trn_pass;S1S;0.00E+00;3.18E-04;2.59E-04;2.00E-04;2.00E-04;2.00E-04
+SSP2;IND;;;;;Freight Rail;trn_freight;S1S;0.085;0.06;0.015;0.015;0.0007;0.0004
+SSP2;IND;;;;;HSR;trn_pass;S1S;0;2E-04;2E-04;2.00E-04;2.00E-04;2.00E-04
 SSP2;IND;;;;;International Aviation;trn_aviation_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;IND;;;;;International Ship;trn_shipping_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;;;Passenger Rail;trn_pass;S1S;4.98E-03;4.50E-03;4.75E-03;5.00E-03;4.00E-03;4.00E-03
-SSP2;IND;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;;;trn_pass_road;trn_pass;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;6.00E-01;6.00E-01
+SSP2;IND;;;;;Passenger Rail;trn_pass;S1S;3E-03;3E-03;1.2E-03;1.2E-03;1.2E-03;1.2E-03
+SSP2;IND;;;;;trn_freight_road;trn_freight;S1S;1.5;1.5;1.5;1.3;1.3;1.3
+SSP2;IND;;;;;trn_pass_road;trn_pass;S1S;1.5;1.5;1.5;1.5;1.2;1.2
 SSP2;IND;;;;;Walk;trn_pass;S1S;1.05E+00;9.00E-01;1.05E+00;1.20E+00;1.20E+00;1.20E+00
 SSP2;JPN;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;7.00E-02;6.00E-02;5.75E-02;5.49E-02;5.49E-02;5.49E-02
 SSP2;JPN;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
