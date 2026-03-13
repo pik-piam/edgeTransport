@@ -1,0 +1,85 @@
+region;variable;unit;covidDecrease;sector;period
+CAZ;FE|Transport|Bunkers;EJ/yr;0.2;trn_aviation_intl;2020
+CHA;FE|Transport|Bunkers;EJ/yr;0.07;trn_aviation_intl;2020
+DEU;FE|Transport|Bunkers;EJ/yr;0.14;trn_aviation_intl;2020
+ECE;FE|Transport|Bunkers;EJ/yr;0.08;trn_aviation_intl;2020
+ECS;FE|Transport|Bunkers;EJ/yr;0.32;trn_aviation_intl;2020
+ENC;FE|Transport|Bunkers;EJ/yr;0.03;trn_aviation_intl;2020
+ESC;FE|Transport|Bunkers;EJ/yr;-0.08;trn_aviation_intl;2020
+ESW;FE|Transport|Bunkers;EJ/yr;0.05;trn_aviation_intl;2020
+EWN;FE|Transport|Bunkers;EJ/yr;-0.01;trn_aviation_intl;2020
+FRA;FE|Transport|Bunkers;EJ/yr;0.25;trn_aviation_intl;2020
+IND;FE|Transport|Bunkers;EJ/yr;0.46;trn_aviation_intl;2020
+JPN;FE|Transport|Bunkers;EJ/yr;0.04;trn_aviation_intl;2020
+LAM;FE|Transport|Bunkers;EJ/yr;0.08;trn_aviation_intl;2020
+MEA;FE|Transport|Bunkers;EJ/yr;0.05;trn_aviation_intl;2020
+NEN;FE|Transport|Bunkers;EJ/yr;0.19;trn_aviation_intl;2020
+NES;FE|Transport|Bunkers;EJ/yr;0.11;trn_aviation_intl;2020
+OAS;FE|Transport|Bunkers;EJ/yr;0.09;trn_aviation_intl;2020
+REF;FE|Transport|Bunkers;EJ/yr;0.24;trn_aviation_intl;2020
+SSA;FE|Transport|Bunkers;EJ/yr;0.15;trn_aviation_intl;2020
+UKI;FE|Transport|Bunkers;EJ/yr;0.13;trn_aviation_intl;2020
+USA;FE|Transport|Bunkers;EJ/yr;0.06;trn_aviation_intl;2020
+CAZ;FE|Transport|Bunkers;EJ/yr;0.2;trn_shipping_intl;2020
+CHA;FE|Transport|Bunkers;EJ/yr;0.07;trn_shipping_intl;2020
+DEU;FE|Transport|Bunkers;EJ/yr;0.14;trn_shipping_intl;2020
+ECE;FE|Transport|Bunkers;EJ/yr;0.08;trn_shipping_intl;2020
+ECS;FE|Transport|Bunkers;EJ/yr;0.32;trn_shipping_intl;2020
+ENC;FE|Transport|Bunkers;EJ/yr;0.03;trn_shipping_intl;2020
+ESC;FE|Transport|Bunkers;EJ/yr;-0.08;trn_shipping_intl;2020
+ESW;FE|Transport|Bunkers;EJ/yr;0.05;trn_shipping_intl;2020
+EWN;FE|Transport|Bunkers;EJ/yr;-0.01;trn_shipping_intl;2020
+FRA;FE|Transport|Bunkers;EJ/yr;0.25;trn_shipping_intl;2020
+IND;FE|Transport|Bunkers;EJ/yr;0.46;trn_shipping_intl;2020
+JPN;FE|Transport|Bunkers;EJ/yr;0.04;trn_shipping_intl;2020
+LAM;FE|Transport|Bunkers;EJ/yr;0.08;trn_shipping_intl;2020
+MEA;FE|Transport|Bunkers;EJ/yr;0.05;trn_shipping_intl;2020
+NEN;FE|Transport|Bunkers;EJ/yr;0.19;trn_shipping_intl;2020
+NES;FE|Transport|Bunkers;EJ/yr;0.11;trn_shipping_intl;2020
+OAS;FE|Transport|Bunkers;EJ/yr;0.09;trn_shipping_intl;2020
+REF;FE|Transport|Bunkers;EJ/yr;0.24;trn_shipping_intl;2020
+SSA;FE|Transport|Bunkers;EJ/yr;0.15;trn_shipping_intl;2020
+UKI;FE|Transport|Bunkers;EJ/yr;0.13;trn_shipping_intl;2020
+USA;FE|Transport|Bunkers;EJ/yr;0.06;trn_shipping_intl;2020
+CAZ;FE|Transport|w/o Bunkers;EJ/yr;0.05;trn_freight;2020
+CHA;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_freight;2020
+DEU;FE|Transport|w/o Bunkers;EJ/yr;0.04;trn_freight;2020
+ECE;FE|Transport|w/o Bunkers;EJ/yr;-0.07;trn_freight;2020
+ECS;FE|Transport|w/o Bunkers;EJ/yr;0.06;trn_freight;2020
+ENC;FE|Transport|w/o Bunkers;EJ/yr;0.09;trn_freight;2020
+ESC;FE|Transport|w/o Bunkers;EJ/yr;0.21;trn_freight;2020
+ESW;FE|Transport|w/o Bunkers;EJ/yr;0.07;trn_freight;2020
+EWN;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_freight;2020
+FRA;FE|Transport|w/o Bunkers;EJ/yr;0.1;trn_freight;2020
+IND;FE|Transport|w/o Bunkers;EJ/yr;0.13;trn_freight;2020
+JPN;FE|Transport|w/o Bunkers;EJ/yr;0.13;trn_freight;2020
+LAM;FE|Transport|w/o Bunkers;EJ/yr;0.12;trn_freight;2020
+MEA;FE|Transport|w/o Bunkers;EJ/yr;0.16;trn_freight;2020
+NEN;FE|Transport|w/o Bunkers;EJ/yr;0.18;trn_freight;2020
+NES;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_freight;2020
+OAS;FE|Transport|w/o Bunkers;EJ/yr;0.04;trn_freight;2020
+REF;FE|Transport|w/o Bunkers;EJ/yr;-0.01;trn_freight;2020
+SSA;FE|Transport|w/o Bunkers;EJ/yr;0.1;trn_freight;2020
+UKI;FE|Transport|w/o Bunkers;EJ/yr;0.14;trn_freight;2020
+USA;FE|Transport|w/o Bunkers;EJ/yr;0.02;trn_freight;2020
+CAZ;FE|Transport|w/o Bunkers;EJ/yr;0.05;trn_pass;2020
+CHA;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_pass;2020
+DEU;FE|Transport|w/o Bunkers;EJ/yr;0.04;trn_pass;2020
+ECE;FE|Transport|w/o Bunkers;EJ/yr;-0.07;trn_pass;2020
+ECS;FE|Transport|w/o Bunkers;EJ/yr;0.06;trn_pass;2020
+ENC;FE|Transport|w/o Bunkers;EJ/yr;0.09;trn_pass;2020
+ESC;FE|Transport|w/o Bunkers;EJ/yr;0.21;trn_pass;2020
+ESW;FE|Transport|w/o Bunkers;EJ/yr;0.07;trn_pass;2020
+EWN;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_pass;2020
+FRA;FE|Transport|w/o Bunkers;EJ/yr;0.1;trn_pass;2020
+IND;FE|Transport|w/o Bunkers;EJ/yr;0.13;trn_pass;2020
+JPN;FE|Transport|w/o Bunkers;EJ/yr;0.13;trn_pass;2020
+LAM;FE|Transport|w/o Bunkers;EJ/yr;0.12;trn_pass;2020
+MEA;FE|Transport|w/o Bunkers;EJ/yr;0.16;trn_pass;2020
+NEN;FE|Transport|w/o Bunkers;EJ/yr;0.18;trn_pass;2020
+NES;FE|Transport|w/o Bunkers;EJ/yr;0.15;trn_pass;2020
+OAS;FE|Transport|w/o Bunkers;EJ/yr;0.04;trn_pass;2020
+REF;FE|Transport|w/o Bunkers;EJ/yr;-0.01;trn_pass;2020
+SSA;FE|Transport|w/o Bunkers;EJ/yr;0.1;trn_pass;2020
+UKI;FE|Transport|w/o Bunkers;EJ/yr;0.14;trn_pass;2020
+USA;FE|Transport|w/o Bunkers;EJ/yr;0.02;trn_pass;2020
