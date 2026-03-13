@@ -18,3 +18,7 @@ SSP2_lowAvShip;Mix2;SSP2;Mix2_lowAvShip
 SSP2_lowAvShip;Mix2ICEban;SSP2;Mix2ICEban_lowAvShip
 SSP2_lowAvShip;Mix3ICEban;SSP2;Mix3ICEban_lowAvShip
 SSP2_lowAvShip;Mix4ICEban;SSP2;Mix4ICEban_lowAvShip
+SSP2_justMIP;Mix2ICEban;SSP2;Mix2ICEban_justMIP
+SSP2_justMIP;Mix4ICEban;SSP2;Mix4ICEban_justMIP
+SSP1_justMIP;Mix2ICEban;SSP1;Mix2ICEban_justMIP
+SSP1_justMIP;Mix4ICEban;SSP1;Mix4ICEban_justMIP
