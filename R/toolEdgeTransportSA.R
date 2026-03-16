@@ -26,7 +26,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
-                                startyear = 2030,
+                                startyear = 2021,
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
@@ -286,6 +286,7 @@ toolEdgeTransportSA <- function(SSPscen,
     vehSalesAndModeShares = vehSalesAndModeShares$shares,
     sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
+    vehicleDepreciationFactors = vehicleDepreciationFactors,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
