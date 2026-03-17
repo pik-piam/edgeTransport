@@ -286,7 +286,6 @@ toolEdgeTransportSA <- function(SSPscen,
     vehSalesAndModeShares = vehSalesAndModeShares$shares,
     sectorESdemand = sectorESdemand,
     ESdemandFVsalesLevel = ESdemandFVsalesLevel,
-    vehicleDepreciationFactors = vehicleDepreciationFactors,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
