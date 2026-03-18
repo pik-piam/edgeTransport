@@ -81,9 +81,9 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     if (year < 2020) {
       floorCosts <- currentMask
     } else if (year >= 2020 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2021, 0.1, 2030, 0.4)
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.1, 2030, 0.6)
     } else if (year > 2030 && year <= 2035) {
-      floorCosts <- strangeICEbanFunction(year, 2031, 0.4, 2035, 0.6)
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.6, 2035, 0.7)
     } else if  (year > 2035) {
       floorCosts <- 1
     }
