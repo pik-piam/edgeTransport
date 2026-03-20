@@ -190,7 +190,7 @@ SSP2;ESC;trn_aviation_intl;0;1.4;0.9;-0.1
 SSP2;ESW;trn_aviation_intl;0;0.8;0.5;-0.1
 SSP2;EWN;trn_aviation_intl;0;0.2;0.2;-0.3
 SSP2;FRA;trn_aviation_intl;0;1;0.6;-0.2
-SSP2;IND;trn_aviation_intl;-0.2;0.8;0;-0.3
+SSP2;IND;trn_aviation_intl;-0.2;0.6;0.3;0
 SSP2;JPN;trn_aviation_intl;0;0.9;0.6;-0.1
 SSP2;LAM;trn_aviation_intl;0;1.5;0.2;-0.2
 SSP2;MEA;trn_aviation_intl;0;0.2;0;0
@@ -208,7 +208,7 @@ SSP2;ECE;trn_freight;0;0;-0.4;-0.2
 SSP2;ECS;trn_freight;0;0;-0.2;0
 SSP2;ESW;trn_freight;0;-0.5;-0.2;0
 SSP2;FRA;trn_freight;0;0.2;0.4;0.2
-SSP2;IND;trn_freight;-1;-0.5;-0.5;-0.1
+SSP2;IND;trn_freight;-0.9;-0.2;-0.2;0.4
 SSP2;LAM;trn_freight;0;0;-0.1;-0.2
 SSP2;MEA;trn_freight;0;0.2;0.2;0.2
 SSP2;NES;trn_freight;0;0.1;0.2;0.1
@@ -227,7 +227,7 @@ SSP2;ESC;trn_pass;0;0.1;0.1;0.05
 SSP2;ESW;trn_pass;0;0.1;0.1;0.05
 SSP2;EWN;trn_pass;0;0.1;0.1;0.02
 SSP2;FRA;trn_pass;0;0.1;0.1;0.02
-SSP2;IND;trn_pass;-1;-0.2;-0.1;0.05
+SSP2;IND;trn_pass;-0.7;-0.4;0.4;0.05
 SSP2;JPN;trn_pass;0;0.2;0.2;0
 SSP2;LAM;trn_pass;0;0;0;0.15
 SSP2;MEA;trn_pass;0;-0.3;-0.2;0.1
