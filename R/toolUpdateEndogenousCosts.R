@@ -34,7 +34,7 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
   # bind variables locally to prevent NSE notes in R CMD CHECK
   totVeh <- technology <- startValue <- period <- startYear <- targetYear <- targetValue <- NULL
   FVvehvar <- regionCode12 <- region <- type <- endoCostRaw <- value <- indexUsagePeriod <- NULL
-  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL 
+  depreciationFactor <- FS3share <- variable <- FS3shareUpdate <- unit <- lateStart <- startYearCat <- NULL
 
   # parameters of endogenous cost trends
   bfuelav <- -5    ## value based on Greene 2001 the original value was "-20"
@@ -81,9 +81,9 @@ toolUpdateEndogenousCosts <- function(dataEndoCosts,
     if (year < 2020) {
       floorCosts <- currentMask
     } else if (year >= 2020 && year <= 2030) {
-      floorCosts <- strangeICEbanFunction(year, 2021, 0.05, 2030, 0.3)
+      floorCosts <- strangeICEbanFunction(year, 2021, 0.1, 2030, 0.6)
     } else if (year > 2030 && year <= 2035) {
-      floorCosts <- strangeICEbanFunction(year, 2031, 0.3, 2035, 0.6)
+      floorCosts <- strangeICEbanFunction(year, 2031, 0.6, 2035, 0.7)
     } else if  (year > 2035) {
       floorCosts <- 1
     }

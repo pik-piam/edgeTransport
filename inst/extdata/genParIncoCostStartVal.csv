@@ -160,10 +160,10 @@ UKI;Model availability;LDV|4W;Hybrid electric;US$2017/veh;123136;123136;123136;7
 UKI;ICE inconvenience;LDV|4W;Liquids;US$2017/veh;0.5;0.5;0.5;0.5
 UKI;Risk aversion;LDV|4W;BEV;US$2017/veh;4680;4680;4680;5542
 UKI;Risk aversion;LDV|4W;FCEV;US$2017/veh;4680;4680;4680;6157
-UKI;Risk aversion;LDV|4W;Gases;US$2017/veh;4680;4680;4680;8620
+UKI;Risk aversion;LDV|4W;Gases;US$2017/veh;4680;4680;4680;10620
 UKI;Risk aversion;LDV|4W;Hybrid electric;US$2017/veh;4680;4680;4680;3695
-UKI;Range anxiety;LDV|4W;BEV;US$2017/veh;123136;123136;123136;140000
-UKI;Stations availability;LDV|4W;BEV;US$2017/veh;1232;1232;1232;2463
+UKI;Range anxiety;LDV|4W;BEV;US$2017/veh;123136;123136;123136;123136
+UKI;Stations availability;LDV|4W;BEV;US$2017/veh;1232;1232;1232;1232
 UKI;Stations availability;LDV|4W;Hybrid electric;US$2017/veh;1232;1232;1232;1232
 UKI;Stations availability;LDV|4W;FCEV;US$2017/veh;123136;123136;123136;147763
 UKI;Stations availability;LDV|4W;Gases;US$2017/veh;123136;123136;123136;197018
