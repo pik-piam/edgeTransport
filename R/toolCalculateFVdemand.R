@@ -12,7 +12,7 @@
 
 toolCalculateFVdemand <- function(sectorESdemand, salesAndModeShares, helpers, histESdemand = NULL,  baseYear = NULL) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- value <- variable <- level <- FVSshare <- shareS1S <- shareS2S1 <- shareS3S2 <- shareVS3 <- shareFV <- NULL
+  period <- value <- variable <- level <- FVSshare <- shareS1S <- shareS2S1 <- shareS3S2 <- shareVS3 <- shareFV <- . <- NULL
 
 # Calculate FV to sector shares --------------------------------------------
   selectLevels <- function(selectedLevel, dt) {

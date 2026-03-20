@@ -10,7 +10,8 @@
 
 toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeValueCost, lambdas, helpers){
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- NULL
+  period <- preference <- lambda <- share <- . <- value <- univocalName <- level <- subsectorL3 <- variable <- unit <- guess <- NULL
+    shareCheck <- shareDiff <- sharesToBecalibrated <- NULL
 
   # Optimization function: Non-linear set of equations to solve. Sha are the calculated shares from empirical data used to calibrate preferences x.
   # Equations are derived by solving logit function to caluclate shares (Rottoli et al.) for zero.
@@ -24,7 +25,7 @@ toolCalibratePreferences <- function(sharesToBeCalibrated, combinedCosts, timeVa
   # - Solves optFunction(...) = 0 for x, subject to positivity.
   # - Returns results$root, the calibrated preferences for that node.
   rootFunction <- function(prices, shares, lambda, factor){
-     invisible(capture.output(
+     invisible(utils::capture.output(
       suppressWarnings(
         suppressMessages({
           results <- rootSolve::multiroot(
