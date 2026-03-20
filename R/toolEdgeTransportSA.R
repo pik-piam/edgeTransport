@@ -40,7 +40,7 @@ toolEdgeTransportSA <- function(SSPscen,
   level <- subsectorL3 <- variable <- version <- region <- vehicleType <- technology <- period <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
-  version <- "3.12.1"
+  version <- "3.13.1"
 
   commonParams <- toolGetCommonParameters(startyear, isICEban[1], isICEban[2])
 
