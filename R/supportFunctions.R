@@ -11,6 +11,8 @@
 
 toolCalculateSharesDecisionTree <- function(dtVariable, helpers) {
 
+  univocalName <- share <- value <- level <- . <- technology <- NULL
+
   # Note: The solution right now is hard-coded and does not react to a change of levels/structure in the decision tree elsewhere.
   # This could be easily changed.
   # Right now changes in the levels are not done regularly and the structure is still quite easy to grasp.
