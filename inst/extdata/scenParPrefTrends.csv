@@ -3893,9 +3893,9 @@ SSP2,Mix4,IND,Liquids,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_r
 SSP2,Mix4,IND,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,90,2050,25
 SSP2,Mix4,IND,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,45,2050,25
 SSP2,Mix4,IND,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
-SSP2,Mix2,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,9,2050,25
+SSP2,Mix2,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,6.5,2050,25
 SSP2,Mix2,IND,,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,10,2050,25
-SSP2,Mix3,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,8,2050,25
+SSP2,Mix3,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,5.5,2050,25
 SSP2,Mix3,IND,,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,10,2050,25
-SSP2,Mix4,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,7,2050,25
+SSP2,Mix4,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,4.5,2050,25
 SSP2,Mix4,IND,,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,10,2050,25
