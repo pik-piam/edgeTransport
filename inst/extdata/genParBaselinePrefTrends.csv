@@ -8012,7 +8012,7 @@ SSP2;ESC;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_s
 SSP2;ESW;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;2.85E-01;2.85E-01;2.85E-01;2.85E-01;2.85E-01;2.85E-01
 SSP2;EWN;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;FRA;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.75E-01;3E-01;3.2E-01;0.14;0.15;0.15
+SSP2;IND;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.75E-01;3E-01;3.2E-01;1.4E-01;1.5E-01;1.5E-01
 SSP2;JPN;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;LAM;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;3.85E-01;3.85E-01;3.85E-01;3.85E-01;3.85E-01;3.85E-01
 SSP2;MEA;;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.30E-01;1.30E-01;1.30E-01;1.30E-01;1.30E-01;1.30E-01
@@ -8516,7 +8516,7 @@ SSP2;ESC;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subs
 SSP2;ESW;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;4.04E-01;4.04E-01;4.04E-01;4.04E-01;4.04E-01;4.04E-01
 SSP2;EWN;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;4.06E-01;4.06E-01;4.06E-01;4.06E-01;4.06E-01;4.06E-01
 SSP2;FRA;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;4.01E-01;4.01E-01;4.01E-01;4.01E-01;4.01E-01;4.01E-01
-SSP2;IND;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E-01;1.00E-01;1.00E-01;0.1125;0.1125;0.1125
+SSP2;IND;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E-01;1.00E-01;1.00E-01;1.125E-01;1.125E-01;1.125E-01
 SSP2;JPN;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.00E+00;0.00E+00;0.00E+00;0.00E+00;0.00E+00;0.00E+00
 SSP2;LAM;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;5.08E-04;5.08E-04;5.08E-04;5.08E-04;5.08E-04;5.08E-04
 SSP2;MEA;;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.00E+00;0.00E+00;0.00E+00;0.00E+00;0.00E+00;0.00E+00
@@ -8684,7 +8684,7 @@ SSP2;ESC;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_sub
 SSP2;ESW;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;EWN;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;5.65E-01;5.65E-01;5.65E-01;5.65E-01;5.65E-01;5.65E-01
 SSP2;FRA;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;3.76E-01;3.76E-01;3.76E-01;3.76E-01;3.76E-01;3.76E-01
-SSP2;IND;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.82E+00;5E-01;4.50E-01;0.306;0.306;0.306
+SSP2;IND;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;0.82E+00;5E-01;4.50E-01;3.06E-01;3.06E-01;3.06E-01
 SSP2;JPN;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;5.90E-01;5.90E-01;5.90E-01;5.90E-01;5.90E-01;5.90E-01
 SSP2;LAM;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.89E-01;1.89E-01;1.89E-01;1.89E-01;1.89E-01;1.89E-01
 SSP2;MEA;;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;VS3;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
