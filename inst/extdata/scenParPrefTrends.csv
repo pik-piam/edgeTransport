@@ -3861,7 +3861,7 @@ SSP2,Mix3,IND,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_r
 SSP2,Mix4,IND,,,,,Cycle,S1S,1,2050,25
 SSP2,Mix4,IND,,,,,Domestic Aviation,S1S,0.45,2050,25
 SSP2,Mix4,IND,,,,,Domestic Ship,S1S,1,2050,25
-SSP2,Mix4,IND,,,,,Freight Rail,S1S,1,2050,25
+SSP2,Mix4,IND,,,,,Freight Rail,S1S,10,2050,25
 SSP2,Mix4,IND,,,,,HSR,S1S,1,2050,25
 SSP2,Mix4,IND,,,,,Passenger Rail,S1S,1,2050,25
 SSP2,Mix4,IND,,,,,trn_freight_road,S1S,0.5,2050,25
