@@ -464,9 +464,9 @@ iterativeEdgeTransport <- function() {
     )
 
     # not all data from inputdataRaw and inputdata is needed for the reporting,
-    # esp. GDP and population are only present when REMIND runs in 12regi
+    # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
     # REMINDsectorESdemand is already covered by sectorESdemand
-    # also save histESdemand, however only possible for 12 regi
+    # also save inputData$histESdemand, however only possible for 12 regi
     add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
                   inputData[!names(inputData) %in% c("REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
     outputRaw <- append(outputRaw, add)
