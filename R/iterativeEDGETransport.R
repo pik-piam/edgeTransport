@@ -213,13 +213,15 @@ iterativeEdgeTransport <- function() {
     ########################################################
     ## Calibrate historical preferences
     ########################################################
-    histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX,
-                                        inputDataRaw$histESdemand,
-                                        inputDataRaw$timeValueCosts,
-                                        genModelPar$lambdasDiscreteChoice,
-                                        helpers)
+    sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
+    histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
+                                          scenSpecInputData$combinedCAPEXandOPEX,
+                                          inputDataRaw$timeValueCosts,
+                                          genModelPar$lambdasDiscreteChoice,
+                                          helpers)
+    # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
+    histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
- 
     scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                                 scenSpecInputData$scenSpecPrefTrends)
     scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
@@ -276,7 +278,8 @@ iterativeEdgeTransport <- function() {
       upfrontCAPEXtrackedFleet = RDSinputs$upfrontCAPEXtrackedFleet,
       initialIncoCosts = RDSinputs$initialIncoCosts,
       annualMileage = RDSinputs$annualMileage,
-      timeValueCosts = RDSinputs$timeValueCosts
+      timeValueCosts = RDSinputs$timeValueCosts,
+      histESdemand = RDSinputs$histESdemand
     )
 
   }
@@ -406,7 +409,7 @@ iterativeEdgeTransport <- function() {
   ESdemandFVsalesLevel <- toolCalculateFVdemand(REMINDsectorESdemand,
                                                 vehSalesAndModeShares$shares,
                                                 helpers,
-                                                inputData$histESdemand, # histESdemand is optional here
+                                                inputData$histESdemand, # histESdemand is not optional here
                                                 baseYear)
   print("Calculation of vehicle sales and mode shares finished")
 
@@ -461,10 +464,11 @@ iterativeEdgeTransport <- function() {
     )
 
     # not all data from inputdataRaw and inputdata is needed for the reporting,
-    # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
+    # esp. GDP and population are only present when REMIND runs in 12regi
     # REMINDsectorESdemand is already covered by sectorESdemand
+    # also save histESdemand, however only possible for 12 regi
     add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
-                  inputData[!names(inputData) %in% c("REMINDsectorESdemand","histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+                  inputData[!names(inputData) %in% c("REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
     outputRaw <- append(outputRaw, add)
   }
   else {
