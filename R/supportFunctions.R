@@ -337,8 +337,8 @@ toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness 
   data <- merge(data, decisionTree, by = c(intersect(names(data), names(decisionTree))))
   allCols <- c(names(decisionTree), "variable", "unit", "period", "value")
   isComplete <- all(names(data) %in% allCols) && all(allCols %in% names(data))
-  if (isComplete == FALSE) stop(paste0(deparse(substitute(data)), " misses columns or has additional columns"))
-  if (anyNA(data) == TRUE) stop(paste0(deparse(substitute(data)), " contains NAs"))
+  if (isComplete == FALSE) stop("data misses columns or has additional columns")
+  if (anyNA(data) == TRUE) stop("data contains NAs")
   data <- data[, allCols, with = FALSE]
 
   if (checkCompleteness == TRUE) {
@@ -348,7 +348,7 @@ toolOrderandCheck <- function(data, decisionTree, yrs = NULL, checkCompleteness 
     decisionTree[, allyears := "All"]
     decisionTree <- merge(decisionTree,  allTimesteps, by = "allyears")
     test <- merge(data, decisionTree, by = intersect(names(data), names(decisionTree)), all = TRUE)
-    if (anyNA(test) == TRUE) stop(paste0(deparse(substitute(data)), " is not complete"))
+    if (anyNA(test) == TRUE) stop("data is not complete")
   }
 
   return(data)
