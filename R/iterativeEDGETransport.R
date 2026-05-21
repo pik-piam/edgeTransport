@@ -123,9 +123,9 @@ iterativeEdgeTransport <- function() {
   if (!dir.exists(file.path(edgeTransportFolder))) {
     if (transportPolScen[2] == "Mix2"){
       file.rename("EDGE-T_NPi2025", "EDGE-T")
-      unlink("EDGE-T_PkBdgt650", recursive = TRUE)
+      unlink("EDGE-T_PkBdgt750", recursive = TRUE)
     } else if (transportPolScen[2] == "Mix4") {
-      file.rename("EDGE-T_PkBdgt650", "EDGE-T")
+      file.rename("EDGE-T_PkBdgt750", "EDGE-T")
       unlink("EDGE-T_NPi2025", recursive = TRUE)
     } else {
       stop("Error in workshop version: pre-specified scenarios for EDGE-T not matching")
