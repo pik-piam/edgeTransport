@@ -755,7 +755,7 @@ SSP2;ESC;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tm
 SSP2;ESW;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.90E-01;5.39E-01;6.88E-01;1.00E+00;1.00E+00
 SSP2;EWN;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.44E-01;4.92E-01;6.40E-01;9.03E-01;9.03E-01
 SSP2;FRA;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.17E-01;4.91E-01;6.65E-01;9.09E-01;9.09E-01
-SSP2;IND;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.79E-02;4.58E-02;6.36E-02;6.43E-02;6.43E-02
+SSP2;IND;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.79E-02;4.58E-02;5.36E-02;6.43E-02;6.43E-02
 SSP2;JPN;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.33E-01;2.37E-01;3.41E-01;8.87E-01;8.87E-01
 SSP2;LAM;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.04E-01;1.50E-01;1.96E-01;2.36E-01;2.36E-01
 SSP2;MEA;BEV;Truck (0-3_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;6.50E-02;8.71E-02;1.09E-01;1.39E-01;1.39E-01
@@ -923,7 +923,7 @@ SSP2;ESC;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_s
 SSP2;ESW;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.55E-01;2.63E-01;3.70E-01;1.00E+00;1.00E+00
 SSP2;EWN;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.37E-01;2.41E-01;3.44E-01;8.76E-01;8.76E-01
 SSP2;FRA;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.26E-01;2.42E-01;3.58E-01;8.81E-01;8.81E-01
-SSP2;IND;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.11E-02;2.27E-02;3.42E-02;6.24E-02;6.24E-02
+SSP2;IND;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.11E-02;2.27E-02;2.42E-02;6.24E-02;6.24E-02
 SSP2;JPN;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.00E+00;5.73E-02;8.86E-02;1.20E-01;9.03E-01;9.03E-01
 SSP2;LAM;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;4.14E-02;7.36E-02;1.06E-01;2.29E-01;2.29E-01
 SSP2;MEA;BEV;Truck (18t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.59E-02;4.23E-02;5.87E-02;1.35E-01;1.35E-01
@@ -1091,7 +1091,7 @@ SSP2;ESC;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_s
 SSP2;ESW;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.55E-01;2.63E-01;3.70E-01;1.00E+00;1.00E+00
 SSP2;EWN;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.37E-01;2.41E-01;3.44E-01;8.76E-01;8.76E-01
 SSP2;FRA;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.26E-01;2.42E-01;3.58E-01;8.81E-01;8.81E-01
-SSP2;IND;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.34E-01;1.81E-01;1.27E-01;6.55E-02;6.55E-02
+SSP2;IND;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.34E-01;1.81E-01;0.5E-01;6.55E-02;6.55E-02
 SSP2;JPN;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.00E+00;5.73E-02;8.86E-02;1.20E-01;9.03E-01;9.03E-01
 SSP2;LAM;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;4.14E-02;7.36E-02;1.06E-01;2.29E-01;2.29E-01
 SSP2;MEA;BEV;Truck (26t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.00E+00;1.56E-01;1.87E-01;2.18E-01;1.42E-01;1.42E-01
@@ -1259,7 +1259,7 @@ SSP2;ESC;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_s
 SSP2;ESW;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.55E-01;2.63E-01;3.70E-01;1.00E+00;1.00E+00
 SSP2;EWN;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.37E-01;2.41E-01;3.44E-01;8.76E-01;8.76E-01
 SSP2;FRA;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.26E-01;2.42E-01;3.58E-01;8.81E-01;8.81E-01
-SSP2;IND;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.34E-01;1.81E-01;1.27E-01;6.55E-02;6.55E-02
+SSP2;IND;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.34E-01;1.81E-01;0.5E-01;6.55E-02;6.55E-02
 SSP2;JPN;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.00E+00;5.73E-02;8.86E-02;1.20E-01;9.03E-01;9.03E-01
 SSP2;LAM;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;4.14E-02;7.36E-02;1.06E-01;2.29E-01;2.29E-01
 SSP2;MEA;BEV;Truck (40t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;1.00E+00;1.56E-01;1.87E-01;2.18E-01;1.42E-01;1.42E-01
@@ -1427,7 +1427,7 @@ SSP2;ESC;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_
 SSP2;ESW;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.90E-01;5.39E-01;6.88E-01;1.00E+00;1.00E+00
 SSP2;EWN;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.44E-01;4.92E-01;6.40E-01;9.03E-01;9.03E-01
 SSP2;FRA;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;3.17E-01;4.91E-01;6.65E-01;9.09E-01;9.09E-01
-SSP2;IND;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.79E-02;4.58E-02;6.36E-02;6.43E-02;6.43E-02
+SSP2;IND;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;2.79E-02;4.58E-02;4.36E-02;6.43E-02;6.43E-02
 SSP2;JPN;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.33E-01;2.37E-01;3.41E-01;8.87E-01;8.87E-01
 SSP2;LAM;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;1.04E-01;1.50E-01;1.96E-01;2.36E-01;2.36E-01
 SSP2;MEA;BEV;Truck (7_5t);trn_freight_road_tmp_subsectorL3;trn_freight_road_tmp_subsectorL2;trn_freight_road;trn_freight;FV;0.00E+00;6.50E-02;8.71E-02;1.09E-01;1.39E-01;1.39E-01
@@ -10527,25 +10527,25 @@ SSP2;FRA;;;;;Passenger Rail;trn_pass;S1S;3.97E-03;2.98E-03;2.68E-03;2.38E-03;3.0
 SSP2;FRA;;;;;trn_freight_road;trn_freight;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.10E+00;1.10E+00
 SSP2;FRA;;;;;trn_pass_road;trn_pass;S1S;9.06E-02;6.00E-02;5.00E-02;4.00E-02;4.00E-02;4.00E-02
 SSP2;FRA;;;;;Walk;trn_pass;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.1;8E-02;8E-02;0.09;0.25;0.25
+SSP2;IND;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.1;7E-02;6E-02;0.07;0.25;0.25
 SSP2;IND;;;trn_pass_road_LDV_3W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;0.022;0.0075;0.007;0.004;0.002;0.002
-SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.35;1.44;1.32;1.425;0.448;0.448
-SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;0.32;0.2;2.62E-01;1.60E-01;3.00E-02;3.00E-02
+SSP2;IND;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.35;1.44;1.32;1.425;0.64;0.64
+SSP2;IND;;;;Bus;trn_pass_road;trn_pass;S2S1;0.2;0.2;2.62E-01;1.30E-01;3.00E-02;3.00E-02
 SSP2;IND;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;7.34E-01;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;;;Cycle;trn_pass;S1S;1.92E-02;3.18E-02;5.34E-02;7.50E-02;1.30E-01;1.30E-01
-SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;1.40E+00;7.57E-01;5.79E-01;4.00E-01;2.50E-01;2.50E-01
-SSP2;IND;;;;;Domestic Ship;trn_freight;S1S;2.20E-02;1.00E-02;1.00E-02;1.00E-02;1.00E-02;1.00E-02
-SSP2;IND;;;;;Freight Rail;trn_freight;S1S;0.09;0.06;0.015;0.015;0.0007;0.0004
-SSP2;IND;;;;;HSR;trn_pass;S1S;0;2E-04;2E-04;2.00E-04;2.00E-04;2.00E-04
+SSP2;IND;;;;;Cycle;trn_pass;S1S;0.9E-02;1.1E-02;3.1E-02;4.5E-02;1.30E-01;1.30E-01
+SSP2;IND;;;;;Domestic Aviation;trn_pass;S1S;1.30E+00;7.57E-01;5.79E-01;4.05E-01;4.2E-01;4.2E-01
+SSP2;IND;;;;;Domestic Ship;trn_freight;S1S;1.35E-02;1.00E-02;1.20E-02;1.20E-02;1.2E-02;1.2E-02
+SSP2;IND;;;;;Freight Rail;trn_freight;S1S;0.1;0.07;0.037;0.037;0.00085;0.00085
+SSP2;IND;;;;;HSR;trn_pass;S1S;0;2E-04;2E-04;2.00E-04;2.40E-04;2.40E-04
 SSP2;IND;;;;;International Aviation;trn_aviation_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
 SSP2;IND;;;;;International Ship;trn_shipping_intl;S1S;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;IND;;;;;Passenger Rail;trn_pass;S1S;5.5E-03;3E-03;2E-03;1.2E-03;1.2E-03;1.2E-03
-SSP2;IND;;;;;trn_freight_road;trn_freight;S1S;1.8;1.5;1.5;1.3;1.3;1.3
-SSP2;IND;;;;;trn_pass_road;trn_pass;S1S;1.8;1.5;1.5;1.5;1.2;1.2
-SSP2;IND;;;;;Walk;trn_pass;S1S;1.05E+00;9.00E-01;1.05E+00;1.20E+00;1.20E+00;1.20E+00
+SSP2;IND;;;;;Passenger Rail;trn_pass;S1S;5.5E-03;3E-03;2E-03;1.25E-03;1.25E-03;1.25E-03
+SSP2;IND;;;;;trn_freight_road;trn_freight;S1S;1.75;1.52;1.55;1.31;1.3;1.3
+SSP2;IND;;;;;trn_pass_road;trn_pass;S1S;1.7;1.3;1.4;1.2;0.6;0.6
+SSP2;IND;;;;;Walk;trn_pass;S1S;0.4E+00;6E-01;0.2E+00;0.4E+00;1.18E+00;1.18E+00
 SSP2;JPN;;;trn_pass_road_LDV_2W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;7.00E-02;6.00E-02;5.75E-02;5.49E-02;5.49E-02;5.49E-02
 SSP2;JPN;;;trn_pass_road_LDV_4W;trn_pass_road_LDV;trn_pass_road;trn_pass;S3S2;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00;1.00E+00
-SSP2;JPN;;;;Bus;trn_pass_road;trn_pass;S2S1;6.08E-02;6.08E-02;6.04E-02;6.00E-02;6.00E-02;6.00E-02
+SSP2;JPN;;;;Bus;trn_pass_road;trn_pass;S2S1;6.08E-02;6.08E-02;6.04E-02;5.70E-02;5.00E-02;5.00E-02
 SSP2;JPN;;;;trn_pass_road_LDV;trn_pass_road;trn_pass;S2S1;1.00E+00;1.00E+00;1.05E+00;1.10E+00;1.00E+00;1.00E+00
 SSP2;JPN;;;;;Cycle;trn_pass;S1S;1.74E-02;3.00E-02;3.75E-02;4.50E-02;6.00E-02;6.00E-02
 SSP2;JPN;;;;;Domestic Aviation;trn_pass;S1S;1.73E-04;2.08E-04;1.79E-04;1.50E-04;7.00E-05;7.00E-05
