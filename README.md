@@ -1,8 +1,8 @@
 # Prepare EDGE Transport Data for the REMIND model
 
-R package **edgeTransport**, version **3.14.0**
+R package **edgeTransport**, version **3.15.0**
 
-[![CRAN status](https://www.r-pkg.org/badges/version/edgeTransport)](https://cran.r-project.org/package=edgeTransport) [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/builds)
+   [![R build status](https://github.com/pik-piam/edgeTransport/workflows/check/badge.svg)](https://github.com/pik-piam/edgeTransport/actions) [![codecov](https://codecov.io/gh/pik-piam/edgeTransport/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/edgeTransport) [![r-universe](https://pik-piam.r-universe.dev/badges/edgeTransport)](https://pik-piam.r-universe.dev/builds)
 
 ## Purpose and Functionality
 
@@ -20,13 +20,13 @@ The additional repository can be made available permanently by adding the line a
 
 After that the most recent version of the package can be installed using `install.packages`:
 
-```r 
+```r
 install.packages("edgeTransport")
 ```
 
 Package updates can be installed using `update.packages` (make sure that the additional repository has been added before running that command):
 
-```r 
+```r
 update.packages()
 ```
 
@@ -46,15 +46,17 @@ In case of questions / problems please contact Johanna Hoppe <johanna.hoppe@pik-
 
 To cite package **edgeTransport** in publications use:
 
-Hoppe J, Dirnaichner A, Rottoli M, Muessel J, Hagen A, Pietzcker R (2026). "edgeTransport: Prepare EDGE Transport Data for the REMIND model - Version 3.14.0."
+Hoppe J, Dirnaichner A, Rottoli M, Muessel J, Hagen A, Pietzcker R (2026). "edgeTransport: Prepare EDGE Transport Data for the REMIND model." Version: 3.15.0, <https://github.com/pik-piam/edgeTransport>.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Misc{,
-  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model - Version 3.14.0},
+  title = {edgeTransport: Prepare EDGE Transport Data for the REMIND model},
   author = {Johanna Hoppe and Alois Dirnaichner and Marianna Rottoli and Jarusch Muessel and Alex K. Hagen and Robert P. Pietzcker},
-  date = {2026-04-13},
+  date = {2026-06-12},
   year = {2026},
+  url = {https://github.com/pik-piam/edgeTransport},
+  note = {Version: 3.15.0},
 }
 ```

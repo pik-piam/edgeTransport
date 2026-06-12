@@ -96,18 +96,30 @@ plotStandardScenarios <- function(folderNameD, defScenN, refFolderD = NULL){
 
   sec <- c("00_info", "01_energy_demand","02_energy_services","03_energy_intensity", "04_stock_and_sales", "05_emissions", "06_input_parameters", "08_transportRemindInputfiles")
 
+
+  #H12
+  piamPlotComparison::compareScenarios(
+    projectLibrary = "reporttransport",
+    mifs,
+    mifHist,
+    outDir,
+    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "H12.pdf"),
+    outputFormat = "pdf",
+    mifScenNames = scenNames,
+    sections = sec,
+    reg = c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World"),
+    mainReg = "World"
+  )
+
   #EU21
   piamPlotComparison::compareScenarios(
     projectLibrary = "reporttransport",
     mifs,
     mifHist,
     outDir,
-    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR-short.pdf"),
+    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR.pdf"),
     outputFormat = "pdf",
     mifScenNames = scenNames,
-    yearsScen = c(seq(2005, 2050, 5)),
-    yearsHist = c(seq(1990, 2030, 1)),
-    yearsBarPlot = c(2020, 2030, 2040, 2050),
     sections = sec,
     reg = c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR"),
     mainReg = "EUR"
@@ -136,27 +148,18 @@ plotStandardScenarios <- function(folderNameD, defScenN, refFolderD = NULL){
     mifs,
     mifHist,
     outDir,
-    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR.pdf"),
+    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "EUR-short.pdf"),
     outputFormat = "pdf",
     mifScenNames = scenNames,
+    yearsScen = c(seq(2005, 2050, 5)),
+    yearsHist = c(seq(1990, 2030, 1)),
+    yearsBarPlot = c(2020, 2030, 2040, 2050),
     sections = sec,
     reg = c("ENC","EWN","ECS","ESC","ECE","FRA","DEU","UKI","ESW","EUR"),
     mainReg = "EUR"
   )
 
-  #H12
-  piamPlotComparison::compareScenarios(
-    projectLibrary = "reporttransport",
-    mifs,
-    mifHist,
-    outDir,
-    outputFile = paste0(format(Sys.time(), "%Y-%m-%d_%H.%M.%S"), "_", filename, "H12.pdf"),
-    outputFormat = "pdf",
-    mifScenNames = scenNames,
-    sections = sec,
-    reg = c("OAS","MEA","SSA","LAM","REF","CAZ","CHA","IND","JPN","USA","NEU","EUR","World"),
-    mainReg = "World"
-  )
+
 }
 
 
