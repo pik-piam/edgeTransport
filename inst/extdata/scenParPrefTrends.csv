@@ -3861,7 +3861,7 @@ SSP2,Mix3,IND,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_r
 SSP2,Mix4,IND,,,,,Cycle,S1S,6,2050,10
 SSP2,Mix4,IND,,,,,Domestic Aviation,S1S,2.5,2050,20
 SSP2,Mix4,IND,,,,,Domestic Ship,S1S,10,2050,20
-SSP2,Mix4,IND,,,,,Freight Rail,S1S,25,2050,3
+SSP2,Mix4,IND,,,,,Freight Rail,S1S,25,2040,4
 SSP2,Mix4,IND,,,,,HSR,S1S,16,2050,5
 SSP2,Mix4,IND,,,,,Passenger Rail,S1S,18.5,2050,5
 SSP2,Mix4,IND,,,,,trn_freight_road,S1S,1,2050,30
@@ -3887,10 +3887,10 @@ SSP2,Mix4,IND,BEV,LDV|2W,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,FV
 SSP2,Mix4,IND,Liquids,LDV|2W,trn_pass_road_LDV_2W,trn_pass_road_LDV,trn_pass_road,FV,1,2050,25
 SSP2,Mix4,IND,Electric,Rail,Passenger Rail_tmp_subsectorL3,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,5,2050,25
 SSP2,Mix4,IND,Liquids,Rail,Passenger Rail_tmp_subsectorL3,Passenger Rail_tmp_subsectorL2,Passenger Rail,FV,0.4,2050,25
-SSP2,Mix4,IND,BEV,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,80,2050,50
+SSP2,Mix4,IND,BEV,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,85,2060,50
 SSP2,Mix4,IND,FCEV,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,5,2050,25
 SSP2,Mix4,IND,Liquids,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
-SSP2,Mix4,IND,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,80,2050,50
+SSP2,Mix4,IND,BEV,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,85,2060,50
 SSP2,Mix4,IND,FCEV,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,45,2050,25
 SSP2,Mix4,IND,Liquids,Truck|heavy,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,FV,1,2050,25
 SSP2,Mix2,IND,,Truck|light,trn_freight_road_tmp_subsectorL3,trn_freight_road_tmp_subsectorL2,trn_freight_road,VS3,6.5,2050,25
