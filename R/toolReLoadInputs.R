@@ -89,19 +89,6 @@ toolReLoadInputs <- function(edgeTransportFolder) {
     dtTimeRes = dtTimeRes
   )
 
-  # # input data, this is just a list for the overview, it can be deleted
-  # inputData <- list(
-  #   scenSpecPrefTrends,
-  #   scenSpecLoadFactor,
-  #   scenSpecEnIntensity,
-  #   CAPEXandNonFuelOPEX,
-  #   upfrontCAPEXtrackedFleet,
-  #   initialIncoCosts,
-  #   annualMileage,
-  #   timeValueCosts,
-  #   histESdemand   # source for that is missing
-  # )
-
   input <- list(
     helpers = helpers,
     genModelPar = genModelPar,
