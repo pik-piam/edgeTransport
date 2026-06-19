@@ -4,7 +4,7 @@
 #'
 #' @author Johanna Hoppe
 #' @param input dataset for discrete choice module
-#' @param generalModelPar general model parameter
+#' @param lambdasDiscreteChoice lambdas from the general model parameters
 #' @param updatedEndoCosts updated endogenous costs
 #' @param helpers list of helpers
 #' @returns calculated shares
@@ -12,7 +12,7 @@
 #' @export
 
 
-toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers) {
+toolDiscreteChoice <- function(input, lambdasDiscreteChoice, updatedEndoCosts, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   type <- level <- vehicleType <- subsectorL1 <- pref <- lambda <- . <- value <- zeroTypes <- share <- NULL
   totPrice <- testShares <- variable <- univocalName <- period <- technology <- subsectorL3 <- subsectorL2 <- unit <- NULL
@@ -31,10 +31,11 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   prefTrends[, c("variable", "unit") := NULL]
   prefTrendsFV <- prefTrends[level == "FV"][, level := NULL]
   FVshares <- merge(allCostsFV, prefTrendsFV, by = intersect(names(allCostsFV), names(prefTrends)), all.x = TRUE, allow.cartesian = TRUE)
+
   # vehicleTypes with endogenous inconvenience costs have no preferences, which means that all preferences
   # are set to 1 (equivalent expression) as there is no decision for cycling and walking, they have to receive 1 as well
   FVshares[vehicleType %in% unique(updatedEndoCosts$vehicleType) | subsectorL1 %in% c("Cycle", "Walk"), pref := 1]
-  lambdas <- generalModelPar$lambdasDiscreteChoice[level == "FV"][, level := NULL]
+  lambdas <- lambdasDiscreteChoice[level == "FV"][, level := NULL]
   FVshares <- merge(FVshares, lambdas, by = intersect(names(FVshares), names(lambdas)), all.x = TRUE)
   # no technology decision for active modes, hence no lambda is supplied
   FVshares[subsectorL1 %in% c("Cycle", "Walk"), lambda := -15]
@@ -73,7 +74,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
   prefTrendsVS3 <- prefTrends[level == "VS3"][, "level" := NULL]
 
   VS3shares <- merge(allCostsVS3, prefTrendsVS3, by = intersect(names(allCostsVS3), names(prefTrends)), all.x = TRUE)
-  lambdas <- generalModelPar$lambdasDiscreteChoice[level == "VS3"]
+  lambdas <- lambdasDiscreteChoice[level == "VS3"]
   lambdas <- lambdas[, c("subsectorL3", "lambda")]
   VS3shares <- merge(VS3shares, lambdas, by = intersect(names(VS3shares), names(lambdas)), all.x = TRUE)
   # modes marked with a "tmp" have only a single branch in this level of the decision tree and
@@ -106,7 +107,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
 
   prefTrendsS3S <- prefTrends[level == "S3S2"][, level := NULL]
   S3S2shares <- merge(allCostsS3S2, prefTrendsS3S, by = intersect(names(allCostsS3S2), names(prefTrends)), all.x = TRUE)
-  lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S3S2"]
+  lambdas <- lambdasDiscreteChoice[level == "S3S2"]
   lambdas <- lambdas[, c("subsectorL2", "lambda")]
   S3S2shares <- merge(S3S2shares, lambdas, by = intersect(names(S3S2shares), names(lambdas)), all.x = TRUE)
   # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore
@@ -134,7 +135,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
 
   prefTrendsS2S1 <- prefTrends[level == "S2S1"][, level := NULL]
   S2S1shares <- merge(allCostsS2S1, prefTrendsS2S1, by = intersect(names(allCostsS2S1), names(prefTrends)), all.x = TRUE)
-  lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S2S1"][, level := NULL]
+  lambdas <- lambdasDiscreteChoice[level == "S2S1"][, level := NULL]
   lambdas <- lambdas[, c("subsectorL1", "lambda")]
   S2S1shares <- merge(S2S1shares, lambdas, by = intersect(names(S2S1shares), names(lambdas)), all.x = TRUE)
   # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore
@@ -162,7 +163,7 @@ toolDiscreteChoice <- function(input, generalModelPar, updatedEndoCosts, helpers
 
   prefTrendsS1S <- prefTrends[level == "S1S"][, level := NULL]
   S1Sshares <- merge(allCostsS1S, prefTrendsS1S, by = intersect(names(allCostsS1S), names(prefTrends)), all.x = TRUE)
-  lambdas <- generalModelPar$lambdasDiscreteChoice[level == "S1S"][, level := NULL]
+  lambdas <- lambdasDiscreteChoice[level == "S1S"][, level := NULL]
   lambdas <- lambdas[, c("sector", "lambda")]
   S1Sshares <- merge(S1Sshares, lambdas, by = intersect(names(S1Sshares), names(lambdas)), all.x = TRUE)
   # modes marked with a "tmp" have only a single branch in this level of the decision tree and therefore

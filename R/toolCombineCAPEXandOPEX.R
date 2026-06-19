@@ -90,7 +90,8 @@ toolCombineCAPEXandOPEX <- function(CAPEXtrackedFleet,
 
   transportCosts <- list(
     combinedCAPEXandOPEX = combinedCAPEXandOPEX,
-    upfrontCAPEXtrackedFleet = upfrontCAPEXtrackedFleet
+    upfrontCAPEXtrackedFleet = upfrontCAPEXtrackedFleet,
+    CAPEXandNonFuelOPEX = CAPEXandNonFuelOPEX
   )
 
   return(transportCosts)
