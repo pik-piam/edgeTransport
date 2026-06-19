@@ -11,7 +11,6 @@ toolCalculateVehicleDepreciationFactors <- function(annuityCalc, helpers) {
   # bind variables locally to prevent NSE notes in R CMD CHECK
   timesteps <- indexUsagePeriod <- serviceLife <- depreciationFactor <- FVvehvar <- NULL
 
-
   # calculate depreciation factors
   vehServiceLifes <- annuityCalc[, c("FVvehvar", "serviceLife")]
   depreciationTimeSteps <- data.table(indexUsagePeriod = seq(0, max(unique(vehServiceLifes$serviceLife), 1)))
