@@ -10,7 +10,6 @@
 #'
 iterativeEdgeTransport <- function() {
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
-  print(paste("Working directory:", getwd()))
 
   #############################################################
   ## Settings
@@ -111,28 +110,7 @@ iterativeEdgeTransport <- function() {
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- commonParams$hybridElecShare
 
-  ###############################################################
-  ##               workshop2026 version                        ##
-  ## use pre-generated input data differentiated for           ##
-  ## two pre-specified scenarios and update folder accordingly ##
-  ###############################################################
-
-  # use transportPolScen[2] as a marker for differentiation
-  # rename fitting folder for consistency with reporting
-  # delete obsolete input folder
-  if (!dir.exists(file.path(edgeTransportFolder))) {
-    if (transportPolScen[2] == "Mix2"){
-      file.rename("EDGE-T_NPi2025", "EDGE-T")
-      unlink("EDGE-T_PkBudg750", recursive = TRUE)
-    } else if (transportPolScen[2] == "Mix4") {
-      file.rename("EDGE-T_PkBudg750", "EDGE-T")
-      unlink("EDGE-T_NPi2025", recursive = TRUE)
-    } else {
-      stop("Error in workshop version: pre-specified scenarios for EDGE-T not matching")
-    }
-  }
-
-  ###############################################################
+    ###############################################################
   ## Load input data from mrtransport if first call in REMIND run
   ## otherwise use RDS files in EDGET folder to reload data
   ###############################################################
@@ -556,7 +534,7 @@ iterativeEdgeTransport <- function() {
 
   ## CapCosts
   gdxdt::writegdx.parameter(
-    file.path(getwd(), "p35_esCapCost.gdx"),
+    "p35_esCapCost.gdx",
     f35_esCapCost,
     "p35_esCapCost",
     valcol = "value",
@@ -565,7 +543,7 @@ iterativeEdgeTransport <- function() {
 
   ## Intensities
   gdxdt::writegdx.parameter(
-    file.path(getwd(), "p35_fe2es.gdx"),
+    "p35_fe2es.gdx",
     f35_fe2es,
     "p35_fe2es",
     valcol = "value",
@@ -574,7 +552,7 @@ iterativeEdgeTransport <- function() {
 
   ## Shares: demand can represent the shares since it is normalized
   gdxdt::writegdx.parameter(
-    file.path(getwd(), "p35_shFeCes.gdx"),
+    "p35_shFeCes.gdx",
     f35_shFeCes,
     "p35_shFeCes",
     valcol = "value",
