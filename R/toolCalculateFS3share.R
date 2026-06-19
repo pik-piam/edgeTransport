@@ -33,7 +33,7 @@ toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preference
   FVshare <- copy(endoCostData[period %in% timesteps])
   FVshare <- FVshare[, .(totPrice = sum(value)), by = .(region, period, sector, subsectorL1, subsectorL2, subsectorL3, vehicleType, technology)]
   FVshare <- merge(FVshare, lambdas[level == "FV"], by = c("sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType"))
-  FVshare[, FVshare := calculateShares(totPrice, lambda), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")][, c("totPrice", "lambda", "level") := NULL]
+  FVshare[, FVshare := calculateSharesDiscreteChoice(totPrice, lambda), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3", "vehicleType")][, c("totPrice", "lambda", "level") := NULL]
   FVshare[, testShare := sum(FVshare), by = c("region", "period", "vehicleType")]
   if (nrow(FVshare[testShare < 0.9999 | testShare > 1.0001]) > 0) stop("FV shares in toolPrepareEndogenousCosts were not calculated correctly")
   FVshare[, testShare := NULL]
@@ -50,7 +50,7 @@ toolCalculateFS3share <- function(endoCostData, timesteps, timeValue, preference
   preftrends <- approx_dt(preftrends, unique(helpers$dtTimeRes$period), "period", "value")
   setnames(preftrends, "value", "pref")
   VS3share <- merge(VS3share, preftrends, by = intersect(names(VS3share), names(preftrends)), all.x = TRUE)
-  VS3share[, VS3share := calculateShares(totPrice, lambda, pref), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
+  VS3share[, VS3share := calculateSharesDiscreteChoice(totPrice, lambda, pref), by = c("region", "period", "sector", "subsectorL1", "subsectorL2", "subsectorL3")]
   VS3share[, c("totPrice", "lambda") := NULL]
   VS3share[, testShare := sum(VS3share), by = c("region", "period", "subsectorL3")]
   if (nrow(VS3share[testShare < 0.9999 | testShare > 1.0001]) > 0) stop("VS3 shares in toolPrepareEndogenousCosts were not calculated correctly")

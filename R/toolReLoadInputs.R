@@ -62,7 +62,8 @@ toolReLoadInputs <- function(edgeTransportFolder) {
                   "upfrontCAPEXtrackedFleet",
                   "initialIncoCosts",
                   "annualMileage",
-                  "timeValueCosts"
+                  "timeValueCosts",
+                  "histESdemand"
                   )
 
   RDSinputs <- toolLoadRDSinputs(edgeTransportFolder, inputFiles)

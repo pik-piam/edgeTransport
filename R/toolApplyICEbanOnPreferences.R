@@ -15,9 +15,9 @@ toolApplyICEbanOnPreferences <- function(preferenceTab, helpers, ICEbanYears) {
   affectedRegions <- unique(helpers$regionmappingISOto21to12[regionCode12 == "EUR"]$regionCode21)
   # affectedRegions <- affectedRegions[!affectedRegions == "UKI"] currently we apply the ban also to UK
   preferenceTab[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-             value := ifelse(period == 2025 & period %in% ICEbanYears, 2 * value[period == 2015], value), by = c("region", "technology")]
+             value := ifelse(period == 2025 & period %in% ICEbanYears, 1.8 * value[period == 2015], value), by = c("region", "technology")]
   preferenceTab[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
-             value := ifelse(period == 2030 & period %in% ICEbanYears, 1 * value[period == 2015], value), by = c("region", "technology")]
+             value := ifelse(period == 2030 & period %in% ICEbanYears, 0.9 * value[period == 2015], value), by = c("region", "technology")]
   preferenceTab[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),
              value := ifelse(period == 2035 & period %in% ICEbanYears, 0.7 * value[period == 2015], value), by = c("region", "technology")]
   preferenceTab[level == "FV" & region %in% affectedRegions & (subsectorL1 == "trn_freight_road" | subsectorL2 == "Bus") & technology %in% c("Liquids", "Gases"),

@@ -44,7 +44,7 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
   categories <- unique(scenParDemRegression$sector)
   # Regional elasticities until 2020
   regionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities, genParDemRegression, GDPperCapitaPPP[period <= 2020]))
-  # apply SSP specific global changes
+  # apply SSP specific global changes from 2025 till 2150
   scenSpecRegionalIncomeElasticities <- rbindlist(lapply(categories, approxElasticities,
                                                          scenParDemRegression[startYearCat == "origin"], GDPperCapitaPPP[period > 2020]))
   # apply change of SSPscen with startyear
@@ -57,12 +57,15 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
 
   # apply SSP specific regional changes------------------------------------------------------------
   if (!is.null(scenParRegionalDemRegression)) {
+    # reshape data in long format( period = [2015, ])
     scenParRegionalDemRegression <- melt(scenParRegionalDemRegression,
                                                id.vars = c("region", "sector", "startYearCat"), variable.name = "period",
                                                   value.name = "regionalSummand")
     scenParRegionalDemRegression[, period := as.numeric(as.character(period))]
+    # linear interpolation of factors in time
     scenParRegionalDemRegressionO <- approx_dt(scenParRegionalDemRegression[startYearCat == "origin"], unique(regionalIncomeElasticities$period),
                                       "period", "regionalSummand", c("region", "sector", "startYearCat"), extrapolate = TRUE)
+
     # check if SSP changes with startyear
     if ("final" %in% unique(scenParRegionalDemRegression$startYearCat)) {
       scenParRegionalDemRegressionO <- scenParRegionalDemRegressionO[period <= allEqYear][, startYearCat := NULL]
@@ -114,22 +117,27 @@ toolDemandRegression <- function(historicalESdemand, GDPperCapitaPPP, POP, genPa
                by = c("region", "sector")]
   }
 
+  # Adjust for covid dip
+  # by shifting dem regression by a value determined by differences to IEA data in 2020
+  demandData <- toolAdjustDemandCovid(demandData)
+
   if (!is.null(scenParDemandFactors)) {
-    # ToDo: startyear adjustment
-    # Apply factors for specific demand scenario on output of demand regression if given/otherwise use
-    # default values from demand regression
-    # Application: linear regression to given support points for the factors starting from allEqYear but not earlier as 2020
-    # constant factors after support points
-    # atm adjustment of demand can only have a later switch-on with allEqYear
-    if (unique(scenParDemandFactors$startYearCat) == "final"){
-      demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
-      demandData[period <= max(allEqYear, 2020), factor := 1][, startYearCat := NULL]
-      demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
-      demandData[, value := factor * value]
-      print(paste0("Demand scenario specific changes were applied on energy service demand"))
-    } else {
+    # Apply factors for specific demand scenario on output of demand regression if given
+    # Application: linear regression to given support points for the factors
+    # starting from 2021 or from startyear
+    # constant factors after last support point
+    if ("full" %in% scenParDemandFactors$startYearCat) {
+      cutoff <- 2020
+    } else if (("final" %in% scenParDemandFactors$startYearCat)) {
+      cutoff <- max(allEqYear, 2020)
+    } else { # "origin" %in% scenParDemandFactors$startYearCat
       stop("Error in demand scenario specific changes: only delayed switch-on with allEqYear possible. Please check toolDemandRegression()")
     }
+    demandData <- merge(demandData, scenParDemandFactors, by = c("region", "period", "sector"), all.x = TRUE)
+    demandData[period <= cutoff, factor := 1][, startYearCat := NULL]
+    demandData[, factor := zoo::na.approx(factor, x = period, rule = 2), by = c("region", "sector")]
+    demandData[, value := factor * value]
+    print(paste0("Demand scenario specific changes were applied on energy service demand"))
  } else {
     print(paste0("No demand scenario specific changes were applied on energy service demand"))
   }

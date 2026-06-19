@@ -10,13 +10,14 @@
 #'
 iterativeEdgeTransport <- function() {
   print(paste("---", Sys.time(), "Start of the EDGE-T iterative model run."))
+  print(paste("Working directory:", getwd()))
 
   #############################################################
   ## Settings
   #############################################################
   # bind variables locally to prevent NSE notes in R CMD CHECK
   period <- value <- unit <- univocalName <- iteration <- type <- variable <- . <- NULL
-  cfg <- sumWeight <- weight <- region <- ..cols <- vehicleType <- technology <- NULL
+  cfg <- sumWeight <- weight <- region  <- vehicleType <- technology <- NULL
 
   # Set paths to folders
   edgeTransportFolder <- "EDGE-T"
@@ -32,10 +33,10 @@ iterativeEdgeTransport <- function() {
   if (file.exists("fulldata.gdx"))
     gdxPath <- "fulldata.gdx"
 
-  #initialize scenario Parameter
-  SSPscen <- c("","")
-  transportPolScen <- c("","")
-  demScen <- c("default","")
+  # initialize scenario Parameter
+  SSPscen <- c("", "")
+  transportPolScen <- c("", "")
+  demScen <- c("default", "")
 
   # config from current run contains information about possible reference run
   load("config.Rdata")
@@ -44,15 +45,23 @@ iterativeEdgeTransport <- function() {
 
   #  scenario after startyear (if given) but no earlier than 2020 from current REMIND config
   SSPscen[2] <- cfgCurrentRun$gms$cm_GDPpopScen
-  transportPolScen[2] <- cfgCurrentRun$gms$cm_EDGEtr_scen
-  demScen[2] <- cfgCurrentRun$gms$cm_demScen
+  # translate scenario labels between REMIND and EDGET
+  edgeTransportScenario <- toolTranslateTransportScenario(
+                                                          cfgCurrentRun$gms$cm_demScen,
+                                                          cfgCurrentRun$gms$cm_EDGEtr_scen,
+                                                          direction = "REMINDtoEDGE")
+  demScen[2] <- edgeTransportScenario$demScen
+  transportPolScen[2] <- edgeTransportScenario$transportPolScen
+
 
   startyear <- as.numeric(cfgCurrentRun$gms$cm_startyear)
 
   # If there is a reference run, load config of REMIND reference run for fixing before startyear
   # if not: duplicate scenario from current config in analogy of solution in standalone
   reference <- cfgCurrentRun$files2export$start["input_ref.gdx"]
+
   if (!is.na(reference)) {
+
     isAbsolutePath <- grepl("^(?:/|~)", reference)
     if (isAbsolutePath) {
       referenceCfgPath <- file.path(dirname(reference), "config.Rdata")
@@ -60,23 +69,30 @@ iterativeEdgeTransport <- function() {
       # go back to remind folder and take relative path from there
       referenceCfgPath <- file.path("../..", dirname(reference), "config.Rdata")
     }
+
     load(referenceCfgPath)
     cfgReferenceRun <- copy(cfg)
     cfg <- NULL
+    # load scenarios from cfgReferenceRun
     SSPscen[1] <- cfgReferenceRun$gms$cm_GDPpopScen
-    transportPolScen[1] <- cfgReferenceRun$gms$cm_EDGEtr_scen
-    demScen[1] <- cfgReferenceRun$gms$cm_demScen
+    edgeTransportScenarioRef <- toolTranslateTransportScenario(
+                                                               cfgReferenceRun$gms$cm_demScen,
+                                                               cfgReferenceRun$gms$cm_EDGEtr_scen,
+                                                               direction = "REMINDtoEDGE")
+    demScen[1] <- edgeTransportScenarioRef$demScen
+    transportPolScen[1] <- edgeTransportScenarioRef$transportPolScen
+
   } else {
     SSPscen[1] <- SSPscen[2]
     transportPolScen[1] <- transportPolScen[2]
   }
 
+  # get ICEban information
   isICEban <- c(FALSE, FALSE)
-
   for (i in 1:length(transportPolScen)) {
     if (grepl(".*ban$", transportPolScen[i])) {
       isICEban[i] <- TRUE
-      transportPolScen[i] <- gsub('ICEban','', transportPolScen[i])
+      transportPolScen[i] <- gsub("ICEban", "", transportPolScen[i])
     }
   }
 
@@ -94,6 +110,27 @@ iterativeEdgeTransport <- function() {
   baseYear <- commonParams$baseYear
   # share of electricity in Hybrid electric vehicles
   hybridElecShare <- commonParams$hybridElecShare
+
+  ###############################################################
+  ##               workshop2026 version                        ##
+  ## use pre-generated input data differentiated for           ##
+  ## two pre-specified scenarios and update folder accordingly ##
+  ###############################################################
+
+  # use transportPolScen[2] as a marker for differentiation
+  # rename fitting folder for consistency with reporting
+  # delete obsolete input folder
+  if (!dir.exists(file.path(edgeTransportFolder))) {
+    if (transportPolScen[2] == "Mix2"){
+      file.rename("EDGE-T_NPi2025", "EDGE-T")
+      unlink("EDGE-T_PkBudg750", recursive = TRUE)
+    } else if (transportPolScen[2] == "Mix4") {
+      file.rename("EDGE-T_PkBudg750", "EDGE-T")
+      unlink("EDGE-T_NPi2025", recursive = TRUE)
+    } else {
+      stop("Error in workshop version: pre-specified scenarios for EDGE-T not matching")
+    }
+  }
 
   ###############################################################
   ## Load input data from mrtransport if first call in REMIND run
@@ -132,8 +169,10 @@ iterativeEdgeTransport <- function() {
     TestIND <- copy(REMINDfuelCosts)[region == "IND"]
 
     setnames(REMINDfuelCosts, "region", "regionCode12")
-    REMINDfuelCosts <- merge(REMINDfuelCosts, unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
-                                  by = "regionCode12", allow.cartesian = TRUE)
+    REMINDfuelCosts <- merge(REMINDfuelCosts,
+                             unique(inputs$helpers$regionmappingISOto21to12[
+                               , c("regionCode12", "regionCode21")]),
+                             by = "regionCode12", allow.cartesian = TRUE)
     REMINDfuelCosts[, "regionCode12" := NULL]
     setnames(REMINDfuelCosts, "regionCode21", "region")
 
@@ -174,30 +213,14 @@ iterativeEdgeTransport <- function() {
     ########################################################
     ## Calibrate historical preferences
     ########################################################
-    histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX,
-                                        inputDataRaw$histESdemand,
-                                        inputDataRaw$timeValueCosts,
-                                        genModelPar$lambdasDiscreteChoice,
-                                        helpers)
-
-    ##########################
-    # The following lines are supposed to be deleted:
-    # overwrite historical preferences for trucks in MEA
-    pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferencesMix2.RDS")
-    paste(pathMEA)
-    paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-    pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
-    overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
-                                  header = TRUE,
-                                  na.strings = "NA",
-                                  colClasses = list(character = "technology"))
-
-    overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-    histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
-    histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
-
-    # end of temporary solution
-    ##########################
+    sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
+    histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
+                                          scenSpecInputData$combinedCAPEXandOPEX,
+                                          inputDataRaw$timeValueCosts,
+                                          genModelPar$lambdasDiscreteChoice,
+                                          helpers)
+    # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
+    histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
     scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
                                 scenSpecInputData$scenSpecPrefTrends)
@@ -255,7 +278,8 @@ iterativeEdgeTransport <- function() {
       upfrontCAPEXtrackedFleet = RDSinputs$upfrontCAPEXtrackedFleet,
       initialIncoCosts = RDSinputs$initialIncoCosts,
       annualMileage = RDSinputs$annualMileage,
-      timeValueCosts = RDSinputs$timeValueCosts
+      timeValueCosts = RDSinputs$timeValueCosts,
+      histESdemand = RDSinputs$histESdemand
     )
 
   }
@@ -270,7 +294,6 @@ iterativeEdgeTransport <- function() {
 
   ## Check if REMINDsectorESdemand needs region deaggregation
   if (numberOfRegions == 12) {
-
     # Demand from the standalone regression module
     # This is only used as deaggregation weight in the iterative version
     # The deaggregation weights used are static across all iterations
@@ -302,14 +325,11 @@ iterativeEdgeTransport <- function() {
     setnames(weightEs, c("region", "value"), c("regionCode21", "weight"))
     dataColumns <- names(REMINDsectorESdemand)[!names(REMINDsectorESdemand) %in% c("region", "period", "value")]
     setnames(REMINDsectorESdemand, "region", "regionCode12")
-    # disaggregate_dt produces duplicates right now - Todo: Check fucntion
-    #REMINDsectorESdemand <- rmndt::disaggregate_dt(REMINDsectorESdemand, helpers$regionmappingISOto21to12, fewcol = "regionCode12", manycol = "regionCode21",
-    #datacols = dataColumns, weights = weightEs)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, unique(helpers$regionmappingISOto21to12[, c("regionCode12", "regionCode21")]),
                                   by = "regionCode12", allow.cartesian = TRUE)
     REMINDsectorESdemand <- merge(REMINDsectorESdemand, weightEs, intersect(names(REMINDsectorESdemand), names(weightEs)))
     REMINDsectorESdemand[, sumWeight := sum(weight), by = c("period", "sector", "regionCode12")]
-    REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight/sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
+    REMINDsectorESdemand <- REMINDsectorESdemand[, .(value = value * (weight / sumWeight)), by = c("regionCode21", "period", "sector", "variable", "unit")]
     setnames(REMINDsectorESdemand, "regionCode21", "region")
     REMINDsectorESdemand <-  REMINDsectorESdemand[do.call(order, REMINDsectorESdemand)]
     # test if total ES demand stayed the same and if demand in IND is unchanged
@@ -389,7 +409,7 @@ iterativeEdgeTransport <- function() {
   ESdemandFVsalesLevel <- toolCalculateFVdemand(REMINDsectorESdemand,
                                                 vehSalesAndModeShares$shares,
                                                 helpers,
-                                                inputData$histESdemand, # histESdemand is optional here
+                                                inputData$histESdemand, # histESdemand is not optional here
                                                 baseYear)
   print("Calculation of vehicle sales and mode shares finished")
 
@@ -446,8 +466,9 @@ iterativeEdgeTransport <- function() {
     # not all data from inputdataRaw and inputdata is needed for the reporting,
     # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
     # REMINDsectorESdemand is already covered by sectorESdemand
+    # also save inputData$histESdemand, however only possible for 12 regi
     add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
-                  inputData[!names(inputData) %in% c("REMINDsectorESdemand","histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+                  inputData[!names(inputData) %in% c("REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
     outputRaw <- append(outputRaw, add)
   }
   else {
@@ -505,9 +526,14 @@ iterativeEdgeTransport <- function() {
   }
 
   # Keep only final SSPscen, demScen, transportPolScen
-  demScen <- demScen[length(demScen)]
   SSPscen <- SSPscen[length(SSPscen)]
   transportPolScen <- transportPolScen[length(transportPolScen)]
+  demScen <- demScen[length(demScen)]
+
+  # translate scenario labels from EDGET to REMIND labels
+  remindScenario <- toolTranslateTransportScenario(demScen, transportPolScen, direction = "EDGEtoREMIND")
+  transportPolScen <- remindScenario$transportPolScen
+  demScen <- remindScenario$demScen
 
   f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
@@ -530,7 +556,7 @@ iterativeEdgeTransport <- function() {
 
   ## CapCosts
   gdxdt::writegdx.parameter(
-    "p35_esCapCost.gdx",
+    file.path(getwd(), "p35_esCapCost.gdx"),
     f35_esCapCost,
     "p35_esCapCost",
     valcol = "value",
@@ -539,7 +565,7 @@ iterativeEdgeTransport <- function() {
 
   ## Intensities
   gdxdt::writegdx.parameter(
-    "p35_fe2es.gdx",
+    file.path(getwd(), "p35_fe2es.gdx"),
     f35_fe2es,
     "p35_fe2es",
     valcol = "value",
@@ -548,7 +574,7 @@ iterativeEdgeTransport <- function() {
 
   ## Shares: demand can represent the shares since it is normalized
   gdxdt::writegdx.parameter(
-    "p35_shFeCes.gdx",
+    file.path(getwd(), "p35_shFeCes.gdx"),
     f35_shFeCes,
     "p35_shFeCes",
     valcol = "value",

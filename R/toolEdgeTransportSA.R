@@ -26,7 +26,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 transportPolScen,
                                 isICEban = c(FALSE, FALSE),
                                 demScen = c("default", "default"),
-                                startyear = 2030,
+                                startyear = 2021,
                                 gdxPath = NULL,
                                 outputFolder = NULL,
                                 isStored = TRUE,
@@ -37,10 +37,10 @@ toolEdgeTransportSA <- function(SSPscen,
                                 testIterative = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  variable <- version <- region <- vehicleType <- technology <- period <- NULL
+  level <- subsectorL3 <- variable <- version <- region <- vehicleType <- technology <- period <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
-  version <- "3.0.0"
+  version <- "3.13.1"
 
   commonParams <- toolGetCommonParameters(startyear, isICEban[1], isICEban[2])
 
@@ -96,30 +96,16 @@ toolEdgeTransportSA <- function(SSPscen,
   ########################################################
   ## Calibrate historical preferences
   ########################################################
-  histPrefs <- toolCalibrateHistPrefs(scenSpecInputData$combinedCAPEXandOPEX,
-                                      inputDataRaw$histESdemand,
-                                      inputDataRaw$timeValueCosts,
-                                      genModelPar$lambdasDiscreteChoice,
-                                      helpers)
-  ##########################
-  # The following lines are supposed to be deleted:
-  # overwrite historical preferences for trucks in MEA
-  pathMEA <- paste0("extdata/SWsToBeDeleted/historicalPreferencesMix2.RDS")
-  paste(pathMEA)
-  paste(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  pathIND_CHA_USA <- "extdata/SWsToBeDeleted/value2010.csv"
-  overwriteIND_CHA_USA <- fread(system.file(pathIND_CHA_USA, package = "edgeTransport", mustWork = TRUE),
-                                header = TRUE,
-                                na.strings = "NA",
-                                colClasses = list(character = "technology"))
+  sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
+  histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
+                                        scenSpecInputData$combinedCAPEXandOPEX,
+                                        inputDataRaw$timeValueCosts,
+                                        genModelPar$lambdasDiscreteChoice,
+                                        helpers)
+  # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
+  histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
-  overwriteMEA <- readRDS(system.file(pathMEA, package = "edgeTransport", mustWork = TRUE))
-  histPrefs$historicalPreferences[region == "MEA" & grepl("Truck", vehicleType)] <- overwriteMEA[region == "MEA" & grepl("Truck", vehicleType)]
-  histPrefs$historicalPreferences[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType) & technology == "" & period %in% unique(overwriteIND_CHA_USA$period) ] <- overwriteIND_CHA_USA[region %in% unique(overwriteIND_CHA_USA$region) & grepl("Truck", vehicleType)]
-
-  # end of temporary solution
-  ##########################
-  scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
+  scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
                               scenSpecInputData$scenSpecPrefTrends)
   scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                               helpers)
@@ -239,7 +225,7 @@ toolEdgeTransportSA <- function(SSPscen,
     ESdemandFVsalesLevel <- toolCalculateFVdemand(sectorESdemand,
                                                   vehSalesAndModeShares$shares,
                                                   helpers,
-                                                  inputData$histESdemand,
+                                                  NULL,
                                                   baseYear)
     print("Calculation of vehicle sales and mode shares finished")
     #################################################
