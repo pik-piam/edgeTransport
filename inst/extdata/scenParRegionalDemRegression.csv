@@ -148,7 +148,7 @@ SSP1;REF;trn_freight;-0.8;-0.9;-0.2;0
 SSP1;SSA;trn_freight;0;0;-0.2;0
 SSP1;UKI;trn_freight;0;0.2;0.1;0
 SSP1;USA;trn_freight;0;0.1;0.1;0.2
-SSP1;CAZ;trn_pass;-0.1;-0.1;-0.15;0
+SSP1;CAZ;trn_pass;0.5;0.15;-0.1;-0.2
 SSP1;CHA;trn_pass;0;-0.2;0.3;0.25
 SSP1;DEU;trn_pass;0.3;0;0;0.2
 SSP1;ECE;trn_pass;0;0.3;0.3;0.2
@@ -168,7 +168,7 @@ SSP1;OAS;trn_pass;0;0;-0.2;0.4
 SSP1;REF;trn_pass;0;0;0.3;0.45
 SSP1;SSA;trn_pass;0;0;-0.3;0.2
 SSP1;UKI;trn_pass;0;0.1;0.1;0.05
-SSP1;USA;trn_pass;-0.1;-0.1;-0.25;0.05
+SSP1;USA;trn_pass;0.2;0.15;-0.15;-0.3
 SSP1;CAZ;trn_shipping_intl;0;0.5;0.3;0
 SSP1;CHA;trn_shipping_intl;-0.4;0;-0.3;-2
 SSP1;EWN;trn_shipping_intl;0;-0.3;-0.4;-0.3
@@ -217,7 +217,7 @@ SSP2;REF;trn_freight;-0.8;-0.9;-0.2;0
 SSP2;SSA;trn_freight;0;0;-0.3;-0.5
 SSP2;UKI;trn_freight;0;0.5;0.4;0.3
 SSP2;USA;trn_freight;0;0.3;0.3;0.2
-SSP2;CAZ;trn_pass;-0.1;-0.1;-0.15;0
+SSP2;CAZ;trn_pass;0.5;0.15;-0.05;-0.15
 SSP2;CHA;trn_pass;0;-0.2;0.3;0.18
 SSP2;DEU;trn_pass;0.3;0;0;0.1
 SSP2;ECE;trn_pass;0;0.3;0.3;0.2
@@ -237,7 +237,7 @@ SSP2;OAS;trn_pass;0;0;-0.1;0
 SSP2;REF;trn_pass;0;0;0.3;0.45
 SSP2;SSA;trn_pass;0;0;-0.3;-0.4
 SSP2;UKI;trn_pass;0;0.1;0.1;0.05
-SSP2;USA;trn_pass;-0.1;-0.1;-0.25;0.05
+SSP2;USA;trn_pass;0.2;0.15;0;-0.1
 SSP2;CAZ;trn_shipping_intl;0;0.5;0.3;0
 SSP2;CHA;trn_shipping_intl;-0.4;0;-0.3;-2
 SSP2;EWN;trn_shipping_intl;0;-0.3;-0.4;-0.3
@@ -286,7 +286,7 @@ SSP3;REF;trn_freight;-0.8;-0.9;-0.2;0
 SSP3;SSA;trn_freight;0;0;-0.3;-0.5
 SSP3;UKI;trn_freight;0;0.5;0.4;0.3
 SSP3;USA;trn_freight;0;0.3;0.3;0.2
-SSP3;CAZ;trn_pass;-0.1;-0.1;-0.15;0
+SSP3;CAZ;trn_pass;0.5;0.15;-0.05;-0.15
 SSP3;CHA;trn_pass;0;-0.2;0.3;0.18
 SSP3;DEU;trn_pass;0.3;0;0;0.1
 SSP3;ECE;trn_pass;0;0.3;0.3;0.2
@@ -306,7 +306,7 @@ SSP3;OAS;trn_pass;0;0;-0.1;0
 SSP3;REF;trn_pass;0;0;0.3;0.45
 SSP3;SSA;trn_pass;0;0;-0.3;-0.4
 SSP3;UKI;trn_pass;0;0.1;0.1;0.05
-SSP3;USA;trn_pass;-0.1;-0.1;-0.25;0.05
+SSP3;USA;trn_pass;0.2;0.15;0;-0.1
 SSP3;CAZ;trn_shipping_intl;0;0.5;0.3;0
 SSP3;CHA;trn_shipping_intl;-0.4;0;-0.3;-2
 SSP3;EWN;trn_shipping_intl;0;-0.3;-0.4;-0.3
@@ -343,7 +343,7 @@ SSP5;REF;trn_freight;-0.8;-0.9;-0.2;0
 SSP5;SSA;trn_freight;0;0;0;0.2
 SSP5;UKI;trn_freight;0;0.2;0.1;0
 SSP5;USA;trn_freight;0;0.2;0.3;0.8
-SSP5;CAZ;trn_pass;-0.1;-0.1;-0.1;0.2
+SSP5;CAZ;trn_pass;0.5;0.15;-0.05;0
 SSP5;CHA;trn_pass;0;-0.2;0.3;-0.5
 SSP5;DEU;trn_pass;0.3;0.2;0.1;0
 SSP5;IND;trn_pass;0;-0.3;-0.3;0.3
@@ -353,7 +353,7 @@ SSP5;NES;trn_pass;0;0.6;0.5;0
 SSP5;OAS;trn_pass;0;0;-0.2;0.2
 SSP5;REF;trn_pass;0;-0.2;-0.1;0
 SSP5;SSA;trn_pass;0;0;-0.2;0.2
-SSP5;USA;trn_pass;-0.1;-0.1;-0.2;0.2
+SSP5;USA;trn_pass;0.2;0.15;0;0
 SSP5;CAZ;trn_shipping_intl;0;0.5;0.3;0
 SSP5;CHA;trn_shipping_intl;-0.4;0;-0.3;-2
 SSP5;EWN;trn_shipping_intl;0;-0.3;-0.4;-0.3
