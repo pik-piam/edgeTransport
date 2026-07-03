@@ -34,7 +34,7 @@ toolCalculateFleetComposition <- function(ESdemandFVsalesLevel,
 
   # calculate total energy service demand for modes with tracked fleets ---------------------------------
   fleetESdemand <- copy(ESdemandFVsalesLevel)
-  fleetESdemand <- fleetESdemand[grepl("Bus.*|.*4W|.*freight_road.*", subsectorL3)]
+  fleetESdemand <- fleetESdemand[grepl("Bus.*|.*4W|.*2W|.*3W|.*freight_road.*", subsectorL3)]
   fleetESdemand <- fleetESdemand[, .(totalESdemand = sum(value[period >= 2005])), by = c("region", "period", "subsectorL3")]
 
   # calculate distribution of total demand on construction years -----------------------------------------
