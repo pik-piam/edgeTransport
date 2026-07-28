@@ -3,8 +3,6 @@
 #' Run in the REMIND output folder in between iterations
 #'
 #' @author Johanna Hoppe, Alex K. Hagen
-#' @importFrom reporttransport storeData reportEdgeTransport reportToREMINDcapitalCosts
-#' reportToREMINDenergyEfficiency reportToREMINDfinalEnergyShares
 #' @import data.table
 #' @export
 #'
@@ -200,7 +198,7 @@ iterativeEdgeTransport <- function() {
     # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
     histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
 
-    scenSpecPrefTrends <- rbind(histPrefs$historicalPreferences,
+    scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
                                 scenSpecInputData$scenSpecPrefTrends)
     scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
                                                 helpers)
@@ -402,7 +400,7 @@ iterativeEdgeTransport <- function() {
                                                            inputData$scenSpecLoadFactor,
                                                            helpers)
   fleetVehiclesPerTech <- fleetSizeAndComposition$fleetVehiclesPerTech
-  storeData(file.path(".", edgeTransportFolder), fleetVehiclesPerTech = fleetVehiclesPerTech)
+  reporttransport::storeData(file.path(".", edgeTransportFolder), fleetVehiclesPerTech = fleetVehiclesPerTech)
   print("Calculation of vehicle stock finished")
 
   #------------------------------------------------------
@@ -468,9 +466,9 @@ iterativeEdgeTransport <- function() {
       scenSpecPrefTrends = inputData$scenSpecPrefTrends)
   }
 
-  storeData(edgeTransportFolder, outputRaw)
+  reporttransport::storeData(edgeTransportFolder, outputRaw)
 
-  baseOutput <- reportEdgeTransport(edgeTransportFolder,
+  baseOutput <- reporttransport::reportEdgeTransport(edgeTransportFolder,
                                     outputRaw,
                                     isTransportReported = FALSE)
 
@@ -513,10 +511,10 @@ iterativeEdgeTransport <- function() {
   transportPolScen <- remindScenario$transportPolScen
   demScen <- remindScenario$demScen
 
-  f35_esCapCost <- reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
+  f35_esCapCost <- reporttransport::reportToREMINDcapitalCosts(esCapCost, fleetESdemand, hybridElecShare, timeResReporting,
                                               demScen, SSPscen, transportPolScen, helpers)
 
-  f35_fe2es <- reportToREMINDenergyEfficiency(fleetFEdemand,
+  f35_fe2es <- reporttransport::reportToREMINDenergyEfficiency(fleetFEdemand,
                                               fleetESdemand,
                                               hybridElecShare,
                                               timeResReporting,
@@ -525,7 +523,7 @@ iterativeEdgeTransport <- function() {
                                               transportPolScen,
                                               helpers)
 
-  f35_shFeCes <- reportToREMINDfinalEnergyShares(fleetFEdemand,
+  f35_shFeCes <- reporttransport::reportToREMINDfinalEnergyShares(fleetFEdemand,
                                                  timeResReporting,
                                                  demScen,
                                                  SSPscen,
