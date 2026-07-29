@@ -10,11 +10,6 @@
 #' @param decisionTree data.table of the full edgeTransport decision tree
 #' @param timeResDataBase data.table with univocalName and period used to derive the temporal
 #'          resolution (see toolDeriveTimeRes())
-#' @param regionmappingISOto21to12 region mapping ISO -> regionCode21 -> regionCode12
-#' @param mitigationTechMap mapping of mitigation technologies
-#' @param mapEdgeToREMIND mapping of EDGE-T categories to REMIND categories
-#' @param reportingNames reporting names mapping
-#' @param reportingAggregation reporting aggregation mapping
 #' @returns list of helpers used throughout the model
 #' @import data.table
 #' @export

@@ -2,9 +2,9 @@
 % Please edit documentation in R/toolReLoadInputs.R
 \name{toolReLoadInputs}
 \alias{toolReLoadInputs}
-\title{When running with REMIND, starting from the second run of
-iterativeEdgeTransport() scenario specific inputData can be reloaded from
-saved files}
+\title{called from iterativeEdgeTransport()
+reloads scenario specific inputData from RDS files in EDGE-T folder
+instead of generation via mrtransport}
 \usage{
 toolReLoadInputs(edgeTransportFolder)
 }
@@ -15,9 +15,9 @@ toolReLoadInputs(edgeTransportFolder)
 list with different input data sets
 }
 \description{
-When running with REMIND, starting from the second run of
-iterativeEdgeTransport() scenario specific inputData can be reloaded from
-saved files
+called from iterativeEdgeTransport()
+reloads scenario specific inputData from RDS files in EDGE-T folder
+instead of generation via mrtransport
 }
 \author{
 Alex K. Hagen
