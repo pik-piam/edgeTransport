@@ -4,12 +4,12 @@
 \alias{toolDiscreteChoice}
 \title{Calculate vehicle sales shares and mode shares for all levels of the decisionTree.}
 \usage{
-toolDiscreteChoice(input, generalModelPar, updatedEndoCosts, helpers)
+toolDiscreteChoice(input, lambdasDiscreteChoice, updatedEndoCosts, helpers)
 }
 \arguments{
 \item{input}{dataset for discrete choice module}
 
-\item{generalModelPar}{general model parameter}
+\item{lambdasDiscreteChoice}{lambdas from the general model parameters}
 
 \item{updatedEndoCosts}{updated endogenous costs}
 

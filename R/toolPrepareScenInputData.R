@@ -88,6 +88,7 @@ toolPrepareScenInputData <- function(genModelPar, scenModelPar, inputDataRaw, al
     scenSpecPrefTrends = scenSpecPrefTrends,
     scenSpecLoadFactor = scenSpecLoadFactor,
     scenSpecEnIntensity = scenSpecEnIntensity,
+    CAPEXandNonFuelOPEX = transportCosts$CAPEXandNonFuelOPEX,
     combinedCAPEXandOPEX = transportCosts$combinedCAPEXandOPEX,
     upfrontCAPEXtrackedFleet = transportCosts$upfrontCAPEXtrackedFleet,
     initialIncoCosts = initialIncoCosts)

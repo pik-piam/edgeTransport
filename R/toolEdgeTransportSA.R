@@ -214,7 +214,7 @@ toolEdgeTransportSA <- function(SSPscen,
     #################################################
     # calculate vehicle sales shares and mode shares for all levels of the decisionTree
     vehSalesAndModeShares <- toolDiscreteChoice(inputData,
-                                                genModelPar,
+                                                genModelPar$lambdasDiscreteChoice,
                                                 endogenousCosts$updatedEndogenousCosts,
                                                 helpers)
     if (isAnalyticsReported) {

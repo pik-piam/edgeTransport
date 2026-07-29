@@ -11,41 +11,21 @@
 #' @export
 
 toolLoadInputs <- function(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear) {
-  # bind variables locally to prevent NSE notes in R CMD CHECK
-  period <- univocalName <- test <- . <- NULL
 
   ### load inputs  ------------------------------------------------------------
 
   ## from mrtransport
   # ToDo temporary default to SSP2, to be removed again
   mrtransportData <- toolLoadmrtransportData()
-  # vehicle types that feature fleet tracking get a different temporal resolution
-  dtTimeRes <- unique(mrtransportData$energyIntensityRaw[, c("univocalName", "period")])
-  highRes <- unique(dtTimeRes$period)
-  lowResUnivocalNames <- copy(dtTimeRes)
-  lowResUnivocalNames <- lowResUnivocalNames[, .(test = all(highRes %in% period)), by = univocalName]
-  lowResUnivocalNames <- lowResUnivocalNames[test == FALSE, univocalName]
-  lowTimeRes <- unique(dtTimeRes[univocalName %in% lowResUnivocalNames]$period)
 
   ### edgeTransport package data
   packageData <- toolLoadPackageData(SSPscen, transportPolScen, demScen)
-  # categories for filtering data
-  categories <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV_3W", "trn_pass_road_LDV_2W", "trn_freight_road", "trn_pass", "trn_freight")
-  filterEntries <- getFilterEntriesUnivocalName(categories, packageData$decisionTree)
-  filterEntries[["trackedFleet"]] <- c(filterEntries[["trn_pass_road_LDV_4W"]], filterEntries[["trn_freight_road"]],
-                                       getFilterEntriesUnivocalName("Bus", packageData$decisionTree)[["Bus"]])
 
-  # mappings and other helpers
-  helpers <- list(
+  # mappings and other helpers incl. filterEntries and temporal resolution
+  # energyIntensityRaw provides the reference for the mixed temporal resolution
+  helpers <- toolBuildHelpers(
     decisionTree = packageData$decisionTree,
-    regionmappingISOto21to12 = packageData$regionmappingISOto21to12,
-    mitigationTechMap = packageData$mitigationTechMap,
-    mapEdgeToREMIND = packageData$mapEdgeToREMIND,
-    filterEntries = filterEntries,
-    dtTimeRes = dtTimeRes,
-    lowTimeRes = lowTimeRes,
-    reportingNames = packageData$reportingNames,
-    reportingAggregation = packageData$reportingAggregation
+    timeResDataBase = mrtransportData$energyIntensityRaw
   )
 
   ## from mrdrivers
