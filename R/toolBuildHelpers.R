@@ -6,7 +6,7 @@
 #' toolReLoadInputs() (reload from RDS in iterative mode) so that the two paths cannot drift
 #' apart.
 #'
-#' @author Johanna Hoppe, Alex K. Hagen
+#' @author Alex K. Hagen
 #' @param decisionTree data.table of the full edgeTransport decision tree
 #' @param timeResDataBase data.table with univocalName and period used to derive the temporal
 #'          resolution (see toolDeriveTimeRes())

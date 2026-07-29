@@ -23,5 +23,5 @@ toolReLoadInputs() (reload from RDS in iterative mode) so that the two paths can
 apart.
 }
 \author{
-Johanna Hoppe, Alex K. Hagen
+Alex K. Hagen
 }
