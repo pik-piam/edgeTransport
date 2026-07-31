@@ -29,9 +29,9 @@ Imports:
     madrat,
     magrittr,
     gdx,
-    gdxrrw,
+    gdx2,
+    gamstransfer,
     zoo,
-    gdxdt,
     mrdrivers,
     reporttransport (>= 1.1.0)
 Suggests:

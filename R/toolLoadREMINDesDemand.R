@@ -18,6 +18,7 @@ toolLoadREMINDesDemand <- function(gdxPath, helpers) {
   mapEdgeToREMIND <- unique(mapEdgeToREMIND[, c("all_in", "sector")])
 
   if (!is.null(gdxPath)){
+    # ToDo: replace gdx dependency
     ESdemand <- gdx::readGDX(gdxPath, c("vm_cesIO"), field = "l", restore_zeros = FALSE)
   } else {
     ESdemand <- readSource("REMINDinputForTransportStandalone", subtype = "esDemand", convert = FALSE)
