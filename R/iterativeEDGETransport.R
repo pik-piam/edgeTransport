@@ -531,30 +531,30 @@ iterativeEdgeTransport <- function() {
                                                  helpers)
 
   ## CapCosts
-  gdxdt::writegdx.parameter(
-    "p35_esCapCost.gdx",
+  writeDfToGDX(
     f35_esCapCost,
+    "p35_esCapCost.gdx",
     "p35_esCapCost",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
   )
 
   ## Intensities
-  gdxdt::writegdx.parameter(
-    "p35_fe2es.gdx",
+  writeDfToGDX(
     f35_fe2es,
+    "p35_fe2es.gdx",
     "p35_fe2es",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
   )
 
   ## Shares: demand can represent the shares since it is normalized
-  gdxdt::writegdx.parameter(
-    "p35_shFeCes.gdx",
+  writeDfToGDX(
     f35_shFeCes,
+    "p35_shFeCes.gdx",
     "p35_shFeCes",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs")
   )
 
   print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
