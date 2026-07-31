@@ -128,8 +128,8 @@ iterativeEdgeTransport <- function() {
   ## Load fuel prices from REMIND and deaggregate if needed
   #############################################################
 
-  numberOfRegions <- length(gdx::readGDX(gdxPath, "all_regi"))
-  iterationNumber <- as.vector(gdxrrw::rgdx(gdxPath, list(name = "o_iterationNumber"))$val)
+  numberOfRegions <- length(gdx2::readGDX(gdxPath, "all_regi"))
+  iterationNumber <-  as.numeric(gdx2::readGDX(gdxPath, "o_iterationNumber"))
 
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
