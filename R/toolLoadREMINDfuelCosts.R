@@ -29,11 +29,10 @@ toolLoadREMINDfuelCosts <- function(gdxPath, hybridElecShare, helpers, transport
      fuelCosts <- readSource("REMINDinputForTransportStandalone", subtype = "fuelCosts",
                              convert = FALSE)
    } else {
-     # ToDo: replace gdx dependency
-     fuelCosts <- gdx::readGDX(gdxPath,
-                               "pm_FEPrice",
-                               format = "first_found",
-                               restore_zeros = FALSE)[, , "trans.ES", pmatch = TRUE]
+     fuelCosts <- gdx2::readGDX(gdxPath,
+                                "pm_FEPrice",
+                                format = "first_found",
+                                restoreZeros = FALSE)[, , "trans.ES", pmatch = TRUE]
    }
 
    ## smooth prices from REMIND gdx (over years) and convert to data.table
