@@ -28,9 +28,7 @@ Imports:
     rootSolve,
     madrat,
     magrittr,
-    gdx,
     gdx2,
-    gamstransfer,
     zoo,
     mrdrivers,
     reporttransport (>= 1.1.0)
