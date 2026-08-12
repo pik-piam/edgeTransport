@@ -128,8 +128,8 @@ iterativeEdgeTransport <- function() {
   ## Load fuel prices from REMIND and deaggregate if needed
   #############################################################
 
-  numberOfRegions <- length(gdx::readGDX(gdxPath, "all_regi"))
-  iterationNumber <- as.vector(gdxrrw::rgdx(gdxPath, list(name = "o_iterationNumber"))$val)
+  numberOfRegions <- length(gdx2::readGDX(gdxPath, "all_regi"))
+  iterationNumber <- as.numeric(gdx2::readGDX(gdxPath, "o_iterationNumber"))
 
   ## from REMIND
   REMINDfuelCosts <- toolLoadREMINDfuelCosts(gdxPath = gdxPath,
@@ -531,30 +531,30 @@ iterativeEdgeTransport <- function() {
                                                  helpers)
 
   ## CapCosts
-  gdxdt::writegdx.parameter(
-    "p35_esCapCost.gdx",
+  rmndt::writeDfToGDXparameter(
     f35_esCapCost,
+    "p35_esCapCost.gdx",
     "p35_esCapCost",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
   )
 
   ## Intensities
-  gdxdt::writegdx.parameter(
-    "p35_fe2es.gdx",
+  rmndt::writeDfToGDXparameter(
     f35_fe2es,
+    "p35_fe2es.gdx",
     "p35_fe2es",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_teEs")
   )
 
   ## Shares: demand can represent the shares since it is normalized
-  gdxdt::writegdx.parameter(
-    "p35_shFeCes.gdx",
+  rmndt::writeDfToGDXparameter(
     f35_shFeCes,
+    "p35_shFeCes.gdx",
     "p35_shFeCes",
-    valcol = "value",
-    uelcols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs")
+    valueCol = "value",
+    domainCols = c("tall", "all_regi", "GDP_scenario", "DEM_scenario", "EDGE_scenario", "all_enty", "all_in", "all_teEs")
   )
 
   print(paste("---", Sys.time(), "End of the EDGE-T iterative model run."))
