@@ -16,6 +16,8 @@ edgeTransport and accompanying packages use versioning reflecting MAJOR.MINOR.PA
 
 ### added
 
+- **CHANGELOG.md** [edgeTransport #414](https://github.com/pik-piam/edgeTransport/pull/414)
+
 ### removed
 
 - **deprecated `gdxrrw` dependency** switched to read/write gdx functions based on `gamstransfer`[edgeTransport #413](https://github.com/pik-piam/edgeTransport/pull/413) [reporttransport #55](https://github.com/pik-piam/reporttransport/pull/55) [rmndt #9](https://github.com/pik-piam/rmndt/pull/9)
