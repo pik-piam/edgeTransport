@@ -60,3 +60,6 @@ A BibTeX entry for LaTeX users is
   note = {Version: 3.20.0},
 }
 ```
+
+## CHANGELOG
+See [CHANGELOG.md](CHANGELOG.md) on GitHub for notable changes of the model corresponding to each release of the [remindmodel](https://github.com/remindmodel/remind/releases).
