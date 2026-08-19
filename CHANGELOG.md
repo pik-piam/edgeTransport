@@ -30,8 +30,8 @@ edgeTransport and accompanying packages use versioning reflecting MAJOR.MINOR.PA
 
 ## [[REMIND 3.7.0](https://github.com/remindmodel/remind/releases/tag/v3.7.0)] - 2026-07-15
 #### `edgeTransport 3.18.0`
-#### `mrtransport 1.4.1`
-#### `reporttransport 0.16.4`
+#### `mrtransport 0.16.4`
+#### `reporttransport 1.4.1`
 
 ### changed
 
