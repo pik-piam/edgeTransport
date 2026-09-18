@@ -531,7 +531,7 @@ iterativeEdgeTransport <- function() {
                                                  helpers)
 
   ## CapCosts
-  rmndt::writeDfToGDXparameter(
+  piamutils::writeDfToGDXparameter(
     f35_esCapCost,
     "p35_esCapCost.gdx",
     "p35_esCapCost",
@@ -540,7 +540,7 @@ iterativeEdgeTransport <- function() {
   )
 
   ## Intensities
-  rmndt::writeDfToGDXparameter(
+  piamutils::writeDfToGDXparameter(
     f35_fe2es,
     "p35_fe2es.gdx",
     "p35_fe2es",
@@ -549,7 +549,7 @@ iterativeEdgeTransport <- function() {
   )
 
   ## Shares: demand can represent the shares since it is normalized
-  rmndt::writeDfToGDXparameter(
+  piamutils::writeDfToGDXparameter(
     f35_shFeCes,
     "p35_shFeCes.gdx",
     "p35_shFeCes",

@@ -36,14 +36,22 @@ export(toolUpdateEndogenousCosts)
 import(data.table)
 import(mrtransport)
 importFrom(data.table,fread)
-importFrom(madrat,calcOutput)
-importFrom(madrat,readSource)
-importFrom(magclass,getComment)
-importFrom(magclass,lowpass)
-importFrom(magclass,time_interpolate)
+importFrom(madrat,
+  calcOutput,
+  readSource
+)
+importFrom(magclass,
+  getComment,
+  lowpass,
+  time_interpolate
+)
 importFrom(magrittr,`%>%`)
 importFrom(mrtransport,toolPrepareTransportSubsidies)
-importFrom(reporttransport,reportEdgeTransport)
-importFrom(reporttransport,storeData)
-importFrom(rmndt,approx_dt)
-importFrom(rmndt,magpie2dt)
+importFrom(reporttransport,
+  reportEdgeTransport,
+  storeData
+)
+importFrom(rmndt,
+  approx_dt,
+  magpie2dt
+)
