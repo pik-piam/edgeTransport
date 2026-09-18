@@ -29,7 +29,7 @@ Imports:
     madrat,
     magrittr,
     gdx2,
-    piamutils,
+    piamutils (>= 0.2.1),
     zoo,
     mrdrivers,
     reporttransport (>= 1.1.0)
