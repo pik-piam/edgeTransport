@@ -1,10 +1,13 @@
-#' Function to load a parameter set for a specific scenario(combination) from the csv file in the package
+#' Function to load a parameter set of inconvinience start costs for a specific scenario(combination) from the csv file in the package
 #' @author Alex K. Hagen
 #' @param SSPs SSP scenarios
 #' @param transportPolS transport policy scenarios
-#' @returns list with different input data sets
+#' @returns list with different parameter sets, one for each scenario 
 
 toolLoadScenParIncoCost <- function(SSPs, transportPolS) {
+  # bind variables locally to prevent NSE notes in R CMD CHECK
+  SSPscen <- transportPolScen <- startYearCat <- NULL
+
   # Transport policy scenario inconvenience cost factors
   #
   scenParIncoCost <- fread(system.file("extdata/scenParIncoCost.csv",
