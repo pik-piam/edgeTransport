@@ -37,7 +37,7 @@ toolEdgeTransportSA <- function(SSPscen,
                                 testIterative = FALSE){
 
   # bind variables locally to prevent NSE notes in R CMD CHECK
-  level <- subsectorL3 <- variable <- version <- region <- vehicleType <- technology <- period <- NULL
+  variable <- version <- NULL
 
   #To trigger the madrat caching even if changes are only applied to the csv files, we include here the version number of edget
   version <- "3.16.0"
@@ -50,8 +50,6 @@ toolEdgeTransportSA <- function(SSPscen,
   # Years in which ICEban is in effect
   ICEbanYears <- commonParams$ICEbanYears
 
-  # set GDP cutoff to differentiate between regions
-  GDPcutoff <- commonParams$GDPcutoff
   # last time step of historical data
   baseYear <- commonParams$baseYear
   # share of electricity in Hybrid electric vehicles
@@ -83,53 +81,18 @@ toolEdgeTransportSA <- function(SSPscen,
   if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
   ########################################################
-  ## Prepare input data and apply scenario specific changes
+  ## Prepare input data, apply scenario specific changes
+  ## and calibrate historical preferences
   ########################################################
 
-  scenSpecInputData <- toolPrepareScenInputData(genModelPar,
+  prepared <- toolPrepareAndCalibrateModelInput(genModelPar,
                                                 scenModelPar,
                                                 inputDataRaw,
-                                                allEqYear,
-                                                GDPcutoff,
+                                                commonParams,
+                                                isICEban,
                                                 helpers)
-
-  ########################################################
-  ## Calibrate historical preferences
-  ########################################################
-  sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
-  histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
-                                        scenSpecInputData$combinedCAPEXandOPEX,
-                                        inputDataRaw$timeValueCosts,
-                                        genModelPar$lambdasDiscreteChoice,
-                                        helpers)
-  # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
-  histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
-
-  scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
-                              scenSpecInputData$scenSpecPrefTrends)
-  scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
-                                              helpers)
-  if (isICEban[1] | isICEban[2]) {
-    scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
-  }
-  scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
-
-  #-------------------------------------------------------
-  inputData <- list(
-    scenSpecPrefTrends = scenSpecPrefTrends,
-    scenSpecLoadFactor = scenSpecInputData$scenSpecLoadFactor,
-    scenSpecEnIntensity = scenSpecInputData$scenSpecEnIntensity,
-    combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
-    upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
-    initialIncoCosts = scenSpecInputData$initialIncoCosts,
-    annualMileage = inputDataRaw$annualMileage,
-    timeValueCosts = inputDataRaw$timeValueCosts,
-    histESdemand = inputDataRaw$histESdemand,
-    GDPMER = inputDataRaw$GDPMER,
-    GDPpcMER = inputDataRaw$GDPpcMER,
-    GDPpcPPP = inputDataRaw$GDPpcPPP,
-    population = inputDataRaw$population
-  )
+  histPrefs <- prepared$histPrefs
+  inputData <- prepared$inputData
 
   print("Input data preparation finished")
   ########################################################
@@ -146,9 +109,9 @@ toolEdgeTransportSA <- function(SSPscen,
   ## Demand regression module
   #################################################
   ## demand in million km
-  sectorESdemand <- toolDemandRegression(inputData$histESdemand,
-                                         inputData$GDPpcPPP,
-                                         inputData$population,
+  sectorESdemand <- toolDemandRegression(inputDataRaw$histESdemand,
+                                         inputDataRaw$GDPpcPPP,
+                                         inputDataRaw$population,
                                          genModelPar$genParDemRegression,
                                          scenModelPar$scenParDemRegression,
                                          scenModelPar$scenParRegionalDemRegression,
@@ -289,8 +252,9 @@ toolEdgeTransportSA <- function(SSPscen,
     helpers = helpers
   )
   # not all data from inputdataRaw and inputdata is needed for the reporting
+  # histESdemand is dropped here because inputDataRaw already provides it
   add <- append(inputDataRaw,
-                inputData[!names(inputData) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+                inputData[!names(inputData) %in% c("histESdemand")])
   outputRaw <- append(outputRaw, add)
 
   if (isAnalyticsReported) outputRaw <- append(outputRaw, list(endogenousCostsIterations = endogenousCostsIterations,
