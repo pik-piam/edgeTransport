@@ -101,8 +101,6 @@ iterativeEdgeTransport <- function() {
   # Years in which ICEban is in effect
   ICEbanYears <- commonParams$ICEbanYears
 
-  # set GDP cutoff to differentiate between regions
-  GDPcutoff <- commonParams$GDPcutoff
   # last time step of historical data
   baseYear <- commonParams$baseYear
   # share of electricity in Hybrid electric vehicles
@@ -116,8 +114,7 @@ iterativeEdgeTransport <- function() {
   if (!dir.exists(file.path(edgeTransportFolder))) {
     isFirstRun <- TRUE
     inputs <- toolLoadInputs(SSPscen, transportPolScen, demScen, hybridElecShare, allEqYear)
-    }
-  else {
+  } else {
     isFirstRun <- FALSE
     inputs <- toolReLoadInputs(edgeTransportFolder)
   }
@@ -176,64 +173,34 @@ iterativeEdgeTransport <- function() {
     if (is.null(scenModelPar$scenParDemFactors)) demScen <- SSPscen
 
     ########################################################
-    ## Prepare input data and apply scenario specific changes
+    ## Prepare input data, apply scenario specific changes
+    ## and calibrate historical preferences
     ########################################################
 
-    scenSpecInputData <- toolPrepareScenInputData(genModelPar,
+    prepared <- toolPrepareAndCalibrateModelInput(genModelPar,
                                                   scenModelPar,
                                                   inputDataRaw,
-                                                  allEqYear,
-                                                  GDPcutoff,
+                                                  commonParams,
+                                                  isICEban,
                                                   helpers)
+    histPrefs <- prepared$histPrefs
 
-    ########################################################
-    ## Calibrate historical preferences
-    ########################################################
-    sharesToBeCalibrated <- toolCalculateSharesDecisionTree(inputDataRaw$histESdemand, helpers)
-    histPrefs <- toolCalibratePreferences(sharesToBeCalibrated,
-                                          scenSpecInputData$combinedCAPEXandOPEX,
-                                          inputDataRaw$timeValueCosts,
-                                          genModelPar$lambdasDiscreteChoice,
-                                          helpers)
-    # Don't use calibrated shareweights for LDV 4w, as they receive inconvenience costs
-    histPrefs$calibratedPreferences <- histPrefs$calibratedPreferences[!(subsectorL3 == "trn_pass_road_LDV_4W" & level == "FV")]
-
-    scenSpecPrefTrends <- rbind(histPrefs$calibratedPreferences,
-                                scenSpecInputData$scenSpecPrefTrends)
-    scenSpecPrefTrends <- toolApplyMixedTimeRes(scenSpecPrefTrends,
-                                                helpers)
-
-    if (isICEban[1] | isICEban[2]) {
-      scenSpecPrefTrends <- toolApplyICEbanOnPreferences(scenSpecPrefTrends, helpers, ICEbanYears)
-    }
-    scenSpecPrefTrends <- toolNormalizePreferences(scenSpecPrefTrends)
+    # collect all finished input data
+    # CAPEXandNonFuelOPEX is only needed in iterative mode: it is stored to RDS and reloaded
+    # in later nash iterations to recombine the costs with the updated REMIND fuel costs
+    inputData <- append(prepared$inputData,
+                        list(CAPEXandNonFuelOPEX = prepared$CAPEXandNonFuelOPEX))
 
     scenParIncoCost <- scenModelPar$scenParIncoCost
 
-    # collect all finished input data
-    inputData <- list(
-      scenSpecPrefTrends = scenSpecPrefTrends,
-      scenSpecLoadFactor = scenSpecInputData$scenSpecLoadFactor,
-      scenSpecEnIntensity = scenSpecInputData$scenSpecEnIntensity,
-      CAPEXandNonFuelOPEX = scenSpecInputData$CAPEXandNonFuelOPEX,
-      combinedCAPEXandOPEX = scenSpecInputData$combinedCAPEXandOPEX,
-      upfrontCAPEXtrackedFleet = scenSpecInputData$upfrontCAPEXtrackedFleet,
-      initialIncoCosts = scenSpecInputData$initialIncoCosts,
-      annualMileage = inputDataRaw$annualMileage,
-      timeValueCosts = inputDataRaw$timeValueCosts,
-      histESdemand = inputDataRaw$histESdemand
-    )
-  }
+  } else {
 
+    ################################################################
+    # Load data from previous EDGE-T run between nash iterations   #
+    ################################################################
 
-  ################################################################
-  # Load data from previous EDGE-T run between nash iterations   #
-  ################################################################
-
-  if (dir.exists(file.path(edgeTransportFolder))) {
-
-    genModelPar = inputs$genModelPar
-    RDSinputs = inputs$RDSinputs
+    genModelPar <- inputs$genModelPar
+    RDSinputs <- inputs$RDSinputs
 
     combinedCAPEXandOPEX <-  toolCombineCAPEXandOPEXiterative(RDSinputs$CAPEXandNonFuelOPEX,
                                                      REMINDfuelCosts,
@@ -241,8 +208,6 @@ iterativeEdgeTransport <- function() {
                                                      RDSinputs$scenSpecLoadFactor,
                                                      RDSinputs$annualMileage,
                                                      helpers)
-
-    scenParIncoCost <- toolLoadScenParIncoCost(SSPscen, transportPolScen)
 
     # collect all finished input data
     inputData <- list(
@@ -257,6 +222,8 @@ iterativeEdgeTransport <- function() {
       timeValueCosts = RDSinputs$timeValueCosts,
       histESdemand = RDSinputs$histESdemand
     )
+
+    scenParIncoCost <- toolLoadScenParIncoCost(SSPscen, transportPolScen)
 
   }
 
@@ -276,7 +243,7 @@ iterativeEdgeTransport <- function() {
     filePath <- list.files(edgeTransportFolder, recursive = TRUE, full.names = TRUE)
     filePath <- filePath[grepl(".*sectorESdemand.RDS", filePath)]
 
-    if (length(filePath == 1)) {
+    if (length(filePath) == 1) {
       # Load from folder after first iterative edge-t run
       sectorESdemand <- readRDS(filePath)
     } else {
@@ -419,51 +386,43 @@ iterativeEdgeTransport <- function() {
   # interpolation step in toolCalculateOutputVariables()
   timeResReporting <-  c(seq(2005, 2060, by = 5), seq(2070, 2110, by = 10), 2130, 2150)
 
-  # in the iterative version sectorESdemand comes from REMIND
-  sectorESdemand <- REMINDsectorESdemand
+  # data that is stored in every iteration
+  outputRaw <- list(
+    SSPscen = SSPscen,
+    transportPolScen = transportPolScen,
+    demScen = demScen,
+    startyear = startyear,
+    gdxPath = gdxPath,
+    fleetSizeAndComposition = fleetSizeAndComposition,
+    endogenousCosts = endogenousCosts,
+    vehSalesAndModeShares = vehSalesAndModeShares$shares,
+    # in the iterative version sectorESdemand comes from REMIND
+    sectorESdemand = REMINDsectorESdemand,
+    ESdemandFVsalesLevel = ESdemandFVsalesLevel
+  )
 
   if (isFirstRun) {
-    outputRaw <- list(
-      SSPscen = SSPscen,
-      transportPolScen = transportPolScen,
-      demScen = demScen,
-      startyear = startyear,
-      gdxPath = gdxPath,
+    outputRaw <- append(outputRaw, list(
       hybridElecShare = hybridElecShare,
       histPrefs = histPrefs,
-      fleetSizeAndComposition = fleetSizeAndComposition,
-      endogenousCosts = endogenousCosts,
-      vehSalesAndModeShares = vehSalesAndModeShares$shares,
-      sectorESdemand = sectorESdemand,
-      ESdemandFVsalesLevel = ESdemandFVsalesLevel,
       helpers = helpers
-    )
+    ))
 
     # not all data from inputdataRaw and inputdata is needed for the reporting,
     # esp. histESdemand, GDP and population are only present when REMIND runs in 12regi
     # REMINDsectorESdemand is already covered by sectorESdemand
     # also save inputData$histESdemand, however only possible for 12 regi
-    add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")],
-                  inputData[!names(inputData) %in% c("REMINDsectorESdemand", "GDPMER","GDPpcMER", "GDPpcPPP", "population")])
+    add <- append(inputDataRaw[!names(inputDataRaw) %in% c("histESdemand", "GDPMER", "GDPpcMER",
+                                                           "GDPpcPPP", "population")],
+                  inputData)
     outputRaw <- append(outputRaw, add)
-  }
-  else {
-   # for later iterations only store data that has been changed
-    outputRaw <- list(
-      SSPscen = SSPscen,
-      transportPolScen = transportPolScen,
-      demScen = demScen,
-      startyear = startyear,
-      gdxPath = gdxPath,
-      fleetSizeAndComposition = fleetSizeAndComposition,
-      endogenousCosts = endogenousCosts,
-      vehSalesAndModeShares = vehSalesAndModeShares$shares,
-      sectorESdemand = sectorESdemand,
-      ESdemandFVsalesLevel = ESdemandFVsalesLevel,
+  } else {
+    # for later iterations only store data that has been changed
+    outputRaw <- append(outputRaw, list(
       REMINDfuelCosts = REMINDfuelCosts,
       combinedCAPEXandOPEX = combinedCAPEXandOPEX,
-      # for debugging: see if RDS file from read-in changed
-      scenSpecPrefTrends = inputData$scenSpecPrefTrends)
+      scenSpecPrefTrends = inputData$scenSpecPrefTrends
+    ))
   }
 
   reporttransport::storeData(edgeTransportFolder, outputRaw)

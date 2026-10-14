@@ -2,7 +2,7 @@
 % Please edit documentation in R/toolLoadScenParIncoCost.R
 \name{toolLoadScenParIncoCost}
 \alias{toolLoadScenParIncoCost}
-\title{Function to load a parameter set for a specific scenario(combination) from the csv file in the package}
+\title{Function to load a parameter set of inconvinience start costs for a specific scenario(combination) from the csv file in the package}
 \usage{
 toolLoadScenParIncoCost(SSPs, transportPolS)
 }
@@ -12,10 +12,10 @@ toolLoadScenParIncoCost(SSPs, transportPolS)
 \item{transportPolS}{transport policy scenarios}
 }
 \value{
-list with different input data sets
+list with different parameter sets, one for each scenario
 }
 \description{
-Function to load a parameter set for a specific scenario(combination) from the csv file in the package
+Function to load a parameter set of inconvinience start costs for a specific scenario(combination) from the csv file in the package
 }
 \author{
 Alex K. Hagen
