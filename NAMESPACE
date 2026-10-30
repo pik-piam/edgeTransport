@@ -46,7 +46,7 @@ importFrom(magclass,
   lowpass,
   time_interpolate
 )
-importFrom(magrittr,`%>%`)
+importFrom(magrittr,"%>%")
 importFrom(mrtransport,toolPrepareTransportSubsidies)
 importFrom(reporttransport,
   reportEdgeTransport,
