@@ -16,13 +16,15 @@ along which the weights differ (e.g. period, sector). Without weights, the 12-re
 copied to each 21-region; with weights, it is split according to the weight shares}
 }
 \value{
-data.table on 21 regions with the columns of dt
+data.table on 21 regions with the columns of dt, in the order of merge(dt, regionMap, by = "regionCode12"):
+         rows sorted by the 12-region, the column region last
 }
 \description{
 Disaggregate data from the 12 REMIND regions to the 21 EDGE-T regions
 }
 \details{
-To save memory, the columns of dt and weights are renamed in place. Reassign the result to the input.
+To save memory, the columns of dt and weights are renamed and dt is sorted in place.
+         Reassign the result to the input.
 }
 \author{
 Alex K. Hagen

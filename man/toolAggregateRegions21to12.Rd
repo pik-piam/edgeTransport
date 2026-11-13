@@ -16,7 +16,8 @@ along which the weights differ. Without weights, the 21-region values are summed
 variables); with weights, the weighted average is calculated (intensive variables)}
 }
 \value{
-data.table on 12 regions with the columns of dt
+data.table on 12 regions with the columns of dt, in the order of rmndt::aggregate_dt(): the column
+         region first
 }
 \description{
 Aggregate data from the 21 EDGE-T regions to the 12 REMIND regions
